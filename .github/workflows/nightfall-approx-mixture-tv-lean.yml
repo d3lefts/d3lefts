@@ -1,0 +1,78 @@
+name: NIGHTFALL approximate-product-mixture TV terminal (pinned Lean)
+on:
+  push:
+    branches: [nightfall-approximate-mixture-tv-20261118]
+    paths:
+      - 'research/nightfall/formalization/product_space/ApproximateMixtureSimulation.lean'
+      - '.github/workflows/nightfall-approx-mixture-tv-lean.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/ApproximateMixtureSimulation.lean'
+      - '.github/workflows/nightfall-approx-mixture-tv-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-tv-approx-mixture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned AA and mixture closure in dependency order
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/log-$M.txt")
+            ! grep -q 'declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile finite TV corollary
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/ApproximateMixtureSimulation.lean /tmp/mathlib4/ApproximateMixtureSimulation.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ApproximateMixtureSimulation.olean ApproximateMixtureSimulation.lean) \
+            2>&1 | tee approx-mixture-compile.log
+          ! grep -E 'sorryAx|declaration uses .sorry|error:' approx-mixture-compile.log
+      - name: Strict named declarations and exact axiom receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/approx-mixture
+          A=Nightfall.ProductSpace.ApproximateMixture
+          python3 scripts/lean_bridge.py research/nightfall/formalization/product_space/ApproximateMixtureSimulation.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 2400 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$A.mixMass_sum_one" \
+            --decl "$A.Ex_eq_mass_sum" \
+            --decl "$A.two_tvPositive_eq_l1" \
+            --decl "$A.tv_event_transfer" \
+            --decl "$A.approximate_mixture_simulation_jensen" \
+            --json-out lean-receipts/approx-mixture/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/approx-mixture/receipt.json
+          (cd /tmp/mathlib4 && lake env lean ApproximateMixtureSimulation.lean) \
+            | tee lean-receipts/approx-mixture/axioms.txt
+          ! grep -E 'sorryAx|error:' lean-receipts/approx-mixture/axioms.txt
+      - name: Preserve exact source hashes and compiler
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/approx-mixture
+          git rev-parse HEAD > lean-receipts/approx-mixture/head
+          sha256sum research/nightfall/formalization/aa_product/CLOSURE.txt \
+            research/nightfall/formalization/product_space/{MixtureSimulation,ApproximateMixtureSimulation}.lean \
+            > lean-receipts/approx-mixture/source-sha256
+          cp approx-mixture-compile.log lean-receipts/approx-mixture/ 2>/dev/null || true
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-approx-mixture-${{ github.run_id }}
+          path: lean-receipts/approx-mixture
+          if-no-files-found: warn
