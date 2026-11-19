@@ -188,13 +188,15 @@ def grade(manifest: Path, trusted: Path, submission: Path, lake: str = "lake", t
             commands.append(execute([lake_path, "build", task["target_module"]], stage, timeout))
             commands.append(execute([lake_path, "env", "lean", audit.name], stage, timeout))
             receipt["axioms"] = parse_axioms(commands[-1]["output"], task["required_theorems"])
+            # Replay compiled .olean terms in leanchecker without running elaborator tactics.
+            commands.append(execute([lake_path, "env", "leanchecker", task["target_module"]], stage, timeout))
             receipt["commands"] = [c["receipt"] for c in commands]
             for p in source_files(trusted):
                 rel = p.relative_to(trusted)
                 if sha256_file(p) != sha256_file(stage / rel):
                     raise InvalidSubmission("trusted source mutated during execution: " + rel.as_posix())
         receipt["status"] = "pass"
-        receipt["certification"] = "harness-smoke-only" if lake != "lake" else "automated-kernel-check-pending-independent-replay"
+        receipt["certification"] = "harness-smoke-only" if lake != "lake" else "leanchecker-kernel-replay-pending-external-review"
         receipt["limitations"] = "Does not sandbox malicious Lean code; run inside a restricted, network-disabled VM/container and independently replay."
     except (OSError, ValueError, json.JSONDecodeError, UnicodeError, subprocess.SubprocessError) as exc:
         receipt["error"] = str(exc)
