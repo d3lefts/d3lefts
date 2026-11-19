@@ -139,4 +139,57 @@ theorem deterministicMapWeights_sum_one
           (Fintype.prod_sum (fun a (u : U) => kernel a u)).symm
     _ = 1 := by simp [hk]
 
+
+/-- Marginal reconstruction for the weighted deterministic-map
+representation. Choosing a finite random function before observing
+the input reproduces the original kernel at every input atom. -/
+theorem deterministicMapWeights_marginal
+    {A U : Type*} [Fintype A] [Fintype U]
+    (kernel : A → U → ℝ)
+    (hk : ∀ a, (∑ u : U, kernel a u) = 1)
+    (a : A) (u : U) :
+    (∑ seed : A → U,
+      if seed a = u then deterministicMapWeight kernel seed else 0) =
+      kernel a u := by
+  classical
+  let F : A → U → ℝ := fun b v =>
+    if b = a then (if v = u then kernel b v else 0) else kernel b v
+  have hseed (seed : A → U) :
+      (∏ b : A, F b (seed b)) =
+        (if seed a = u then deterministicMapWeight kernel seed else 0) := by
+    by_cases h : seed a = u
+    · simp only [if_pos h]
+      unfold deterministicMapWeight
+      apply Finset.prod_congr rfl
+      intro b hb
+      by_cases he : b = a
+      · subst b
+        simp [F, h]
+      · simp [F, he]
+    · have hz : F a (seed a) = 0 := by simp [F, h]
+      have hp : (∏ b : A, F b (seed b)) = 0 :=
+        Finset.prod_eq_zero (Finset.mem_univ a) hz
+      simp [h, hp]
+  have hrow (b : A) :
+      (∑ v : U, F b v) =
+        (if b = a then kernel a u else 1) := by
+    by_cases he : b = a
+    · subst b
+      simp [F]
+    · simp [F, he, hk b]
+  calc
+    (∑ seed : A → U,
+      if seed a = u then deterministicMapWeight kernel seed else 0) =
+        ∑ seed : A → U, ∏ b : A, F b (seed b) := by
+          apply Finset.sum_congr rfl
+          intro seed hs
+          exact (hseed seed).symm
+    _ = ∏ b : A, ∑ v : U, F b v :=
+      (Fintype.prod_sum F).symm
+    _ = ∏ b : A, if b = a then kernel a u else 1 :=
+      Finset.prod_congr rfl (fun b hb => hrow b)
+    _ = kernel a u := by
+      simp
+
+
 end Nightfall.StrongSimulation.SeedFixing
