@@ -81,6 +81,25 @@ jobs:
             --decl Nightfall.LatinSquare.latin_iff_ordered_one_factorization \
             --json-out lean-receipts/latin/representation-bridge.json 2>&1 | tee lean-receipts/latin/representation-bridge.log
           sha256sum Nightfall/LatinSquare/Representation.lean >> lean-receipts/latin/source-sha256.txt
+      - name: Exact finite TV-killing and cumulative survival Lean certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake env lean Nightfall/LatinSquare/IncidenceCoupling.lean 2>&1 | tee lean-receipts/latin/incidence-coupling.log
+          python3 scripts/lean_bridge.py Nightfall/LatinSquare/IncidenceCoupling.lean \
+            --strict --timeout 600 \
+            --allow-axiom propext \
+            --allow-axiom Classical.choice \
+            --allow-axiom Quot.sound \
+            --decl Nightfall.LatinSquare.min_as_half_sum_sub_abs \
+            --decl Nightfall.LatinSquare.overlapMass_eq_one_sub_tv \
+            --decl Nightfall.LatinSquare.killedMass_eq_totalVariation \
+            --decl Nightfall.LatinSquare.overlap_dominated \
+            --decl Nightfall.LatinSquare.capped_density_eq_overlap \
+            --decl Nightfall.LatinSquare.sequential_survival_budget \
+            --decl Nightfall.LatinSquare.retained_mass_three_quarters \
+            --json-out lean-receipts/latin/incidence-coupling-bridge.json 2>&1 | tee lean-receipts/latin/incidence-coupling-bridge.log
+          sha256sum Nightfall/LatinSquare/IncidenceCoupling.lean >> lean-receipts/latin/source-sha256.txt
       - name: Independent exact combinatorial incidence audit (n=1..5)
         shell: bash
         run: |
