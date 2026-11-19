@@ -26,6 +26,8 @@ TARGETS = [
     "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_ae",
     "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional",
     "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance",
+    "Nightfall.InfinitePiQ2HoeffdingDegree.hoeffdingDegreeLeTwo_tripleResidualZero",
+    "Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding",
 ]
 
 
