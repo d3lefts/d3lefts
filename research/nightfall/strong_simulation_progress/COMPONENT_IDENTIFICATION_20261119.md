@@ -15,7 +15,8 @@ Date: 2026-11-19.
     `prod_one_sub_le_exp` and `hellinger_K_le`.
   - Step 2 (Bernstein) enters as the explicit hypothesis `hBern`.
   - `mean_near` assumes u ∈ [0,1]. The audit's u ∈ [−ε, 1+ε] variant is not yet covered; clipping the
-    centres reduces to it.
+    centres to [0,1] reduces to it. Failure sets only shrink, but the separation |u − v| can drop by up
+    to 2ε.
   - Not yet reviewed by a person.
 - **Theorem 2:** a conditional composition. It takes strong per-component product simulation as a black
   box.
