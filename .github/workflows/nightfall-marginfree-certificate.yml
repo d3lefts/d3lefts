@@ -1,0 +1,53 @@
+name: NIGHTFALL margin-free finite Lean certificate (pinned)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/ComponentIdentification.lean'
+      - 'research/nightfall/formalization/product_space/MarginFreeCertificate.lean'
+      - '.github/workflows/nightfall-marginfree-certificate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  marginfree-finite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel-compile exact-head source and print dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/ComponentIdentification.lean /tmp/mathlib4/ComponentIdentification.lean
+          cp research/nightfall/formalization/product_space/MarginFreeCertificate.lean /tmp/mathlib4/MarginFreeCertificate.lean
+          cd /tmp/mathlib4
+          lake env lean -o .lake/build/lib/lean/ComponentIdentification.olean ComponentIdentification.lean 2>&1 | tee /tmp/finite-core.log
+          lake env lean -o .lake/build/lib/lean/MarginFreeCertificate.olean MarginFreeCertificate.lean 2>&1 | tee /tmp/marginfree.log
+          if grep -E '(error:|declaration uses .sorry)' /tmp/finite-core.log /tmp/marginfree.log; then exit 1; fi
+          cat > PrintMarginFreeAxioms.lean <<'LEAN'
+          import MarginFreeCertificate
+          #print axioms Nightfall.MarginFreeCertificate.weighted_overlap
+          #print axioms Nightfall.MarginFreeCertificate.rounding_mass_balance
+          #print axioms Nightfall.MarginFreeCertificate.rounding_mass_bound
+          #print axioms Nightfall.MarginFreeCertificate.rounding_conditional_mismatch
+          #print axioms Nightfall.MarginFreeCertificate.tournament_budget
+          LEAN
+          sed -i 's/^          //' PrintMarginFreeAxioms.lean
+          lake env lean PrintMarginFreeAxioms.lean 2>&1 | tee /tmp/axioms.txt
+          if grep -E '(error:|sorryAx)' /tmp/axioms.txt; then exit 1; fi
+          sha256sum MarginFreeCertificate.lean | tee /tmp/source-hash.txt
+      - name: Save exact compiler receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: marginfree-finite-certificate
+          path: |
+            /tmp/finite-core.log
+            /tmp/marginfree.log
+            /tmp/axioms.txt
+            /tmp/source-hash.txt
+          retention-days: 60
+          if-no-files-found: warn
