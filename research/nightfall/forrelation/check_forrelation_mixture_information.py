@@ -9,7 +9,7 @@ function is enumerated directly. No random sampling or third-party packages.
 
 from fractions import Fraction
 from itertools import product
-from math import cos, exp, isclose, log, pi, sin, sqrt
+from math import exp, isclose, log, pi, sqrt
 
 TOL = 2e-12
 
@@ -40,9 +40,13 @@ def entropy(dist):
 def n2_exact_gaussian_sign_distribution():
     h = hadamard(2)
     counts = {}
-    for k in range(8):
-        phi = (k + Fraction(1, 2)) * pi / 4
-        z = (cos(phi), sin(phi))
+    # Four lines x=0, y=0, x+y=0, x−y=0 divide the plane into
+    # eight sectors of angular width exactly π/4. These integer vectors
+    # lie strictly in the sectors in counterclockwise order, so the sign
+    # patterns are computed using exact integer arithmetic (no trig).
+    sector_reps = ((2, 1), (1, 2), (-1, 2), (-2, 1),
+                   (-2, -1), (-1, -2), (1, -2), (2, -1))
+    for z in sector_reps:
         f = tuple(1 if v > 0 else -1 for v in z)
         g = tuple(1 if sum(h[j][i] * z[i] for i in range(2)) > 0 else -1 for j in range(2))
         key = f, g
