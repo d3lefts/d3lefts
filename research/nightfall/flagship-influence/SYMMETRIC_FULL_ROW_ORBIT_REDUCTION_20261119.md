@@ -52,6 +52,25 @@ No distribution is used in the row LP. Under iid Bernoulli(p) source, independen
 
 At p=1/2, M=(1/4) E_{Bin(n-1,1/2)}[(Δh)^2]. For any nonconstant h, the candidate sharp row inequality is K²M/V²>=4; ***this remains unproved*** even for all symmetric profiles.
 
+## General orbit-density mechanism (author proof, conditional structural class)
+
+The symmetric theorem is a corollary of a more general *maximal-edge multiplicity* certificate for arbitrary real functions on the binary cube with any independent product source (including heterogeneous biases).
+
+Define D=max_{x,i}|f(x)-f(x^i)|. If D=0, f is constant. Suppose at some vertex x at least m>=1 distinct coordinates i attain the *global* maximal edge increment D. Every full fractional row at x must assign each such coordinate >=D, so K>=mD. For original-law independent binary marginals,
+
+    I_i = p_i(1-p_i) E[(f(X_{-i},1)-f(X_{-i},0))²]
+        <= D²/4 <= K²/(4m²).
+
+Ordinary Efron–Stein yields V<=sum_i I_i<=nM. Consequently
+
+    V² <= (n/(2m))² K² M.
+
+For any family with m>=rho*n for a fixed rho>0, this is a dimension-free all-degree exponent-two bound with c=4*rho². Symmetric h(|x|) has m>=max(n-k,k+1)>=(n+1)/2 for an edge attaining D, recovering c=(n+1)²/n².
+
+**Scope and proof-attack:** This is useful only when maximal edges have a large common-vertex orbit. A dictator has m=1 and n arbitrarily large despite satisfying the sharp row inequality by a different (direct-sum) argument. A universal conclusion cannot follow by assuming a dimension-free rho. The natural next operator is a decomposition of f into orbit-dense components and low-dimensional direct-sum components *without losing the row K budget*. This is a proposed generalization target, not an established universal decomposition theorem.
+
+---
+
 ## Search and independently certified finite evidence
 
 Run `python3 row_symmetric_operator.py` (numpy/scipy) for numerical stress and `python3 check_symmetric_row_exact.py` (numpy/scipy for candidate generation, `fractions.Fraction` for acceptance). Numeric solver values alone are **never accepted** for the rational certificate:
