@@ -53,7 +53,14 @@ def main():
             count = 0
             for forbidden in boards(n,r):
                 allowed = tuple(((1 << n)-1) ^ row for row in forbidden)
-                p = Fraction(permanent(allowed), factorial(n))
+                w = permanent(allowed)
+                d = n-r
+                # Fully exact integer checks of both classical inequalities.
+                # van der Waerden lower: permanent(A) >= n! * (d/n)^n
+                # Bregman upper: permanent(A)^d <= (d!)^n.
+                assert w * n**n >= factorial(n) * d**n, (n,r,forbidden)
+                assert w**d <= factorial(d)**n, (n,r,forbidden)
+                p = Fraction(w, factorial(n))
                 rooks = rook_numbers(forbidden)
                 terms = [Fraction((-1)**k * rooks[k] * factorial(n-k), factorial(n))
                          for k in range(n+1)]
@@ -68,7 +75,7 @@ def main():
                 count += 1
             print(f'FIXED_DEFECT n={n} r={r} boards={count}')
     assert cases == 2292, cases
-    print('FIXED_DEFECT_BONFERRONI_EXACT_PASS: 2292 cases')
+    print('FIXED_DEFECT_BONFERRONI_EXACT_PASS: 2292 cases; Bregman and van der Waerden integer checks pass')
 
 if __name__ == '__main__':
     main()
