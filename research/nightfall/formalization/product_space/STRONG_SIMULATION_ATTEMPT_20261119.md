@@ -100,3 +100,42 @@ Stopped at the planned checkpoint: §1 proved on paper, §2 barrier with explici
 check, §3 open. Next gates if pursued: second reader for §1–2; decide whether to formalize §1 (small:
 reuses `ProductSimulation` with a new stopping rule) and whether the tail-aware potential is worth a
 second budget.
+
+## 4. Priority correction: BBBV hybrid + Talagrand is already BDST
+
+**Strong prior art:** Blanc–Docter–Strassle–Tan, *Quantum Speedups Require Structure or Depth*, arXiv:2608.19158, submitted 2026-08-19, https://arxiv.org/html/2608.19158v1 . Corollary 6.4 explicitly proves input-dependent weighted Talagrand concentration; Lemma 4.5 bounds individual future-round query weights from previous-round weights, Section 7 develops higher-order hitting-set machinery, and Lemma 10.1 implements greedy restrictions with estimated average query weights. Therefore the proposed hybrid-plus-Talagrand and average-to-pointwise regularity approach **already exists**. Their results leave the strong unrestricted sequential-round Conjecture 2 open.
+
+**Every-input median lemma: recovered known consequence, not novel.** Let a normalized T-query algorithm have acceptance f and query weights W_i(x)>=0 with sum_i W_i(x)=T. BBBV hybrid plus an acceptance measurement gives
+
+    |f(x)-f(y)| <= 4 sqrt(T * sum_{i:x_i!=y_i} W_i(x)).
+
+For any finite product law (including biased and zero-mass atoms), any median m of f, and B>0, an x with f(x)>=m+u and sum_i W_i(x)^2<=B must have weighted distance from A={y:f(y)<=m} at least u²/(16T). Choose a Talagrand witness a_i=W_i(x)/sqrt(sum_i W_i(x)^2). This yields convex distance d_Tal(x,A)>=u²/(16T sqrt(B)). As mu(A)>=1/2, Talagrand's convex distance inequality implies
+
+    mu{f(X)>=m+u AND sum_i W_i(X)^2<=B}
+        <= 2 exp(-u^4/(1024 T^2 B)).
+
+Likewise for the lower tail. If max_i W_i(x)<=w at every input, then B=Tw and
+
+    mu{|f(X)-m|>=u} <= 4 exp(-u^4/(1024 T^3 w)).
+
+More generally add mu{sum_i W_i(X)^2>B} if the cap is only typical. This derives precisely the suggested exp[-u^4/(C T^3 w)] scale, and shows it is already implicit in BDST Corollary 6.4. This is paper reasoning, not Lean certification. Full Conjecture 2 requires controlling the exceptional high-weight set from max_i E W_i alone with a polynomial in T and log(1/delta), without BDST's exponential losses in the number of adaptive rounds.
+
+## 5. Exact falsification: one-step expected tail-mass contraction fails
+
+Section 3's previously proposed tail-decrement condition is **FALSE**. Let f=AND_k of k independent fair bits for any k>=4. Fix epsilon=1/4, and set q_rho=Pr(|f-E[f|rho]|>epsilon | rho). At the root
+
+    q_empty=2^(-k).
+
+For every unqueried bit i, its zero branch makes f identically zero, hence q_{i=0}=0. Its one branch has a rare AND_(k-1) event with probability 2^(-(k-1))<=1/8<epsilon, so q_{i=1}=2^(-(k-1)). Consequently,
+
+    E_{y_i} q_{y_i} = (0+2^(-(k-1)))/2 = q_empty,
+
+even though q_empty>delta for any 0<delta<2^(-k). Thus max_i (q_empty-E q_after_i)=0, contradicting every proposed positive fractional one-step decrement.
+
+**Independent exact checker:** Python itertools.product and fractions.Fraction enumerated all 64 inputs for k=6, epsilon=1/4 and delta=1/256. For all six i: q_root=1/64, q_{i=0}=0, q_{i=1}=1/32 and E q_after=1/64. No floating-point assumptions.
+
+**General mechanism:** for f=1_E with conditional event probability p_rho<=epsilon<1/2, the conditional tail mass equals p_rho. If that remains true after revealing either value of a coordinate, then E q_child=q_rho exactly by the tower property. Therefore q itself is a martingale until the event is no longer rare. The claim in Section 3 that querying an AND-defining coordinate 'halves' rare-event mass neglects the one branch, where conditional mass doubles; it does NOT decrease in expectation. Demote that fallback potential unless replaced by a multi-step or nonlinear information witness.
+
+## 6. Novelty and stop rule
+
+BDST already contains the candidate concentration and average-query-weight restriction techniques. Do not claim them as NIGHTFALL discoveries. Only a structurally new way around the exponential adaptive-round loss in BDST Lemma 4.5 (or independently verified genuinely new mechanism) would be progress toward their full Conjecture 2. Require explicit assumptions, a decisive AND/address-function test, and external prior-art comparison before new claims.
