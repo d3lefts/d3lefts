@@ -152,7 +152,6 @@ theorem softKernelMass_balance
           apply Finset.sum_congr rfl
           intro z hz
           field_simp [ha, hden z]
-          ring
     _ = (w / a) * ∑ z, r z * (a / (t z + a)) := by
           rw [Finset.mul_sum]
 
@@ -177,7 +176,6 @@ theorem scaledKernelMass_balance
   unfold scaledReverseKernelMass
   have hcoeff : w / (H / m) = (w / H) * m := by
     field_simp [hH, hm]
-    ring
   rw [hcoeff]
   ring
 
