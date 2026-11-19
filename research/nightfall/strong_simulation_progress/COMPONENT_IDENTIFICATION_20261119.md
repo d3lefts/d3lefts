@@ -1,6 +1,6 @@
 # Component identification for product laws, and strong simulation over M-mixtures
 
-> **2026-11-19 independent audit:** The component lemma and strong-product transfer are provisional paper arguments, not Lean-certified or peer-reviewed results. See [INDEPENDENT_AUDIT_20261119.md](INDEPENDENT_AUDIT_20261119.md). The previous strong-product proof below has been sharpened to make the threshold polynomial and the encoding-length fixed point explicit. The general polynomial-in-1/δ mixture theorem in the earlier preprint remains a separate, certified result even if this bounded-round improvement ultimately fails.
+> **2026-11-19 independent audit:** The component lemma and strong-product transfer are provisional paper arguments, not Lean-certified or peer-reviewed results. See [INDEPENDENT_AUDIT_20261119.md](INDEPENDENT_AUDIT_20261119.md) and the follow-on [STRONG_TRANSFER_CLOSURE_20261119.md](STRONG_TRANSFER_CLOSURE_20261119.md), which gives a paper-level explicit block-length bound and weighted transcript-duel calculation. The previous strong-product proof below has been sharpened to make the threshold polynomial and the encoding-length fixed point explicit. The general polynomial-in-1/δ mixture theorem in the earlier preprint remains a separate, certified result even if this bounded-round improvement ultimately fails.
 
 Date: 2026-11-19.
 
@@ -179,7 +179,7 @@ Such an integer **exists** because, for fixed d and fixed other parameters, the 
 
    Invoke this lemma with internal ε/2 and η=desiredFailure/4 to obtain ε-accurate per-component trees.
 
-**Remaining proof obligations.** Prove the exact binomial polynomial tail bounds (including boundary conventions), supply a quantitative fixed-point bound for m, verify the coherent finite-alphabet oracle translation, and complete weighted conditional pairwise-tournament accounting. An unreviewed paper construction is not a Lean certificate.
+**Follow-on paper proof and remaining gates.** [STRONG_TRANSFER_CLOSURE_20261119.md](STRONG_TRANSFER_CLOSURE_20261119.md) supplies an explicit m satisfying the fixed-point inequality and a transcript-weighted Bayes-risk proof of the mixture tournament, including the unequal-transcript-prior case. These derivations are still author-side: recheck the binomial threshold boundaries, match the exact BDST query model/constants, audit the finite-alphabet coherent oracle pullback, obtain a separate independent review, and formalize analytic dependencies. An unreviewed paper argument is not a Lean certificate.
 
 ## Theorem 2, instantiated (paper level)
 
@@ -191,7 +191,7 @@ Inputs: d-round, t-query algorithms, and M-mixtures of margin-c products over fi
 
       M·2^{O(d²)}·(t·log(M/(εδc))/ε)^{O(d)} + M²·O(t²·log(M/(εδ))/(ε²c²)).
 
-**Provisional:** the proposed bound has polylog(1/δ) dependence for fixed d, but its final asymptotic form requires the quantitative encoding-length fixed-point proof and the weighted conditional-tournament lemma.
+**Provisional:** a complete paper-level route to the polylog(1/δ) bound for fixed d is now recorded, including an explicit encoding-length estimate and a weighted conditional-tournament argument in [STRONG_TRANSFER_CLOSURE_20261119.md](STRONG_TRANSFER_CLOSURE_20261119.md). The end-to-end theorem has not been kernel checked or reviewed by an independent person.
 
 **Prior art.**
 
@@ -205,10 +205,7 @@ Inputs: d-round, t-query algorithms, and M-mixtures of margin-c products over fi
 ## What remains
 
 1. **Prior-art check.** Initial comparison covers BDST Theorem 1 and GMNR Proposition 3.6/Remark 3.5; specialist novelty review remains open.
-2. **Finish the product black box.** Complete the explicit fixed-point inequality, coherent alphabet reduction and event-polynomial tails; see the independent audit.
-3. **Lean.**
-   - Steps 3–5 are finite combinatorics and fit the existing posterior and TV infrastructure.
-   - Step 2 needs Bernstein's inequality for real polynomials, which is probably not in Mathlib. The plan
-     is to state it as a named hypothesis first and discharge it later.
+2. **Audit the product black box.** The fixed-point inequality now has an explicit author-side proof; verify it independently against the exact BDST constants, the coherent alphabet reduction and the binomial event-polynomial tails.
+3. **Lean.** Steps 3–5 finite scalar core have passed pinned Lean 4.36.0-rc2 with standard axioms, workflow run 44487229739. The real-polynomial Bernstein interpolation and actual product-law tensorization remain separate, explicit formalization obligations.
 4. **Margin.** Remove or soften the dependence on 1/c, e.g. with a Hellinger (√p) reparametrisation of
    the segment in Step 2. This is the sparse regime, item 2 of the plan.
