@@ -112,6 +112,20 @@ theorem acceptance_eq_pathBorn {T : ℕ}
   · have hf : accept k = false := Bool.eq_false_of_ne_true hk
     simp [QuantumPath.amplitudeRe, acceptedRe, acceptedIm, hf]
 
+/-- The key missing quantum-to-polynomial theorem, stated on the circuit's
+    actual complex matrix-entry execution semantics; no degree hypothesis. -/
+theorem acceptance_degree (p : ι → α → ℝ)
+    (hp1 : ∀ i, ∑ a, p i a = 1) (T : ℕ)
+    (c : QuantumCircuitPaths.Circuit ι α κ T)
+    (accept : κ → Bool) :
+    RowBound.HasProdDegreeLE (acceptanceProbability c accept) (2 * T) := by
+  have heq : acceptanceProbability c accept =
+      QuantumPath.pathBorn T (acceptedRe c accept) (acceptedIm c accept) :=
+    funext (acceptance_eq_pathBorn c accept)
+  rw [heq]
+  exact QuantumPath.pathBorn_degree p hp1 T
+    (acceptedRe c accept) (acceptedIm c accept)
+
 /-- Direct uniform classical simulation for finite matrix-oracle circuits.
     T counts oracle calls; the circuit acceptance probability is calculated
     from its complex execution semantics, not postulated to have degree ≤2T.
