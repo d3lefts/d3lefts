@@ -77,7 +77,7 @@ theorem rounding_mass_balance {α : Type*} [DecidableEq α]
     ring
   have hsplit : (∑ i ∈ s.erase anchor, (q i - p i)) +
       (q anchor - p anchor) = ∑ i ∈ s, (q i - p i) := by
-    exact Finset.sum_erase_add s ha
+    exact Finset.sum_erase_add s (fun i => q i - p i) ha
   linarith
 
 /-- Exact finite-dimensional rounding displacement, with no positivity floor
