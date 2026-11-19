@@ -1,4 +1,4 @@
-import MixtureSimulation
+import QuantumMixtureSimulation
 
 /-!
 # NIGHTFALL: total-variation stability of the Jensen mixture simulator
@@ -41,7 +41,7 @@ theorem mixMass_sum_one (P : Θ → ι → α → ℝ) (w : Θ → ℝ)
   calc
     (∑ θ : Θ, ∑ x : ι → α, w θ * Transfer.prodMass (P θ) x) =
       ∑ θ : Θ, w θ * ∑ x : ι → α, Transfer.prodMass (P θ) x := by
-        exact Finset.sum_congr rfl fun θ _ => (Finset.mul_sum).symm
+        exact Finset.sum_congr rfl fun θ _ => by rw [Finset.mul_sum]
     _ = ∑ θ : Θ, w θ := by
       apply Finset.sum_congr rfl
       intro θ _
@@ -164,8 +164,52 @@ theorem approximate_mixture_simulation_jensen [Nonempty α]
   rw [← Ex_eq_mass_sum] at ht
   linarith
 
+/-- Source-exact TV transfer of the merged normalized quantum-circuit/Jensen
+mixture theorem (#877). Unlike the exact mixture theorem, the target q may be
+correlated. No new degree, runtime, or oracle-semantics assumption is hidden:
+the same deterministic tree and depth n incur at most additive TV η. -/
+theorem quantum_circuit_tv_mixture_jensen {κ : Type}
+    [Nonempty α] [Nonempty Θ] [Fintype κ]
+    (P : Θ → ι → α → ℝ)
+    (hP0 : ∀ θ i a, 0 ≤ P θ i a)
+    (hP1 : ∀ θ i, ∑ a, P θ i a = 1)
+    (w : Θ → ℝ) (hw0 : ∀ θ, 0 ≤ w θ)
+    (hw1 : ∑ θ, w θ = 1)
+    (q : (ι → α) → ℝ)
+    (hq0 : ∀ x, 0 ≤ q x)
+    (hq1 : ∑ x, q x = 1)
+    (η : ℝ) (hη : 0 ≤ η)
+    (hTV : tvPositive q (mixMass P w) ≤ η)
+    (T : ℕ) (hT : 1 ≤ T)
+    (c : QuantumCircuitPaths.Circuit ι α κ T)
+    (hc : QuantumCircuitNormalization.WellFormed c)
+    (accept : κ → Bool)
+    (τ : ℝ) (hτ : 0 < τ) (hτ2 : τ ≤ 1 / 2)
+    (ε : ℝ) (hε : 0 < ε)
+    (n : ℕ) (hn : 0 < n) :
+    ∃ t : Simulation.DTree ι α, (∀ x, t.queries x ≤ n) ∧
+      (∑ x : ι → α, q x *
+        (if ε < |QuantumCircuitSimulation.acceptanceProbability c accept x - t.eval x|
+         then (1 : ℝ) else 0)) ≤
+      (3 * Real.sqrt 2 * Real.pi ^ 6 * ((2 * T : ℕ) : ℝ) ^ 6 *
+           Fintype.card Θ / (τ * Real.sqrt τ) +
+        512 * ((2 * T : ℕ) : ℝ) ^ 4 *
+           (Fintype.card Θ : ℝ) ^ 4 / τ ^ 3) / n + τ / ε ^ 2 + η := by
+  classical
+  obtain ⟨t, ht, herr⟩ :=
+    QuantumMixtureSimulation.unitary_circuit_mixture_simulation_jensen
+      P hP0 hP1 w hw0 hw1 T hT c hc accept τ hτ hτ2 ε hε n hn
+  refine ⟨t, ht, ?_⟩
+  have htransfer := tv_event_transfer q (mixMass P w) η hTV
+    (fun x => ε < |QuantumCircuitSimulation.acceptanceProbability c accept x -
+      t.eval x|)
+  rw [← Ex_eq_mass_sum] at htransfer
+  linarith
+
 end Nightfall.ProductSpace.ApproximateMixture
 
 #print axioms Nightfall.ProductSpace.ApproximateMixture.two_tvPositive_eq_l1
 #print axioms Nightfall.ProductSpace.ApproximateMixture.tv_event_transfer
 #print axioms Nightfall.ProductSpace.ApproximateMixture.approximate_mixture_simulation_jensen
+
+#print axioms Nightfall.ProductSpace.ApproximateMixture.quantum_circuit_tv_mixture_jensen
