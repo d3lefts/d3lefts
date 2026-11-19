@@ -11,6 +11,7 @@ namespace Nightfall.ProductSpace.LatentComponent
 
 open Finset
 open Nightfall.ProductSpace.Transfer
+open Nightfall.ProductSpace.Influence
 open Nightfall.ProductSpace.RowBound
 open Nightfall.ProductSpace.Mixture
 
