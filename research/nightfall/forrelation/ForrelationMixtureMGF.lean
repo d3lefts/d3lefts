@@ -190,3 +190,70 @@ theorem latent_mixture_exp_certificate
             (fun f g => (Real.exp_pos (λ * S f g)).le) hmgf
 
 end Nightfall.Forrelation.Information
+
+namespace Nightfall.Forrelation.Information
+
+open Finset
+
+variable {Θ F G : Type*} [Fintype Θ] [Fintype F] [Fintype G]
+
+/-- **Abstract exponential lower bound on mixture size.**
+The only analytic hypothesis is the single-block MGF estimate
+at the discriminating scale λ = N*c; the rest is kernel-checked
+finite latent-mixture algebra and exponential Jensen. The theorem
+does not assume Gaussianity, Hadamard matrices or independent coordinates. -/
+theorem latent_exp_component_lower_bound
+    (w : Θ → ℝ) (a : Θ → F → ℝ) (b : Θ → G → ℝ)
+    (u : F → ℝ) (S : F → G → ℝ) (N c : ℝ)
+    (hN : 0 < N)
+    (hw : ∀ θ, 0 ≤ w θ)
+    (ha : ∀ θ f, 0 ≤ a θ f)
+    (hb : ∀ θ g, 0 ≤ b θ g)
+    (hw1 : (∑ θ : Θ, w θ) = 1)
+    (ha1 : ∀ θ, (∑ f : F, a θ f) = 1)
+    (hb1 : ∀ θ, (∑ g : G, b θ g) = 1)
+    (hmarg : ∀ f, (∑ θ : Θ, w θ * a θ f) = u f)
+    (hmean :
+      (∑ t : Θ × (F × G), latentJoint w a b t * S t.2.1 t.2.2) = c)
+    (hmgf : ∀ g, (∑ f : F, u f * Real.exp ((N * c) * S f g)) ≤
+      Real.exp (((N * c) ^ 2) / (2 * N))) :
+    Real.exp (N * c ^ 2 / 2) ≤ (Fintype.card Θ : ℝ) := by
+  have hbase := latent_mixture_exp_certificate w a b u S
+    (N * c) (((N * c) ^ 2) / (2 * N))
+    hw ha hb hw1 ha1 hb1 hmarg hmgf
+  have hweighted :
+      (∑ t : Θ × (F × G),
+        latentJoint w a b t * ((N * c) * S t.2.1 t.2.2)) = (N * c) * c := by
+    calc
+      _ = ∑ t : Θ × (F × G),
+          (N * c) * (latentJoint w a b t * S t.2.1 t.2.2) := by
+            apply Finset.sum_congr rfl
+            intro t _
+            ring
+      _ = (N * c) * (∑ t : Θ × (F × G),
+          latentJoint w a b t * S t.2.1 t.2.2) := by
+            rw [Finset.mul_sum]
+      _ = (N * c) * c := by rw [hmean]
+  rw [hweighted] at hbase
+  have hkappa : ((N * c) ^ 2) / (2 * N) = N * c ^ 2 / 2 := by
+    field_simp [hN.ne']
+    ring
+  rw [hkappa] at hbase
+  have hbound : Real.exp (N * c ^ 2) ≤
+      (Fintype.card Θ : ℝ) * Real.exp (N * c ^ 2 / 2) := by
+    convert hbase using 1
+    congr 1
+    ring
+  have hratio :
+      Real.exp (N * c ^ 2) / Real.exp (N * c ^ 2 / 2) ≤
+        (Fintype.card Θ : ℝ) :=
+    (div_le_iff₀ (Real.exp_pos _)).mpr hbound
+  calc
+    Real.exp (N * c ^ 2 / 2) =
+        Real.exp (N * c ^ 2) / Real.exp (N * c ^ 2 / 2) := by
+          rw [← Real.exp_sub]
+          congr 1
+          ring
+    _ ≤ _ := hratio
+
+end Nightfall.Forrelation.Information
