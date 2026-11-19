@@ -1,0 +1,16 @@
+depth gaps vs OPT(delta/2), worst-case depth
+  esc: mean 0.297  max 5  hist {-2: 1, 0: 555, 1: 125, 2: 31, 3: 4, 4: 3, 5: 1}
+  bad: mean 0.269  max 5  hist {0: 578, 1: 102, 2: 31, 3: 7, 4: 1, 5: 1}
+  inf: mean 0.406  max 5  hist {-2: 1, 0: 510, 1: 147, 2: 46, 3: 11, 4: 3, 5: 2}
+  var: mean 0.583  max 5  hist {-2: 1, 0: 451, 1: 150, 2: 87, 3: 27, 4: 3, 5: 1}
+  red: mean -0.914  max 3  hist {-7: 4, -6: 26, -5: 35, -4: 63, -3: 40, -2: 33, -1: 22, 0: 381, 1: 77, 2: 33, 3: 6}
+
+largest losses of 'esc' to the best other rule:
+  +3 s0t74 rare mixture M=2 eps=0.1 delta=0.005 opt=3 esc=6 bad=6 inf=3 var=3 red=3
+  +3 s0t74 rare mixture M=2 eps=0.1 delta=0.0005 opt=3 esc=6 bad=6 inf=3 var=3 red=3
+  +2 s0t36 rare product eps=0.1 delta=0.05 opt=2 esc=4 bad=4 inf=2 var=2 red=1
+  +2 s0t67 poly3 mixture M=3 eps=0.1 delta=0.05 opt=6 esc=8 bad=7 inf=7 var=6 red=6
+  +2 s0t67 poly3 mixture M=3 eps=0.1 delta=0.005 opt=6 esc=8 bad=7 inf=7 var=6 red=6
+  +2 s0t67 poly3 mixture M=3 eps=0.1 delta=0.0005 opt=6 esc=8 bad=7 inf=7 var=6 red=6
+  +2 s0t74 rare mixture M=2 eps=0.1 delta=0.05 opt=2 esc=5 bad=5 inf=3 var=3 red=3
+  +1 s0t13 poly3 product eps=0.1 delta=0.05 opt=4 esc=5 bad=4 inf=5 var=4 red=5
