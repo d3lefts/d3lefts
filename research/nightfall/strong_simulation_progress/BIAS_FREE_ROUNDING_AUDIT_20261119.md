@@ -89,6 +89,32 @@ with approximation error 5ε and total mixture failure δ. For fixed d and finit
 
 This statement is an **analytic conjectural composition**, not a proved/certified new headline theorem. It also requires checking posterior-dependent query overlaps and exact resource accounting. No external reviewer has examined it.
 
+## Frozen conditional tournament: explicit paper-level error accounting
+
+This spells out the mixture step that must not be hidden behind a conditional-failure bound.
+
+For each known component P_j obtain a **deterministic** product-law tree T_j with worst-case query depth D and global failure
+
+    E_j := Pr_{P_j}[|f−T_j|>ε] ≤ ρ.
+
+Run all M trees, fixing their *joint* transcript ℓ and outputs a_j(ℓ) clipped to [0,1]. Every as-yet-unqueried coordinate has its original product marginal under each component conditional on ℓ. For each unordered pair (j,k) with |a_j−a_k|≥4ε, choose a test coordinate set S_jk(ℓ) *before seeing any duel outcomes*, by the high-TV/low-TV rule in #894, with tail parameter ζ. Query the union of these coordinate sets, then evaluate the frozen likelihood-ratio tests using only their designated observations. This avoids conditioning later tests on earlier duel outcomes.
+
+Let α_j=P_j(ℓ), α_k=P_k(ℓ), and E_j(ℓ),E_k(ℓ) be the **unnormalized** contributions to their global failure events. In the high-TV regime, the Bhattacharyya affinity between the queried residual products is ≤ζ, and the **unnormalized, two-sided** likelihood-test error at ℓ is ≤ζ√(α_jα_k)≤ζ(α_j+α_k)/2. In the low-TV regime, the Markov stability lemma gives a conditional mean gap at most g/2, with g=|a_j−a_k|−2ε≥2ε, so the residual conditional failure probabilities obey r_j(ℓ,z)+r_k(ℓ,z)≥g/2≥ε for **every** assignment z to the high-TV set. Weighting by min(α_j p_j(z),α_k p_k(z)) and summing shows the leaf's two-sided error ≤(E_j(ℓ)+E_k(ℓ))/ε. Summing over disjoint joint transcripts yields
+
+    Pr_{P_j}[j loses duel vs k]
+       + Pr_{P_k}[k loses duel vs j]
+       ≤ ζ+(E_j+E_k)/ε ≤ ζ+2ρ/ε.
+
+For a true mixture component θ, if T_θ is accurate and θ wins every duel it enters, θ is undefeated. Every undefeated j then has |a_j−a_θ|<4ε, so its output is within 5ε of f. By the union bound, under any θ,
+
+    Pr[error] ≤ ρ+(M−1)(ζ+2ρ/ε).
+
+Take ζ=δ/(4M), ρ=εδ/(8M), with 0<ε≤1/4, 0<δ<1. The right side is <δ. At each transcript, the number of distinct queried coordinates is at most the sum over pairs, giving worst-case depth
+
+    M·D(t,d,ε,ρ,A) + binom(M,2) ceil(128 t⁴ ε^(−2) ln(4M/δ)).
+
+This *derives the exact conditional accounting on paper* provided (A) and the biased-product transfer are valid. It **does not certify** the external BDST composition, coherent-oracle implementation, quantitative m, or any Lean statement. Overlapping pair query sets may be reused; no saving is assumed in this bound.
+
 ## Proof obligations / falsification gates
 
 1. Independently construct and check the gap polynomial's binomial tail constants and endpoint conventions.
