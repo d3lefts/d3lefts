@@ -1,0 +1,42 @@
+name: NIGHTFALL real-row direct-sum rigidity exact audit
+
+on:
+  push:
+    branches:
+      - nightfall-real-row-direct-sum-rigidity-20261118
+    paths:
+      - 'research/nightfall/flagship-influence/check_row_direct_sum_rigidity_exact.py'
+      - 'research/nightfall/flagship-influence/ROW_DIRECT_SUM_RIGIDITY_20261118.md'
+      - '.github/workflows/nightfall-row-direct-sum-rigidity.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/flagship-influence/check_row_direct_sum_rigidity_exact.py'
+      - 'research/nightfall/flagship-influence/ROW_DIRECT_SUM_RIGIDITY_20261118.md'
+      - '.github/workflows/nightfall-row-direct-sum-rigidity.yml'
+  workflow_dispatch:
+
+jobs:
+  rational-scope-proof-attack:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact head and source sha256
+        run: |
+          git rev-parse HEAD | tee exact-head.txt
+          sha256sum research/nightfall/flagship-influence/check_row_direct_sum_rigidity_exact.py research/nightfall/flagship-influence/ROW_DIRECT_SUM_RIGIDITY_20261118.md | tee source-sha256.txt
+      - name: Independent true-product moments, optimal rows and categorical falsifier
+        run: |
+          set -o pipefail
+          python3 -I research/nightfall/flagship-influence/check_row_direct_sum_rigidity_exact.py | tee exact-rational-receipt.txt
+      - name: Archive exact source custody
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-row-direct-sum-rigidity-proof-attack
+          path: |
+            exact-head.txt
+            source-sha256.txt
+            exact-rational-receipt.txt
+          if-no-files-found: warn
