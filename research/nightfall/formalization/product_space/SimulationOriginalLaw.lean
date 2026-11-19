@@ -194,4 +194,42 @@ theorem totalDoubleInfluence_pin_expectation
     _ = totalDoubleInfluence p f - doubleInfluence p f j := by
           simpa only [totalDoubleInfluence] using hsplit (fun i => doubleInfluence p f i)
 
+
+/-- Nonnegative genuine product mass, even when some atoms vanish. -/
+theorem originalMass_nonneg (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a) (x : ι → α) :
+    0 ≤ originalMass p x := by
+  unfold originalMass
+  exact Finset.prod_nonneg (fun i _ => hp i (x i))
+
+/-- Every source resampling energy is nonnegative. -/
+theorem refreshEnergy_nonneg (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a)
+    (f : (ι → α) → ℝ) (i : ι) (x : ι → α) :
+    0 ≤ refreshEnergy p f i x := by
+  unfold refreshEnergy
+  apply Finset.sum_nonneg
+  intro y _
+  exact mul_nonneg (originalMass_nonneg p hp y) (sq_nonneg _)
+
+/-- The one-coordinate genuine resampling energy is nonnegative. -/
+theorem doubleInfluence_nonneg (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a)
+    (f : (ι → α) → ℝ) (i : ι) :
+    0 ≤ doubleInfluence p f i := by
+  unfold doubleInfluence
+  apply Finset.sum_nonneg
+  intro x _
+  exact mul_nonneg (originalMass_nonneg p hp x)
+    (refreshEnergy_nonneg p hp f i x)
+
+/-- The total resampling potential is nonnegative. -/
+theorem totalDoubleInfluence_nonneg (p : ι → α → ℝ)
+    (hp : ∀ i a, 0 ≤ p i a)
+    (f : (ι → α) → ℝ) :
+    0 ≤ totalDoubleInfluence p f := by
+  unfold totalDoubleInfluence
+  exact Finset.sum_nonneg (fun i _ => doubleInfluence_nonneg p hp f i)
+
+
 end Nightfall.QuerySimulation.OriginalLaw
