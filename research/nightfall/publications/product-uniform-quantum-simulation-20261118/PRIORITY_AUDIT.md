@@ -41,7 +41,7 @@ Review target HEAD: 771d11af21896aa83f481b332d21d7d706b56927.
 ProductSimulation.lean blob SHA-1: 20bd62a563266bebd59e84440567cf1a9090020e.
 Closure: 178 modules in research/nightfall/formalization/aa_product/CLOSURE.txt.
 Pin: Lean 4.36.0-rc2, Mathlib 9d581dfff2e41de989072ea63abf3daf69311520.
-Exact-head workflow: https://github.com/d3lefts/d3lefts/actions/runs/44433153026 — RUNNING at time of audit, NO claim of passing the source theorem until strict named-declaration audit and receipt upload complete.
+Exact-head workflow: https://github.com/d3lefts/d3lefts/actions/runs/44433153026 — COMPLETED SUCCESS at source SHA 771d11af21896aa83f481b332d21d7d706b56927. Its 178-module compile, named simulation_degree strict axiom audit, and source/compiler capture steps all succeeded. Immutable evidence: artifact aa-product-terminal-44433153026, artifact ID 14487982785 (16,255 bytes; https://github.com/d3lefts/d3lefts/actions/runs/44433153026/artifacts/14487982785). Allowed axioms: propext, Classical.choice, Quot.sound. This verifies the typed real-function theorem, not a quantum-circuit formalization.
 Earlier 203-module integrated Lake run 44413969643 passed on 0dbffc9, WITHOUT the new ProductSimulation module. It is not a substitute for the new simulator certificate.
 
 ## Cheapest decisive experiments and posting gate
