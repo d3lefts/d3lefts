@@ -1,0 +1,51 @@
+name: NIGHTFALL Forrelation finite mixture MGF Lean gate
+
+on:
+  push:
+    branches: [nightfall-forrelation-mgf-certificate-20261119]
+    paths:
+      - 'research/nightfall/forrelation/ForrelationMixtureMGF.lean'
+      - '.github/workflows/nightfall-forrelation-mgf-lean.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/forrelation/ForrelationMixtureMGF.lean'
+      - '.github/workflows/nightfall-forrelation-mgf-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  finite-mixture-information:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile finite mixture marginal and exponential Jensen operators
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/forrelation/ForrelationMixtureMGF.lean /tmp/mathlib4/ForrelationMixtureMGF.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ForrelationMixtureMGF.olean ForrelationMixtureMGF.lean)
+          cat > /tmp/mathlib4/ForrelationMixtureAudit.lean <<'LEAN'
+          import ForrelationMixtureMGF
+          #check @Nightfall.Forrelation.Information.weighted_component_le_marginal
+          #check @Nightfall.Forrelation.Information.mixture_kernel_domination
+          #check @Nightfall.Forrelation.Information.finite_exp_jensen
+          #print axioms Nightfall.Forrelation.Information.weighted_component_le_marginal
+          #print axioms Nightfall.Forrelation.Information.mixture_kernel_domination
+          #print axioms Nightfall.Forrelation.Information.finite_exp_jensen
+          LEAN
+          (cd /tmp/mathlib4 && lake env lean ForrelationMixtureAudit.lean) | tee forrelation-mgf-axioms.txt
+          ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' forrelation-mgf-axioms.txt
+          sha256sum research/nightfall/forrelation/ForrelationMixtureMGF.lean
+          git rev-parse HEAD
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: forrelation-mixture-finite-mgf-lean-${{ github.run_id }}
+          path: forrelation-mgf-axioms.txt
+          if-no-files-found: warn
