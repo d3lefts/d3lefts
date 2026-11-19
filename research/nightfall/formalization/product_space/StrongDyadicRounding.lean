@@ -76,6 +76,77 @@ theorem anchor_survives
     exact Finset.sum_le_sum (fun b _ => le_of_lt (increment_lt N hN (p b) (hp b)))
   linarith
 
+
+/-- Concrete one-sided grid-rounded mass table: all nonanchors are rounded
+up, and the anchor pays for their cumulative increments. -/
+noncomputable def roundedMass (N : ℕ) (p : α → ℝ) (a b : α) : ℝ :=
+  if b = a then
+    p a - ∑ c ∈ (Finset.univ.erase a), increment N (p c)
+  else upperGrid N (p b)
+
+theorem roundedMass_nonneg
+    (N : ℕ) (hN : 0 < N) (p : α → ℝ)
+    (hp : ∀ b, 0 ≤ p b) (a : α)
+    (hroom :
+      (∑ b ∈ (Finset.univ.erase a), (1 : ℝ) / (N : ℝ)) < p a)
+    (b : α) :
+    0 ≤ roundedMass N p a b := by
+  by_cases h : b = a
+  · subst b
+    simpa [roundedMass] using
+      (anchor_survives N hN p hp a hroom).le
+  · simp only [roundedMass, if_neg h]
+    exact (hp b).trans (upperGrid_ge N hN (p b))
+
+theorem roundedMass_support
+    (N : ℕ) (hN : 0 < N) (p : α → ℝ)
+    (hp : ∀ b, 0 ≤ p b) (a : α)
+    (hroom :
+      (∑ b ∈ (Finset.univ.erase a), (1 : ℝ) / (N : ℝ)) < p a)
+    (b : α) (hb : 0 < p b) :
+    0 < roundedMass N p a b := by
+  by_cases h : b = a
+  · subst b
+    simpa [roundedMass] using
+      anchor_survives N hN p hp a hroom
+  · simp only [roundedMass, if_neg h]
+    exact hb.trans_le (upperGrid_ge N hN (p b))
+
+/-- No probability mass is created or destroyed by rounding: the
+anchor debit exactly balances the non-anchor rounding increments. -/
+theorem roundedMass_sum (N : ℕ) (p : α → ℝ) (a : α) :
+    (∑ b : α, roundedMass N p a b) = ∑ b : α, p b := by
+  classical
+  let E : Finset α := Finset.univ.erase a
+  have hsplit (f : α → ℝ) :
+      (∑ b : α, f b) = (∑ b ∈ E, f b) + f a := by
+    simpa [E] using (Finset.sum_erase_add (Finset.mem_univ a) (f := f)).symm
+  have hE (b : α) (hb : b ∈ E) : b ≠ a :=
+    (Finset.mem_erase.mp hb).1
+  have hother :
+      (∑ b ∈ E, roundedMass N p a b) =
+        ∑ b ∈ E, upperGrid N (p b) := by
+    apply Finset.sum_congr rfl
+    intro b hb
+    simp [roundedMass, hE b hb]
+  have hinc :
+      (∑ b ∈ E, increment N (p b)) =
+        (∑ b ∈ E, upperGrid N (p b)) -
+          (∑ b ∈ E, p b) := by
+    simp_rw [increment]
+    rw [Finset.sum_sub_distrib]
+  calc
+    (∑ b : α, roundedMass N p a b) =
+        (∑ b ∈ E, roundedMass N p a b) + roundedMass N p a a := hsplit _
+    _ = (∑ b ∈ E, upperGrid N (p b)) +
+          (p a - ∑ b ∈ E, increment N (p b)) := by
+          rw [hother]
+          simp [roundedMass, E]
+    _ = (∑ b ∈ E, p b) + p a := by
+          rw [hinc]
+          ring
+    _ = ∑ b : α, p b := (hsplit p).symm
+
 end Nightfall.StrongDyadicRounding
 
 #print axioms Nightfall.StrongDyadicRounding.upperGrid_ge
@@ -83,3 +154,7 @@ end Nightfall.StrongDyadicRounding
 #print axioms Nightfall.StrongDyadicRounding.increment_nonneg
 #print axioms Nightfall.StrongDyadicRounding.increment_lt
 #print axioms Nightfall.StrongDyadicRounding.anchor_survives
+
+#print axioms Nightfall.StrongDyadicRounding.roundedMass_nonneg
+#print axioms Nightfall.StrongDyadicRounding.roundedMass_support
+#print axioms Nightfall.StrongDyadicRounding.roundedMass_sum
