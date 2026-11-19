@@ -141,12 +141,12 @@ theorem pair_error_budget
   have h := pair_error_budget_scaled err badP badQ affinity
     decisive small ε η hε hη hpos hzero hsmall hbig hbadP hbadQ haff
   have hnonzero : ε ≠ 0 := ne_of_gt hε
-  apply (le_div_iff₀ hε).2
   calc
-    (∑ l : Λ, err l) * ε = ε * (∑ l : Λ, err l) := by ring
-    _ ≤ η * (2 + ε) := h
-    _ = (η * (1 + 2 / ε)) * ε := by
-      field_simp
+    (∑ l : Λ, err l) ≤ η * (2 + ε) / ε := by
+      apply (le_div_iff₀ hε).2
+      nlinarith [h]
+    _ = η * (1 + 2 / ε) := by
+      field_simp [hnonzero]
       ring
 
 /-- Error bookkeeping for the event-polynomial rounding argument.
