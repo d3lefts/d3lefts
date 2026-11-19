@@ -1,0 +1,112 @@
+name: NIGHTFALL unitary quantum circuit to mixture simulation (pinned Lean)
+on:
+  push:
+    branches: [nightfall-unitary-circuit-mixture-terminal-20261118]
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumCircuitPaths.lean'
+      - 'research/nightfall/formalization/product_space/QuantumPathDegree.lean'
+      - 'research/nightfall/formalization/product_space/QuantumCircuitSimulation.lean'
+      - 'research/nightfall/formalization/product_space/QuantumCircuitNormalization.lean'
+      - 'research/nightfall/formalization/product_space/MixtureSimulation.lean'
+      - 'research/nightfall/formalization/product_space/QuantumCircuitMixtureSimulation.lean'
+      - '.github/workflows/nightfall-circuit-mixture-simulation.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumCircuitPaths.lean'
+      - 'research/nightfall/formalization/product_space/QuantumPathDegree.lean'
+      - 'research/nightfall/formalization/product_space/QuantumCircuitSimulation.lean'
+      - 'research/nightfall/formalization/product_space/MixtureSimulation.lean'
+      - 'research/nightfall/formalization/product_space/QuantumCircuitMixtureSimulation.lean'
+      - '.github/workflows/nightfall-circuit-mixture-simulation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  end-to-end-quantum-simulation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile frozen 178 module AA closure at one pinned compiler
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="${M//.//}"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/log-$M.txt")
+            if grep -q "declaration uses .sorry" "/tmp/log-$M.txt"; then echo "sorry in $M"; exit 1; fi
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Kernel-check mixed product source, circuit semantics and degree bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in MixtureSimulation QuantumCircuitPaths QuantumPathDegree QuantumCircuitNormalization QuantumCircuitSimulation QuantumCircuitMixtureSimulation; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "$GITHUB_WORKSPACE/quantum-$M-compile.log")
+            ! grep -E 'sorryAx|declaration uses .sorry|error:' "quantum-$M-compile.log"
+          done
+      - name: Strict named circuit-to-mixture declaration and axiom receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/circuit-mixture
+          python3 scripts/lean_bridge.py research/nightfall/formalization/product_space/QuantumCircuitMixtureSimulation.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "Nightfall.QuantumCircuitPaths.execute_eq_path_sum" \
+            --decl "Nightfall.ProductSpace.QuantumPath.pathBorn_degree" \
+            --decl "Nightfall.ProductSpace.QuantumPath.pathBorn_simulation" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitSimulation.acceptance_eq_pathBorn" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitSimulation.acceptance_degree" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitSimulation.circuit_uniform_simulation" \
+            --decl "Nightfall.QuantumCircuitNormalization.execute_energy_one" \
+            --decl "Nightfall.QuantumCircuitNormalization.probability_in_unit_interval" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitSimulation.unitary_circuit_uniform_simulation" \
+            --decl "Nightfall.ProductSpace.Mixture.mixture_simulation_jensen" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitMixtureSimulation.unitary_circuit_mixture_simulation_jensen" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitMixtureSimulation.unitary_circuit_mixture_simulation" \
+            --json-out lean-receipts/circuit-mixture/receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/circuit-mixture/receipt.json
+          cat >/tmp/mathlib4/QuantumSimulationAudit.lean <<'LEAN'
+          import QuantumCircuitMixtureSimulation
+          #check @Nightfall.QuantumCircuitPaths.execute_eq_path_sum
+          #check @Nightfall.ProductSpace.QuantumPath.pathBorn_degree
+          #check @Nightfall.ProductSpace.QuantumCircuitSimulation.acceptance_degree
+          #check @Nightfall.ProductSpace.QuantumCircuitSimulation.circuit_uniform_simulation
+          #check @Nightfall.QuantumCircuitNormalization.probability_in_unit_interval
+          #check @Nightfall.ProductSpace.QuantumCircuitSimulation.unitary_circuit_uniform_simulation
+          #print axioms Nightfall.QuantumCircuitPaths.execute_eq_path_sum
+          #print axioms Nightfall.ProductSpace.QuantumPath.pathBorn_degree
+          #print axioms Nightfall.ProductSpace.QuantumCircuitSimulation.acceptance_degree
+          #print axioms Nightfall.ProductSpace.QuantumCircuitSimulation.circuit_uniform_simulation
+          #print axioms Nightfall.QuantumCircuitNormalization.probability_in_unit_interval
+          #print axioms Nightfall.ProductSpace.QuantumCircuitSimulation.unitary_circuit_uniform_simulation
+          #check @Nightfall.ProductSpace.QuantumCircuitMixtureSimulation.unitary_circuit_mixture_simulation_jensen
+          #check @Nightfall.ProductSpace.QuantumCircuitMixtureSimulation.unitary_circuit_mixture_simulation
+          #print axioms Nightfall.ProductSpace.QuantumCircuitMixtureSimulation.unitary_circuit_mixture_simulation_jensen
+          #print axioms Nightfall.ProductSpace.QuantumCircuitMixtureSimulation.unitary_circuit_mixture_simulation
+          LEAN
+          (cd /tmp/mathlib4 && lake env lean QuantumSimulationAudit.lean) | tee lean-receipts/circuit-mixture/axioms.txt
+          ! grep -E 'sorryAx|unknown constant|error:' lean-receipts/circuit-mixture/axioms.txt
+      - name: Preserve exact sources and pinned compiler head
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/quantum-simulation
+          git rev-parse HEAD > lean-receipts/circuit-mixture/head
+          sha256sum research/nightfall/formalization/product_space/{QuantumCircuitPaths,QuantumCircuitSimulation,QuantumPathDegree,QuantumCircuitNormalization,QuantumCircuitMixtureSimulation,MixtureSimulation}.lean > lean-receipts/circuit-mixture/source-sha256
+          sha256sum research/nightfall/formalization/aa_product/CLOSURE.txt > lean-receipts/circuit-mixture/closure-sha256
+          cp /tmp/nightfall-lean-version.txt lean-receipts/circuit-mixture/lean-version.txt 2>/dev/null || true
+          cp quantum-*compile.log lean-receipts/circuit-mixture/ 2>/dev/null || true
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-circuit-mixture-${{ github.run_id }}
+          path: lean-receipts/quantum-simulation
+          if-no-files-found: warn
