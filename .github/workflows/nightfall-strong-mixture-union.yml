@@ -1,0 +1,34 @@
+name: NIGHTFALL strong mixture event-measure certificate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/StrongMixtureUnion.lean'
+      - '.github/workflows/nightfall-strong-mixture-union.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-event-union:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel check finite event and mixture-law composition
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/product_space/StrongMixtureUnion.lean
+          cp "$SRC" /tmp/mathlib4/StrongMixtureUnion.lean
+          cd /tmp/mathlib4
+          lake env lean -o .lake/build/lib/lean/StrongMixtureUnion.olean StrongMixtureUnion.lean 2>&1 | tee /tmp/union.log
+          if grep -q "error:\|declaration uses .sorry" /tmp/union.log; then exit 1; fi
+          printf '%s\n' 'import StrongMixtureUnion' \
+            '#print axioms Nightfall.StrongMixtureUnion.indicator_union_bound' \
+            '#print axioms Nightfall.StrongMixtureUnion.component_failure_le' \
+            '#print axioms Nightfall.StrongMixtureUnion.mixture_event_mass_eq' \
+            '#print axioms Nightfall.StrongMixtureUnion.mixture_event_mass_le' > UnionAxioms.lean
+          lake env lean UnionAxioms.lean | tee /tmp/union-axioms.txt
+          if grep -q "sorryAx" /tmp/union-axioms.txt; then exit 1; fi
