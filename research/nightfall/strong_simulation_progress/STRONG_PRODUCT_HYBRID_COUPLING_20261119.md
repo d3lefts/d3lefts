@@ -105,8 +105,11 @@ queried** by the simulator.
 
 Even if q_i(a)=0, symbols with p_i(a)>0 cannot have q_i(a)=0
 under the one-sided construction: all non-anchor atoms were rounded
-up, and the anchor is strictly positive for N large enough.
-Thus the conditional block sampler exists on the support of P.
+up. Moreover the anchor is strictly positive when N≥A(A−1):
+its rounding loss is strictly less than (A−1)/N≤1/A≤p_i(a_i).
+Thus Y is supported on symbols with q_i(a)>0, so the second-stage
+conditional distribution U_i|Y_i exists; sampling the composite
+U_i|X_i works on the entire support of P.
 
 ## Theorem P: strong product transfer without a margin
 
