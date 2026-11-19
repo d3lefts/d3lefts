@@ -62,6 +62,7 @@ theorem finiteTV_sq_le_one_sub_affinity_sq (p q : β → ℝ)
     simp_rw [hpt]
     simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.mul_sum, hp1, hq1]
     unfold finiteAffinity
+    rw [← Finset.sum_mul]
     ring
   have hB : B = 2 + 2 * finiteAffinity p q := by
     have hpt (z : β) : v z ^ 2 = p z + q z + 2 * Real.sqrt (p z) * Real.sqrt (q z) := by
@@ -73,6 +74,7 @@ theorem finiteTV_sq_le_one_sub_affinity_sq (p q : β → ℝ)
     simp_rw [hpt]
     simp only [Finset.sum_add_distrib, ← Finset.mul_sum, hp1, hq1]
     unfold finiteAffinity
+    rw [← Finset.sum_mul]
     ring
   dsimp [finiteTV]
   dsimp [S] at hpow'
