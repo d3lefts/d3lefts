@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeProductDisintegration.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeBoundedK.lean'
+      - 'research/nightfall/formalization/product_space/MarginFreeLikelihoodDecision.lean'
       - 'research/nightfall/formalization/product_space/PinnedConditionalStability.lean'
       - 'research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean'
       - 'research/nightfall/formalization/aa_product/CLOSURE_PINNED.txt'
@@ -43,7 +44,7 @@ jobs:
         run: |
           set -euo pipefail
           cd /tmp/mathlib4
-          for M in ComponentIdentification MarginFreeCertificate LatentProductInterpolationDegree MarginFreeFiniteTests MarginFreeBhattacharyya MarginFreeTVHellinger MarginFreeLargeGaps LatentComponentCertifiedCore PinnedConditionalStability MarginFreeIntegrated MarginFreeProductDisintegration MarginFreeBoundedK; do
+          for M in ComponentIdentification MarginFreeCertificate LatentProductInterpolationDegree MarginFreeFiniteTests MarginFreeBhattacharyya MarginFreeTVHellinger MarginFreeLargeGaps LatentComponentCertifiedCore PinnedConditionalStability MarginFreeIntegrated MarginFreeProductDisintegration MarginFreeBoundedK MarginFreeLikelihoodDecision; do
             cp "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/$M.lean" "$M.lean"
             lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "/tmp/$M.log"
             if grep -E 'error:|sorryAx|declaration uses .sorry' "/tmp/$M.log"; then exit 1; fi
@@ -52,6 +53,7 @@ jobs:
           import MarginFreeProductDisintegration
           import MarginFreeLargeGaps
           import MarginFreeBoundedK
+          import MarginFreeLikelihoodDecision
           #print axioms Nightfall.MarginFreeIntegrated.pinned_failure_mean_near
           #print axioms Nightfall.MarginFreeIntegrated.weighted_pinned_component_overlap
           #print axioms Nightfall.MarginFreeDisintegration.observed_then_pin_mass
@@ -62,6 +64,8 @@ jobs:
           #print axioms Nightfall.MarginFreeBoundedK.high_tv_observed_bayes_error
           #print axioms Nightfall.MarginFreeBoundedK.largeTVCoords_small_complement
           #print axioms Nightfall.MarginFreeBoundedK.bounded_K_component_overlap
+          #print axioms Nightfall.MarginFreeLikelihood.likelihood_two_sided_error_eq_overlap
+          #print axioms Nightfall.MarginFreeLikelihood.likelihood_observed_locality
           LEAN
           sed -i 's/^          //' IntegratedAxioms.lean
           lake env lean IntegratedAxioms.lean 2>&1 | tee /tmp/integration-axioms.log
@@ -86,6 +90,7 @@ jobs:
             /tmp/MarginFreeIntegrated.log
             /tmp/MarginFreeProductDisintegration.log
             /tmp/MarginFreeBoundedK.log
+            /tmp/MarginFreeLikelihoodDecision.log
             /tmp/integration-axioms.log
             /tmp/integration-sha256.txt
           retention-days: 60
