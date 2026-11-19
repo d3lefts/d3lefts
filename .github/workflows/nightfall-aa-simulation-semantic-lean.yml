@@ -5,6 +5,7 @@ on:
     branches: [nightfall-aa-simulator-semantic-cert-20261118]
     paths:
       - 'research/nightfall/formalization/product_space/SimulationOriginalLaw.lean'
+      - 'research/nightfall/formalization/product_space/SimulationCappedError.lean'
       - '.github/workflows/nightfall-aa-simulation-semantic-lean.yml'
   pull_request:
     paths:
@@ -32,20 +33,28 @@ jobs:
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ActualProductMergeTower.olean ActualProductMergeTower.lean)
           cp research/nightfall/formalization/product_space/SimulationOriginalLaw.lean /tmp/mathlib4/SimulationOriginalLaw.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SimulationOriginalLaw.olean SimulationOriginalLaw.lean)
+          cp research/nightfall/formalization/product_space/SimulationCappedError.lean /tmp/mathlib4/SimulationCappedError.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SimulationCappedError.olean SimulationCappedError.lean)
           cat > /tmp/mathlib4/SimulationSemanticAudit.lean <<'LEAN'
           import SimulationOriginalLaw
+          import SimulationCappedError
           #check @Nightfall.QuerySimulation.OriginalLaw.source_pin_tower
           #check @Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_self
           #check @Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_other_expectation
           #check @Nightfall.QuerySimulation.OriginalLaw.totalDoubleInfluence_pin_expectation
+          #check @Nightfall.QuerySimulation.OriginalLaw.totalDoubleInfluence_nonneg
+          #check @Nightfall.QuerySimulation.finite_capped_leaf_error
           #print axioms Nightfall.QuerySimulation.OriginalLaw.source_pin_tower
           #print axioms Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_self
           #print axioms Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_other_expectation
           #print axioms Nightfall.QuerySimulation.OriginalLaw.totalDoubleInfluence_pin_expectation
+          #print axioms Nightfall.QuerySimulation.OriginalLaw.totalDoubleInfluence_nonneg
+          #print axioms Nightfall.QuerySimulation.finite_capped_leaf_error
           LEAN
           (cd /tmp/mathlib4 && lake env lean SimulationSemanticAudit.lean) | tee semantic-axioms.txt
           ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' semantic-axioms.txt
           sha256sum research/nightfall/formalization/product_space/SimulationOriginalLaw.lean
+          sha256sum research/nightfall/formalization/product_space/SimulationCappedError.lean
           git rev-parse HEAD
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
