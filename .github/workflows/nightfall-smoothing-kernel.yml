@@ -1,0 +1,47 @@
+name: NIGHTFALL uniform strong-event smoother kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingPolynomial.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingUniform.lean'
+      - '.github/workflows/nightfall-smoothing-kernel.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoothing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile uniformly bounded smoothing polynomial and tail estimates
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean /tmp/mathlib4/StrongSmoothingAmplifier.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingPolynomial.lean /tmp/mathlib4/StrongSmoothingPolynomial.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingUniform.lean /tmp/mathlib4/StrongSmoothingUniform.lean
+          cd /tmp/mathlib4
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingAmplifier.olean StrongSmoothingAmplifier.lean | tee /tmp/sa.log
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingPolynomial.olean StrongSmoothingPolynomial.lean | tee /tmp/sp.log
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingUniform.olean StrongSmoothingUniform.lean | tee /tmp/su.log
+          cat > SmoothingAxioms.lean <<'LEAN'
+          import StrongSmoothingAmplifier
+          import StrongSmoothingPolynomial
+          import StrongSmoothingUniform
+          #print axioms Nightfall.StrongSmoothing.amp_low_tail
+          #print axioms Nightfall.StrongSmoothing.amp_high_tail
+          #print axioms Nightfall.StrongSmoothing.ampPoly_natDegree_le
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_natDegree_le
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_mem_unit
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_small
+          #print axioms Nightfall.StrongSmoothing.smoothPoly_large
+          LEAN
+          sed -i 's/^          //' SmoothingAxioms.lean
+          lake env lean SmoothingAxioms.lean | tee /tmp/s-axioms.log
+          ! grep -q sorryAx /tmp/s-axioms.log
+          ! grep -q 'declaration uses .sorry' /tmp/sa.log /tmp/sp.log /tmp/su.log
