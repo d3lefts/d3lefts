@@ -44,7 +44,6 @@ theorem upperGrid_lt (N : ℕ) (hN : 0 < N)
   have hcalc : (p + 1 / (N : ℝ)) * (N : ℝ) =
       (N : ℝ) * p + 1 := by
     field_simp [ne_of_gt hpos]
-    ring
   rw [hcalc]
   exact hceil
 
