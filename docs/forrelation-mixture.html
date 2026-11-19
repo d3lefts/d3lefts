@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NIGHTFALL companion working preprint: exponential product-mixture complexity of the Gaussian-sign Forrelation law; sharp binary-information exponent and TV robustness.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/forrelation-mixture.html">
+<meta property="og:title" content="Forrelation Product-Mixture Complexity — NIGHTFALL">
+<meta property="og:url" content="https://d3lefts.github.io/d3lefts/forrelation-mixture.html">
+<title>Forrelation · Product-Mixture Complexity — NIGHTFALL</title>
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script src="site.js" defer></script>
+<style>
+:root{color-scheme:dark}body{background:#070b10;color:#e9edf4;font-family:system-ui,-apple-system,Segoe UI,sans-serif;margin:0}a{color:#c9e6ff}
+.nf-page{max-width:960px;margin:0 auto;padding:28px 24px 86px}.nf-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;border-bottom:1px solid #394552;padding-bottom:20px}.nf-mark{font-weight:800;letter-spacing:.16em;color:#c3d5ed;text-decoration:none}.nf-sub{font-size:.8rem;text-transform:uppercase;letter-spacing:.16em;color:#b7af99;margin-top:5rem}.nf-heading{font-size:clamp(2.1rem,5vw,4rem);max-width:900px;letter-spacing:-.055em;line-height:1.08;font-weight:650;margin:16px 0 18px}.nf-lede{font-size:1.11rem;max-width:730px;line-height:1.72;color:#c7d0df}.nf-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:38px 0}.nf-metric{border:1px solid #394552;border-radius:12px;padding:24px;background:rgba(255,255,255,.035)}.nf-metric small{display:block;color:#a9b9c8;text-transform:uppercase;letter-spacing:.11em;margin-bottom:14px}.nf-value{font-size:clamp(1.8rem,4vw,2.7rem);font-weight:650;letter-spacing:-.035em;white-space:nowrap}.nf-metric p{font-size:.93rem;line-height:1.65;color:#c0c9d5}.nf-section{border-top:1px solid #394552;padding-top:25px;margin-top:30px}.nf-section h2{font-size:1.28rem}.nf-section p{line-height:1.75;color:#ccd3dd}.nf-linkbar{display:flex;flex-wrap:wrap;gap:12px;margin:25px 0}.nf-linkbar a{padding:13px 17px;border:1px solid #576475;border-radius:7px;background:#101a26;text-decoration:none;font-weight:600}.nf-linkbar a:hover{border-color:#accff5}.nf-alert{background:#151c24;border-left:3px solid #a99672;padding:16px 20px;color:#d3d8e0;line-height:1.65}.nf-footer{color:#9dadbd;font-size:.86rem;margin-top:65px}.nf-formula{font-size:1.25rem;overflow:auto;white-space:nowrap;color:#e6e5d3}@media(max-width:650px){.nf-metrics{grid-template-columns:1fr}.nf-top{align-items:flex-start}.nf-value{font-size:2rem}}
+</style>
+</head>
+<body>
+<main class="nf-page">
+<header class="nf-top"><a class="nf-mark" href="./">NIGHTFALL / THEORY ATLAS</a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation"><a href="./">Current research</a><a href="constellation.html">Methods</a><a href="review.html">Review the evidence</a></nav></header>
+<div class="nf-sub">Quantum query theory · Companion working paper · 19 November 2026</div>
+<h1 class="nf-heading">How much independence does Forrelation hide?</h1>
+<p class="nf-lede">The Gaussian-sign Forrelation law requires exponentially many independent latent components. A sharper per-coordinate information argument improves the earlier aggregate-moment exponent, and the obstruction survives small errors in total variation.</p>
+<div class="nf-metrics">
+<div class="nf-metric"><small>Exact product-mixture representation</small><div class="nf-value">M ≥ exp(0.2192005 N)</div><p>Improved sharpest derived universal coefficient. Holds even when each latent component only separates the two N-bit blocks.</p></div>
+<div class="nf-metric"><small>1% total-variation approximation</small><div class="nf-value">log M ≥ 0.2053376 N</div><p>Less an additive 0.1120031 nats. The obstruction is exponential for fixed sufficiently small approximation error.</p></div>
+</div>
+<div class="nf-linkbar">
+<a href="https://github.com/d3lefts/d3lefts/blob/main/papers/forrelation-mixture-obstruction/Companion_Forrelation_Product_Mixture_v0_1.pdf">Read PDF manuscript</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/papers/forrelation-mixture-obstruction/COMPANION_PAPER.md">Inspect full proof</a>
+<a href="https://github.com/d3lefts/d3lefts/blob/main/papers/forrelation-mixture-obstruction/PROOF_PASSPORT.md">Proof Passport</a>
+<a href="https://github.com/d3lefts/d3lefts/tree/main/papers/forrelation-mixture-obstruction">Reproduce exact checks</a>
+</div>
+<section class="nf-section"><h2>Reconciled exponents</h2><p>The earlier constant <strong>2/π² = 0.2026423673</strong> follows from a single Forrelation statistic and a quadratic relative-entropy bound. The stronger <strong>φ(2/π) = 0.2192005468</strong> uses each coordinate's information witness and the exact binary-information function. Both are correct; the latter is stronger.</p><p class="nf-formula">φ(t) = (1+t) log(1+t)/2 + (1−t) log(1−t)/2</p></section>
+<section class="nf-section"><h2>What is proved, and what remains</h2><p>The full analytic derivation uses the classical Gaussian sign-correlation identity, orthogonality, binary entropy convexity, and finite conditional-entropy continuity. The general latent-mixture exponential-moment operator passed a strict pinned Lean audit, but that does <strong>not</strong> constitute a Lean proof of the Gaussian-sign specialization or its sharpened entropy exponent.</p><div class="nf-alert"><strong>Evidence classification:</strong> publicly released, non-peer-reviewed working preprint. The specific Gaussian theorem is paper-level, not end-to-end Lean certified; independent human review, full priority analysis, and final contributor attribution remain open. The law is <em>unconditioned</em> Gaussian-sign Forrelation, not every Forrelation promise-conditioned distribution.</div></section>
+<section class="nf-section"><h2>Source and attribution</h2><p>The Gaussian sign-rounding source and original Forrelation problem are due to Aaronson and Ambainis. Mutual-information bounds for conditionally independent latent mixtures are established information theory. This quantitative specialization emerged from NIGHTFALL's AI-assisted adversarial review and subsequent independently reproduced calculations; it is not claimed to be a new general common-information principle or an already established priority record.</p></section>
+<div class="nf-footer">NIGHTFALL · Source-controlled working research · Manuscript version 0.1 · 2026-11-19</div>
+</main>
+</body>
+</html>
