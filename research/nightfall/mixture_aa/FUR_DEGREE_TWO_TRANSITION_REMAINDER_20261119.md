@@ -96,7 +96,9 @@ Companion script check_fur_degree_two_exact.py passed **73,633** exact rational 
 
 **Cubic counterexample:** f(x)=x_0*x_1*x_2, r=000, x=(0,0,1), y=(1,1,1). The actual remainder after changing coordinates 0 and 1 is 1, while D_01 at fixed r is 0. A naive all-degree version would require activating coordinates where x_i=y_i and would lose the fiber claim. Therefore DO NOT claim general FUR from this argument.
 
-The checker uses c_i=4 as a **finite n<=5 regression convenience only**. This does not establish any n-independent row budget: the analytic bound depends on RowBound.product_row_bound. Finite exact testing also does not substitute for the higher-alphabet Lean theorem.
+A second, independently implemented checker (check_fur_degree_two_lp.py) solves the global shared-fiber LP directly, without the transition construction. It found and **verified with exact rational arithmetic** feasible rows for 80 random binary quadratic functions (20 each at n=3,4,5,6). Max exact feasible cost across those cases was 2.02381254; the reported floating-point LP optima are NOT exact optimality certificates. Its numeric optimizer supplies candidates only; all pairwise row constraints are checked in fractions after conservative upward rounding. The two audits are separate software mechanisms, but not external human review.
+
+The first checker uses c_i=4 as a **finite n<=5 regression convenience only**. This does not establish any n-independent row budget: the analytic bound depends on RowBound.product_row_bound. Finite exact testing also does not substitute for the higher-alphabet Lean theorem.
 
 ## Claude handoff: actual kernel obligations
 
