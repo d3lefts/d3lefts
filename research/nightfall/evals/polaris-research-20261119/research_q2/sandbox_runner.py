@@ -19,8 +19,8 @@ import sys
 import tempfile
 
 from grade_research_q2 import (
-    BERNSTEIN, TARGET, TOOLCHAIN, MATHLIB_COMMIT, digest, verify_trusted,
-    candidate_check,
+    BERNSTEIN, TARGET, TOOLCHAIN, MATHLIB_COMMIT, digest, git_blob,
+    verify_trusted, candidate_check,
 )
 
 IMAGE_PIN = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9._:/-]*@sha256:[a-f0-9]{64}$")
@@ -79,7 +79,8 @@ def sealed_sources(candidate: Path, stage: Path) -> dict:
         "schema": "nightfall.polaris.sealed-submission.v1",
         "source_files": files, "candidate_sha256": candidate_hash,
         "compiler_pin": TOOLCHAIN, "mathlib_commit": MATHLIB_COMMIT,
-        "reference_proof_included": False,
+        "reference_solution_preloaded": False,
+        "candidate_matches_public_reference": git_blob(candidate) == "c978b8343785911162fd1028c96be32a0c9de242",
     }
 
 
