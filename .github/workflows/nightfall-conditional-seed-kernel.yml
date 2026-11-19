@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/StrongConditionalSeedKernel.lean'
+      - 'research/nightfall/strong_simulation_progress/check_conditional_seed_kernel_exact.py'
       - '.github/workflows/nightfall-conditional-seed-kernel.yml'
   push:
     branches:
@@ -18,6 +19,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+      - name: Independent exact-rational zero-atom regression
+        run: python3 research/nightfall/strong_simulation_progress/check_conditional_seed_kernel_exact.py
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Exact source Lean compilation and axiom print
         shell: bash
