@@ -71,10 +71,34 @@ jobs:
             --candidate research/nightfall/formalization/observability/ShiftedC4Scalar.lean \
             --workspace /tmp/mathlib4 \
             --receipt "$RUNNER_TEMP/polaris-q2-reference-receipt.json"
-      - name: Preserve research-Q2 positive-control receipt
+      - name: Research-Q2 adversarial weaker-theorem control must be rejected
+        run: |
+          set -euo pipefail
+          set +e
+          python3 research/nightfall/evals/polaris-research-20261119/research_q2/grade_research_q2.py \
+            --candidate research/nightfall/evals/polaris-research-20261119/research_q2/examples/weakened_to_true.lean \
+            --workspace /tmp/mathlib4 \
+            --receipt "$RUNNER_TEMP/polaris-q2-weakened-receipt.json" \
+            > "$RUNNER_TEMP/polaris-q2-weakened-output.log"
+          code=$?
+          set -e
+          test "$code" -ne 0
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path(os.environ["RUNNER_TEMP"])/"polaris-q2-weakened-receipt.json"
+          d=json.loads(p.read_text())
+          assert d["status"]=="fail",d
+          assert "Lean command failure" in d.get("error",""),d
+          assert "NightfallPolarisQ2Target.lean" in d["error"],d
+          print("PASS: kernel/elaborator rejected candidate theorem weakening")
+          PY
+      - name: Preserve research-Q2 positive and negative control receipts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: polaris-research-q2-reference-receipt
-          path: ${{ runner.temp }}/polaris-q2-reference-receipt.json
+          path: |
+            ${{ runner.temp }}/polaris-q2-reference-receipt.json
+            ${{ runner.temp }}/polaris-q2-weakened-receipt.json
           if-no-files-found: warn
