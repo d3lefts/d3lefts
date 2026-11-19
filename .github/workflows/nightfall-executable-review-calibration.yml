@@ -1,0 +1,56 @@
+name: NIGHTFALL executable adversarial review calibration
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/evals/executable-review-study/**'
+      - '.github/workflows/nightfall-executable-review-calibration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-reviewed-claims:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact mechanism and adversarial scorer unit tests
+        run: python3 -m unittest discover -s research/nightfall/evals/executable-review-study -p 'test*.py' -v
+      - name: Replay independently implemented Bernstein interpolation audit
+        run: |
+          python3 research/nightfall/evals/executable-review-study/independent_poly_audit.py > "$RUNNER_TEMP/independent-poly-audit.json"
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          result=json.loads((Path(os.environ['RUNNER_TEMP'])/'independent-poly-audit.json').read_text())
+          assert result['status']=='pass' and result['cells']==8 and result['domain_area']=='1'
+          print('PASS separate exact Bernstein interpolation audit: 8 boxes cover unit square')
+          PY
+      - name: Compute frozen public case oracle with source-certificate replay
+        run: |
+          python3 research/nightfall/evals/executable-review-study/oracle.py --output "$RUNNER_TEMP/public-review-oracle.json" > "$RUNNER_TEMP/public-review-oracle.stdout.json"
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])
+          data=json.loads((root/'public-review-oracle.json').read_text())
+          assert data['counts']=={'valid':8,'invalid':8} and len(data['cases'])==16
+          assert len(data['pinned_sources'])==2
+          print('PASS 16 public calibrated claims, balanced 8 valid / 8 invalid, source pins intact')
+          PY
+      - name: Archive reproducible calibration outputs, not model results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-exec-review-calibration
+          path: |
+            ${{ runner.temp }}/independent-poly-audit.json
+            ${{ runner.temp }}/public-review-oracle.json
+          if-no-files-found: warn
+          retention-days: 90

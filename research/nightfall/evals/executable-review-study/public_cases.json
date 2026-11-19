@@ -1,0 +1,143 @@
+{
+  "schema": "nightfall.exec-review.public-calibration.v1",
+  "source": "Existing NIGHTFALL Q2 certificate, modular complementarity, diagonal full-coordinate product lower bound, and provenance.",
+  "disclosure": "PUBLIC calibration: answer derivable from oracle.py; NOT a blinded model benchmark.",
+  "cases": [
+    {
+      "id": "P01",
+      "family": "shifted_bernstein",
+      "kind": "poly_global_lower",
+      "threshold": "0",
+      "claim": "For all x,t in [0,1], the original shifted-c/4 polynomial P(x,t) is at least 0."
+    },
+    {
+      "id": "P02",
+      "family": "shifted_bernstein",
+      "kind": "poly_global_lower",
+      "threshold": "1/8",
+      "claim": "For all x,t in [0,1], the original shifted-c/4 polynomial P(x,t) is at least 1/8."
+    },
+    {
+      "id": "P03",
+      "family": "shifted_bernstein",
+      "kind": "poly_value",
+      "x": "1",
+      "t": "0",
+      "value": "2",
+      "claim": "The pinned polynomial satisfies P(1,0)=2."
+    },
+    {
+      "id": "P04",
+      "family": "shifted_bernstein",
+      "kind": "poly_value",
+      "x": "1",
+      "t": "0",
+      "value": "1",
+      "claim": "The pinned polynomial satisfies P(1,0)=1."
+    },
+    {
+      "id": "S01",
+      "family": "modular_synergy",
+      "kind": "mutual_info",
+      "r": 4,
+      "law": "independent",
+      "condition": "joint",
+      "bits": 2,
+      "claim": "If independent uniform T,A lie in Z/4Z and K=T+A mod 4, then I(K;(T,A))=2 bits."
+    },
+    {
+      "id": "S02",
+      "family": "modular_synergy",
+      "kind": "mutual_info",
+      "r": 4,
+      "law": "independent",
+      "condition": "single_T",
+      "bits": 1,
+      "claim": "If independent uniform T,A lie in Z/4Z and K=T+A mod 4, then I(K;T)=1 bit."
+    },
+    {
+      "id": "S03",
+      "family": "modular_synergy",
+      "kind": "mutual_info",
+      "r": 4,
+      "law": "diagonal",
+      "condition": "single_T",
+      "bits": 1,
+      "claim": "Under T=A uniform on Z/4Z and K=T+A mod 4, I(K;T)=1 bit."
+    },
+    {
+      "id": "S04",
+      "family": "modular_synergy",
+      "kind": "mutual_info",
+      "r": 4,
+      "law": "diagonal",
+      "condition": "joint",
+      "bits": 2,
+      "claim": "Under T=A uniform on Z/4Z and K=T+A mod 4, I(K;(T,A))=2 bits."
+    },
+    {
+      "id": "D01",
+      "family": "diagonal_product",
+      "kind": "min_components",
+      "n": 3,
+      "value": 8,
+      "claim": "For X uniform on {0,1}^3 and Y=X, the exact minimum number of positive mixtures of full 6-coordinate product laws is 8."
+    },
+    {
+      "id": "D02",
+      "family": "diagonal_product",
+      "kind": "matrix_rank",
+      "n": 3,
+      "value": 4,
+      "claim": "For X uniform on {0,1}^3 and Y=X, the X-by-Y probability matrix has rational rank 4."
+    },
+    {
+      "id": "D03",
+      "family": "diagonal_product",
+      "kind": "matrix_rank",
+      "n": 2,
+      "value": 4,
+      "claim": "For X uniform on {0,1}^2 and Y=X, the X-by-Y probability matrix has rational rank 4."
+    },
+    {
+      "id": "D04",
+      "family": "diagonal_product",
+      "kind": "min_components",
+      "n": 2,
+      "value": 2,
+      "claim": "For X uniform on {0,1}^2 and Y=X, exactly 2 positive components suffice if each component factors across all 4 individual bits."
+    },
+    {
+      "id": "H01",
+      "family": "source_integrity",
+      "kind": "git_blob",
+      "path": "research/nightfall/formalization/observability/ShiftedC4Bernstein.lean",
+      "claimed_blob": "d29a1e5f0396ca7f29fde24a34325fc324a3d3c0",
+      "claim": "The pinned Lean shifted-c/4 Bernstein proof file has Git blob d29a1e5f0396ca7f29fde24a34325fc324a3d3c0."
+    },
+    {
+      "id": "H02",
+      "family": "source_integrity",
+      "kind": "git_blob",
+      "path": "research/nightfall/formalization/observability/ShiftedC4Bernstein.lean",
+      "claimed_blob": "0000000000000000000000000000000000000000",
+      "claim": "The pinned Lean shifted-c/4 Bernstein proof file has Git blob 0000000000000000000000000000000000000000."
+    },
+    {
+      "id": "H03",
+      "family": "source_integrity",
+      "kind": "git_blob",
+      "path": "research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py",
+      "claimed_blob": "f73179e69e19576c0e1e7dac37e1801fe5b33d56",
+      "claim": "The original exact-rational shifted moment checker has Git blob f73179e69e19576c0e1e7dac37e1801fe5b33d56."
+    },
+    {
+      "id": "H04",
+      "family": "source_integrity",
+      "kind": "git_blob",
+      "path": "research/nightfall/2026-11-quadratic-law-free-audit/check_shifted_owner_moment_107.py",
+      "claimed_blob": "1111111111111111111111111111111111111111",
+      "claim": "The original exact-rational shifted moment checker has Git blob 1111111111111111111111111111111111111111."
+    }
+  ]
+}
