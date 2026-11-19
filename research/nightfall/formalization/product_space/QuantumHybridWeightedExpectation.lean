@@ -64,7 +64,14 @@ theorem weighted_sqrt_le_sqrt_budget
       (∑ y : Ω, π y * Real.sqrt (z y)) ≤
         (2 * Real.sqrt lam) * Real.sqrt lam := by
     nlinarith [hbudget, hr2]
-  exact (mul_le_mul_left (by positivity : 0 < 2 * Real.sqrt lam)).mp hscaled
+  by_contra hnot
+  have hlt : Real.sqrt lam <
+      (∑ y : Ω, π y * Real.sqrt (z y)) := lt_of_not_ge hnot
+  have hstrict :
+      0 < (2 * Real.sqrt lam) *
+        ((∑ y : Ω, π y * Real.sqrt (z y)) - Real.sqrt lam) :=
+    mul_pos (by positivity) (sub_pos.mpr hlt)
+  nlinarith
 
 /-- A normalized query-index distribution assigns expected mismatch mass
 at most lambda if the one-coordinate conditional mismatch probabilities
