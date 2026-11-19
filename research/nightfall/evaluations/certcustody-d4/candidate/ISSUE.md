@@ -1,0 +1,21 @@
+# CertificateCustody-D4 — repair source-bound proof receipt custody
+
+## Context
+A research team stores hundreds of Lean source modules and machine-readable proof receipts. Its public registry must never promote a checked claim if source bytes change, a receipt refers to a different commit or theorem, the receipt was forged, or a newly added source was never classified. NIGHTFALL previously reconciled uncatalogued source files and stale provenance in PRs #389, #395, #669, and #780. This task recreates the **software evidence-custody problem** with new synthetic sources. It does **not** prove a Lean theorem or authenticate remote CI execution.
+
+## Assignment
+Repair `certcustody/` while preserving `verify_checkout(root, trusted_receipts, key)` and deterministic report schema. Return a valid report or raise `AuditError` on any invalid input. Never rewrite source bytes or certificates.
+
+1. **Complete inventory:** Recursively enumerate `sources/**/*.lean`. Every file requires exactly one row and every row must resolve to exactly one regular source under `root/sources/`. Reject duplicate paths/claim IDs, missing or unknown files, non-Lean paths, absolute paths, "." or ".." components and symlink escapes (including symlink directories). A manifest does not silently define all files that exist.
+2. **Content identity:** Check actual Git blob SHA-1, not raw SHA-1, against every `checked` **and** `pending` row: `sha1(b"blob "+str(len(bytes))+b"\\0"+bytes)`. Reject malformed hashes, unsupported status and stale source identities.
+3. **Independent authenticated receipts:** The externally supplied `nightfall.receipts.v1` file contains entries exactly `{body,hmac}`. Verify HMAC-SHA256 using `key` and canonical JSON from `hashes.py`, comparing signatures in constant time. A receipt body must have exactly `{claim_id,source_path,blob_sha1,ci_head,ci_run,theorem,status,priority}`; reject duplicate, orphaned, unverified and wrong-source receipts. A `checked` row requires an authenticated body matching **all** corresponding fields and current source identity. Pending rows must have no receipts.
+4. **Status and priority:** `checked` requires a 40-character lowercase hex CI head, positive non-Boolean integer CI run, nonempty theorem name and `priority="unverified"`. `pending` requires `ci_head=null,ci_run=null,theorem=null,priority="unverified"`. No other status, unknown manifest fields or automatic novelty promotion. A CI receipt is not itself an independent mathematical proof review.
+5. **Evidence laundering:** Reject swapped CI heads, forged theorem names, altered HMAC, copied signatures, pending status with claimed CI, duplicate/extra Lean files, and source/reference substitutions. Fail closed on malformed manifests and receipts.
+6. **Report/CLI:** On valid input preserve sorted `entries`, checked/pending counts, and the stable report schema. On invalid input the CLI exits nonzero without a success report. Use stdlib Python 3.10/3.13.
+
+## Calibration, scoring, contamination
+Run `PYTHONPATH=candidate python -m unittest discover -s candidate/tests -v` from this benchmark root. Three intentionally shallow smoke checks are **not** a sufficient grader. The independent public semantic probe in `audit/` demonstrates source and receipt attacks.
+
+Proposed **100-point rubric, not independently validated:** inventory/path/symlink confinement (25), source hash and freshness (20), authenticated receipt linkage (25), status/nonpromotion (20), deterministic report and CLI rejection (10). The public `fixture.key` is explicitly a **synthetic, non-secret development key**; it does not demonstrate real-world credential protection. Future private tests require a separate non-public trust key, a grader false-pass audit, a human-independent correct repair and isolated blind agent runs.
+
+Historical derivation: [#389](https://github.com/d3lefts/d3lefts/pull/389), [#395](https://github.com/d3lefts/d3lefts/pull/395), [#669](https://github.com/d3lefts/d3lefts/pull/669) and [#780](https://github.com/d3lefts/d3lefts/pull/780). Those public repairs can contaminate model testing, so future blinded variants must change schemas, file arrangements and missing-data mechanisms. This version is **author calibration only**, not an uncontaminated frontier-model SWE benchmark.
