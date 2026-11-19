@@ -47,3 +47,34 @@ jobs:
         with:
           name: proofgraph-smoke-receipt
           path: ${{ runner.temp }}/proofgraph-receipt.json
+  proofgraph-research-q2-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Research-Q2 trusted-source and bypass preflight tests
+        run: |
+          python3 -m unittest discover -s research/nightfall/evals/polaris-research-20261119/research_q2 -p 'test_research_q2.py' -v
+      - name: Install and independently pin compiler and Mathlib source
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Research-Q2 public reference proof, locked target, axiom audit and leanchecker
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/evals/polaris-research-20261119/research_q2/grade_research_q2.py \
+            --candidate research/nightfall/formalization/observability/ShiftedC4Scalar.lean \
+            --workspace /tmp/mathlib4 \
+            --receipt "$RUNNER_TEMP/polaris-q2-reference-receipt.json"
+      - name: Preserve research-Q2 positive-control receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: polaris-research-q2-reference-receipt
+          path: ${{ runner.temp }}/polaris-q2-reference-receipt.json
+          if-no-files-found: warn
