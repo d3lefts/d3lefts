@@ -6,12 +6,14 @@ on:
       - 'research/nightfall/formalization/product_space/QueryLocalDegree.lean'
       - 'research/nightfall/formalization/product_space/QueryDecoderLift.lean'
       - 'research/nightfall/formalization/product_space/QueryLocalFactorTransfer.lean'
+      - 'research/nightfall/formalization/product_space/QueryLocalSourceTransfer.lean'
       - '.github/workflows/nightfall-query-local-factor.yml'
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/QueryLocalDegree.lean'
       - 'research/nightfall/formalization/product_space/QueryDecoderLift.lean'
       - 'research/nightfall/formalization/product_space/QueryLocalFactorTransfer.lean'
+      - 'research/nightfall/formalization/product_space/QueryLocalSourceTransfer.lean'
       - '.github/workflows/nightfall-query-local-factor.yml'
   workflow_dispatch:
 permissions:
@@ -36,7 +38,7 @@ jobs:
             cp "$P" "/tmp/mathlib4/$REL.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/factor-$M.log")
           done < research/nightfall/formalization/aa_product/CLOSURE.txt
-          for M in QueryLocalDegree QueryDecoderLift QueryLocalFactorTransfer; do
+          for M in QueryLocalDegree QueryDecoderLift QueryLocalFactorTransfer QueryLocalSourceTransfer; do
             if [ ! -f "research/nightfall/formalization/product_space/$M.lean" ]; then continue; fi
             cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "$GITHUB_WORKSPACE/$M-compile.log")
@@ -50,16 +52,21 @@ jobs:
           import QueryLocalDegree
           import QueryDecoderLift
           import QueryLocalFactorTransfer
+          import QueryLocalSourceTransfer
           #check @Nightfall.ProductSpace.QueryLocalDegree.degree_pullback
           #check @Nightfall.ProductSpace.QueryDecoderLift.substitute_queries
           #check @Nightfall.ProductSpace.QueryDecoderLift.substitute_eval
           #check @Nightfall.ProductSpace.QueryLocalFactor.factor_mixture_simulation_jensen
           #check @Nightfall.ProductSpace.QueryLocalFactor.factor_mixture_simulation_delta
+          #check @Nightfall.ProductSpace.QueryLocalSource.factor_mixture_simulation_support
+          #check @Nightfall.ProductSpace.QueryLocalSource.factor_mixture_simulation_tv
           #print axioms Nightfall.ProductSpace.QueryLocalDegree.degree_pullback
           #print axioms Nightfall.ProductSpace.QueryDecoderLift.substitute_queries
           #print axioms Nightfall.ProductSpace.QueryDecoderLift.substitute_eval
           #print axioms Nightfall.ProductSpace.QueryLocalFactor.factor_mixture_simulation_jensen
           #print axioms Nightfall.ProductSpace.QueryLocalFactor.factor_mixture_simulation_delta
+          #print axioms Nightfall.ProductSpace.QueryLocalSource.factor_mixture_simulation_support
+          #print axioms Nightfall.ProductSpace.QueryLocalSource.factor_mixture_simulation_tv
           LEAN
           (cd /tmp/mathlib4 && lake env lean QueryFactorAudit.lean) | tee lean-receipts/query-factor/axioms.txt
           ! grep -E 'sorryAx|unknown constant|error:' lean-receipts/query-factor/axioms.txt
