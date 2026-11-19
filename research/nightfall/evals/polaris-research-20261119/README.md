@@ -34,7 +34,7 @@ Validity is a hard gate. For a task with a complete oracle: 35% correctness, 25%
 
 ## Next gates
 1. Reconcile this directory with the repository's existing evaluation lab; avoid duplicate public navigation.
-2. Pinned toy and nontrivial shifted-c/4 scalar reference controls pass. Next: non-public held-out variants, restricted container/VM, independent implementation audit, end-to-end Q2 integration tier, and two budget-matched independent agent trials.
+2. Pinned toy and nontrivial shifted-c/4 scalar reference controls pass. Next: build and independently verify an immutable evaluation image, execute a real restricted-container trial, create unpublished held-out variants, obtain an external implementation audit, integrate full Q2, and run two equal-budget agents. The [experimental sealed sandbox entrypoint](research_q2/SANDBOX.md) has static contract tests but no verified runtime deployment.
 3. Independently verify TheoremBreak held-out instances and establish failure baselines.
 4. Audit InvariantLab's support/rank proof and source attribution.
 5. Keep PotentialForge quarantined pending independent mathematical audit and prior-art review.
