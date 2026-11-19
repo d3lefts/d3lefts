@@ -72,6 +72,26 @@ class ResearchQ2PreflightTests(unittest.TestCase):
     def test_allowlist_is_standard_only(self):
         self.assertEqual(ALLOW_AXIOMS, {"Classical.choice", "Quot.sound", "propext"})
 
+    def test_bundle_omits_known_reference_solution(self):
+        from prepare_agent_bundle import prepare
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp) / "agent_input"
+            manifest = prepare(folder)
+            self.assertTrue(manifest["not_blind_or_uncontaminated"])
+            self.assertIn("ShiftedC4Scalar.lean", manifest["editable_only"])
+            stub = (folder / "ShiftedC4Scalar.lean").read_text()
+            known_proof = (BERNSTEIN.parent / "ShiftedC4Scalar.lean").read_text()
+            self.assertNotEqual(stub, known_proof)
+            self.assertNotIn("have hmoment :", stub)
+            self.assertFalse(any("ShiftedC4Scalar.lean" == p.name for p in
+                                 folder.iterdir() if p.is_symlink()))
+            self.assertTrue((folder / "INPUT_MANIFEST.json").is_file())
+
+    def test_weakened_statement_survives_lexical_preflight(self):
+        # Only Lean's frozen target catches the semantically invalid theorem.
+        p = Path(__file__).parent / "examples/weakened_to_true.lean"
+        self.assertEqual(len(candidate_check(p)), 64)
+
 
 if __name__ == "__main__":
     unittest.main()
