@@ -27,19 +27,40 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
-      - name: Compile pinned source closure and factor transfer modules
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        id: factor-closure-cache
+        with:
+          path: /tmp/nightfall-factor-oleans
+          key: linux-nightfall-883-41126153-lean436-closure179-v1
+      - name: Prepare pinned AA/mixture closure, reuse byte-frozen build for iteration
         shell: bash
         run: |
           set -euo pipefail
-          while read -r M P; do
-            [ -z "$M" ] && continue
-            REL="${M//.//}"
-            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
-            cp "$P" "/tmp/mathlib4/$REL.lean"
-            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/factor-$M.log")
-          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+          if [ -f /tmp/nightfall-factor-oleans/MixtureSimulation.olean ]; then
+            cp -a /tmp/nightfall-factor-oleans/. /tmp/mathlib4/.lake/build/lib/lean/
+            echo "Restored precompiled 179-module closure from source-frozen cache"
+          else
+            mkdir -p /tmp/nightfall-factor-oleans
+            while read -r M P; do
+              [ -z "$M" ] && continue
+              REL="${M//.//}"
+              mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+              cp "$P" "/tmp/mathlib4/$REL.lean"
+              (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/factor-$M.log")
+              mkdir -p "/tmp/nightfall-factor-oleans/$(dirname "$REL")"
+              cp "/tmp/mathlib4/.lake/build/lib/lean/$REL.olean" "/tmp/nightfall-factor-oleans/$REL.olean"
+            done < research/nightfall/formalization/aa_product/CLOSURE.txt
+          fi
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        if: steps.factor-closure-cache.outputs.cache-hit != 'true'
+        with:
+          path: /tmp/nightfall-factor-oleans
+          key: linux-nightfall-883-41126153-lean436-closure179-v1
+      - name: Compile factor transfer Lean modules
+        shell: bash
+        run: |
+          set -euo pipefail
           for M in QueryLocalDegree QueryDecoderLift QueryLocalFactorTransfer QueryLocalSourceTransfer; do
-            if [ ! -f "research/nightfall/formalization/product_space/$M.lean" ]; then continue; fi
             cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "$GITHUB_WORKSPACE/$M-compile.log")
           done
