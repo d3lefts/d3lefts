@@ -1,7 +1,54 @@
-# Classical simulation of quantum query algorithms, uniform over product distributions — paper proof (2026-11-18)
+# Classical simulation of quantum query algorithms, uniform over product distributions (2026-11-18)
 
-Status: complete proof on paper. No Lean yet (by the standing rule: no Lean or provenance work
-until the paper proof is complete and reviewed). Priority check: partial, see §6.
+## Update: sharper bound, Lean-certified
+
+**Theorem** (`Simulation.simulation_degree` in `ProductSimulation.lean`, axioms `propext`,
+`Classical.choice`, `Quot.sound` only). Let `p` be any product law on a finite `ι → α`
+(any masses, zeros allowed) and `f : (ι → α) → [0, 1]` of interaction degree at most `d ≥ 1`.
+If `n · ε³ δ² √δ ≥ 6√2 π⁶ d⁶`, there is a decision tree making at most `n` queries on every input
+with `Pr_{x∼p}[ |f(x) − Q̃(x)| > ε ] ≤ δ`.
+
+For a `T`-query quantum algorithm (`d = 2T`, §2 (A)) this is depth
+
+    n = ⌈ 384 √2 π⁶ T⁶ / (ε³ δ^{5/2}) ⌉ ≈ 5.2 · 10⁵ · T⁶ ε⁻³ δ^{−5/2},
+
+replacing the `T⁷ ε⁻⁵ δ^{−7/2}` bound of §§3–5 below. Still no dependence on the masses, the
+alphabet or `n`.
+
+**What changed.** The tree queries a coordinate with large *mean absolute increment*
+`L_j(g) = E_{x, b∼p_j} |g(x) − g(x_j := b)|` instead of large Efron–Stein influence, and the
+potential is the total `L(g) = ∑_k L_k(g)`:
+
+* `L(g) ≤ K` when `g` has rows of cost `K` (`Influence.sum_pincr_le`); for `[0,1]`-valued `f`
+  of degree `d`, `K = π² d² / 2` (`hasRows_of_degree`: Lemma B on `2f − 1`).
+* Sections keep rows of the same cost (`hasRows_sect`), and fixing `x_j` lowers `L` on average by
+  exactly `L_j` (`sum_mul_Ltot_sect`).
+* A section with variance `> τ` has `L_j ≥ η` whenever `144 K⁴ η² ≤ τ³`
+  (`Influence.mean_increment`: `Var³ ≤ 144 K⁴ L_j²`, Turturean's Theorem 7.10 on product spaces).
+* So `η · E[#queries] ≤ L(f) ≤ K` (`expected_queries`), unfinished leaves need the full `n`
+  queries (`bad_queries`), and finished leaves have error variance `≤ τ` (`leaf_error`).
+* `simulation_rows`: `Pr[|f − Q̃| > ε] ≤ K / (η n) + τ / ε²`. With `τ = ε² δ / 2` and
+  `η = τ^{3/2} / (12 K²)` this gives the theorem.
+
+No boundedness or degree is used beyond the existence of rows, so `simulation_rows` holds for any
+function with rows of cost `K` on any finite product law.
+
+**Scope of the Lean statement.** One alphabet `α` for all coordinates. Different alphabets per
+coordinate reduce to it by padding with zero-mass symbols; for a quantum algorithm the padded
+oracle strings are still valid inputs, so `Q` stays in `[0, 1]` there. The quantum-to-polynomial
+step (A) is on paper, not in Lean; the Lean theorem takes `f` of degree `≤ d` as its interface.
+
+**Is it optimal?** Not known. `d = Θ(T)` and the row cost `K = Θ(d²)` is attained for degree-`d`
+functions, so within this method the `T⁶` comes from `K³` in `mean_increment` and the potential.
+Beating it needs a better increment inequality than `Var³ ≤ 144 K⁴ L_j²` or a different potential.
+We know no lower bound matching `T⁶ ε⁻³ δ^{−5/2}`. The HMP bound `O(Q(f)⁶ / (εδ)²)` is for a
+different task (computing a partial Boolean function on a dense domain, uniform cube only), so it
+is not directly comparable.
+
+---
+
+The original paper proof follows. Its §§2(A)–(E) and §6 still apply; §§3–5 are superseded by the
+update above.
 
 ## 1. Statement
 

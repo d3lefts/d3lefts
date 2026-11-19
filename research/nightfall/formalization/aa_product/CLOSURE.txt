@@ -175,3 +175,4 @@ AaronsonAmbainis.Bridge.Affine research/nightfall/formalization/vendor/aaronson_
 AaronsonAmbainis.Bridge.PrintedAA research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/PrintedAA.lean
 AaronsonAmbainis.Conjecture research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Conjecture.lean
 CubePrintedAA research/nightfall/formalization/product_space/CubePrintedAA.lean
+ProductSimulation research/nightfall/formalization/product_space/ProductSimulation.lean
