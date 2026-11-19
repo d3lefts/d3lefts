@@ -1,0 +1,41 @@
+name: NIGHTFALL binary Q2 FUR independent exact audit
+on:
+  push:
+    branches:
+      - nightfall-fur-q2-grothendieck-20261119
+  pull_request:
+    paths:
+      - 'research/nightfall/mixture_aa/FUR_Q2_GROTHENDIECK_BINARY_20261119.md'
+      - 'research/nightfall/mixture_aa/fur_q2_binary/check_binary_fur_q2_exact.py'
+      - '.github/workflows/nightfall-fur-q2-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  binary-q2-fur-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact Fraction verification with zero-atom latent controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/mixture_aa/fur_q2_binary/check_binary_fur_q2_exact.py | tee /tmp/fur-q2-exact.log
+          grep -Fq "PASS 222165 exact assertions, 114 fully certified-instance row weights, 216960 ordered input pairs, 96 hidden-coordinate coupling cases." /tmp/fur-q2-exact.log
+          grep -Fq "LIMIT: universal GP factorization" /tmp/fur-q2-exact.log
+          sha256sum research/nightfall/mixture_aa/fur_q2_binary/check_binary_fur_q2_exact.py research/nightfall/mixture_aa/FUR_Q2_GROTHENDIECK_BINARY_20261119.md | tee /tmp/fur-q2-sha256.txt
+          echo "CI_HEAD_SHA=$GITHUB_SHA" | tee /tmp/fur-q2-head.txt
+      - name: Immutable reproducibility receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fur-q2-binary-exact-receipt
+          path: |
+            /tmp/fur-q2-exact.log
+            /tmp/fur-q2-sha256.txt
+            /tmp/fur-q2-head.txt
+          retention-days: 60
+          if-no-files-found: warn
