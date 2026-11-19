@@ -7,6 +7,7 @@ on:
       - 'research/nightfall/strong_simulation_progress/check_strong_product_transfer_exact.py'
       - 'research/nightfall/formalization/product_space/StrongProductTransferConditional.lean'
       - 'research/nightfall/formalization/product_space/StrongDyadicRounding.lean'
+      - 'research/nightfall/formalization/product_space/StrongOneSidedCoupling.lean'
       - '.github/workflows/nightfall-strong-product-transfer-exact.yml'
   pull_request:
     paths:
@@ -45,6 +46,17 @@ jobs:
             grep -Fq "Nightfall.StrongDyadicRounding.$name' depends on axioms:" product-transfer-lean-receipts/dyadic-rounding.log
           done
           ! grep -E 'sorryAx|Lean.ofReduceBool' product-transfer-lean-receipts/dyadic-rounding.log
+          COUPLING=research/nightfall/formalization/product_space/StrongOneSidedCoupling.lean
+          if grep -En '\bsorry\b|\badmit\b|sorryAx|^[[:space:]]*axiom\b|native_decide|unsafe' "$COUPLING"; then
+            echo 'Disallowed coupling proof gap'; exit 1
+          fi
+          cp "$COUPLING" /tmp/mathlib4/StrongOneSidedCoupling.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/StrongOneSidedCoupling.olean StrongOneSidedCoupling.lean) 2>&1 | tee product-transfer-lean-receipts/one-sided-coupling.log
+          ! grep -E 'error:|sorryAx|declaration uses .sorry' product-transfer-lean-receipts/one-sided-coupling.log
+          for name in kernel_nonneg kernel_sum_one kernel_pushforward; do
+            grep -Fq "Nightfall.StrongOneSidedCoupling.$name' depends on axioms:" product-transfer-lean-receipts/one-sided-coupling.log
+          done
+          ! grep -E 'sorryAx|Lean.ofReduceBool' product-transfer-lean-receipts/one-sided-coupling.log
           cp "$SRC" /tmp/mathlib4/StrongProductTransferConditional.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/StrongProductTransferConditional.olean StrongProductTransferConditional.lean) 2>&1 | tee product-transfer-lean-receipts/compile.log
           ! grep -E 'error:|sorryAx|declaration uses .sorry|unknown constant' product-transfer-lean-receipts/compile.log
@@ -58,7 +70,7 @@ jobs:
         run: |
           mkdir -p product-transfer-lean-receipts
           git rev-parse HEAD > product-transfer-lean-receipts/head.txt
-          sha256sum research/nightfall/formalization/product_space/{StrongProductTransferConditional,StrongDyadicRounding}.lean > product-transfer-lean-receipts/source.sha256
+          sha256sum research/nightfall/formalization/product_space/{StrongProductTransferConditional,StrongDyadicRounding,StrongOneSidedCoupling}.lean > product-transfer-lean-receipts/source.sha256
           cp /tmp/nightfall-lean-version.txt product-transfer-lean-receipts/lean-version.txt 2>/dev/null || true
           echo 'CONDITIONAL_FINITE_PROBABILITY_CORE_ONLY; NOT BDST / NOT QUANTUM PRODUCT TRANSFER' > product-transfer-lean-receipts/status.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
