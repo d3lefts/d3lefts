@@ -65,3 +65,16 @@ once at every one of its coordinates at the anchor, for a total of `8d²`**.
 * **E. Weaker sufficient statement.** Route 1 only needs FUR **in expectation under one product
   law** (`E_{x∼ν̄} ∑_i α_i(x_{−i}) ≤ C`), not pointwise. Check whether Lemma P plus the plain row bound
   already gives that version.
+
+## Update (2026-11-19, 18:45): Approach A is false
+
+External check (GPT audit of `8640ce8`): `f(x) = (1 − x_1)(1 − x_2 x_3)` on `{0,1}^3` (degree 3) has
+plain row cost 2 and fiber cost 5/2. Reproduced exactly with `fiber_lp.py`. The audit also reports a
+degree-2 instance on 4 bits with costs 7/4 vs 15/8 (function not recorded here; not reproduced).
+So fiber cost = plain cost fails on the Boolean cube, and the earlier "exact on 0/1 inputs" reading of
+`growth.py` was too strong: random instances simply missed these.
+
+This does not refute FUR with `C(d) = poly(d)`. On the family `(1 − x_1)(1 − x_2 ⋯ x_n)`,
+`n = 3 … 7`, the gap appears only at `n = 3` (2 vs 2.5) and is 0 for `n = 4 … 7`. Largest ratio seen
+so far: 1.28 (alphabet 4). Approach A should be restated as "fiber cost ≤ c · plain cost" or
+"fiber cost ≤ C(d)", not equality.
