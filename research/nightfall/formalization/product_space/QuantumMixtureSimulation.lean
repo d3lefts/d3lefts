@@ -103,7 +103,7 @@ theorem unitary_circuit_mixture_delta
   refine ⟨t, ht, ?_⟩
   have hε2 : ε ^ 2 ≠ 0 := ne_of_gt (by positivity)
   have hleaf : (ε ^ 2 * δ / 2) / ε ^ 2 = δ / 2 := by
-    field_simp
+    field_simp [hε2] <;> ring
   calc
     _ ≤ (3 * Real.sqrt 2 * Real.pi ^ 6 * ((2 * T : ℕ) : ℝ) ^ 6 *
            Fintype.card Θ /
