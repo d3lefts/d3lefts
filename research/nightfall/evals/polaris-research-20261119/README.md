@@ -19,7 +19,7 @@ The supplied example is a smoke test. For scored evaluation, create held-out var
 
 ## ProofGraph-Hard v0.1 grading prototype
 
-The [ProofGraph-Hard protocol](proofgraph_hard/PROTOCOL.md) defines a SHA-256-pinned trusted theorem, narrow proof-only overlay, grader-owned axiom audit, fake-runner mutation tests, and pinned Lean CI smoke + leanchecker replay. The public example proves only natural-number addition commutativity; it is **not a research-level task**. No model evaluation, independent proof review, or research-grade unified Lake integration is claimed. The Python harness is **not a security sandbox**; execute candidate Lean code only in restricted isolation.
+The [evidence-backed ProofGraph-Hard portfolio card](proofgraph_hard/PORTFOLIO_CARD.md) and [ProofGraph-Hard protocol](proofgraph_hard/PROTOCOL.md) defines a SHA-256-pinned trusted theorem, narrow proof-only overlay, grader-owned axiom audit, fake-runner mutation tests, and pinned Lean CI smoke + leanchecker replay. The public example proves only natural-number addition commutativity; it is **not a research-level task**. No model evaluation, independent proof review, or research-grade unified Lake integration is claimed. The Python harness is **not a security sandbox**; execute candidate Lean code only in restricted isolation.
 
 ## ProofGraph task specification
 Input: a clean checkout pinned to a stated commit, a fixed Lean toolchain, and a manifest of required declaration names, modules, and allowed axioms. Agent task: integrate imports into the generated Lake manifest, resolve conflicts without weakening declarations, and provide machine-readable receipts.
