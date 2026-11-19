@@ -1,0 +1,57 @@
+name: NIGHTFALL FUR degree-2 coupling and Grothendieck numerical audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/mixture_aa/FUR_*20261119.md'
+      - 'research/nightfall/mixture_aa/*fur*exact_audit.py'
+      - '.github/workflows/nightfall-fur-q2-coupling-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  binary-q2-exact-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact quadratic coupling and Grothendieck falsifier tests
+        run: |
+          python3 -m unittest discover -s research/nightfall/mixture_aa -p 'test_fur*exact_audit.py' -v
+      - name: Pointwise independent product-pair degree-two arithmetic audit
+        run: |
+          python3 research/nightfall/mixture_aa/fur_pointwise_exact_audit.py > "$RUNNER_TEMP/fur-pointwise-exact.json"
+      - name: Arbitrarily correlated binary quadratic coupling audit
+        run: |
+          python3 research/nightfall/mixture_aa/fur_q2_grothendieck_exact_audit.py > "$RUNNER_TEMP/fur-grothendieck-exact.json"
+      - name: Enforce status and non-promotion gates
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])
+          a=json.loads((root/'fur-pointwise-exact.json').read_text())
+          b=json.loads((root/'fur-grothendieck-exact.json').read_text())
+          assert a['num_quadratic_trials']==16 and a['status']=='finite-exact-tests-pass'
+          assert b['random_correlated_couplings']==16
+          assert b['status']=='exact-finite-falsification-controls-pass'
+          assert b['real_grothendieck_proved_here'] is False
+          assert b['lean_certified'] is False and b['full_FUR_all_alphabets'] is False
+          assert a['complete_FUR'] is False
+          print('PASS: two exact 16-instance falsifier families, no false theorem promotion')
+          PY
+      - name: Archive scope-limited exact arithmetic receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fur-degree2-exact-falsification
+          path: |
+            ${{ runner.temp }}/fur-pointwise-exact.json
+            ${{ runner.temp }}/fur-grothendieck-exact.json
+          if-no-files-found: warn
