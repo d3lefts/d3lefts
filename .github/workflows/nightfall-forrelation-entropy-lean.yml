@@ -1,0 +1,60 @@
+name: NIGHTFALL Forrelation conditional entropy terminals (pinned Lean)
+
+on:
+  push:
+    branches: [nightfall-forrelation-entropy-lean-20261118]
+    paths:
+      - 'research/nightfall/formalization/forrelation/**'
+      - '.github/workflows/nightfall-forrelation-entropy-lean.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/forrelation/**'
+      - '.github/workflows/nightfall-forrelation-entropy-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  conditional-entropy-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact conditional Forrelation Lean source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/forrelation/ForrelationEntropyObstruction.lean /tmp/mathlib4/ForrelationEntropyObstruction.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ForrelationEntropyObstruction.olean ForrelationEntropyObstruction.lean 2>&1 | tee "$GITHUB_WORKSPACE/forrelation-build.log")
+          ! grep -q "declaration uses .sorry" forrelation-build.log
+      - name: Strict named declaration and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/forrelation
+          F=Nightfall.Forrelation.EntropyCore
+          python3 scripts/lean_bridge.py research/nightfall/formalization/forrelation/ForrelationEntropyObstruction.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl "$F.exact_conditional_terminal" \
+            --decl "$F.tv_robust_conditional_terminal" \
+            --json-out lean-receipts/forrelation/conditional-receipt.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/forrelation/conditional-receipt.json
+      - name: Pin source and compiler provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/forrelation
+          git rev-parse HEAD > lean-receipts/forrelation/commit
+          sha256sum research/nightfall/formalization/forrelation/ForrelationEntropyObstruction.lean > lean-receipts/forrelation/source.sha256
+          cp lean-toolchain lean-receipts/forrelation/lean-toolchain
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-forrelation-conditional-${{ github.run_id }}
+          path: lean-receipts/forrelation
+          if-no-files-found: warn
