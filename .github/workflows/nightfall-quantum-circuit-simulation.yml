@@ -58,6 +58,7 @@ jobs:
             --decl "Nightfall.ProductSpace.QuantumPath.pathBorn_degree" \
             --decl "Nightfall.ProductSpace.QuantumPath.pathBorn_simulation" \
             --decl "Nightfall.ProductSpace.QuantumCircuitSimulation.acceptance_eq_pathBorn" \
+            --decl "Nightfall.ProductSpace.QuantumCircuitSimulation.acceptance_degree" \
             --decl "Nightfall.ProductSpace.QuantumCircuitSimulation.circuit_uniform_simulation" \
             --json-out lean-receipts/quantum-simulation/receipt.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/quantum-simulation/receipt.json
@@ -65,9 +66,11 @@ jobs:
           import QuantumCircuitSimulation
           #check @Nightfall.QuantumCircuitPaths.execute_eq_path_sum
           #check @Nightfall.ProductSpace.QuantumPath.pathBorn_degree
+          #check @Nightfall.ProductSpace.QuantumCircuitSimulation.acceptance_degree
           #check @Nightfall.ProductSpace.QuantumCircuitSimulation.circuit_uniform_simulation
           #print axioms Nightfall.QuantumCircuitPaths.execute_eq_path_sum
           #print axioms Nightfall.ProductSpace.QuantumPath.pathBorn_degree
+          #print axioms Nightfall.ProductSpace.QuantumCircuitSimulation.acceptance_degree
           #print axioms Nightfall.ProductSpace.QuantumCircuitSimulation.circuit_uniform_simulation
           LEAN
           (cd /tmp/mathlib4 && lake env lean QuantumSimulationAudit.lean) | tee lean-receipts/quantum-simulation/axioms.txt
