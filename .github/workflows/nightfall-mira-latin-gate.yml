@@ -1,0 +1,52 @@
+name: NIGHTFALL Mira Latin exact-gate kernel audit
+
+on:
+  pull_request:
+    paths:
+      - 'Nightfall/LatinSquare/**'
+      - '.github/workflows/nightfall-mira-latin-gate.yml'
+      - 'lean-toolchain'
+      - 'lakefile.toml'
+      - 'docs/lean-compiler-lock.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  latin-gate-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Resolve exact pinned dependency revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake update
+          python3 scripts/check_nightfall_compiler_lock.py --checkout . \
+            --installed-mathlib .lake/packages/mathlib \
+            --lean-version-file /tmp/nightfall-lean-version.txt
+          lake exe cache get
+      - name: Compile the exact rational identities with pinned Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/latin
+          lake env lean Nightfall/LatinSquare/ExactFlattening.lean 2>&1 | tee lean-receipts/latin/lean.log
+          grep -F 'Nightfall.LatinSquare.flattenMass_eq' lean-receipts/latin/lean.log
+          grep -F 'Nightfall.LatinSquare.soft_forward_sum' lean-receipts/latin/lean.log
+          git rev-parse HEAD > lean-receipts/latin/repo-head.txt
+          git -C .lake/packages/mathlib rev-parse HEAD > lean-receipts/latin/mathlib-head.txt
+          sha256sum Nightfall/LatinSquare/ExactFlattening.lean lean-toolchain docs/lean-compiler-lock.json > lean-receipts/latin/source-sha256.txt
+      - name: Preserve theorem-source and compiler evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-mira-latin-gate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/latin/
+          if-no-files-found: warn
+          retention-days: 30
