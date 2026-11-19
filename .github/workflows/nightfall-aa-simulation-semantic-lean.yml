@@ -37,9 +37,11 @@ jobs:
           #check @Nightfall.QuerySimulation.OriginalLaw.source_pin_tower
           #check @Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_self
           #check @Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_other_expectation
+          #check @Nightfall.QuerySimulation.OriginalLaw.totalDoubleInfluence_pin_expectation
           #print axioms Nightfall.QuerySimulation.OriginalLaw.source_pin_tower
           #print axioms Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_self
           #print axioms Nightfall.QuerySimulation.OriginalLaw.doubleInfluence_pin_other_expectation
+          #print axioms Nightfall.QuerySimulation.OriginalLaw.totalDoubleInfluence_pin_expectation
           LEAN
           (cd /tmp/mathlib4 && lake env lean SimulationSemanticAudit.lean) | tee semantic-axioms.txt
           ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' semantic-axioms.txt
