@@ -71,7 +71,7 @@ theorem foldl_update_preserves (js : List ι) (ρ x : ι → α) (i : ι)
     by_cases h : j = i
     · subst j
       simp
-    · simpa [Function.update, h] using hi
+    · simpa [Function.update, Ne.symm h] using hi
 
 /-- Every index appearing in the queried list agrees with the source
 input in the assembled final word. No distinctness assumption is needed. -/
