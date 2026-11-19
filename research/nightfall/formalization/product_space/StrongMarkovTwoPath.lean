@@ -37,7 +37,7 @@ theorem bias_free_two_path_stability
     rw [← hstart]
     ring
   rw [heq]
-  rw [abs_sub_comm (Pv.eval 0)] at hv
+  rw [abs_sub_comm (Pv.eval 1) (Pv.eval 0)] at hv
   nlinarith
 
 end Nightfall.BiasFreeMarkov
