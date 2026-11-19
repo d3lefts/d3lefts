@@ -103,7 +103,7 @@ theorem latentSupport_card
           Finset.card_union_le _ _
         _ ≤ b + b * S.card := Nat.add_le_add (hdeps i) ih
         _ = b * (insert i S).card := by
-          rw [Finset.card_insert_of_notMem hi]
+          rw [Finset.card_insert_of_notMem hi, mul_add, mul_one]
           omega
 
 /-- An observed indicator monomial becomes a latent junta on the union of dependencies. -/
