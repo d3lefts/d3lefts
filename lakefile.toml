@@ -228,6 +228,32 @@ globs = [
 ]
 
 [[lean_lib]]
+name = "LegacyProductSpace"
+srcDir = "research/nightfall/formalization/product_space"
+roots = [
+  "CubePrintedAA",
+  "EfronSteinDegree",
+  "HeterogeneousAlphabets",
+  "MixedDifferenceDegree",
+  "MixtureSimulation",
+  "ProductInfluence",
+  "ProductRowBound",
+  "ProductSimulation",
+  "ProductSpaceTwoSidedBridge"
+]
+globs = [
+  "CubePrintedAA",
+  "EfronSteinDegree",
+  "HeterogeneousAlphabets",
+  "MixedDifferenceDegree",
+  "MixtureSimulation",
+  "ProductInfluence",
+  "ProductRowBound",
+  "ProductSimulation",
+  "ProductSpaceTwoSidedBridge"
+]
+
+[[lean_lib]]
 name = "LegacyQ2Shifted"
 srcDir = "research/nightfall/formalization/q2_shifted"
 roots = [
@@ -249,6 +275,10 @@ globs = [
 name = "LegacyUniversal"
 srcDir = "research/nightfall/formalization/universal"
 roots = [
+  "InfinitePiAAProductTerminal",
+  "InfinitePiAllDegreeFiniteIndicators",
+  "InfinitePiAllDegreeFiniteResidualBridge",
+  "InfinitePiAllDegreeLabelTransfer",
   "InfinitePiQ2ActiveFiniteLabelCondExp",
   "InfinitePiQ2AdjointTransfer",
   "InfinitePiQ2AllL2LabelIntertwining",
@@ -274,6 +304,7 @@ roots = [
   "InfinitePiQ2NativeSupportedTerminal",
   "InfinitePiQ2OriginalHeatBath",
   "InfinitePiQ2OriginalIndependence",
+  "InfinitePiQ2OriginalLabelResidualTransfer",
   "InfinitePiQ2OriginalLabelTransport",
   "InfinitePiQ2RangeProjectionTransfer",
   "InfinitePiQ2SourceHilbertTensor",
@@ -284,6 +315,10 @@ roots = [
   "InfinitePiQ2ZeroCellSourceInvariance"
 ]
 globs = [
+  "InfinitePiAAProductTerminal",
+  "InfinitePiAllDegreeFiniteIndicators",
+  "InfinitePiAllDegreeFiniteResidualBridge",
+  "InfinitePiAllDegreeLabelTransfer",
   "InfinitePiQ2ActiveFiniteLabelCondExp",
   "InfinitePiQ2AdjointTransfer",
   "InfinitePiQ2AllL2LabelIntertwining",
@@ -309,6 +344,7 @@ globs = [
   "InfinitePiQ2NativeSupportedTerminal",
   "InfinitePiQ2OriginalHeatBath",
   "InfinitePiQ2OriginalIndependence",
+  "InfinitePiQ2OriginalLabelResidualTransfer",
   "InfinitePiQ2OriginalLabelTransport",
   "InfinitePiQ2RangeProjectionTransfer",
   "InfinitePiQ2SourceHilbertTensor",
@@ -317,4 +353,114 @@ globs = [
   "InfinitePiQ2TaggedSourceTransport",
   "InfinitePiQ2UnconditionalTerminal",
   "InfinitePiQ2ZeroCellSourceInvariance"
+]
+
+[[lean_lib]]
+name = "UpstreamAaronsonAmbainis"
+srcDir = "research/nightfall/formalization/vendor/aaronson_ambainis"
+roots = [
+  "AaronsonAmbainis.AllPairsDefs",
+  "AaronsonAmbainis.Bridge.Affine",
+  "AaronsonAmbainis.Bridge.Algebra",
+  "AaronsonAmbainis.Bridge.Basic",
+  "AaronsonAmbainis.Bridge.Fourier",
+  "AaronsonAmbainis.Bridge.Poly",
+  "AaronsonAmbainis.Bridge.Positivity",
+  "AaronsonAmbainis.Bridge.PrintedAA",
+  "AaronsonAmbainis.Conjecture",
+  "AaronsonAmbainis.Defs",
+  "AaronsonAmbainis.DetBij.Basic",
+  "AaronsonAmbainis.DetBij.Identity",
+  "AaronsonAmbainis.DetBij.Main",
+  "AaronsonAmbainis.DetBij.Perm",
+  "AaronsonAmbainis.DetDefs",
+  "AaronsonAmbainis.DetLow.Basic",
+  "AaronsonAmbainis.DetLow.Count",
+  "AaronsonAmbainis.DetLow.Degree",
+  "AaronsonAmbainis.DetLow.Main",
+  "AaronsonAmbainis.DetLow.NonZero",
+  "AaronsonAmbainis.DetLow.RowOps",
+  "AaronsonAmbainis.DetLow.Unit",
+  "AaronsonAmbainis.DetTheorem",
+  "AaronsonAmbainis.Dual.Core",
+  "AaronsonAmbainis.Dual.Cover",
+  "AaronsonAmbainis.Dual.Functional",
+  "AaronsonAmbainis.Dual.Main",
+  "AaronsonAmbainis.Dual.Row",
+  "AaronsonAmbainis.Dual.RowAux",
+  "AaronsonAmbainis.Dual.Sets",
+  "AaronsonAmbainis.Level.Basic",
+  "AaronsonAmbainis.Level.Integral",
+  "AaronsonAmbainis.Pack.Blocks",
+  "AaronsonAmbainis.Pack.Gate",
+  "AaronsonAmbainis.Pack.Main",
+  "AaronsonAmbainis.Pack.Packing",
+  "AaronsonAmbainis.Pack.Scaled",
+  "AaronsonAmbainis.Row.Block",
+  "AaronsonAmbainis.Row.Chi",
+  "AaronsonAmbainis.Row.Degree",
+  "AaronsonAmbainis.Row.Extension",
+  "AaronsonAmbainis.Row.Gadget",
+  "AaronsonAmbainis.Row.Main",
+  "AaronsonAmbainis.Row.Markov",
+  "AaronsonAmbainis.Row.Sensitivity",
+  "AaronsonAmbainis.RowDefs",
+  "AaronsonAmbainis.Statements",
+  "AaronsonAmbainis.TwoSided.Antipodal",
+  "AaronsonAmbainis.TwoSided.Basic",
+  "AaronsonAmbainis.TwoSided.CauchySchwarz",
+  "AaronsonAmbainis.TwoSided.Overlap"
+]
+globs = [
+  "AaronsonAmbainis.AllPairsDefs",
+  "AaronsonAmbainis.Bridge.Affine",
+  "AaronsonAmbainis.Bridge.Algebra",
+  "AaronsonAmbainis.Bridge.Basic",
+  "AaronsonAmbainis.Bridge.Fourier",
+  "AaronsonAmbainis.Bridge.Poly",
+  "AaronsonAmbainis.Bridge.Positivity",
+  "AaronsonAmbainis.Bridge.PrintedAA",
+  "AaronsonAmbainis.Conjecture",
+  "AaronsonAmbainis.Defs",
+  "AaronsonAmbainis.DetBij.Basic",
+  "AaronsonAmbainis.DetBij.Identity",
+  "AaronsonAmbainis.DetBij.Main",
+  "AaronsonAmbainis.DetBij.Perm",
+  "AaronsonAmbainis.DetDefs",
+  "AaronsonAmbainis.DetLow.Basic",
+  "AaronsonAmbainis.DetLow.Count",
+  "AaronsonAmbainis.DetLow.Degree",
+  "AaronsonAmbainis.DetLow.Main",
+  "AaronsonAmbainis.DetLow.NonZero",
+  "AaronsonAmbainis.DetLow.RowOps",
+  "AaronsonAmbainis.DetLow.Unit",
+  "AaronsonAmbainis.DetTheorem",
+  "AaronsonAmbainis.Dual.Core",
+  "AaronsonAmbainis.Dual.Cover",
+  "AaronsonAmbainis.Dual.Functional",
+  "AaronsonAmbainis.Dual.Main",
+  "AaronsonAmbainis.Dual.Row",
+  "AaronsonAmbainis.Dual.RowAux",
+  "AaronsonAmbainis.Dual.Sets",
+  "AaronsonAmbainis.Level.Basic",
+  "AaronsonAmbainis.Level.Integral",
+  "AaronsonAmbainis.Pack.Blocks",
+  "AaronsonAmbainis.Pack.Gate",
+  "AaronsonAmbainis.Pack.Main",
+  "AaronsonAmbainis.Pack.Packing",
+  "AaronsonAmbainis.Pack.Scaled",
+  "AaronsonAmbainis.Row.Block",
+  "AaronsonAmbainis.Row.Chi",
+  "AaronsonAmbainis.Row.Degree",
+  "AaronsonAmbainis.Row.Extension",
+  "AaronsonAmbainis.Row.Gadget",
+  "AaronsonAmbainis.Row.Main",
+  "AaronsonAmbainis.Row.Markov",
+  "AaronsonAmbainis.Row.Sensitivity",
+  "AaronsonAmbainis.RowDefs",
+  "AaronsonAmbainis.Statements",
+  "AaronsonAmbainis.TwoSided.Antipodal",
+  "AaronsonAmbainis.TwoSided.Basic",
+  "AaronsonAmbainis.TwoSided.CauchySchwarz",
+  "AaronsonAmbainis.TwoSided.Overlap"
 ]

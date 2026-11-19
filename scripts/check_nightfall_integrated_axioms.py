@@ -28,6 +28,20 @@ TARGETS = [
     "Nightfall.InfinitePiQ2UnconditionalTerminal.infinitePi_q2_105416_unconditional_variance",
     "Nightfall.InfinitePiQ2HoeffdingDegree.hoeffdingDegreeLeTwo_tripleResidualZero",
     "Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding",
+    "Nightfall.ProductSpace.Mixture.mixture_simulation_jensen",
+    "Nightfall.ProductSpace.Mixture.increment_good_jensen",
+    "Nightfall.ProductSpace.Mixture.power_mean",
+    "Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product",
+    "Nightfall.ProductSpace.CubeAA.mainTheorem_of_productSpace",
+    "Nightfall.ProductSpace.CubeAA.printedConjecture",
+    "Nightfall.ProductSpace.CubeAA.explicitBound",
+    "Nightfall.ProductSpace.Simulation.simulation_degree",
+    "Nightfall.ProductSpace.Simulation.simulation_rows",
+    "Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree",
+    "Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree_zero",
+    "Nightfall.InfinitePiAllDegreeFiniteIndicators.esDegreeLE_implies_indicatorDegreeLE",
+    "Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_ESDegreeLE",
+    "Nightfall.InfinitePiAllDegreeFiniteResidualBridge.nativeResidualWords_imply_indicatorDegreeLE",
 ]
 
 
