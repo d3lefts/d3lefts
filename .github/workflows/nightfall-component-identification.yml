@@ -1,5 +1,12 @@
 name: NIGHTFALL component identification core (pinned 4.36)
 on:
+  push:
+    branches:
+      - nightfall-fixedpoint-closure-20261119
+    paths:
+      - 'research/nightfall/formalization/product_space/StrongSmoothingBase.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingMoment.lean'
+      - '.github/workflows/nightfall-component-identification.yml'
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/ComponentIdentification.lean'
