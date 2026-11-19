@@ -29,6 +29,7 @@ jobs:
             '#print axioms Nightfall.StrongMixtureUnion.indicator_union_bound' \
             '#print axioms Nightfall.StrongMixtureUnion.component_failure_le' \
             '#print axioms Nightfall.StrongMixtureUnion.mixture_event_mass_eq' \
-            '#print axioms Nightfall.StrongMixtureUnion.mixture_event_mass_le' > UnionAxioms.lean
+            '#print axioms Nightfall.StrongMixtureUnion.mixture_event_mass_le' \
+            '#print axioms Nightfall.StrongMixtureUnion.frozen_mixture_failure_le' > UnionAxioms.lean
           lake env lean UnionAxioms.lean | tee /tmp/union-axioms.txt
           if grep -q "sorryAx" /tmp/union-axioms.txt; then exit 1; fi
