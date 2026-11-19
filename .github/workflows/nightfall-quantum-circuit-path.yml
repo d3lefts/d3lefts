@@ -1,0 +1,58 @@
+name: NIGHTFALL finite quantum circuit path extraction (pinned Lean)
+on:
+  push:
+    branches: [nightfall-unitary-oracle-path-extraction-20261118]
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumCircuitPaths.lean'
+      - '.github/workflows/nightfall-quantum-circuit-path.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumCircuitPaths.lean'
+      - '.github/workflows/nightfall-quantum-circuit-path.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  circuit-to-path:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel-check circuit extraction against pinned Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/QuantumCircuitPaths.lean /tmp/mathlib4/QuantumCircuitPaths.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuantumCircuitPaths.olean QuantumCircuitPaths.lean 2>&1 | tee "$GITHUB_WORKSPACE/quantum-circuit-path-compile.log")
+          ! grep -E 'sorryAx|declaration uses .sorry' quantum-circuit-path-compile.log
+      - name: Named theorem and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat >/tmp/mathlib4/QuantumCircuitPathsAudit.lean <<'LEAN'
+          import QuantumCircuitPaths
+          #check @Nightfall.QuantumCircuitPaths.execute_eq_path_sum
+          #print axioms Nightfall.QuantumCircuitPaths.execute_eq_path_sum
+          LEAN
+          (cd /tmp/mathlib4 && lake env lean QuantumCircuitPathsAudit.lean) | tee quantum-circuit-path-axioms.txt
+          ! grep -E 'sorryAx|error:' quantum-circuit-path-axioms.txt
+          mkdir -p lean-receipts/quantum-circuit-path
+          cp quantum-circuit-path-axioms.txt lean-receipts/quantum-circuit-path/axioms.txt
+      - name: Preserve source and compiler identity
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/quantum-circuit-path
+          git rev-parse HEAD > lean-receipts/quantum-circuit-path/head
+          sha256sum research/nightfall/formalization/product_space/QuantumCircuitPaths.lean > lean-receipts/quantum-circuit-path/source.sha256
+          cp quantum-circuit-path-compile.log lean-receipts/quantum-circuit-path/compile.log 2>/dev/null || true
+          cp /tmp/nightfall-lean-version.txt lean-receipts/quantum-circuit-path/compiler.txt 2>/dev/null || true
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-quantum-circuit-path-${{ github.run_id }}
+          path: lean-receipts/quantum-circuit-path
+          if-no-files-found: warn
