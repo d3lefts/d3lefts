@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/QuantumHybridTelescope.lean'
       - 'research/nightfall/formalization/product_space/QuantumOracleMismatch.lean'
+      - 'research/nightfall/formalization/product_space/QuantumValueOracleDiscrepancy.lean'
       - '.github/workflows/nightfall-quantum-hybrid-telescope.yml'
   push:
     branches:
@@ -44,7 +45,18 @@ jobs:
           for lemma in indexwise_oracle_discrepancy_sq indexwise_oracle_discrepancy; do
             grep -Fq "Nightfall.QuantumOracleMismatch.$lemma' depends on axioms:" /tmp/oracle-mismatch.log
           done
-          sha256sum "$SRC" "$LOCAL" | tee /tmp/hybrid-telescope-sha256.txt
+          SRCVALUE="research/nightfall/formalization/product_space/QuantumValueOracleDiscrepancy.lean"
+          if grep -En '\bsorry\b|\badmit\b|sorryAx|^[[:space:]]*axiom\b|native_decide|unsafe' "$SRCVALUE"; then
+            echo "Forbidden proof gap"; exit 1
+          fi
+          cp "$SRCVALUE" /tmp/mathlib4/QuantumValueOracleDiscrepancy.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuantumValueOracleDiscrepancy.olean QuantumValueOracleDiscrepancy.lean) 2>&1 | tee /tmp/value-oracle-discrepancy.log
+          ! grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/value-oracle-discrepancy.log
+          for lemma in sqmag_sub_le sum_sqmag_shift value_oracle_discrepancy_sq_le; do
+            grep -Fq "Nightfall.QuantumValueOracleDiscrepancy.$lemma' depends on axioms:" /tmp/value-oracle-discrepancy.log
+          done
+          ! grep -E 'depends on axioms:.*(sorryAx|Lean.ofReduceBool)' /tmp/value-oracle-discrepancy.log
+          sha256sum "$SRC" "$LOCAL" "$SRCVALUE" | tee /tmp/hybrid-telescope-sha256.txt
       - name: Preserve compiler receipt
         if: always()
         uses: actions/upload-artifact@v4
@@ -53,6 +65,7 @@ jobs:
           path: |
             /tmp/hybrid-telescope.log
             /tmp/oracle-mismatch.log
+            /tmp/value-oracle-discrepancy.log
             /tmp/hybrid-telescope-sha256.txt
           retention-days: 60
           if-no-files-found: warn
