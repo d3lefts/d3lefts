@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/strong_simulation_progress/STRONG_PRODUCT_TRANSFER_THEOREM_P_REVISED_20261119.md'
       - 'research/nightfall/strong_simulation_progress/check_strong_product_transfer_exact.py'
       - 'research/nightfall/formalization/product_space/StrongProductTransferConditional.lean'
+      - 'research/nightfall/formalization/product_space/StrongDyadicRounding.lean'
       - '.github/workflows/nightfall-strong-product-transfer-exact.yml'
   pull_request:
     paths:
@@ -33,6 +34,17 @@ jobs:
           if grep -En '\bsorry\b|\badmit\b|sorryAx|^\s*axiom\b|native_decide|unsafe' "$SRC"; then
             echo 'Disallowed gap or axiom marker'; exit 1
           fi
+          ROUND=research/nightfall/formalization/product_space/StrongDyadicRounding.lean
+          if grep -En '\bsorry\b|\badmit\b|sorryAx|^[[:space:]]*axiom\b|native_decide|unsafe' "$ROUND"; then
+            echo 'Disallowed rounding proof gap'; exit 1
+          fi
+          cp "$ROUND" /tmp/mathlib4/StrongDyadicRounding.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/StrongDyadicRounding.olean StrongDyadicRounding.lean) 2>&1 | tee product-transfer-lean-receipts/dyadic-rounding.log
+          ! grep -E 'error:|sorryAx|declaration uses .sorry' product-transfer-lean-receipts/dyadic-rounding.log
+          for name in upperGrid_ge upperGrid_lt increment_nonneg increment_lt anchor_survives; do
+            grep -Fq "Nightfall.StrongDyadicRounding.$name' depends on axioms:" product-transfer-lean-receipts/dyadic-rounding.log
+          done
+          ! grep -E 'sorryAx|Lean.ofReduceBool' product-transfer-lean-receipts/dyadic-rounding.log
           cp "$SRC" /tmp/mathlib4/StrongProductTransferConditional.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/StrongProductTransferConditional.olean StrongProductTransferConditional.lean) 2>&1 | tee product-transfer-lean-receipts/compile.log
           ! grep -E 'error:|sorryAx|declaration uses .sorry|unknown constant' product-transfer-lean-receipts/compile.log
@@ -46,7 +58,7 @@ jobs:
         run: |
           mkdir -p product-transfer-lean-receipts
           git rev-parse HEAD > product-transfer-lean-receipts/head.txt
-          sha256sum research/nightfall/formalization/product_space/StrongProductTransferConditional.lean > product-transfer-lean-receipts/source.sha256
+          sha256sum research/nightfall/formalization/product_space/{StrongProductTransferConditional,StrongDyadicRounding}.lean > product-transfer-lean-receipts/source.sha256
           cp /tmp/nightfall-lean-version.txt product-transfer-lean-receipts/lean-version.txt 2>/dev/null || true
           echo 'CONDITIONAL_FINITE_PROBABILITY_CORE_ONLY; NOT BDST / NOT QUANTUM PRODUCT TRANSFER' > product-transfer-lean-receipts/status.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
