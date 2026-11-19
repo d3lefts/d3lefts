@@ -5,6 +5,7 @@ on:
     paths:
       - 'research/nightfall/latent_component_identification/**'
       - 'research/nightfall/formalization/product_space/LatentComponentArithmetic.lean'
+      - 'research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean'
       - '.github/workflows/nightfall-latent-component-identification.yml'
   workflow_dispatch:
 permissions:
@@ -42,12 +43,38 @@ jobs:
             --decl Nightfall.LatentComponent.bernoulli_variance_le_quarter \
             --json-out lean-receipts/latent-component/scalar-strict.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/latent-component/scalar-strict.json
+      - name: Compile full 179-module product-plus-mixture dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="${M//.//}"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" >"/tmp/log-$M.txt" 2>&1) || { tail -120 "/tmp/log-$M.txt"; exit 1; }
+            if grep -E 'declaration uses .sorry|sorryAx|error:' "/tmp/log-$M.txt"; then exit 1; fi
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Strict no-minimum-mass separation certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean
+          cp "$SRC" /tmp/mathlib4/LatentComponentCertifiedCore.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LatentComponentCertifiedCore.olean LatentComponentCertifiedCore.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 1800 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.ProductSpace.LatentComponent.fooling_tv_positive_gap \
+            --decl Nightfall.ProductSpace.LatentComponent.expectation_gap_forces_coordinate \
+            --json-out lean-receipts/latent-component/separation-strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/latent-component/separation-strict.json
       - name: Source and environment provenance
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts/latent-component
-          sha256sum research/nightfall/latent_component_identification/check_exact.py research/nightfall/formalization/product_space/LatentComponentArithmetic.lean > lean-receipts/latent-component/SHA256SUMS.txt
+          sha256sum research/nightfall/latent_component_identification/check_exact.py research/nightfall/formalization/product_space/LatentComponentArithmetic.lean research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean research/nightfall/formalization/aa_product/CLOSURE.txt > lean-receipts/latent-component/SHA256SUMS.txt
           git rev-parse HEAD > lean-receipts/latent-component/head.txt
           cat lean-toolchain > lean-receipts/latent-component/toolchain.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
