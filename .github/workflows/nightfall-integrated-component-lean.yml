@@ -12,6 +12,7 @@ on:
       - 'research/nightfall/formalization/product_space/MarginFreeOriginalClassifier.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeWeightedOriginal.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeWeightedTree.lean'
+      - 'research/nightfall/latent_component_identification/check_weighted_source_likelihood_exact.py'
       - 'research/nightfall/formalization/product_space/PinnedConditionalStability.lean'
       - 'research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean'
       - 'research/nightfall/formalization/aa_product/CLOSURE_PINNED.txt'
@@ -28,6 +29,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact weighted-source likelihood regression
+        run: python3 research/nightfall/latent_component_identification/check_weighted_source_likelihood_exact.py
       - name: Source pinned dependency closure (minimal 56 modules)
         shell: bash
         run: |
