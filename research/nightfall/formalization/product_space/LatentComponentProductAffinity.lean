@@ -38,10 +38,16 @@ theorem finite_product_affinity_factor
 theorem min_le_sqrt_mul_sqrt (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
     min a b ≤ Real.sqrt a * Real.sqrt b := by
   rcases le_total a b with h | h
-  · rw [min_eq_left h, ← Real.mul_self_sqrt ha]
-    exact mul_le_mul_of_nonneg_left (Real.sqrt_le_sqrt h) (Real.sqrt_nonneg a)
-  · rw [min_eq_right h, ← Real.mul_self_sqrt hb]
-    exact mul_le_mul_of_nonneg_right (Real.sqrt_le_sqrt h) (Real.sqrt_nonneg b)
+  · calc
+      min a b = a := min_eq_left h
+      _ = Real.sqrt a * Real.sqrt a := (Real.mul_self_sqrt ha).symm
+      _ ≤ Real.sqrt a * Real.sqrt b :=
+        mul_le_mul_of_nonneg_left (Real.sqrt_le_sqrt h) (Real.sqrt_nonneg a)
+  · calc
+      min a b = b := min_eq_right h
+      _ = Real.sqrt b * Real.sqrt b := (Real.mul_self_sqrt hb).symm
+      _ ≤ Real.sqrt a * Real.sqrt b :=
+        mul_le_mul_of_nonneg_right (Real.sqrt_le_sqrt h) (Real.sqrt_nonneg b)
 
 theorem finite_product_overlap_le_affinity
     (p q : ι → α → ℝ)
