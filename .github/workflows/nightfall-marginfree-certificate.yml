@@ -4,6 +4,9 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/ComponentIdentification.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeCertificate.lean'
+      - 'research/nightfall/formalization/product_space/MarginFreeFiniteTests.lean'
+      - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
+      - 'research/nightfall/formalization/product_space/StrongMixtureDuel.lean'
       - '.github/workflows/nightfall-marginfree-certificate.yml'
   workflow_dispatch:
 permissions:
@@ -23,22 +26,35 @@ jobs:
           set -euo pipefail
           cp research/nightfall/formalization/product_space/ComponentIdentification.lean /tmp/mathlib4/ComponentIdentification.lean
           cp research/nightfall/formalization/product_space/MarginFreeCertificate.lean /tmp/mathlib4/MarginFreeCertificate.lean
+          cp research/nightfall/formalization/product_space/MarginFreeFiniteTests.lean /tmp/mathlib4/MarginFreeFiniteTests.lean
+          cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
+          cp research/nightfall/formalization/product_space/StrongMixtureDuel.lean /tmp/mathlib4/StrongMixtureDuel.lean
           cd /tmp/mathlib4
           lake env lean -o .lake/build/lib/lean/ComponentIdentification.olean ComponentIdentification.lean 2>&1 | tee /tmp/finite-core.log
           lake env lean -o .lake/build/lib/lean/MarginFreeCertificate.olean MarginFreeCertificate.lean 2>&1 | tee /tmp/marginfree.log
-          if grep -E '(error:|declaration uses .sorry)' /tmp/finite-core.log /tmp/marginfree.log; then exit 1; fi
+          lake env lean -o .lake/build/lib/lean/LatentProductInterpolationDegree.olean LatentProductInterpolationDegree.lean 2>&1 | tee /tmp/interpolation.log
+          lake env lean -o .lake/build/lib/lean/StrongMixtureDuel.olean StrongMixtureDuel.lean 2>&1 | tee /tmp/duel.log
+          lake env lean -o .lake/build/lib/lean/MarginFreeFiniteTests.olean MarginFreeFiniteTests.lean 2>&1 | tee /tmp/finite-tests.log
+          if grep -E '(error:|declaration uses .sorry)' /tmp/finite-core.log /tmp/marginfree.log /tmp/interpolation.log /tmp/duel.log /tmp/finite-tests.log; then exit 1; fi
           cat > PrintMarginFreeAxioms.lean <<'LEAN'
-          import MarginFreeCertificate
+          import MarginFreeFiniteTests
+          import StrongMixtureDuel
           #print axioms Nightfall.MarginFreeCertificate.weighted_overlap
           #print axioms Nightfall.MarginFreeCertificate.rounding_mass_balance
           #print axioms Nightfall.MarginFreeCertificate.rounding_mass_bound
           #print axioms Nightfall.MarginFreeCertificate.rounding_conditional_mismatch
           #print axioms Nightfall.MarginFreeCertificate.tournament_budget
+          #print axioms Nightfall.MarginFreeFiniteTests.likelihood_cost_eq_overlap
+          #print axioms Nightfall.MarginFreeFiniteTests.overlap_le_any_test
+          #print axioms Nightfall.MarginFreeFiniteTests.weighted_markov_tail
+          #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_natDegree_le
+          #print axioms Nightfall.StrongMixtureDuel.weighted_posterior_duel
+          #print axioms Nightfall.StrongMixtureDuel.undefeated_is_accurate
           LEAN
           sed -i 's/^          //' PrintMarginFreeAxioms.lean
           lake env lean PrintMarginFreeAxioms.lean 2>&1 | tee /tmp/axioms.txt
           if grep -E '(error:|sorryAx)' /tmp/axioms.txt; then exit 1; fi
-          sha256sum MarginFreeCertificate.lean | tee /tmp/source-hash.txt
+          sha256sum MarginFreeCertificate.lean MarginFreeFiniteTests.lean LatentProductInterpolationDegree.lean StrongMixtureDuel.lean | tee /tmp/source-hash.txt
       - name: Save exact compiler receipts
         if: always()
         uses: actions/upload-artifact@v4
@@ -49,5 +65,8 @@ jobs:
             /tmp/marginfree.log
             /tmp/axioms.txt
             /tmp/source-hash.txt
+            /tmp/interpolation.log
+            /tmp/duel.log
+            /tmp/finite-tests.log
           retention-days: 60
           if-no-files-found: warn
