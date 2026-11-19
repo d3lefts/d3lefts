@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
       - 'research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean'
       - 'research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean'
+      - 'research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean'
       - 'research/nightfall/strong_simulation_progress/component_id_nonvacuous_check.py'
       - '.github/workflows/nightfall-component-identification.yml'
   workflow_dispatch:
@@ -34,6 +35,7 @@ jobs:
           cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
           cp research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean /tmp/mathlib4/LatentLikelihoodRatio.lean
           cp research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean /tmp/mathlib4/StrongSmoothingAmplifier.lean
+          cp research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean /tmp/mathlib4/StrongMarkovEndpoint.lean
           cd /tmp/mathlib4
           lake env lean -o .lake/build/lib/lean/ComponentIdentification.olean ComponentIdentification.lean 2>&1 | tee /tmp/ci.log
           lake env lean -o .lake/build/lib/lean/ComponentIdentificationWeightedTournament.olean ComponentIdentificationWeightedTournament.lean 2>&1 | tee /tmp/ci-weighted.log
@@ -41,8 +43,9 @@ jobs:
           lake env lean -o .lake/build/lib/lean/LatentProductInterpolationDegree.olean LatentProductInterpolationDegree.lean 2>&1 | tee /tmp/ci-interp.log
           lake env lean -o .lake/build/lib/lean/LatentLikelihoodRatio.olean LatentLikelihoodRatio.lean 2>&1 | tee /tmp/ci-lr.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothingAmplifier.olean StrongSmoothingAmplifier.lean 2>&1 | tee /tmp/ci-smooth.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log; then echo "sorry found"; exit 1; fi
-          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log; then exit 1; fi
+          lake env lean -o .lake/build/lib/lean/StrongMarkovEndpoint.olean StrongMarkovEndpoint.lean 2>&1 | tee /tmp/ci-markov.log
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-smooth.log /tmp/ci-markov.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
           import ComponentIdentificationWeightedTournament
@@ -50,6 +53,7 @@ jobs:
           import LatentProductInterpolationDegree
           import LatentLikelihoodRatio
           import StrongSmoothingAmplifier
+          import StrongMarkovEndpoint
           open Nightfall.ComponentIdentification
           #print axioms component_identification_core
           #print axioms hellinger_K_le
@@ -67,6 +71,7 @@ jobs:
           #print axioms Nightfall.LatentLikelihoodRatio.likelihood_error_le_weighted_budget
           #print axioms Nightfall.StrongSmoothing.amp_low_tail
           #print axioms Nightfall.StrongSmoothing.amp_high_tail
+          #print axioms Nightfall.BiasFreeMarkov.chebyshev_endpoint_derivative_bound
           LEAN
           sed -i 's/^          //' CIAxioms.lean
           lake env lean CIAxioms.lean | tee /tmp/axioms.txt
