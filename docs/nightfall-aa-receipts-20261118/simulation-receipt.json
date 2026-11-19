@@ -1,0 +1,194 @@
+{
+  "axiom_audit": {
+    "Nightfall.ProductSpace.Simulation.bad_queries": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Simulation.expected_queries": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Simulation.hasRows_of_degree": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Simulation.leaf_error": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Simulation.simulation_degree": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Simulation.simulation_rows": "allowlisted_dependencies"
+  },
+  "axiom_dependencies": {
+    "Nightfall.ProductSpace.Simulation.bad_queries": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Simulation.expected_queries": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Simulation.hasRows_of_degree": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Simulation.leaf_error": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Simulation.simulation_degree": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Simulation.simulation_rows": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "compiler": [
+    "lake",
+    "env",
+    "lean"
+  ],
+  "compiler_exit_code": 0,
+  "compiler_version": "Lean (version 4.36.0-rc2, x86_64-unknown-linux-gnu, commit b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a, Release)",
+  "contract_relpath": null,
+  "contract_sha256": null,
+  "contract_targets": [],
+  "contract_workspace_commit": null,
+  "declarations_requested": [
+    "Nightfall.ProductSpace.Simulation.simulation_degree",
+    "Nightfall.ProductSpace.Simulation.simulation_rows",
+    "Nightfall.ProductSpace.Simulation.expected_queries",
+    "Nightfall.ProductSpace.Simulation.leaf_error",
+    "Nightfall.ProductSpace.Simulation.bad_queries",
+    "Nightfall.ProductSpace.Simulation.hasRows_of_degree"
+  ],
+  "diagnostics": [
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 71,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.inv_sect_self`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 75,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.inv_sect`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 81,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.sect_self`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 87,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.pincr_eq_zero_of_inv`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 150,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.hasRows_sect`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 174,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.build_zero`:",
+      "severity": "warning"
+    },
+    {
+      "column": 13,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 179,
+      "message": "`dif_pos` has been deprecated: Use `dite_eq_left` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 177,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.build_pos`:",
+      "severity": "warning"
+    },
+    {
+      "column": 13,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 183,
+      "message": "`dif_neg` has been deprecated: Use `dite_eq_right` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 181,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.build_neg`:",
+      "severity": "warning"
+    },
+    {
+      "column": 6,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 285,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 55,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 263,
+      "message": "Variable name `h\u03b7` is not explicitly referenced.",
+      "severity": "warning"
+    },
+    {
+      "column": 55,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 306,
+      "message": "`if_false` has been deprecated: Use `ite_false` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 6,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 307,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 19,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean",
+      "line": 425,
+      "message": "`if_true` has been deprecated: Use `ite_true` instead",
+      "severity": "warning"
+    }
+  ],
+  "expected_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "explicit_allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "invocation": [
+    "lake",
+    "env",
+    "lean",
+    "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean"
+  ],
+  "parsed_compiler_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "policy_findings": [],
+  "proof_scope": "named declarations compile; only explicitly allowed axioms reported",
+  "protocol": "nightfall-lean-bridge/v2",
+  "source": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/ProductSimulation.lean",
+  "source_relpath": "research/nightfall/formalization/product_space/ProductSimulation.lean",
+  "source_sha256": "dc318ce5b23c0cf67512c0911c87e97ce1df950ca2daf98304867cacb5e6dc3d",
+  "status": "COMPILED",
+  "stderr": "",
+  "stdout": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:71:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.inv_sect_self`:\n  [Fintype \u03b9]\n  [Fintype \u03b1]\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [Fintype \u03b1] [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:75:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.inv_sect`:\n  [Fintype \u03b9]\n  [Fintype \u03b1]\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [Fintype \u03b1] [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:81:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.sect_self`:\n  [Fintype \u03b9]\n  [Fintype \u03b1]\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [Fintype \u03b1] [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:87:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.pincr_eq_zero_of_inv`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:150:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.hasRows_sect`:\n  [Fintype \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:174:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.build_zero`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:179:13: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead\n\nHint: Replace the deprecated name:\n  d\u0335i\u0335f\u0335_\u0335p\u0335o\u0335s\u0335d\u0332i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332l\u0332e\u0332f\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:177:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.build_pos`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:183:13: warning: `dif_neg` has been deprecated: Use `dite_eq_right` instead\n\nHint: Replace the deprecated name:\n  d\u0335i\u0335f\u0335_\u0335n\u0335e\u0335g\u0335d\u0332i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332r\u0332i\u0332g\u0332h\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:181:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Simulation.build_neg`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:285:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:263:55: warning: Variable name `h\u03b7` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _h\u03b7\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:306:55: warning: `if_false` has been deprecated: Use `ite_false` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335f\u0335a\u0335l\u0335s\u0335e\u0335i\u0332t\u0332e\u0332_\u0332f\u0332a\u0332l\u0332s\u0332e\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:307:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_zte_tm9p.lean:425:19: warning: `if_true` has been deprecated: Use `ite_true` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335t\u0335r\u0335u\u0335e\u0335i\u0332t\u0332e\u0332_\u0332t\u0332r\u0332u\u0332e\u0332\n'Nightfall.ProductSpace.Simulation.simulation_rows' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Simulation.simulation_degree' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Simulation.simulation_degree' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Simulation.simulation_rows' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Simulation.expected_queries' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Simulation.leaf_error' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Simulation.bad_queries' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Simulation.hasRows_of_degree' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "time_utc": "2026-11-19T01:13:30.910852+00:00",
+  "version_matches_pin": true,
+  "workspace": "/tmp/mathlib4",
+  "workspace_commit": null
+}
