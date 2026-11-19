@@ -43,7 +43,7 @@ theorem latentMass_nonneg (P : Θ → J → β → ℝ)
   apply Finset.sum_nonneg
   intro θ _
   exact mul_nonneg (hw0 θ)
-    (Transfer.prodMass_nonneg' (P θ) (hP0 θ) z)
+    (Influence.prodMass_nonneg' (P θ) (hP0 θ) z)
 
 /-- The certified Jensen mixture expectation is expectation under the
 pointwise mixture mass; makes source support exact and checkable. -/
@@ -53,7 +53,7 @@ theorem ex_eq_mass (P : Θ → J → β → ℝ) (w : Θ → ℝ)
   calc
     Mixture.Ex P w F =
         ∑ θ, ∑ z, w θ * (Transfer.prodMass (P θ) z * F z) := by
-          unfold Mixture.Ex Transfer.pexp
+          unfold Mixture.Ex Influence.pexp
           apply Finset.sum_congr rfl
           intro θ _
           rw [Finset.mul_sum]
@@ -253,8 +253,8 @@ theorem factor_mixture_simulation_tv
       Phi deps b hPhi dec r hdec hcost f hf01 d hd
       τ hτ hτ2 ε hε n hn
   refine ⟨t, ht, ?_⟩
-  exact (tv_event_transfer q (observedMass P w Phi) η hTV
-      (fun x => ε < |f x - t.eval x|)).trans
-    (add_le_add_right herr η)
+  have htransfer := tv_event_transfer q (observedMass P w Phi) η hTV
+    (fun x => ε < |f x - t.eval x|)
+  linarith
 
 end Nightfall.ProductSpace.QueryLocalSource
