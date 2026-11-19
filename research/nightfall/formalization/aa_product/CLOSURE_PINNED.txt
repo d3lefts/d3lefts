@@ -1,5 +1,3 @@
-# Source-ordered 56-module transitive dependency candidate for MixtureSimulation.lean
-# To be validated by strict pinned Lean compile; never substitute for a successful receipt.
 AaronsonAmbainis.Defs research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Defs.lean
 AaronsonAmbainis.Statements research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Statements.lean
 AaronsonAmbainis.DetDefs research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetDefs.lean
