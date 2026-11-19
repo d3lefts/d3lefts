@@ -38,12 +38,14 @@ jobs:
           #check @Nightfall.Forrelation.Information.latentJoint_sum_kernel
           #check @Nightfall.Forrelation.Information.latentJoint_sum_one
           #check @Nightfall.Forrelation.Information.latent_mixture_exp_certificate
+          #check @Nightfall.Forrelation.Information.latent_exp_component_lower_bound
           #print axioms Nightfall.Forrelation.Information.weighted_component_le_marginal
           #print axioms Nightfall.Forrelation.Information.mixture_kernel_domination
           #print axioms Nightfall.Forrelation.Information.finite_exp_jensen
           #print axioms Nightfall.Forrelation.Information.latentJoint_sum_kernel
           #print axioms Nightfall.Forrelation.Information.latentJoint_sum_one
           #print axioms Nightfall.Forrelation.Information.latent_mixture_exp_certificate
+          #print axioms Nightfall.Forrelation.Information.latent_exp_component_lower_bound
           LEAN
           (cd /tmp/mathlib4 && lake env lean ForrelationMixtureAudit.lean) | tee forrelation-mgf-axioms.txt
           ! grep -E 'sorryAx|Lean\.ofReduceBool|native_decide' forrelation-mgf-axioms.txt
