@@ -1,0 +1,77 @@
+name: Polaris Q2 isolated Docker runtime positive/negative controls
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/nightfall/evals/polaris-research-20261119/research_q2/**'
+      - '.github/workflows/polaris-q2-isolated-runtime.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: polaris-q2-container-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  isolated-image-and-controls:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 85
+    steps:
+      - name: Checkout unprivileged source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Confirm Docker availability and pin Ubuntu base manifest digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker version
+          docker pull ubuntu:24.04
+          BASE_REF="$(docker image inspect --format '{{index .RepoDigests 0}}' ubuntu:24.04)"
+          [[ "$BASE_REF" =~ ^ubuntu@sha256:[a-f0-9]{64}$ ]]
+          printf '%s\n' "$BASE_REF" > "$RUNNER_TEMP/polaris-ubuntu-base.txt"
+          echo "PINNED_BASE_IMAGE=$BASE_REF" >> "$GITHUB_ENV"
+          printf 'Base manifest digest: %s\n' "$BASE_REF"
+      - name: Build independent Q2 compiler/Mathlib container image
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE=research/nightfall/evals/polaris-research-20261119/research_q2
+          sed "s|^FROM ubuntu:24.04$|FROM ${PINNED_BASE_IMAGE}|" "$SOURCE/Dockerfile" > "$RUNNER_TEMP/Dockerfile.pinned"
+          grep -F "FROM ${PINNED_BASE_IMAGE}" "$RUNNER_TEMP/Dockerfile.pinned"
+          docker build --progress=plain -f "$RUNNER_TEMP/Dockerfile.pinned" \
+            -t polaris-q2:isolated-ci "$SOURCE"
+      - name: Record immutable Docker image configuration ID and source commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMAGE_ID="$(docker image inspect --format '{{.Id}}' polaris-q2:isolated-ci)"
+          [[ "$IMAGE_ID" =~ ^sha256:[a-f0-9]{64}$ ]]
+          printf '%s\n' "$IMAGE_ID" > "$RUNNER_TEMP/polaris-image-id.txt"
+          git rev-parse HEAD > "$RUNNER_TEMP/polaris-source-commit.txt"
+          docker image inspect polaris-q2:isolated-ci > "$RUNNER_TEMP/polaris-image-inspect.json"
+          echo "POLARIS_IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
+          echo "Local content-addressed image: $IMAGE_ID"
+          echo "Source revision: $(cat "$RUNNER_TEMP/polaris-source-commit.txt")"
+      - name: Evaluate valid and invalid Lean proofs in isolated image
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/evals/polaris-research-20261119/research_q2/run_isolated_controls.py \
+            --image "$POLARIS_IMAGE_ID" \
+            --output "$RUNNER_TEMP/polaris-isolated-controls"
+      - name: Publish immutable-control evidence (not a security certification)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: polaris-q2-isolated-smoke-receipts
+          path: |
+            ${{ runner.temp }}/polaris-ubuntu-base.txt
+            ${{ runner.temp }}/polaris-image-id.txt
+            ${{ runner.temp }}/polaris-source-commit.txt
+            ${{ runner.temp }}/polaris-image-inspect.json
+            ${{ runner.temp }}/polaris-isolated-controls/
+          if-no-files-found: warn
+          retention-days: 60
