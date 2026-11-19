@@ -1,0 +1,35 @@
+cells: worst/expected depth; '!' = total failure exceeded delta
+
+rareAND k=3 m=9        delta=0.1     var=3/1.75  inf=3/1.75  thr=3/1.75  bad=3/1.75  esc=3/1.75  red=0/0.0!  opt=3
+rareAND k=3 m=9        delta=0.01    var=3/1.75  inf=3/1.75  thr=3/1.75  bad=3/1.75  esc=3/1.75  red=0/0.0!  opt=3
+rareAND k=3 m=9        delta=0.001   var=3/1.75  inf=3/1.75  thr=3/1.75  bad=3/1.75  esc=3/1.75  red=0/0.0!  opt=3
+rareAND k=4 m=8        delta=0.1     var=4/1.88  inf=4/1.88  thr=4/1.88  bad=4/1.88  esc=4/1.88  red=0/0.0  opt=4
+rareAND k=4 m=8        delta=0.01    var=4/1.88  inf=4/1.88  thr=4/1.88  bad=4/1.88  esc=4/1.88  red=0/0.0!  opt=4
+rareAND k=4 m=8        delta=0.001   var=4/1.88  inf=4/1.88  thr=4/1.88  bad=4/1.88  esc=4/1.88  red=0/0.0!  opt=4
+rareAND k=5 m=7        delta=0.1     var=0/0.0  inf=0/0.0  thr=0/0.0  bad=0/0.0  esc=0/0.0  red=0/0.0  opt=0
+rareAND k=5 m=7        delta=0.01    var=12/8.94  inf=12/8.94  thr=5/1.94  bad=5/1.94  esc=5/1.94  red=0/0.0!  opt=5
+rareAND k=5 m=7        delta=0.001   var=12/8.94  inf=12/8.94  thr=5/1.94  bad=5/1.94  esc=5/1.94  red=0/0.0!  opt=5
+rareAND k=6 m=6        delta=0.1     var=0/0.0  inf=0/0.0  thr=0/0.0  bad=0/0.0  esc=0/0.0  red=0/0.0  opt=0
+rareAND k=6 m=6        delta=0.01    var=12/7.97  inf=12/7.97  thr=6/1.97  bad=6/1.97  esc=6/1.97  red=0/0.0!  opt=6
+rareAND k=6 m=6        delta=0.001   var=12/7.97  inf=12/7.97  thr=6/1.97  bad=6/1.97  esc=6/1.97  red=0/0.0!  opt=6
+
+parity k=2 m=6         delta=0.1     var=8/8.0  inf=2/2.0  thr=2/2.0  bad=2/2.0  esc=2/2.0  red=0/0.0!  opt=2
+parity k=2 m=6         delta=0.01    var=8/8.0  inf=2/2.0  thr=2/2.0  bad=2/2.0  esc=2/2.0  red=0/0.0!  opt=2
+parity k=2 m=6         delta=0.001   var=8/8.0  inf=2/2.0  thr=2/2.0  bad=2/2.0  esc=2/2.0  red=0/0.0!  opt=2
+parity k=3 m=6         delta=0.1     var=9/9.0  inf=3/3.0  thr=3/3.0  bad=3/3.0  esc=3/3.0  red=0/0.0!  opt=3
+parity k=3 m=6         delta=0.01    var=9/9.0  inf=3/3.0  thr=3/3.0  bad=3/3.0  esc=3/3.0  red=0/0.0!  opt=3
+parity k=3 m=6         delta=0.001   var=9/9.0  inf=3/3.0  thr=3/3.0  bad=3/3.0  esc=3/3.0  red=0/0.0!  opt=3
+parity k=4 m=6         delta=0.1     var=10/10.0  inf=4/4.0  thr=4/4.0  bad=4/4.0  esc=4/4.0  red=0/0.0!  opt=4
+parity k=4 m=6         delta=0.01    var=10/10.0  inf=4/4.0  thr=4/4.0  bad=4/4.0  esc=4/4.0  red=0/0.0!  opt=4
+parity k=4 m=6         delta=0.001   var=10/10.0  inf=4/4.0  thr=4/4.0  bad=4/4.0  esc=4/4.0  red=0/0.0!  opt=4
+
+avg m=10               delta=0.1     var=8/8.0  inf=8/8.0  thr=0/0.0!  bad=8/8.0  esc=8/8.0  red=0/0.0!  opt=8
+avg m=10               delta=0.01    var=8/8.0  inf=8/8.0  thr=0/0.0!  bad=8/8.0  esc=8/8.0  red=0/0.0!  opt=8
+avg m=10               delta=0.001   var=8/8.0  inf=8/8.0  thr=0/0.0!  bad=8/8.0  esc=8/8.0  red=0/0.0!  opt=8
+
+mixAND k=4 m=6         delta=0.1     var=6/4.16  inf=4/2.66  thr=4/2.66  bad=4/2.66  esc=4/2.66  red=5/2.56  opt=4
+mixAND k=4 m=6         delta=0.01    var=6/4.16  inf=4/2.66  thr=4/2.66  bad=4/2.66  esc=4/2.66  red=5/2.56!  opt=4
+mixAND k=4 m=6         delta=0.001   var=6/4.16  inf=4/2.66  thr=4/2.66  bad=4/2.66  esc=4/2.66  red=5/2.56!  opt=4
+hiddenAND k=4 m=6      delta=0.1     var=4/1.88  inf=4/1.88  thr=4/1.88  bad=4/1.88  esc=4/1.88  red=0/0.0  opt=3
+hiddenAND k=4 m=6      delta=0.01    var=4/1.88  inf=4/1.88  thr=4/1.88  bad=4/1.88  esc=4/1.88  red=0/0.0!  opt=4
+hiddenAND k=4 m=6      delta=0.001   var=4/1.88  inf=4/1.88  thr=4/1.88  bad=4/1.88  esc=4/1.88  red=0/0.0!  opt=4
