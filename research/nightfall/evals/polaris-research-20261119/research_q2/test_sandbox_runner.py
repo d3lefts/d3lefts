@@ -80,6 +80,14 @@ class SandboxContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "digest"):
             evaluate(REF, "polaris-q2:latest", Path("/tmp/no-output"))
 
+    def test_image_recipe_pins_compiler_mathlib_and_nonroot_user(self):
+        recipe = (Path(__file__).with_name("Dockerfile")).read_text()
+        self.assertIn("b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a", recipe)
+        self.assertIn(MATHLIB_COMMIT, recipe)
+        self.assertIn("USER 10001:10001", recipe)
+        self.assertIn("lake exe cache get", recipe)
+        self.assertNotIn("COPY . ", recipe)
+
     def test_no_candidate_reference_repo_mount(self):
         args = docker_argv(DIGEST_IMAGE, Path("/var/tmp/input"), Path("/var/tmp/output"))
         mounts = [args[i+1] for i, v in enumerate(args) if v == "--mount"]
