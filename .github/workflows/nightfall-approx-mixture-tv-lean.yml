@@ -1,7 +1,7 @@
 name: NIGHTFALL certified Jensen + quantum circuit TV extension (pinned Lean)
 on:
   push:
-    branches: [nightfall-approximate-mixture-tv-20261118]
+    branches: [nightfall-tv-canonical-quantum-20261119]
     paths:
       - 'research/nightfall/formalization/product_space/ApproximateMixtureSimulation.lean'
       - '.github/workflows/nightfall-approx-mixture-tv-lean.yml'
@@ -12,6 +12,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: nightfall-tv-canonical-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 jobs:
   exact-tv-approx-mixture:
     runs-on: ubuntu-latest
