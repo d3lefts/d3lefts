@@ -52,8 +52,10 @@ theorem indicator_union_bound
       have hbig : 1 ≤ ∑ k ∈ s, eventIndicator (L k) := by
         rw [heqsum, heq]
         linarith
-      change 1 ≤ (if A then (1 : ℝ) else 0) +
+      change (if E then (1 : ℝ) else 0) ≤
+        (if A then (1 : ℝ) else 0) +
         ∑ k ∈ s, (if L k then (1 : ℝ) else 0)
+      rw [if_pos he]
       change 1 ≤ ∑ k ∈ s, (if L k then (1 : ℝ) else 0) at hbig
       linarith
   · change (if E then (1 : ℝ) else 0) ≤
