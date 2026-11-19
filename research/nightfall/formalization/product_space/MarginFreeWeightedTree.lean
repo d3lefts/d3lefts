@@ -16,6 +16,8 @@ and thus transfers beyond the latent-source setting.
 namespace Nightfall.MarginFreeWeightedTree
 
 open Nightfall.ProductSpace.Simulation
+open Nightfall.ProductSpace.Transfer
+open Nightfall.MarginFreeDisintegration
 open Nightfall.MarginFreeLikelihood
 open Nightfall.MarginFreeWeightedOriginal
 
