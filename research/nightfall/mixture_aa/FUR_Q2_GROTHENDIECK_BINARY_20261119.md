@@ -109,3 +109,22 @@ For 0<tau≤1/4, g≤eta. This is precisely the n- and M-free **degree-two Boole
 Cheapest next decisive test: independently replay a second implementation of the n=3/4 matrix factorization via an SDP dual and verify finite explicit factorized p,q; then source-level Lean encode A assuming the standard Grothendieck factorization theorem (do not assert it as an axiom without labeling), B, the finite quantile coupling, and C. Target generalization: arbitrary finite alphabets via a block-operator Grothendieck factorization retaining one total mass per coordinate; expect a distinct proof obligation rather than naive one-hot reduction (would leak alphabet size).
 
 *Provenance:* NIGHTFALL research derivation based on `mixture_aa` original FUR crux and imported classical GP theorem. Preserve author/source attribution and invite external mathematical adversarial review.
+
+
+## Independent adversarial no-go: pointwise fixed rows fail for categorical degree 2
+
+**Exact analytic counterexample, not a counterexample to the Boolean theorem or to the mean-level Hellinger FUR.** For every integer N≥2, let A be **one categorical coordinate** taking N possible addresses, Y_1,...,Y_N independent binary coordinates, and set
+
+    f(A,Y_1,...,Y_N) = Y_A in {0,1}.
+
+This f has **global indicator-interaction degree 2**: f=Σ_{j=1}^N 1[A=j]·Y_j. For any proposed *fixed* nonnegative coordinate weights w_A,w_1,...,w_N and squared row constant C in
+
+    |f(x)-f(y)|² <= C Σ_{i:x_i!=y_i} w_i   for ALL input pairs,
+
+fix A=j at both endpoints, change only Y_j from 0 to 1, and keep every other coordinate identical. Then 1<=C w_j; summing the N independent leaf constraints gives
+
+    Σ_i w_i >= N/C.
+
+Thus there cannot be a universal coefficient C(d) and total fixed weight W(d) depending only on degree d=2 (without alphabet-size dependence) for the **pointwise** fixed-row statement on arbitrary categorical products. The obstruction is alphabet-size-addressing, not a failure of the latent-product crux. A comparison of *product expectations* can charge the categorical address change in Hellinger distance, so the weaker Hellinger **mean** FUR still requires a separate proof or counterexample. This is the decisive proof-attack for any attempt to port Theorem A by replacing bits with arbitrary one-hot atoms.
+
+Transfer directive: keep the proven Boolean-degree-two fixed row + common monotone coupling; do **not** announce all-alphabet closure or substitute categorical pointwise weights. To reach arbitrary alphabets investigate source-dependent mean-level FUR and/or a block-Grothendieck theorem controlling changes to a *categorical address* by its own information. Note the existing categorical selector context in #811/#812; do not claim the selector construction itself is new.
