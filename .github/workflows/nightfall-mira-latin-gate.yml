@@ -64,6 +64,8 @@ jobs:
             --decl Nightfall.LatinSquare.scaledKernelMass_balance \
             --decl Nightfall.LatinSquare.correctedLevelMass_eq \
             --decl Nightfall.LatinSquare.correctedKernelMass_normalizes \
+            --decl Nightfall.LatinSquare.supportedLikelihood_balance \
+            --decl Nightfall.LatinSquare.supportedKernelMass_balance \
             --json-out lean-receipts/latin/bridge.json 2>&1 | tee lean-receipts/latin/bridge.log
       - name: Finite Latin representation kernel and strict axiom receipt
         shell: bash
