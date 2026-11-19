@@ -121,7 +121,7 @@ theorem original_likelihood_error_eq_overlap
         rw [← Finset.sum_add_distrib]
         apply Finset.sum_congr rfl
         intro y hy
-        by_cases h : C y <;> simp [h]
+        cases h : C y <;> simp [h]
     _ = ∑ y : ι → α, min (P y) (Q y) := by
       exact likelihood_two_sided_error_eq_overlap P Q
 
