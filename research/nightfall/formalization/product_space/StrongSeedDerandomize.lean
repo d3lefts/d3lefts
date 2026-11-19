@@ -28,7 +28,7 @@ open Nightfall.StrongAdaptiveSeedCompiler
 open Nightfall.StrongSimulation.SeedFixing
 
 variable {I A U B : Type*}
-variable [Fintype I] [Fintype A] [Fintype U]
+variable [Fintype I] [DecidableEq I] [Fintype A] [DecidableEq A] [Fintype U]
 
 /-- Actual source failure event of the compiled deterministic symbol tree. -/
 noncomputable def symbolFailureMass
