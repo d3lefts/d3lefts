@@ -16,7 +16,9 @@ namespace Nightfall.StrongMixtureUnion
 
 open Finset
 
-noncomputable def eventIndicator (E : Prop) : ℝ := if E then 1 else 0
+noncomputable def eventIndicator (E : Prop) : ℝ := by
+  classical
+  exact if E then 1 else 0
 
 theorem indicator_nonneg (E : Prop) : 0 ≤ eventIndicator E := by
   classical
