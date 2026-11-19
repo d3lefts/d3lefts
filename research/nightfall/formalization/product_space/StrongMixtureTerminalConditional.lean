@@ -24,6 +24,7 @@ No hidden axiom, sorry, or parameter treated as a completed construction.
 namespace Nightfall.StrongMixtureTerminal
 
 open Finset
+open Classical
 
 variable {ι Ω : Type*} [Fintype ι] [Fintype Ω]
 
