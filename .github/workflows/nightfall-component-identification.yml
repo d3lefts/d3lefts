@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/product_space/ComponentIdentification.lean'
       - 'research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean'
       - 'research/nightfall/formalization/product_space/StrongMixtureDuel.lean'
+      - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
       - 'research/nightfall/strong_simulation_progress/component_id_nonvacuous_check.py'
       - '.github/workflows/nightfall-component-identification.yml'
   workflow_dispatch:
@@ -28,16 +29,19 @@ jobs:
           cp research/nightfall/formalization/product_space/ComponentIdentification.lean /tmp/mathlib4/ComponentIdentification.lean
           cp research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean /tmp/mathlib4/ComponentIdentificationWeightedTournament.lean
           cp research/nightfall/formalization/product_space/StrongMixtureDuel.lean /tmp/mathlib4/StrongMixtureDuel.lean
+          cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
           cd /tmp/mathlib4
           lake env lean -o .lake/build/lib/lean/ComponentIdentification.olean ComponentIdentification.lean 2>&1 | tee /tmp/ci.log
           lake env lean -o .lake/build/lib/lean/ComponentIdentificationWeightedTournament.olean ComponentIdentificationWeightedTournament.lean 2>&1 | tee /tmp/ci-weighted.log
           lake env lean -o .lake/build/lib/lean/StrongMixtureDuel.olean StrongMixtureDuel.lean 2>&1 | tee /tmp/ci-duel.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log; then echo "sorry found"; exit 1; fi
+          lake env lean -o .lake/build/lib/lean/LatentProductInterpolationDegree.olean LatentProductInterpolationDegree.lean 2>&1 | tee /tmp/ci-interp.log
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log; then echo "sorry found"; exit 1; fi
           if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
           import ComponentIdentificationWeightedTournament
           import StrongMixtureDuel
+          import LatentProductInterpolationDegree
           open Nightfall.ComponentIdentification
           #print axioms component_identification_core
           #print axioms hellinger_K_le
@@ -49,6 +53,8 @@ jobs:
           #print axioms WeightedTournament.undefeated_output_accuracy
           #print axioms Nightfall.StrongMixtureDuel.weighted_posterior_duel
           #print axioms Nightfall.StrongMixtureDuel.undefeated_is_accurate
+          #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_natDegree_le
+          #print axioms Nightfall.LatentProductInterpolationDegree.affineMarginal_eval
           LEAN
           sed -i 's/^          //' CIAxioms.lean
           lake env lean CIAxioms.lean | tee /tmp/axioms.txt
