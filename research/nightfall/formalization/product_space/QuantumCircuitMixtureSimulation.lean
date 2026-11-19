@@ -26,7 +26,7 @@ open Finset
 
 variable {ι α κ Θ : Type}
     [Fintype ι] [DecidableEq ι]
-    [Fintype α] [DecidableEq α] [Fintype κ] [Fintype Θ]
+    [Fintype α] [DecidableEq α] [Nonempty α] [Fintype κ] [Fintype Θ]
 
 /-- A single reference product marginal whose symbol masses sum to one.
     This is used only for the law-independent indicator-degree certificate,
