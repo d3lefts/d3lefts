@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/ComponentIdentification.lean'
+      - 'research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean'
       - 'research/nightfall/strong_simulation_progress/component_id_nonvacuous_check.py'
       - '.github/workflows/nightfall-component-identification.yml'
   workflow_dispatch:
@@ -24,17 +25,24 @@ jobs:
         run: |
           set -euo pipefail
           cp research/nightfall/formalization/product_space/ComponentIdentification.lean /tmp/mathlib4/ComponentIdentification.lean
+          cp research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean /tmp/mathlib4/ComponentIdentificationWeightedTournament.lean
           cd /tmp/mathlib4
           lake env lean -o .lake/build/lib/lean/ComponentIdentification.olean ComponentIdentification.lean 2>&1 | tee /tmp/ci.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log; then echo "sorry found"; exit 1; fi
-          if grep -q "error" /tmp/ci.log; then exit 1; fi
+          lake env lean -o .lake/build/lib/lean/ComponentIdentificationWeightedTournament.olean ComponentIdentificationWeightedTournament.lean 2>&1 | tee /tmp/ci-weighted.log
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
+          import ComponentIdentificationWeightedTournament
           open Nightfall.ComponentIdentification
           #print axioms component_identification_core
           #print axioms hellinger_K_le
           #print axioms mean_near
           #print axioms min_le_sqrt_mul
+          #print axioms WeightedTournament.weighted_overlap_from_pointwise_cost
+          #print axioms WeightedTournament.pair_error_budget
+          #print axioms WeightedTournament.strong_rounding_four_eta
+          #print axioms WeightedTournament.undefeated_output_accuracy
           LEAN
           sed -i 's/^          //' CIAxioms.lean
           lake env lean CIAxioms.lean | tee /tmp/axioms.txt
