@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/product_space/LatentComponentLikelihood.lean'
       - 'research/nightfall/formalization/product_space/LatentComponentHellinger.lean'
       - 'research/nightfall/formalization/product_space/LatentComponentProductAffinity.lean'
+      - 'research/nightfall/formalization/product_space/LatentComponentHighTV.lean'
       - '.github/workflows/nightfall-latent-likelihood-lean.yml'
   workflow_dispatch:
 permissions:
@@ -66,6 +67,19 @@ jobs:
             --decl Nightfall.ProductSpace.LatentComponent.finite_product_overlap_le_affinity \
             --json-out lean-receipts/latent-likelihood/product-strict.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/latent-likelihood/product-strict.json
+      - name: High-TV product likelihood power certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/product_space/LatentComponentHighTV.lean
+          cp "$SRC" /tmp/mathlib4/LatentComponentHighTV.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LatentComponentHighTV.olean LatentComponentHighTV.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.ProductSpace.LatentComponent.finite_product_overlap_le_power \
+            --json-out lean-receipts/latent-likelihood/high-tv-strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/latent-likelihood/high-tv-strict.json
       - name: Provenance
         if: always()
         shell: bash
@@ -73,7 +87,7 @@ jobs:
           mkdir -p lean-receipts/latent-likelihood
           git rev-parse HEAD > lean-receipts/latent-likelihood/head.txt
           cat lean-toolchain > lean-receipts/latent-likelihood/toolchain.txt
-          sha256sum research/nightfall/formalization/product_space/LatentComponentLikelihood.lean research/nightfall/formalization/product_space/LatentComponentHellinger.lean research/nightfall/formalization/product_space/LatentComponentProductAffinity.lean > lean-receipts/latent-likelihood/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/LatentComponentLikelihood.lean research/nightfall/formalization/product_space/LatentComponentHellinger.lean research/nightfall/formalization/product_space/LatentComponentProductAffinity.lean research/nightfall/formalization/product_space/LatentComponentHighTV.lean > lean-receipts/latent-likelihood/SHA256SUMS.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
