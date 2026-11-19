@@ -59,6 +59,10 @@ jobs:
             --decl Nightfall.LatinSquare.normalized_flatten_mass \
             --decl Nightfall.LatinSquare.normalize_weighted_mass \
             --decl Nightfall.LatinSquare.weighted_flatten_normalizes \
+            --decl Nightfall.LatinSquare.softKernelMass_balance \
+            --decl Nightfall.LatinSquare.scaledKernelMass_balance \
+            --decl Nightfall.LatinSquare.correctedLevelMass_eq \
+            --decl Nightfall.LatinSquare.correctedKernelMass_normalizes \
             --json-out lean-receipts/latin/bridge.json 2>&1 | tee lean-receipts/latin/bridge.log
       - name: Preserve theorem-source and compiler evidence
         if: always()
