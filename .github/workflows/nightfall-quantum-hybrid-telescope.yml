@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/QuantumHybridTelescope.lean'
+      - 'research/nightfall/formalization/product_space/QuantumOracleMismatch.lean'
       - '.github/workflows/nightfall-quantum-hybrid-telescope.yml'
   push:
     branches:
@@ -27,14 +28,23 @@ jobs:
           if grep -En '\bsorry\b|\badmit\b|sorryAx|^[[:space:]]*axiom\b|native_decide|unsafe' "$SRC"; then
             echo "Forbidden proof gap"; exit 1
           fi
+          LOCAL="research/nightfall/formalization/product_space/QuantumOracleMismatch.lean"
+          if grep -En '\bsorry\b|\badmit\b|sorryAx|^[[:space:]]*axiom\b|native_decide|unsafe' "$LOCAL"; then
+            echo "Forbidden proof gap"; exit 1
+          fi
           cp "$SRC" /tmp/mathlib4/QuantumHybridTelescope.lean
+          cp "$LOCAL" /tmp/mathlib4/QuantumOracleMismatch.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuantumHybridTelescope.olean QuantumHybridTelescope.lean) 2>&1 | tee /tmp/hybrid-telescope.log
-          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/hybrid-telescope.log; then exit 1; fi
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuantumOracleMismatch.olean QuantumOracleMismatch.lean) 2>&1 | tee /tmp/oracle-mismatch.log
+          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/hybrid-telescope.log /tmp/oracle-mismatch.log; then exit 1; fi
           for lemma in hybrid_step hybrid_telescope hybrid_readout; do
             grep -Fq "Nightfall.QuantumHybridTelescope.$lemma' depends on axioms:" /tmp/hybrid-telescope.log
           done
           if grep -E 'depends on axioms:.*(sorryAx|Lean\.ofReduceBool|Classical\.choice.*Classical\.choice)' /tmp/hybrid-telescope.log; then exit 1; fi
-          sha256sum "$SRC" | tee /tmp/hybrid-telescope-sha256.txt
+          for lemma in indexwise_oracle_discrepancy_sq indexwise_oracle_discrepancy; do
+            grep -Fq "Nightfall.QuantumOracleMismatch.$lemma' depends on axioms:" /tmp/oracle-mismatch.log
+          done
+          sha256sum "$SRC" "$LOCAL" | tee /tmp/hybrid-telescope-sha256.txt
       - name: Preserve compiler receipt
         if: always()
         uses: actions/upload-artifact@v4
@@ -42,6 +52,7 @@ jobs:
           name: quantum-hybrid-telescope-certificate
           path: |
             /tmp/hybrid-telescope.log
+            /tmp/oracle-mismatch.log
             /tmp/hybrid-telescope-sha256.txt
           retention-days: 60
           if-no-files-found: warn
