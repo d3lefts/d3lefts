@@ -1,0 +1,47 @@
+name: NIGHTFALL quantum hybrid telescope Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumHybridTelescope.lean'
+      - '.github/workflows/nightfall-quantum-hybrid-telescope.yml'
+  push:
+    branches:
+      - nightfall-quantum-hybrid-telescope-20261119
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  quantum-hybrid-telescope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact circuit-state induction and print axiom receipts
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC="research/nightfall/formalization/product_space/QuantumHybridTelescope.lean"
+          if grep -En '\bsorry\b|\badmit\b|sorryAx|^[[:space:]]*axiom\b|native_decide|unsafe' "$SRC"; then
+            echo "Forbidden proof gap"; exit 1
+          fi
+          cp "$SRC" /tmp/mathlib4/QuantumHybridTelescope.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuantumHybridTelescope.olean QuantumHybridTelescope.lean) 2>&1 | tee /tmp/hybrid-telescope.log
+          if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/hybrid-telescope.log; then exit 1; fi
+          for lemma in hybrid_step hybrid_telescope hybrid_readout; do
+            grep -Fq "Nightfall.QuantumHybridTelescope.$lemma' depends on axioms:" /tmp/hybrid-telescope.log
+          done
+          if grep -E 'depends on axioms:.*(sorryAx|Lean\.ofReduceBool|Classical\.choice.*Classical\.choice)' /tmp/hybrid-telescope.log; then exit 1; fi
+          sha256sum "$SRC" | tee /tmp/hybrid-telescope-sha256.txt
+      - name: Preserve compiler receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quantum-hybrid-telescope-certificate
+          path: |
+            /tmp/hybrid-telescope.log
+            /tmp/hybrid-telescope-sha256.txt
+          retention-days: 60
+          if-no-files-found: warn
