@@ -99,8 +99,9 @@ noncomputable def permute {S : Type*} (e : S ≃ S)
 
 /-- Embed an arbitrary quantum state with a clean workspace. -/
 noncomputable def cleanWorkspace
-    (ψ : (I × Z) → ℂ) : Reg I Z W → ℂ :=
-  fun s => if s.2.2 = 0 then ψ (s.1, s.2.1) else 0
+    (ψ : (I × Z) → ℂ) : Reg I Z W → ℂ := by
+  classical
+  exact fun s => if s.2.2 = 0 then ψ (s.1, s.2.1) else 0
 
 /-- Full coherent amplitude identity, not just a computational-basis test:
 the three-stage permutation transforms every superposition exactly as
@@ -110,6 +111,7 @@ theorem coherent_pullback (U : I → W) (D : I → W → Z)
     permute (compiledOracle U D) (cleanWorkspace ψ) =
       cleanWorkspace
         (fun iz => ψ (iz.1, iz.2 - D iz.1 (U iz.1))) := by
+  classical
   funext s
   rcases s with ⟨i, z, w⟩
   change
