@@ -157,4 +157,40 @@ theorem mixture_event_mass_le
     _ = (∑ j : J, w j) * B := by rw [Finset.sum_mul]
     _ = B := by rw [hwsum, one_mul]
 
+
+/-- Actual source-weighted M-mixture event bound from *frozen* pairwise
+error-event predicates.  It combines finite event cover under every
+component with exact mixture averaging. The per-component simulator
+and frozen-test failure bounds are explicit inputs. Unlike a scalar
+budget theorem, this conclusion is the probability mass of one event
+under the actual mixture law. -/
+theorem frozen_mixture_failure_le
+    {J Ω : Type*} [Fintype J] [Fintype Ω]
+    (w : J → ℝ) (P : J → Ω → ℝ)
+    (E : Ω → Prop) (A : J → Ω → Prop)
+    (L : J → J → Ω → Prop)
+    (ρ β : ℝ)
+    (hP : ∀ j x, 0 ≤ P j x)
+    (hw : ∀ j, 0 ≤ w j)
+    (hwsum : (∑ j : J, w j) = 1)
+    (hcover : ∀ j x, E x → A j x ∨ ∃ k : J, L j k x)
+    (hown : ∀ j : J,
+      (∑ x : Ω, P j x * eventIndicator (A j x)) ≤ ρ)
+    (hpair : ∀ j k : J,
+      (∑ x : Ω, P j x * eventIndicator (L j k x)) ≤ β) :
+    (∑ x : Ω, (∑ j : J, w j * P j x) *
+       eventIndicator (E x)) ≤ ρ + (Fintype.card J : ℝ) * β := by
+  apply mixture_event_mass_le w P E
+    (ρ + (Fintype.card J : ℝ) * β) hw hwsum
+  intro j
+  simpa using (component_failure_le (Finset.univ : Finset J)
+    (P j) E (A j) (L j) ρ β (hP j)
+    (fun x => by
+      intro hx
+      rcases hcover j x hx with h | ⟨k, hk⟩
+      · exact Or.inl h
+      · exact Or.inr ⟨k, Finset.mem_univ k, hk⟩)
+    (hown j)
+    (fun k hk => hpair j k))
+
 end Nightfall.StrongMixtureUnion
