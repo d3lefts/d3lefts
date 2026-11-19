@@ -114,6 +114,8 @@ theorem probability_in_unit_interval {T : ℕ}
     unfold energy
     apply Finset.sum_le_sum
     intro k _
-    split_ifs <;> positivity
+    split_ifs
+    · exact le_refl _
+    · positivity
 
 end Nightfall.QuantumCircuitNormalization
