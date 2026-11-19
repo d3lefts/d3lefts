@@ -103,7 +103,7 @@ theorem cubic_quadratic_bound {x : ℝ} (hx : 0 ≤ x) :
   unfold cubic
   nlinarith [pow_nonneg hx 3]
 
-def tailBound : ℕ → ℝ
+noncomputable def tailBound : ℕ → ℝ
   | 0 => 3 / 4
   | n + 1 => (tailBound n) ^ 2
 
@@ -122,7 +122,6 @@ theorem tailBound_eq (n : ℕ) :
       change tailBound n ^ 2 = (3 / 4 : ℝ) ^ (2 ^ (n + 1))
       rw [ih, ← pow_mul]
       congr 1
-      simp [pow_succ]
 
 theorem amp_tail
     (n : ℕ) {x : ℝ} (hx : 0 ≤ x) (hmax : x ≤ 2 / 5) :
