@@ -133,7 +133,7 @@ theorem execute_eq_path_sum : ∀ {n : ℕ}
             (∑ τ : Trace n ι α, pathCoeff prev τ v * traceWeight τ x) = _
         rw [Finset.mul_sum]
         rw [Finset.mul_sum]
-        rw [Finset.sum_mul]
+        simp_rw [Finset.sum_mul]
         rw [Finset.sum_comm]
         apply Finset.sum_congr rfl
         intro s _
