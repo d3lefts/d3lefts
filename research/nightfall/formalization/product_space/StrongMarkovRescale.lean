@@ -36,9 +36,10 @@ theorem endpointAffine_natDegree_le_one (a b : ℝ) :
   have h := Polynomial.natDegree_add_le
     (C ((a + b) / 2) : Polynomial ℝ)
     (C ((a - b) / 2) * X)
-  have hm := Polynomial.natDegree_C_mul_le ((a - b) / 2) (X : Polynomial ℝ)
+  have hm : (C ((a - b) / 2) * X).natDegree ≤ 1 := by
+    simpa using Polynomial.natDegree_C_mul_le ((a - b) / 2) (X : Polynomial ℝ)
   have hc : (C ((a + b) / 2) : Polynomial ℝ).natDegree ≤ 1 := by simp
-  omega
+  exact h.trans (max_le hc hm)
 
 noncomputable def normalizedEndpointPoly
     (P : Polynomial ℝ) (a b : ℝ) : Polynomial ℝ :=
@@ -59,13 +60,18 @@ theorem normalizedEndpointPoly_natDegree_le
     (p := P) (q := endpointAffine a b)
   have hq := endpointAffine_natDegree_le_one a b
   have hcomp' : (P.comp (endpointAffine a b)).natDegree ≤ d := by
-    omega
-  have hmul := Polynomial.natDegree_C_mul_le (2 : ℝ)
-    (P.comp (endpointAffine a b))
+    calc
+      (P.comp (endpointAffine a b)).natDegree ≤
+        P.natDegree * (endpointAffine a b).natDegree := hcomp
+      _ ≤ d * 1 := Nat.mul_le_mul hdeg hq
+      _ = d := by simp
+  have hmul : (C (2 : ℝ) * P.comp (endpointAffine a b)).natDegree ≤ d :=
+    (Polynomial.natDegree_C_mul_le (2 : ℝ)
+      (P.comp (endpointAffine a b))).trans hcomp'
   have hminus := Polynomial.natDegree_sub_le
     (C (2 : ℝ) * P.comp (endpointAffine a b)) (C (1 : ℝ))
   have hconst : (C (1 : ℝ) : Polynomial ℝ).natDegree ≤ d := by simp
-  omega
+  exact hminus.trans (max_le hmul hconst)
 
 theorem normalizedEndpointPoly_derivative_eval_one
     (P : Polynomial ℝ) (a b : ℝ) :
