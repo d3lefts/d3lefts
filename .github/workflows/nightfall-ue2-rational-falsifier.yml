@@ -1,0 +1,44 @@
+name: NIGHTFALL UE2 finite-rational falsifier exact audit (not a universal proof)
+on:
+  push:
+    branches: [nightfall-ue2-rational-falsifier-infinite-cover-20261118]
+    paths:
+      - 'research/nightfall/flagship-influence/check_ue2_rational_falsification.py'
+      - 'research/nightfall/flagship-influence/RATIONAL_FALSIFIER_COMPLETENESS_INFINITE_COVER_20261118.md'
+      - '.github/workflows/nightfall-ue2-rational-falsifier.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/flagship-influence/check_ue2_rational_falsification.py'
+      - 'research/nightfall/flagship-influence/RATIONAL_FALSIFIER_COMPLETENESS_INFINITE_COVER_20261118.md'
+      - '.github/workflows/nightfall-ue2-rational-falsifier.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-rational-falsifier:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Exact independent source-law influence and negative-control checks
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/flagship-influence/check_ue2_rational_falsification.py
+          python3 -m py_compile "$SRC"
+          python3 -I "$SRC"
+      - name: Print source checksum and provenance (does not prove analytic theorem)
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/flagship-influence/check_ue2_rational_falsification.py
+          mkdir -p research-receipts/rational-falsifier
+          sha256sum "$SRC" > research-receipts/rational-falsifier/SHA256SUMS
+          sha256sum research/nightfall/flagship-influence/RATIONAL_FALSIFIER_COMPLETENESS_INFINITE_COVER_20261118.md >> research-receipts/rational-falsifier/SHA256SUMS
+          git rev-parse HEAD > research-receipts/rational-falsifier/commit.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ue2-rational-refutation-checker-receipt
+          path: research-receipts/rational-falsifier/
+          retention-days: 45
