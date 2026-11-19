@@ -126,6 +126,71 @@ been verified here.
 If D is polynomial in log(1/δ), this is **strong (log 1/δ) simulation over M-mixtures of margin-c
 products**, with only polynomial overhead in M, t, 1/ε and 1/c.
 
+## Lemma 3 (strong product simulation from the uniform case: the black box, paper proof)
+
+**Why this is needed.** BDST Theorem 1 is stated for the uniform cube only. Its setup line says all
+probabilities are over uniform x. Girish–Mittal–Nehoran–Raz (arXiv:2609.35327), the "gadget" source,
+cover µ_p and products with biases in [a, 1−a]. But they work with error ε and overhead poly(T, 1/ε), and
+never track δ. So neither paper supplies a polylog(1/δ) simulation for biased products, and we prove one
+here.
+
+**Claim.**
+
+- **Setup:** S(t, d, ε, δ) is a uniform-cube strong simulator for t-query, d-round algorithms; BDST gives
+  2^{O(d²)}·(t log(1/δ)/ε)^{O(d)}. P = ⊗p_i is a product law over finite alphabets with margin c.
+- **Conclusion:** there is a tree of depth D ≤ S(2mt, 2d, ε, δ) with Pr_P[|f − T| > 2ε] ≤ 3δ, where
+  m = log₂(deg/(δc)) + O(1) and deg = (2t + D)·O(log(1/δ)/ε).
+
+**Proof.**
+
+1. **Encoding.** For each coordinate, pick a map g_i: {0,1}^m → Σ_i whose pushforward p'_i satisfies
+   |p'_i(a) − p_i(a)| ≤ 2^{−m}, using a binary expansion. Then p' has margin ≥ c/2 once 2^{−m} ≤ c/2.
+2. **Quantum algorithm on the encoding.** A' answers each query to x_i by computing g_i(y_block) with m
+   parallel queries and then uncomputing. It uses 2mt queries and 2d rounds, and its acceptance
+   probability is exactly f(g(y)).
+3. **Uniform simulation.** Apply S to A' over uniform y.
+4. **Back to x.** Convert the y-tree into an x-tree:
+   - when the y-tree queries a bit of block i, query x_i;
+   - sample y_block uniformly among the preimages of x_i;
+   - fix the random seed by averaging.
+
+   If x ∼ P' = ⊗p'_i, the simulated y is exactly uniform. So Pr_{P'}[|f − T| > ε] ≤ δ.
+5. **Rounding by Bernstein.**
+   - Let φ be a polynomial of degree O(log(1/δ)/ε) mapping [−1,1] to [0,1], with φ ≤ δ on [−ε, ε] and
+     φ ≥ 1 − δ outside [−2ε, 2ε].
+   - Then x ↦ φ(f(x) − T(x)) has degree ≤ deg in the one-hot indicators, since a depth-D tree has
+     degree ≤ D.
+   - Its mean along the segment from p' to p changes by at most (π/4)·deg·2^{−m}/(c/2) ≤ δ, by the
+     choice of m.
+   - So Pr_P[|f − T| > 2ε] ≤ E_P φ + δ ≤ E_{P'} φ + 2δ ≤ Pr_{P'}[|f − T| > ε] + 3δ'. Here
+     δ' = max(δ, the Bernstein term), so 3δ' ≤ 4δ, and rescaling δ gives the claimed bound. ∎
+
+**Margin dependence.** The margin enters this lemma only as **log(1/c)**, through m. The stated GMNR
+transfer has block size m ≈ (2/a)·log(·), which is linear in 1/a. The gap comes from using binary
+rounding and paying for it with Bernstein instead of exact couplings. This needs an independent check
+before it is relied on.
+
+## Theorem 2, instantiated (paper level)
+
+Inputs: d-round, t-query algorithms, and M-mixtures of margin-c products over finite alphabets.
+
+- **Approximation:** 5ε.
+- **Failure:** ≤ δ.
+- **Depth:**
+
+      M·2^{O(d²)}·(t·log(M/(εδc))/ε)^{O(d)} + M²·O(t²·log(M/(εδ))/(ε²c²)).
+
+This is strong (polylog 1/δ) simulation over latent product sources for every constant number of rounds.
+
+**Prior art.**
+
+- BDST, LM26 and EPS26 treat the uniform cube only.
+- GMNR treat µ_p, slices and products, but without δ tracking or mixtures.
+- A search for simulation over mixtures of products found nothing.
+- Closest in spirit: Bogdanov–Cheung–Dinesh–Lui, "Classical simulation of one-query quantum
+  distinguishers" (APPROX 2023). It concerns general distribution pairs with one quantum query, not
+  products or strong simulation.
+
 ## What remains
 
 1. **Prior-art check.** Do BDST or the concurrent papers already handle product or mixture inputs?
