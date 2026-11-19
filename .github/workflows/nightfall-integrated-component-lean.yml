@@ -1,11 +1,5 @@
 name: NIGHTFALL margin-free component identification integrated source Lean
 on:
-  push:
-    branches:
-      - nightfall-original-classifier-terminal-cert-20261119
-    paths:
-      - '.github/workflows/nightfall-integrated-component-lean.yml'
-      - 'research/nightfall/formalization/product_space/MarginFreeOriginalClassifier.lean'
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/MarginFreeIntegrated.lean'
@@ -16,6 +10,9 @@ on:
       - 'research/nightfall/formalization/product_space/MarginFreeClassifierTerminal.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeObservationPushforward.lean'
       - 'research/nightfall/formalization/product_space/MarginFreeOriginalClassifier.lean'
+      - 'research/nightfall/formalization/product_space/MarginFreeWeightedOriginal.lean'
+      - 'research/nightfall/formalization/product_space/MarginFreeWeightedTree.lean'
+      - 'research/nightfall/latent_component_identification/check_weighted_source_likelihood_exact.py'
       - 'research/nightfall/formalization/product_space/PinnedConditionalStability.lean'
       - 'research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean'
       - 'research/nightfall/formalization/aa_product/CLOSURE_PINNED.txt'
@@ -32,6 +29,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact weighted-source likelihood regression
+        run: python3 research/nightfall/latent_component_identification/check_weighted_source_likelihood_exact.py
       - name: Source pinned dependency closure (minimal 56 modules)
         shell: bash
         run: |
@@ -53,7 +52,7 @@ jobs:
         run: |
           set -euo pipefail
           cd /tmp/mathlib4
-          for M in ComponentIdentification MarginFreeCertificate LatentProductInterpolationDegree MarginFreeFiniteTests MarginFreeBhattacharyya MarginFreeTVHellinger MarginFreeLargeGaps LatentComponentCertifiedCore PinnedConditionalStability MarginFreeIntegrated MarginFreeProductDisintegration MarginFreeBoundedK MarginFreeLikelihoodDecision MarginFreeClassifierTerminal MarginFreeObservationPushforward MarginFreeOriginalClassifier; do
+          for M in ComponentIdentification MarginFreeCertificate LatentProductInterpolationDegree MarginFreeFiniteTests MarginFreeBhattacharyya MarginFreeTVHellinger MarginFreeLargeGaps LatentComponentCertifiedCore PinnedConditionalStability MarginFreeIntegrated MarginFreeProductDisintegration MarginFreeBoundedK MarginFreeLikelihoodDecision MarginFreeClassifierTerminal MarginFreeObservationPushforward MarginFreeOriginalClassifier MarginFreeWeightedOriginal MarginFreeWeightedTree; do
             cp "$GITHUB_WORKSPACE/research/nightfall/formalization/product_space/$M.lean" "$M.lean"
             lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "/tmp/$M.log"
             if grep -E 'error:|sorryAx|declaration uses .sorry' "/tmp/$M.log"; then exit 1; fi
@@ -66,6 +65,8 @@ jobs:
           import MarginFreeClassifierTerminal
           import MarginFreeObservationPushforward
           import MarginFreeOriginalClassifier
+          import MarginFreeWeightedOriginal
+          import MarginFreeWeightedTree
           #print axioms Nightfall.MarginFreeIntegrated.pinned_failure_mean_near
           #print axioms Nightfall.MarginFreeIntegrated.weighted_pinned_component_overlap
           #print axioms Nightfall.MarginFreeDisintegration.observed_then_pin_mass
@@ -86,12 +87,16 @@ jobs:
           #print axioms Nightfall.MarginFreeOriginalClassifier.source_canonical_expectation
           #print axioms Nightfall.MarginFreeOriginalClassifier.original_likelihood_error_eq_overlap
           #print axioms Nightfall.MarginFreeOriginalClassifier.bounded_K_original_source_classifier
+          #print axioms Nightfall.MarginFreeWeightedOriginal.weighted_likelihood_error_eq_overlap
+          #print axioms Nightfall.MarginFreeWeightedOriginal.weighted_original_locality
+          #print axioms Nightfall.MarginFreeWeightedOriginal.weighted_original_likelihood_error_eq_overlap
+          #print axioms Nightfall.MarginFreeWeightedTree.exists_local_decision_tree
+          #print axioms Nightfall.MarginFreeWeightedTree.weighted_original_likelihood_tree
           LEAN
           sed -i 's/^          //' IntegratedAxioms.lean
           lake env lean IntegratedAxioms.lean 2>&1 | tee /tmp/integration-axioms.log
           if grep -E 'error:|sorryAx|declaration uses .sorry' /tmp/integration-axioms.log; then exit 1; fi
-          echo "CI_HEAD_SHA=$GITHUB_SHA" | tee /tmp/classifier-cert-head.txt
-          sha256sum MarginFreeOriginalClassifier.lean MarginFreeClassifierTerminal.lean MarginFreeObservationPushforward.lean MarginFreeProductDisintegration.lean MarginFreeIntegrated.lean PinnedConditionalStability.lean LatentComponentCertifiedCore.lean MarginFreeLargeGaps.lean | tee /tmp/integration-sha256.txt
+          sha256sum MarginFreeProductDisintegration.lean MarginFreeIntegrated.lean PinnedConditionalStability.lean LatentComponentCertifiedCore.lean MarginFreeLargeGaps.lean | tee /tmp/integration-sha256.txt
       - name: Preserve complete integration receipt
         if: always()
         uses: actions/upload-artifact@v4
@@ -115,8 +120,9 @@ jobs:
             /tmp/MarginFreeClassifierTerminal.log
             /tmp/MarginFreeObservationPushforward.log
             /tmp/MarginFreeOriginalClassifier.log
+            /tmp/MarginFreeWeightedOriginal.log
+            /tmp/MarginFreeWeightedTree.log
             /tmp/integration-axioms.log
             /tmp/integration-sha256.txt
-            /tmp/classifier-cert-head.txt
           retention-days: 60
           if-no-files-found: warn
