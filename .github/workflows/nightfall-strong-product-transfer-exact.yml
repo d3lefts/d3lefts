@@ -1,10 +1,11 @@
-name: NIGHTFALL strong product transfer finite exact audit (NOT Lean certificate)
+name: NIGHTFALL product-transfer exact audit + conditional finite Lean
 on:
   push:
     branches: [nightfall-strong-product-paper-terminal-20261119]
     paths:
       - 'research/nightfall/strong_simulation_progress/STRONG_PRODUCT_TRANSFER_THEOREM_P_REVISED_20261119.md'
       - 'research/nightfall/strong_simulation_progress/check_strong_product_transfer_exact.py'
+      - 'research/nightfall/formalization/product_space/StrongProductTransferConditional.lean'
       - '.github/workflows/nightfall-strong-product-transfer-exact.yml'
   pull_request:
     paths:
@@ -15,6 +16,45 @@ on:
 permissions:
   contents: read
 jobs:
+  finite-source-mass-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile scoped finite error-union and fixed-tape kernel declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/product_space/StrongProductTransferConditional.lean
+          mkdir -p product-transfer-lean-receipts
+          if grep -En '\bsorry\b|\badmit\b|sorryAx|^\s*axiom\b|native_decide|unsafe' "$SRC"; then
+            echo 'Disallowed gap or axiom marker'; exit 1
+          fi
+          cp "$SRC" /tmp/mathlib4/StrongProductTransferConditional.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/StrongProductTransferConditional.olean StrongProductTransferConditional.lean) 2>&1 | tee product-transfer-lean-receipts/compile.log
+          ! grep -E 'error:|sorryAx|declaration uses .sorry|unknown constant' product-transfer-lean-receipts/compile.log
+          for name in bad_triangle uniform_seed_bad_mass source_joint_failure_le fix_random_tape; do
+            grep -F "Nightfall.StrongProductTransferConditional.$name" product-transfer-lean-receipts/compile.log
+          done
+          ! grep -E 'sorryAx|Lean.ofReduceBool' product-transfer-lean-receipts/compile.log
+      - name: Preserve explicit conditional-theorem and compiler hashes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p product-transfer-lean-receipts
+          git rev-parse HEAD > product-transfer-lean-receipts/head.txt
+          sha256sum research/nightfall/formalization/product_space/StrongProductTransferConditional.lean > product-transfer-lean-receipts/source.sha256
+          cp /tmp/nightfall-lean-version.txt product-transfer-lean-receipts/lean-version.txt 2>/dev/null || true
+          echo 'CONDITIONAL_FINITE_PROBABILITY_CORE_ONLY; NOT BDST / NOT QUANTUM PRODUCT TRANSFER' > product-transfer-lean-receipts/status.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-product-transfer-lean-${{ github.run_id }}
+          path: product-transfer-lean-receipts
+          if-no-files-found: warn
   independent-finite-audit:
     runs-on: ubuntu-latest
     timeout-minutes: 10
