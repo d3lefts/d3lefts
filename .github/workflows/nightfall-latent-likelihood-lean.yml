@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/LatentComponentLikelihood.lean'
+      - 'research/nightfall/formalization/product_space/LatentComponentHellinger.lean'
       - '.github/workflows/nightfall-latent-likelihood-lean.yml'
   workflow_dispatch:
 permissions:
@@ -33,6 +34,22 @@ jobs:
             --decl Nightfall.ProductSpace.LatentComponent.likelihood_error_le_of_conditional_bounds \
             --json-out lean-receipts/latent-likelihood/strict.json
           python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/latent-likelihood/strict.json
+      - name: Compile and audit Hellinger-TV finite bound
+        shell: bash
+        run: |
+          set -euo pipefail
+          SRC=research/nightfall/formalization/product_space/LatentComponentHellinger.lean
+          cp "$SRC" /tmp/mathlib4/LatentComponentHellinger.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/LatentComponentHellinger.olean LatentComponentHellinger.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.ProductSpace.LatentComponent.finiteAffinity_nonneg \
+            --decl Nightfall.ProductSpace.LatentComponent.finiteAffinity_le_one \
+            --decl Nightfall.ProductSpace.LatentComponent.finiteTV_sq_le_one_sub_affinity_sq \
+            --decl Nightfall.ProductSpace.LatentComponent.finiteAffinity_le_one_sub_half_tv_sq \
+            --json-out lean-receipts/latent-likelihood/hellinger-strict.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/latent-likelihood/hellinger-strict.json
       - name: Provenance
         if: always()
         shell: bash
@@ -40,7 +57,7 @@ jobs:
           mkdir -p lean-receipts/latent-likelihood
           git rev-parse HEAD > lean-receipts/latent-likelihood/head.txt
           cat lean-toolchain > lean-receipts/latent-likelihood/toolchain.txt
-          sha256sum research/nightfall/formalization/product_space/LatentComponentLikelihood.lean > lean-receipts/latent-likelihood/SHA256SUMS.txt
+          sha256sum research/nightfall/formalization/product_space/LatentComponentLikelihood.lean research/nightfall/formalization/product_space/LatentComponentHellinger.lean > lean-receipts/latent-likelihood/SHA256SUMS.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
