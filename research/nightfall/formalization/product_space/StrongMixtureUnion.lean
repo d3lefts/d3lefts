@@ -37,10 +37,11 @@ theorem indicator_union_bound
   have hsum0 : 0 ≤ ∑ j ∈ s, eventIndicator (L j) :=
     Finset.sum_nonneg (fun j hj => indicator_nonneg (L j))
   have ha0 := indicator_nonneg A
+  change 0 ≤ (if A then (1 : ℝ) else 0) at ha0
+  change 0 ≤ ∑ j ∈ s, (if L j then (1 : ℝ) else 0) at hsum0
   by_cases he : E
   · rcases hcover he with ha | ⟨j, hj, hlj⟩
     · simp [eventIndicator, he, ha]
-      linarith
     · have heq : eventIndicator (L j) = 1 := by simp [eventIndicator, hlj]
       have heqsum : ∑ k ∈ s, eventIndicator (L k) =
             (∑ k ∈ s.erase j, eventIndicator (L k)) +
@@ -51,9 +52,14 @@ theorem indicator_union_bound
       have hbig : 1 ≤ ∑ k ∈ s, eventIndicator (L k) := by
         rw [heqsum, heq]
         linarith
-      simp only [eventIndicator, if_pos he]
+      change 1 ≤ (if A then (1 : ℝ) else 0) +
+        ∑ k ∈ s, (if L k then (1 : ℝ) else 0)
+      change 1 ≤ ∑ k ∈ s, (if L k then (1 : ℝ) else 0) at hbig
       linarith
-  · simp only [eventIndicator, if_neg he]
+  · change (if E then (1 : ℝ) else 0) ≤
+      (if A then (1 : ℝ) else 0) +
+        ∑ k ∈ s, (if L k then (1 : ℝ) else 0)
+    rw [if_neg he]
     linarith
 
 /-- A finite nonnegative source law obeys an error mass union bound using
