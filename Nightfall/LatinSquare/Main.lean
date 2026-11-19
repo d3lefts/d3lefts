@@ -1,5 +1,6 @@
 import Nightfall.LatinSquare.ExactFlattening
 import Nightfall.LatinSquare.Representation
+import Nightfall.LatinSquare.IncidenceCoupling
 
 /-!
 # Finite labeled Latin-square likelihood and mixture kernel
