@@ -142,4 +142,56 @@ theorem doubleInfluence_pin_other_expectation
     _ = ∑ x : ι → α, originalMass p x * refreshEnergy p f i x :=
           source_pin_tower p hp1 j (refreshEnergy p f i)
 
+
+/-- The total original-law double influence (twice J). -/
+noncomputable def totalDoubleInfluence (p : ι → α → ℝ)
+    (f : (ι → α) → ℝ) : ℝ :=
+  ∑ i : ι, doubleInfluence p f i
+
+/-- Exact expected total-potential decrement for any queried site.
+No lower probability bound and no uniformity of coordinate weights.
+This is an equality of genuine original-law expectations. -/
+theorem totalDoubleInfluence_pin_expectation
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (f : (ι → α) → ℝ) (j : ι) :
+    (∑ y : ι → α, originalMass p y *
+      totalDoubleInfluence p (pin f j (y j))) =
+    totalDoubleInfluence p f - doubleInfluence p f j := by
+  have hsplit (u : ι → ℝ) :
+      (∑ i : ι, if i = j then (0 : ℝ) else u i) =
+        (∑ i : ι, u i) - u j := by
+    have hsum :
+        (∑ i : ι, (if i = j then (0 : ℝ) else u i) +
+          (if i = j then u j else 0)) = ∑ i : ι, u i := by
+      apply Finset.sum_congr rfl
+      intro i _
+      by_cases hi : i = j <;> simp [hi]
+    rw [Finset.sum_add_distrib] at hsum
+    have hsingle : (∑ i : ι, if i = j then u j else 0) = u j := by
+      simp
+    rw [hsingle] at hsum
+    linarith
+  calc
+    (∑ y : ι → α, originalMass p y *
+        totalDoubleInfluence p (pin f j (y j))) =
+      ∑ y : ι → α, ∑ i : ι,
+        originalMass p y * doubleInfluence p (pin f j (y j)) i := by
+          unfold totalDoubleInfluence
+          apply Finset.sum_congr rfl
+          intro y _
+          rw [Finset.mul_sum]
+    _ = ∑ i : ι, ∑ y : ι → α,
+        originalMass p y * doubleInfluence p (pin f j (y j)) i := Finset.sum_comm
+    _ = ∑ i : ι, if i = j then 0 else doubleInfluence p f i := by
+          apply Finset.sum_congr rfl
+          intro i _
+          by_cases hi : i = j
+          · subst i
+            simp [doubleInfluence_pin_self]
+          · rw [if_neg hi]
+            exact doubleInfluence_pin_other_expectation p hp1 f i j hi
+    _ = totalDoubleInfluence p f - doubleInfluence p f j := by
+          simpa only [totalDoubleInfluence] using hsplit (fun i => doubleInfluence p f i)
+
 end Nightfall.QuerySimulation.OriginalLaw
