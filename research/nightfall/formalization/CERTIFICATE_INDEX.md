@@ -1,22 +1,5 @@
 # NIGHTFALL Lean certificates — consolidated audit
 
-## 18 November 2026 — product-space Aaronson–Ambainis and simulation (PR #858)
-
-This **current active-branch appendix** is scoped to [PR #858](https://github.com/d3lefts/d3lefts/pull/858), not a claim that it has merged into `main`. Each entry identifies the *specific* compiled declaration and its applicable run; a separate paper-level quantum-oracle bridge and novelty review remain outstanding. The earlier dated sections below are historical and should not be read as the latest all-L² status.
-
-| Result | Exact declaration / source | Certified evidence and status |
-| --- | --- | --- |
-| Finite arbitrary-product AA influence bound (includes zero-mass symbols, no quantitative bias/alphabet dependence) | `Nightfall.ProductSpace.Influence.product_influence` in [ProductInfluence.lean](product_space/ProductInfluence.lean); heterogeneous form `Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence` in [HeterogeneousAlphabets.lean](product_space/HeterogeneousAlphabets.lean) | [Run 44406881226](https://github.com/d3lefts/d3lefts/actions/runs/44406881226), **success** on `d8e201626bf1461bdedc280b1d27c9b731e45e8b`; [artifact 14476363017](https://github.com/d3lefts/d3lefts/actions/runs/44406881226) |
-| Arbitrary measurable / infinite-index product AA terminal, a.e.-bounded L² class and iterated-residual degree | `Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product` in [InfinitePiAAProductTerminal.lean](universal/InfinitePiAAProductTerminal.lean) | [Run 44393215489](https://github.com/d3lefts/d3lefts/actions/runs/44393215489), **success** on `d596301450a51a1de3383933f64bc8b2705c2bab`; artifact `14471730074` |
-| Printed cube AA conjecture recovered from product-space chain (not independent of Turturean's vendored lemmas) | `Nightfall.ProductSpace.CubeAA.printedConjecture`, `mainTheorem_of_productSpace`, `explicitBound` in [CubePrintedAA.lean](product_space/CubePrintedAA.lean) | [Run 44406881226](https://github.com/d3lefts/d3lefts/actions/runs/44406881226), **success** on `d8e201626bf1461bdedc280b1d27c9b731e45e8b` |
-| Deterministic product-law simulation of bounded low-degree functions, `q ε³ δ^(5/2) ≥ 6√2 π⁶ d⁶` | `Nightfall.ProductSpace.Simulation.simulation_degree` in [ProductSimulation.lean](product_space/ProductSimulation.lean), source commit `771d11af21896aa83f481b332d21d7d706b56927` | [Run 44433153026](https://github.com/d3lefts/d3lefts/actions/runs/44433153026), **success** on `771d11af21896aa83f481b332d21d7d706b56927`: exact 178-module closure, strict named-declaration and standard-axiom audit; artifact `14487982785` |
-
-**Trust boundary:** Lean directly certifies the *function* simulation theorem on a common finite alphabet with coordinate-dependent product weights; variable finite alphabets are handled by paper-level padding. The step from a T-query quantum oracle to a degree-≤2T symbol-indicator polynomial is still a paper proof, not a Lean theorem. Query complexity does not assert construction-time efficiency. The exact source receipt JSONs are in CI artifact `14487982785` ([run 44433153026](https://github.com/d3lefts/d3lefts/actions/runs/44433153026)). A persistent in-repository archive must contain those **actual downloaded bytes**, with source hashes and audit run IDs, rather than reconstructed receipt records.
-
-Compiling the dedicated 178-module closure is not equivalent to a fresh-clone `lake build` of these roots. The active generator `scripts/generate_nightfall_lake.py` does not yet seed all four result families or resolve hierarchical vendored `AaronsonAmbainis.*` module names. The integrated Lake gate is separate.
-
----
-
 **Additional strictly compiled Lean support (#520):** [run 43637631337](https://github.com/d3lefts/d3lefts/actions/runs/43637631337) proves arbitrary product sigma-algebra cylinder generation, measurable-event countable coordinate support, and real measurable-observable countable coordinate support. Exact blobs tracked in [unrestricted terminal proof-scope manifest](../../../docs/unrestricted-terminal-proof-scope-20261114.json). The all-L² original-source unconditional Lean endpoint remains OPEN.
 
 ## 14 November 2026 supplemental current-source certification
