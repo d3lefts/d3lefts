@@ -1,0 +1,53 @@
+name: NIGHTFALL strong product transfer finite exact audit (NOT Lean certificate)
+on:
+  push:
+    branches: [nightfall-strong-product-paper-terminal-20261119]
+    paths:
+      - 'research/nightfall/strong_simulation_progress/STRONG_PRODUCT_TRANSFER_THEOREM_P_REVISED_20261119.md'
+      - 'research/nightfall/strong_simulation_progress/check_strong_product_transfer_exact.py'
+      - '.github/workflows/nightfall-strong-product-transfer-exact.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/strong_simulation_progress/STRONG_PRODUCT_TRANSFER_THEOREM_P_REVISED_20261119.md'
+      - 'research/nightfall/strong_simulation_progress/check_strong_product_transfer_exact.py'
+      - '.github/workflows/nightfall-strong-product-transfer-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-finite-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Run exact rational enumeration and verify checklist
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/strong_simulation_progress
+          python3 "$P/check_strong_product_transfer_exact.py" | tee strong-product-exact.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('strong-product-exact.json'))
+          assert r['status']=='FINITE_TESTS_ONLY'
+          assert r['total']>=40000
+          assert all(v>0 for v in r['checks'].values())
+          print('Finite exact audit: PASS (not a universal/Lean proof)')
+          PY
+      - name: Preserve immutable source/fixture provenance and scope
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p product-transfer-receipts
+          git rev-parse HEAD > product-transfer-receipts/head.txt
+          sha256sum research/nightfall/strong_simulation_progress/{STRONG_PRODUCT_TRANSFER_THEOREM_P_REVISED_20261119.md,check_strong_product_transfer_exact.py} > product-transfer-receipts/sources.sha256
+          cp strong-product-exact.json product-transfer-receipts/ 2>/dev/null || true
+          echo 'FINITE_EXACT_AUDIT_ONLY; not a Lean kernel proof or independent referee certificate' > product-transfer-receipts/status.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: nightfall-product-transfer-exact-${{ github.run_id }}
+          path: product-transfer-receipts
+          if-no-files-found: warn
