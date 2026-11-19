@@ -23,7 +23,7 @@ from grade_research_q2 import (
     ALLOW_AXIOMS, DECL, digest, git_blob, verify_trusted, candidate_check,
 )
 
-IMAGE_PIN = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9._:/-]*@sha256:[a-f0-9]{64}$")
+IMAGE_PIN = re.compile(r"^(?:[a-zA-Z0-9][a-zA-Z0-9._:/-]*@sha256:[a-f0-9]{64}|sha256:[a-f0-9]{64})$")
 REQUIRED_FILES = frozenset({
     "lean-toolchain",
     "research/nightfall/formalization/observability/ShiftedC4Bernstein.lean",
@@ -87,7 +87,7 @@ def sealed_sources(candidate: Path, stage: Path) -> dict:
 def docker_argv(image: str, stage: Path, output: Path, *, memory: str = "8g",
                 cpus: str = "2", pids: int = 256) -> list[str]:
     if not IMAGE_PIN.fullmatch(image):
-        raise ValueError("image must be pinned via registry/name@sha256:<64-hex>")
+        raise ValueError("image must be pinned by registry digest or local content-addressed sha256 ID")
     if not stage.is_absolute() or not output.is_absolute():
         raise ValueError("paths must be absolute")
     if not re.fullmatch(r"[1-9][0-9]*[mg]", memory) or not re.fullmatch(r"[1-9][0-9]*(?:\.[0-9]+)?", cpus):
@@ -193,6 +193,19 @@ def evaluate(candidate: Path, image: str, output: Path) -> dict:
         raise ValueError("explicit immutable image digest required")
     if not shutil.which("docker"):
         raise RuntimeError("Docker missing: untrusted evaluation refused")
+    # A local image ID is content-addressed but scoped to this Docker daemon;
+    # production scoring must use an independently audited registry digest.
+    try:
+        identity = subprocess.check_output(
+            ["docker", "image", "inspect", "--format", "{{.Id}}", image],
+            text=True, timeout=20,
+        ).strip()
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+        raise RuntimeError("pinned image is not locally available") from exc
+    if not re.fullmatch(r"sha256:[a-f0-9]{64}", identity):
+        raise RuntimeError("Docker image ID is not a content-addressed SHA-256")
+    if image.startswith("sha256:") and image != identity:
+        raise RuntimeError("local image digest differs from loaded image ID")
     # Docker is trusted infrastructure. No host result directory is writable by the candidate.
     with tempfile.TemporaryDirectory(prefix="polaris-q2-sealed-") as folder:
         stage = Path(folder) / "sealed"
@@ -232,6 +245,7 @@ def evaluate(candidate: Path, image: str, output: Path) -> dict:
         verify_grader_receipt(report, manifest)
         report["host_sandbox_wrapper"] = {
             "mode": "docker-nonprivileged-network-disabled",
+            "resolved_image_id": identity,
             "image": image, "sealed_files": manifest["source_files"],
             "docker_exit_code": completed.returncode,
             "security_limitations": "Docker/runtime and image not independently assessed; public theorem; no blind model trial",
