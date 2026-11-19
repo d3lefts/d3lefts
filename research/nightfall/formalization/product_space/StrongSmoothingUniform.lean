@@ -69,16 +69,19 @@ theorem complement_pow_le_two_fifths
   have hquad := Real.quadratic_le_exp_of_nonneg hq0
   have hlarge : (5 / 2 : ℝ) ≤ Real.exp ((k : ℝ) * t) := by
     nlinarith [sq_nonneg ((k : ℝ) * t - 1)]
-  have hpos : 0 < Real.exp ((k : ℝ) * t) :=
-    Real.exp_pos _
-  have hinv : (Real.exp ((k : ℝ) * t))⁻¹ ≤ (2 / 5 : ℝ) := by
-    apply (inv_le_iff₀ hpos).2
-    nlinarith [hlarge]
+  have hprod : Real.exp (-((k : ℝ) * t)) *
+      Real.exp ((k : ℝ) * t) = 1 := by
+    rw [← Real.exp_add]
+    simp
+  have hneg : 0 ≤ Real.exp (-((k : ℝ) * t)) :=
+    (Real.exp_pos _).le
+  have hmult := mul_nonneg (sub_nonneg.mpr hlarge) hneg
+  have hsmall : Real.exp (-((k : ℝ) * t)) ≤ (2 / 5 : ℝ) := by
+    nlinarith [hprod, hmult]
   calc
     (1 - t) ^ k ≤ (Real.exp (-t)) ^ k := hpow
     _ = Real.exp (-((k : ℝ) * t)) := hxp
-    _ = (Real.exp ((k : ℝ) * t))⁻¹ := Real.exp_neg _
-    _ ≤ 2 / 5 := hinv
+    _ ≤ 2 / 5 := hsmall
 
 theorem baseValue_ge_three_fifths
     (k : ℕ) {z : ℝ}
@@ -111,6 +114,12 @@ theorem basePoly_natDegree_le (k : ℕ) :
     omega
   have hp := Polynomial.natDegree_pow_le
     (p := ((1 : Polynomial ℝ) - X ^ 2)) (n := k)
+  have hpow : (((1 : Polynomial ℝ) - X ^ 2) ^ k).natDegree ≤ 2 * k := by
+    calc
+      (((1 : Polynomial ℝ) - X ^ 2) ^ k).natDegree ≤
+          k * ((1 : Polynomial ℝ) - X ^ 2).natDegree := hp
+      _ ≤ k * 2 := Nat.mul_le_mul_left k hx
+      _ = 2 * k := by omega
   have hb := Polynomial.natDegree_sub_le (1 : Polynomial ℝ)
     (((1 : Polynomial ℝ) - X ^ 2) ^ k)
   have h1 : (1 : Polynomial ℝ).natDegree = 0 := by simp
@@ -173,7 +182,7 @@ theorem smoothPoly_large
     3 * (1 - (smoothPoly k n).eval z) ≤ (3 / 4 : ℝ) ^ (2 ^ n) := by
   have hsq : (2 * ε) ^ 2 ≤ z ^ 2 := by
     have hsq := mul_nonneg (sub_nonneg.mpr hz)
-      (add_nonneg (mul_nonneg (by norm_num) hε) (abs_nonneg z))
+      (add_nonneg (mul_nonneg (by norm_num : 0 ≤ (2 : ℝ)) hε) (abs_nonneg z))
     nlinarith [sq_abs z]
   have hkn : 0 ≤ (k : ℝ) := Nat.cast_nonneg _
   have hgap : 1 ≤ (k : ℝ) * z ^ 2 := by
