@@ -139,3 +139,12 @@ even though q_empty>delta for any 0<delta<2^(-k). Thus max_i (q_empty-E q_after_
 ## 6. Novelty and stop rule
 
 BDST already contains the candidate concentration and average-query-weight restriction techniques. Do not claim them as NIGHTFALL discoveries. Only a structurally new way around the exponential adaptive-round loss in BDST Lemma 4.5 (or independently verified genuinely new mechanism) would be progress toward their full Conjecture 2. Require explicit assumptions, a decisive AND/address-function test, and external prior-art comparison before new claims.
+
+
+### 6.1 Adversarial check of the tempting entropy repair
+
+Since tail mass of a rare indicator is a martingale, concave entropy H(p)=-p log2(p)-(1-p)log2(1-p) does give a nonnegative expected decrease. On fair AND_k, the information gain from querying one bit is H(2^-k) - H(2^{-(k-1)})/2 > 0, which is about 2^-k bits and a relative 1/k fraction of H(2^-k). Exact k=6 values: H=0.1161150753 bits; expected child H=0.1003111622 bits; information gain=0.0158039131 bits.
+
+**However, single-coordinate Shannon entropy descent is NOT universal.** Let E={parity_n(x)=1} under independent fair bits, with n>=2. Then Pr(E)=1/2, but for every coordinate i, Pr(E|x_i=0)=Pr(E|x_i=1)=1/2. Consequently I(1_E;X_i)=H(E)-E H(E|X_i)=0 for EVERY i. This remains true under any proper restriction with at least two parity bits unqueried. Exact rational enumeration verified this at n=6 for all six coordinates.
+
+Thus replacing conditional tail mass by entropy fixes AND_k but fails on parity. A future progress witness cannot demand positive *one-step* entropy gain from every unresolved bounded-query circuit; it must recognize higher-order joint information, quantum query-state structure, or delayed multi-query gain. Neither counterexample refutes BDST Conjecture 2, because query weights still identify relevant coordinates.
