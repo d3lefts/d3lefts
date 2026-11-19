@@ -1,0 +1,33 @@
+name: NIGHTFALL bias-free dyadic rounding exact-rational audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/strong_simulation_progress/biasfree_rounding_exact_check.py'
+      - '.github/workflows/nightfall-biasfree-rounding-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  biasfree-dyadic-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Replay exact-rational finite tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/strong_simulation_progress/biasfree_rounding_exact_check.py | tee biasfree-rounding-replay.txt
+          sha256sum research/nightfall/strong_simulation_progress/biasfree_rounding_exact_check.py | tee biasfree-rounding-check-sha256.txt
+      - name: Preserve replay receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: biasfree-rounding-exact-replay
+          path: |
+            biasfree-rounding-replay.txt
+            biasfree-rounding-check-sha256.txt
+          retention-days: 45
+          if-no-files-found: warn
