@@ -34,7 +34,6 @@ REQUIRED_FILES = frozenset({
 GRADER_REL = "research/nightfall/evals/polaris-research-20261119/research_q2/grade_research_q2.py"
 BERNSTEIN_REL = "research/nightfall/formalization/observability/ShiftedC4Bernstein.lean"
 TARGET_REL = "research/nightfall/evals/polaris-research-20261119/research_q2/NightfallPolarisQ2Target.lean"
-REFERENCE_MARKER = b"have hmoment :" # This is not the security gate; excludes accidental reference bundles.
 
 
 def sealed_sources(candidate: Path, stage: Path) -> dict:
@@ -89,7 +88,7 @@ def docker_argv(image: str, stage: Path, output: Path, *, memory: str = "8g",
     if not IMAGE_PIN.fullmatch(image):
         raise ValueError("image must be pinned via registry/name@sha256:<64-hex>")
     if not stage.is_absolute() or not output.is_absolute():
-        raise ValueError("bind mounts must use absolute paths")
+        raise ValueError("paths must be absolute")
     if not re.fullmatch(r"[1-9][0-9]*[mg]", memory) or not re.fullmatch(r"[1-9][0-9]*(?:\.[0-9]+)?", cpus):
         raise ValueError("invalid resource limits")
     if not isinstance(pids, int) or not 16 <= pids <= 1024:
@@ -98,7 +97,7 @@ def docker_argv(image: str, stage: Path, output: Path, *, memory: str = "8g",
     # Mathlib .olean files and compiler. Installed tools include python3, git, lake.
     # Runtime copies this image-owned workspace to ephemeral tmpfs.
     task = (
-        "cp -a /opt/mathlib4 /tmp/mathlib4; "
+        "cp -r /opt/mathlib4 /tmp/mathlib4; "
         "test \"$(git -C /tmp/mathlib4 rev-parse HEAD)\" = " + MATHLIB_COMMIT + "; "
         "python3 /task/" + GRADER_REL +
         " --candidate /task/candidate/ShiftedC4Scalar.lean"
@@ -107,13 +106,12 @@ def docker_argv(image: str, stage: Path, output: Path, *, memory: str = "8g",
     return [
         "docker", "run", "--rm", "--network", "none", "--read-only",
         "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
-        "--security-opt", "label=disable", # removable only on platforms w/o SELinux labeling
         "--user", "10001:10001", "--pids-limit", str(pids),
         "--memory", memory, "--cpus", cpus,
         "--tmpfs", "/tmp:rw,nosuid,nodev,size=6g,mode=1777",
-        "--tmpfs", "/home/runner:rw,nosuid,nodev,size=64m,mode=1777",
+        "--tmpfs", "/results:rw,nosuid,nodev,size=32m,mode=1777",
+        "--env", "HOME=/tmp",
         "--mount", "type=bind,src=" + str(stage) + ",dst=/task,readonly",
-        "--mount", "type=bind,src=" + str(output) + ",dst=/results",
         "--workdir", "/task", image, "sh", "-euc", task,
     ]
 
@@ -123,11 +121,11 @@ def evaluate(candidate: Path, image: str, output: Path) -> dict:
         raise ValueError("explicit immutable image digest required")
     if not shutil.which("docker"):
         raise RuntimeError("Docker missing: untrusted evaluation refused")
-    # Caller must provision a nonroot-writable output directory; the Docker
-    # daemon and pinned container image remain part of the trusted computing base.
+    # Docker is trusted infrastructure. No host result directory is writable by the candidate.
     with tempfile.TemporaryDirectory(prefix="polaris-q2-sealed-") as folder:
         stage = Path(folder) / "sealed"
         manifest = sealed_sources(candidate, stage)
+        Path(folder).chmod(0o755)
         output = output.resolve()
         output.mkdir(parents=True, exist_ok=True)
         # Docker uses remapped/nonroot uid, must be able to read staged sources.
@@ -137,10 +135,11 @@ def evaluate(candidate: Path, image: str, output: Path) -> dict:
         cmd = docker_argv(image, stage.resolve(), output)
         completed = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                    encoding="utf-8", errors="replace", timeout=5400)
-        receipt_path = output / "proofgraph-q2.json"
-        if not receipt_path.is_file() or receipt_path.is_symlink():
-            raise RuntimeError("no valid sandbox receipt")
-        report = json.loads(receipt_path.read_text())
+        # Parse the grader output as data, not as host-executable instructions.
+        # Receipt on host is written ONLY by this wrapper after post-run validation.
+        if not completed.stdout.strip():
+            raise RuntimeError("sandbox produced no JSON report")
+        report = json.loads(completed.stdout)
         if completed.returncode or report.get("status") != "pass":
             raise RuntimeError("sandbox rejected submission or exited unsuccessfully")
         if report.get("candidate_sha256") != manifest["candidate_sha256"]:
@@ -159,6 +158,10 @@ def evaluate(candidate: Path, image: str, output: Path) -> dict:
             "docker_exit_code": completed.returncode,
             "security_limitations": "Docker/runtime and image not independently assessed; public theorem; no blind model trial",
         }
+        path = output / "proofgraph-q2.json"
+        if path.exists() or path.is_symlink():
+            raise RuntimeError("output receipt already exists: refusing overwrite")
+        path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         return report
 
 
