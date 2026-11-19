@@ -178,4 +178,55 @@ theorem substitute_eval (dec : J → DecoderTree I α β)
       (Nat.mul_le_mul_left r (hdepth z)))]
   exact lift_eval dec Phi hdec t z
 
+
+/-- Pointwise variant: recovery correctness is needed only at this latent
+input, allowing decoder specifications that hold merely on source support. -/
+theorem lift_eval_at (dec : J → DecoderTree I α β)
+    (Phi : (J → β) → (I → α)) (z : J → β)
+    (hdec_z : ∀ j, (dec j).eval (Phi z) = z j) :
+    ∀ t : DTree J β, (lift dec t).eval (Phi z) = t.eval z := by
+  intro t
+  induction t with
+  | leaf v bad => rfl
+  | node j children ih =>
+      change (DecoderTree.bind (dec j)
+        (fun b => lift dec (children b))).eval (Phi z) =
+        (children (z j)).eval z
+      rw [DecoderTree.bind_eval, hdec_z j]
+      exact ih (z j)
+
+/-- Pointwise path-cost control requires recovery only at this latent input. -/
+theorem lift_queries_le_at (dec : J → DecoderTree I α β)
+    (Phi : (J → β) → (I → α)) (z : J → β)
+    (hdec_z : ∀ j, (dec j).eval (Phi z) = z j)
+    (r : ℕ) (hcost : ∀ j x, (dec j).queries x ≤ r) :
+    ∀ t : DTree J β,
+      (lift dec t).queries (Phi z) ≤ r * t.queries z := by
+  intro t
+  induction t with
+  | leaf v bad => simp [lift, DTree.queries]
+  | node j children ih =>
+      change (DecoderTree.bind (dec j)
+        (fun b => lift dec (children b))).queries (Phi z) ≤
+        r * ((children (z j)).queries z + 1)
+      rw [DecoderTree.bind_queries, hdec_z j]
+      have h1 := hcost j (Phi z)
+      have h2 := ih (z j)
+      omega
+
+/-- On any one decodable source input, truncation preserves the simulator's
+exact value, even if decoding is not valid on other (zero-mass) inputs. -/
+theorem substitute_eval_at (dec : J → DecoderTree I α β)
+    (Phi : (J → β) → (I → α))
+    (r : ℕ) (hcost : ∀ j x, (dec j).queries x ≤ r)
+    (n : ℕ) (t : DTree J β)
+    (z : J → β) (hdepth : t.queries z ≤ n)
+    (hdec_z : ∀ j, (dec j).eval (Phi z) = z j) :
+    (substitute dec r n t).eval (Phi z) = t.eval z := by
+  unfold substitute
+  rw [truncate_eval (r * n) (lift dec t) (Phi z)
+    ((lift_queries_le_at dec Phi z hdec_z r hcost t).trans
+      (Nat.mul_le_mul_left r hdepth))]
+  exact lift_eval_at dec Phi z hdec_z t
+
 end Nightfall.ProductSpace.QueryDecoderLift
