@@ -162,8 +162,8 @@ theorem totalDoubleInfluence_pin_expectation
       (∑ i : ι, if i = j then (0 : ℝ) else u i) =
         (∑ i : ι, u i) - u j := by
     have hsum :
-        (∑ i : ι, (if i = j then (0 : ℝ) else u i) +
-          (if i = j then u j else 0)) = ∑ i : ι, u i := by
+        (∑ i : ι, ((if i = j then (0 : ℝ) else u i) +
+          (if i = j then u j else 0))) = ∑ i : ι, u i := by
       apply Finset.sum_congr rfl
       intro i _
       by_cases hi : i = j <;> simp [hi]
