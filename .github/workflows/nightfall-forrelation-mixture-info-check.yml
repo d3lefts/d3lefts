@@ -29,6 +29,8 @@ jobs:
           set -euo pipefail
           python3 -m py_compile research/nightfall/forrelation/check_forrelation_mixture_information.py
           python3 research/nightfall/forrelation/check_forrelation_mixture_information.py
+          python3 -m py_compile research/nightfall/forrelation/check_tv_continuity_strengthening.py
+          python3 research/nightfall/forrelation/check_tv_continuity_strengthening.py
           git rev-parse HEAD
           sha256sum research/nightfall/forrelation/*.py research/nightfall/forrelation/*.md
           echo 'NOTE: this CI validates finite sanity checks, NOT a Lean or universal proof'
