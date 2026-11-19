@@ -147,7 +147,8 @@ theorem degree_pullback
       exact degree_of_junta p hp1 (latentSupport deps S) (b * d) hc
         (fun z => a S τ * indMono S τ (Phi z))
         (fun z z' hz => by
-          rw [indMono_pullback_dep Phi deps b hPhi S τ z z' hz])
+          exact congrArg (fun v : ℝ => a S τ * v)
+            (indMono_pullback_dep Phi deps b hPhi S τ z z' hz))
     · have hz : a S τ = 0 := ha0 S (Nat.lt_of_not_ge hs) τ
       refine ⟨fun _ _ => 0, ?_, ?_⟩
       · simp
