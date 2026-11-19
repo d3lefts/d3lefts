@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/formalization/product_space/StrongFixedPoint.lean'
       - 'research/nightfall/formalization/product_space/StrongSmoothing.lean'
       - 'research/nightfall/formalization/product_space/StrongSmoothingMoment.lean'
+      - 'research/nightfall/formalization/product_space/StrongSmoothingBase.lean'
       - 'research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean'
       - 'research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean'
       - 'research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean'
@@ -38,6 +39,7 @@ jobs:
           cp research/nightfall/formalization/product_space/StrongFixedPoint.lean /tmp/mathlib4/StrongFixedPoint.lean
           cp research/nightfall/formalization/product_space/StrongSmoothing.lean /tmp/mathlib4/StrongSmoothing.lean
           cp research/nightfall/formalization/product_space/StrongSmoothingMoment.lean /tmp/mathlib4/StrongSmoothingMoment.lean
+          cp research/nightfall/formalization/product_space/StrongSmoothingBase.lean /tmp/mathlib4/StrongSmoothingBase.lean
           cp research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean /tmp/mathlib4/LatentProductInterpolationDegree.lean
           cp research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean /tmp/mathlib4/LatentLikelihoodRatio.lean
           cp research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean /tmp/mathlib4/StrongSmoothingAmplifier.lean
@@ -49,12 +51,13 @@ jobs:
           lake env lean -o .lake/build/lib/lean/StrongFixedPoint.olean StrongFixedPoint.lean 2>&1 | tee /tmp/ci-fixedpoint.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothing.olean StrongSmoothing.lean 2>&1 | tee /tmp/ci-smoothing.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothingMoment.olean StrongSmoothingMoment.lean 2>&1 | tee /tmp/ci-moment.log
+          lake env lean -o .lake/build/lib/lean/StrongSmoothingBase.olean StrongSmoothingBase.lean 2>&1 | tee /tmp/ci-base.log
           lake env lean -o .lake/build/lib/lean/LatentProductInterpolationDegree.olean LatentProductInterpolationDegree.lean 2>&1 | tee /tmp/ci-interp.log
           lake env lean -o .lake/build/lib/lean/LatentLikelihoodRatio.olean LatentLikelihoodRatio.lean 2>&1 | tee /tmp/ci-lr.log
           lake env lean -o .lake/build/lib/lean/StrongSmoothingAmplifier.olean StrongSmoothingAmplifier.lean 2>&1 | tee /tmp/ci-smooth.log
           lake env lean -o .lake/build/lib/lean/StrongMarkovEndpoint.olean StrongMarkovEndpoint.lean 2>&1 | tee /tmp/ci-markov.log
-          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log /tmp/ci-smoothing.log /tmp/ci-moment.log /tmp/ci-smooth.log /tmp/ci-markov.log; then echo "sorry found"; exit 1; fi
-          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log /tmp/ci-smoothing.log /tmp/ci-moment.log /tmp/ci-smooth.log /tmp/ci-markov.log; then exit 1; fi
+          if grep -q "declaration uses .sorry" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log /tmp/ci-smoothing.log /tmp/ci-moment.log /tmp/ci-base.log /tmp/ci-smooth.log /tmp/ci-markov.log; then echo "sorry found"; exit 1; fi
+          if grep -q "error" /tmp/ci.log /tmp/ci-weighted.log /tmp/ci-duel.log /tmp/ci-interp.log /tmp/ci-lr.log /tmp/ci-fixedpoint.log /tmp/ci-smoothing.log /tmp/ci-moment.log /tmp/ci-base.log /tmp/ci-smooth.log /tmp/ci-markov.log; then exit 1; fi
           cat > CIAxioms.lean <<'LEAN'
           import ComponentIdentification
           import ComponentIdentificationWeightedTournament
@@ -62,6 +65,7 @@ jobs:
           import StrongFixedPoint
           import StrongSmoothing
           import StrongSmoothingMoment
+          import StrongSmoothingBase
           import LatentProductInterpolationDegree
           import LatentLikelihoodRatio
           import StrongSmoothingAmplifier
@@ -84,6 +88,11 @@ jobs:
           #print axioms Nightfall.StrongSimulation.Smoothing.tail_mem_unit_interval
           #print axioms Nightfall.StrongSimulation.Smoothing.weighted_binomial_mass
           #print axioms Nightfall.StrongSimulation.Smoothing.upper_tail_moment
+          #print axioms Nightfall.StrongSimulation.SmoothingBase.one_sub_pow_lower
+          #print axioms Nightfall.StrongSimulation.SmoothingBase.one_sub_pow_product_upper
+          #print axioms Nightfall.StrongSimulation.SmoothingBase.base_gap_of_integer_budget
+          #print axioms Nightfall.StrongSimulation.SmoothingBase.thresholdCount_budget
+          #print axioms Nightfall.StrongSimulation.SmoothingBase.base_separator
           #print axioms Nightfall.LatentProductInterpolationDegree.sparseExpectationPoly_natDegree_le
           #print axioms Nightfall.LatentProductInterpolationDegree.affineMarginal_eval
           #print axioms Nightfall.LatentLikelihoodRatio.likelihood_two_sided_error_eq_overlap
