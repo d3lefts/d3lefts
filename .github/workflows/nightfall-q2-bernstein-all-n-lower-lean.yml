@@ -1,0 +1,77 @@
+name: NIGHTFALL Q2 Bernstein all-n original-product lower bound
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/Q2BernsteinFamilySharpLower.lean'
+      - 'research/nightfall/flagship-influence/Q2_BERNSTEIN_LOWER_LEAN_20261118.md'
+      - 'research/nightfall/flagship-influence/check_q2_bernstein_sqrt2_worlds.py'
+      - '.github/workflows/nightfall-q2-bernstein-all-n-lower-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-moment-and-sharpness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict pinned kernel verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=lean-receipts/q2-bernstein-all-n
+          mkdir -p "$OUT"
+          SRC=research/nightfall/formalization/universal/Q2BernsteinFamilySharpLower.lean
+          cp "$SRC" /tmp/mathlib4/Q2BernsteinFamilySharpLower.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Q2BernsteinFamilySharpLower.olean Q2BernsteinFamilySharpLower.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Q2BernsteinLower.original_source_moments \
+            --decl Nightfall.Q2BernsteinLower.extremal_mean_square \
+            --decl Nightfall.Q2BernsteinLower.variance_formula_closed \
+            --decl Nightfall.Q2BernsteinLower.influence_formula_closed \
+            --decl Nightfall.Q2BernsteinLower.exact_ratio_identity \
+            --decl Nightfall.Q2BernsteinLower.arbitrarily_close_to_four \
+            --decl Nightfall.Q2BernsteinLower.coefficient_at_least_four \
+            --decl Nightfall.Q2BernsteinLower.physical_variance_matches \
+            --decl Nightfall.Q2BernsteinLower.physical_influence_matches \
+            --decl Nightfall.Q2BernsteinLower.physical_coefficient_at_least_four \
+            --decl Nightfall.Q2BernsteinLower.third_mixed_difference_zero \
+            --decl Nightfall.Q2BernsteinLower.second_mixed_difference_sixteen \
+            --decl Nightfall.Q2BernsteinLower.extremal_bias_interior \
+            --decl Nightfall.Q2BernsteinLower.signed_sum_bounds \
+            --decl Nightfall.Q2BernsteinLower.quadratic_cube_range \
+            --json-out "$OUT/named-proof.json"
+          python3 research/nightfall/formalization/product_space/check_receipts.py "$OUT/named-proof.json"
+      - name: Independent original Bernoulli rational checker
+        run: |
+          python3 -I research/nightfall/flagship-influence/check_q2_bernstein_sqrt2_worlds.py
+          python3 -I research/nightfall/flagship-influence/check_ue2_bernstein_saturation.py
+      - name: Preserve precise source custody
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT=lean-receipts/q2-bernstein-all-n
+          mkdir -p "$OUT"
+          git rev-parse HEAD > "$OUT/commit.txt"
+          git -C /tmp/mathlib4 rev-parse HEAD > "$OUT/mathlib.txt" 2>/dev/null || true
+          cat lean-toolchain > "$OUT/toolchain.txt" || true
+          sha256sum research/nightfall/formalization/universal/Q2BernsteinFamilySharpLower.lean \
+            research/nightfall/flagship-influence/check_q2_bernstein_sqrt2_worlds.py > "$OUT/SHA256SUMS"
+      - name: Preserve proof receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: q2-bernstein-all-n
+          path: lean-receipts/q2-bernstein-all-n/
+          retention-days: 60

@@ -1,0 +1,63 @@
+name: NIGHTFALL all-degree product-space finite-cell transfer (strict Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/universal/InfinitePiAllDegreeLabelTransfer.lean'
+      - '.github/workflows/nightfall-all-degree-label-transfer.yml'
+      - 'research/nightfall/2026-11-product-all-degree/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: all-degree-product-label-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  exact-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile existing source dependency closure and new all-degree source
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in InfinitePiQ2Density InfinitePiQ2InfluenceStability InfinitePiQ2OriginalIndependence InfinitePiQ2ConditionalSourceTest InfinitePiQ2FiniteRankConditional InfinitePiQ2OriginalLabelTransport InfinitePiQ2OriginalHeatBath InfinitePiQ2FrozenLabelMeasurable InfinitePiQ2ActiveFiniteLabelCondExp InfinitePiQ2LabelAtomMass InfinitePiQ2BoundedLabelIntertwining InfinitePiQ2GenuineLabelIsometry InfinitePiQ2SourceLabelL2Intertwining InfinitePiQ2SourceLabelLpIntertwining InfinitePiQ2AllL2LabelIntertwining InfinitePiQ2AdjointTransfer InfinitePiQ2RangeProjectionTransfer InfinitePiQ2OriginalLabelResidualTransfer InfinitePiAllDegreeLabelTransfer; do
+            cp "research/nightfall/formalization/universal/${name}.lean" "/tmp/mathlib4/${name}.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${name}.olean" "${name}.lean")
+          done
+      - name: Strict named theorem kernel and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/product-all-degree
+          python3 scripts/lean_bridge.py research/nightfall/formalization/universal/InfinitePiAllDegreeLabelTransfer.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 900 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_labelRangeProjection \
+            --decl Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_zero_after_labelRangeProjection \
+            --decl Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_labelAdjoint \
+            --decl Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_labelAdjoint_zero \
+            --decl Nightfall.InfinitePiAllDegreeLabelTransfer.iterResidual_eq_source \
+            --decl Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree \
+            --decl Nightfall.InfinitePiAllDegreeLabelTransfer.original_source_label_all_degree_zero \
+            --decl Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree \
+            --decl Nightfall.InfinitePiAllDegreeLabelTransfer.original_cell_average_all_degree_zero \
+            --json-out lean-receipts/product-all-degree/theorems.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py lean-receipts/product-all-degree/theorems.json
+      - name: Preserve exact input hashes and provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/product-all-degree
+          git rev-parse HEAD > lean-receipts/product-all-degree/COMMIT
+          sha256sum research/nightfall/formalization/universal/InfinitePiAllDegreeLabelTransfer.lean research/nightfall/formalization/universal/InfinitePiQ2OriginalLabelResidualTransfer.lean research/nightfall/formalization/universal/InfinitePiQ2AllL2LabelIntertwining.lean > lean-receipts/product-all-degree/SHA256SUMS
+          cat lean-toolchain 2>/dev/null > lean-receipts/product-all-degree/ROOT_TOOLCHAIN || true
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: product-all-degree-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/product-all-degree
+          if-no-files-found: warn

@@ -1,0 +1,92 @@
+{
+  "schema": "nightfall-dq2-proof-passport-v3",
+  "id": "NF-DQ2-CYCLES-20261117",
+  "version": "v3.0",
+  "date": "2026-11-17",
+  "state": "provisional-author-analytic",
+  "author_proof_written": true,
+  "exact_finite_tests_passed_locally": true,
+  "original_source_kernel_check": false,
+  "independently_refereed": false,
+  "novelty_verified": false,
+  "merge_authorized": false,
+  "source": {
+    "repo": "d3lefts/d3lefts",
+    "pr": 786,
+    "head_branch": "nightfall-dq2-tree-transfer-20261117",
+    "note": "research/nightfall/2026-11-dq2/DQ2_CYCLES_V3.md",
+    "note_git_blob_sha1": "ed826e40a43fd14bf15ed7b23fe29a79e310298c",
+    "exact_gate": "research/nightfall/2026-11-dq2/dq2_cycles_exact_gate.py",
+    "exact_gate_git_blob_sha1": "4869ec9dbb4b28fea5abae31bd3665fe053822fb"
+  },
+  "scope": {
+    "law": "full-support finite ±1-coordinate measure with zero means",
+    "dob": "c_ij=sup conditional total-variation change at coordinate i when coordinate j flips; delta=max(row-sum norm,column-sum norm) < 1",
+    "v": "explicit global lower bound on Var(X_i | X_-i) with 0<v<=1",
+    "function": "bounded algebraic real polynomial of degree <=2 in original coordinate spins",
+    "influence": "E Var(f | all other original spins), no product substitution",
+    "graph": "arbitrary graphs/cycles/hypergraphs; no tree or edge-factorization assumption"
+  },
+  "statement": {
+    "K0": "pre-existing finite uniform-product Q2 theorem constant",
+    "general": "Var_nu(f)^2 <= [4(1+delta)^2/(v^3(1-delta)^5)] K0 B^2 max_i Inf_nu,i(f)",
+    "spinflip": "if nu(x)=nu(-x), v>=1-delta^2, and coefficient simplifies to 4K0 / ((1-delta)^8(1+delta))",
+    "ising": "any finite zero-field signed-coupling Ising on any graph with max_i sum_j tanh|J_ij|<1 satisfies the spinflip result",
+    "endpoint": "general transfer uses 4K0 at delta=0; the product theorem itself yields K0 there; no sharpness claim"
+  },
+  "mechanism": [
+    "Dobrushin path coupling -> coordinate heat-bath Poincare constant >=1-delta",
+    "residual scores R_i = X_i - E[X_i | X_-i]",
+    "score duality <sum a_i X_i,sum a_j R_j> = sum a_i^2 E Var_i X_i",
+    "upper and lower covariance matrix spectral bounds",
+    "restricted degree-two variance comparison Var_nu(f)<=2/(1-delta)^2 Var_mu(f)",
+    "native-coordinate influence comparison Inf_nu,i(f)>=v^3(1-delta)/(1+delta)^2 Inf_mu,i(f)"
+  ],
+  "exact_replay": {
+    "local_suite1": {
+      "models": 8,
+      "random_coefficients": 240,
+      "influence_comparisons": 1290,
+      "all_coefficients_quadratic_operator_psd": true,
+      "all_native_influence_operator_psd": true
+    },
+    "local_suite2": {
+      "models": 5,
+      "random_coefficients": 110,
+      "influence_comparisons": 484,
+      "nonpairwise_even_interactions": true,
+      "odd_three_body_mean_zero_case": true
+    },
+    "github_gate": {
+      "tested_locally": true,
+      "symmetry_models": 6,
+      "exact_PSD_for_all_functions": true,
+      "zero_pivot_boundary_test": "square cycle tight Poincare equality; strict positive pivot checker corrected to semidefinite",
+      "check_ci_status": "not assumed green until exact run checked"
+    },
+    "source_sha256": "4f37e39e5036c6fdb8a5112e2e9308928e19f46ea79221061c5c589c25718b0a"
+  },
+  "strongest_prior_art": [
+    "Daskalakis et al., Outlier-Robust Learning of Ising Models Under Dobrushin's Condition (arXiv:2102.02171), quadratic lower/upper variance comparison already known",
+    "Eldan-Koehler-Zeitouni (2022), Poincare for high-temperature Ising (arXiv:2007.08200)",
+    "Koehler-Lifshitz-Minzer-Mossel (2024), Influences in Mixing Measures (arXiv:2307.07625)",
+    "Chen-Chen-Zhang (revised 2026-11-12), Discrete Isoperimetric Inequalities via Curvature (arXiv:2609.24687)"
+  ],
+  "novelty_gate": "No novelty claim. Pairwise Ising qualitative extension has substantial prior art. Exact budget and nonpairwise law interface require separate detailed priority audit.",
+  "limitation": [
+    "finite binary full-support laws only",
+    "zero means required for this uniform-product coefficient reference",
+    "all-graph Dobrushin delta<1 is essential to argument",
+    "conditional-variance floor v required except under spinflip symmetry",
+    "not a native dependent-Hoeffding notion of degree",
+    "not Lean certified or externally mathematically audited",
+    "loose numerical constant; does not recover product K0 coefficient continuously"
+  ],
+  "independent_audit_next": [
+    "formalize finite heat-bath Poincare under row/column Dobrushin",
+    "formalize score-dual lower covariance operator",
+    "compare theorem exact quantifiers and influence normalization to literature",
+    "compose original finite Q2 terminal in strict pinned Lean, print axioms, archive hash, CI",
+    "seek counterexamples to perturbative 1+O(delta) covariance bound as next structural target"
+  ]
+}

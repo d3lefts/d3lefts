@@ -1,0 +1,89 @@
+name: NIGHTFALL Jensen one-shot exact receipt archive
+on:
+  push:
+    branches: [nightfall-jensen-receipt-archive-20261118]
+    paths:
+      - '.github/workflows/nightfall-jensen-receipt-archive.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archive-verified-source-receipt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Download immutable successful source-run artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --retry 3 \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/d3lefts/d3lefts/actions/artifacts/14498417944/zip" \
+            -o /tmp/jensen-source-receipts.zip
+      - name: Check unmodified ZIP, proof declaration and original source; freeze raw JSON
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json,zipfile
+          zpath=Path('/tmp/jensen-source-receipts.zip')
+          want_zip='279f31619131fc5797a4b5a0ba4fe083f23046a7d20c2acc9ec0e9233a3f9236'
+          assert hashlib.sha256(zpath.read_bytes()).hexdigest()==want_zip, 'artifact digest mismatch'
+          source=Path('research/nightfall/formalization/product_space/MixtureSimulation.lean')
+          want_source='be0eae8b785582265b28b11a9efcacaed562e6f4324a7e18df4a33e4adba0c3b'
+          assert hashlib.sha256(source.read_bytes()).hexdigest()==want_source, 'source bytes drifted from CI'
+          out=Path('docs/nightfall-jensen-receipts-20261118')
+          out.mkdir(parents=True,exist_ok=True)
+          with zipfile.ZipFile(zpath) as z:
+              data=z.read('mixture-receipt.json')
+              payload=json.loads(data)
+              assert payload['status']=='COMPILED'
+              assert payload['compiler_exit_code']==0
+              assert payload['version_matches_pin'] is True
+              assert payload['source_sha256']==want_source
+              named=[
+                  'Nightfall.ProductSpace.Mixture.mixture_simulation_jensen',
+                  'Nightfall.ProductSpace.Mixture.increment_good_jensen',
+                  'Nightfall.ProductSpace.Mixture.power_mean',
+              ]
+              assert all(n in payload['declarations_requested'] for n in named)
+              allowed={'propext','Classical.choice','Quot.sound'}
+              assert all(set(payload['axiom_dependencies'][n])<=allowed for n in named)
+              assert all(payload['axiom_audit'][n]=='allowlisted_dependencies' for n in named)
+              (out/'mixture-receipt.json').write_bytes(data)
+              original_head=z.read('head').decode().strip()
+              register={
+                  'schema':'nightfall-jensen-exact-head-lean-receipt-v1',
+                  'source_PR':867,
+                  'source_commit':'b5e81949dfeb8107de24ad8c9e9baafe8adad9b5',
+                  'source_run':44456342019,
+                  'source_run_result':'success',
+                  'artifact_id':14498417944,
+                  'artifact_zip_sha256':want_zip,
+                  'source_sha256':want_source,
+                  'raw_receipt_sha256':hashlib.sha256(data).hexdigest(),
+                  'checkout_head_in_zip':original_head,
+                  'strict_named_declarations':named,
+                  'standard_axioms':sorted(allowed),
+                  'scope':'raw original source CI receipt, not an integrated Lake build, not novelty review',
+              }
+              (out/'register.json').write_text(json.dumps(register,indent=2,sort_keys=True)+'\n')
+          print('PASS: frozen original Jensen source receipt, byte-for-byte')
+          PY
+      - name: Commit exact source receipt to the archive branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/nightfall-jensen-receipts-20261118/
+          git diff --cached --check
+          git commit -m "Archive source-exact Lean Jensen mixture proof receipt from run 44456342019"
+          git push origin HEAD:nightfall-jensen-receipt-archive-20261118

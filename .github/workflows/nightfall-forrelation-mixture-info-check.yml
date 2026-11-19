@@ -1,0 +1,36 @@
+name: NIGHTFALL Forrelation mixture information falsifier (finite exact cases)
+
+on:
+  push:
+    branches: [nightfall-forrelation-mixture-information-audit-20261118]
+    paths:
+      - 'research/nightfall/forrelation/**'
+      - '.github/workflows/nightfall-forrelation-mixture-info-check.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/forrelation/**'
+      - '.github/workflows/nightfall-forrelation-mixture-info-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-finite-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Reproduce exact finite-cases and arithmetic
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile research/nightfall/forrelation/check_forrelation_mixture_information.py
+          python3 research/nightfall/forrelation/check_forrelation_mixture_information.py
+          python3 -m py_compile research/nightfall/forrelation/check_tv_continuity_strengthening.py
+          python3 research/nightfall/forrelation/check_tv_continuity_strengthening.py
+          git rev-parse HEAD
+          sha256sum research/nightfall/forrelation/*.py research/nightfall/forrelation/*.md
+          echo 'NOTE: this CI validates finite sanity checks, NOT a Lean or universal proof'

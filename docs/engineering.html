@@ -70,6 +70,8 @@
 </article>
 </div>
 <p class="eng-section-lead"><strong>First real coding-agent calibration:</strong> a local Qwen2.5-Coder-3B model made four nonterminal mediated tool calls and one source edit on each task. Both public smoke suites stayed green, but separate API contract audits found <strong>8/13 DispatchQ violations</strong> and <strong>11/20 ArtifactGraph violations</strong>—the same violation totals as the original defective seeds. This is a source-pinned, unscored local-model experiment, not an accepted blind benchmark or a grader-completeness certificate.</p>
+<p class="eng-section-lead"><strong>New grader-validity check:</strong> two source-frozen alternate repairs—not model-generated patches—were accepted by the private author graders: DispatchQ-B1 <strong>37/37</strong> on revised v0.3, and ArtifactGraph-B2 <strong>25/25</strong> on v0.1. Independently authored public-contract tests also passed. These internally replayed outcomes establish alternative-solution acceptance, not external human certification or agent benchmark success.</p>
+<div class="eng-action-row"><a href="evals.html#independent-alternates" class="eng-action secondary">Review alternate-repair evidence and limits ↗</a></div>
 <div class="eng-action-row"><a href="evals.html#real-agent-pilot" class="eng-action">Inspect real tool-agent pilot ↗</a><a href="https://github.com/d3lefts/d3lefts/actions/runs/44389930077" class="eng-action secondary">Actual model and public-check receipts ↗</a></div>
 </section>
 <section class="eng-section" id="benchmark-incubator" aria-labelledby="incubator-heading">

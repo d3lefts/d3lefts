@@ -1,0 +1,418 @@
+{
+  "axiom_audit": {
+    "Nightfall.ProductSpace.Mixture.Sq_gain": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Mixture.fooling_tv": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Mixture.good_exists": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Mixture.increment_good_jensen": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Mixture.mexpected": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Mixture.mixture_simulation": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Mixture.mixture_simulation_jensen": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Mixture.mleaf_error": "allowlisted_dependencies",
+    "Nightfall.ProductSpace.Mixture.power_mean": "allowlisted_dependencies"
+  },
+  "axiom_dependencies": {
+    "Nightfall.ProductSpace.Mixture.Sq_gain": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Mixture.fooling_tv": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Mixture.good_exists": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Mixture.increment_good_jensen": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Mixture.mexpected": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Mixture.mixture_simulation": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Mixture.mixture_simulation_jensen": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Mixture.mleaf_error": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "Nightfall.ProductSpace.Mixture.power_mean": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "compiler": [
+    "lake",
+    "env",
+    "lean"
+  ],
+  "compiler_exit_code": 0,
+  "compiler_version": "Lean (version 4.36.0-rc2, x86_64-unknown-linux-gnu, commit b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a, Release)",
+  "contract_relpath": null,
+  "contract_sha256": null,
+  "contract_targets": [],
+  "contract_workspace_commit": null,
+  "declarations_requested": [
+    "Nightfall.ProductSpace.Mixture.mixture_simulation",
+    "Nightfall.ProductSpace.Mixture.mixture_simulation_jensen",
+    "Nightfall.ProductSpace.Mixture.increment_good_jensen",
+    "Nightfall.ProductSpace.Mixture.power_mean",
+    "Nightfall.ProductSpace.Mixture.good_exists",
+    "Nightfall.ProductSpace.Mixture.fooling_tv",
+    "Nightfall.ProductSpace.Mixture.Sq_gain",
+    "Nightfall.ProductSpace.Mixture.mexpected",
+    "Nightfall.ProductSpace.Mixture.mleaf_error"
+  ],
+  "diagnostics": [
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 59,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.lawPath_sum`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 64,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.lawPath_nonneg`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 81,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.pexp_eq_sum`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 177,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.tvd_nonneg`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 182,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.common_ok`:",
+      "severity": "warning"
+    },
+    {
+      "column": 5,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 183,
+      "message": "Variable name `h\u03bc` is not explicitly referenced.",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 274,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.swapAt_invol`:",
+      "severity": "warning"
+    },
+    {
+      "column": 8,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 290,
+      "message": "`if_pos` has been deprecated: Use `ite_eq_left` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 29,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 290,
+      "message": "`if_pos` has been deprecated: Use `ite_eq_left` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 8,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 291,
+      "message": "`if_neg` has been deprecated: Use `ite_eq_right` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 43,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 291,
+      "message": "`if_neg` has been deprecated: Use `ite_eq_right` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 436,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.mbuild_zero`:",
+      "severity": "warning"
+    },
+    {
+      "column": 14,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 444,
+      "message": "`dif_pos` has been deprecated: Use `dite_eq_left` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 439,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.mbuild_pos`:",
+      "severity": "warning"
+    },
+    {
+      "column": 14,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 449,
+      "message": "`dif_neg` has been deprecated: Use `dite_eq_right` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 446,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.mbuild_neg`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 510,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.Ex_add`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 520,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.Vs_upd_sum`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 539,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.Psi_nonneg`:",
+      "severity": "warning"
+    },
+    {
+      "column": 6,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 608,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 797,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.l1_eq_two_tvd`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 808,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.tvd_self`:",
+      "severity": "warning"
+    },
+    {
+      "column": 23,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 815,
+      "message": "`if_true` has been deprecated: Use `ite_true` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 23,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 816,
+      "message": "`if_false` has been deprecated: Use `ite_false` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 811,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.pin_nonneg`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 818,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.pin_sum`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 880,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.St_pres`:",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 892,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.Psi_children`:",
+      "severity": "warning"
+    },
+    {
+      "column": 4,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 912,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 2,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 985,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 6,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 995,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 2,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1019,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 6,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1030,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 4,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1064,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 25,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1079,
+      "message": "`if_true` has been deprecated: Use `ite_true` instead",
+      "severity": "warning"
+    },
+    {
+      "column": 0,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1048,
+      "message": "automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.exists_sep_coord`:",
+      "severity": "warning"
+    },
+    {
+      "column": 4,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1141,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 4,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1186,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 4,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1284,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 6,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1313,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 6,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1336,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 4,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1504,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 6,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1533,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    },
+    {
+      "column": 6,
+      "file": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean",
+      "line": 1556,
+      "message": "`push_neg` has been deprecated. Prefer using `push Not` instead.",
+      "severity": "warning"
+    }
+  ],
+  "expected_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "explicit_allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "invocation": [
+    "lake",
+    "env",
+    "lean",
+    "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean"
+  ],
+  "parsed_compiler_toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "policy_findings": [],
+  "proof_scope": "named declarations compile; only explicitly allowed axioms reported",
+  "protocol": "nightfall-lean-bridge/v2",
+  "source": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/MixtureSimulation.lean",
+  "source_relpath": "research/nightfall/formalization/product_space/MixtureSimulation.lean",
+  "source_sha256": "be0eae8b785582265b28b11a9efcacaed562e6f4324a7e18df4a33e4adba0c3b",
+  "status": "COMPILED",
+  "stderr": "",
+  "stdout": "/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:59:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.lawPath_sum`:\n  [Fintype \u03b9]\n  [DecidableEq \u03b9]\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [DecidableEq \u03b9] [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:64:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.lawPath_nonneg`:\n  [Fintype \u03b9]\n  [DecidableEq \u03b9]\n  [Fintype \u03b1]\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [DecidableEq \u03b9] [Fintype \u03b1] [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:81:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.pexp_eq_sum`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:177:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.tvd_nonneg`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:182:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.common_ok`:\n  [Fintype \u03b9]\n  [DecidableEq \u03b9]\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [DecidableEq \u03b9] [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:183:5: warning: Variable name `h\u03bc` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _h\u03bc\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:274:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.swapAt_invol`:\n  [Fintype \u03b9]\n  [Fintype \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [Fintype \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:290:8: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335p\u0335o\u0335s\u0335i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332l\u0332e\u0332f\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:290:29: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335p\u0335o\u0335s\u0335i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332l\u0332e\u0332f\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:291:8: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335n\u0335e\u0335g\u0335i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332r\u0332i\u0332g\u0332h\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:291:43: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335n\u0335e\u0335g\u0335i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332r\u0332i\u0332g\u0332h\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:436:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.mbuild_zero`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:444:14: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead\n\nHint: Replace the deprecated name:\n  d\u0335i\u0335f\u0335_\u0335p\u0335o\u0335s\u0335d\u0332i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332l\u0332e\u0332f\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:439:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.mbuild_pos`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:449:14: warning: `dif_neg` has been deprecated: Use `dite_eq_right` instead\n\nHint: Replace the deprecated name:\n  d\u0335i\u0335f\u0335_\u0335n\u0335e\u0335g\u0335d\u0332i\u0332t\u0332e\u0332_\u0332e\u0332q\u0332_\u0332r\u0332i\u0332g\u0332h\u0332t\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:446:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.mbuild_neg`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:510:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.Ex_add`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:520:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.Vs_upd_sum`:\n  [Fintype \u03b9]\n  [DecidableEq \u03b9]\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [DecidableEq \u03b9] [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:539:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.Psi_nonneg`:\n  hP1\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit hP1 in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:608:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:797:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.l1_eq_two_tvd`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:808:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.tvd_self`:\n  [DecidableEq \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [DecidableEq \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:815:23: warning: `if_true` has been deprecated: Use `ite_true` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335t\u0335r\u0335u\u0335e\u0335i\u0332t\u0332e\u0332_\u0332t\u0332r\u0332u\u0332e\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:816:23: warning: `if_false` has been deprecated: Use `ite_false` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335f\u0335a\u0335l\u0335s\u0335e\u0335i\u0332t\u0332e\u0332_\u0332f\u0332a\u0332l\u0332s\u0332e\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:811:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.pin_nonneg`:\n  [Fintype \u03b9]\n  [Fintype \u03b1]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] [Fintype \u03b1] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:818:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.pin_sum`:\n  [Fintype \u03b9]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u03b9] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:880:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.St_pres`:\n  [Fintype \u0398]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u0398] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:892:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.Psi_children`:\n  hP0\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit hP0 in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:912:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:985:2: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:995:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1019:2: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1030:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1064:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1079:25: warning: `if_true` has been deprecated: Use `ite_true` instead\n\nHint: Replace the deprecated name:\n  i\u0335f\u0335_\u0335t\u0335r\u0335u\u0335e\u0335i\u0332t\u0332e\u0332_\u0332t\u0332r\u0332u\u0332e\u0332\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1048:0: warning: automatically included section variable(s) unused in theorem `Nightfall.ProductSpace.Mixture.exists_sep_coord`:\n  [Fintype \u0398]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype \u0398] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1141:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1186:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1284:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1313:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1336:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1504:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1533:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n/home/runner/work/d3lefts/d3lefts/research/nightfall/formalization/product_space/.lean_bridge_gywf_g6b.lean:1556:6: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n'Nightfall.ProductSpace.Mixture.fooling_tv' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.mixture_simulation' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.mixture_simulation_jensen' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.mixture_simulation' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.mixture_simulation_jensen' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.increment_good_jensen' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.power_mean' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.good_exists' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.fooling_tv' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.Sq_gain' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.mexpected' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Nightfall.ProductSpace.Mixture.mleaf_error' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "time_utc": "2026-11-19T04:27:14.425751+00:00",
+  "version_matches_pin": true,
+  "workspace": "/tmp/mathlib4",
+  "workspace_commit": null
+}

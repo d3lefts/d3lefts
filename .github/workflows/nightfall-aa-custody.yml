@@ -1,0 +1,20 @@
+name: NIGHTFALL archived original AA named receipts
+on:
+  pull_request:
+    paths:
+      - 'docs/nightfall-aa-receipts-20261118/**'
+      - 'scripts/check_aa_receipt_archive.cjs'
+      - '.github/workflows/nightfall-aa-custody.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/nightfall-aa-receipts-20261118/**'
+      - 'scripts/check_aa_receipt_archive.cjs'
+permissions:
+  contents: read
+jobs:
+  source-hash-custody:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - run: node scripts/check_aa_receipt_archive.cjs

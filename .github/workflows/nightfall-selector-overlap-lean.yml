@@ -1,0 +1,71 @@
+name: NIGHTFALL selector overlap exact-source Lean row certificate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+    paths:
+      - 'research/nightfall/formalization/universal/SelectorOverlapWeighted.lean'
+      - 'research/nightfall/flagship-influence/SELECTOR_OVERLAP_LEAN_LEDGER_20261118.md'
+      - 'research/nightfall/flagship-influence/check_selector_overlap_source_exact.py'
+      - '.github/workflows/nightfall-selector-overlap-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  selector-overlap:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Pin Lean and Mathlib from repo
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict weighted row + conditional terminal certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/selector-overlap
+          SRC=research/nightfall/formalization/universal/SelectorOverlapWeighted.lean
+          cp "$SRC" /tmp/mathlib4/SelectorOverlapWeighted.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SelectorOverlapWeighted.olean SelectorOverlapWeighted.lean)
+          python3 scripts/lean_bridge.py "$SRC" \
+            --workspace /tmp/mathlib4 --timeout 900 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.SelectorOverlap.finite_weighted_cauchy \
+            --decl Nightfall.SelectorOverlap.finite_source_weighted_row_energy \
+            --decl Nightfall.SelectorOverlap.finite_source_weighted_overlap_energy \
+            --decl Nightfall.SelectorOverlap.source_activation_budget \
+            --decl Nightfall.SelectorOverlap.source_overlap_leaf_energy_le_activation_max \
+            --decl Nightfall.SelectorOverlap.selector_weighted_terminal_from_source_obligations \
+            --json-out lean-receipts/selector-overlap/row-conditional.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/selector-overlap/row-conditional.json
+      - name: Original source probability and variance checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/flagship-influence/check_selector_overlap_source_exact.py
+      - name: Immutable source custody
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/selector-overlap
+          git rev-parse HEAD > lean-receipts/selector-overlap/head.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/selector-overlap/mathlib-head.txt 2>/dev/null || true
+          cat lean-toolchain > lean-receipts/selector-overlap/lean-toolchain.txt || true
+          sha256sum research/nightfall/formalization/universal/SelectorOverlapWeighted.lean \
+            research/nightfall/flagship-influence/SELECTOR_OVERLAP_LEAN_LEDGER_20261118.md \
+            research/nightfall/flagship-influence/check_selector_overlap_source_exact.py \
+            > lean-receipts/selector-overlap/SHA256SUMS
+      - name: Archive exact-head certificate
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: selector-overlap-receipts
+          path: lean-receipts/selector-overlap/
+          retention-days: 60

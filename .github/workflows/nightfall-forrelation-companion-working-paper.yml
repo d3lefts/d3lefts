@@ -1,0 +1,32 @@
+name: NIGHTFALL Forrelation companion working paper verification
+on:
+  push:
+    branches: [nightfall-forrelation-companion-working-paper-20261119]
+    paths:
+      - 'papers/forrelation-product-mixture/**'
+      - '.github/workflows/nightfall-forrelation-companion-working-paper.yml'
+  pull_request:
+    paths:
+      - 'papers/forrelation-product-mixture/**'
+      - '.github/workflows/nightfall-forrelation-companion-working-paper.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-falsifiers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Recompute constants and exact finite examples
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile papers/forrelation-product-mixture/check_companion.py
+          python3 papers/forrelation-product-mixture/check_companion.py
+          sha256sum papers/forrelation-product-mixture/FORRELATION_COMPANION_WORKING_PAPER_20261119.md
+          sha256sum papers/forrelation-product-mixture/check_companion.py
+          git rev-parse HEAD
+          echo "This finite checker is not a Lean or peer-review certificate."

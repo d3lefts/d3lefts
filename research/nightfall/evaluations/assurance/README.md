@@ -1,0 +1,57 @@
+# NIGHTFALL / Frozen blind-run evidence gate (v0.1)
+
+**Purpose:** keep all coding-agent evaluation attempts, including tool failures and timeouts, in the denominator while preserving a frozen task/source, model, budget and hidden-grader identity. This is a **portable internal receipt consistency checker** and an adversarial test suite, **not** an agent executor, reference solution, grader, sandbox, independent human review, benchmark validator or cryptographically authenticated attestation.
+
+## Objective and supporting work
+
+NIGHTFALL currently has two draft, orthogonal tasks: [DispatchQ-B1 (#818)](https://github.com/d3lefts/d3lefts/pull/818), for durable multi-process queue correctness, and [ArtifactGraph-B2 (#824)](https://github.com/d3lefts/d3lefts/pull/824), for incremental DAG build and cache/source integrity. Each has an internal author-side calibrated hidden grader, plus separate public contract canaries in [#820](https://github.com/d3lefts/d3lefts/pull/820) and [#825](https://github.com/d3lefts/d3lefts/pull/825)/[#827](https://github.com/d3lefts/d3lefts/pull/827). **There are no accepted blind model results.**
+
+The independent finding in #827 that Boolean JSON versions passed two author-reference checks is a direct reason to reject self-certified grader completeness. An equally important systems risk is that a failed model-tool protocol or dropped attempt can be accidentally counted as a valid benchmark success rate.
+
+**Research hypothesis:** a frozen-plan, byte-hash-pinned, fail-closed structural gate can catch common score inflation and attempt-selection artifacts *before* a team publishes model comparisons. **Prediction:** one honest synthetic two-episode report (completed + tool failure) is structurally admissible; each deliberately malformed or tampered variant is rejected. This is an internal *process* improvement, not a mathematical or empirical model-capability result.
+
+## Contract
+
+A reproducible run directory contains:
+
+```text
+run/
+  plan.json
+  attempts/
+    try-1/
+      receipt.json
+      trace.json
+      patch.diff
+      grade.json
+    try-2/
+      receipt.json
+      trace.json
+```
+
+The run directory contains **only** the listed plan and attempts; each attempt contains exactly its allowed receipt, trace and (only for completed attempts) patch and grade files. The exact `plan.json` bytes must be SHA-256 pinned **outside the run directory before execution**. It freezes task Git commit and candidate-tree SHA-256, prompt SHA-256, private grader SHA-256, runner image digest, version-qualified model name, positive budgets, distinct attempt IDs and declared holdout/isolation policy. It records the *intended* isolation, which must be independently verified by an actual OS/container runner. Do not put hidden grader tests/reference in the public run directory.
+
+Each receipt references a hashed per-attempt **tool-event metadata trace** (call/result types and tool names, not raw arguments and outputs). A full runner must retain its complete raw transcript separately with independently controlled custody and a digest attached to the runner's authoritative record; this utility cannot certify it. An episode labeled `completed` must have at least one logged tool call and a nonempty hashed patch, plus a hashed grader receipt matching the frozen grader identity and score denominator. Non-completed episodes—including zero-tool-call failures—must remain in the planned denominator **without a fabricated graded result**. The gate rejects undeclared/missing attempt directories, duplicate JSON keys, nonfinite JSON tokens, stale plan hashes, mismatched source and grader IDs, over-budget claims, unsafe file paths and symlinks, cross-attempt artifact reuse, undeclared private grader files, tampered traces, invalid scores and silent omitted attempts. The checker never constructs a success rate from absent data.
+
+The result is always labeled `structurally_consistent_unattested_internal_records`. The output field `author_reported_grader_scores_not_verified` explicitly prevents a successful schema/hashing check from being mislabeled a verified model benchmark.
+
+## Inspectable checker
+
+```sh
+python -m unittest discover -s research/nightfall/evaluations/assurance/tests -v
+
+# For a real run, independently preregister the exact plan SHA-256 first.
+python research/nightfall/evaluations/assurance/frozen_run_gate.py \
+  /path/to/trusted/run --expected-plan-sha256 <64-character-hex>
+```
+
+The tests construct an ephemeral **synthetic** frozen plan, one completed episode with a fake external scorer receipt, one zero-tool-call failure, and independently mutate plan/trace/patch/grade/identity/denominator controls. There is **no actual coding agent, model inference, isolated grader, or hidden reference** in the test suite. The test verifies the validator's handling of evidence format and consistency only.
+
+### External trust boundary
+
+A malicious operator controlling the entire run and the external plan anchor can still manufacture a perfect receipt. SHA-256 protects only changes relative to a separately trusted recorded value. This tool does **not** attest the executor, the sandbox, the true model identity, the time budget, whether a grader was in fact held out, or grader correctness. Use OS-level isolation, approved runner attestation and independent human review as separate gates. Never infer trusted execution merely because `holdout.network_disabled=true` appears in a JSON claim.
+
+The next decisive experiment is genuine clean-checkout, isolated, fixed-budget coding-agent runs on both tasks, with immutable external plan commitment, raw tool traces and separately executed locked holdout grader. A task is not promoted to `blind-model-measured` without real executable attempts and validation of the evaluation harness itself.
+
+## Independent criticism and reuse
+
+This implementation deliberately remains in `research/nightfall/evaluations/assurance/` and does not edit or merge either benchmark author's source, grader, private references, or candidate branches. A separate reviewer should attack assumptions on the evidence schema and the sandbox/credential boundary. Failures must be preserved with input SHA and a correction record; do not label these synthetic attack tests independent human peer review. This tool can transfer to any NIGHTFALL SWE task without claiming portability to environments with richer interaction schemas until their event format is explicitly validated.

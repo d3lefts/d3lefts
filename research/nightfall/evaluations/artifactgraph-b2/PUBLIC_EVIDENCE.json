@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-18",
+  "grader": {
+    "kind": "author-side hidden unit tests",
+    "points_per_test": 4,
+    "private": true,
+    "sha256": "124128e0ead404f4f17d76f52f9202a06b7b30cc974a1527e5fbc53127f82d7b",
+    "tests_total": 25
+  },
+  "id": "NIGHTFALL-ARTIFACTGRAPH-B2",
+  "limitations": [
+    "Reference and hidden tests authored by same team",
+    "No blind coding-model run",
+    "No independent grader review",
+    "No concurrent source-swap guarantee",
+    "No multi-process writer guarantee"
+  ],
+  "mutations": {
+    "detected": 10,
+    "status": "author_side_same_development_effort",
+    "total": 10,
+    "variants": [
+      {
+        "id": "mtime_source_cache",
+        "passes": 23
+      },
+      {
+        "id": "unordered_dependencies",
+        "passes": 24
+      },
+      {
+        "id": "trust_corrupted_objects",
+        "passes": 23
+      },
+      {
+        "id": "skip_cycle_detection",
+        "passes": 23
+      },
+      {
+        "id": "allow_source_path_escape",
+        "passes": 24
+      },
+      {
+        "id": "early_index_publish",
+        "passes": 24
+      },
+      {
+        "id": "accept_corrupt_index",
+        "passes": 24
+      },
+      {
+        "id": "discard_dep_effect_in_output",
+        "passes": 23
+      },
+      {
+        "id": "drop_cached_index_integrity",
+        "passes": 24
+      },
+      {
+        "id": "ignore_missing_object",
+        "passes": 20
+      }
+    ]
+  },
+  "next_gates": [
+    "Independent alternative repair",
+    "Reviewer mutation audit",
+    "Fixed-budget blind agent runs",
+    "Repeatability and uncertainty accounting"
+  ],
+  "public_smoke": {
+    "status": "locally_passed",
+    "tests_passed": 3,
+    "tests_total": 3
+  },
+  "publication_status": "author_calibrated_prototype",
+  "reference": {
+    "private": true,
+    "score_points": 100,
+    "source_tree_sha256": "ef830a8bcd208cdb14b8466bd66d175e8f59fd3c1440a70e1bbd5af480a71dbb",
+    "tests_passed": 25,
+    "tests_total": 25
+  },
+  "repeatability": {
+    "execution": "fresh interpreters per suite; fixed contract tests; limited sample",
+    "reference_scores": [
+      100,
+      100,
+      100
+    ],
+    "repeats": 3,
+    "starter_scores": [
+      60,
+      60,
+      60
+    ]
+  },
+  "schema": "NIGHTFALL-EVAL-EVIDENCE-0.1",
+  "scope": "no independent human review; no blind agent evaluation; no model ranking",
+  "starter": {
+    "score_points": 60,
+    "source_tree_sha256": "841f9a64f32207e74d3940e118d985d78e1bf435543f44ec5d1de900daf0ae7c",
+    "tests_passed": 15,
+    "tests_total": 25
+  },
+  "task": "Python incremental build dependency, cache and integrity repair",
+  "version": "0.1.0"
+}

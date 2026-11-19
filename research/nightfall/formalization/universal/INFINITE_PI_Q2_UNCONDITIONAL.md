@@ -30,13 +30,18 @@ influence oracle, density statement, countability, atom floor or
 finite-alphabet condition is a hypothesis. `#print axioms` reports only
 `propext`, `Classical.choice` and `Quot.sound`.
 
-**Why this is the Efron–Stein condition.** If `G = Σ_{|S| ≤ 2} G_S` is an
-`L²` Efron–Stein (ANOVA) decomposition, each `G_S` with `i ∉ S` is measurable
-for the other-coordinates sigma algebra, so `R_i G_S = 0`; every component is
-killed by one of three distinct residuals, so `TripleResidualZero` holds.
-Conversely `R_i R_j R_k` keeps exactly the components with `S ⊇ {i, j, k}`.
-This equivalence is standard but is **not itself formalized here**; the Lean
-hypothesis is the operator statement above.
+**Hoeffding form (formalized bridge).** `InfinitePiQ2HoeffdingDegree` defines
+`HoeffdingDegreeLeTwo μ G`: `G` lies in the `L²` closure of the span of
+Hoeffding components `H` on coordinate sets `S` with `|S| ≤ 2`, i.e. `H` is
+measurable for the coordinates in `S` and degenerate,
+`E_ν[H | all coordinates ≠ i] = 0` for every `i ∈ S`. The theorem
+`hoeffdingDegreeLeTwo_tripleResidualZero` proves this implies
+`TripleResidualZero`, and `infinitePi_q2_105416_hoeffding` states the terminal
+with the Hoeffding hypothesis directly. The per-coordinate degeneracy used is
+implied by the textbook condition `E[H | x_T] = 0` for all `T ⊉ S`, so the
+hypothesis is no stronger than the textbook one. Existence and uniqueness of
+the Hoeffding decomposition for an arbitrary `L²` function on an infinite
+product are not formalized; nothing in the terminal depends on them.
 
 ## Also proved
 
@@ -71,14 +76,14 @@ hypothesis is the operator statement above.
 
 ## Scope and limits — read before citing
 
-* **Degree definition.** The hypothesis is the triple-residual operator
-  condition; its equivalence with a chosen textbook ANOVA formulation is
-  argued above but not formalized.
+* **Degree definition.** The Hoeffding form is formalized as an implication
+  into the triple-residual condition; the converse and the existence of the
+  Hoeffding decomposition are not formalized.
 * **Constant.** `≈105.4162` is inherited from the finite C105.416 module; the
   conditional 107/99 targets and the sharp-constant problem are unaffected.
-* **Replay.** Per-module compile of the full 118-module closure plus a strict
-  `#print axioms` audit; not yet `lake build` + `lake check` inside the
-  integrated `Nightfall` Lake package.
+* **Replay.** Integrated `lake build Nightfall` + `lake check` passed in merged
+  PR #776 (run 44171646200) for the a.e. and pointwise terminals; the
+  Hoeffding bridge is added to the same integrated graph.
 * **Review.** Kernel acceptance validates proofs of these Lean statements
   only. Independent audit against the community's canonical Q2 formulation,
   priority (including Grothendieck/decoupling routes) and novelty remain open.

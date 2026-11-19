@@ -1,0 +1,66 @@
+name: NIGHTFALL Forrelation companion preprint exact checker and PDF release
+
+on:
+  push:
+    branches: [nightfall-forrelation-companion-preprint-20261119]
+    paths:
+      - 'papers/forrelation-mixture-obstruction/COMPANION_PAPER.md'
+      - 'papers/forrelation-mixture-obstruction/check_reproduction.py'
+      - 'papers/forrelation-mixture-obstruction/check_original_mgf.py'
+      - '.github/workflows/nightfall-forrelation-companion-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reproducibility-and-pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Run independent finite falsifiers and numerical constants
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile papers/forrelation-mixture-obstruction/check_reproduction.py
+          python3 -m py_compile papers/forrelation-mixture-obstruction/check_original_mgf.py
+          python3 papers/forrelation-mixture-obstruction/check_reproduction.py
+          python3 papers/forrelation-mixture-obstruction/check_original_mgf.py
+      - name: Install public PDF build tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq pandoc texlive-xetex fonts-dejavu-core > /tmp/nightfall-pdf-install.log
+      - name: Typeset companion preprint from canonical Markdown
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd papers/forrelation-mixture-obstruction
+          pandoc COMPANION_PAPER.md --from markdown+tex_math_dollars+tex_math_single_backslash \
+            --standalone --pdf-engine=xelatex \
+            -V geometry:margin=0.9in -V fontsize=10pt \
+            -V mainfont='DejaVu Serif' \
+            --metadata title='Exponential Product-Mixture Complexity of Gaussian-Sign Forrelation' \
+            --metadata author='NIGHTFALL collaboration — public working preprint v0.1' \
+            -o Companion_Forrelation_Product_Mixture_v0_1.pdf
+          test -s Companion_Forrelation_Product_Mixture_v0_1.pdf
+          sha256sum COMPANION_PAPER.md Companion_Forrelation_Product_Mixture_v0_1.pdf
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: forrelation-companion-preprint-${{ github.run_id }}
+          path: papers/forrelation-mixture-obstruction/Companion_Forrelation_Product_Mixture_v0_1.pdf
+          if-no-files-found: error
+      - name: Commit public PDF source-built from canonical manuscript
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add papers/forrelation-mixture-obstruction/Companion_Forrelation_Product_Mixture_v0_1.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish source-built PDF companion for sharper Forrelation mixture exponent"
+            git push origin HEAD:refs/heads/nightfall-forrelation-companion-preprint-20261119
+          fi

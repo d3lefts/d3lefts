@@ -1,0 +1,25 @@
+{
+  "schema": "nightfall.certcustody.v1",
+  "records": [
+    {
+      "path": "sources/Alpha.lean",
+      "status": "checked",
+      "blob_sha1": "a389e02a2b0bf67cd8336a7dad17f3a436b686e2",
+      "claim_id": "ALPHA",
+      "ci_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ci_run": 314159,
+      "theorem": "CustodyExample.example",
+      "priority": "unverified"
+    },
+    {
+      "path": "sources/Beta.lean",
+      "status": "pending",
+      "blob_sha1": "36e2d006b5420500a58eb96b726056ccf34dc2e4",
+      "claim_id": "BETA",
+      "ci_head": null,
+      "ci_run": null,
+      "theorem": null,
+      "priority": "unverified"
+    }
+  ]
+}

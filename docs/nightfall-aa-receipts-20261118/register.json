@@ -1,0 +1,19 @@
+{
+  "schema": "nightfall-aa-lean-receipt-register-v1",
+  "source_workflow_run": 44433153026,
+  "source_workflow_head": "771d11af21896aa83f481b332d21d7d706b56927",
+  "artifact_id": 14487982785,
+  "artifact_checkout_head": "6b2cda54c503cceb2411528275289360c33d81d1",
+  "toolchain": "leanprover/lean4:v4.36.0-rc2",
+  "raw_sha256": {
+    "receipt.json": "693497f5f4ad5aa53cb5f9ebee1da80c1fd410463e43effe5af23011f6c5958f",
+    "printed-receipt.json": "fc4f7fbfb4ca97eea2e4abcbf795400f5bee49fbd949bb1dce6c1cc4d30f7481",
+    "simulation-receipt.json": "c4e675bcd1e70c267087e1235be8384f6c5cd585cd4db63c73d1f0e9c813d099"
+  },
+  "certifies": {
+    "receipt.json": "Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product",
+    "printed-receipt.json": "Nightfall.ProductSpace.CubeAA.printedConjecture",
+    "simulation-receipt.json": "Nightfall.ProductSpace.Simulation.simulation_degree"
+  },
+  "scope": "Only three original named source Lean audits, not a unified Lake proof, independent review or a Lean quantum-to-polynomial theorem."
+}

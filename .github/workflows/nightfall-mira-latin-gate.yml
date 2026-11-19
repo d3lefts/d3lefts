@@ -1,0 +1,131 @@
+name: NIGHTFALL Mira Latin exact-gate kernel audit
+
+on:
+  pull_request:
+    paths:
+      - 'Nightfall/LatinSquare/**'
+      - 'scripts/audit_mira_latin_incidence.py'
+      - '.github/workflows/nightfall-mira-latin-gate.yml'
+      - 'lean-toolchain'
+      - 'lakefile.toml'
+      - 'docs/lean-compiler-lock.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  latin-gate-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Resolve exact pinned dependency revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake update
+          python3 scripts/check_nightfall_compiler_lock.py --checkout . \
+            --installed-mathlib .lake/packages/mathlib \
+            --lean-version-file /tmp/nightfall-lean-version.txt
+          lake exe cache get
+      - name: Compile the exact rational identities with pinned Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/latin
+          lake env lean Nightfall/LatinSquare/ExactFlattening.lean 2>&1 | tee lean-receipts/latin/lean.log
+          grep -F 'Nightfall.LatinSquare.flattenMass_eq' lean-receipts/latin/lean.log
+          grep -F 'Nightfall.LatinSquare.soft_forward_sum' lean-receipts/latin/lean.log
+          git rev-parse HEAD > lean-receipts/latin/repo-head.txt
+          git -C .lake/packages/mathlib rev-parse HEAD > lean-receipts/latin/mathlib-head.txt
+          sha256sum Nightfall/LatinSquare/ExactFlattening.lean lean-toolchain docs/lean-compiler-lock.json > lean-receipts/latin/source-sha256.txt
+      - name: NIGHTFALL strict compiler bridge receipt and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py Nightfall/LatinSquare/ExactFlattening.lean \
+            --strict --timeout 600 \
+            --allow-axiom propext \
+            --allow-axiom Classical.choice \
+            --allow-axiom Quot.sound \
+            --decl Nightfall.LatinSquare.weighted_ratio_balance \
+            --decl Nightfall.LatinSquare.soft_forward_atom \
+            --decl Nightfall.LatinSquare.soft_forward_sum \
+            --decl Nightfall.LatinSquare.stage_gate_identity \
+            --decl Nightfall.LatinSquare.flattenMass_eq \
+            --decl Nightfall.LatinSquare.normalized_flatten_mass \
+            --decl Nightfall.LatinSquare.normalize_weighted_mass \
+            --decl Nightfall.LatinSquare.weighted_flatten_normalizes \
+            --decl Nightfall.LatinSquare.softKernelMass_balance \
+            --decl Nightfall.LatinSquare.scaledKernelMass_balance \
+            --decl Nightfall.LatinSquare.correctedLevelMass_eq \
+            --decl Nightfall.LatinSquare.correctedKernelMass_normalizes \
+            --decl Nightfall.LatinSquare.supportedLikelihood_balance \
+            --decl Nightfall.LatinSquare.supportedKernelMass_balance \
+            --json-out lean-receipts/latin/bridge.json 2>&1 | tee lean-receipts/latin/bridge.log
+      - name: Finite Latin representation kernel and strict axiom receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake env lean Nightfall/LatinSquare/Representation.lean 2>&1 | tee lean-receipts/latin/representation.log
+          python3 scripts/lean_bridge.py Nightfall/LatinSquare/Representation.lean \
+            --strict --timeout 600 \
+            --allow-axiom propext \
+            --allow-axiom Classical.choice \
+            --allow-axiom Quot.sound \
+            --decl Nightfall.LatinSquare.edgeDisjoint_iff_column_injective \
+            --decl Nightfall.LatinSquare.latin_iff_ordered_one_factorization \
+            --json-out lean-receipts/latin/representation-bridge.json 2>&1 | tee lean-receipts/latin/representation-bridge.log
+          sha256sum Nightfall/LatinSquare/Representation.lean >> lean-receipts/latin/source-sha256.txt
+      - name: Exact finite TV-killing and cumulative survival Lean certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake env lean Nightfall/LatinSquare/IncidenceCoupling.lean 2>&1 | tee lean-receipts/latin/incidence-coupling.log
+          python3 scripts/lean_bridge.py Nightfall/LatinSquare/IncidenceCoupling.lean \
+            --strict --timeout 600 \
+            --allow-axiom propext \
+            --allow-axiom Classical.choice \
+            --allow-axiom Quot.sound \
+            --decl Nightfall.LatinSquare.min_as_half_sum_sub_abs \
+            --decl Nightfall.LatinSquare.overlapMass_eq_one_sub_tv \
+            --decl Nightfall.LatinSquare.killedMass_eq_totalVariation \
+            --decl Nightfall.LatinSquare.overlap_dominated \
+            --decl Nightfall.LatinSquare.capped_density_eq_overlap \
+            --decl Nightfall.LatinSquare.sequential_survival_budget \
+            --decl Nightfall.LatinSquare.retained_mass_three_quarters \
+            --json-out lean-receipts/latin/incidence-coupling-bridge.json 2>&1 | tee lean-receipts/latin/incidence-coupling-bridge.log
+          sha256sum Nightfall/LatinSquare/IncidenceCoupling.lean >> lean-receipts/latin/source-sha256.txt
+      - name: Independent exact combinatorial incidence audit (n=1..5)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/audit_mira_latin_incidence.py 2>&1 | tee lean-receipts/latin/incidence-exact.log
+          grep -F 'FINITE_EXACT_INCIDENCE_CHECK_PASS' lean-receipts/latin/incidence-exact.log
+          sha256sum scripts/audit_mira_latin_incidence.py >> lean-receipts/latin/source-sha256.txt
+      - name: Build connected Latin target theorem through Lake import graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build Nightfall.LatinSquare.Main 2>&1 | tee lean-receipts/latin/latin-main-build.log
+          python3 scripts/lean_bridge.py Nightfall/LatinSquare/Main.lean \
+            --strict --timeout 600 \
+            --allow-axiom propext \
+            --allow-axiom Classical.choice \
+            --allow-axiom Quot.sound \
+            --decl Nightfall.LatinSquare.latinMixture_softKernelMass \
+            --decl Nightfall.LatinSquare.latentProductLatin_correctedLaw \
+            --json-out lean-receipts/latin/latin-main-bridge.json 2>&1 | tee lean-receipts/latin/latin-main-bridge.log
+          sha256sum Nightfall/LatinSquare/Main.lean >> lean-receipts/latin/source-sha256.txt
+      - name: Preserve theorem-source and compiler evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-mira-latin-gate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: lean-receipts/latin/
+          if-no-files-found: warn
+          retention-days: 30

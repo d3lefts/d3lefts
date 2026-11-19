@@ -1,0 +1,23 @@
+{
+  "artifact_id": 14498417944,
+  "artifact_zip_sha256": "279f31619131fc5797a4b5a0ba4fe083f23046a7d20c2acc9ec0e9233a3f9236",
+  "checkout_head_in_zip": "fe9ac00235f8391f2bb67725a928aefe0f0dd161",
+  "raw_receipt_sha256": "2c39cbad5530d2109c345f3e814a388994352e216b3b0777c2814011ea06ded4",
+  "schema": "nightfall-jensen-exact-head-lean-receipt-v1",
+  "scope": "raw original source CI receipt, not an integrated Lake build, not novelty review",
+  "source_PR": 867,
+  "source_commit": "b5e81949dfeb8107de24ad8c9e9baafe8adad9b5",
+  "source_run": 44456342019,
+  "source_run_result": "success",
+  "source_sha256": "be0eae8b785582265b28b11a9efcacaed562e6f4324a7e18df4a33e4adba0c3b",
+  "standard_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "strict_named_declarations": [
+    "Nightfall.ProductSpace.Mixture.mixture_simulation_jensen",
+    "Nightfall.ProductSpace.Mixture.increment_good_jensen",
+    "Nightfall.ProductSpace.Mixture.power_mean"
+  ]
+}
