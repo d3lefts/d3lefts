@@ -49,12 +49,17 @@ jobs:
           cat >/tmp/mathlib4/QueryFactorAudit.lean <<'LEAN'
           import QueryLocalDegree
           import QueryDecoderLift
+          import QueryLocalFactorTransfer
           #check @Nightfall.ProductSpace.QueryLocalDegree.degree_pullback
           #check @Nightfall.ProductSpace.QueryDecoderLift.substitute_queries
           #check @Nightfall.ProductSpace.QueryDecoderLift.substitute_eval
+          #check @Nightfall.ProductSpace.QueryLocalFactor.factor_mixture_simulation_jensen
+          #check @Nightfall.ProductSpace.QueryLocalFactor.factor_mixture_simulation_delta
           #print axioms Nightfall.ProductSpace.QueryLocalDegree.degree_pullback
           #print axioms Nightfall.ProductSpace.QueryDecoderLift.substitute_queries
           #print axioms Nightfall.ProductSpace.QueryDecoderLift.substitute_eval
+          #print axioms Nightfall.ProductSpace.QueryLocalFactor.factor_mixture_simulation_jensen
+          #print axioms Nightfall.ProductSpace.QueryLocalFactor.factor_mixture_simulation_delta
           LEAN
           (cd /tmp/mathlib4 && lake env lean QueryFactorAudit.lean) | tee lean-receipts/query-factor/axioms.txt
           ! grep -E 'sorryAx|unknown constant|error:' lean-receipts/query-factor/axioms.txt
