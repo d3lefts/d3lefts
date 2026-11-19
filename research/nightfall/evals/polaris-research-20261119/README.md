@@ -7,7 +7,7 @@ Each task has a prompt, inputs, machine-checkable oracle, and limitations. Agent
 
 | Task | Objective | Checkable output | Status |
 |---|---|---|---|
-| ProofGraph | Integrate pinned Lean modules without assuming CI of isolated modules implies unified Lake closure | Exact module imports, axiom report, fresh-build log, source/commit hashes | Trusted-target grader + 16 simulated-runner tests + pinned-Lean CI smoke job; real research integration, independent replay, and blind runs pending |
+| ProofGraph | Integrate pinned Lean modules without assuming CI of isolated modules implies unified Lake closure | Exact module imports, axiom report, fresh-build log, source/commit hashes | Trusted-target grader + 17 simulated-runner tests + pinned-Lean CI smoke and leanchecker replay pass; real research integration and blind runs pending |
 | TheoremBreak | Find counterexamples to unjustified mixture/conditioning inference | Finite rational counterexample verified by checker | Executable starter fixture |
 | InvariantLab | Demonstrate product-mixture rank can grow exponentially while deterministic query depth stays one | Explicit finite product-mixture rank lower bound and query decoder | Specification; proof obligations open |
 | PotentialForge | Audit an entropy-potential improvement, not reproduce an unverified claimed theorem | Independently reviewed proof or finite counterexample | Research candidate; no benchmark ground truth |
@@ -19,7 +19,7 @@ The supplied example is a smoke test. For scored evaluation, create held-out var
 
 ## ProofGraph-Hard v0.1 grading prototype
 
-The [ProofGraph-Hard protocol](proofgraph_hard/PROTOCOL.md) defines a SHA-256-pinned trusted theorem, narrow proof-only overlay, independent axiom report, fake-runner mutation tests, and separate pinned Lean CI smoke. The public example proves only natural-number addition commutativity; it is **not a research-level task**. No model evaluation, independent proof review, or research-grade unified Lake integration is claimed. The Python harness is **not a security sandbox**; execute candidate Lean code only in restricted isolation.
+The [ProofGraph-Hard protocol](proofgraph_hard/PROTOCOL.md) defines a SHA-256-pinned trusted theorem, narrow proof-only overlay, grader-owned axiom audit, fake-runner mutation tests, and pinned Lean CI smoke + leanchecker replay. The public example proves only natural-number addition commutativity; it is **not a research-level task**. No model evaluation, independent proof review, or research-grade unified Lake integration is claimed. The Python harness is **not a security sandbox**; execute candidate Lean code only in restricted isolation.
 
 ## ProofGraph task specification
 Input: a clean checkout pinned to a stated commit, a fixed Lean toolchain, and a manifest of required declaration names, modules, and allowed axioms. Agent task: integrate imports into the generated Lake manifest, resolve conflicts without weakening declarations, and provide machine-readable receipts.
@@ -34,7 +34,7 @@ Validity is a hard gate. For a task with a complete oracle: 35% correctness, 25%
 
 ## Next gates
 1. Reconcile this directory with the repository's existing evaluation lab; avoid duplicate public navigation.
-2. Run the pinned-Lean CI fixture to completion and inspect its audit receipt; then add a restricted VM/container, independent kernel replay, and a withheld research-level integration task.
+2. Pinned toy Lean fixture and separate leanchecker replay passed in run 44560021054. Next: add a restricted VM/container, withheld research-level integration task, independent implementation audit, and blind agent baselines.
 3. Independently verify TheoremBreak held-out instances and establish failure baselines.
 4. Audit InvariantLab's support/rank proof and source attribution.
 5. Keep PotentialForge quarantined pending independent mathematical audit and prior-art review.
