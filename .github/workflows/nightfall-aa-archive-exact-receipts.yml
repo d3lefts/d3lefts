@@ -1,0 +1,121 @@
+name: NIGHTFALL AA — archive exact pinned receipts once
+
+on:
+  push:
+    branches: [q-all-degree-lift]
+    paths:
+      - ".github/workflows/nightfall-aa-archive-exact-receipts.yml"
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: true
+      - name: Download, validate and preserve original receipt JSON bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, io, json, os, pathlib, urllib.request, zipfile
+
+          repo = "d3lefts/d3lefts"
+          archives = {
+              "44393215489": {
+                  "artifact": 14471730074,
+                  "head": "d596301450a51a1de3383933f64bc8b2705c2bab",
+                  "zip_sha256": "dfbc99e9e239806ad884a15f6dbed01d9a38874248e528abd3829bf607fbb9c7",
+                  "receipts": {"receipt.json": "c2f6778067d012227ed379a7bd296ba6d475d1f5bab08966f202c8a67e411891"},
+              },
+              "44406881226": {
+                  "artifact": 14476363017,
+                  "head": "d8e201626bf1461bdedc280b1d27c9b731e45e8b",
+                  "zip_sha256": "20bcf122d2cd9a2a28936dba173fb7ddf01ed6a599660ab38877a012c64c2009",
+                  "receipts": {
+                      "receipt.json": "7043bd725a80f12bbc49c2ba87c021fd2b973dfb2c1c0d584bebad793e502bee",
+                      "printed-receipt.json": "ca1879d4690486277456c4651eeb18fa6ff4d893b873858eb88a0031d85a042e",
+                  },
+              },
+              "44433153026": {
+                  "artifact": 14487982785,
+                  "head": "771d11af21896aa83f481b332d21d7d706b56927",
+                  "zip_sha256": "0416ce1277182b8c7dabc9fe8d3ee45ccd62d3642274dbb3bd83e7658bd38654",
+                  "receipts": {
+                      "receipt.json": "693497f5f4ad5aa53cb5f9ebee1da80c1fd410463e43effe5af23011f6c5958f",
+                      "printed-receipt.json": "fc4f7fbfb4ca97eea2e4abcbf795400f5bee49fbd949bb1dce6c1cc4d30f7481",
+                      "simulation-receipt.json": "c4e675bcd1e70c267087e1235be8384f6c5cd585cd4db63c73d1f0e9c813d099",
+                  },
+              },
+          }
+          root = pathlib.Path("docs/lean-receipts/aa-product/20261118")
+          manifest = {"schema": "nightfall-aa-unaltered-ci-receipts/v1", "runs": {}}
+          for run, spec in archives.items():
+              req = urllib.request.Request(
+                  f"https://api.github.com/repos/{repo}/actions/artifacts/{spec['artifact']}/zip",
+                  headers={
+                      "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+                      "Accept": "application/vnd.github+json",
+                      "X-GitHub-Api-Version": "2022-11-28",
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=60) as response:
+                  raw_zip = response.read()
+              digest = hashlib.sha256(raw_zip).hexdigest()
+              if digest != spec["zip_sha256"]:
+                  raise RuntimeError(f"Artifact ZIP digest mismatch, run {run}: {digest}")
+              zf = zipfile.ZipFile(io.BytesIO(raw_zip))
+              if zf.read("head").decode("ascii").strip() != spec["head"]:
+                  raise RuntimeError(f"Artifact head mismatch: {run}")
+              target = root / run
+              target.mkdir(parents=True, exist_ok=True)
+              manifest["runs"][run] = {
+                  "workflow_run": int(run),
+                  "source_commit": spec["head"],
+                  "artifact_id": spec["artifact"],
+                  "artifact_sha256": digest,
+                  "files": {},
+              }
+              permitted = ("head", "axioms.txt", "printed-axioms.txt", "source-sha256", "receipt.json", "printed-receipt.json", "simulation-receipt.json")
+              for name in permitted:
+                  if name not in zf.namelist():
+                      continue
+                  content = zf.read(name)
+                  sha = hashlib.sha256(content).hexdigest()
+                  if name in spec["receipts"]:
+                      if sha != spec["receipts"][name]:
+                          raise RuntimeError(f"Receipt SHA256 mismatch: {run}/{name}")
+                      data = json.loads(content)
+                      if data.get("status") != "COMPILED" or data.get("compiler_exit_code") != 0 or data.get("version_matches_pin") is not True:
+                          raise RuntimeError(f"Receipt not certified: {run}/{name}")
+                      if any(v != "allowlisted_dependencies" for v in data.get("axiom_audit", {}).values()):
+                          raise RuntimeError(f"Receipt axiom audit failed: {run}/{name}")
+                  (target / name).write_bytes(content)
+                  manifest["runs"][run]["files"][name] = sha
+              if set(spec["receipts"]) - set(manifest["runs"][run]["files"]):
+                  raise RuntimeError(f"Missing required receipts for {run}")
+          (root / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          print("Archived exact bytes with verified ZIP and per-receipt SHA256:")
+          for run in archives:
+              print(run, sorted(manifest["runs"][run]["files"]))
+          PY
+      - name: Commit immutable receipt snapshots to this PR branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/lean-receipts/aa-product/20261118
+          if git diff --cached --quiet; then
+            echo "Receipt snapshots already committed"
+            exit 0
+          fi
+          git commit -m "docs(aa): preserve exact source-hashed CI receipt JSONs (2026-11-18)"
+          git push origin HEAD:refs/heads/q-all-degree-lift
