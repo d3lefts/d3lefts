@@ -57,8 +57,9 @@ noncomputable def discrepancySq (v w : I → Z) (ψ : I → Z → ℂ) : ℝ :=
   ∑ i : I, ∑ z : Z, sqmag (oracle v ψ i z - oracle w ψ i z)
 
 /-- Query weight on the source-symbol mismatch support. -/
-noncomputable def mismatchWeight (v w : I → Z) (ψ : I → Z → ℂ) : ℝ :=
-  ∑ i ∈ (Finset.univ.filter (fun i : I => v i ≠ w i)),
+noncomputable def mismatchWeight (v w : I → Z) (ψ : I → Z → ℂ) : ℝ := by
+  classical
+  exact ∑ i ∈ (Finset.univ.filter (fun i : I => v i ≠ w i)),
     ∑ z : Z, sqmag (ψ i z)
 
 /-- **Concrete value-oracle local quantum discrepancy.** The entire complex
@@ -96,7 +97,7 @@ theorem value_oracle_discrepancy_sq_le (v w : I → Z) (ψ : I → Z → ℂ) :
           exact Finset.sum_le_sum (fun i _ => hstep i)
     _ = 4 * (∑ i ∈ (Finset.univ.filter (fun i : I => v i ≠ w i)),
                  ∑ z : Z, sqmag (ψ i z)) := by
-          simp only [Finset.sum_ite, ← Finset.mul_sum]
+          simp [Finset.sum_ite, ← Finset.mul_sum]
 
 end Nightfall.QuantumValueOracleDiscrepancy
 
