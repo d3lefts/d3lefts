@@ -76,11 +76,47 @@ theorem normalized_flatten_mass
     flattenMass a u rs / scale = (a * u) / scale := by
   rw [flattenMass_eq]
 
+/-- A finite output law with target masses c * weight has normalized
+distribution exactly proportional to the target weight. This is the
+conditioning-on-acceptance step, not a theorem that the concrete Mira
+sampler satisfies its hypotheses. -/
+theorem normalize_weighted_mass
+    (α : Type*) [Fintype α]
+    (mass weight : α → ℚ) (c : ℚ)
+    (hc : c ≠ 0)
+    (hweight : (∑ z, weight z) ≠ 0)
+    (hmass : ∀ z, mass z = c * weight z)
+    (s : α) :
+    mass s / (∑ z, mass z) = weight s / (∑ z, weight z) := by
+  have htotal : (∑ z, mass z) = c * (∑ z, weight z) := by
+    simp_rw [hmass]
+    rw [Finset.mul_sum]
+  rw [hmass, htotal]
+  field_simp [hc, hweight] <;> ring
+
+/-- The weighted telescoping expression, normalized after a successful
+non-null trial, has exactly the desired finite target distribution. -/
+theorem weighted_flatten_normalizes
+    (α : Type*) [Fintype α]
+    (weight : α → ℚ) (u : ℚ) (hu : u ≠ 0)
+    (hweight : (∑ z, weight z) ≠ 0)
+    (gates : α → List ℚ) (s : α) :
+    flattenMass (weight s) u (gates s) /
+      (∑ z, flattenMass (weight z) u (gates z)) =
+        weight s / (∑ z, weight z) := by
+  apply normalize_weighted_mass α (fun z => flattenMass (weight z) u (gates z)) weight u
+    hu hweight
+  · intro z
+    rw [flattenMass_eq]
+    ring
+
 #print axioms Nightfall.LatinSquare.weighted_ratio_balance
 #print axioms Nightfall.LatinSquare.soft_forward_atom
 #print axioms Nightfall.LatinSquare.soft_forward_sum
 #print axioms Nightfall.LatinSquare.stage_gate_identity
 #print axioms Nightfall.LatinSquare.flattenMass_eq
 #print axioms Nightfall.LatinSquare.normalized_flatten_mass
+#print axioms Nightfall.LatinSquare.normalize_weighted_mass
+#print axioms Nightfall.LatinSquare.weighted_flatten_normalizes
 
 end Nightfall.LatinSquare
