@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/structural_information/SUBCUBE_ONE_QUERY_SIMULATION_20261119.md'
+      - 'research/nightfall/structural_information/PROOF_PASSPORT_SUBCUBE_T1_20261119.md'
       - 'scripts/check_subcube_one_query.py'
       - '.github/workflows/nightfall-subcube-onequery-fibers.yml'
   workflow_dispatch:
@@ -26,7 +27,7 @@ jobs:
           mkdir -p subcube-onequery-receipt
           python3 -I scripts/check_subcube_one_query.py 2>&1 | tee subcube-onequery-receipt/replay.log
           grep -F 'SUBCUBE_ONE_QUERY_SIMULATION_EXACT_AUDIT_PASS' subcube-onequery-receipt/replay.log
-          sha256sum research/nightfall/structural_information/SUBCUBE_ONE_QUERY_SIMULATION_20261119.md scripts/check_subcube_one_query.py > subcube-onequery-receipt/SHA256SUMS
+          sha256sum research/nightfall/structural_information/SUBCUBE_ONE_QUERY_SIMULATION_20261119.md research/nightfall/structural_information/PROOF_PASSPORT_SUBCUBE_T1_20261119.md scripts/check_subcube_one_query.py > subcube-onequery-receipt/SHA256SUMS
           git rev-parse HEAD > subcube-onequery-receipt/commit.txt
           printf '%s\n' 'Author-side all-L one-query proof; exact finite tests only; no Lean, arbitrary-T or priority certification' > subcube-onequery-receipt/limits.txt
       - name: Preserve immutable check outputs
