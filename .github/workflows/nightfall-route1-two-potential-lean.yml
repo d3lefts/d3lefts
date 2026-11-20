@@ -1,0 +1,59 @@
+name: NIGHTFALL Route 1 two-potential finite stopping lemma pinned Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1PotentialBudget.lean'
+      - '.github/workflows/nightfall-route1-two-potential-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  two-potential:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up pinned Lean 4.36.0-rc2 and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile abstract potential theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/route1-two-potential
+          cp research/nightfall/formalization/product_space/Route1PotentialBudget.lean /tmp/mathlib4/Route1PotentialBudget.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1PotentialBudget.olean Route1PotentialBudget.lean) 2>&1 | tee lean-receipts/route1-two-potential/compile.log
+          ! grep -E '(^|:)error(:|\\()' lean-receipts/route1-two-potential/compile.log
+      - name: Replay independent kernel and audit scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker Route1PotentialBudget) 2>&1 | tee lean-receipts/route1-two-potential/leanchecker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('lean-receipts/route1-two-potential/compile.log').read_text()
+          ax=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',s,re.S)
+          assert len(ax)==3,('expected 3 named statements',len(ax))
+          for a in ax:
+            assert {x.strip() for x in a.split(',') if x.strip()} <= {'propext','Classical.choice','Quot.sound'},a
+          assert 'sorryAx' not in s
+          print('PASS abstract finite two-potential budget; NOT Route1 full theorem')
+          PY
+      - name: Save exact immutable evidence
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/route1-two-potential
+          sha256sum research/nightfall/formalization/product_space/Route1PotentialBudget.lean > lean-receipts/route1-two-potential/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/route1-two-potential/commit.txt
+      - name: Archive receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: route1-two-potential-kernel-receipt
+          path: lean-receipts/route1-two-potential
+          retention-days: 90
+          if-no-files-found: error
