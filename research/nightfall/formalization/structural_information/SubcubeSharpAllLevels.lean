@@ -98,7 +98,7 @@ theorem all_levels_affine_sharp (n : Nat)
       ((Module.finrank K W + 1:Nat):ℝ) := by exact_mod_cast hdim
   have hmono : ((Module.finrank K U:Nat):ℝ)^alpha ≤
       ((Module.finrank K W + 1:Nat):ℝ)^alpha :=
-    Real.rpow_le_rpow (by positivity) hdim' (le_of_lt alpha_gt_one)
+    Real.rpow_le_rpow (by positivity) hdim' (by linarith [alpha_gt_one] : 0 ≤ alpha)
   exact hct'.trans (hU.trans hmono)
 
 #print axioms Nightfall.StructuralInformation.SubcubeSharpAllLevels.all_levels_sharp
