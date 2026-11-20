@@ -90,6 +90,35 @@ theorem overlap_add_rightResidual (p q : A → ℝ) (a : A) :
   simp only [rightResidual]
   ring
 
+
+/-- Exact pointwise overlap decomposition of the absolute difference. -/
+theorem residual_pair_abs (p q : A → ℝ) (a : A) :
+    leftResidual p q a + rightResidual p q a = |p a - q a| := by
+  unfold leftResidual rightResidual overlap
+  rcases le_total (p a) (q a) with h | h
+  · rw [min_eq_left h, abs_of_nonpos (sub_nonpos.mpr h)]
+    ring
+  · rw [min_eq_right h, abs_of_nonneg (sub_nonneg.mpr h)]
+    ring
+
+/-- For normalized finite laws, the mismatch mass is exactly
+    half the L1 distance, including unequal supports and zero atoms. -/
+theorem mismatchMass_eq_half_l1 (p q : A → ℝ)
+    (hp : (∑ a, p a) = 1) (hq : (∑ a, q a) = 1) :
+    mismatchMass p q = (∑ a, |p a - q a|) / 2 := by
+  have hsum :
+      (∑ a, |p a - q a|) =
+        (∑ a, leftResidual p q a) +
+          (∑ a, rightResidual p q a) := by
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro a _
+    exact (residual_pair_abs p q a).symm
+  rw [residual_mass_eq p q hp hq] at hsum
+  change (∑ a, |p a - q a|) =
+    mismatchMass p q + mismatchMass p q at hsum
+  linarith
+
 end Nightfall.Route1FiniteMaxCoupling
 
 #print axioms Nightfall.Route1FiniteMaxCoupling.overlap_nonneg
@@ -97,3 +126,4 @@ end Nightfall.Route1FiniteMaxCoupling
 #print axioms Nightfall.Route1FiniteMaxCoupling.residual_disjoint
 #print axioms Nightfall.Route1FiniteMaxCoupling.residual_mass_eq
 #print axioms Nightfall.Route1FiniteMaxCoupling.residual_zero_of_mass_zero
+#print axioms Nightfall.Route1FiniteMaxCoupling.mismatchMass_eq_half_l1
