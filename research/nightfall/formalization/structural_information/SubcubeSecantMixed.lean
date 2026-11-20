@@ -10,6 +10,10 @@ open Nightfall.StructuralInformation.SubcubeAllSpacesL3
 
 variable {V : Type*} [AddCommGroup V] [Module K V] [DecidableEq V]
 
+noncomputable def affineRowHits (R : Finset V) (Q : Submodule K V) (a : V) : Nat := by
+  classical
+  exact (R.filter fun s => s - a ∈ Q).card
+
 private theorem bounded_fibers {α β : Type*} [DecidableEq β]
     (S : Finset α) (T : Finset β) (f : α → β) (m : Nat)
     (hmap : ∀ x ∈ S, f x ∈ T)
@@ -29,7 +33,7 @@ theorem mixed_product_bound [FiniteDimensional K V]
     (hlinear : ∀ P : Submodule K V,
       rowHits R P ≤ (Module.finrank K P) * (Module.finrank K P))
     (haffine : ∀ (Q : Submodule K V) (a : V),
-      (R.filter fun s => s - a ∈ Q).card ≤
+      affineRowHits R Q a ≤
       (Module.finrank K Q + 1) * (Module.finrank K Q + 1))
     (U : Submodule K (V × V)) :
     rowHits (R.product R) U ≤ 4 * (Module.finrank K U)^4 := by
@@ -66,7 +70,7 @@ theorem mixed_product_bound [FiniteDimensional K V]
       have hp0r : p0.1 = r := (Finset.mem_filter.mp hp0).2
       let T0 : Finset V := R.filter fun s => s - p0.2 ∈ Q
       have hmap0 : Set.MapsTo Prod.snd
-          (S.filter fun p => p.1 = r) T0 := by
+          (S.filter (fun p => p.1 = r) : Set (V × V)) (T0 : Set V) := by
         intro p hmem
         obtain ⟨hpS, hpr⟩ := Finset.mem_filter.mp hmem
         obtain ⟨hpR, hpU⟩ := Finset.mem_filter.mp hpS
@@ -79,7 +83,7 @@ theorem mixed_product_bound [FiniteDimensional K V]
           simpa [sub_eq_zero.mpr hfst] using hpair
         exact Finset.mem_filter.mpr ⟨hs, hvertical⟩
       have hinj : Set.InjOn Prod.snd
-          (S.filter fun p => p.1 = r) := by
+          (S.filter (fun p => p.1 = r) : Set (V × V)) := by
         intro p hp p' hp' hsecond
         have hfirst : p.1 = p'.1 :=
           (Finset.mem_filter.mp hp).2.trans (Finset.mem_filter.mp hp').2.symm
@@ -87,7 +91,7 @@ theorem mixed_product_bound [FiniteDimensional K V]
       have hc : (S.filter fun p => p.1 = r).card ≤ T0.card :=
         Finset.card_le_card_of_injOn Prod.snd hmap0 hinj
       have ha : T0.card ≤ (Module.finrank K Q + 1) *
-          (Module.finrank K Q + 1) := haffine Q p0.2
+          (Module.finrank K Q + 1) := by simpa [affineRowHits, T0] using haffine Q p0.2
       have hb : (Module.finrank K Q + 1) *
           (Module.finrank K Q + 1) ≤ (q + 1)*(q + 1) :=
         Nat.mul_le_mul (Nat.add_le_add_right hk 1) (Nat.add_le_add_right hk 1)
