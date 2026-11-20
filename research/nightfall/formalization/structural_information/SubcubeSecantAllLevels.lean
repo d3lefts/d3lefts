@@ -73,7 +73,7 @@ theorem all_levels_nonzero_secants_quartic (n : Nat)
         _ ≤ nonzeroHits (pairSums (R n)) (slice W inl) +
             nonzeroHits (pairSums (R n)) (slice W inr) +
             nonzeroHits (pairSums (R n)) (slice W diag) +
-            12*q^4 := by simpa [q] using hstep
+            12*q^4 := hstep
         _ ≤ (12*n)*a^4 + (12*n)*b^4 + (12*n)*c^4 + 12*q^4 := by
             simpa [a, b, c] using
               (Nat.add_le_add_right
