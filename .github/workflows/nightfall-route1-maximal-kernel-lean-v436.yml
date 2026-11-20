@@ -56,12 +56,15 @@ jobs:
           names=[
             'overlap_nonneg','residual_nonneg','residual_disjoint',
             'residual_mass_eq','residual_zero_of_mass_zero',
+            'mismatchMass_eq_half_l1',
             'pairMass_left','pairMass_right','pairMass_diag_normalized',
             'maximalKernel_row','maximalKernel_push','pairMass_mismatch',
             'finite_maximal_kernel_exists',
             'Nightfall.Route1StarMaximalTerminal.concreteStar_reference',
             'Nightfall.Route1StarMaximalTerminal.concreteStar_component',
             'Nightfall.Route1StarMaximalTerminal.concreteStar_all_marginals',
+            'Nightfall.Route1StarMaximalTerminal.concreteStar_nonneg',
+            'Nightfall.Route1StarMaximalTerminal.concreteStar_total',
             'Nightfall.Route1StarMaximalBridge.canonicalStarKernel_sum',
             'Nightfall.Route1StarMaximalBridge.canonicalStarMass_component',
             'Nightfall.Route1StarMaximalBridge.canonicalStarMass_mismatch',
@@ -78,12 +81,12 @@ jobs:
           data=Path(os.environ['GITHUB_WORKSPACE']+'/lean-receipts/route1-maximal-kernel/axioms.log').read_text()
           allowed={'propext','Quot.sound','Classical.choice'}
           reports=re.findall(r"depends on axioms:\s*\[([^\]]*)\]",data,re.S)
-          if len(reports) != 19:
-              raise SystemExit(f'expected nineteen named axiom reports, got {len(reports)}')
+          if len(reports) != 22:
+              raise SystemExit(f'expected twenty-two named axiom reports, got {len(reports)}')
           for report in reports:
               axioms={x.strip() for x in report.split(',') if x.strip()}
               if not axioms<=allowed: raise SystemExit('nonstandard axioms: '+str(axioms-allowed))
-          print('PASS 19 named Lean declarations: concrete star plus exact per-component maximal TV mismatch')
+          print('PASS 22 named Lean declarations: finite TV half-L1, normalized star and exact per-component maximal mismatch')
           PY
       - name: Preserve source provenance and negative result logs
         if: always()
