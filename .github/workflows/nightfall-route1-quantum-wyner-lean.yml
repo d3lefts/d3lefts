@@ -70,7 +70,7 @@ jobs:
           import re
           d=Path('receipts/quantum-wyner')
           s=''.join(p.read_text() for p in sorted(d.glob('*.log')))
-          reports=re.findall(r"'([^']+)' depends on axioms:\\s*\\[([^\\]]*)\\]",s,re.S)
+          reports=re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
           names={n for n,_ in reports}
           needed=[
             'Nightfall.Route1Polylog.crux',
@@ -85,8 +85,11 @@ jobs:
             a={z.strip() for z in x.split(',') if z.strip()}
             assert a <= allowed,(n,a)
           assert 'sorryAx' not in s
-          for p in sorted(d.glob('*.lean')):
-            assert not re.search(r'(?m)^\\s*(sorry|admit|axiom)\\b',p.read_text())
+          paths=list(Path('research/nightfall/formalization/product_space').glob('Route1*.lean'))
+          paths += list(Path('research/nightfall/formalization/product_space').glob('QuantumCircuit*.lean'))
+          paths += [Path('research/nightfall/formalization/product_space/QuantumPathDegree.lean')]
+          for p in paths:
+            assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',p.read_text()),p
           print('PASS: physical circuit Wyner CI and fixed-component terminal, source-closed, kernel replay')
           PY
       - name: Preserve evidence
