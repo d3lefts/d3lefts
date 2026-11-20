@@ -34,7 +34,8 @@ jobs:
           assert not re.search(r'\b(sorry|admit|axiom)\b',p), 'untrusted proof escape found'
           log=Path('subcube-l3-lean-receipt/compile.log').read_text()
           reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
-          assert len(reports)==6, f'expected 6 axiom audit reports; got {len(reports)}'
+          none_count=log.count('does not depend on any axioms')
+          assert len(reports)+none_count==10, f'expected 10 declarations; got {len(reports)} with axioms and {none_count} without'
           allowed={'propext','Classical.choice','Quot.sound'}
           for report in reports:
               axioms={x.strip() for x in report.split(',') if x.strip()}
