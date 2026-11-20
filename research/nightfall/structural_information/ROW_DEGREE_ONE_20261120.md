@@ -153,3 +153,28 @@ rank `2^L`, so their Sidon constant must be at least `(3/2)^{L/2}` up to lower-o
   `L = 3` have variance `≈ 3/8`; whether constant-variance flat functions exist for large `L` is now the
   decisive question (option 3: a variance-based argument, or a construction refuting (★)).
 * **`T = 1` is unaffected.** The additive-energy simulator (Theorem I, Proposition J) does not use `K`.
+
+## Direct test of (★) at row-degree 1 with capped coefficients (2026-11-20, `boxed_flat.py`, `boxed_flat_cg.py`)
+
+Question: if every `|c_g| ≤ t`, how much variance can a bounded `F` have? (A counterexample to (★) needs
+constant variance with `t = m^{-Ω(1)}`.) For a sign pattern, maximise `∑ σ_g c_g` under `|F| ≤ 1` and
+`0 ≤ σ_g c_g ≤ t` (exact LP; the cutting-plane version adds only violated points), then local search over
+patterns to maximise the resulting variance.
+
+| L | cap `t` | best variance found | `∑|c|` |
+| --- | --- | --- | --- |
+| 3 | 1/4 | 0.625 | 2.5 |
+| 3 | 1/8 | 0.375 | 3.0 |
+| 3 | 1/16 | 0.105 | 1.69 (all 27 rows at cap) |
+| 3 | 1/32 | 0.026 | 0.84 (all 27 rows at cap) |
+| 4 | 1/8 | 0.375 | 3.0 |
+| 4 | 1/16 | 0.1875 | 3.0 |
+
+At `L ≤ 4` the best variance found is `≈ t · ∑|c|` with `∑|c| ≤ 3`, i.e. `max c² ≳ (Var/3)²`: no
+constant-variance flat function appears. Local search at `L = 4` does not exceed `∑|c| = 3`, so it has
+not found `K(4)`'s true value either. Theorem T only forces exponential growth from about `L = 16`, so
+**small cases cannot decide (★) at row-degree 1**; it needs an argument.
+
+Status: (★) at row-degree 1 for subcubes is open. Bounding `∑|c|` cannot prove it (Theorem T); the
+remaining options are a variance-based proof or a construction of constant-variance flat functions from
+the high-order additive relations that drive Theorem T.
