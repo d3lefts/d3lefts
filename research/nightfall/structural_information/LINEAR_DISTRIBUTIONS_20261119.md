@@ -68,14 +68,14 @@ Define `Λ_T(G) = min { c · c′ : R has a (c, c′, h(2cT))-frame }`; then sim
 | any rows with dual distance `> h` | `B = R` | 1 | none (Theorem A) |
 | Bernstein–Vazirani, `R = F_2^m` | see below | large | `Ω(m)` at `T = 1` |
 
-**Bernstein–Vazirani has no cheap frame.** Condition 1 with `R = F_2^m` says every vector is a sum
-of `≤ c` elements of `B`. Two different `c`-subsets with the same sum give a dependency of weight
-`≤ 2c`. Condition 3 needs `h > 2c`, which forces all `≤ c`-subset sums to be distinct, so
-`∑_{j≤c} (|B| choose j) = 2^m` exactly with no collisions, i.e. `B` is a perfect code of covering
-radius `c` in the dual sense; and `h(2cT) > 2c` already fails for every `c ≥ 1` because
-`h(2cT) ≥ 2k_φ · 2cT > 2c`. So `R = F_2^m` has **no** frame with `h(2cT) > 2c`. Any frame must take
-`c` large enough that condition 1 can be met without condition 3 being needed (e.g. `B` a basis,
-`c = m`), so `Λ_T(F_2^m)` is of order `m`, matching the true advantage.
+**Bernstein–Vazirani: `Λ_T = m` exactly.** Let `R = F_2^m` and let `B` be a `(c, c′, h)`-frame
+with `h = h(2cT)`. If `|B| ≥ c + 1`, the sum `v` of any `c + 1` elements of `B` is a row, hence a sum
+of at most `c` elements of `B` by condition 1. The two subsets have different sizes, so their
+symmetric difference is a nonempty dependency of weight `≤ 2c + 1`. Condition 3 then needs
+`h ≤ 2c + 1`, but `h(2cT) ≥ 4 k_φ c T > 2c + 1`. So `|B| ≤ c`. Since `B` spans `F_2^m` (every vector
+is a sum of elements of `B`), `c ≥ |B| ≥ m`. Conversely the standard basis is a frame with
+`c = m`, `c′ = 1` (basis vectors are rows) and no dependencies at all. Hence `Λ_T(F_2^m) = m`,
+matching the true advantage `Ω(m)` at `T = 1` up to the polynomial.
 
 ## 4. Conjecture (two-sided characterization for linear distributions)
 
