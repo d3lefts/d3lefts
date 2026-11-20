@@ -99,7 +99,7 @@ theorem fiber_uniform_row_of_quadratic_transition
     exact congrArg (fun z : ℝ => z + c i) (hvinvariant x i b)
   · intro x
     calc
-      (∑ i : ι, v x i + c i) =
+      (∑ i : ι, (v x i + c i)) =
           (∑ i, v x i) + (∑ i, c i) := by rw [Finset.sum_add_distrib]
       _ ≤ 8 + 16 * Real.pi ^ 2 :=
           add_le_add (hvcost x) hccost
@@ -111,7 +111,7 @@ theorem fiber_uniform_row_of_quadratic_transition
       _ ≤ (∑ i ∈ disagree x y, v x i) +
           (∑ i ∈ disagree x y, c i) :=
             add_le_add (le_refl _) (hcrem x y)
-      _ = (∑ i ∈ disagree x y, v x i + c i) := by
+      _ = (∑ i ∈ disagree x y, (v x i + c i)) := by
             rw [Finset.sum_add_distrib]
 
 end Nightfall.MixtureAA.FUR2
