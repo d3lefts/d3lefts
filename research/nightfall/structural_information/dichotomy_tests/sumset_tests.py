@@ -1,3 +1,4 @@
+# NOTE: maxsub returns (best_found, complete). A timed-out search is a lower bound, NOT an exact N_r.
 import itertools, random, sys, time
 def sumsets(R, rmax, m):
     full=1<<m; layers=[{0}]; cur={0}
@@ -8,12 +9,14 @@ def sumsets(R, rmax, m):
             layers += [cur]*(rmax-r); break
     return layers
 def maxsub(S, m, tlimit=20):
-    if len(S)==1<<m: return m
-    t0=time.time(); best=[0]
+    if len(S)==1<<m: return m, True
+    t0=time.time(); best=[0]; timed_out=[False]
     Sl=sorted(S-{0})
     def dfs(V, cands, d):
         if d>best[0]: best[0]=d
-        if time.time()-t0>tlimit: return
+        if time.time()-t0>tlimit:
+            timed_out[0]=True
+            return
         # bound
         import math
         if d+int(math.log2(len(cands)/len(V)+1))<=best[0]: return
@@ -22,7 +25,7 @@ def maxsub(S, m, tlimit=20):
             nc=[u for u in cands[idx+1:] if u not in W and all((u^w) in S for w in W)]
             dfs(W,nc,d+1)
     dfs({0},Sl,0)
-    return best[0]
+    return best[0], not timed_out[0]
 def gf_mul(a,b,k,poly):
     r=0
     while b:
@@ -64,5 +67,7 @@ for name,(R,m) in fams:
     L=sumsets(set(R),4,m)
     out=[]
     for r in range(1,5):
-        out.append("r=%d |rR|/2^m=%.2f N=%d"%(r,len(L[r])/2**m,maxsub(L[r],m,15)))
+        nr, exact = maxsub(L[r],m,15)
+        label = "N=%d [EXACT]" % nr if exact else "N>=%d [TIMEOUT/LOWER BOUND]" % nr
+        out.append("r=%d |rR|/2^m=%.2f %s"%(r,len(L[r])/2**m,label))
     print(name,"m=%d n=%d |"%(m,len(set(R)))," | ".join(out),flush=True)
