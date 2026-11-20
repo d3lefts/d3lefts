@@ -19,7 +19,7 @@ Consequently the depth is poly(d,1/epsilon,1/delta)*(1+ln M), independent of n, 
 
 ### Input dependencies, checked against source this session
 
-1. Existing kernel-checked product row theorem: Nightfall.ProductSpace.RowBound.product_row_bound in research/nightfall/formalization/product_space/ProductRowBound.lean, cost K=pi^2 d^2 for globally [-1,1]-bounded degree-d f.
+1. Existing product row theorem: RowBound.product_row_bound (common finite alphabet), K=pi^2*d^2. For heterogeneous A_i, embed into the tagged sum A=Sigma_i A_i, choose default letters, and retract each A to A_i by the i-tag. The extended F(z)=f((R_i(z_i))_i) stays [0,1]-bounded and degree<=d. Apply the common-alphabet theorem to F and restrict rows back to the tagged embeddings. This standard tagged-sum method is in HeterogeneousAlphabets.lean; the particular row transfer is not yet a named Lean theorem.
 2. Existing kernel-checked product influence theorem: Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product, bound 3 Var(G)^5 <= 12500 (pi^2 D^2)^6 B^6 (max_i Inf_i(G))^2. For B=1 this gives the gamma above.
 3. Standard real Markov polynomial derivative inequality |p'|<=d^2 for |p|<=1 on [-1,1], and finite Pinsker KL(p||q)>=2 TV(p,q)^2 in natural logarithms. The former is re-derived below for the required interpolation; the latter remains an external analytic input.
 4. Existing exact posterior Phi-splitting identity in research/nightfall/formalization/product_space/MixtureSimulation.lean (Phi_sum), used with posterior component weights, not an M-factor loss.
