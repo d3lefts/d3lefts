@@ -1,0 +1,40 @@
+name: NIGHTFALL structural information — exact Fourier audit
+on:
+  pull_request:
+    branches: [structural-information-theory]
+    paths:
+      - 'research/nightfall/structural_information/INDEPENDENT_AUDIT_AND_FOURIER_TRANSFER_20261119.md'
+      - 'research/nightfall/structural_information/check_structural_fourier_exact.py'
+      - '.github/workflows/nightfall-structural-fourier-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-fraction-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Exact effective-source checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Strict exact rational checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p structural-fourier-receipts
+          python3 -I research/nightfall/structural_information/check_structural_fourier_exact.py | tee structural-fourier-receipts/replay.log
+          grep -Fq "PASS 3160 exact integer/Fraction assertions across 302 datasets/instances." structural-fourier-receipts/replay.log
+          grep -Fq "LIMIT: Gaussian sign arcsine law" structural-fourier-receipts/replay.log
+          sha256sum research/nightfall/structural_information/check_structural_fourier_exact.py research/nightfall/structural_information/INDEPENDENT_AUDIT_AND_FOURIER_TRANSFER_20261119.md | tee structural-fourier-receipts/SHA256SUMS
+          grep -Fq "a97a81bd817727c7e7979e7937d0eccdd469000e2e6fcda81ded961028d82e65" structural-fourier-receipts/SHA256SUMS
+          git rev-parse HEAD > structural-fourier-receipts/commit.txt
+          printf '%s\n' 'FINITE FRACTION AUDIT: NOT A THEOREM, LEAN TERMINAL, OR NOVELTY CERTIFICATE' > structural-fourier-receipts/scope.txt
+      - name: Archive source-hashed exact evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: structural-fourier-exact-receipt
+          path: structural-fourier-receipts/
+          retention-days: 60
+          if-no-files-found: warn
