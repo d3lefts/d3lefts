@@ -53,16 +53,14 @@ jobs:
           lake env lean Route1MaximalAxiomAudit.lean 2>&1 | tee "$GITHUB_WORKSPACE/lean-receipts/route1-maximal-kernel/axioms.log"
           python3 - <<'PY'
           from pathlib import Path
-          data=Path(__import__('os').environ['GITHUB_WORKSPACE']+'/lean-receipts/route1-maximal-kernel/axioms.log').read_text()
+          import re, os
+          data=Path(os.environ['GITHUB_WORKSPACE']+'/lean-receipts/route1-maximal-kernel/axioms.log').read_text()
           allowed={'propext','Quot.sound','Classical.choice'}
-          lines=[x for x in data.splitlines() if 'axioms:' in x]
-          if len(lines) != 8:
-              raise SystemExit(f'expected five named axiom reports, got {len(lines)}')
-          for line in lines:
-              body=line.split('axioms:',1)[1].strip()
-              if not (body.startswith('[') and body.endswith(']')):
-                  raise SystemExit('invalid axiom report: '+line)
-              axioms={x.strip() for x in body[1:-1].split(',') if x.strip()}
+          reports=re.findall(r"depends on axioms:\s*\[([^\]]*)\]",data,re.S)
+          if len(reports) != 8:
+              raise SystemExit(f'expected eight named axiom reports, got {len(reports)}')
+          for report in reports:
+              axioms={x.strip() for x in report.split(',') if x.strip()}
               if not axioms<=allowed: raise SystemExit('nonstandard axioms: '+str(axioms-allowed))
           print('PASS 8 scoped Lean kernel declarations including exact joint mass, standard axioms only')
           PY
