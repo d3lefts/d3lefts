@@ -50,11 +50,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if (cd /tmp/mathlib4 && lake env which leanchecker >/dev/null 2>&1); then
-            (cd /tmp/mathlib4 && lake env leanchecker Route1WynerSimulation) 2>&1 | tee receipts/route1-polylog/checker.log
-          else
-            echo "leanchecker unavailable; axiom audit only" | tee receipts/route1-polylog/checker.log
-          fi
+          # Fail closed: a passing source/axiom audit is not a kernel replay.
+          # Every successful run must execute the independent checker, without fallback.
+          test -s /tmp/mathlib4/.lake/build/lib/lean/Route1WynerSimulation.olean
+          (cd /tmp/mathlib4 && lake env leanchecker Route1WynerSimulation) 2>&1 | tee receipts/route1-polylog/checker.log
+          test -f receipts/route1-polylog/checker.log
           python3 - <<'PY'
           from pathlib import Path
           import re
