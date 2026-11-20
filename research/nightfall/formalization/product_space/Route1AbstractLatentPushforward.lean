@@ -41,8 +41,10 @@ measure on the compact product-law space. -/
 theorem abstract_latent_pushforward_probability
     (μ : Measure W) [IsProbabilityMeasure μ]
     (Q : W → LawSpace ι α) (hQ : Measurable Q) :
-    IsProbabilityMeasure (Measure.map Q μ) :=
-  Measure.isProbabilityMeasure_map hQ.aemeasurable
+    IsProbabilityMeasure (Measure.map Q μ) := by
+  constructor
+  rw [Measure.map_apply hQ MeasurableSet.univ]
+  exact measure_univ
 
 /-- The conditional-product-law pushforward preserves all input atom masses,
 including zero atoms, with no finiteness assumption on W. -/
