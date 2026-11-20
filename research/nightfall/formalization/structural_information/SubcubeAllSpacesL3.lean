@@ -7,7 +7,7 @@ namespace Nightfall.StructuralInformation.SubcubeAllSpacesL3
 
 abbrev K := ZMod 2
 
-variable {V : Type*} [AddCommGroup V] [Module K V]
+variable {V : Type*} [AddCommGroup V] [Module K V] [DecidableEq V]
 
 private def inl : V →ₗ[K] V × V := LinearMap.inl K V V
 private def inr : V →ₗ[K] V × V := LinearMap.inr K V V
@@ -104,7 +104,7 @@ private theorem hits_image_le (R : Finset V) (W : Submodule K (V × V))
   rw [Finset.filter_image]
   exact Finset.card_image_le
 
-private theorem hits_union_le {T : Type*} [AddCommGroup T] [Module K T]
+private theorem hits_union_le {T : Type*} [AddCommGroup T] [Module K T] [DecidableEq T]
     (R S : Finset T) (W : Submodule K T) :
     rowHits (R ∪ S) W ≤ rowHits R W + rowHits S W := by
   classical
@@ -172,8 +172,23 @@ private theorem rank_base0 (W : Submodule K E0) :
       simp [he] at h
     have hr : 0 < Module.finrank K W :=
       (Submodule.one_le_finrank_iff.mpr hneq)
-    simp [rowHits, R0, h, cap0, Nat.ne_of_gt hr]
-  · simp [rowHits, R0, h]
+    have hcount : rowHits R0 W ≤ 1 := by
+      change ((R0.filter fun r => r ∈ W)).card ≤ 1
+      calc
+        _ ≤ R0.card := Finset.card_filter_le _ _
+        _ = 1 := by decide
+    simpa [cap0, Nat.ne_of_gt hr] using hcount
+  · have hz : rowHits R0 W = 0 := by
+      unfold rowHits
+      rw [Finset.card_eq_zero]
+      apply Finset.eq_empty_iff_forall_not_mem.mpr
+      intro x hx
+      obtain ⟨hR,hW⟩ := Finset.mem_filter.mp hx
+      have heq : x = (1 : E0) := by simpa [R0] using hR
+      subst x
+      exact h hW
+    rw [hz]
+    exact Nat.zero_le _
 
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.hits_step_le
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.rank_base0
