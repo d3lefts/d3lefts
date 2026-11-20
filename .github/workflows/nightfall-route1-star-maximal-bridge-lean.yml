@@ -1,0 +1,71 @@
+name: NIGHTFALL Route 1 exact maximal star bridge Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1StarMaximalBridge.lean'
+      - '.github/workflows/nightfall-route1-star-maximal-bridge-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  star-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout exact effective source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Pin Lean 4.36.0-rc2 and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact dependency chain and new star mismatch terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/route1-star-bridge
+          for module in Route1FiniteMaxCoupling Route1FiniteJointMass Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge; do
+            cp "research/nightfall/formalization/product_space/${module}.lean" "/tmp/mathlib4/${module}.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${module}.olean" "${module}.lean") 2>&1 | tee -a lean-receipts/route1-star-bridge/compile.log
+          done
+          ! grep -E '(^|:)error:' lean-receipts/route1-star-bridge/compile.log
+      - name: Independent kernel replay and strict named axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          lake env leanchecker Route1StarMaximalBridge 2>&1 | tee "$GITHUB_WORKSPACE/lean-receipts/route1-star-bridge/leanchecker.log"
+          cat > Route1StarBridgeAxioms.lean <<'EOF'
+          import Route1StarMaximalBridge
+          #print axioms Nightfall.Route1StarMaximalBridge.canonicalStarKernel_sum
+          #print axioms Nightfall.Route1StarMaximalBridge.canonicalStarMass_component
+          #print axioms Nightfall.Route1StarMaximalBridge.canonicalStarMass_mismatch
+          #print axioms Nightfall.Route1StarMaximalBridge.finite_star_maximal_exists
+          EOF
+          lake env lean Route1StarBridgeAxioms.lean 2>&1 | tee "$GITHUB_WORKSPACE/lean-receipts/route1-star-bridge/axioms.log"
+          python3 - <<'PY'
+          import re,os
+          from pathlib import Path
+          data=Path(os.environ['GITHUB_WORKSPACE']+'/lean-receipts/route1-star-bridge/axioms.log').read_text()
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',data,re.S)
+          assert len(reports)==4, f'expected 4 named axiom reports, got {len(reports)}'
+          allowed={'propext','Quot.sound','Classical.choice'}
+          for report in reports:
+              actual={x.strip() for x in report.split(',') if x.strip()}
+              assert actual <= allowed, f'nonstandard axioms: {actual-allowed}'
+          print('PASS 4 named kernel-replayed star-bridge declarations, standard axioms only')
+          PY
+      - name: Preserve exact source hashes and receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/route1-star-bridge
+          sha256sum research/nightfall/formalization/product_space/Route1StarMaximalBridge.lean > lean-receipts/route1-star-bridge/SHA256SUMS
+          git rev-parse HEAD > lean-receipts/route1-star-bridge/commit.txt
+      - name: Archive reproducibility receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: route1-star-bridge-kernel-receipt
+          path: lean-receipts/route1-star-bridge/
+          retention-days: 90
+          if-no-files-found: warn
