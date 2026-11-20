@@ -1,0 +1,41 @@
+name: NIGHTFALL oracle-relative information exact finite audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/mixture_aa/ORACLE_RELATIVE_STRUCTURAL_INFORMATION_20261119.md'
+      - 'scripts/check_oracle_relative_information.py'
+      - '.github/workflows/nightfall-oracle-relative-info.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-adversary-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Replay exact finite witnesses
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p oracle-relative-receipt
+          python3 -I scripts/check_oracle_relative_information.py 2>&1 | tee oracle-relative-receipt/replay.log
+          grep -F 'LOCAL_4X4_NO_RAW_BITS_OR_DUPLICATED_FORMS_PASS' oracle-relative-receipt/replay.log
+          grep -F 'ORACLE_RELATIVE_STRUCTURAL_INFORMATION_EXACT_REPLAY_PASS' oracle-relative-receipt/replay.log
+          sha256sum scripts/check_oracle_relative_information.py \
+            research/nightfall/mixture_aa/ORACLE_RELATIVE_STRUCTURAL_INFORMATION_20261119.md \
+            > oracle-relative-receipt/SHA256SUMS
+          git rev-parse HEAD > oracle-relative-receipt/commit.txt
+          printf '%s\n' 'SCOPE: finite checks and source integrity only; conditional Route 1 transfer not Lean-certified' > oracle-relative-receipt/limit.txt
+      - name: Preserve exact-head evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-oracle-relative-${{ github.run_id }}-${{ github.run_attempt }}
+          path: oracle-relative-receipt/
+          if-no-files-found: warn
+          retention-days: 30
