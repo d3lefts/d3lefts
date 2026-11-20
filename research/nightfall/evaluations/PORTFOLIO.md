@@ -26,3 +26,18 @@ Prefer **two validated, orthogonal tasks** over many unvalidated tasks. A third 
 ## Attribution and boundaries
 
 NIGHTFALL's human lead coordinates task scope and source publication. ChatGPT and Claude may construct and audit work in separate processes; agent-to-agent agreement is not independent human review. Credit external projects and collaborators; use source-linked empirical claims. No Google/DeepMind/Polaris affiliation, endorsement, external benchmark score, or production-security certification is implied.
+
+## Matched interaction checks on public starters
+
+Run `python3 research/nightfall/evaluations/paired_contract_calibration.py` from the repository root. The script runs trusted public fixtures and prints one JSON record per task, arm and repetition. A false check records a contract mismatch. Exceptions stop the experiment. This diagnostic imports candidate code in process and is suitable only for trusted calibration.
+
+The [Google Quantum AI experiment](https://research.google/blog/a-game-you-cannot-win-unless-you-have-a-quantum-computer/) motivates the comparison: structured tasks can expose systematic errors under a specified resource budget. Here both arms use the same number of public API calls per task and four checks on each history. The software experiment measures detection on selected histories. Its baseline has no theoretical success ceiling.
+
+| Public starter | Baseline | Targeted change | Passing histories, baseline / targeted |
+| --- | --- | --- | --- |
+| DispatchQ-B1 | After expiry and reclaim, finish the current lease first. | Submit the old token first and verify that the new lease is unchanged and can still finish. | 3/3 / 3/3 |
+| ArtifactGraph-B2 | Modify bytes and timestamp together, then rebuild unchanged. | Change equal-length bytes at fixed timestamp, then change only the timestamp. | 3/3 / 0/3 |
+
+Local three-repeat calibration against source revision `46b6712b0afdbea4e7c66d82533715a73794f177`. Every repeat starts with fresh state. B2 reused stale output and subsequently rebuilt unchanged bytes. All four queue checks passed in both orders. Each task contributes one implementation, so repeats measure reproducibility rather than independent repair samples. The script reports wall time for inspection. Fixed arm order and first-import cost preclude speed comparisons.
+
+For a prospective test, freeze both suites before collecting additional patches. Have a separate reviewer classify valid alternatives and faulty repairs from the written contract without seeing arm outcomes. Compare paired detection counts and false rejections by implementation. Preserve every attempt, including crashes. Keep private cases outside the public tree. The [Docker calibration](assurance/trust-boundary/DOCKER_RESULTS.md) covers a synthetic protocol. Real model grading still requires external score computation and integration with the private task graders.
