@@ -32,6 +32,12 @@ This is a straightforward consequence of *known* Sanders and Green–Tao theorem
 
 These consequences inherit Theorems B/C's author-side/paper status. The exact quantum-to-classical lower-bound translation has not been independently reviewed, and no claim about all distributions or full Conjecture E is made.
 
+## Sharpness limitation of the rank-based bridge
+
+The additive O(K) loss in **rank R vs. N_4(R)** cannot be replaced by o(K) using this argument. Take R={e_1,...,e_m}, the standard coordinate basis with m≥4. Then rank R=m and |R+R|=1+binom(m,2), so K=(m−1)/2+1/m. The at-most-four row sumset consists exactly of binary vectors of Hamming weight at most four. Any dimension-k linear subspace has some vector of weight ≥k: choose k coordinate positions on which the projection is an isomorphism and take their all-ones preimage. Hence N_4(R)≤4; the span of e_1,...,e_4 attains 4. Therefore rank R−N_4(R)=m−4=2K−O(1).
+
+**Crucial distinction:** despite this sharp rank gap, the actual frame cost Λ_T(R)=1 (take B=R), so no quantum advantage is implied. The loss belongs to our *trivial-basis rank upper bound*, not necessarily to the true optimal frame. This example rules out over-interpreting Proposition SD as an optimal description of Λ_T.
+
 ## Prior-art and independent checker plan
 - Sanders inclusion must be an actual subspace in **four** sums, not merely a PFR coset cover. The polynomial Bogolyubov–Ruzsa question with polynomial *size* guarantee in four sums remains a different, potentially open strengthening.
 - Green–Tao must bound the **linear span**, not simply supply a coset cover. Both source inequalities were inspected in this session; the new composite is not in Lean.
