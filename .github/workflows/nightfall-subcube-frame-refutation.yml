@@ -1,0 +1,39 @@
+name: NIGHTFALL subcube frame refutation finite audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/SUBCUBE_FRAME_REFUTATION_20261119.md'
+      - 'scripts/check_subcube_frame_refutation.py'
+      - '.github/workflows/nightfall-subcube-frame-refutation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Replay independent exact finite audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p subcube-frame-receipt
+          python3 -I scripts/check_subcube_frame_refutation.py 2>&1 | tee subcube-frame-receipt/replay.log
+          grep -F 'SUBCUBE_FRAME_REFUTATION_FINITE_AUDIT_PASS' subcube-frame-receipt/replay.log
+          sha256sum research/nightfall/structural_information/SUBCUBE_FRAME_REFUTATION_20261119.md scripts/check_subcube_frame_refutation.py > subcube-frame-receipt/SHA256SUMS
+          git rev-parse HEAD > subcube-frame-receipt/commit.txt
+          printf '%s\n' 'Author-side general proof; finite checker independent, no Lean or novelty status' > subcube-frame-receipt/limits.txt
+      - name: Preserve finite-check source hashes and log
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-subcube-frame-receipt
+          path: subcube-frame-receipt/
+          if-no-files-found: warn
+          retention-days: 30
