@@ -1,0 +1,37 @@
+name: NIGHTFALL graphic-row Conjecture E falsifier (finite checks)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/GRAPHIC_ROW_OBSTRUCTION_20261119.md'
+      - 'research/nightfall/structural_information/check_graphic_row_obstruction.py'
+      - '.github/workflows/nightfall-graphic-row-obstruction.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-graphic-obstruction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact finite graphic-row falsifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p graphic-row-receipt
+          python3 -I research/nightfall/structural_information/check_graphic_row_obstruction.py | tee graphic-row-receipt/replay.log
+          grep -Fq 'PASS 409 exact graphic-row finite assertions' graphic-row-receipt/replay.log
+          grep -Fq 'GRID L=10 vertices=100 edges=180 rank=99' graphic-row-receipt/replay.log
+          sha256sum research/nightfall/structural_information/check_graphic_row_obstruction.py research/nightfall/structural_information/GRAPHIC_ROW_OBSTRUCTION_20261119.md > graphic-row-receipt/SHA256SUMS
+          git rev-parse HEAD > graphic-row-receipt/effective-commit.txt
+          echo 'Finite regression only. No all-graph frame theorem, Conjecture E proof, or Lean certification.' > graphic-row-receipt/scope.txt
+      - name: Preserve exact-head evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-graphic-row-finite-audit
+          path: graphic-row-receipt/
+          if-no-files-found: warn
+          retention-days: 60
