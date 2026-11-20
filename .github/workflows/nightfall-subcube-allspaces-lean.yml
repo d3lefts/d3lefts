@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean'
       - 'research/nightfall/formalization/structural_information/SubcubeL3.lean'
       - 'research/nightfall/formalization/structural_information/SubcubeAllLevels.lean'
+      - 'research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean'
       - 'scripts/check_subcube_subspace_evasion.py'
       - 'scripts/check_subcube_scalar_budget.py'
       - 'research/nightfall/structural_information/SUBCUBE_SUBSPACE_EVASION_20261119.md'
@@ -37,6 +38,10 @@ jobs:
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SubcubeAllLevels.olean SubcubeAllLevels.lean) 2>&1 | tee subcube-allspaces-lean/compile-allL.log
           ! grep -E '(^|:)error:' subcube-allspaces-lean/compile-allL.log
           (cd /tmp/mathlib4 && lake env leanchecker SubcubeAllLevels) 2>&1 | tee subcube-allspaces-lean/leanchecker-allL.log
+          cp research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean /tmp/mathlib4/SubcubeAffineAllLevels.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SubcubeAffineAllLevels.olean SubcubeAffineAllLevels.lean) 2>&1 | tee subcube-allspaces-lean/compile-affine.log
+          ! grep -E '(^|:)error:' subcube-allspaces-lean/compile-affine.log
+          (cd /tmp/mathlib4 && lake env leanchecker SubcubeAffineAllLevels) 2>&1 | tee subcube-allspaces-lean/leanchecker-affine.log
           python3 - <<'PY'
           from pathlib import Path
           import re
@@ -57,10 +62,20 @@ jobs:
               assert set(z.strip() for z in x.split(',') if z.strip())<=allowed
           for name in ['finrank_E','all_levels_budget','all_levels_quadratic','source_L3']:
               assert name in log2, f'missing all-level kernel receipt {name}'
+          s3=Path('research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean').read_text()
+          assert not re.search(r'(?m)^\s*(axiom|sorry|admit)\b',s3)
+          log3=Path('subcube-allspaces-lean/compile-affine.log').read_text()
+          reports3=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log3)
+          assert len(reports3)+log3.count('does not depend on any axioms')>=2
+          for x in reports3:
+              assert set(z.strip() for z in x.split(',') if z.strip())<=allowed
+          for name in ['affine_subset_span','all_levels_affine_quadratic']:
+              assert name in log3, f'missing affine kernel receipt {name}'
           for name in ['subcube_all_W_L3','source_rows_L3']:
               assert name in log, f'missing named theorem certificate {name}'
           print('ALLSPACES_LEAN_KERNEL_PASS')
           print('ALL_LEVELS_QUADRATIC_KERNEL_PASS')
+          print('ALL_LEVELS_AFFINE_KERNEL_PASS')
           PY
       - name: Replay independent exhaustive all-W RREF checker
         shell: bash
@@ -80,7 +95,7 @@ jobs:
         run: |
           mkdir -p subcube-allspaces-lean
           git rev-parse HEAD > subcube-allspaces-lean/commit.txt
-          sha256sum research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean research/nightfall/formalization/structural_information/SubcubeL3.lean research/nightfall/formalization/structural_information/SubcubeAllLevels.lean scripts/check_subcube_subspace_evasion.py scripts/check_subcube_scalar_budget.py > subcube-allspaces-lean/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean research/nightfall/formalization/structural_information/SubcubeL3.lean research/nightfall/formalization/structural_information/SubcubeAllLevels.lean research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean scripts/check_subcube_subspace_evasion.py scripts/check_subcube_scalar_budget.py > subcube-allspaces-lean/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
