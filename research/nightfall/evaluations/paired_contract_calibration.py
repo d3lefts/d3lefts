@@ -31,45 +31,57 @@ def queue_case(root, targeted):
             "current_token_accepted": completed, "terminal": queue.status("a")["state"] == "done"}
 
 
-def build_case(root, targeted):
+def build_pair(root, change_bytes, change_stamp):
     from artifactgraph import Builder
 
-    (root / "src").mkdir()
+    (root / "src").mkdir(parents=True)
     source = root / "src" / "a"
-    source.write_bytes(b"A")
-    (root / "graph.json").write_text(json.dumps(
-        {"version": 1, "nodes": {"a": {"source": "a", "deps": []}}}))
+    manifest = {"version": 1, "nodes": {"a": {"source": "a", "deps": []}}}
+    (root / "graph.json").write_text(json.dumps(manifest))
     stamp = 1600000000
-    def build():
-        os.utime(source, (stamp, stamp))
-        return Builder(root).build(["a"])
-    first = build()
-    source.write_bytes(b"B")
-    if not targeted:
+    source.write_bytes(b"A")
+    os.utime(source, (stamp, stamp))
+    first = Builder(root).build(["a"])
+    if change_bytes:
+        source.write_bytes(b"B")
+    if change_stamp:
         stamp += 10
-    changed = build()
-    if targeted:
-        stamp += 10
-    unchanged = build()
+    os.utime(source, (stamp, stamp))
+    second = Builder(root).build(["a"])
+    return first, second
+
+
+def build_case(root, targeted):
+    original, changed = build_pair(root / "edit", True, not targeted)
+    clean, unchanged = build_pair(root / "reuse", False, targeted)
     return {"changed_bytes_rebuilt": changed.built == ("a",),
-            "output_changed": first.outputs["a"] != changed.outputs["a"],
+            "output_changed": original.outputs["a"] != changed.outputs["a"],
             "same_bytes_reused": unchanged.reused == ("a",),
-            "output_stable": unchanged.outputs["a"] == changed.outputs["a"]}
+            "output_stable": clean.outputs["a"] == unchanged.outputs["a"]}
 
 
 def main():
     tasks = (("dispatchq-b1", queue_case), ("artifactgraph-b2", build_case))
+    errors = 0
     for task, case in tasks:
         sys.path.insert(0, str(ROOT / task / "candidate"))
         for repeat in range(3):
             for arm in (False, True):
                 with tempfile.TemporaryDirectory() as directory:
                     start = time.perf_counter_ns()
-                    checks = case(Path(directory), arm)
+                    try:
+                        checks = case(Path(directory), arm)
+                        error = None
+                    except Exception as exc:
+                        checks = {}
+                        error = f"{type(exc).__name__}: {exc}"
+                        errors += 1
                     print(json.dumps(dict(task=task, repeat=repeat, arm="targeted" if arm else "baseline",
-                                          checks=checks, passed=all(checks.values()),
+                                          checks=checks, passed=error is None and all(checks.values()), error=error,
                                           elapsed_ns=time.perf_counter_ns()-start)))
+
+    return int(errors > 0)
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
