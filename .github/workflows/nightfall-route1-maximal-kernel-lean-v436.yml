@@ -58,9 +58,9 @@ jobs:
             'finite_maximal_kernel_exists'
           ]
           Path('Route1MaximalAxiomAudit.lean').write_text(
-            'import Route1StarMaximalBridge\\n' +
-            ''.join('#print axioms Nightfall.Route1FiniteMaxCoupling.'+n+'\\n' for n in names) +
-            ''.join('#print axioms Nightfall.Route1StarMaximalBridge.'+n+'\\n' for n in [
+            'import Route1StarMaximalBridge\n' +
+            ''.join('#print axioms Nightfall.Route1FiniteMaxCoupling.'+n+'\n' for n in names) +
+            ''.join('#print axioms Nightfall.Route1StarMaximalBridge.'+n+'\n' for n in [
               'canonicalStarKernel_sum','canonicalStarMass_component',
               'canonicalStarMass_mismatch','finite_star_maximal_exists']))
           PY
