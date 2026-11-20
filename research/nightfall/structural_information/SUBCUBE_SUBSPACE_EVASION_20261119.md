@@ -67,6 +67,16 @@ For q=O(poly(L)), the number of original row labels *within a given quotient cla
 \]
 or find a counterexample that forces abandoning worst-case quotient multiplicity. The coarse bound 2^q mu_0 in PR #961 still applies in the absence of this new bound.
 
+## Corollary S-B: independent proof of Claude's exact one-row subspace number
+
+Claude's Proposition R states that the largest subspace \(V\subseteq\mathcal R_L\cup\{0\}\) has dimension exactly 2. Theorem S immediately recovers the nontrivial upper bound: for \(d=\dim V\),
+\[
+2^d-1=|\mathcal R_L\cap V|\le d^\alpha.
+\]
+For integers \(d\ge3\) this inequality is impossible: it fails directly at d=3,4, while for d>=5 use \(d^\alpha\le d^2\) and \(2^d-1>d^2\). A two-dimensional example is \(\{0,r_0,r_1,r_0+r_1\}\) where \(r_0,r_1\) are complementary half-subcubes and their sum is the parent. Hence \(N_1(R_L)=2\). This is a short independent route to an already established result, not a priority claim.
+
+The same estimate controls query synthesis in a row span: any q independent observed parity queries can make at most \(q^\alpha\) original subcube query rows deterministically recoverable *without further queries* (precisely, rows lying in the known span W). This does not bound information gained about an arbitrary quantum observable.
+
 ## Exact independent finite audit and falsifier
 
 A standalone Python stdlib integer-matrix enumerator \`scripts/check_subcube_subspace_evasion.py\` independently constructs every GF(2) row-reduced-echelon subspace of \(E_L\) for \(L\le3\), including **all 200,787 four-dimensional subspaces** at L=3. It checks every linear intersection against q^\alpha and **every affine fiber** against (q+1)^\alpha (by exact integer threshold comparison; the checker uses 3^k vs 2^k and a conservative integer-power bound to avoid tolerance). For L=3 the exact maximum intersections as q runs from 0 to 8 are
