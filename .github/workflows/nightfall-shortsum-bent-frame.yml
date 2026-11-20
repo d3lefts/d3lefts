@@ -1,0 +1,38 @@
+name: NIGHTFALL short-sum bent/frame finite audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/check_shortsum_bent_frames.py'
+      - 'research/nightfall/structural_information/SHORT_SUM_BENT_FRAME_20261119.md'
+      - '.github/workflows/nightfall-shortsum-bent-frame.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Replay exact finite Walsh and frame checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p shortsum-bent-receipt
+          python3 -I scripts/check_shortsum_bent_frames.py 2>&1 | tee shortsum-bent-receipt/finite.log
+          grep -F 'SHORTSUM_BENT_FRAME_EXACT_FINITE_PASS' shortsum-bent-receipt/finite.log
+          sha256sum scripts/check_shortsum_bent_frames.py research/nightfall/structural_information/SHORT_SUM_BENT_FRAME_20261119.md > shortsum-bent-receipt/SHA256SUMS
+          git rev-parse HEAD > shortsum-bent-receipt/commit.txt
+          printf '%s\n' 'SCOPE: finite audit; all-m theorem author-side; Sanders imported; not Lean or priority certification' > shortsum-bent-receipt/limit.txt
+      - name: Preserve audit receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: shortsum-bent-frame-${{ github.run_id }}-${{ github.run_attempt }}
+          path: shortsum-bent-receipt/
+          if-no-files-found: warn
+          retention-days: 30
