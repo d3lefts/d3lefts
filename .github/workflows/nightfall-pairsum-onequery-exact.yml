@@ -1,0 +1,48 @@
+name: NIGHTFALL pair-sum one-query structural simulation exact falsifier
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/PAIR_SUM_COHERENCE_SIMULATION_20261119.md'
+      - 'research/nightfall/structural_information/dichotomy_tests/check_pair_sum_onequery.py'
+      - '.github/workflows/nightfall-pairsum-onequery-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pairsum-onequery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Independent exact-pair combinatorics and rational PSD Walsh check
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/structural_information/dichotomy_tests/check_pair_sum_onequery.py 2>&1 | tee onequery-pairsum.log
+          grep -q '^PASS finite one-query pair-sum PSD/frequency/Parseval audit$' onequery-pairsum.log
+          grep -q "'subcube_exact_mu': 6" onequery-pairsum.log
+          grep -q "'grid_exact_mu': 6" onequery-pairsum.log
+          grep -q "'BV_exact_mu': 5" onequery-pairsum.log
+          grep -q "'exact_mse_tail': 70" onequery-pairsum.log
+          grep -q "'explicit_parseval': 40" onequery-pairsum.log
+          grep -q "'subcube_rankone_multiplicity': 1092" onequery-pairsum.log
+      - name: Preserve strict provenance (NOT a Lean certificate)
+        shell: bash
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/pairsum-onequery
+          cp onequery-pairsum.log receipts/pairsum-onequery/ 2>/dev/null || true
+          sha256sum research/nightfall/structural_information/PAIR_SUM_COHERENCE_SIMULATION_20261119.md research/nightfall/structural_information/dichotomy_tests/check_pair_sum_onequery.py > receipts/pairsum-onequery/SHA256SUMS
+          git rev-parse HEAD > receipts/pairsum-onequery/commit.txt
+          python3 --version > receipts/pairsum-onequery/python-version.txt
+      - name: Upload exact-head evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pairsum-onequery-exact-receipt
+          path: receipts/pairsum-onequery/
+          if-no-files-found: error
+          retention-days: 90
