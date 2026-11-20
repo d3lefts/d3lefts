@@ -1,0 +1,98 @@
+name: NIGHTFALL Route1 large-set and FUR2 pair-degree pinned Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1LargeSet.lean'
+      - 'research/nightfall/formalization/fur/FUR2PairDegree.lean'
+      - '.github/workflows/nightfall-route1-fur2-closure-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scoped-closure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 95
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Pinned Lean compiler and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile M-free large-set source independently
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/route1-fur2-closure
+          cp research/nightfall/formalization/product_space/Route1LargeSet.lean /tmp/mathlib4/Route1LargeSet.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1LargeSet.olean Route1LargeSet.lean) 2>&1 | tee receipts/route1-fur2-closure/route1-compile.log
+          ! grep -E '(^|:)error:' receipts/route1-fur2-closure/route1-compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker Route1LargeSet) 2>&1 | tee receipts/route1-fur2-closure/route1-checker.log
+      - name: Compile source RowBound dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            case "$M" in
+              AaronsonAmbainis.*|ProductRowBound)
+                REL="$(printf '%s' "$M" | tr . /)"
+                mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+                cp "$P" "/tmp/mathlib4/$REL.lean"
+                (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") 2>&1 | tee -a receipts/route1-fur2-closure/source-closure.log
+                if [ "$M" = "ProductRowBound" ]; then break; fi
+                ;;
+            esac
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+          test -s /tmp/mathlib4/.lake/build/lib/lean/ProductRowBound.olean
+      - name: Compile latent-degree source bridge and FUR2 pair degree
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in Route1LatentDegree Route1DegreeSourceBridge; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee -a receipts/route1-fur2-closure/fur2-compile.log
+          done
+          cp research/nightfall/formalization/fur/FUR2PairDegree.lean /tmp/mathlib4/FUR2PairDegree.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/FUR2PairDegree.olean FUR2PairDegree.lean) 2>&1 | tee -a receipts/route1-fur2-closure/fur2-compile.log
+          ! grep -E '(^|:)error:' receipts/route1-fur2-closure/fur2-compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker FUR2PairDegree) 2>&1 | tee receipts/route1-fur2-closure/fur2-checker.log
+      - name: Strict named axiom and scope gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('receipts/route1-fur2-closure')
+          for file, expected, names in [
+              ('route1-compile.log', 3, ['threshold_indicator_square','posterior_large_frequency','weighted_large_charge']),
+              ('fur2-compile.log', 10, ['pair_term_degree_two','pair_sum_degree_two','transitionRemainder_inactive','transitionRemainder_degree_two']),
+          ]:
+              s = (p/file).read_text()
+              reports = re.findall(r'depends on axioms:\s*\[([^\]]*)\]',s,re.S)
+              assert len(reports)==expected,(file,'expected',expected,'got',len(reports))
+              for name in names: assert name in s,(file,'missing',name)
+              for report in reports:
+                  axioms={a.strip() for a in report.split(',') if a.strip()}
+                  assert axioms <= {'propext','Classical.choice','Quot.sound'},(file,axioms)
+              assert 'sorryAx' not in s,file
+          print('PASS SCOPED large-set charge and FUR2 transition degree; full terminals remain OPEN')
+          PY
+      - name: Record source hashes, compiler version, and commit
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/route1-fur2-closure
+          git rev-parse HEAD > receipts/route1-fur2-closure/commit.txt
+          sha256sum research/nightfall/formalization/product_space/Route1LargeSet.lean research/nightfall/formalization/fur/FUR2PairDegree.lean > receipts/route1-fur2-closure/SHA256SUMS
+          (cd /tmp/mathlib4 && lake env lean --version) > receipts/route1-fur2-closure/lean-version.txt || true
+      - name: Preserve exact source and kernel receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: nightfall-route1-fur2-closure-lean
+          path: receipts/route1-fur2-closure
+          retention-days: 90
+          if-no-files-found: warn
