@@ -56,6 +56,20 @@ This proves c≥(4/3)^L, and c′≥1 proves the frame-cost statement. QED.
 
 No use of Sanders, PFR, FUR, Route 1, or a claimed numerical optimum occurs anywhere in Theorem H.
 
+## Extension: all nonzero-vector tensor towers
+
+The mechanism does not depend on binary subcubes specifically. Fix a≥2 and L≥1. Let W=F₂^a, D=W\{0}, and let R_{a,L} comprise **all rank-one tensors** v_1⊗...⊗v_L with v_i in D, regarded as rows in the m=a^L-dimensional binary tensor space. Here n=(2^a−1)^L rows (all distinct) and rank R=m. The original subcube family is the case a=2, because F₂² has exactly three nonzero vectors, corresponding to 0,1,*.
+
+**Theorem H+ (paper generalization):** Every (c,c′,h)-frame for R_{a,L} with h≥3c satisfies
+
+    c≥[a·2^{a−1}/(2^a−1)]^L,   hence Λ_T(R_{a,L})≥[a·2^{a−1}/(2^a−1)]^L,
+
+under the source's h(2cT)≥3c condition. Also N_r(R_{a,L})≤r log₂((2^a−1)^L+1)=O_a(rL). Thus **every fixed a≥2** gives an unbounded-depth family contradicting the frame converse.
+
+*Proof:* For each fixed choice of other factors and any distinct v,w∈D, the original rows obey r_{...,v,...}+r_{...,w,...}+r_{...,v+w,...}=0. A frame representation of width c with girth ≥3c must obey this relation coefficientwise. Therefore every coefficient column f:D^L→F₂ is separately linear in each factor, hence a multilinear form on W^L. For a nonzero multilinear form, choose the first-factor slices: the linear map v↦f(v,⋅) has nonzero outputs at at least 2^{a−1} of the v∈D. Each such slice is a nonzero (L−1)-linear form and has ≥(2^{a−1})^{L−1} nonzero values by induction. So every nonzero column has Hamming weight ≥(2^{a−1})^L (the tensor power of the binary simplex code, whose one-factor parameters are [2^a−1,a,2^{a−1}]). Rank of the row factorization forces at least a^L nonzero columns. Counting all coefficient 1s gives c(2^a−1)^L≥a^L (2^{a−1})^L. QED.
+
+This *tensor-code min-distance argument* is a general reusable obstruction, not evidence that any of these families has a quantum-classical query separation. The underlying coding-theoretic distance formula is classical. This extension should be reviewed for precise oracle interpretation and published priority.
+
 ## Verification and limitations
 Independent checker: dichotomy_tests/check_subcube_frame_obstruction.py. It verifies for L=1..4 that (a) original row rank is 2^L, (b) all splitting relations hold, (c) their span has dimension 3^L−2^L, (d) every nonzero LOCAL codeword has weight at least 2^L (exhaustive on all 2^{2^L} codewords for L≤4), (e) canonical independent basis attains cost c=m (upper bound) while theorem lower bound holds, and (f) a one-bit mutation of the full-cube row is detected by the splitting-relation audit.
 
