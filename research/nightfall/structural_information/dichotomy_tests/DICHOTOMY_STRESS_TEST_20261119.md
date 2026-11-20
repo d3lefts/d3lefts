@@ -5,7 +5,10 @@ uninformative (finite-size saturation); the informative results are analytic, an
 families **both directions are proved** by Theorems A and C, with a sharp threshold in `T`.
 Not reviewed.
 
-## Exact computations (`sumset_tests.py`, `m ≤ 12`)
+## Finite computations (historical; exactness requires rechecking)
+
+> **Audit status correction (2026-11-19):** The table below is a historical output record, **not yet a certified table of exact maxima**. The previous `maxsub` search silently stopped on a wall-clock deadline and returned its best lower bound. The checker has now been changed to report `N>=...` with `[TIMEOUT/LOWER BOUND]` unless complete, but the table has **not been regenerated** under the patched code. Keep its numerical `N` entries provisional pending a complete independent enumeration. Moreover, Theorem A gives a no-advantage regime only under its explicit `h(T,epsilon,delta) <= d(R)-1` hypothesis; the BCH/APN assertion of a *sharp* quantum-query threshold is not certified by that condition at fixed small `t`. See [bounded-doubling and dichotomy audit](../SMALL_DOUBLING_FRAME_AUDIT_20261119.md).
+
 
 `|r·R| / 2^m` and the subspace number `N_r` (exact maximum subspace inside `r·R`):
 
