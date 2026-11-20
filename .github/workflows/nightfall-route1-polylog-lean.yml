@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/formalization/product_space/Route1Lift.lean'
       - 'research/nightfall/formalization/product_space/Route1PolylogSimulation.lean'
       - 'research/nightfall/formalization/product_space/Route1WynerSimulation.lean'
+      - 'research/nightfall/formalization/product_space/Route1WynerGeneral.lean'
       - '.github/workflows/nightfall-route1-polylog-lean.yml'
   workflow_dispatch:
 permissions:
@@ -40,7 +41,7 @@ jobs:
           mkdir -p receipts/route1-polylog
           for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
                    Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
-                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation Route1WynerSimulation; do
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral; do
             cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 \
               | tee "receipts/route1-polylog/$M.log"
@@ -51,7 +52,7 @@ jobs:
         run: |
           set -euo pipefail
           if (cd /tmp/mathlib4 && lake env which leanchecker >/dev/null 2>&1); then
-            (cd /tmp/mathlib4 && lake env leanchecker Route1WynerSimulation) 2>&1 | tee receipts/route1-polylog/checker.log
+            (cd /tmp/mathlib4 && lake env leanchecker Route1WynerGeneral) 2>&1 | tee receipts/route1-polylog/checker.log
           else
             echo "leanchecker unavailable; axiom audit only" | tee receipts/route1-polylog/checker.log
           fi
@@ -62,7 +63,7 @@ jobs:
           s=''.join(p.read_text() for p in sorted(d.glob('Route1*.log')))
           reports=re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
           names={n for n,_ in reports}
-          for need in ['Nightfall.Route1Polylog.crux','Nightfall.Route1Polylog.route1_polylog_simulation','Nightfall.Route1Polylog.info_chain','Nightfall.Route1Polylog.info_nonneg','Nightfall.Route1Polylog.route1_wyner_simulation','Nightfall.Route1Polylog.route1_wyner_CI']:
+          for need in ['Nightfall.Route1Polylog.crux','Nightfall.Route1Polylog.route1_polylog_simulation','Nightfall.Route1Polylog.info_chain','Nightfall.Route1Polylog.info_nonneg','Nightfall.Route1Polylog.route1_wyner_simulation','Nightfall.Route1Polylog.route1_wyner_CI','Nightfall.Route1Polylog.wynerGenSet_eq','Nightfall.Route1Polylog.wynerSet_nonempty','Nightfall.Route1Polylog.route1_wyner_general']:
               assert need in names,(need,names)
           for n,x in reports:
               a={z.strip() for z in x.split(',') if z.strip()}
@@ -76,7 +77,7 @@ jobs:
         run: |
           mkdir -p receipts/route1-polylog
           git rev-parse HEAD > receipts/route1-polylog/commit.txt
-          sha256sum research/nightfall/formalization/product_space/Route1{PolylogTools,Entropy,KeyLemma,Lift,PolylogSimulation,WynerSimulation}.lean > receipts/route1-polylog/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/Route1{PolylogTools,Entropy,KeyLemma,Lift,PolylogSimulation,WynerSimulation,WynerGeneral}.lean > receipts/route1-polylog/SHA256SUMS
       - name: Upload receipt
         if: always()
         uses: actions/upload-artifact@v4
