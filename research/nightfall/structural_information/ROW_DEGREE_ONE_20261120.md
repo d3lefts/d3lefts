@@ -120,3 +120,36 @@ Conjecture S must therefore share certificate mass across free sets, as the `L =
 
 Status of Conjecture S: exact values `1.5, 2.25, 3.0` (`L = 1, 2, 3`); flat extremal family through
 `L = 3`; **no proof of any polynomial upper bound** (best proved: `2m`).
+
+## Resolution: Conjecture S is false — `K(L)` grows exponentially (2026-11-20)
+
+**Theorem T.** `K(L) ≥ c · (3/2)^{L/2} = c · m^{0.2925}` with `c = 2^{-1/(2 ln 2)} / √(2 ln 2) ≈ 0.42`,
+so `K(L) > 3(L+1)/4` for all `L ≥ 17`. The exact values `1.5, 2.25, 3.0` for `L ≤ 3` were small-case
+coincidences.
+
+*Proof* (the standard "Sidon sets are proportionally independent" counting, made explicit).
+
+1. **Sidon ⇒ subgaussian (Rudin).** For any signs `ε` on `R` there is a measure `μ_ε` with
+   `μ̂_ε = ε` on `R` and `‖μ_ε‖ ≤ K(L)` (the dual of `K`). For `f` with spectrum in `R`,
+   `f = μ_ε * (∑ ε_g ĉ_g χ_g)`, so `‖f‖_p ≤ K(L) ‖∑ ε_g ĉ_g χ_g‖_p` by Young. Averaging over random `ε`
+   and applying Khintchine pointwise in `S` gives `‖f‖_p ≤ K(L) √p ‖f‖_2`.
+2. **Counting.** Take `f = ∑_{g ∈ R} χ_g` and `p = 2q`. Then `‖f‖_2² = |R| = 3^L` and
+   `E f^{2q} = ∑_v r_q(v)²`, where `r_q(v)` counts `q`-tuples of rows summing to `v`. Since
+   `∑_v r_q(v) = |R|^q` over at most `2^m` vectors, Cauchy–Schwarz gives `E f^{2q} ≥ |R|^{2q}/2^m`.
+3. Combining: `|R|^q ≤ 2^m (K √(2q))^{2q}`, i.e.
+   `log₂ K ≥ ½ log₂|R| − m/(2q) − ½ log₂(2q)`. With `|R| = 3^L`, `m = 2^L`, `q = m ln 2` this is
+   `log₂ K ≥ 0.2925 L − 0.96`. ∎
+
+This is the quantitative form of the classical fact (Pisier's arithmetic characterization) that a
+Sidon set in `F_2^n` with constant `S` has size `O(S² · rank)`. Subcube rows have `3^L` elements in
+rank `2^L`, so their Sidon constant must be at least `(3/2)^{L/2}` up to lower-order factors.
+
+## Consequences for the influence route
+
+* **Lemma S gives only a polynomial-in-`m` bound.** `max c² ≥ Var²/K²` with `K ≥ m^{0.29}` loses a
+  power of `m`, not of `log m`. Bounding `Σ|c|` cannot give a polylogarithmic row-degree-1 inequality.
+* **(★) at row-degree 1 is not refuted.** A large Sidon constant does not by itself produce a
+  bounded function with constant variance and uniformly small coefficients. The flat extremals through
+  `L = 3` have variance `≈ 3/8`; whether constant-variance flat functions exist for large `L` is now the
+  decisive question (option 3: a variance-based argument, or a construction refuting (★)).
+* **`T = 1` is unaffected.** The additive-energy simulator (Theorem I, Proposition J) does not use `K`.
