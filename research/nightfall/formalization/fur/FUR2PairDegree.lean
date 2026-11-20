@@ -34,6 +34,7 @@ theorem pair_term_degree_two
     intro x y h
     have hi : x i = y i := h i (by simp)
     have hj : x j = y j := h j (by simp)
+    change b (x i) (x j) = b (y i) (y j)
     rw [hi, hj]
   have hc : ({i, j} : Finset ι).card ≤ 2 := by
     have h := Finset.card_insert_le i ({j} : Finset ι)
