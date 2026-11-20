@@ -127,7 +127,7 @@ for trial in range(200):
 n=64
 size4=sum(comb(n,j) for j in range(5))
 check(size4 < (1<<(n-1)),('sparse independent rank-vs-sumset',n))
-check((n+1)/2 > 20,('large doubling basis example',n))
+check(1+comb(n,2)==2017 and (1+comb(n,2))>20*n,('large doubling basis example',n))
 print(f"PASS exact cover-to-frame audit: {checks} assertions, {dense_cases} dense Fourier cases, {cover_cases} cover instances.")
 print(f"SPARSE_CONTROL n={n}, rank={n}, |4R|={size4}, N4<={size4.bit_length()-1}, B=R gives c=c'=1.")
 print("LIMIT: finite checker does NOT certify external PFR, the universal proof, Lean or novelty.")
