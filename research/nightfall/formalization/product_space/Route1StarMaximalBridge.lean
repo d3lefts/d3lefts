@@ -17,7 +17,7 @@ open Finset
 open Nightfall.Route1FiniteMaxCoupling
 open Nightfall.Route1StarCoupling
 
-variable {Θ A : Type*} [Fintype Θ] [DecidableEq Θ]
+variable {Θ A : Type} [Fintype Θ] [DecidableEq Θ]
   [Fintype A] [DecidableEq A]
 
 noncomputable def canonicalStarKernel
