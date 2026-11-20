@@ -185,7 +185,7 @@ theorem nonzero_secant_step_quartic [FiniteDimensional K V]
       nonzeroHits (sixSlices R) W := by
     unfold nonzeroHits
     exact Finset.card_le_card
-      (Finset.filter_subset_filter _ _ hcover)
+      (Finset.filter_subset_filter _ hcover)
   have h1 := nonzeroHits_union_le (rowsUp S) (B ∪ (C ∪ D)) W
   have h2 := nonzeroHits_union_le B (C ∪ D) W
   have h3 := nonzeroHits_union_le C D W
