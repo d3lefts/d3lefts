@@ -27,12 +27,14 @@ degree-1 case); for a Bernstein–Vazirani subspace of dimension `k` it is `2^{k
 | --- | --- | --- | --- |
 | 1 | 3 | 1.5 | exact (all sign patterns) |
 | 2 | 9 | 2.25 | exact (all sign patterns) |
-| 3 | 27 | ≥ 3.0 | local search over sign patterns (400 LP steps); tensor-product patterns give only 2.625 |
+| 3 | 27 | ≥ 3.0, ≤ 13.98 | local search and an exact MILP (incumbent 3.0, not closed in 800 s); tensor-product patterns give only 2.625 |
 | 4 | 81 | ≥ 2.525 | tensor-product patterns only (local search too slow at 65 536 constraints) |
 
-The values fit `K(L) = 3(L + 1)/4` exactly for `L = 1, 2` and the search value at `L = 3`; they do
-**not** follow the exponential `1.5^L` (which would be `3.375, 5.06`) that a naive tensor argument
-suggests.
+**Correction (2026-11-20).** `L = 1, 2` fit **both** `3(L+1)/4` and `1.5^L`; only `L = 3` separates
+them (`3.0` vs `3.375`). The best pattern found at `L = 3` gives `3.0`, but the exact MILP did not close
+(dual bound `13.98`), so `L = 3` does **not** yet rule out exponential growth. Next: exact `K(3)` by
+enumerating sign patterns up to symmetry (translations make the 8 point-rows positive, leaving
+`2^19` patterns, further reduced by the `S_3^L ⋊ S_L` action).
 
 **Conjecture S.** `K(L) = Θ(L)` (possibly exactly `3(L+1)/4`).
 

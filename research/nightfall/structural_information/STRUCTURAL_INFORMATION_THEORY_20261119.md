@@ -65,8 +65,16 @@ superpolynomial structural information.
 `ν = ½F + ½U`. One quantum query separates `F` from `U` with constant bias, and every classical
 distinguisher needs `Ω̃(√N)` queries (Aaronson–Ambainis 2015). A simulator for `ν` with small
 constant `ε, δ` yields such a distinguisher, so `S(ν) = Ω̃(√N)`; by subadditivity (`S(U) = 0`),
-`S(F) ≥ 2(S(ν) − ln 2) = Ω̃(√N)`. This is an information-theoretic lower bound on Wyner common
-information obtained from a quantum algorithm. Whether a direct proof exists is open.
+`S(F) ≥ 2(S(ν) − ln 2) = Ω̃(√N)`.
+
+**Correction (2026-11-20): this corollary is weak, and a direct proof gives more.** Wyner common
+information is at least the mutual information across any split of the coordinates: if `W` makes
+`X_A ⊥ X_B`, then `I(X_A; X_B) ≤ I(X_A; W) ≤ I(W; X)`. For Forrelation, split into `x = sign(g)` and
+`y = sign(Hg)`. `y` is uniform, so `I(x; y) ≥ ∑_j I(y_j; x)`, and given `x`, `(Hg)_j` is
+approximately Gaussian with mean `√(2/π)(Hx)_j` and variance `1 − 2/π` (CLT over the half-normal
+magnitudes). Each `y_j` therefore carries `≈ 0.38` bits about `x`, so `S(F) ≥ I(x; y) ≈ 0.38 N`, and
+`S(F) = Θ(N)`. The quantum route gives only `Ω̃(√N)`. Keep this as a consistency check of the main
+theorem, not as a result.
 
 **Special cases recovered.** `S = 0`: the bias-free product-space AA simulation (certified).
 `S ≤ ln M`: the polylog-`M` mixture simulation (Route 1).
@@ -91,7 +99,7 @@ information obtained from a quantum algorithm. Whether a direct proof exists is 
    of each other (block structure), e.g. `S` minimised over all coarsenings of the coordinates into
    blocks queried as single symbols, at a query cost polynomial in the block size.
 2. **Strong version.** `polylog(1/δ)` simulation for bounded rounds with cost `poly · (1 + S)`.
-3. **Direct proof of the Forrelation bound**, and the exact order of `S(F)`.
+3. ~~Direct proof of the Forrelation bound~~ — done directly: `S(F) = Θ(N)` (see the correction above).
 4. **Converse family.** For every `s`, a distribution with `S = s` and a `poly(log s)`-query
    quantum algorithm needing `s^{Ω(1)}` classical queries, beyond Bernstein–Vazirani.
 
