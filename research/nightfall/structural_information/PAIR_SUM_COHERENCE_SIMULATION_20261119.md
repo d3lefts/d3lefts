@@ -126,6 +126,41 @@ Thus the existing product-space AA simulation plus the exact local-representatio
 
 This is a **proof that the pair-collision criterion is sufficient, not necessary or sufficient-for-advantage in the reverse direction**: high mu can arise from a single shared latent bit that is cheap to identify. Therefore neither mu nor the earlier exact frame cost alone is a two-sided characterization. A successful all-T invariant must account for low-cost latent elimination *and* coherent Fourier collisions. This negative control is tested exactly by the accompanying script.
 
+## Corollary I.4: quantitative row-influence for one-query quantum acceptance (new bridge)
+
+Claude's later [INFLUENCE_ROUTE_20261119.md](https://github.com/d3lefts/d3lefts/blob/structural-information-theory/research/nightfall/structural_information/INFLUENCE_ROUTE_20261119.md) defines the row norm of a nonzero character v as the least number of original rows XORing to v, and the **row influence**
+
+    Inf_g(f) = sum_{v: norm_R(v+g) < norm_R(v)} fhat(v)^2.
+
+For any **one-query quantum acceptance function f at the unconditioned uniform secret**, let v=Var(f)>0 and mu be the *unordered* pair collision number above. Then
+
+    max_{g in R} Inf_g(f) >= v^3/(64 mu^2).
+
+This is not the arbitrary bounded-degree-d inequality (star) of Claude's Theorem Q: the PSD one-query hypothesis is essential to the proof, and **stability under adaptive quotients is not established**.
+
+**Proof.** Set eta=v/(8mu), choose heavy indices J={a:p_a>=eta}, and let F be the set of nonzero frequencies expressible as a sum of **two distinct heavy indices**. Then |J|<=8mu/v and |F|<=|J|²/2. For every frequency outside F, all representations a+b involve at least one light sector. The same PSD and Parseval inequality as Theorem I gives
+
+    sum_{gamma not in F, gamma != 0} fhat(gamma)^2
+         <= 4mu eta = v/2.
+
+Since sum over all nonzero frequencies is Var(f)=v, the spectral mass inside F is at least v/2. Thus some gamma in F obeys
+
+    fhat(gamma)^2 >= (v/2)/|F|
+                   >= v/|J|²
+                   >= v^3/(64mu²).
+
+Now gamma is a sum of at most two original rows and is nonzero. If norm_R(gamma)=1, choose g=gamma: it peels gamma to zero. If norm_R(gamma)=2, choose either row g in a minimal two-row decomposition: then norm_R(gamma+g)=1<2. Hence Inf_g(f)>=fhat(gamma)^2. QED.
+
+For grids, mu=2 implies
+
+    max Inf_g(f) >= Var(f)^3/256;
+
+for L-level tensor subcubes, mu=L+1 implies
+
+    max Inf_g(f) >= Var(f)^3/(64(L+1)^2).
+
+These bounds hold at **T=1 and the initial uniform secret**. After conditioning on parity rows, identical quotient frequencies can merge and the effective collision number can increase; the proof does not furnish a uniform gamma for the entire quotient-closed family. It provides a concrete new **positive base case and target to generalize** for Claude's influence program, not an all-T quantum advantage characterization.
+
 ## General sufficient certificate: Fourier-sector coherence at T queries
 
 This extension is **also author-side**, and is not a complete characterization. A T-query algorithm's final state has the Walsh expansion
