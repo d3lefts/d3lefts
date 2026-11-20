@@ -1,0 +1,38 @@
+name: NIGHTFALL subcube frame obstruction exact finite audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/dichotomy_tests/SUBCUBE_FRAME_OBSTRUCTION_20261119.md'
+      - 'research/nightfall/structural_information/dichotomy_tests/check_subcube_frame_obstruction.py'
+      - '.github/workflows/nightfall-subcube-frame-obstruction.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-finite-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Run deterministic exact GF2 obstruction and mutation checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p subcube-frame-receipt
+          python3 -I research/nightfall/structural_information/dichotomy_tests/check_subcube_frame_obstruction.py 2>&1 | tee subcube-frame-receipt/finite.log
+          grep -F 'SUBCUBE_FRAME_OBSTRUCTION_FINITE_PASS' subcube-frame-receipt/finite.log
+          sha256sum research/nightfall/structural_information/dichotomy_tests/check_subcube_frame_obstruction.py research/nightfall/structural_information/dichotomy_tests/SUBCUBE_FRAME_OBSTRUCTION_20261119.md > subcube-frame-receipt/SHA256SUMS
+          git rev-parse HEAD > subcube-frame-receipt/commit.txt
+          echo 'Finite check only: theorem all-L is paper proof; E frame converse counterexample remains non-Lean, no human referee, no novelty certificate' > subcube-frame-receipt/scope.txt
+      - name: Preserve audit receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: subcube-frame-obstruction-receipt
+          path: subcube-frame-receipt/
+          if-no-files-found: warn
+          retention-days: 30
