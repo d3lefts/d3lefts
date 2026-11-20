@@ -167,11 +167,12 @@ private theorem rank_base0 (W : Submodule K E0) :
     rowHits R0 W ≤ cap0 (Module.finrank K W) := by
   classical
   by_cases h : (1 : E0) ∈ W
-  · have hneq : W ≠ ⊥ := by
+  · have hr : 0 < Module.finrank K W := by
+      apply Module.finrank_pos_iff_exists_ne_zero.mpr
+      refine ⟨⟨1, h⟩, ?_⟩
       intro he
-      simp [he] at h
-    have hr : 0 < Module.finrank K W :=
-      (Submodule.one_le_finrank_iff.mpr hneq)
+      have hzero : (1 : E0) = 0 := congrArg Subtype.val he
+      exact (by decide : (1 : E0) ≠ 0) hzero
     have hcount : rowHits R0 W ≤ 1 := by
       change ((R0.filter fun r => r ∈ W)).card ≤ 1
       calc
@@ -181,9 +182,8 @@ private theorem rank_base0 (W : Submodule K E0) :
   · have hz : rowHits R0 W = 0 := by
       unfold rowHits
       rw [Finset.card_eq_zero]
-      apply Finset.eq_empty_iff_forall_not_mem.mpr
-      intro x hx
-      obtain ⟨hR,hW⟩ := Finset.mem_filter.mp hx
+      apply Finset.filter_eq_empty_iff.mpr
+      intro x hR hW
       have heq : x = (1 : E0) := by simpa [R0] using hR
       subst x
       exact h hW
