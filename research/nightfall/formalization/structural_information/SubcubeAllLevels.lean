@@ -83,7 +83,7 @@ theorem all_levels_budget (f : Nat → Nat)
             rw [Finset.card_eq_zero]
             apply Finset.filter_eq_empty_iff.mpr
             intro x hx hzero
-            have hx1 : x = (1 : K) := by simpa [R, R0] using hx
+            have hx1 : x = (1 : K) := Finset.mem_singleton.mp hx
             exact (by decide : (1 : K) ≠ 0) (hx1.symm.trans hzero)
           rw [hz]
           exact Nat.zero_le _
