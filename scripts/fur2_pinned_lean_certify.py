@@ -113,17 +113,16 @@ def compile_order(order: list[str], files: dict[str,Path], receipt:Path):
     if p.returncode:
         raise RuntimeError("Lean axiom audit did not compile; see receipt")
     permitted={"propext","Classical.choice","Quot.sound"}
-    axlines=[line for line in p.stdout.splitlines() if "axioms:" in line]
-    if len(axlines)!=len(NAMES):
-        raise RuntimeError(f"expected {len(NAMES)} named axiom reports, got {len(axlines)}")
-    for line in axlines:
-        line=line.split("axioms:",1)[1].strip()
-        if line.startswith("[") and line.endswith("]"):
-            names={x.strip() for x in line[1:-1].split(",") if x.strip()}
-        else:
-            raise RuntimeError("unknown Lean axiom report format: "+line)
+    # Lean may pretty-print the bracketed axiom list across several lines.
+    # Match each exact declaration name and retain FAIL-CLOSED allowlisting.
+    for target in NAMES:
+        pattern = re.escape("'" + target + "'") + r" depends on axioms:\s*\[([^\]]*)\]"
+        matches = re.findall(pattern, p.stdout, flags=re.DOTALL)
+        if len(matches) != 1:
+            raise RuntimeError("expected exactly one complete axiom report for " + target)
+        names = {x.strip() for x in matches[0].split(",") if x.strip()}
         if not names <= permitted:
-            raise RuntimeError("nonstandard axioms: "+str(names-permitted))
+            raise RuntimeError("nonstandard axioms for " + target + ": " + str(names-permitted))
     for mod in ("FUR2AnchoredRow","FUR2RangeEight"):
         p=subprocess.run(["lake","env","leanchecker",mod],cwd=WORK,
                          text=True,capture_output=True,timeout=900)
