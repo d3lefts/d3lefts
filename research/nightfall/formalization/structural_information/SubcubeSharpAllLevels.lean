@@ -27,7 +27,7 @@ private theorem cap0_le_rpow (q : Nat) :
     Sharpness of the exponent is a separate lower-bound assertion. -/
 theorem all_levels_sharp (n : Nat) (W : Submodule K (E n)) :
     (rowHits (R n) W : ℝ) ≤ ((Module.finrank K W : Nat) : ℝ) ^ alpha := by
-  induction n with
+  induction n generalizing W with
   | zero =>
       have hbase : rowHits (R 0) W ≤ cap0 (Module.finrank K W) :=
         rank_base0 W
