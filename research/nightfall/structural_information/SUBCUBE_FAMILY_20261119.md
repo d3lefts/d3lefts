@@ -9,7 +9,7 @@ Family: rows are the `3^L` subcube indicators `1_C` of `{0,1}^L`, acting on `S �
 
 ## Theorem H
 
-1. **Small subspace number.** `N_r ≤ (log₂ 3) · L · r = O(r log m)` (counting, `TOWERS_20261119.md`).
+1. **Small subspace number.** `N_r ≤ r log₂(3^L + 1) = O(r log m)` (at-most-r counting, with the zero option included; see `TOWERS_20261119.md`).
 2. **No cheap frame.** Every `(c, c′, h)`-frame with `h > 3c` has `c ≥ (4/3)^L = m^{log₂(4/3)} ≈ m^{0.415}`.
 
 Hence for any polynomials `a, b`, Conjecture E as stated (`N_{a(T)} ≤ k ⇒ Λ_T ≤ b(k, T)`) fails for
