@@ -1,0 +1,89 @@
+name: NIGHTFALL Wyner one-step source information charging pinned Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1WynerOneStep.lean'
+      - '.github/workflows/nightfall-route1-wyner-one-step-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  wyner-one-step:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout exact head source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify and install pinned compiler and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Build actual AA and mixture source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean")
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile Route 1 + source-connected Wyner information module
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/wyner-one-step
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
+                   Route1WynerOneStep; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 \
+              | tee "receipts/wyner-one-step/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/wyner-one-step/$M.log"
+          done
+      - name: Mandatory kernel replay and exact named axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker Route1WynerOneStep) 2>&1 | tee receipts/wyner-one-step/leanchecker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/wyner-one-step/Route1WynerOneStep.log').read_text()
+          reports=re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          required={
+            'Nightfall.Route1WynerOneStep.remainingInfo_joint_chain',
+            'Nightfall.Route1WynerOneStep.entropy_head_eq_weightedKL',
+            'Nightfall.Route1WynerOneStep.remainingInfo_joint_KL',
+            'Nightfall.Route1WynerOneStep.remainingInfo_joint_charge',
+            'Nightfall.Route1WynerOneStep.remainingInfo_nonneg',
+          }
+          actual={n for n,_ in reports}
+          assert required <= actual,(required-actual)
+          assert len(reports)==5,len(reports)
+          for n,x in reports:
+              a={z.strip() for z in x.split(',') if z.strip()}
+              assert a <= {'Classical.choice','propext','Quot.sound'},(n,a)
+          assert 'sorryAx' not in s
+          src=Path('research/nightfall/formalization/product_space/Route1WynerOneStep.lean').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',src)
+          print('PASS 5 source-connected one-step Wyner theorems, independently kernel-replayed')
+          PY
+      - name: Immutable source and compiler receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/wyner-one-step
+          git rev-parse HEAD > receipts/wyner-one-step/commit.txt
+          sha256sum research/nightfall/formalization/product_space/Route1WynerOneStep.lean > receipts/wyner-one-step/SHA256SUMS
+          cp docs/lean-compiler-lock.json receipts/wyner-one-step/lean-compiler-lock.json
+      - name: Archive evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: route1-wyner-one-step-lean-receipt
+          path: receipts/wyner-one-step
+          if-no-files-found: error
+          retention-days: 90
