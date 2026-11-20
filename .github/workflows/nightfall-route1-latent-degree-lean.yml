@@ -1,0 +1,60 @@
+name: NIGHTFALL Route1 latent degree algebra pinned Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1LatentDegree.lean'
+      - '.github/workflows/nightfall-route1-latent-degree-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  latent-degree:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up exact pinned toolchain
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile general-d latent degree lift
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/Route1LatentDegree.lean /tmp/mathlib4/Route1LatentDegree.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1LatentDegree.olean Route1LatentDegree.lean) 2>&1 | tee latent-degree.log
+          ! grep -E '(^|:)error:' latent-degree.log
+          grep -q "Nightfall.Route1LatentDegree.latent_degree_succ" latent-degree.log
+      - name: Independent kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker Route1LatentDegree) 2>&1 | tee latent-degree-checker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('latent-degree.log').read_text()
+          reports=re.findall(r"depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          assert len(reports)==3, ('expected three named axiom reports',len(reports))
+          for r in reports:
+              ax={z.strip() for z in r.split(',') if z.strip()}
+              assert ax<={'propext','Classical.choice','Quot.sound'},ax
+          print('PASS exact-pin general-d algebraic latent lift; standard axioms only')
+          PY
+      - name: Save source provenance, errors and receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/route1-latent-degree
+          cp latent-degree.log receipts/route1-latent-degree/ 2>/dev/null || true
+          cp latent-degree-checker.log receipts/route1-latent-degree/ 2>/dev/null || true
+          sha256sum research/nightfall/formalization/product_space/Route1LatentDegree.lean > receipts/route1-latent-degree/SHA256SUMS
+          git rev-parse HEAD > receipts/route1-latent-degree/commit.txt
+      - name: Upload receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: route1-latent-degree-lean-receipt
+          path: receipts/route1-latent-degree
+          if-no-files-found: error
+          retention-days: 90
