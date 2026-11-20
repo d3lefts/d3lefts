@@ -1,0 +1,46 @@
+name: NIGHTFALL degree-two FUR exact regression (not a Lean terminal)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/mixture_aa/FUR_DEGREE_TWO_TRANSITION_REMAINDER_20261119.md'
+      - 'research/nightfall/mixture_aa/check_fur_degree_two_exact.py'
+      - 'research/nightfall/mixture_aa/check_fur_degree_two_lp.py'
+      - '.github/workflows/nightfall-fur-degree-two-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-fur2-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Run exact rational degree-two falsifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/mixture_aa/check_fur_degree_two_exact.py --seeds 12 | tee fur2-exact.log
+          grep -q 'PASS 73633 exact rational assertions' fur2-exact.log
+          sha256sum research/nightfall/mixture_aa/check_fur_degree_two_exact.py | tee fur2-source-sha256.txt
+      - name: Independent global-fiber LP with exact rational witness audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check numpy==2.3.5 scipy==1.17.0
+          python3 research/nightfall/mixture_aa/check_fur_degree_two_lp.py --seeds 20 | tee fur2-lp-exact.log
+          grep -q 'PASS 80 independent LP instances' fur2-lp-exact.log
+          sha256sum research/nightfall/mixture_aa/check_fur_degree_two_lp.py | tee fur2-lp-source-sha256.txt
+      - name: Preserve trace and source receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fur2-exact-regression-not-kernel
+          path: |
+            fur2-exact.log
+            fur2-source-sha256.txt
+            fur2-lp-exact.log
+            fur2-lp-source-sha256.txt
+          if-no-files-found: warn
+          retention-days: 60
