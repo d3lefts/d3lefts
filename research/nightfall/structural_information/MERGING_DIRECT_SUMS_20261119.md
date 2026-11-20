@@ -1,6 +1,6 @@
 # The merging step: direct sums and local codes over balanced blocks (2026-11-19)
 
-Status: Theorem F proved on paper (two-sided, polynomial losses). Not reviewed, no Lean. First
+Status: Theorem M proved on paper (two-sided, polynomial losses). Not reviewed, no Lean. First
 multi-scale step toward Conjecture E. Notation as in `LINEAR_DISTRIBUTIONS_20261119.md`.
 
 ## Definitions
@@ -19,7 +19,7 @@ Examples of balanced blocks: Bernstein–Vazirani (`d = 3`, `ρ = 1`); dual BCH 
 a direct sum of balanced blocks: repeated rows (`c₀ = c₀′ = 1` to single-row blocks) and any local
 code of a product.
 
-## Theorem F
+## Theorem M
 
 Let `R′ = R_1 ⊕ ⋯ ⊕ R_q` (blocks acting on independent parts of `s`) with every `R_j`
 `p`-balanced, and let `R` be `(c₀, c₀′)`-locally equivalent to `R′`. For `T, ε, δ` put

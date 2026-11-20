@@ -65,7 +65,7 @@ since `rank L_j ≤ k_j ≤ c′`, at least `m / c′` maps are nonzero. A nonze
 with `λ ∘ L_j = ⟨1_Z, ·⟩`, `Z ≠ ∅`, so it is nonzero on at least `2^L` subcubes (input-code distance).
 Counting `∑_j #{C : L_j(1_C) ≠ 0} ≤ c · 3^L` gives `(m/c′) · 2^L ≤ c · 3^L`. ∎
 
-This covers the merged-symbol representations of Theorem F, so no exact linear local representation
+This covers the merged-symbol representations of Theorem M, so no exact linear local representation
 simulates subcube parities cheaply, yet Theorem I does at `T = 1`.
 
 ## Status of the subcube question and next step

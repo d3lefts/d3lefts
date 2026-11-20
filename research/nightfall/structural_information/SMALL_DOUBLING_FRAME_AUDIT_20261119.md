@@ -47,7 +47,7 @@ The distinct-coset calculation is **exact**:
 
 Thus the doubling constant grows linearly with `t` (for fixed `d`). Nevertheless `B = {e_1,...,e_d,f_1,...,f_t}` is a `(d,1,h)`-frame for every `h`, since every row in `H` needs at most `d` of the first basis vectors and each `f_i` needs one. Hence `Lambda_T(R) <= d` independently of `t`. Large doubling by itself does **not** imply high local-frame cost.
 
-This example is consistent with the branch's newer Theorem F (direct-sum merging) and reinforces the target: **high doubling plus genuinely interacting short circuits not removable by cheap independent frames**.
+This example is consistent with the branch's newer Theorem M (direct-sum merging) and reinforces the target: **high doubling plus genuinely interacting short circuits not removable by cheap independent frames**.
 
 A separate small-dimensional exhaustive checker is appropriate for the formula above, but cannot certify the PFR/BR corollary or general Conjecture E.
 

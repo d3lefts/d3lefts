@@ -43,7 +43,7 @@ nonempty `Z_b` contributes at least `2^L`, giving `2^L · 2^L ≤ c · 3^L`, i.e
 * **Not settled:** whether subcube parities give a quantum advantage. Two outcomes remain.
   * *No advantage* (simulation cost `poly(T, log m)`). Then the subspace number may still characterize
     advantage, but the classical simulator must come from somewhere other than an exact local
-    representation. Theorem H rules out frames; the merged-symbol representations of Theorem F are
+    representation. Theorem H rules out frames; the merged-symbol representations of Theorem M are
     not yet ruled out.
   * *Advantage.* Then the subspace number is not the right measure, and the answer must see
     recursive (tensor) structure.
