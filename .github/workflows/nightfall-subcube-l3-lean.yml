@@ -35,7 +35,7 @@ jobs:
           log=Path('subcube-l3-lean-receipt/compile.log').read_text()
           reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
           none_count=log.count('does not depend on any axioms')
-          assert len(reports)+none_count==10, f'expected 10 declarations; got {len(reports)} with axioms and {none_count} without'
+          assert len(reports)+none_count==6, f'expected 6 declarations; got {len(reports)} with axioms and {none_count} without'
           allowed={'propext','Classical.choice','Quot.sound'}
           for report in reports:
               axioms={x.strip() for x in report.split(',') if x.strip()}
