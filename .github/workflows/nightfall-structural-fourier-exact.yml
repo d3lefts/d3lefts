@@ -24,10 +24,10 @@ jobs:
           set -euo pipefail
           mkdir -p structural-fourier-receipts
           python3 -I research/nightfall/structural_information/check_structural_fourier_exact.py | tee structural-fourier-receipts/replay.log
-          grep -Fq "PASS 3158 exact integer/Fraction assertions across 302 datasets/instances." structural-fourier-receipts/replay.log
+          grep -Fq "PASS 3160 exact integer/Fraction assertions across 302 datasets/instances." structural-fourier-receipts/replay.log
           grep -Fq "LIMIT: Gaussian sign arcsine law" structural-fourier-receipts/replay.log
           sha256sum research/nightfall/structural_information/check_structural_fourier_exact.py research/nightfall/structural_information/INDEPENDENT_AUDIT_AND_FOURIER_TRANSFER_20261119.md | tee structural-fourier-receipts/SHA256SUMS
-          grep -Fq "170344f61355cfa31f854ae0e3fe0a4cadb8b32cced56f430a47cd4196ea2a0b" structural-fourier-receipts/SHA256SUMS
+          grep -Fq "a97a81bd817727c7e7979e7937d0eccdd469000e2e6fcda81ded961028d82e65" structural-fourier-receipts/SHA256SUMS
           git rev-parse HEAD > structural-fourier-receipts/commit.txt
           printf '%s\n' 'FINITE FRACTION AUDIT: NOT A THEOREM, LEAN TERMINAL, OR NOVELTY CERTIFICATE' > structural-fourier-receipts/scope.txt
       - name: Archive source-hashed exact evidence
