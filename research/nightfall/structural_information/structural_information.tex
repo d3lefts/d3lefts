@@ -1,0 +1,129 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\newtheorem{theorem}{Theorem}\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{problem}{Open Problem}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\E}{\mathbb{E}}\newcommand{\poly}{\mathrm{poly}}
+\title{Structural Information as the Resource for\\Quantum Query Advantage}
+\author{Devin J.\ Wright \and NIGHTFALL}
+\date{Draft of 19 November 2026 --- not peer reviewed}
+\begin{document}\maketitle
+\begin{abstract}
+We identify a single information-theoretic quantity that bounds the cost of classically simulating quantum query algorithms on random inputs. For a distribution $\nu$ of $X=(X_1,\dots,X_n)$ over finite alphabets, let $S(\nu)$ be the Wyner common information of the coordinates: the least mutual information $I(W;X)$ over latent variables $W$ given which the coordinates are independent. We show that every $T$-query quantum algorithm admits a deterministic classical decision tree of depth $\poly(T,1/\varepsilon,1/\delta)\cdot(1+S(\nu))$ that approximates its acceptance probability within $\varepsilon$ except with $\nu$-probability $\delta$, with no dependence on $n$, the alphabets, or the probabilities. The case $S=0$ is a bias-free Aaronson--Ambainis simulation for arbitrary product distributions; the bound is tight in the worst case by Bernstein--Vazirani. Contrapositively, average-case superpolynomial quantum query advantage requires superpolynomial structural information. As a consistency check, a Forrelation separation forces $S=\tilde\Omega(\sqrt N)$, though a direct mutual-information argument gives the stronger $S=\Theta(N)$. We record what $S$ does not capture and state the problem whose resolution would turn the upper bound into a characterization.
+\end{abstract}
+
+\paragraph{Status.} The main theorem is a short corollary of a mixture simulation theorem (``Route~1'') whose proof is complete on paper and under Lean formalization; neither is yet externally reviewed. The product-space ingredients (Section~\ref{sec:ingredients}) are certified in Lean~4 with Mathlib. Our search found no prior link between Wyner common information and quantum query simulation; a specialist priority check is pending.
+
+\section{Introduction}
+Aaronson and Ambainis~\cite{AA14} conjectured that quantum query algorithms can be simulated classically with polynomial overhead on most inputs drawn uniformly, so exponential speedups need \emph{structure} in the input. The conjecture was recently proved~\cite{Tur26,HMP26}. Girish, Mittal, Nehoran and Raz~\cite{GMNR26} extended the simulation to biased products and slices, with overhead polynomial in the inverse bias.
+
+This raises the quantitative question behind ``structure'': \emph{how much} structure must a distribution have before quantum algorithms gain a superpolynomial advantage? Counting mixture components is too coarse, since a mixture of many nearly identical products is essentially a product. We propose instead to measure the \emph{knowledge about a hidden cause} that makes the input independent, and we show this quantity controls simulation cost.
+
+\section{Structural information}
+\begin{definition}
+For a distribution $\nu$ of $X=(X_1,\dots,X_n)$ on $\prod_i\Sigma_i$, with finite $\Sigma_i$,
+\[ S(\nu)\;=\;\inf\bigl\{\, I(W;X)\;:\; X_1,\dots,X_n \text{ mutually independent given } W \bigr\}. \]
+\end{definition}
+This is the $n$-variable Wyner common information~\cite{Wyn75,LXC10}: the least rate of shared randomness from which non-communicating parties can generate the coordinates. A finite alphabet for $W$ suffices by Carath\'eodory.
+
+\begin{proposition}\label{prop:basic}
+\begin{enumerate}[nosep]
+\item $S(\nu)=0$ if and only if $\nu$ is a product distribution.
+\item If $\nu=\sum_{\theta\le M}\pi_\theta\mu_\theta$ with product components, then $S(\nu)\le H(\pi)\le\ln M$.
+\item $S(\nu)\le H(X)$.
+\item $S(\lambda\nu_1+(1-\lambda)\nu_2)\le h(\lambda)+\lambda S(\nu_1)+(1-\lambda)S(\nu_2)$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+(1)~If $I(W;X)=0$, then $X$ is independent of $W$, so its law is the law given $W$, a product. (2)~Take $W=\theta$. (3)~Take $W=X$. (4)~Take $W'=(B,W_B)$ with $B\sim\mathrm{Bern}(\lambda)$ selecting the component and near-optimal $W_1,W_2$; then $I(W';X)\le H(B)+\lambda I(W_1;X)+(1-\lambda)I(W_2;X)$.
+\end{proof}
+The quantity can be far smaller than $\ln M$: a mixture of $M$ products whose components differ by $\gamma$ in each marginal has $S=O(\gamma^2 n)$, independent of $M$.
+
+\section{Ingredients}\label{sec:ingredients}
+Let $f:\prod_i\Sigma_i\to[0,1]$ have \emph{coordinate degree} at most $d$: a linear combination of indicator monomials $\prod_{i\in A}\mathbf 1[x_i=\tau_i]$ with $|A|\le d$. The acceptance probability of a $T$-query algorithm with the standard value oracle has coordinate degree at most $2T$; this is the indicator form of~\cite{BBCMW01}.
+
+\begin{enumerate}[label=(I\arabic*)]
+\item \textbf{Product-space AA inequality.} For any product law on any finite alphabets, with zero masses allowed, some coordinate $j$ satisfies $3\,\mathrm{Var}(f)^5\le 12500(\pi^2d^2)^6\,\mathrm{Inf}_j(f)^2$. The same holds on infinite products under Efron--Stein degree. Certified in Lean; the proof ports~\cite{Tur26} through a competing-symbol selector.
+\item \textbf{Rows.} At every point $x$ there are weights $a_j(x)\ge0$ with $\sum_j a_j(x)\le\pi^2d^2$ and $|f(x)-f(y)|\le\sum_{j:x_j\ne y_j}a_j(x)$ for all $y$. Certified.
+\item \textbf{Single-coordinate sensitivity.} $\sum_j \max_b |f(x)-f(x^{j\leftarrow b})|\le 4d^2$ pointwise. Certified.
+\item \textbf{Key Lemma} (Route~1, paper). Let $\theta$ be a latent variable given which the coordinates are independent. Let $h(\theta,u)$ and $\bar h(u)$ be consistent-sampling couplings with independent seeds $u=(u_j)$, and let $I^*=\max_j I(\theta;X_j)$. Then for every $\eta\in(0,1]$,
+\[ \E_\theta\E_u\bigl|f(h(\theta,u))-f(\bar h(u))\bigr|\;\le\;\tfrac{\pi^4}{4}\,d^2\,\frac{I^*}{\eta^2}+8d^2\eta . \]
+\end{enumerate}
+
+\section{Main theorem}
+\begin{theorem}[Structural simulation]\label{thm:main}
+Let $\nu$ be any distribution on a finite product, and let $Q$ be the acceptance probability of a $T$-query quantum algorithm. For $\varepsilon,\delta\in(0,1)$ there is a deterministic classical decision tree of depth
+\[ \poly(T,1/\varepsilon,1/\delta)\cdot\bigl(1+S(\nu)\bigr) \]
+whose output is within $\varepsilon$ of $Q(x)$ except with $\nu$-probability at most $\delta$. The polynomial is explicit and does not depend on $n$, the alphabets, or the probabilities.
+\end{theorem}
+\begin{proof}
+Fix $W$ with $I(W;X)\le S(\nu)+1$ and $X_i$ mutually independent given $W$; write $\theta=W$ and $d=2T$. The simulator maintains the partial assignment $\rho$ of queried coordinates and the posterior law of $\theta$ given $\rho$. Given $\theta$, the unqueried coordinates are still independent. It stops when $\mathrm{Var}(Q_\rho)\le\tau=\varepsilon^2\delta/2$ and outputs the conditional mean.
+
+\emph{Progress.} Lift $Q_\rho$ to $G(\theta,u)=Q_\rho(h(\theta,u))$ on the product space of $\theta$ and the seeds. $G$ has the law of $Q_\rho$, values in $[0,1]$, and degree at most $d+1$. By (I1), some coordinate of the lift has mean increment at least $\gamma=\poly(\tau/d)$. Consider the two cases.
+\begin{itemize}[nosep]
+\item If it is a seed $u_j$, its increment equals the posterior-averaged component increment of $x_j$. That is the decrease of the potential $\Phi=\E_\pi\sum_i L_i\le 2d^2$ when $x_j$ is queried.
+\item If it is $\theta$, the triangle inequality through $\bar h(u)$ and (I4) with $\eta=(I^*)^{1/3}$ give $\gamma\le c\,d^2 (I^*)^{1/3}$. So some coordinate has $I(\theta;X_j\mid\rho)\ge(\gamma/cd^2)^3$.
+\end{itemize}
+
+\emph{Information potential.} Let $\Psi_\rho=I(\theta;X_{U}\mid\rho)$ with $U$ the unqueried coordinates. By the chain rule,
+\[ I(\theta;X_U\mid\rho)=I(\theta;X_j\mid\rho)+\E_{x_j}\,I(\theta;X_{U\setminus j}\mid\rho,x_j), \]
+so querying $x_j$ lowers $\Psi$ in expectation by exactly $I(\theta;X_j\mid\rho)$. Also $\Psi\ge0$ and $\Psi_\emptyset=I(\theta;X)\le S(\nu)+1$. In Route~1 this potential was $H(\pi)\le\ln M$; nothing else in that argument uses $M$.
+
+\emph{Depth.} Each query before stopping lowers $\Phi/\gamma+\Psi/(\gamma/cd^2)^3$ in expectation by at least~1. Hence the expected number of queries is at most $2d^2/\gamma+(S(\nu)+1)(cd^2/\gamma)^3$. Markov's inequality on the stopping time, truncation at $2/\delta$ times this bound, and Chebyshev at the leaves give the claim. Averaging over the seeds used in the analysis yields a deterministic tree.
+\end{proof}
+
+\section{Consequences}
+\begin{proposition}[Worst-case tightness]
+For $s\in\{0,1\}^m$ uniform, let $X$ be the truth table of $y\mapsto s\cdot y$. Then $S\le m$, one quantum query computes $\mathrm{Maj}(s)$, and every classical tree approximating it on most inputs needs $\Omega(m)$ queries. Hence the linear dependence on $S$ in Theorem~\ref{thm:main} cannot be improved in general.
+\end{proposition}
+\begin{proof}
+Given $s$, $X$ is constant, so $W=s$ is admissible and $I(s;X)\le m$. The quantum algorithm is Bernstein--Vazirani. Each classical query reveals one parity of $s$, and $\mathrm{Maj}$ of a uniform string is not determined, even approximately on most inputs, by $o(m)$ parities.
+\end{proof}
+
+\begin{corollary}[Advantage certifies structure]
+If some $T$-query quantum algorithm on $\nu$ cannot be $(\varepsilon,\delta)$-simulated by classical trees of depth $q$, then $S(\nu)\ge q/\poly(T,1/\varepsilon,1/\delta)-1$. In particular, a superpolynomial average-case quantum query advantage requires superpolynomial structural information.
+\end{corollary}
+
+\begin{corollary}[Forrelation]
+Let $F$ be the Forrelation distribution on $2N$ bits~\cite{AA15}. Then $S(F)=\tilde\Omega(\sqrt N)$.
+\end{corollary}
+\begin{proof}
+Let $\nu=\tfrac12F+\tfrac12U$, with $U$ uniform. One quantum query has acceptance probabilities differing by a constant under $F$ and $U$. Every classical randomized distinguisher needs $\tilde\Omega(\sqrt N)$ queries~\cite{AA15}. A tree simulating the query under $\nu$ with small constant $\varepsilon,\delta$, thresholded at a random level, is such a distinguisher. So $S(\nu)=\tilde\Omega(\sqrt N)$ by Theorem~\ref{thm:main}. Since $S(U)=0$, Proposition~\ref{prop:basic}(4) gives $S(F)\ge 2(S(\nu)-\ln 2)$.
+\end{proof}
+\begin{remark}This corollary is only a consistency check. Wyner common information dominates the mutual information across any split of the coordinates, and for Forrelation the halves $x=\mathrm{sign}(g)$, $y=\mathrm{sign}(Hg)$ share $I(x;y)\ge\sum_j I(y_j;x)\approx 0.38N$ bits (given $x$, $(Hg)_j$ is approximately Gaussian with mean $\sqrt{2/\pi}(Hx)_j$ and variance $1-2/\pi$). Hence $S(F)=\Theta(N)$ directly, which is stronger.\end{remark}
+
+\paragraph{Special cases.} $S=0$ gives polynomial simulation for every product distribution, with no bias floor and over any alphabets. $S\le\ln M$ gives simulation with cost $\poly\cdot\log M$ over mixtures of $M$ products.
+
+\section{Limits}
+\begin{itemize}[nosep]
+\item \textbf{$S$ is sufficient, not necessary.} If $X$ consists of $k$ copies of each bit of a uniform $s\in\{0,1\}^m$, then $S\approx m$. Yet $X$ is a relabelling of a uniform string and admits simulation polynomial in $T$, independent of $m$.
+\item \textbf{$S$ is not function-relative.} It charges for all structure, including structure that no low-degree function detects.
+\item \textbf{Failure dependence.} The bound is polynomial in $1/\delta$. A $\mathrm{polylog}(1/\delta)$ version is known to us only for products and bounded rounds.
+\item \textbf{Idealized simulator.} As in~\cite{AA14,GMNR26}, the classical simulator knows $\nu$ and is computationally unbounded; only its queries are counted.
+\end{itemize}
+
+\section{Open problems}
+\begin{problem}[Relevant structural information]
+Find $S_T(\nu)\le S(\nu)$ that is both sufficient, giving $\poly(T,1/\varepsilon,1/\delta)(1+S_T)$ simulation, and necessary, in that some $T$-query algorithm needs $S_T^{\Omega(1)}$ classical queries. Matching only moments of degree at most $2T$ does not suffice: copies of a bit have correlation one, which no product matches. A candidate must at least be invariant under merging coordinates that determine each other, for example $S$ minimized over coarsenings of the coordinates into blocks queried as single symbols.
+\end{problem}
+\begin{problem}Prove a $\mathrm{polylog}(1/\delta)$ bounded-round version with cost $\poly\cdot(1+S)$.\end{problem}
+\begin{problem}For every $s$, construct distributions with $S=s$ and a $\poly(\log s)$-query quantum algorithm that requires $s^{\Omega(1)}$ classical queries, beyond Bernstein--Vazirani.\end{problem}
+A positive answer to Problem~1 would say that quantum query advantage on average is exactly the cost of relevant structural knowledge.
+
+\begin{thebibliography}{99}\small
+\bibitem{AA14} S.~Aaronson and A.~Ambainis. The need for structure in quantum speedups. \emph{Theory of Computing} 10 (2014). arXiv:0911.0996.
+\bibitem{AA15} S.~Aaronson and A.~Ambainis. Forrelation: a problem that optimally separates quantum from classical computing. \emph{STOC} 2015.
+\bibitem{BBCMW01} R.~Beals, H.~Buhrman, R.~Cleve, M.~Mosca and R.~de Wolf. Quantum lower bounds by polynomials. \emph{J.\ ACM} 48 (2001).
+\bibitem{BDST26} BDST. Quantum speedups require structure or depth. arXiv:2608.19158.
+\bibitem{GMNR26} U.~Girish, K.~Mittal, B.~Nehoran and R.~Raz. Distributional variants of the Aaronson--Ambainis conjecture. arXiv:2609.35327.
+\bibitem{HMP26} T.~Huffstutler, D.~Miloschewsky and S.~Podder. A short proof of the Aaronson--Ambainis conjecture via the completion framework. arXiv:2611.12795.
+\bibitem{LXC10} W.~Liu, G.~Xu and B.~Chen. The common information of $N$ dependent random variables. \emph{Allerton} 2010.
+\bibitem{Tur26} D.~Turturean. arXiv:2611.09773.
+\bibitem{Wyn75} A.~D.~Wyner. The common information of two dependent random variables. \emph{IEEE Trans.\ Inf.\ Theory} 21 (1975).
+\end{thebibliography}
+\end{document}
