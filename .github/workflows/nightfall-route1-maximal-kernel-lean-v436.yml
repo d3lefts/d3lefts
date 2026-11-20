@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/Route1FiniteMaxCoupling.lean'
+      - 'research/nightfall/formalization/product_space/Route1FiniteJointMass.lean'
       - '.github/workflows/nightfall-route1-maximal-kernel-lean-v436.yml'
   workflow_dispatch:
 
@@ -27,21 +28,26 @@ jobs:
           mkdir -p lean-receipts/route1-maximal-kernel
           cp research/nightfall/formalization/product_space/Route1FiniteMaxCoupling.lean /tmp/mathlib4/Route1FiniteMaxCoupling.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1FiniteMaxCoupling.olean Route1FiniteMaxCoupling.lean) 2>&1 | tee lean-receipts/route1-maximal-kernel/compile.log
+          cp research/nightfall/formalization/product_space/Route1FiniteJointMass.lean /tmp/mathlib4/Route1FiniteJointMass.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1FiniteJointMass.olean Route1FiniteJointMass.lean) 2>&1 | tee -a lean-receipts/route1-maximal-kernel/compile.log
           ! grep -E '(^|:)error:' lean-receipts/route1-maximal-kernel/compile.log
       - name: Independently replay Lean kernel and check exact axiom sets
         shell: bash
         run: |
           set -euo pipefail
           cd /tmp/mathlib4
-          lake env leanchecker Route1FiniteMaxCoupling 2>&1 | tee "$GITHUB_WORKSPACE/lean-receipts/route1-maximal-kernel/leanchecker.log"
+          for module in Route1FiniteMaxCoupling Route1FiniteJointMass; do
+            lake env leanchecker "$module" 2>&1 | tee -a "$GITHUB_WORKSPACE/lean-receipts/route1-maximal-kernel/leanchecker.log"
+          done
           python3 - <<'PY'
           from pathlib import Path
           names=[
             'overlap_nonneg','residual_nonneg','residual_disjoint',
-            'residual_mass_eq','residual_zero_of_mass_zero'
+            'residual_mass_eq','residual_zero_of_mass_zero',
+            'pairMass_left','pairMass_right','pairMass_diag_normalized'
           ]
           Path('Route1MaximalAxiomAudit.lean').write_text(
-            'import Route1FiniteMaxCoupling\n' +
+            'import Route1FiniteJointMass\n' +
             ''.join('#print axioms Nightfall.Route1FiniteMaxCoupling.'+n+'\n' for n in names))
           PY
           lake env lean Route1MaximalAxiomAudit.lean 2>&1 | tee "$GITHUB_WORKSPACE/lean-receipts/route1-maximal-kernel/axioms.log"
@@ -50,7 +56,7 @@ jobs:
           data=Path(__import__('os').environ['GITHUB_WORKSPACE']+'/lean-receipts/route1-maximal-kernel/axioms.log').read_text()
           allowed={'propext','Quot.sound','Classical.choice'}
           lines=[x for x in data.splitlines() if 'axioms:' in x]
-          if len(lines) != 5:
+          if len(lines) != 8:
               raise SystemExit(f'expected five named axiom reports, got {len(lines)}')
           for line in lines:
               body=line.split('axioms:',1)[1].strip()
@@ -58,14 +64,14 @@ jobs:
                   raise SystemExit('invalid axiom report: '+line)
               axioms={x.strip() for x in body[1:-1].split(',') if x.strip()}
               if not axioms<=allowed: raise SystemExit('nonstandard axioms: '+str(axioms-allowed))
-          print('PASS 5 exact scoped Lean kernel declarations with standard axioms only')
+          print('PASS 8 scoped Lean kernel declarations including exact joint mass, standard axioms only')
           PY
       - name: Preserve source provenance and negative result logs
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts/route1-maximal-kernel
-          sha256sum research/nightfall/formalization/product_space/Route1FiniteMaxCoupling.lean > lean-receipts/route1-maximal-kernel/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/Route1FiniteMaxCoupling.lean research/nightfall/formalization/product_space/Route1FiniteJointMass.lean > lean-receipts/route1-maximal-kernel/SHA256SUMS
           git rev-parse HEAD > lean-receipts/route1-maximal-kernel/commit.txt
           printf '%s\n' 'leanprover/lean4:v4.36.0-rc2' > lean-receipts/route1-maximal-kernel/toolchain.txt
           printf '%s\n' '9d581dfff2e41de989072ea63abf3daf69311520' > lean-receipts/route1-maximal-kernel/mathlib.txt
