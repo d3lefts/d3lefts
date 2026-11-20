@@ -44,9 +44,9 @@ theorem residual_nonneg (p q : A → ℝ) (a : A) :
 theorem residual_disjoint (p q : A → ℝ) (a : A) :
     leftResidual p q a * rightResidual p q a = 0 := by
   unfold leftResidual rightResidual overlap
-  le_total (p a) (q a) |>.elim
-    (fun h => by rw [min_eq_left h]; ring)
-    (fun h => by rw [min_eq_right h]; ring)
+  rcases le_total (p a) (q a) with h | h
+  · rw [min_eq_left h]; ring
+  · rw [min_eq_right h]; ring
 
 theorem residual_mass_eq (p q : A → ℝ)
     (hp : (∑ a, p a) = 1)
