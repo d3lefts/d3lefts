@@ -118,7 +118,7 @@ hashed checker files, replay `command` arrays, hashed canonical NDJSON
 `independent_code_audited`, `formal_semantics_proven`,
 `full_theorem_certified`, `external_peer_review`.
 
-The checker runs 16 adversarial self-test controls, checks actual file
+The checker rejects byte-identical checker files even when stored at different\npaths, and rejects shared output paths masquerading as independent output\nartifacts. These are necessary but not sufficient independence controls.\n\nThe checker runs 18 adversarial self-test controls, checks actual file
 bytes and complete stage outputs, and fails closed on mismatches. **It
 does not execute the listed producer commands**; run and record those
 separately. It does not authenticate GitHub logs or prove independent
