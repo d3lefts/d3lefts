@@ -106,7 +106,9 @@ def audit(doc: dict, root: Path) -> dict:
         implementations = s.get("implementations")
         require(isinstance(implementations, list) and len(implementations) >= 2,
                 sid + ": two implementations required")
-        modes, families, checker_paths, outputs, counts = set(), set(), set(), [], set()
+        modes, families, checker_paths, checker_digests, output_paths, outputs, counts = (
+            set(), set(), set(), set(), set(), [], set()
+        )
         for impl in implementations:
             require(isinstance(impl, dict), sid + ": invalid implementation")
             mode = impl.get("mode")
@@ -119,16 +121,22 @@ def audit(doc: dict, root: Path) -> dict:
                     and all(isinstance(x, str) and x for x in impl["command"]),
                     sid + ": replay command absent")
             source_rec, output_rec = impl.get("checker"), impl.get("output")
-            fingerprint(root, source_rec, sid + ": checker")
+            checker_bytes = fingerprint(root, source_rec, sid + ": checker")
             payload = fingerprint(root, output_rec, sid + ": output")
             canonical_ndjson(payload, impl.get("records"), sid + ": output")
             checker_paths.add(source_rec["path"])
+            checker_digests.add(hashlib.sha256(checker_bytes).hexdigest())
+            output_paths.add(output_rec["path"])
             modes.add(mode)
             families.add(family)
             outputs.append(payload)
             counts.add(impl["records"])
         require(len(checker_paths) == len(implementations),
                 sid + ": duplicate checker implementation")
+        require(len(checker_digests) == len(implementations),
+                sid + ": byte-identical checker implementations under different paths")
+        require(len(output_paths) == len(implementations),
+                sid + ": shared output artifact cannot demonstrate differential replay")
         require("reference" in modes and "spec_independent" in modes,
                 sid + ": reference and specification-only verifier required")
         require(len(counts) == 1 and all(o == outputs[0] for o in outputs[1:]),
@@ -153,7 +161,10 @@ def self_test() -> int:
         for name, content in {
             "spec.txt": b"source theorem stage contract v3\n",
             "input.txt": b"frozen exact input\n",
-            "ref.py": b"# reference implementation\n",
+            "ref.py": b"# reference implementation
+",
+            "ref_duplicate.py": b"# reference implementation
+",
             "ind.py": b"# independent specification-only implementation\n",
             "ref.ndjson": b'{"value":"1/3"}\n',
             "ind.ndjson": b'{"value":"1/3"}\n',
@@ -196,6 +207,8 @@ def self_test() -> int:
             lambda d: d["stages"][0]["implementations"][1]["checker"].update(
                 path="ref.py", sha256=f("ref.py")["sha256"]),
             lambda d: d["stages"][0]["implementations"][1].update(records=2),
+            lambda d: d["stages"][0]["implementations"][1].update(checker=f("ref_duplicate.py")),
+            lambda d: d["stages"][0]["implementations"][1].update(output=f("ref.ndjson")),
             lambda d: d["stages"][0]["implementations"][1]["output"].update(sha256="0" * 64),
             lambda d: d["stages"][0]["implementations"][0].update(command=[]),
             lambda d: d["claim_boundaries"].update(full_theorem_certified=True),
