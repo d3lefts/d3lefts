@@ -89,8 +89,11 @@ theorem pairMass_right (p q : A → ℝ)
   · have hpq : p b = q b := by
       have hl := residual_zero_of_mass_zero p q ht b
       have hr := right_residual_zero_of_mass_zero p q hp hq ht b
-      unfold leftResidual rightResidual at hl hr
-      linarith
+      have hleft : p b = overlap p q b := by
+        simpa only [leftResidual, sub_eq_zero] using hl
+      have hright : q b = overlap p q b := by
+        simpa only [rightResidual, sub_eq_zero] using hr
+      exact hleft.trans hright.symm
     simpa [pairMass, ht] using hpq
   · have hs (a : A) :
         pairMass p q a b =
