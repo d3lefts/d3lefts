@@ -112,6 +112,18 @@ independent of m or n, even though n can be exponentially large and the oracle c
 
 The bounded pair-representation property itself is a standard generalized Sidon/B_2[g] notion from additive combinatorics (not a novelty claim). What is being asserted here is its quantitative connection to one-query acceptance-probability simulation. Related classical B_2[g] literature requires a full priority check.
 
+## Negative control: large pair collisions do not imply quantum advantage
+
+Let the secret have independent bits s_0,s_1,...,s_n, and let the rows consist of e_i and e_i+e_0 for i=1,...,n. Then the nonzero frequency e_0 has exactly n representations
+
+    e_0 = e_i + (e_i+e_0),
+
+so mu>=n, and direct counting shows mu=n for n>=2. Yet every oracle coordinate is a function of at most two *independent* secret bits. Every s_i, i>=1, is directly queryable as x_{e_i}, and s_0 can be recovered from any pair x_{e_i},x_{e_i+e_0} using two original queries.
+
+Thus the existing product-space AA simulation plus the exact local-representation transfer simulates **every T-query quantum algorithm** on this family with poly(T,1/eps,1/delta) original queries, independent of n. Specifically a quantum query of x_{e_i+e_0} is compiled into two secret-bit queries (plus uncomputation), followed by the product-input simulator; each simulated secret query costs at most two original row queries.
+
+This is a **proof that the pair-collision criterion is sufficient, not necessary or sufficient-for-advantage in the reverse direction**: high mu can arise from a single shared latent bit that is cheap to identify. Therefore neither mu nor the earlier exact frame cost alone is a two-sided characterization. A successful all-T invariant must account for low-cost latent elimination *and* coherent Fourier collisions. This negative control is tested exactly by the accompanying script.
+
 ## General sufficient certificate: Fourier-sector coherence at T queries
 
 This extension is **also author-side**, and is not a complete characterization. A T-query algorithm's final state has the Walsh expansion
