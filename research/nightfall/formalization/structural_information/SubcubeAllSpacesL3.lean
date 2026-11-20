@@ -22,7 +22,8 @@ private def liftTwo (W : Submodule K (V × V))
   map_add' := by
     intro a b
     apply Subtype.ext
-    simp
+    simp only [map_add, Prod.fst_add, Prod.snd_add, Submodule.coe_add]
+    abel
   map_smul' := by
     intro c a
     apply Subtype.ext
