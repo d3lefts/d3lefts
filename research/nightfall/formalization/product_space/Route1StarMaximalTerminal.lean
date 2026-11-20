@@ -72,8 +72,48 @@ theorem concreteStar_all_marginals
   · intro θ₀ b
     exact concreteStar_component p q hp0 hq0 hp hq θ₀ b
 
+
+/-- The concrete simultaneous star is nonnegative, hence has the
+    pointwise mass condition absent from the conditional star interface. -/
+theorem concreteStar_nonneg
+    (p : A → ℝ) (q : Θ → A → ℝ)
+    (hp0 : ∀ a, 0 ≤ p a)
+    (hq0 : ∀ θ b, 0 ≤ q θ b)
+    (a : A) (bs : Θ → A) :
+    0 ≤ concreteStarMass p q a bs := by
+  classical
+  unfold concreteStarMass starMass conditionalStarMass
+  have hfactor (θ : Θ) :
+      0 ≤ maximalKernel p (q θ) a (bs θ) :=
+    maximalKernel_nonneg p (q θ) hp0 (hq0 θ) a (bs θ)
+  have hprod (s : Finset Θ) :
+      0 ≤ ∏ θ ∈ s, maximalKernel p (q θ) a (bs θ) := by
+    induction s using Finset.induction_on with
+    | empty => simp
+    | @insert θ s hnot ih =>
+        rw [Finset.prod_insert hnot]
+        exact mul_nonneg (hfactor θ) ih
+  exact mul_nonneg (hp0 a) (hprod Finset.univ)
+
+/-- Full finite star distribution is normalized, not merely given
+    as separate component marginals. -/
+theorem concreteStar_total
+    (p : A → ℝ) (q : Θ → A → ℝ)
+    (hp : (∑ a, p a) = 1)
+    (hq : ∀ θ, (∑ b, q θ b) = 1) :
+    (∑ a : A, ∑ bs : Θ → A, concreteStarMass p q a bs) = 1 := by
+  calc
+    (∑ a : A, ∑ bs : Θ → A, concreteStarMass p q a bs) =
+        ∑ a : A, p a := by
+          apply Finset.sum_congr rfl
+          intro a _
+          exact concreteStar_reference p q hp hq a
+    _ = 1 := hp
+
 end Nightfall.Route1StarMaximalTerminal
 
 #print axioms Nightfall.Route1StarMaximalTerminal.concreteStar_reference
 #print axioms Nightfall.Route1StarMaximalTerminal.concreteStar_component
 #print axioms Nightfall.Route1StarMaximalTerminal.concreteStar_all_marginals
+#print axioms Nightfall.Route1StarMaximalTerminal.concreteStar_nonneg
+#print axioms Nightfall.Route1StarMaximalTerminal.concreteStar_total
