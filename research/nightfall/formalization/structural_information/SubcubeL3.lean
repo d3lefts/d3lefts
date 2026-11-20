@@ -88,7 +88,7 @@ theorem caps_L3_exact :
 def orderedFiber (A : Finset Nat) (z : Nat) : Nat :=
   (A.filter (fun a => Nat.xor a z ∈ A)).card
 
-def original : Finset Nat := rows3.insert 0
+def original : Finset Nat := insert 0 rows3
 
 theorem original_ordered_mu_upper :
     ∀ z : Fin 256, z.val ≠ 0 → orderedFiber original z.val ≤ 8 := by
@@ -105,7 +105,7 @@ def reduceQ2 (z : Nat) : Nat :=
   if t % 2 = 1 then Nat.xor t 97 else t
 
 def quotientRows (f : Nat → Nat) : Finset Nat :=
-  (rows3.image f).insert 0
+  insert 0 (rows3.image f)
 
 theorem rank1_quotient_ordered_mu_upper :
     ∀ z : Fin 256, z.val ≠ 0 →
@@ -124,17 +124,17 @@ theorem rank2_quotient_ordered_mu_witness :
     orderedFiber (quotientRows reduceQ2) 96 = 20 := by decide
 
 /-! The dual simplex-tensor evaluation code has minimum weight 8 at L=3. -/
-def oddOverlap (r v : Nat) : Prop :=
-  ((Finset.range 8).filter (fun i =>
-    Nat.testBit r i = true ∧ Nat.testBit v i = true)).card % 2 = 1
+def oddOverlap (r v : Nat) : Bool :=
+  (((Finset.range 8).filter (fun i =>
+    Nat.testBit r i = true ∧ Nat.testBit v i = true)).card % 2 == 1)
 
 theorem dual_min_distance_L3 :
     ∀ v : Fin 256, v.val ≠ 0 →
-      (rows3.filter (fun r => oddOverlap r v.val)).card ≥ 8 := by
+      (rows3.filter (fun r => oddOverlap r v.val = true)).card ≥ 8 := by
   decide
 
 theorem dual_min_distance_witness_L3 :
-    (rows3.filter (fun r => oddOverlap r 1)).card = 8 := by decide
+    (rows3.filter (fun r => oddOverlap r 1 = true)).card = 8 := by decide
 
 end Nightfall.StructuralInformation.SubcubeL3
 
