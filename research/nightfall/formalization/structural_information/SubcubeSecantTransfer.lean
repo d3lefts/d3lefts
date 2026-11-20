@@ -208,6 +208,7 @@ theorem nonzero_secant_step_quartic [FiniteDimensional K V]
       nonzeroHits C W + nonzeroHits D W := by
     change nonzeroHits (rowsUp S ∪ (B ∪ (C ∪ D))) W ≤ _
     omega
+  dsimp only [S, B, C, D, q, sixSlices] at h0 h1 h2 h3 hpure hlin hAC hBC hcap ⊢
   omega
 
 #print axioms Nightfall.StructuralInformation.SubcubeSecantTransfer.nonzeroHits_up_le
