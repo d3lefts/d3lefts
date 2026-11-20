@@ -1,6 +1,6 @@
 # Small doubling gives a bounded-cost independent frame: scoped audit (2026-11-19)
 
-**Status:** author-side derived corollary of published PFR and dense Bogolyubov–Ruzsa results; not an independent new additive-combinatorics theorem, not Lean-checked, not externally reviewed. Conjecture E remains open. This note supplements, without overwriting, `LINEAR_NECESSITY_20261119.md` and `MERGING_DIRECT_SUMS_20261119.md` (Theorem F). Quantitative constants implicit in the Bogolyubov–Ruzsa big-O are not extracted.
+**Status:** author-side derived corollary of published PFR and dense Bogolyubov–Ruzsa results; not an independent new additive-combinatorics theorem, not Lean-checked, not externally reviewed. Conjecture E remains open. This note supplements, without overwriting, `LINEAR_NECESSITY_20261119.md` and `MERGING_DIRECT_SUMS_20261119.md` (Theorem M). Quantitative constants implicit in the Bogolyubov–Ruzsa big-O are not extracted.
 
 ## Precise statement
 
