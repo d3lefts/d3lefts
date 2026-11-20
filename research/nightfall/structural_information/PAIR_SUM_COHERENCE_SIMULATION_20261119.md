@@ -92,6 +92,26 @@ Maximum multiplicity is max(L+1,3)=L+1 for L>=2. This establishes the claimed cl
 
 **Consequences:** The tensor frame obstruction of Claude's Theorem H/H' is mathematically compatible with a positive **one-query, non-frame** classical simulator. No conclusion has been proved for arbitrary T.
 
+## Corollary I.3: exponential random row sets below square-root density
+
+Let r_1,...,r_n be independent uniform vectors in F_2^m, and take A to be the set of their distinct values plus the virtual zero vector. For every integer k>=2,
+
+    Pr[mu(A)>=k] <= (n+1)^(2k) * 2^(-m(k-1)).
+
+Indeed, representations of a nonzero frequency by **distinct unordered pairs are vertex-disjoint**: any a has only the possible partner a+v. Thus k pair representations require 2k distinct vector values, and hence 2k distinct sample/dummy indices. Each of their k pair XORs is an independent uniform F_2^m vector (the pair involving the dummy zero is a single independent uniform sample). The probability that all k XORs agree is exactly 2^(-m(k-1)). There are at most (n+1)^(2k) ordered candidate pair arrangements. The union bound proves the result, even if original sample duplicates occur (removing duplicates cannot create additional representations).
+
+In particular, for any fixed zeta in (0,1/2), suppose n<=2^((1/2-zeta)m). Choose any fixed integer k>1/(2*zeta). Then
+
+    Pr[mu(A)>=k] <= 2^(-m(2*zeta*k-1)+O(k)),
+
+so with probability tending exponentially to 1 as m grows, mu(A)<=k-1. Theorem I then proves **every one-query quantum acceptance algorithm** on that random linear-code family has classical nonadaptive simulation cost
+
+    O(1/(zeta*delta*eps^2))
+
+independent of m or n, even though n can be exponentially large and the oracle coordinates strongly dependent. This is a **one-query only** positive result; the short-sum/spectral arguments still permit quantum advantage at larger query counts.
+
+The bounded pair-representation property itself is a standard generalized Sidon/B_2[g] notion from additive combinatorics (not a novelty claim). What is being asserted here is its quantitative connection to one-query acceptance-probability simulation. Related classical B_2[g] literature requires a full priority check.
+
 ## General sufficient certificate: Fourier-sector coherence at T queries
 
 This extension is **also author-side**, and is not a complete characterization. A T-query algorithm's final state has the Walsh expansion
