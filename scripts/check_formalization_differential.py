@@ -161,10 +161,8 @@ def self_test() -> int:
         for name, content in {
             "spec.txt": b"source theorem stage contract v3\n",
             "input.txt": b"frozen exact input\n",
-            "ref.py": b"# reference implementation
-",
-            "ref_duplicate.py": b"# reference implementation
-",
+            "ref.py": b"# reference implementation\n",
+            "ref_duplicate.py": b"# reference implementation\n",
             "ind.py": b"# independent specification-only implementation\n",
             "ref.ndjson": b'{"value":"1/3"}\n',
             "ind.ndjson": b'{"value":"1/3"}\n',
