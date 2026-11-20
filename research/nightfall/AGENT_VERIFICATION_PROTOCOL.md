@@ -39,6 +39,95 @@ Every run must publish:
 
 Passing one row **never** silently passes another. For the Erdős construction, the new big-integer replay is a finite exact check; the real-shift reduction and current prior-art comparison are separately auditable.
 
+
+## Exact staged differential formalization (4CT-inspired, v1)
+
+**Provenance of the method.** This refines NIGHTFALL's existing independence
+contract using the reproducible staged computer checks from Inoue,
+Kawarabayashi, Miyashita, Mohar, Thomassen and Thorup,
+[arXiv:2603.24880v3](https://arxiv.org/abs/2603.24880v3)
+and the published [C++](https://github.com/near-linear-4ct/computer-checks),
+[specification-only Python](https://github.com/near-linear-4ct/computer-checks-by-Claude-Code),
+and [Rust/Lean](https://github.com/kfl/4ct-checks-rust-lean) checking
+efforts. The later [arXiv:2610.39753v1](https://arxiv.org/abs/2610.39753v1)
+supersedes the first paper's O(n log n) algorithmic complexity claim,
+but not the staged verification lesson. These are credited precedents,
+not source code imported into NIGHTFALL.
+
+For a theorem whose proof relies on an exact finite enumeration, a
+computationally decided lemma, or a program-generated certificate:
+
+1. **Freeze the mathematical contract first.** Record the exact version of
+   the paper/proof, enumerated lemma labels and dependency DAG, input format,
+   mathematical quantifiers, theorem statement, and hashes of raw inputs.
+   Independently reconcile the paper version against the code: a port of a
+   v2 pseudocode appendix is not automatically a checker for v3.
+2. **Build from the *specification*, not another program.** Give a reproducer
+   the mathematics, published input format, and frozen data, but not reference
+   implementation internals, intermediate arrays, or expected answers. Record
+   authorship, access and implementation lineage. A port that mirrors a C++
+   source file is useful differential evidence but is not specification-only
+   independent reconstruction.
+3. **Keep stages inspectable.** Provide one executable command, source SHA-256,
+   exact input SHA-256, canonical output and output SHA-256 per stage. Match
+   stage labels to source lemmas; require complete coverage and resolve
+   upstream-stage failures before relying on downstream results.
+4. **Compare exact objects, not headlines.** For portable finite outputs use
+   sorted-key, compact UTF-8 NDJSON with a trailing newline and exact integers
+   or rational strings (never floating-point JSON). Compare full output bytes,
+   record counts and hashes across at least one reference and one
+   specification-only implementation. If exact canonicalization is not
+   feasible, write a new format contract and a separate sound comparison
+   proof; a tolerance-based numerical match is not a byte-identical check.
+5. **Formalize the *checker theorem*.** Where Lean is used, state the
+   mathematical proposition the program or certificate encodes, then prove
+   checker soundness (accepted certificate => formal property), coverage or
+   completeness of the finite case family, and the source-theorem bridge.
+   State all three obligations separately. A proved parser/homomorphism
+   subroutine or successful Lake build does not close the surrounding theorem.
+6. **Attack the evidence gate.** Include source-byte tampering, dropped
+   cases, duplicate implementations, shared lineage, version drift,
+   noncanonical serialization, count mismatches, arithmetic overflow,
+   and unequal outputs among negative controls. Reviewer independence and
+   semantic equivalence cannot be established by assertions in a manifest.
+7. **Report certificates by scope.** Distinguish byte-level differential
+   replay, independent code audit, exact finite coverage, mathematical
+   semantics, named-declaration kernel checks, and human or prior-art review.
+   Never promote any of these statuses automatically.
+
+### Shared differential evidence gate
+
+For new finite computational-lemma families, run:
+
+```sh
+python3 scripts/check_formalization_differential.py --self-test
+python3 scripts/check_formalization_differential.py \
+  --manifest path/to/versioned-evidence.json --root .
+```
+
+The versioned manifest schema is
+`nightfall.formalization-differential/v1`, with required
+`source {identifier,url}`, `specification {path,sha256}`,
+`inputs [{path,sha256}]`, `required_stage_ids` and corresponding
+`stages [{id,paper_lemma,depends_on,implementations}]`.
+Each stage has two or more `implementations`: a `reference` and a
+`spec_independent` checker, **distinct declared lineages**, separate
+hashed checker files, replay `command` arrays, hashed canonical NDJSON
+`output` files and exact `records` counts. The mandatory
+`claim_boundaries` map has four `false` values:
+`independent_code_audited`, `formal_semantics_proven`,
+`full_theorem_certified`, `external_peer_review`.
+
+The checker runs 16 adversarial self-test controls, checks actual file
+bytes and complete stage outputs, and fails closed on mismatches. **It
+does not execute the listed producer commands**; run and record those
+separately. It does not authenticate GitHub logs or prove independent
+development, enumeration completeness, mathematical semantics, or a
+theorem. A complete formal certificate therefore needs a separate
+pinned Lean theorem contract, verified terminal declaration, source-
+theorem correspondence review and any external mathematical premises.
+Do not retroactively revise or promote older passports.
+
 ## Four initial assignments
 
 - **EA-36-FINITE-131072:** reproduce the frozen witness using a different convolution mechanism, verify hash, mass, box constraints, every signed shift and exact rational supremum. [Agent task / issue #1](https://github.com/d3lefts/d3lefts/issues/1). The publicly uploaded master archive is a dependency for independent external execution.
