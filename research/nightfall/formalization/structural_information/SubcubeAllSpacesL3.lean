@@ -1,4 +1,5 @@
 import Mathlib
+import SubcubeL3
 
 set_option maxRecDepth 10000
 set_option maxHeartbeats 3000000
@@ -262,6 +263,34 @@ theorem subcube_all_W_L3 (W : Submodule K E3) :
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.subcube_all_W_L1
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.subcube_all_W_L2
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.subcube_all_W_L3
+
+
+/-! ## Source identity: typed tensor product equals the independent mask generator. -/
+
+def mask0 (x : E0) : Nat := if x = 0 then 0 else 1
+def mask1 (x : E1) : Nat := mask0 x.1 + 2 * mask0 x.2
+def mask2 (x : E2) : Nat := mask1 x.1 + 4 * mask1 x.2
+def mask3 (x : E3) : Nat := mask2 x.1 + 16 * mask2 x.2
+
+/-- The independently generated source row list is EXACTLY the typed tensor
+    construction used in the all-W rank proof (not a new or substituted row law). -/
+theorem source_rows_L1 : R1.image mask1 =
+    Nightfall.StructuralInformation.SubcubeL3.rows1 := by decide
+
+theorem source_rows_L2 : R2.image mask2 =
+    Nightfall.StructuralInformation.SubcubeL3.rows2 := by decide
+
+theorem source_rows_L3 : R3.image mask3 =
+    Nightfall.StructuralInformation.SubcubeL3.rows3 := by decide
+
+theorem source_rows_L3_card :
+    (R3.image mask3).card = 27 := by
+  rw [source_rows_L3]
+  decide
+
+#print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.source_rows_L1
+#print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.source_rows_L2
+#print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.source_rows_L3
 
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.slice_rank_pairs
 
