@@ -113,6 +113,29 @@ All nonzero fibers therefore have size \(2L+2\), \(6\), or \(2\). For \(L\ge2\),
 
 Combining Theorems A and B gives the claimed classical query depth \(\lceil(4L+4)/(\varepsilon^2\delta)\rceil\). Its coefficient is not optimized; the structural operator and dimension-independence matter.
 
+## A concrete obstruction to the naive T=2 extension
+
+The mutually orthogonal frequency vectors in Theorem A are an **exact T=1 phenomenon**, not a general property of Fourier expansions of quantum states.
+
+Fix two available distinct parity rows a and b. In the eigenbasis of a standard bit oracle, one query at row r acts as the phase diagonal D_r=diag(1,chi_r(s)). Take the initial state (|0>+|1>)/sqrt(2), apply D_a, then the real rotation
+
+    U = [[3/5,-4/5],[4/5,3/5]],
+
+then apply D_b. The final normalized state is
+
+    psi_s = ((3-4 chi_a)|0> + chi_b (4+3 chi_a)|1>)/(5 sqrt(2)).
+
+Its FOUR Fourier-frequency vectors, at 0,a,b,a+b, are respectively
+
+    3 |0>/(5 sqrt(2)), -4 |0>/(5 sqrt(2)),
+    4 |1>/(5 sqrt(2)),  3 |1>/(5 sqrt(2)).
+
+In particular, the 0 and a components are **parallel**, not orthogonal, and their inner product equals -6/25. The b and a+b components are also parallel. Measurement in the |+> basis has acceptance probability
+
+    f(s) = 1/2 - (7/50) chi_{a+b}(s),
+
+which is a completely legitimate two-query function. This example is **not** a quantum advantage: two classical row queries suffice. It disproves only the *specific attempted proof step* of retaining T=1 orthogonal-frequency Gram estimates after multiple adaptive calls. A T=2 theorem needs a stronger process/operator inequality rather than that false expansion assumption. The finite checker evaluates all four (chi_a,chi_b) assignments using exact fractions.
+
 ## Independent finite adversarial audit
 
 The attached \`scripts/check_subcube_one_query.py\` uses only integer XOR and exact rational arithmetic. It:
