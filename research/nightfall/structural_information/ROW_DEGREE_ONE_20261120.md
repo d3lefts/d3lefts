@@ -96,3 +96,27 @@ Consequences:
   every sign pattern, built mode by mode. The naive three-part construction (one measure per first-mode
   type `0, 1, *`) gives `3 K(L−1)`; the data require the three parts to share mass so that each level
   adds `3/4`. An explicit flat family for all `L` would give the matching lower bound.
+
+## Dual certificates and pattern structure (2026-11-20, `sidon_duals.py`, `sidon_freeset.py`)
+
+`K(σ) = min { ‖λ‖₁ : λ̂(0) = 0, λ̂(g) = σ_g for all rows g }` (LP duality; `λ` a signed measure on `S`).
+Exact optimal certificates:
+
+* `L = 1`: `λ = δ_0 − u` (`u` uniform), norm 1.5. In general `δ_0 − u` certifies the all-`+` pattern
+  with norm `< 2` for every `L`, so the all-`+` pattern never gives more than 2.
+* `L = 2`: support 10 of 16 points, weights in `{1/8, 3/8}`, norm 2.25.
+* `L = 3`: support 24 of 256 points, weights in `{1/40, 1/20, 1/8, 3/20, 1/5, 3/10, 13/40}`, norm 3.
+
+**Patterns that depend only on the free set are not optimal.** Over all `2^7` such patterns at `L = 3`
+the best is `2.8125 < 3` (`2.25` at `L = 2` is attained by one). So optimal patterns depend on the
+fixed values too, and a certificate cannot be built from free-set bookkeeping alone.
+
+**Why the obvious decompositions fail.** Splitting rows by free set `A` gives families of disjoint
+cells whose test measures automatically vanish on rows not measurable with respect to the cells, but
+they must also vanish on unions of cells that are subcubes; the only cheap way (parity classes of
+cells) costs `2^{L+1}` families. Riesz-product covers need `≥ (3/2)^L` families. A proof of
+Conjecture S must therefore share certificate mass across free sets, as the `L = 3` optimum does
+(mixed weights on 24 points). No inductive pattern is visible yet in the `L = 2 → 3` certificates.
+
+Status of Conjecture S: exact values `1.5, 2.25, 3.0` (`L = 1, 2, 3`); flat extremal family through
+`L = 3`; **no proof of any polynomial upper bound** (best proved: `2m`).
