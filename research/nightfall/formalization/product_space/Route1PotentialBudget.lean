@@ -99,7 +99,6 @@ theorem adaptive_two_potential_budget
       (hPhiDrop k hk) hu
     have hen := mul_le_mul_of_nonneg_left
       (hEntDrop k hk) hv
-    dsimp
     nlinarith
 
 end Nightfall.Route1PotentialBudget
