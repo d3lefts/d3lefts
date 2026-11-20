@@ -136,44 +136,6 @@ theorem dual_min_distance_L3 :
 theorem dual_min_distance_witness_L3 :
     (rows3.filter (fun r => oddOverlap r 1 = true)).card = 8 := by decide
 
-
-/-!
-  Secant-fiber exact controls for the two exhibited quotient subspaces.
-  Each secant is an XOR of two original zero-or-row words.
-  These are not the maximum over all q-dimensional subspaces.
--/
-def secants : Finset Nat :=
-  original.biUnion (fun a => original.image (fun b => Nat.xor a b))
-
-def secantFiber (f : Nat → Nat) (z : Nat) : Nat :=
-  (secants.filter (fun s => f s = z)).card
-
-theorem secant_q0_witness : secantFiber (fun z => z) 1 = 1 := by decide
-
-theorem secant_q1_upper :
-    ∀ z : Fin 256, z.val ≠ 0 → secantFiber reduceQ1 z.val ≤ 2 := by
-  decide
-
-theorem secant_q1_witness : secantFiber reduceQ1 2 = 2 := by decide
-
-theorem secant_q2_upper :
-    ∀ z : Fin 256, z.val ≠ 0 → secantFiber reduceQ2 z.val ≤ 4 := by
-  decide
-
-theorem secant_q2_witness : secantFiber reduceQ2 96 = 4 := by decide
-
-theorem quotient_pair_vs_secant_rank1 :
-    ∀ z : Fin 256, z.val ≠ 0 →
-      orderedFiber (quotientRows reduceQ1) z.val ≤
-        8 * secantFiber reduceQ1 z.val := by
-  decide
-
-theorem quotient_pair_vs_secant_rank2 :
-    ∀ z : Fin 256, z.val ≠ 0 →
-      orderedFiber (quotientRows reduceQ2) z.val ≤
-        8 * secantFiber reduceQ2 z.val := by
-  decide
-
 end Nightfall.StructuralInformation.SubcubeL3
 
 #print axioms Nightfall.StructuralInformation.SubcubeL3.rows3_source
@@ -182,8 +144,3 @@ end Nightfall.StructuralInformation.SubcubeL3
 #print axioms Nightfall.StructuralInformation.SubcubeL3.rank1_quotient_ordered_mu_upper
 #print axioms Nightfall.StructuralInformation.SubcubeL3.rank2_quotient_ordered_mu_upper
 #print axioms Nightfall.StructuralInformation.SubcubeL3.dual_min_distance_L3
-
-#print axioms Nightfall.StructuralInformation.SubcubeL3.secant_q1_upper
-#print axioms Nightfall.StructuralInformation.SubcubeL3.secant_q2_upper
-#print axioms Nightfall.StructuralInformation.SubcubeL3.quotient_pair_vs_secant_rank1
-#print axioms Nightfall.StructuralInformation.SubcubeL3.quotient_pair_vs_secant_rank2
