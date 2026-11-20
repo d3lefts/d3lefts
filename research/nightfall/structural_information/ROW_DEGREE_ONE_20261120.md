@@ -76,3 +76,23 @@ leaves a level-`(L−1)` instance in `S_0` with coefficients `c^0_g + c^*_g χ_g
 1. Prove `K(L) ≤ K(L−1) + O(1)` from the mode recursion (the additive loss the data show).
 2. Compute `K(4)` with a faster solver (column generation over the 65 536 constraints) to test `3.75`.
 3. Then quotients (step 2 of the influence route).
+
+## Extremal functions (2026-11-20, `dichotomy_tests/sidon_extremals.py`)
+
+The optimal LP solutions for `L = 1, 2, 3` are **flat**: every nonzero coefficient is `±1/(2L)`, on
+exactly `3L(L+1)/2` rows (3, 9, 18), so `∑|c| = 3(L+1)/4 = K(L)`. Their variance is exactly
+`3(L+1)/(8L)` (`0.75, 0.5625, 0.5`) and their values lie in `{±1, ±1/L, 0}`-type sets (`L = 1`: `±1`;
+`L = 2`: `−1, 0, 1`; `L = 3`: `±1, ±1/3`). `L = 1` is the AND gadget on the triple `{0, 1, *}`.
+
+Consequences:
+
+* **The `log² m` loss is real.** These functions have variance `≥ 3/8` and every coefficient squared
+  equal to `1/(4L²)`. So no row-degree-1 influence inequality for subcubes can beat
+  `max c² ≈ Var / L²`.
+* **Lemma S is tight.** If `K(L) = 3(L+1)/4`, Lemma S gives `max c² ≥ Var²/K² = 1/(4(L+1)²)` at
+  `Var = 3/8`, within a factor `(L+1)²/L²` of these examples.
+* **Target for the proof.** Conjecture S says the flat family is optimal. A proof would most naturally
+  be a dual certificate (a signed measure `λ` with `λ̂ = σ` on rows, `λ̂(0) = 0`, `‖λ‖₁ ≤ 3(L+1)/4`) for
+  every sign pattern, built mode by mode. The naive three-part construction (one measure per first-mode
+  type `0, 1, *`) gives `3 K(L−1)`; the data require the three parts to share mass so that each level
+  adds `3/4`. An explicit flat family for all `L` would give the matching lower bound.
