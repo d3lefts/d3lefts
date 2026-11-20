@@ -123,7 +123,54 @@ def check(L: int) -> None:
     )
 
 
+
+def check_general_tensor(a: int, L: int) -> None:
+    """Exhaustive code distance and local-relation rank for rank-one tensor rows."""
+    factors = list(product(range(1, 1 << a), repeat=L))
+    where = {w: i for i, w in enumerate(factors)}
+    m, n = a**L, (2**a - 1)**L
+    rows = []
+    for v in factors:
+        row = 0
+        for coord in product(range(a), repeat=L):
+            if all((v[i] >> coord[i]) & 1 for i in range(L)):
+                row |= 1 << sum(coord[i] * a**i for i in range(L))
+        rows.append(row)
+    assert len(rows) == n and len(set(rows)) == n
+    assert binary_rank(rows) == m
+    rels = []
+    for word in factors:
+        for i in range(L):
+            for u in range(1, 1 << a):
+                for v in range(u + 1, 1 << a):
+                    w1, w2, w3 = list(word), list(word), list(word)
+                    w1[i], w2[i], w3[i] = u, v, u ^ v
+                    rels.append(
+                        (1 << where[tuple(w1)])
+                        ^ (1 << where[tuple(w2)])
+                        ^ (1 << where[tuple(w3)])
+                    )
+    assert relation_violations(rows, rels) == 0
+    assert binary_rank(rels) == n - m
+    distance = n + 1
+    for lam in range(1, 1 << m):
+        weight = sum((lam & row).bit_count() & 1 for row in rows)
+        distance = min(distance, weight)
+        assert weight >= (1 << (a - 1))**L
+    assert distance == (1 << (a - 1))**L
+    lower_num = m * distance
+    print(
+        "TENSOR_SIMPLEX_EXACT_PASS", "a", a, "L", L,
+        "m", m, "n", n, "relation_rank", n - m,
+        "distance", distance,
+        "frame_c_lower_ceil", (lower_num + n - 1) // n,
+        flush=True,
+    )
+
+
 if __name__ == "__main__":
     for length in (1, 2, 3, 4):
         check(length)
+    for a, L in ((2, 2), (3, 1), (3, 2)):
+        check_general_tensor(a, L)
     print("SUBCUBE_FRAME_OBSTRUCTION_FINITE_PASS")
