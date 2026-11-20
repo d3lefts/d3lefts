@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean'
       - 'research/nightfall/formalization/structural_information/SubcubeSharpAllLevels.lean'
+      - 'research/nightfall/formalization/structural_information/SubcubeSharpness.lean'
       - '.github/workflows/nightfall-subcube-sharp-lean.yml'
   workflow_dispatch:
 permissions:
@@ -64,12 +65,34 @@ jobs:
           assert all(set(x.strip() for x in m.split(',') if x.strip())<=allowed for m in reports)
           print('SHARP_ALL_LEVELS_KERNEL_PASS')
           PY
+      - name: Exact kernel certificate of optimal full-space extremizer family
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/structural_information/SubcubeSharpness.lean /tmp/mathlib4/SubcubeSharpness.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SubcubeSharpness.olean SubcubeSharpness.lean) 2>&1 | tee sharp-scalar-receipt/compile-sharpness.log
+          (cd /tmp/mathlib4 && lake env leanchecker SubcubeSharpness) 2>&1 | tee sharp-scalar-receipt/kernel-sharpness.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/SubcubeSharpness.lean').read_text()
+          log=Path('sharp-scalar-receipt/compile-sharpness.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          for name in ['rows_nonzero','all_levels_cardinality','full_space_extremizer']:
+              assert name in log
+          allowed={'propext','Classical.choice','Quot.sound'}
+          matches=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          assert len(matches)>=3
+          assert all(set(x.strip() for x in m.split(',') if x.strip())<=allowed for m in matches)
+          print('SUBCUBE_SHARPNESS_KERNEL_PASS')
+          PY
       - name: Persist exact source
         if: always()
         run: |
           mkdir -p sharp-scalar-receipt
           git rev-parse HEAD > sharp-scalar-receipt/commit.txt
-          sha256sum research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean research/nightfall/formalization/structural_information/SubcubeSharpAllLevels.lean research/nightfall/formalization/structural_information/SubcubeAllLevels.lean research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean research/nightfall/formalization/structural_information/SubcubeL3.lean > sharp-scalar-receipt/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean research/nightfall/formalization/structural_information/SubcubeSharpAllLevels.lean research/nightfall/formalization/structural_information/SubcubeSharpness.lean research/nightfall/formalization/structural_information/SubcubeAllLevels.lean research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean research/nightfall/formalization/structural_information/SubcubeL3.lean > sharp-scalar-receipt/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
