@@ -67,6 +67,25 @@ For q=O(poly(L)), the number of original row labels *within a given quotient cla
 \]
 or find a counterexample that forces abandoning worst-case quotient multiplicity. The coarse bound 2^q mu_0 in PR #961 still applies in the absence of this new bound.
 
+## Lemma S-C: exact reduction of adaptive pair multiplicity to secant intersections
+
+Write \(A_L=\mathcal R_L\cup\{0\}\) and, for any finite set \(A\) in an \(\mathbb F_2\)-space, let \(\mu(A)\) be the maximum over nonzero \(\gamma\) of the number of **unordered** pairs of DISTINCT elements \(\{a,b\}\subseteq A\) with \(a+b=\gamma\). For a subspace W, let \(\pi:E_L\to E_L/W\) be the quotient map. Define
+\[
+E_2(W)=\max_{\gamma\notin W}
+  |(A_L+A_L)\cap(\gamma+W)|,
+\]
+with maximum zero if the quotient is trivial. Then
+\[
+\boxed{\mu(\pi(A_L))\le \mu(A_L)\,E_2(W)
+=(L+1)\,E_2(W)\quad(L\ge2).}\tag{S3}
+\]
+
+**Proof.** Fix any nonzero quotient sum \(\bar\gamma\). Choose one original representative \(a_c\in A_L\) for every distinct quotient row label \(c\in\pi(A_L)\). Each unordered quotient pair \(\{c,d\}\) with \(c+d=\bar\gamma\) determines a different unordered original representative pair \(\{a_c,a_d\}\), and its sum belongs to \((A_L+A_L)\cap\pi^{-1}(\bar\gamma)\), an affine W-coset not containing zero. Group the representative pairs by their *exact* original sum. At most \(\mu(A_L)\) pairs have any given nonzero exact sum, and there are at most \(E_2(W)\) possible sums in the coset. Maximize over \(\bar\gamma\). QED.
+
+Since \(E_2(W)\le |W|=2^{\dim W}\), (S3) recovers the coarse general quotient bound already obtained in PR #961. **A uniform polynomial upper bound on \(E_2(W)\)** for this tensor family would replace that exponential factor by a polynomial, precisely the missing combinatorial ingredient for *transcript-relative one-query energy and influence*. It would **not** by itself resolve coherent \(T\ge2\) algorithms, whose distinct Fourier frequency sectors can be nonorthogonal (the exact T=2 counterexample in PR #962).
+
+The one-query unordered multiplicity \(\mu(A_L)=L+1\) is Claude's established result (equivalently ordered \(2L+2\)), independently reproduced in PR #961; it is not derived anew here. Formula S3 uses its value but proves its own quotient-vs-secant reduction.
+
 ## Corollary S-B: independent proof of Claude's exact one-row subspace number
 
 Claude's Proposition R states that the largest subspace \(V\subseteq\mathcal R_L\cup\{0\}\) has dimension exactly 2. Theorem S immediately recovers the nontrivial upper bound: for \(d=\dim V\),
