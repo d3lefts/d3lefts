@@ -65,3 +65,56 @@ This removes the old \(2^q\) factor ***if and only if*** Claims A–C survive th
 7. Literature audit: Segre secant geometry and subspace tensor rank are established research areas; the present search did not establish whether this specific finite-field polynomial bound is historically new. No novelty claim.
 
 Next certification target: kernel-checked `mixed_product_bound`, `six_way_secants`, and `all_levels_secant_quartic`; then source-grounded affine and quotient corollaries. Preserve exact build logs, SHA, and independent checker; do not merge a theorem claim while these Lean dependencies are missing.
+
+
+## Sharper exponent transfer — author-side revision v2 (same date)
+
+The quartic exponent in (S3-poly) is not the structural limit. Set
+\(\alpha=\log_2 3\), already defined and kernel-certified in `SubcubeSharpScalar.lean`.
+The established all-level linear and affine row bounds have exponent \(\alpha\).
+For a q-dimensional \(U\le E_n\oplus E_n\), the mixed-product projection/fiber
+argument gives \(|(R_n\times R_n)\cap U|\le p^\alpha(k+1)^\alpha\), with
+\(p,k\le q\). At \(q=0\) this is zero, since no row is the zero vector.
+For \(q\ge1\), \(q+1\le2q\) and \(2^\alpha=3\), whence
+\[
+  |(R_n\times R_n)\cap U|\le
+     q^\alpha(q+1)^\alpha\le 3q^{2\alpha}.\tag{M-sharp}
+\]
+This avoids the rank-nullity identity \(p+k=q\), so the formalization can
+reuse only rank monotonicity plus the previously certified row bounds.
+
+Let \(\beta=2\alpha\). The already-certified generic scalar
+`SubcubeSharpScalar.triple_rpow` applies at \(p=\beta\), because
+\(\beta\ge1\) and \(2^\beta=9\ge3\). Combining the same six-way decomposition
+and (M-sharp) inductively predicts
+\[
+  \boxed{|S_n^*\cap W|\le9n (\dim W)^{2\alpha}},\qquad
+  \boxed{|(A_n+A_n)\cap(a+W)|\le1+9n(q+1)^{2\alpha}}\quad(n\ge1).
+  \tag{S3-sharp-degree candidate}
+\]
+The degree \(2\alpha\approx3.169925\) is consistent with the full-space count
+\(|S_n|\asymp9^n\) observed in finite levels. Conditional on the independent
+one-query pair multiplicity \(\mu(A_n)=n+1\) for \(n\ge2\), counting distinct
+nonzero sums among the \(\binom{3^n}{2}\) unordered distinct row pairs gives
+\[
+  |S_n^*|\ge \frac{3^n(3^n-1)}{2(n+1)}.
+\]
+Thus no polynomial-in-\(n\) prefactor can support a **uniform exponent below
+\(2\alpha\)** when \(W=E_n\) ranges over all depths. This is a conditional
+exponent-optimality calculation, **not** a Lean theorem or verified novelty
+claim.
+
+**Certification split:** The six-way covering theorem `six_way_cover` is
+kernel-checked on [run 44784499681](https://github.com/d3lefts/d3lefts/actions/runs/44784499681).
+The integer quartic mixed-product lemma is in pinned CI iteration; the real
+\(3q^{2\alpha}\) upgrade and global induction are NOT kernel certified.
+Exact finite checks are independent of these proof steps.
+
+## Closest literature checked this session
+
+Broad background on Segre rank-two geometry includes the 2018
+[Hitchhiker guide to secant varieties](https://www.mdpi.com/2227-7390/6/12/314)
+and [Ranks of tensors and a generalization of secant varieties](https://arxiv.org/abs/0909.4262).
+Neither reference was found to settle this precise finite-field arbitrary-subspace
+count. This is **not evidence of novelty**; a theorem-specific prior-art search
+and adversarial mathematical review remain required.
