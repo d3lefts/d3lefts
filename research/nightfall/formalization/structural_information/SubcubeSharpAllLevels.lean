@@ -19,7 +19,7 @@ private theorem cap0_le_rpow (q : Nat) :
   · have hq1 : (1:ℝ) ≤ q := by
       exact_mod_cast Nat.one_le_iff_ne_zero.mpr hq
     have hp := Real.rpow_le_rpow (by norm_num : (0:ℝ) ≤ 1) hq1
-      (le_of_lt alpha_gt_one)
+      (by linarith [alpha_gt_one] : 0 ≤ alpha)
     simpa [cap0, hq, Real.one_rpow] using hp
 
 /-- Sharp real-exponent bound for EVERY subspace at EVERY tensor level.
@@ -27,7 +27,7 @@ private theorem cap0_le_rpow (q : Nat) :
     Sharpness of the exponent is a separate lower-bound assertion. -/
 theorem all_levels_sharp (n : Nat) (W : Submodule K (E n)) :
     (rowHits (R n) W : ℝ) ≤ ((Module.finrank K W : Nat) : ℝ) ^ alpha := by
-  induction n generalizing W with
+  induction n with
   | zero =>
       have hbase : rowHits (R 0) W ≤ cap0 (Module.finrank K W) :=
         rank_base0 W
