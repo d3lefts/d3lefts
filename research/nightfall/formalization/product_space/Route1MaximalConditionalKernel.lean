@@ -93,9 +93,8 @@ theorem pairMass_mismatch (p q : A → ℝ)
           (∑ b : A, pairMass p q a b) -
             pairMass p q a a := by
             calc
-              _ = ∑ b : A,
-                  pairMass p q a b -
-                    (if a = b then pairMass p q a b else 0) := by
+              _ = (∑ b : A, pairMass p q a b -
+                    (if a = b then pairMass p q a b else 0)) := by
                     apply Finset.sum_congr rfl
                     intro b _
                     by_cases hab : a = b <;> simp [hab]
