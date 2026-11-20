@@ -1,6 +1,6 @@
-# Theorem H: grid rows refute the original frame dichotomy (2026-11-19)
+# Grid Obstruction G2: grid rows refute the original frame dichotomy (2026-11-19)
 
-**Status:** Complete author-side paper argument plus an independently implemented exact finite chain replay. Not Lean-certified, independently human-refereed, or novelty-cleared. Supersedes the earlier restricted c'=1 result in GRID_CYCLE_FRAME_RIGIDITY_20261119.md, which remains archived. Does not refute frame *sufficiency*, show grid quantum advantage, or contradict Claude's balanced direct-sum theorem.
+**Status:** Complete author-side paper argument plus an independently implemented exact finite chain replay. Not Lean-certified, independently human-refereed, or novelty-cleared. Independent of Claude's distinct tensor-subcube Theorem H (see SUBCUBE_FAMILY_20261119.md), and not a priority claim. Supersedes the earlier restricted c'=1 result in GRID_CYCLE_FRAME_RIGIDITY_20261119.md, which remains archived. Does not refute frame *sufficiency*, show grid quantum advantage, or contradict Claude's balanced direct-sum theorem.
 
 ## Exact negative theorem
 
@@ -8,7 +8,7 @@ Let G_L=P_L×P_L be the L×L vertex grid, with rows R_L={e_u+e_v:uv edge of G_L}
 
 For every r≥0, N_r(R_L)≤2r: each sum of ≤r edges has weight ≤2r, and every k-dimensional binary subspace contains a vector of weight at least k (set all coordinates in a full-rank k-column information set to one).
 
-**Theorem H.** Every (c,c',h)-frame B for these rows with h≥4c satisfies, writing q=cc' and N=L−1,
+**Grid Obstruction G2.** Every (c,c',h)-frame B for these rows with h≥4c satisfies, writing q=cc' and N=L−1,
 
     2L(L−1)(q+1)² ≥ 16 D_N,
     D_N = Σ_{t=0}^{floor((N−1)/2)} (N−2t)² ≥ N³/6,
@@ -19,7 +19,7 @@ and hence
 
 The conclusion holds for arbitrary B consisting of short original-row sums (c'>1 permitted). There is **no** additional assumption h≥cc'+1.
 
-**Conjecture E is false under its existing quantifiers.** Its source smoothing scale is h(Q)=2k_phi max(2Q,D_product) with integer k_phi≥1. Therefore h(2cT)≥8k_phi cT≥4c whenever T≥1. Fix T=1 and constant accuracy parameters. For the hypothetical universal polynomial a, set r=a(1), k=2r, independent of L. The antecedent N_r≤k holds for every grid, while Theorem H makes the promised cost cc'≤b(k,1) impossible for arbitrarily large L. No universal a,b as specified can exist.
+**Conjecture E is false under its existing quantifiers.** Its source smoothing scale is h(Q)=2k_phi max(2Q,D_product) with integer k_phi≥1. Therefore h(2cT)≥8k_phi cT≥4c whenever T≥1. Fix T=1 and constant accuracy parameters. For the hypothetical universal polynomial a, set r=a(1), k=2r, independent of L. The antecedent N_r≤k holds for every grid, while Grid Obstruction G2 makes the promised cost cc'≤b(k,1) impossible for arbitrarily large L. No universal a,b as specified can exist.
 
 ## Complete proof
 
