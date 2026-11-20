@@ -44,8 +44,8 @@ theorem mono_reconstruct (S : Finset ι) (f : (ι → α) → ℝ)
     simp [τ₀, hi]
   symm
   rw [Finset.sum_eq_single τ₀]
-  · simp only [show (∀ i, i ∉ S → τ₀ i = Classical.choice ‹Nonempty α›) from hfix,
-      if_true, hone, mul_one, heq]
+  · have ht : (∀ i, i ∉ S → τ₀ i = Classical.choice ‹Nonempty α›) := hfix
+    simp [ht, hone, heq]
   · intro τ _ hne
     by_cases hc : ∀ i, i ∉ S → τ i = base
     · have hex : ∃ i, i ∈ S ∧ x i ≠ τ i := by
@@ -63,7 +63,8 @@ theorem mono_reconstruct (S : Finset ι) (f : (ι → α) → ℝ)
         apply Finset.prod_eq_zero hi
         simp [hdiff]
       simp [hc, hz]
-    · simp [hc]
+    · have hc' : ¬(∀ i, i ∉ S → τ i = Classical.choice ‹Nonempty α›) := hc
+      simp [hc']
   · intro h
     exact (h (Finset.mem_univ τ₀)).elim
 
@@ -80,8 +81,19 @@ theorem degree_of_supported (S : Finset ι) (f : (ι → α) → ℝ)
       omega
     · simp [heq]
   · intro x
-    simpa only [Finset.sum_ite_eq', Finset.mem_univ, ite_true] using
-      (mono_reconstruct S f hf x)
+    calc
+      f x = ∑ τ : ι → α,
+          (if ∀ i, i ∉ S → τ i = Classical.choice ‹Nonempty α›
+           then f τ else 0) * indMono S τ x := mono_reconstruct S f hf x
+      _ = ∑ T : Finset ι, ∑ τ : ι → α,
+          (if T = S then (if ∀ i, i ∉ S → τ i = Classical.choice ‹Nonempty α›
+             then f τ else 0) else 0) * indMono T τ x := by
+          symm
+          rw [Finset.sum_eq_single S]
+          · simp
+          · intro T _ hT
+            simp [hT]
+          · simp
 
 theorem degree_sum {β : Type*} [Fintype β] (g : β → (ι → α) → ℝ)
     (d : ℕ) (hg : ∀ b, DegreeLE (g b) d) :
@@ -132,7 +144,7 @@ noncomputable def latentLift (f : (ι → A) → ℝ)
     (h : Θ → ι → U → A) (z : Option ι → Θ ⊕ U) : ℝ :=
   f (fun i => h (pickTheta z) i (pickSeed z i))
 
-private def term (h : Θ → ι → U → A) (T : Finset ι)
+private noncomputable def term (h : Θ → ι → U → A) (T : Finset ι)
     (τ : ι → A) (z : Option ι → Θ ⊕ U) : ℝ :=
   ∏ i ∈ T, if h (pickTheta z) i (pickSeed z i) = τ i then (1 : ℝ) else 0
 
@@ -170,7 +182,7 @@ theorem latent_degree_succ (f : (ι → A) → ℝ)
             _ ≤ T.card + 1 := Nat.add_le_add_right (Finset.card_image_le) 1
             _ ≤ d + 1 := Nat.add_le_add_right hT 1)
       intro x y hxy
-      rw [(term_supported h T τ) x y hxy]
+      exact congrArg (fun v : ℝ => a T τ * v) ((term_supported h T τ) x y hxy)
     · have hz : a T τ = 0 := ha0 T (by omega) τ
       simpa [hz] using
         (degree_zero (ι := Option ι) (α := Θ ⊕ U) (d+1))
