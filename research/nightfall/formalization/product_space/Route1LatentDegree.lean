@@ -45,7 +45,7 @@ theorem mono_reconstruct (S : Finset ι) (f : (ι → α) → ℝ)
   symm
   rw [Finset.sum_eq_single τ₀]
   · have ht : (∀ i, i ∉ S → τ₀ i = Classical.choice ‹Nonempty α›) := hfix
-    exact if_pos ht
+    rw [if_pos ht, hone, mul_one, heq]
   · intro τ _ hne
     by_cases hc : ∀ i, i ∉ S → τ i = base
     · have hex : ∃ i, i ∈ S ∧ x i ≠ τ i := by
