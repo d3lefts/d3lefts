@@ -84,6 +84,100 @@ private theorem slice_rank_pairs [FiniteDimensional K V]
       (liftTwo W inr diag).finrank_le_finrank_of_injective
         (liftTwo_injective W inr diag inr_diag_zero)
 
+
+/-! ## Uniform row-count recursion for every submodule -/
+
+private noncomputable def rowHits {T : Type*} [AddCommGroup T] [Module K T]
+    (R : Finset T) (W : Submodule K T) : Nat := by
+  classical
+  exact (R.filter fun r => r ∈ W).card
+
+private def rowsUp (R : Finset V) : Finset (V × V) :=
+  (R.image inl ∪ R.image inr) ∪ R.image diag
+
+private theorem hits_image_le (R : Finset V) (W : Submodule K (V × V))
+    (f : V →ₗ[K] V × V) :
+    rowHits (R.image f) W ≤ rowHits R (slice W f) := by
+  classical
+  change ((R.image f).filter fun x => x ∈ W).card ≤
+    (R.filter fun x => f x ∈ W).card
+  rw [Finset.filter_image]
+  exact Finset.card_image_le
+
+private theorem hits_union_le {T : Type*} [AddCommGroup T] [Module K T]
+    (R S : Finset T) (W : Submodule K T) :
+    rowHits (R ∪ S) W ≤ rowHits R W + rowHits S W := by
+  classical
+  change ((R ∪ S).filter fun x => x ∈ W).card ≤
+    (R.filter fun x => x ∈ W).card + (S.filter fun x => x ∈ W).card
+  rw [Finset.filter_union]
+  exact Finset.card_union_le _ _
+
+private theorem hits_step_le (R : Finset V) (W : Submodule K (V × V)) :
+    rowHits (rowsUp R) W ≤ rowHits R (slice W inl) +
+      rowHits R (slice W inr) + rowHits R (slice W diag) := by
+  have h1 := hits_union_le (R.image inl ∪ R.image inr) (R.image diag) W
+  have h2 := hits_union_le (R.image inl) (R.image inr) W
+  have h3 := hits_image_le R W inl
+  have h4 := hits_image_le R W inr
+  have h5 := hits_image_le R W diag
+  change rowHits ((R.image inl ∪ R.image inr) ∪ R.image diag) W ≤ _ 
+  omega
+
+private def cap0 (q : Nat) : Nat := if q = 0 then 0 else 1
+private def cap1 (q : Nat) : Nat :=
+  if q = 0 then 0 else if q = 1 then 1 else 3
+private def cap2 (q : Nat) : Nat :=
+  if q = 0 then 0 else if q = 1 then 1 else
+    if q = 2 then 3 else if q = 3 then 5 else 9
+private def cap3 (q : Nat) : Nat :=
+  if q = 0 then 0 else if q = 1 then 1 else if q = 2 then 3 else
+    if q = 3 then 5 else if q = 4 then 9 else if q = 5 then 11 else
+      if q = 6 then 15 else if q = 7 then 19 else 27
+
+private theorem arithmetic_1 :
+    ∀ q : Fin 3, ∀ a b c : Fin 2,
+      a.val + b.val ≤ q.val → a.val + c.val ≤ q.val →
+      b.val + c.val ≤ q.val →
+      cap0 a.val + cap0 b.val + cap0 c.val ≤ cap1 q.val := by decide
+
+private theorem arithmetic_2 :
+    ∀ q : Fin 5, ∀ a b c : Fin 3,
+      a.val + b.val ≤ q.val → a.val + c.val ≤ q.val →
+      b.val + c.val ≤ q.val →
+      cap1 a.val + cap1 b.val + cap1 c.val ≤ cap2 q.val := by decide
+
+private theorem arithmetic_3 :
+    ∀ q : Fin 9, ∀ a b c : Fin 5,
+      a.val + b.val ≤ q.val → a.val + c.val ≤ q.val →
+      b.val + c.val ≤ q.val →
+      cap2 a.val + cap2 b.val + cap2 c.val ≤ cap3 q.val := by decide
+
+private abbrev E0 := K
+private abbrev E1 := E0 × E0
+private abbrev E2 := E1 × E1
+private abbrev E3 := E2 × E2
+
+private def R0 : Finset E0 := {1}
+private def R1 : Finset E1 := rowsUp R0
+private def R2 : Finset E2 := rowsUp R1
+private def R3 : Finset E3 := rowsUp R2
+
+private theorem rank_base0 (W : Submodule K E0) :
+    rowHits R0 W ≤ cap0 (Module.finrank K W) := by
+  classical
+  by_cases h : (1 : E0) ∈ W
+  · have hneq : W ≠ ⊥ := by
+      intro he
+      simp [he] at h
+    have hr : 0 < Module.finrank K W :=
+      (Submodule.one_le_finrank_iff.mpr hneq)
+    simp [rowHits, R0, h, cap0, Nat.ne_of_gt hr]
+  · simp [rowHits, R0, h]
+
+#print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.hits_step_le
+#print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.rank_base0
+
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.slice_rank_pairs
 
 end Nightfall.StructuralInformation.SubcubeAllSpacesL3
