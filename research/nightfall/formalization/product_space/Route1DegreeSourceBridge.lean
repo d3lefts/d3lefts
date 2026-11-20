@@ -15,7 +15,7 @@ namespace Nightfall.Route1SourceBridge
 open Nightfall.Route1LatentDegree
 open Nightfall.ProductSpace.RowBound
 
-variable {ι A : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι A : Type} [Fintype ι] [DecidableEq ι]
   [Fintype A] [DecidableEq A] [Nonempty A]
 
 theorem local_to_source (f : (ι → A) → ℝ) (d : ℕ)
@@ -26,7 +26,7 @@ theorem source_to_local (f : (ι → A) → ℝ) (d : ℕ)
     (hf : HasProdDegreeLE f d) : DegreeLE f d := by
   exact hf
 
-variable {Θ U : Type*}
+variable {Θ U : Type}
   [Fintype Θ] [DecidableEq Θ] [Nonempty Θ]
   [Fintype U] [DecidableEq U] [Nonempty U]
 
