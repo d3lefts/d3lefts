@@ -12,7 +12,7 @@ Avoid the universal “no information-only measure”: the example only attacks 
 
 **Even simpler complete counterexample to sufficiency:** `X=(Z,Z)`, where `Z∈{0,1}^m` is a vector of m independent fair bits. `H(X)=m` and every coordinate is determined by its twin, so `DTC(X)=m`. The standard bound `C_W≥DTC` plus `W=Z` gives `C_W(X)=m` **exactly**. A coherent query to any coordinate of `X` is exactly a query to one coordinate of `Z`; hence the existing uniform/product Aaronson–Ambainis simulator gives dimension-independent classical depth `poly(T,1/ε,1/δ)`. Therefore this high-information/no-advantage separation was **already present in Section 2** of the source. The random-H theorem may still add the harder-to-represent phenomenon, but its claimed representation-cost lower bound is a conjecture.
 
-**Prior art:** `C_W≥DTC` is explicitly in the 2017 multivariate common-information literature, e.g. Li–Hanna–Diggavi–Fragouli, *Distributed Simulation of Continuous Random Variables*, IEEE Transactions on Information Theory 63(10), Eq. (4), https://isl.stanford.edu/~abbas/papers/Distributed%20Simulation%20of%20Continuous%20Random%20Variables.pdf . Do not label the information inequality novel.
+**Prior art:** `C_W≥DTC` is explicitly in the 2017 multivariate common-information literature, e.g. Cheuk Ting Li and Abbas El Gamal, *Distributed Simulation of Continuous Random Variables*, IEEE Transactions on Information Theory 63(10), Eq. (4), https://isl.stanford.edu/~abbas/papers/Distributed%20Simulation%20of%20Continuous%20Random%20Variables.pdf . Do not label the information inequality novel.
 
 ## 2. The conditional representation transfer theorem: author-side argument valid with explicit interfaces
 
