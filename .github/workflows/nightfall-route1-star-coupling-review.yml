@@ -4,13 +4,13 @@ on:
   push:
     branches: [nightfall-route1-star-coupling-review-20261119]
     paths:
-      - 'research/nightfall/mixture_aa/check_route1_star_coupling_exact.py'
+      - 'research/nightfall/mixture_aa/check_route1_star_coupling_independent_exact.py'
       - 'research/nightfall/mixture_aa/ROUTE1_STAR_COUPLING_INDEPENDENT_AUDIT_20261119.md'
       - '.github/workflows/nightfall-route1-star-coupling-review.yml'
   pull_request:
     branches: [hellinger-bernstein-transfer]
     paths:
-      - 'research/nightfall/mixture_aa/check_route1_star_coupling_exact.py'
+      - 'research/nightfall/mixture_aa/check_route1_star_coupling_independent_exact.py'
       - 'research/nightfall/mixture_aa/ROUTE1_STAR_COUPLING_INDEPENDENT_AUDIT_20261119.md'
       - '.github/workflows/nightfall-route1-star-coupling-review.yml'
   workflow_dispatch:
@@ -33,7 +33,7 @@ jobs:
           mkdir -p proof-receipts/route1-reference-star
           git rev-parse HEAD > proof-receipts/route1-reference-star/HEAD.txt
           sha256sum research/nightfall/mixture_aa/{check_route1_star_coupling_exact.py,ROUTE1_STAR_COUPLING_INDEPENDENT_AUDIT_20261119.md} > proof-receipts/route1-reference-star/SHA256SUMS
-          python3 -I research/nightfall/mixture_aa/check_route1_star_coupling_exact.py | tee proof-receipts/route1-reference-star/exact.json
+          python3 -I research/nightfall/mixture_aa/check_route1_star_coupling_independent_exact.py | tee proof-receipts/route1-reference-star/exact.json
           python3 - <<'PY'
           import json
           c=json.load(open('proof-receipts/route1-reference-star/exact.json'))
