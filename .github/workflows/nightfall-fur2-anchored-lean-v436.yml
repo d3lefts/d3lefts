@@ -1,0 +1,57 @@
+name: NIGHTFALL FUR2 anchored row pinned Lean kernel certificate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/fur/**'
+      - 'scripts/fur2_pinned_lean_certify.py'
+      - '.github/workflows/nightfall-fur2-anchored-lean-v436.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightfall-fur2-kernel-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  fur2-pinned-conditional:
+    runs-on: ubuntu-latest
+    timeout-minutes: 95
+    steps:
+      - name: Checkout exact effective source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Preflight exact vendored dependency closure
+        run: |
+          set -euo pipefail
+          python3 scripts/fur2_pinned_lean_certify.py --plan | tee fur2-dependency-plan.json
+      - name: Pin Lean compiler and Mathlib from repository action
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned source and kernel check named FUR2 conditional terminals
+        run: |
+          set -euo pipefail
+          python3 scripts/fur2_pinned_lean_certify.py lean-receipts/fur2
+      - name: Enforce certificate is scoped and does not claim full FUR2
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("lean-receipts/fur2/manifest.json")
+          obj=json.loads(p.read_text())
+          assert obj["status"] == "pinned-kernel-pass-conditional-theorem"
+          assert len(obj["named_declarations"]) == 3
+          assert "not unconditional degree-two FUR" in obj["limitation"]
+          print("PASS: 3 named Lean declarations, no proof-promotion")
+          PY
+      - name: Persist source, axiom and independent kernel replay evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: fur2-pinned-lean-conditional-receipt
+          path: |
+            lean-receipts/fur2/
+            fur2-dependency-plan.json
+          if-no-files-found: warn
+          retention-days: 90
