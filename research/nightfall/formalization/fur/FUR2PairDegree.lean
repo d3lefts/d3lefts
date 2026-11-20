@@ -20,7 +20,7 @@ open Nightfall.Route1LatentDegree
 open Nightfall.Route1SourceBridge
 open Nightfall.ProductSpace.RowBound
 
-variable {ι α : Type*}
+variable {ι α : Type}
   [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α] [Nonempty α]
 
