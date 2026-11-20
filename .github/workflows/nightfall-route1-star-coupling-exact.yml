@@ -1,0 +1,35 @@
+name: NIGHTFALL Route 1 finite star coupling exact regression (not Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/mixture_aa/ROUTE1_FINITE_STAR_COUPLING_PROOF_20261119.md'
+      - 'research/nightfall/mixture_aa/check_route1_star_coupling_exact.py'
+      - '.github/workflows/nightfall-route1-star-coupling-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-star-coupling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact rational finite star-coupling and large/small audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/mixture_aa/check_route1_star_coupling_exact.py --seeds 12 | tee route1-star-exact.log
+          grep -q 'PASS 32340 exact rational checks over 36 star-coupled finite mixtures' route1-star-exact.log
+          sha256sum research/nightfall/mixture_aa/check_route1_star_coupling_exact.py | tee route1-star-source-sha256.txt
+      - name: Preserve reproducibility receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: route1-finite-star-exact-not-kernel
+          path: |
+            route1-star-exact.log
+            route1-star-source-sha256.txt
+          if-no-files-found: warn
+          retention-days: 60
