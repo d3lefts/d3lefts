@@ -87,12 +87,12 @@ private theorem slice_rank_pairs [FiniteDimensional K V]
 
 /-! ## Uniform row-count recursion for every submodule -/
 
-private noncomputable def rowHits {T : Type*} [AddCommGroup T] [Module K T]
+noncomputable def rowHits {T : Type*} [AddCommGroup T] [Module K T]
     (R : Finset T) (W : Submodule K T) : Nat := by
   classical
   exact (R.filter fun r => r ∈ W).card
 
-private def rowsUp (R : Finset V) : Finset (V × V) :=
+def rowsUp (R : Finset V) : Finset (V × V) :=
   (R.image inl ∪ R.image inr) ∪ R.image diag
 
 private theorem hits_image_le (R : Finset V) (W : Submodule K (V × V))
@@ -124,13 +124,13 @@ private theorem hits_step_le (R : Finset V) (W : Submodule K (V × V)) :
   change rowHits ((R.image inl ∪ R.image inr) ∪ R.image diag) W ≤ _ 
   omega
 
-private def cap0 (q : Nat) : Nat := if q = 0 then 0 else 1
-private def cap1 (q : Nat) : Nat :=
+def cap0 (q : Nat) : Nat := if q = 0 then 0 else 1
+def cap1 (q : Nat) : Nat :=
   if q = 0 then 0 else if q = 1 then 1 else 3
-private def cap2 (q : Nat) : Nat :=
+def cap2 (q : Nat) : Nat :=
   if q = 0 then 0 else if q = 1 then 1 else
     if q = 2 then 3 else if q = 3 then 5 else 9
-private def cap3 (q : Nat) : Nat :=
+def cap3 (q : Nat) : Nat :=
   if q = 0 then 0 else if q = 1 then 1 else if q = 2 then 3 else
     if q = 3 then 5 else if q = 4 then 9 else if q = 5 then 11 else
       if q = 6 then 15 else if q = 7 then 19 else 27
@@ -153,15 +153,15 @@ private theorem arithmetic_3 :
       b.val + c.val ≤ q.val →
       cap2 a.val + cap2 b.val + cap2 c.val ≤ cap3 q.val := by decide
 
-private abbrev E0 := K
-private abbrev E1 := E0 × E0
-private abbrev E2 := E1 × E1
-private abbrev E3 := E2 × E2
+abbrev E0 := K
+abbrev E1 := E0 × E0
+abbrev E2 := E1 × E1
+abbrev E3 := E2 × E2
 
-private def R0 : Finset E0 := {1}
-private def R1 : Finset E1 := rowsUp R0
-private def R2 : Finset E2 := rowsUp R1
-private def R3 : Finset E3 := rowsUp R2
+def R0 : Finset E0 := {1}
+def R1 : Finset E1 := rowsUp R0
+def R2 : Finset E2 := rowsUp R1
+def R3 : Finset E3 := rowsUp R2
 
 private theorem rank_base0 (W : Submodule K E0) :
     rowHits R0 W ≤ cap0 (Module.finrank K W) := by
@@ -192,6 +192,71 @@ private theorem rank_base0 (W : Submodule K E0) :
 
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.hits_step_le
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.rank_base0
+
+
+/-! ## Generic certified propagation from every W in V to every W in V × V. -/
+private theorem lift_bound [FiniteDimensional K V]
+    (R : Finset V) (f g : Nat → Nat) (d : Nat)
+    (hDim : Module.finrank K V = d)
+    (hPrev : ∀ W : Submodule K V, rowHits R W ≤ f (Module.finrank K W))
+    (hArith : ∀ q : Fin (2*d+1), ∀ a b c : Fin (d+1),
+      a.val+b.val ≤ q.val → a.val+c.val ≤ q.val →
+      b.val+c.val ≤ q.val →
+      f a.val + f b.val + f c.val ≤ g q.val)
+    (W : Submodule K (V × V)) :
+    rowHits (rowsUp R) W ≤ g (Module.finrank K W) := by
+  let q := Module.finrank K W
+  let a := Module.finrank K (slice W inl)
+  let b := Module.finrank K (slice W inr)
+  let c := Module.finrank K (slice W diag)
+  have hq : q ≤ 2*d := by
+    calc
+      q ≤ Module.finrank K (V × V) := W.finrank_le
+      _ = d+d := by rw [Module.finrank_prod, hDim]
+      _ = 2*d := by omega
+  have ha : a ≤ d := by
+    calc
+      a ≤ Module.finrank K V := (slice W inl).finrank_le
+      _ = d := hDim
+  have hb : b ≤ d := by
+    calc
+      b ≤ Module.finrank K V := (slice W inr).finrank_le
+      _ = d := hDim
+  have hc : c ≤ d := by
+    calc
+      c ≤ Module.finrank K V := (slice W diag).finrank_le
+      _ = d := hDim
+  obtain ⟨h01,h02,h12⟩ := slice_rank_pairs W
+  have hScalar : f a + f b + f c ≤ g q :=
+    hArith ⟨q, by omega⟩ ⟨a,by omega⟩ ⟨b,by omega⟩ ⟨c,by omega⟩ h01 h02 h12
+  have hRow := hits_step_le R W
+  have hA := hPrev (slice W inl)
+  have hB := hPrev (slice W inr)
+  have hC := hPrev (slice W diag)
+  omega
+
+/-- Every linear subspace of F₂² satisfies the exact 0,1,3 intersection cap. -/
+theorem subcube_all_W_L1 (W : Submodule K E1) :
+    rowHits R1 W ≤ cap1 (Module.finrank K W) := by
+  exact lift_bound R0 cap0 cap1 1 (by simp [E0]) rank_base0 arithmetic_1 W
+
+/-- Every linear subspace of F₂⁴ satisfies the exact 0,1,3,5,9 intersection cap. -/
+theorem subcube_all_W_L2 (W : Submodule K E2) :
+    rowHits R2 W ≤ cap2 (Module.finrank K W) := by
+  exact lift_bound R1 cap1 cap2 2
+    (by simp [E1, E0, Module.finrank_prod]) subcube_all_W_L1 arithmetic_2 W
+
+/-- Every linear subspace of F₂⁸ satisfies the exact rank-indexed cap:
+    q=0..8 ↦ 0,1,3,5,9,11,15,19,27.
+    This quantifies over ALL subspaces W, not only coordinate or sampled spaces. -/
+theorem subcube_all_W_L3 (W : Submodule K E3) :
+    rowHits R3 W ≤ cap3 (Module.finrank K W) := by
+  exact lift_bound R2 cap2 cap3 4
+    (by simp [E2, E1, E0, Module.finrank_prod]) subcube_all_W_L2 arithmetic_3 W
+
+#print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.subcube_all_W_L1
+#print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.subcube_all_W_L2
+#print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.subcube_all_W_L3
 
 #print axioms Nightfall.StructuralInformation.SubcubeAllSpacesL3.slice_rank_pairs
 
