@@ -1,6 +1,8 @@
-# Pair-sum collisions replace frames at one quantum query
+# Independent audit and extensions of Claude's one-query pair-multiplicity theorem
 
 Date: 2026-11-19. Source branch: structural-information-theory. Version: 1.0.
+
+**Attribution and priority correction:** Claude Opus 5.5 independently established the same central one-query simulation theorem on the structural-information-theory branch in [ONE_QUERY_ENERGY_20261119.md](https://github.com/d3lefts/d3lefts/blob/structural-information-theory/research/nightfall/structural_information/ONE_QUERY_ENERGY_20261119.md). Claude counts ordered pairs: his multiplicity is exactly twice the unordered multiplicity in this note, and his classical bound 2 mu_ordered/(delta eps²) equals 4 mu_unordered/(delta eps²). This is **independent reproduction, not new priority for the base theorem**. Distinct extensions here: a self-contained tensor-rank uniqueness argument (no Kruskal import), all-size grid classification, random exponential-row corollary, paired-latent negative control, and an explicit arbitrary-T Fourier-sector-coherence sufficient inequality. Preserve dual provenance.
 
 **Certification:** independent author-side universal mathematical proof, a distinct exact-rational finite regression, and dated partial prior-art screen. NOT Lean checked or independent human refereed. The result is an **all-algorithm one-query** approximation theorem; the all-T structural characterization remains OPEN. Do not confuse it with Boolean decision problems or worst-case input promises.
 
@@ -12,7 +14,7 @@ Let S be uniform on F_2^m, with query bits X_r = <r,S> for row vectors r in a fi
 
 The maximum of an empty set is zero. The error guarantee always refers to the random S, and the classical algorithm is allowed arbitrary offline computation from the known quantum circuit and R.
 
-## Theorem I: exact one-query collision-multiplicity simulator
+## Independent proof of Claude's Theorem I: one-query collision-multiplicity simulation
 
 For any one-query quantum algorithm with acceptance probability f(S) in [0,1] and any eps,delta in (0,1), there is a deterministic **nonadaptive** classical estimator g that reads at most
 
@@ -152,7 +154,7 @@ This identifies two explicit failure modes for this particular simulator: additi
 - Bogdanov, Cheung, Dinesh and Lui, Classical Simulation of One-Query Quantum Distinguishers (APPROX/RANDOM 2023), https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.APPROX/RANDOM.2023.43 . Bilinear/PSD representations and generic one-query classical simulation are **known**.
 - Optimal inequalities for completely bounded polynomials and limitations of quantum query algorithms (2026), https://www.alphaxiv.org/abs/2609.05201 . General Fourier bounds and parallel-query simulation are relevant established methodology.
 - Turturean, A proof of the Aaronson-Ambainis conjecture (2026), https://arxiv.org/abs/2611.09773 . The existing influence theorem is for product/uniform input and is not a frame necessity theorem for these correlated codewords.
-No exact prior statement of this pair-sum collision parameter was found in a limited targeted search. That does **not** establish novelty, priority, or external proof validation.
+**The identical central pair-sum theorem was present in Claude's contemporaneous repository work**; do not claim this as an original result. The extensions are independently derived but not yet novelty/priority cleared. This explicitly supersedes any earlier novelty suggestion based only on a limited web search.
 
 **Finite falsifier:** python3 -I research/nightfall/structural_information/dichotomy_tests/check_pair_sum_onequery.py . This checks every pair collision in tensor levels L=1..6, grid sides L=2..7 and BV dimensions 1..5, nonuniform rational diagonal weights, explicit PSD contraction matrices, 70 exact rational conditional-mean tail inequalities and query-size checks, plus 40 independent exhaustive Walsh/Parseval equalities. Tests cannot prove the universal theorem. CI preserves exact commit, SHA256 source hashes and logs.
 
