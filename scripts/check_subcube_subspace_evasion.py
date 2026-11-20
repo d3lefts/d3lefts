@@ -58,8 +58,10 @@ def audit_level(L):
     n=1<<L;R=subcube_rows(L)
     linear_max=[];fiber_max=[]
     pair_max=[]
+    secant_max=[]
+    original_sumset={a^b for a in R|{0} for b in R|{0}}
     for q in range(n+1):
-        lm=fm=pm=0; count=0
+        lm=fm=pm=sm=0; count=0
         for B in all_rref_bases(n,q):
             count+=1
             span=[0]
@@ -77,9 +79,18 @@ def audit_level(L):
             if L==3 and q<=2:
                 A=set(fibers)|{0}
                 collisions=Counter(u^v for u in A for v in A if u!=v)
-                pm=max(pm,max(collisions.values(),default=0))
+                ordered_mu=max(collisions.values(),default=0)
+                secant_fibers=Counter(reduce_mod_subspace(s,B)
+                                      for s in original_sumset
+                                      if reduce_mod_subspace(s,B)!=0)
+                E2=max(secant_fibers.values(),default=0)
+                assert ordered_mu<=2*(L+1)*E2,(L,q,B,ordered_mu,E2)
+                pm=max(pm,ordered_mu)
+                sm=max(sm,E2)
         linear_max.append(lm);fiber_max.append(fm)
-        if L==3 and q<=2: pair_max.append(pm)
+        if L==3 and q<=2:
+            pair_max.append(pm)
+            secant_max.append(sm)
         print("EVASIVE_EXHAUST",L,q,"spaces",count,
               "linear_max",lm,"affine_fiber_max",fm,flush=True)
     assert linear_max=={1:[0,1,3],
@@ -88,6 +99,8 @@ def audit_level(L):
     if L==3:
         assert pair_max == [8,14,20],pair_max
         print("PAIR_QUOTIENT_NEGATIVE_CONTROL",pair_max)
+        print("SECANT_FIBER_MAX_Q0_TO_Q2",secant_max)
+        print("QUOTIENT_PAIR_VS_SECANT_LEMMA_EXACT_PASS")
     for k in range(L+1):
         q=1<<k
         assert linear_max[q]==3**k,(L,k,q,linear_max[q])
