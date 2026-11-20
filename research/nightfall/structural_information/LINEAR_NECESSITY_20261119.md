@@ -1,6 +1,8 @@
 # Linear distributions: the necessity half reduced to an additive-combinatorics dichotomy (2026-11-19)
 
-Status: Theorem C and Corollary D proved on paper; the dichotomy is a conjecture. Not reviewed.
+**STATUS CORRECTION (2026-11-19): Conjecture E in the exact high-girth FRAME formulation below is REFUTED at author-paper level, not merely open.** The tensor-subcube family from `TOWERS_20261119.md` and the general relation-code proof in `TENSOR_NEARLINEAR_FRAME_OBSTRUCTION_AUDIT_20261119.md` show `N_r=O(r log m)` yet every frame has `Λ_1≥m^(1−η)` for any fixed η>0 along a suitable family. This is independently finite-tested but **not Lean- or human-refereed**. The original historical conjecture text is retained below for provenance; **DO NOT cite its proposed two-sided conclusion as established**. Theorems B/C and a possible characterization using a different, non-frame simulator remain separate.
+
+Status of source Theorem C and Corollary D: author-side paper proofs, not independently reviewed.
 Notation as in `LINEAR_DISTRIBUTIONS_20261119.md`. For `r ≥ 1` let `r·R` be the set of sums of at
 most `r` rows.
 
