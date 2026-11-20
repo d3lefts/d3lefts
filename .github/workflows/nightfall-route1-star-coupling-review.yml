@@ -1,0 +1,56 @@
+name: NIGHTFALL Route 1 reference-star coupling independent exact audit
+
+on:
+  push:
+    branches: [nightfall-route1-star-coupling-review-20261119]
+    paths:
+      - 'research/nightfall/mixture_aa/check_route1_star_coupling_exact.py'
+      - 'research/nightfall/mixture_aa/ROUTE1_STAR_COUPLING_INDEPENDENT_AUDIT_20261119.md'
+      - '.github/workflows/nightfall-route1-star-coupling-review.yml'
+  pull_request:
+    branches: [hellinger-bernstein-transfer]
+    paths:
+      - 'research/nightfall/mixture_aa/check_route1_star_coupling_exact.py'
+      - 'research/nightfall/mixture_aa/ROUTE1_STAR_COUPLING_INDEPENDENT_AUDIT_20261119.md'
+      - '.github/workflows/nightfall-route1-star-coupling-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-finite-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Exact head, provenance and direct Fraction verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p proof-receipts/route1-reference-star
+          git rev-parse HEAD > proof-receipts/route1-reference-star/HEAD.txt
+          sha256sum research/nightfall/mixture_aa/{check_route1_star_coupling_exact.py,ROUTE1_STAR_COUPLING_INDEPENDENT_AUDIT_20261119.md} > proof-receipts/route1-reference-star/SHA256SUMS
+          python3 -I research/nightfall/mixture_aa/check_route1_star_coupling_exact.py | tee proof-receipts/route1-reference-star/exact.json
+          python3 - <<'PY'
+          import json
+          c=json.load(open('proof-receipts/route1-reference-star/exact.json'))
+          assert c['status']=='EXACT_FINITE_REGRESSIONS_NOT_PROOF'
+          assert c['seed']==20261119
+          assert c['counts']=={
+            'component_reference_pairs':1165,
+            'zero_weight_branches':65,
+            'potential_queries':458,
+            'zero_mass_component_values':132,
+            'fixtures':240,
+          }, c
+          print('PASS: exact-rational finite coupling/zero-posterior audit. NOT an end-to-end Lean proof.')
+          PY
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-route1-reference-star-${{ github.run_id }}
+          path: proof-receipts/route1-reference-star/
+          retention-days: 60
