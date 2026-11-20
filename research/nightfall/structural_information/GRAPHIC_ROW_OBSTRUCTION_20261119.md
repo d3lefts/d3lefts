@@ -18,11 +18,24 @@ Let G be the L×L square grid, L even. It has m=L² vertices and n=2L(L−1) edg
 
     |R+R| ≥ binom(t,2)
     K(R)=|R+R|/|R| ≥ binom(L²/2,2)/(2L(L−1))
-        = L(L+1)/16.
+        = L(L²−2)/(16(L−1)).
 
-The displayed equality follows by cancelling the exact factor L−1; the checker evaluates the binomial ratio directly. In particular K=Ω(L²).
+The displayed equality follows from the exact binomial formula; the checker evaluates the ratio directly. In particular K=Ω(L²).
 
 Every square face contributes a **four-row dependency**, while N_r(R)≤2r independent of L. Therefore these graphs have both rapidly growing doubling and many short dependencies, without a large short-sum subspace.
+
+## Corollary G3 (maximal Wyner information on bridgeless grids)
+
+For a **connected, bridgeless** graph, every edge lies on a cycle. The edge label X_e=⟨e_u+e_v,s⟩ is the XOR of all the other edge labels along that cycle, so H(X_e | X_{−e})=0. The map s↦X has one-dimensional kernel (simultaneously flipping all vertices), hence H(X)=|V|−1 bits for uniform s.
+
+For any W rendering all X_e conditionally independent, the dual-total-correlation lower bound gives
+
+    I(W;X) = H(X)−Σ_e H(X_e|W)
+           ≥ H(X)−Σ_e H(X_e|X_{−e}) = |V|−1.
+
+Choosing W=X makes every coordinate deterministic given W, giving S(X)≤H(X)=|V|−1. Thus **S(X)=|V|−1** exactly.
+
+For an L×L grid (L≥2), this gives **S=L²−1 bits**, while the graphic short-sum bound yields **N_r≤2r** for every r. This is an exact distributional separation between *maximal Wyner common information* and this specific *short-sum-subspace necessity signature*. It does **not** itself show classical simulation is easy, or that Conjecture E fails, because only the existence of a large subspace forces an advantage in Theorem C, not the converse.
 
 ## Consequence for the proposed two-sided conjecture
 
