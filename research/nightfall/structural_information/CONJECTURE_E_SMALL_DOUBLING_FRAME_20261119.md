@@ -53,7 +53,7 @@ The coset cover entails `span(R)⊆H+span(t₁,...,t_L)`, hence
 
     rank(R) ≤ dim H + L ≤ N₄(R)+2L²+L.
 
-Choose any linearly independent row subset `B⊆R` forming a basis of `span(R)`. Then **each row** is a sum of at most `c=rank(R)` elements of B, **each b∈B** is already one original row (`c′=1`), and B is independent at **every** order h. The frame is source-exact and does not need a costly reconstruction decoder. This proves (F). Substitute the PFR cover `L≤2K¹²` to obtain (F-PFR). ∎
+Choose any linearly independent row subset `B⊆R` forming a basis of `span(R)`. When rank is positive, **each row** is a sum of at most `c=rank(R)` elements of B, **each b∈B** is already one original row (`c′=1`), and B is independent at **every** order h. For the degenerate case `R={0}`, choose `B=∅`, `c=c′=1` with the zero row represented by the empty sum; the same numerical bound holds without zero locality parameters. The frame is source-exact and does not need a costly reconstruction decoder. This proves (F). Substitute the PFR cover `L≤2K¹²` to obtain (F-PFR). ∎
 
 **Remark:** the proof is not asserting that the PFR covering subgroup is itself a low-cost frame, or that the arbitrary PFR subgroup lies in 4R. It derives an actual short-sum subspace from the **dense cover fiber** and then chooses a separate row-basis frame. These are the previously missing bridges.
 
