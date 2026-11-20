@@ -128,9 +128,8 @@ theorem pairMass_right (p q : A → ℝ)
     rw [ht']
     exact overlap_add_rightResidual p q b
 
-theorem pairMass_diag (p q : A → ℝ)
-    (ht : mismatchMass p q = 0 → p a = overlap p q a)
-    (a : A) :
+theorem pairMass_diag (p q : A → ℝ) (a : A)
+    (ht : mismatchMass p q = 0 → p a = overlap p q a) :
     pairMass p q a a = overlap p q a := by
   classical
   by_cases hz : mismatchMass p q = 0
@@ -140,7 +139,7 @@ theorem pairMass_diag (p q : A → ℝ)
 theorem pairMass_diag_normalized (p q : A → ℝ)
     (hp : (∑ a, p a) = 1) (hq : (∑ a, q a) = 1) (a : A) :
     pairMass p q a a = overlap p q a := by
-  apply pairMass_diag p q ?_ a
+  apply pairMass_diag p q a ?_
   intro ht
   have h := residual_zero_of_mass_zero p q ht a
   unfold leftResidual at h
