@@ -52,12 +52,15 @@ jobs:
           names=[
             'overlap_nonneg','residual_nonneg','residual_disjoint',
             'residual_mass_eq','residual_zero_of_mass_zero',
+            'mismatchMass_eq_half_l1',
             'pairMass_left','pairMass_right','pairMass_diag_normalized',
             'maximalKernel_row','maximalKernel_push','pairMass_mismatch',
             'finite_maximal_kernel_exists',
             'Nightfall.Route1StarMaximalTerminal.concreteStar_reference',
             'Nightfall.Route1StarMaximalTerminal.concreteStar_component',
-            'Nightfall.Route1StarMaximalTerminal.concreteStar_all_marginals'
+            'Nightfall.Route1StarMaximalTerminal.concreteStar_all_marginals',
+            'Nightfall.Route1StarMaximalTerminal.concreteStar_nonneg',
+            'Nightfall.Route1StarMaximalTerminal.concreteStar_total'
           ]
           Path('Route1MaximalAxiomAudit.lean').write_text(
             'import Route1StarMaximalTerminal\n' +
@@ -70,12 +73,12 @@ jobs:
           data=Path(os.environ['GITHUB_WORKSPACE']+'/lean-receipts/route1-maximal-kernel/axioms.log').read_text()
           allowed={'propext','Quot.sound','Classical.choice'}
           reports=re.findall(r"depends on axioms:\s*\[([^\]]*)\]",data,re.S)
-          if len(reports) != 15:
-              raise SystemExit(f'expected fifteen named axiom reports, got {len(reports)}')
+          if len(reports) != 18:
+              raise SystemExit(f'expected eighteen named axiom reports, got {len(reports)}')
           for report in reports:
               axioms={x.strip() for x in report.split(',') if x.strip()}
               if not axioms<=allowed: raise SystemExit('nonstandard axioms: '+str(axioms-allowed))
-          print('PASS 15 named Lean declarations including concrete star, no assumed conditional K')
+          print('PASS 18 named Lean declarations including finite total variation and nonnegative normalized concrete star')
           PY
       - name: Preserve source provenance and negative result logs
         if: always()
