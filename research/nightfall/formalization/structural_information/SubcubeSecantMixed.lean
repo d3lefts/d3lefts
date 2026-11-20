@@ -78,7 +78,9 @@ theorem mixed_product_bound [FiniteDimensional K V]
         have hfst : p.1 = p0.1 := hpr.trans hp0r.symm
         have hsub : p - p0 ∈ U := U.sub_mem hpU hp0U
         have hpair : (p.1 - p0.1, p.2 - p0.2) ∈ U := by
-          simpa [Prod.mk_sub_mk] using hsub
+          have heq : p - p0 = (p.1 - p0.1, p.2 - p0.2) := by
+            apply Prod.ext <;> simp
+          simpa only [heq] using hsub
         have hvertical : (0, p.2 - p0.2) ∈ U := by
           simpa [sub_eq_zero.mpr hfst] using hpair
         exact Finset.mem_filter.mpr ⟨hs, hvertical⟩
