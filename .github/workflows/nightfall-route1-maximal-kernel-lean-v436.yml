@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/Route1FiniteMaxCoupling.lean'
       - 'research/nightfall/formalization/product_space/Route1FiniteJointMass.lean'
+      - 'research/nightfall/formalization/product_space/Route1MaximalConditionalKernel.lean'
       - '.github/workflows/nightfall-route1-maximal-kernel-lean-v436.yml'
   workflow_dispatch:
 
@@ -30,13 +31,15 @@ jobs:
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1FiniteMaxCoupling.olean Route1FiniteMaxCoupling.lean) 2>&1 | tee lean-receipts/route1-maximal-kernel/compile.log
           cp research/nightfall/formalization/product_space/Route1FiniteJointMass.lean /tmp/mathlib4/Route1FiniteJointMass.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1FiniteJointMass.olean Route1FiniteJointMass.lean) 2>&1 | tee -a lean-receipts/route1-maximal-kernel/compile.log
+          cp research/nightfall/formalization/product_space/Route1MaximalConditionalKernel.lean /tmp/mathlib4/Route1MaximalConditionalKernel.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1MaximalConditionalKernel.olean Route1MaximalConditionalKernel.lean) 2>&1 | tee -a lean-receipts/route1-maximal-kernel/compile.log
           ! grep -E '(^|:)error:' lean-receipts/route1-maximal-kernel/compile.log
       - name: Independently replay Lean kernel and check exact axiom sets
         shell: bash
         run: |
           set -euo pipefail
           cd /tmp/mathlib4
-          for module in Route1FiniteMaxCoupling Route1FiniteJointMass; do
+          for module in Route1FiniteMaxCoupling Route1FiniteJointMass Route1MaximalConditionalKernel; do
             lake env leanchecker "$module" 2>&1 | tee -a "$GITHUB_WORKSPACE/lean-receipts/route1-maximal-kernel/leanchecker.log"
           done
           python3 - <<'PY'
@@ -44,10 +47,12 @@ jobs:
           names=[
             'overlap_nonneg','residual_nonneg','residual_disjoint',
             'residual_mass_eq','residual_zero_of_mass_zero',
-            'pairMass_left','pairMass_right','pairMass_diag_normalized'
+            'pairMass_left','pairMass_right','pairMass_diag_normalized',
+            'maximalKernel_row','maximalKernel_push','pairMass_mismatch',
+            'finite_maximal_kernel_exists'
           ]
           Path('Route1MaximalAxiomAudit.lean').write_text(
-            'import Route1FiniteJointMass\n' +
+            'import Route1MaximalConditionalKernel\n' +
             ''.join('#print axioms Nightfall.Route1FiniteMaxCoupling.'+n+'\n' for n in names))
           PY
           lake env lean Route1MaximalAxiomAudit.lean 2>&1 | tee "$GITHUB_WORKSPACE/lean-receipts/route1-maximal-kernel/axioms.log"
@@ -57,19 +62,19 @@ jobs:
           data=Path(os.environ['GITHUB_WORKSPACE']+'/lean-receipts/route1-maximal-kernel/axioms.log').read_text()
           allowed={'propext','Quot.sound','Classical.choice'}
           reports=re.findall(r"depends on axioms:\s*\[([^\]]*)\]",data,re.S)
-          if len(reports) != 8:
-              raise SystemExit(f'expected eight named axiom reports, got {len(reports)}')
+          if len(reports) != 12:
+              raise SystemExit(f'expected twelve named axiom reports, got {len(reports)}')
           for report in reports:
               axioms={x.strip() for x in report.split(',') if x.strip()}
               if not axioms<=allowed: raise SystemExit('nonstandard axioms: '+str(axioms-allowed))
-          print('PASS 8 scoped Lean kernel declarations including exact joint mass, standard axioms only')
+          print('PASS 12 scoped Lean kernel declarations including actual maximal conditional kernel, standard axioms only')
           PY
       - name: Preserve source provenance and negative result logs
         if: always()
         shell: bash
         run: |
           mkdir -p lean-receipts/route1-maximal-kernel
-          sha256sum research/nightfall/formalization/product_space/Route1FiniteMaxCoupling.lean research/nightfall/formalization/product_space/Route1FiniteJointMass.lean > lean-receipts/route1-maximal-kernel/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/Route1FiniteMaxCoupling.lean research/nightfall/formalization/product_space/Route1FiniteJointMass.lean research/nightfall/formalization/product_space/Route1MaximalConditionalKernel.lean > lean-receipts/route1-maximal-kernel/SHA256SUMS
           git rev-parse HEAD > lean-receipts/route1-maximal-kernel/commit.txt
           printf '%s\n' 'leanprover/lean4:v4.36.0-rc2' > lean-receipts/route1-maximal-kernel/toolchain.txt
           printf '%s\n' '9d581dfff2e41de989072ea63abf3daf69311520' > lean-receipts/route1-maximal-kernel/mathlib.txt
