@@ -75,7 +75,18 @@ theorem all_levels_budget (f : Nat → Nat)
   | zero =>
       intro W
       have h : rowHits (R 0) W ≤ cap0 (Module.finrank K W) := by
-        simpa only [R] using (rank_base0 W)
+        classical
+        by_cases hW : W = ⊥
+        · subst W
+          simp [R, R0, rowHits, cap0]
+        · have hq : 0 < Module.finrank K W :=
+            Submodule.one_le_finrank_iff.mpr hW
+          have hc : rowHits (R 0) W ≤ 1 := by
+            change ((R0.filter fun r => r ∈ W)).card ≤ 1
+            calc
+              _ ≤ R0.card := Finset.card_filter_le _ _
+              _ = 1 := by decide
+          simpa [cap0, Nat.ne_of_gt hq] using hc
       exact h.trans (hBase _)
   | succ n ih =>
       intro W
