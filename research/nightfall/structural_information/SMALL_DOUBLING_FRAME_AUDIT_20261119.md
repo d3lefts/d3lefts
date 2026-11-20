@@ -1,6 +1,6 @@
 # Small doubling gives a bounded-cost independent frame: scoped audit (2026-11-19)
 
-**Status:** author-side derived corollary of published PFR and dense Bogolyubov–Ruzsa results; not an independent new additive-combinatorics theorem, not Lean-checked, not externally reviewed. Conjecture E remains open. This note supplements, without overwriting, `LINEAR_NECESSITY_20261119.md` and `MERGING_DIRECT_SUMS_20261119.md` (Theorem F). Quantitative constants implicit in the Bogolyubov–Ruzsa big-O are not extracted.
+**Status:** author-side derived corollary of published PFR and dense Bogolyubov–Ruzsa results; not an independent new additive-combinatorics theorem, not Lean-checked, not externally reviewed. The unrestricted high-girth frame version of Conjecture E is now **refuted** by the tensor-subcube family; see [SUBCUBE_FRAME_REFUTATION_20261119.md](SUBCUBE_FRAME_REFUTATION_20261119.md). The bounded-doubling implication in this note remains an independently valid **restricted theorem**, not a proof of the refuted global conjecture. This note supplements, without overwriting, `LINEAR_NECESSITY_20261119.md` and `MERGING_DIRECT_SUMS_20261119.md` (Theorem F). Quantitative constants implicit in the Bogolyubov–Ruzsa big-O are not extracted.
 
 ## Precise statement
 
@@ -21,7 +21,7 @@ For every choice of the independence parameter `h`, there is a `(d, 1, h)`-frame
 
 for **every** `T`. The lower inequality `N_4 <= d` is immediate because the sumset lies in `span(R)`.
 
-**Restricted Conjecture E consequence:** If `N_4(R) <= k` and `K <= P(k,T)` for a fixed polynomial `P`, then `Lambda_T(R) <= poly(k,T)`. This is a restricted positive result, **not** the unrestricted frame dichotomy: no bound on `K` follows merely from a bound on `N_{a(T)}`. If invoking Conjecture E's premise instead, require explicitly `a(T) >= 4`.
+**Restricted bounded-doubling implication (survives the global counterexample):** If `N_4(R) <= k` and `K <= P(k,T)` for a fixed polynomial `P`, then `Lambda_T(R) <= poly(k,T)`. This is a restricted positive result, **not** the unrestricted frame dichotomy: no bound on `K` follows merely from a bound on `N_{a(T)}`. If invoking Conjecture E's premise instead, require explicitly `a(T) >= 4`.
 
 ## Proof with dependencies exposed
 
