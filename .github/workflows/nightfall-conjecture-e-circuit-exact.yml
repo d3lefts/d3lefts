@@ -4,6 +4,8 @@ on:
     paths:
       - 'research/nightfall/structural_information/KFREE_CIRCUIT_FRAME_THEOREM_20261119.md'
       - 'research/nightfall/structural_information/dichotomy_tests/check_kfree_circuit_frames_exact.py'
+      - 'research/nightfall/structural_information/GRID_COCYCLE_FRAME_REDUCTION_20261119.md'
+      - 'research/nightfall/structural_information/dichotomy_tests/check_grid_cocycle_exact.py'
       - '.github/workflows/nightfall-conjecture-e-circuit-exact.yml'
   workflow_dispatch:
 permissions:
@@ -25,7 +27,10 @@ jobs:
           python3 -I research/nightfall/structural_information/dichotomy_tests/check_kfree_circuit_frames_exact.py | tee receipts/conjecture-e-circuit/replay.log
           grep -Fq "PASS exact XOR certificate:" receipts/conjecture-e-circuit/replay.log
           grep -Fq "LIMIT: no general connected high-doubling Conjecture E" receipts/conjecture-e-circuit/replay.log
-          sha256sum research/nightfall/structural_information/dichotomy_tests/check_kfree_circuit_frames_exact.py research/nightfall/structural_information/KFREE_CIRCUIT_FRAME_THEOREM_20261119.md > receipts/conjecture-e-circuit/SHA256SUMS
+          python3 -I research/nightfall/structural_information/dichotomy_tests/check_grid_cocycle_exact.py | tee receipts/conjecture-e-circuit/grid-cocycle.log
+          grep -Fq "PASS exact grid cochain audit:" receipts/conjecture-e-circuit/grid-cocycle.log
+          grep -Fq "LIMIT: not a nonexistence certificate" receipts/conjecture-e-circuit/grid-cocycle.log
+          sha256sum research/nightfall/structural_information/dichotomy_tests/check_kfree_circuit_frames_exact.py research/nightfall/structural_information/KFREE_CIRCUIT_FRAME_THEOREM_20261119.md research/nightfall/structural_information/dichotomy_tests/check_grid_cocycle_exact.py research/nightfall/structural_information/GRID_COCYCLE_FRAME_REDUCTION_20261119.md > receipts/conjecture-e-circuit/SHA256SUMS
           git rev-parse HEAD > receipts/conjecture-e-circuit/commit.txt
           printf '%s\n' "FINITE EXACT FRAME CHECKS ONLY; NOT LEAN, INDEPENDENT HUMAN PROOF REVIEW, OR GENERAL CONJECTURE E" > receipts/conjecture-e-circuit/scope.txt
       - name: Immutable audit receipt
