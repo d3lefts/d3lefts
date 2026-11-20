@@ -68,6 +68,22 @@ def psd_moments(rows,mu,seed):
         val=weights[i]*weights[j]*(u[i]*u[j]+v[i]*v[j])
         numerator[rows[i]^rows[j]]+=val
     den=4*N*K
+    # Claude's initial row-norm influence: for one-query spectra, norm is 1
+    # for a queried row and 2 otherwise (all nonzero spectra are <=2R).
+    # Exact integer theorem: max Inf >= Var^3 / (64 mu^2).
+    R=set(rows)-{0}
+    varnum=sum(a*a for a in numerator.values())
+    if varnum:
+        maxinf=0
+        for g in R:
+            infnum=numerator[g]**2
+            for b in R:
+                gamma=g^b
+                if gamma and gamma not in R:
+                    infnum+=numerator[gamma]**2
+            maxinf=max(maxinf,infnum)
+        check('row_influence_bound',
+              64*mu*mu*maxinf*den**4 >= varnum**3)
     for eta in (Fraction(1,500),Fraction(1,80),Fraction(1,20),
                 Fraction(1,5),Fraction(3,5)):
         S=[rows[i] for i in range(N)
