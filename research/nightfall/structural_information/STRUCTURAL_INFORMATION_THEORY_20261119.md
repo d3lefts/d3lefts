@@ -85,10 +85,11 @@ information obtained from a quantum algorithm. Whether a direct proof exists is 
 
 1. **Relevant structural information.** Find `S_T(ν) ≤ S(ν)`, depending on `ν` and `T` only, that
    is both sufficient (`poly(T,1/ε,1/δ)(1 + S_T)` simulation) and necessary (some `T`-query
-   algorithm needs `S_T^{Ω(1)}` classical queries). Candidate: the least `I(W; X)` over `W` making
-   the coordinates independent *up to degree-`2T` statistics*, i.e. all degree-`≤ 2T` moments of
-   `ν` agree with those of a mixture over `W` of products. The repetition example has `S_T = 0` for
-   this candidate when `k > 2T`? (to be checked).
+   algorithm needs `S_T^{Ω(1)}` classical queries). Matching only degree-`≤ 2T` moments is not
+   enough: in the repetition example copies of one bit have correlation 1, which no product matches.
+   A candidate must at least be invariant under merging coordinates that are deterministic functions
+   of each other (block structure), e.g. `S` minimised over all coarsenings of the coordinates into
+   blocks queried as single symbols, at a query cost polynomial in the block size.
 2. **Strong version.** `polylog(1/δ)` simulation for bounded rounds with cost `poly · (1 + S)`.
 3. **Direct proof of the Forrelation bound**, and the exact order of `S(F)`.
 4. **Converse family.** For every `s`, a distribution with `S = s` and a `poly(log s)`-query
