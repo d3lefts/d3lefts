@@ -27,6 +27,7 @@ jobs:
           grep -q "'BV_exact_mu': 5" onequery-pairsum.log
           grep -q "'paired_latent_exact_mu': 9" onequery-pairsum.log
           grep -q "'exact_mse_tail': 70" onequery-pairsum.log
+          grep -q "'row_influence_bound': 14" onequery-pairsum.log
           grep -q "'explicit_parseval': 40" onequery-pairsum.log
           grep -q "'subcube_rankone_multiplicity': 1092" onequery-pairsum.log
       - name: Preserve strict provenance (NOT a Lean certificate)
