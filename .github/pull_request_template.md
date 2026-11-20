@@ -25,7 +25,7 @@ or theorem proofs that import computational claims; otherwise mark N/A. -->
 - [ ] The mathematical specification, raw input bytes, expected coverage and stage DAG were frozen **before** independent implementation.
 - [ ] At least one checker was independently constructed from the **specification**, without access to reference code or intermediate answers; code lineage and shared inputs are disclosed.
 - [ ] Every stage has exact replay commands, SHA-256 input/checker/output hashes, canonical output, and a byte-for-byte differential result (or a documented alternative comparison proof).
-- [ ] The differential manifest was audited by `scripts/check_formalization_differential.py --manifest ...`; its 16 negative controls passed with `--self-test`. The original producer programs were actually executed separately.
+- [ ] The differential manifest was audited by `scripts/check_formalization_differential.py --manifest ...`; its 18 negative controls passed with `--self-test`. The original producer programs were actually executed separately.
 - [ ] Semantic formalization explicitly distinguishes **checker soundness**, finite-case **coverage/completeness**, and the **source-theorem bridge**, with named Lean receipts for each completed obligation.
 - [ ] Missing formal obligations, code-independence review, external human review, and the theorem/novelty claims remain unpromoted.
 - [ ] Correctness checks and performance measurements are reported separately.
