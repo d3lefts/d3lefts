@@ -81,7 +81,23 @@ def check_quantum_truncation(L):
           'heavy',len(heavy),'light',len(light),
           'mse',str(parseval),'frob',str(frob))
 
+def check_two_query_orthogonality_failure():
+    # Exact rational real rotation (3/5,-4/5; 4/5,3/5).
+    c,s=Fraction(3,5),Fraction(4,5)
+    # After two phase queries: psi=[(c-s*x)/sqrt2, y*(s+c*x)/sqrt2].
+    # Frequency components 0 and a are collinear; their dot = -c*s/2.
+    inner=-c*s/Fraction(2)
+    assert inner==Fraction(-6,25) and inner!=0
+    for x in (-1,1):
+        for y in (-1,1):
+            # |+> measurement, with both state amplitudes /sqrt(2).
+            observed=((c-s*x)+y*(s+c*x))**2/Fraction(4)
+            predicted=Fraction(1,2)-Fraction(7,50)*x*y
+            assert observed==predicted,(x,y,observed,predicted)
+    print('EXACT_TWO_QUERY_FALSE_ORTHOGONALITY_PASS')
+
 if __name__=='__main__':
     for L in range(1,6):check_pair_fibers(L)
     for L in range(1,4):check_quantum_truncation(L)
+    check_two_query_orthogonality_failure()
     print('SUBCUBE_ONE_QUERY_SIMULATION_EXACT_AUDIT_PASS')
