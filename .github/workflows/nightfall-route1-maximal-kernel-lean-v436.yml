@@ -68,7 +68,7 @@ jobs:
             'Nightfall.Route1StarMaximalBridge.finite_star_maximal_exists'
           ]
           Path('Route1MaximalAxiomAudit.lean').write_text(
-            'import Route1StarMaximalTerminal\n' +
+            'import Route1StarMaximalBridge\n' +
             ''.join('#print axioms '+(n if n.startswith('Nightfall.') else 'Nightfall.Route1FiniteMaxCoupling.'+n)+'\n' for n in names))
           PY
           lake env lean Route1MaximalAxiomAudit.lean 2>&1 | tee "$GITHUB_WORKSPACE/lean-receipts/route1-maximal-kernel/axioms.log"
