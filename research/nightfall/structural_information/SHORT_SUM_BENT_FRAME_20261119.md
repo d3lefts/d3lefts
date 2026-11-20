@@ -64,6 +64,17 @@ at the fixed accuracy and confidence parameters stated above. In particular if K
 
 Thus the bounded-doubling case does NOT need a cheap-frame theorem. Small doubling actually forces EXPENSIVE frames through a short-sum subgroup, and supplies an explicit quantum witness. The larger Conjecture E remains open where K grows enough that the Sanders bound becomes vacuous, or where costs may arise from qualitatively different structures. This corollary is a composition of known additive-combinatorics and parity-query facts; novelty and priority have not been checked exhaustively.
 
+## A decisive counting barrier for the middle regime
+
+There is a model-independent capacity restriction on ANY short-sum/Bernstein–Vazirani proof strategy. If the indexed row family has n entries, the number of possible ordered k-term sums is at most n^k. Hence
+
+  V subset kR, dim V=r  ==>  2^r<=|kR|<=n^k,
+  so r<=k log2 n.                                                   (9)
+
+In particular, for n=poly(m), a constant-query BV subspace witness can force at most O(log m) classical queries. Even taking k=polylog(m) gives only polylog(m)-dimensional V and hence at most a polylogarithmic classical lower bound via Theorem I. To obtain a BV witness of dimension Omega(m^a) from polynomially many rows would require k=Omega(m^a/log m) queries, not polylogarithmically many.
+
+This is a rigorous **proof-strategy barrier** directly relevant to Conjecture E: if its frame cost L grows as a polynomial in the ambient rank m while the input has only polynomially many rows, then a polylog(L)-query quantum witness requiring L^Omega(1) classical queries cannot arise solely by invoking a large V subset kR and a bent/BV predicate. It must use a different quantum mechanism, a different structural certificate, or Conjecture E is false. None of these alternatives is resolved here.
+
 ## Middle-regime counterexample surface: graph-edge rows
 
 Let R be rows e_u+e_v from edges in a graph on v vertices. A sum of k edges has vertex Hamming weight <=2k. Any dimension-r subspace contains a vector of weight >=r (same pivot lemma), hence
