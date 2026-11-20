@@ -4,6 +4,7 @@ No quantum kernel proof, no general theorem certified by finite replay.
 """
 from collections import Counter
 from fractions import Fraction
+from random import Random
 from itertools import combinations
 
 counts = Counter()
@@ -102,6 +103,32 @@ def psd_moments(rows,mu,seed):
                 sq+=err*err
             check('explicit_parseval',sq==(1<<bits)*tail)
 
+
+def span_words(gens):
+    V={0}
+    for x in gens:
+        V |= {v^x for v in tuple(V)}
+    return V
+
+def quotient_audit():
+    rng=Random(20261119)
+    for m in range(3,8):
+        for trial in range(40):
+            R=rng.sample(list(range(1<<m)),rng.randrange(2,min(20,1<<m)+1))
+            A=sorted(set(R)|{0})
+            C=collisions(A)
+            mu=max(C.values(),default=0)
+            for q in range(min(4,m)+1):
+                W=span_words(rng.sample(R,min(q,len(R))))
+                canon=lambda x:min(x^w for w in W)
+                Q=sorted({canon(a) for a in A})
+                counts_Q=Counter(canon(a^b) for a,b in combinations(Q,2))
+                mu_Q=max(counts_Q.values(),default=0)
+                check('quotient_transfer',mu_Q<=len(W)*mu)
+                for freq,num in counts_Q.items():
+                    check('quotient_coset_injection',
+                          num<=sum(C[freq^w] for w in W))
+
 def main():
     table=[]
     for L in range(1,7):
@@ -125,6 +152,7 @@ def main():
         check('BV_exact_mu',mu==2**(m-1))
         psd_moments(R,mu,m+50)
         table.append(('BV',m,len(R),mu))
+    quotient_audit()
     print('PASS finite one-query pair-sum PSD/frequency/Parseval audit')
     for row in table: print('FAMILY',*row)
     print('COUNTS',dict(sorted(counts.items())))
