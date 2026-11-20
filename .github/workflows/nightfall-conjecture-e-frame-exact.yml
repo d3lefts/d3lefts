@@ -1,0 +1,41 @@
+name: NIGHTFALL Conjecture E cover-to-frame exact audit
+on:
+  pull_request:
+    branches: [structural-information-theory]
+    paths:
+      - 'research/nightfall/structural_information/CONJECTURE_E_SMALL_DOUBLING_FRAME_20261119.md'
+      - 'research/nightfall/structural_information/check_conjecture_e_frame_exact.py'
+      - '.github/workflows/nightfall-conjecture-e-frame-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact effective source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact integer/Fourier witness audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p conjecture-e-receipts
+          python3 -I research/nightfall/structural_information/check_conjecture_e_frame_exact.py | tee conjecture-e-receipts/replay.log
+          grep -Fq 'PASS exact cover-to-frame audit: 996568 assertions, 66009 dense Fourier cases, 200 cover instances.' conjecture-e-receipts/replay.log
+          grep -Fq 'SPARSE_CONTROL n=64, rank=64, |4R|=679121, N4<=19' conjecture-e-receipts/replay.log
+          grep -Fq 'LIMIT: finite checker does NOT certify external PFR' conjecture-e-receipts/replay.log
+          sha256sum research/nightfall/structural_information/check_conjecture_e_frame_exact.py research/nightfall/structural_information/CONJECTURE_E_SMALL_DOUBLING_FRAME_20261119.md | tee conjecture-e-receipts/SHA256SUMS
+          grep -Fq '29f9c7cccc2f248f0ebbc2986420eafcee1e540729a167ec5794b75c741a0440' conjecture-e-receipts/SHA256SUMS
+          git rev-parse HEAD > conjecture-e-receipts/effective-head.txt
+          printf '%s\n' 'RESTRICTED COVER-TO-FRAME PAPER PROOF; GENERAL E OPEN; NO LEAN TERMINAL OR NOVELTY CLEARANCE' > conjecture-e-receipts/scope.txt
+      - name: Preserve immutable replay receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: conjecture-e-frame-exact-receipt
+          path: conjecture-e-receipts/
+          retention-days: 90
+          if-no-files-found: warn
