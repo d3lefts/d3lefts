@@ -58,6 +58,9 @@ theorem nonzeroHits_up_le (R : Finset V) (W : Submodule K (V × V)) :
   have h3 := nonzeroHits_image_le R W inl
   have h4 := nonzeroHits_image_le R W inr
   have h5 := nonzeroHits_image_le R W diag
+  have h3' : nonzeroHits (R.image inl) W ≤ nonzeroHits R (slice W inl) := h3
+  have h4' : nonzeroHits (R.image inr) W ≤ nonzeroHits R (slice W inr) := h4
+  have h5' : nonzeroHits (R.image diag) W ≤ nonzeroHits R (slice W diag) := h5
   change nonzeroHits ((R.image inl ∪ R.image inr) ∪ R.image diag) W ≤ _
   omega
 
@@ -83,16 +86,16 @@ theorem mixed_image_quartic [FiniteDimensional K V] (R : Finset V)
       4 * (Module.finrank K W)^4 := by
   classical
   let U : Submodule K (V × V) := W.comap f
-  let g : U →ₗ[K] W where
-    toFun p := ⟨f p.val, p.property⟩
-    map_add' := by
-      intro a b
-      apply Subtype.ext
-      simp
-    map_smul' := by
-      intro a p
-      apply Subtype.ext
-      simp
+  let g : U →ₗ[K] W :=
+    { toFun := fun p => ⟨f p.val, p.property⟩
+      map_add' := by
+        intro a b
+        apply Subtype.ext
+        simp
+      map_smul' := by
+        intro a p
+        apply Subtype.ext
+        simp }
   have hginj : Function.Injective g := by
     intro a b hab
     apply Subtype.ext
@@ -192,14 +195,19 @@ theorem nonzero_secant_step_quartic [FiniteDimensional K V]
   have hpure := nonzeroHits_up_le S W
   have hlin : nonzeroHits B W ≤ 4 * q^4 := by
     have h := mixed_product_bound R hlinear haffine W
-    exact (nonzeroHits_le_rowHits B W).trans (by simpa [q] using h)
+    have hb : rowHits B W ≤ 4*q^4 := h
+    exact (nonzeroHits_le_rowHits B W).trans hb
   have hAC : nonzeroHits C W ≤ 4 * q^4 := by
     have h := mixed_image_quartic R hlinear haffine W shearAC shearAC_injective
-    simpa only [mixedAC, shearAC] using h
+    simpa [C, q, mixedAC, shearAC] using h
   have hBC : nonzeroHits D W ≤ 4 * q^4 := by
     have h := mixed_image_quartic R hlinear haffine W shearBC shearBC_injective
-    simpa only [mixedBC, shearBC] using h
-  change nonzeroHits (rowsUp S ∪ (B ∪ (C ∪ D))) W ≤ _ at h0
+    simpa [D, q, mixedBC, shearBC] using h
+  have hcap : nonzeroHits (sixSlices R) W ≤
+      nonzeroHits (rowsUp S) W + nonzeroHits B W +
+      nonzeroHits C W + nonzeroHits D W := by
+    change nonzeroHits (rowsUp S ∪ (B ∪ (C ∪ D))) W ≤ _
+    omega
   omega
 
 #print axioms Nightfall.StructuralInformation.SubcubeSecantTransfer.nonzeroHits_up_le
