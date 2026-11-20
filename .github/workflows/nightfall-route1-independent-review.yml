@@ -1,0 +1,41 @@
+name: NIGHTFALL Mixture AA Route 1 independent paper audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/mixture_aa/ROUTE1_INDEPENDENT_STAR_REVIEW_20261119.md'
+      - 'scripts/audit_route1_star_coupling.py'
+      - '.github/workflows/nightfall-route1-independent-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Replay independent finite coupling and posterior identity checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p route1-review-receipts
+          python3 scripts/audit_route1_star_coupling.py 2>&1 | tee route1-review-receipts/exact-audit.log
+          grep -F 'ROUTE1_STAR_COUPLING_EXACT_PASS' route1-review-receipts/exact-audit.log
+          grep -F 'ROUTE1_PHI_DRIFT_EXACT_PASS' route1-review-receipts/exact-audit.log
+          sha256sum scripts/audit_route1_star_coupling.py \
+            research/nightfall/mixture_aa/ROUTE1_INDEPENDENT_STAR_REVIEW_20261119.md \
+            > route1-review-receipts/SHA256SUMS
+          git rev-parse HEAD > route1-review-receipts/checkout-revision.txt
+          printf '%s\n' 'Finite exact arithmetic only; not Lean or novelty certification' > route1-review-receipts/limitations.txt
+      - name: Preserve audit evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-route1-independent-review-${{ github.run_id }}-${{ github.run_attempt }}
+          path: route1-review-receipts/
+          if-no-files-found: warn
+          retention-days: 30
