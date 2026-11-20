@@ -1,0 +1,78 @@
+name: NIGHTFALL sharp subcube scalar Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean'
+      - 'research/nightfall/formalization/structural_information/SubcubeSharpAllLevels.lean'
+      - '.github/workflows/nightfall-subcube-sharp-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sharp-scalar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel-check sharp scalar
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p sharp-scalar-receipt
+          cp research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean /tmp/mathlib4/SubcubeSharpScalar.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SubcubeSharpScalar.olean SubcubeSharpScalar.lean) 2>&1 | tee sharp-scalar-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker SubcubeSharpScalar) 2>&1 | tee sharp-scalar-receipt/kernel.log
+          python3 - <<'PY'
+          import pathlib,re
+          p=pathlib.Path('research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean')
+          s=p.read_text(); log=pathlib.Path('sharp-scalar-receipt/compile.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          for n in ['alpha_gt_one','two_rpow_alpha','scalar_sorted','triple_alpha']:
+              assert n in log
+          allowed={'propext','Classical.choice','Quot.sound'}
+          matches=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          assert len(matches)>=4, matches
+          assert all(set(x.strip() for x in m.split(',') if x.strip())<=allowed for m in matches)
+          print('SHARP_SCALAR_KERNEL_PASS')
+          PY
+      - name: Kernel-check sharp all-level linear and affine theorems
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir=research/nightfall/formalization/structural_information
+          for f in SubcubeL3 SubcubeAllSpacesL3 SubcubeAllLevels SubcubeAffineAllLevels SubcubeSharpAllLevels; do
+            cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "sharp-scalar-receipt/$f.log"
+          done
+          (cd /tmp/mathlib4 && lake env leanchecker SubcubeSharpAllLevels) 2>&1 | tee sharp-scalar-receipt/kernel-allL.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('research/nightfall/formalization/structural_information/SubcubeSharpAllLevels.lean')
+          s=p.read_text(); log=Path('sharp-scalar-receipt/SubcubeSharpAllLevels.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          for n in ['all_levels_sharp','all_levels_affine_sharp']:
+              assert n in log
+          allowed={'propext','Classical.choice','Quot.sound'}
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]', log)
+          assert len(reports)>=2
+          assert all(set(x.strip() for x in m.split(',') if x.strip())<=allowed for m in reports)
+          print('SHARP_ALL_LEVELS_KERNEL_PASS')
+          PY
+      - name: Persist exact source
+        if: always()
+        run: |
+          mkdir -p sharp-scalar-receipt
+          git rev-parse HEAD > sharp-scalar-receipt/commit.txt
+          sha256sum research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean research/nightfall/formalization/structural_information/SubcubeSharpAllLevels.lean research/nightfall/formalization/structural_information/SubcubeAllLevels.lean research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean research/nightfall/formalization/structural_information/SubcubeL3.lean > sharp-scalar-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: sharp-scalar-receipt
+          path: sharp-scalar-receipt/
+          retention-days: 90
