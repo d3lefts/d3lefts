@@ -15,7 +15,7 @@ private theorem cap0_le_rpow (q : Nat) :
     (cap0 q : ℝ) ≤ (q : ℝ) ^ alpha := by
   by_cases hq : q = 0
   · subst q
-    simp [cap0, Real.zero_rpow alpha_gt_one.ne']
+    simp [cap0, Real.zero_rpow (ne_of_gt (by linarith [alpha_gt_one] : 0 < alpha))]
   · have hq1 : (1:ℝ) ≤ q := by
       exact_mod_cast Nat.one_le_iff_ne_zero.mpr hq
     have hp := Real.rpow_le_rpow (by norm_num : (0:ℝ) ≤ 1) hq1
