@@ -9,6 +9,10 @@
 
 The site engineering dossier in [PR #821](https://github.com/d3lefts/d3lefts/pull/821) is already merged; do not edit it to imply that the still-draft benchmark branches have been merged.
 
+## Five-minute work sample
+
+Start with the [ArtifactGraph repair brief](artifactgraph-b2/candidate/ISSUE.md), inspect the [two defects missed by the original reference suite](https://github.com/d3lefts/d3lefts/pull/827), then read the [internally graded alternate repair evidence](independent-alternates-20261118/README.md). The [retail rollout prototype](retail-rollout-e5/README.md) extends this portfolio to mixed-version database migration and recovery.
+
 ## Benchmark promotion protocol (shared across tasks)
 
 1. **Reproducibility / provenance:** pin candidate source commit, complete task prompt, dependencies, Python runtime, evaluator source hash, sandbox image, evaluator settings and SHA-256 of each replay artifact. Successful CI for *public smoke* is not validation of the hidden grader.
