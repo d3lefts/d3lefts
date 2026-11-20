@@ -74,3 +74,11 @@ exponential in `m`, and `N_r` tracks it.
 1. Prove Conjecture E for row sets with small doubling (`|2·R| ≤ K|R|`) via PFR.
 2. Locate the threshold for random rows exactly: for `n = m^α`, compute `N_r` and `Λ_T`.
 3. Check whether `N_r` is known under another name (sumset/Fourier-sampling literature).
+
+## Audit addendum: bounded doubling is now a proved restricted case (2026-11-19)
+
+See [SMALL_DOUBLING_FRAME_AUDIT_20261119.md](SMALL_DOUBLING_FRAME_AUDIT_20261119.md) for the complete conditional proof and cited external dependencies. For every nonempty row set `R`, with `K=|R+R|/|R|`, the published polynomial Freiman–Ruzsa coset cover combined with a dense Bogolyubov–Ruzsa subspace yields
+
+    Lambda_T(R) <= rank(R) <= N_4(R) + O(K^12 + log^4(2K)).
+
+Thus Conjecture E's frame conclusion holds if `N_4(R) <= k` and `K <= poly(k,T)`. This does **not** settle its large-doubling, interacting-short-circuit regime. A direct sum of a fixed-rank row subspace and arbitrarily many independent rows has unbounded doubling but bounded local-frame cost; see the audit for the exact formula. Do not describe Theorem C as a converse or necessary characterization without Conjecture E. The existing BCH/APN 'sharp threshold' and finite `N_r` computations require the audit's caveats, including explicit `h(T,epsilon,delta)` accounting and timeout-completion flags.
