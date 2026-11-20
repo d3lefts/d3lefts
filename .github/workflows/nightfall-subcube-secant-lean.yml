@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/structural_information/SubcubeSecantMixed.lean'
       - 'research/nightfall/formalization/structural_information/SubcubeSecantScalar.lean'
       - 'research/nightfall/formalization/structural_information/SubcubeSecantTransfer.lean'
+      - 'research/nightfall/formalization/structural_information/SubcubeSecantAllLevels.lean'
       - 'research/nightfall/structural_information/SUBCUBE_SECANT_POLYNOMIAL_20261120.md'
       - 'scripts/check_subcube_secant_structural.py'
       - '.github/workflows/nightfall-subcube-secant-lean.yml'
@@ -27,7 +28,7 @@ jobs:
           set -euo pipefail
           mkdir -p secant-receipt
           dir=research/nightfall/formalization/structural_information
-          for f in SubcubeL3 SubcubeAllSpacesL3 SubcubeAllLevels SubcubeAffineAllLevels SubcubeSecantSlices SubcubeSecantMixed SubcubeSharpScalar SubcubeSecantScalar SubcubeSecantTransfer; do
+          for f in SubcubeL3 SubcubeAllSpacesL3 SubcubeAllLevels SubcubeAffineAllLevels SubcubeSecantSlices SubcubeSecantMixed SubcubeSharpScalar SubcubeSecantScalar SubcubeSecantTransfer SubcubeSecantAllLevels; do
             cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "secant-receipt/$f.log"
             ! grep -F 'error:' "secant-receipt/$f.log"
@@ -36,6 +37,7 @@ jobs:
           (cd /tmp/mathlib4 && lake env leanchecker SubcubeSecantMixed) 2>&1 | tee secant-receipt/leanchecker-mixed.log
           (cd /tmp/mathlib4 && lake env leanchecker SubcubeSecantScalar) 2>&1 | tee secant-receipt/leanchecker-scalar.log
           (cd /tmp/mathlib4 && lake env leanchecker SubcubeSecantTransfer) 2>&1 | tee secant-receipt/leanchecker-transfer.log
+          (cd /tmp/mathlib4 && lake env leanchecker SubcubeSecantAllLevels) 2>&1 | tee secant-receipt/leanchecker-alllevels.log
           python3 - <<'PY'
           from pathlib import Path
           import re
@@ -76,7 +78,17 @@ jobs:
           assert len(reports4)>=3
           assert all(set(y.strip() for y in x.split(',') if y.strip()) <= allowed for x in reports4)
           print('SECANT_SCALAR_BETA_KERNEL_PASS')
+          fifth=Path('research/nightfall/formalization/structural_information/SubcubeSecantAllLevels.lean').read_text()
+          assert not re.search(r'(?m)^\s*(axiom|sorry|admit)\b',fifth)
+          log5=Path('secant-receipt/SubcubeSecantAllLevels.log').read_text()
+          assert 'error:' not in log5
+          for name in ['triple_fourth','all_levels_nonzero_secants_quartic']:
+              assert name in log5
+          reports5=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log5)
+          assert len(reports5)>=2
+          assert all(set(y.strip() for y in x.split(',') if y.strip()) <= allowed for x in reports5)
           print('SECANT_STEP_QUARTIC_KERNEL_PASS')
+          print('ALL_LEVELS_SECANT_QUARTIC_KERNEL_PASS')
           PY
       - name: Independent full finite checks
         shell: bash
@@ -90,7 +102,7 @@ jobs:
         run: |
           mkdir -p secant-receipt
           git rev-parse HEAD > secant-receipt/HEAD
-          sha256sum research/nightfall/formalization/structural_information/SubcubeSecantSlices.lean research/nightfall/formalization/structural_information/SubcubeSecantMixed.lean research/nightfall/formalization/structural_information/SubcubeSecantScalar.lean research/nightfall/formalization/structural_information/SubcubeSecantTransfer.lean scripts/check_subcube_secant_structural.py research/nightfall/structural_information/SUBCUBE_SECANT_POLYNOMIAL_20261120.md > secant-receipt/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/SubcubeSecantSlices.lean research/nightfall/formalization/structural_information/SubcubeSecantMixed.lean research/nightfall/formalization/structural_information/SubcubeSecantScalar.lean research/nightfall/formalization/structural_information/SubcubeSecantTransfer.lean research/nightfall/formalization/structural_information/SubcubeSecantAllLevels.lean scripts/check_subcube_secant_structural.py research/nightfall/structural_information/SUBCUBE_SECANT_POLYNOMIAL_20261120.md > secant-receipt/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
