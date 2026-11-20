@@ -24,10 +24,11 @@ jobs:
           set -euo pipefail
           mkdir -p conjecture-e-receipts
           python3 -I research/nightfall/structural_information/check_conjecture_e_frame_exact.py | tee conjecture-e-receipts/replay.log
-          grep -Fq 'PASS exact cover-to-frame audit:' conjecture-e-receipts/replay.log
-          grep -Fq '200 cover instances.' conjecture-e-receipts/replay.log
+          grep -Fq 'PASS exact cover-to-frame audit: 996568 assertions, 66009 dense Fourier cases, 200 cover instances.' conjecture-e-receipts/replay.log
+          grep -Fq 'SPARSE_CONTROL n=64, rank=64, |4R|=679121, N4<=19' conjecture-e-receipts/replay.log
           grep -Fq 'LIMIT: finite checker does NOT certify external PFR' conjecture-e-receipts/replay.log
           sha256sum research/nightfall/structural_information/check_conjecture_e_frame_exact.py research/nightfall/structural_information/CONJECTURE_E_SMALL_DOUBLING_FRAME_20261119.md | tee conjecture-e-receipts/SHA256SUMS
+          grep -Fq '29f9c7cccc2f248f0ebbc2986420eafcee1e540729a167ec5794b75c741a0440' conjecture-e-receipts/SHA256SUMS
           git rev-parse HEAD > conjecture-e-receipts/effective-head.txt
           printf '%s\n' 'RESTRICTED COVER-TO-FRAME PAPER PROOF; GENERAL E OPEN; NO LEAN TERMINAL OR NOVELTY CLEARANCE' > conjecture-e-receipts/scope.txt
       - name: Preserve immutable replay receipt
