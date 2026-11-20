@@ -88,18 +88,26 @@ theorem pairMass_mismatch (p q : A → ℝ)
   have hrow (a : A) :
       (∑ b : A, if a = b then 0 else pairMass p q a b) =
         p a - overlap p q a := by
-    have hpoint (b : A) :
-        (if a = b then 0 else pairMass p q a b) =
-          pairMass p q a b -
-            (if a = b then pairMass p q a b else 0) := by
-      by_cases hab : a = b <;> simp [hab]
-    simp_rw [hpoint]
-    rw [Finset.sum_sub_distrib]
-    have hdiag :
-        (∑ b : A, if a = b then pairMass p q a b else 0) =
-          pairMass p q a a := by simp
-    rw [pairMass_left p q hp hq a, hdiag,
-        pairMass_diag_normalized p q hp hq a]
+    let off : A → ℝ := fun z => if a = z then 0 else pairMass p q a z
+    let diag : A → ℝ := fun z => if a = z then pairMass p q a z else 0
+    have hsplit (z : A) :
+        off z + diag z = pairMass p q a z := by
+      dsimp [off, diag]
+      by_cases hz : a = z <;> simp [hz]
+    have hsum :
+        (∑ z : A, off z) + (∑ z : A, diag z) =
+          ∑ z : A, pairMass p q a z := by
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro z _
+      exact hsplit z
+    have hdiag : (∑ z : A, diag z) = pairMass p q a a := by
+      simp [diag]
+    have hh := pairMass_left p q hp hq a
+    have hd := pairMass_diag_normalized p q hp hq a
+    rw [hdiag, hh, hd] at hsum
+    change (∑ z : A, off z) = p a - overlap p q a
+    linarith
   calc
     (∑ a : A, ∑ b : A,
         if a = b then 0 else pairMass p q a b) =
