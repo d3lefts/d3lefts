@@ -4,6 +4,8 @@ on:
     paths:
       - 'research/nightfall/structural_information/dichotomy_tests/GRID_CYCLE_FRAME_RIGIDITY_20261119.md'
       - 'research/nightfall/structural_information/dichotomy_tests/check_grid_cycle_rigidity.py'
+      - 'research/nightfall/structural_information/dichotomy_tests/GRID_FRAME_NO_GO_CONJECTURE_E_20261119.md'
+      - 'research/nightfall/structural_information/dichotomy_tests/check_grid_frame_dual_nogo.py'
       - '.github/workflows/nightfall-grid-cycle-frame-rigidity.yml'
   workflow_dispatch:
 permissions:
@@ -25,6 +27,32 @@ jobs:
           grep -q '^TREE_STRETCH \[(2, 2, 3, 4), (2, 3, 3, 15), (3, 3, 3, 192)\]$' grid-rigidity.log
           grep -q "'first_gate_negative': 1" grid-rigidity.log
           grep -q "'second_gate_negative': 1" grid-rigidity.log
+      - name: Independent two-dimensional chain-section no-go audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/structural_information/dichotomy_tests/check_grid_frame_dual_nogo.py 2>&1 | tee grid-dual-nogo.log
+          grep -q '^PASS grid dual-chain no-go 160 cases
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/grid-cycle-rigidity
+          cp grid-rigidity.log receipts/grid-cycle-rigidity/ 2>/dev/null || true
+          cp grid-dual-nogo.log receipts/grid-cycle-rigidity/ 2>/dev/null || true
+          sha256sum research/nightfall/structural_information/dichotomy_tests/GRID_CYCLE_FRAME_RIGIDITY_20261119.md research/nightfall/structural_information/dichotomy_tests/check_grid_cycle_rigidity.py research/nightfall/structural_information/dichotomy_tests/GRID_FRAME_NO_GO_CONJECTURE_E_20261119.md research/nightfall/structural_information/dichotomy_tests/check_grid_frame_dual_nogo.py > receipts/grid-cycle-rigidity/SHA256SUMS
+          git rev-parse HEAD > receipts/grid-cycle-rigidity/effective-commit.txt
+          python3 --version > receipts/grid-cycle-rigidity/python-version.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: grid-cycle-rigidity-exact-receipt
+          path: receipts/grid-cycle-rigidity/
+          if-no-files-found: error
+          retention-days: 90
+ grid-dual-nogo.log
+          grep -q "'exact_face_lift': 8460" grid-dual-nogo.log
+          grep -q "'S_boundary2_identity': 3580" grid-dual-nogo.log
+          grep -q "'global_bound': 160" grid-dual-nogo.log
       - name: Preserve exact-head provenance and failed diagnostics
         if: always()
         shell: bash
