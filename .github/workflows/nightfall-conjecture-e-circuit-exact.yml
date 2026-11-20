@@ -1,0 +1,50 @@
+name: NIGHTFALL Conjecture E — K-free circuit frame exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/KFREE_CIRCUIT_FRAME_THEOREM_20261119.md'
+      - 'research/nightfall/structural_information/dichotomy_tests/check_kfree_circuit_frames_exact.py'
+      - 'research/nightfall/structural_information/GRID_COCYCLE_FRAME_REDUCTION_20261119.md'
+      - 'research/nightfall/structural_information/dichotomy_tests/check_grid_cocycle_exact.py'
+      - 'research/nightfall/structural_information/TENSOR_NEARLINEAR_FRAME_OBSTRUCTION_AUDIT_20261119.md'
+      - 'research/nightfall/structural_information/LINEAR_NECESSITY_20261119.md'
+      - 'research/nightfall/structural_information/TOWERS_20261119.md'
+      - 'research/nightfall/structural_information/dichotomy_tests/check_tensor_frame_obstruction_independent.py'
+      - '.github/workflows/nightfall-conjecture-e-circuit-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  circuit-frame-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact effective PR head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Independent exact F2 frame checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/conjecture-e-circuit
+          python3 -I research/nightfall/structural_information/dichotomy_tests/check_kfree_circuit_frames_exact.py | tee receipts/conjecture-e-circuit/replay.log
+          grep -Fq "PASS exact XOR certificate:" receipts/conjecture-e-circuit/replay.log
+          grep -Fq "LIMIT: no general connected high-doubling Conjecture E" receipts/conjecture-e-circuit/replay.log
+          python3 -I research/nightfall/structural_information/dichotomy_tests/check_grid_cocycle_exact.py | tee receipts/conjecture-e-circuit/grid-cocycle.log
+          grep -Fq "PASS exact grid cochain audit:" receipts/conjecture-e-circuit/grid-cocycle.log
+          grep -Fq "LIMIT: not a nonexistence certificate" receipts/conjecture-e-circuit/grid-cocycle.log
+          python3 -I research/nightfall/structural_information/dichotomy_tests/check_tensor_frame_obstruction_independent.py | tee receipts/conjecture-e-circuit/tensor-refutation.log
+          grep -Fq "PASS independent tensor-simplex audit:" receipts/conjecture-e-circuit/tensor-refutation.log
+          grep -Fq "LIMIT: universal relation-distance theorem" receipts/conjecture-e-circuit/tensor-refutation.log
+          sha256sum research/nightfall/structural_information/dichotomy_tests/check_kfree_circuit_frames_exact.py research/nightfall/structural_information/KFREE_CIRCUIT_FRAME_THEOREM_20261119.md research/nightfall/structural_information/dichotomy_tests/check_grid_cocycle_exact.py research/nightfall/structural_information/GRID_COCYCLE_FRAME_REDUCTION_20261119.md research/nightfall/structural_information/TENSOR_NEARLINEAR_FRAME_OBSTRUCTION_AUDIT_20261119.md research/nightfall/structural_information/dichotomy_tests/check_tensor_frame_obstruction_independent.py research/nightfall/structural_information/LINEAR_NECESSITY_20261119.md research/nightfall/structural_information/TOWERS_20261119.md > receipts/conjecture-e-circuit/SHA256SUMS
+          git rev-parse HEAD > receipts/conjecture-e-circuit/commit.txt
+          printf '%s\n' "FINITE EXACT FRAME CHECKS ONLY; GENERAL FRAME CONJECTURE E HAS AUTHOR-SIDE COUNTEREXAMPLE, NOT LEAN OR HUMAN CERTIFICATION" > receipts/conjecture-e-circuit/scope.txt
+      - name: Immutable audit receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: conjecture-e-kfree-circuit-exact-receipt
+          path: receipts/conjecture-e-circuit/
+          retention-days: 90
+          if-no-files-found: warn
