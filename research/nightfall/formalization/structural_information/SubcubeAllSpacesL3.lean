@@ -233,6 +233,11 @@ private theorem lift_bound [FiniteDimensional K V]
   have hA := hPrev (slice W inl)
   have hB := hPrev (slice W inr)
   have hC := hPrev (slice W diag)
+  have hScalar' :
+      f (Module.finrank K (slice W inl)) +
+      f (Module.finrank K (slice W inr)) +
+      f (Module.finrank K (slice W diag)) ≤
+      g (Module.finrank K W) := hScalar
   omega
 
 /-- Every linear subspace of F₂² satisfies the exact 0,1,3 intersection cap. -/
