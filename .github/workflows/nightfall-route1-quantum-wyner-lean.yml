@@ -1,0 +1,109 @@
+name: NIGHTFALL quantum circuits Wyner information pinned Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1PolylogTools.lean'
+      - 'research/nightfall/formalization/product_space/Route1Entropy.lean'
+      - 'research/nightfall/formalization/product_space/Route1KeyLemma.lean'
+      - 'research/nightfall/formalization/product_space/Route1Lift.lean'
+      - 'research/nightfall/formalization/product_space/Route1PolylogSimulation.lean'
+      - 'research/nightfall/formalization/product_space/Route1WynerSimulation.lean'
+      - 'research/nightfall/formalization/product_space/QuantumCircuitWynerSimulation.lean'
+      - '.github/workflows/nightfall-route1-quantum-wyner-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  quantum-wyner:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned AA and mixture closure in dependency order
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/log-$M.txt")
+            ! grep -q 'declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile Route 1 chain (merged star coupling and latent degree, then polylog modules)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/quantum-wyner
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation Route1WynerSimulation; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 \
+              | tee "receipts/quantum-wyner/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/quantum-wyner/$M.log"
+          done
+      - name: Compile finite complex quantum circuit bridge and Wyner terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/quantum-wyner
+          for M in QuantumCircuitPaths QuantumPathDegree QuantumCircuitNormalization QuantumCircuitSimulation \
+                   QuantumCircuitMixtureSimulation QuantumCircuitWynerSimulation; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 \
+              | tee "receipts/quantum-wyner/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/quantum-wyner/$M.log"
+          done
+      - name: Independent kernel replay and strict axiom audit (fail closed)
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s /tmp/mathlib4/.lake/build/lib/lean/QuantumCircuitWynerSimulation.olean
+          (cd /tmp/mathlib4 && lake env leanchecker QuantumCircuitWynerSimulation) 2>&1 | tee receipts/quantum-wyner/checker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          d=Path('receipts/quantum-wyner')
+          s=''.join(p.read_text() for p in sorted(d.glob('*.log')))
+          reports=re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          names={n for n,_ in reports}
+          needed=[
+            'Nightfall.Route1Polylog.crux',
+            'Nightfall.Route1Polylog.route1_polylog_simulation',
+            'Nightfall.Route1Polylog.route1_wyner_CI',
+            'Nightfall.ProductSpace.QuantumCircuitWyner.unitary_circuit_wyner_simulation',
+            'Nightfall.ProductSpace.QuantumCircuitWyner.unitary_circuit_wyner_CI',
+          ]
+          for name in needed: assert name in names, ('missing axiom report',name)
+          allowed={'Classical.choice','propext','Quot.sound'}
+          for n,x in reports:
+            a={z.strip() for z in x.split(',') if z.strip()}
+            assert a <= allowed,(n,a)
+          assert 'sorryAx' not in s
+          paths=list(Path('research/nightfall/formalization/product_space').glob('Route1*.lean'))
+          paths += list(Path('research/nightfall/formalization/product_space').glob('QuantumCircuit*.lean'))
+          paths += [Path('research/nightfall/formalization/product_space/QuantumPathDegree.lean')]
+          for p in paths:
+            assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',p.read_text()),p
+          print('PASS: physical circuit Wyner CI and fixed-component terminal, source-closed, kernel replay')
+          PY
+      - name: Preserve evidence
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/quantum-wyner
+          git rev-parse HEAD > receipts/quantum-wyner/commit.txt
+          sha256sum research/nightfall/formalization/product_space/Route1{PolylogTools,Entropy,KeyLemma,Lift,PolylogSimulation,WynerSimulation}.lean research/nightfall/formalization/product_space/QuantumCircuit{Paths,Normalization,Simulation,MixtureSimulation,WynerSimulation}.lean research/nightfall/formalization/product_space/QuantumPathDegree.lean > receipts/quantum-wyner/SHA256SUMS
+      - name: Upload receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quantum-wyner-lean-receipt
+          path: receipts/quantum-wyner
+          if-no-files-found: warn
+          retention-days: 90
