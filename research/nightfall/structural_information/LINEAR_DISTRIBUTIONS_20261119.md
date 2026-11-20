@@ -32,6 +32,8 @@ coordinate degree `≤ h`, so `E_ν G = E_μ G` because `G` is a combination of 
 
 `D = poly(T, 1/ε, 1/δ)` by the certified product simulation, so `h = poly(T, 1/ε, 1/δ)`.
 
+*Credit.* The distinguishing version (a `2k`-wise independent law fools `k`-query quantum distinguishers) is a standard consequence of the polynomial method; Theorem A is its pointwise-simulation strengthening. See `PRIOR_ART_LINEAR_20261119.md`.
+
 **Consequence: random linear codes have no advantage.** For `n = Cm` random rows, `C^⊥` has
 relative distance `Θ(1)` with high probability, so `ν_G` is `Θ(n)`-wise independent. For every
 `T` with `h(T, ε, δ) ≤ cn`, simulation costs `poly(T, 1/ε, 1/δ)` independent of `m`. Yet every row lies
@@ -96,5 +98,7 @@ characterized exactly, by a linear-algebraic quantity.
 1. Necessity in a special case: rows with a frame lower bound coming from a large "short-sum
    closed" subspace. Show Bernstein–Vazirani embeds with `poly(T)` overhead.
 2. Decide whether `Λ_T` must be relaxed to approximate frames (dual distance `> h` replaced by
-   small bias of all `≤ h`-sums), which Theorem A tolerates with an `ℓ¹`-type error term.
+   small bias of all `≤ h`-sums). Caution: Fourier Checking is almost `k`-wise independent yet has a
+   quantum advantage (Aaronson), so any approximate version must pay for the number of degree-`h`
+   monomials.
 3. Check Simon's problem inputs and random sparse rows (LDPC-type `G`) against the table.
