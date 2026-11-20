@@ -88,23 +88,18 @@ theorem pairMass_mismatch (p q : A → ℝ)
   have hrow (a : A) :
       (∑ b : A, if a = b then 0 else pairMass p q a b) =
         p a - overlap p q a := by
-    calc
-      (∑ b : A, if a = b then 0 else pairMass p q a b) =
-          (∑ b : A, pairMass p q a b) -
-            pairMass p q a a := by
-            calc
-              _ = (∑ b : A, pairMass p q a b -
-                    (if a = b then pairMass p q a b else 0)) := by
-                    apply Finset.sum_congr rfl
-                    intro b _
-                    by_cases hab : a = b <;> simp [hab]
-              _ = (∑ b : A, pairMass p q a b) -
-                    pairMass p q a a := by
-                    rw [Finset.sum_sub_distrib]
-                    simp
-      _ = p a - overlap p q a := by
-            rw [pairMass_left p q hp hq a,
-                pairMass_diag_normalized p q hp hq a]
+    have hpoint (b : A) :
+        (if a = b then 0 else pairMass p q a b) =
+          pairMass p q a b -
+            (if a = b then pairMass p q a b else 0) := by
+      by_cases hab : a = b <;> simp [hab]
+    simp_rw [hpoint]
+    rw [Finset.sum_sub_distrib]
+    have hdiag :
+        (∑ b : A, if a = b then pairMass p q a b else 0) =
+          pairMass p q a a := by simp
+    rw [pairMass_left p q hp hq a, hdiag,
+        pairMass_diag_normalized p q hp hq a]
   calc
     (∑ a : A, ∑ b : A,
         if a = b then 0 else pairMass p q a b) =
