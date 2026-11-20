@@ -2,7 +2,7 @@
 
 Date: 2026-11-19 (America/New_York). **Status: independently derived author-side conditional transfer and two exact finite families; NOT an end-to-end Lean certification, external review, or priority-cleared new mathematical theorem.** This is a continuation of the earlier NIGHTFALL query-local structural note, not a rediscovery of it.
 
-**Primary NIGHTFALL dependencies:** [Route 1, merged #928](../mixture_aa/ROUTE1_PROOF_20261119.md), improved paper proof [#930](../mixture_aa/ROUTE1_FINITE_STAR_COUPLING_PROOF_20261119.md); [previous factor/quotient theorem, #883](QUERY_LOCAL_PRODUCT_FACTOR_TRANSFER_20261119.md); #883's pinned Lean diagonal-rank certificate, run 44464612579. The Route 1 end-to-end full theorem is presently **paper-level only**; its finite star kernel has separately passed pinned Lean and must not be confused with a full terminal.
+**Primary NIGHTFALL dependencies:** [Route 1, merged #928](../mixture_aa/ROUTE1_PROOF_20261119.md), improved paper proof [#930](../mixture_aa/ROUTE1_FINITE_STAR_COUPLING_PROOF_20261119.md); [previous factor/quotient theorem, #883](../formalization/product_space/QUERY_LOCAL_PRODUCT_FACTOR_TRANSFER_20261119.md); #883's pinned Lean diagonal-rank certificate, run 44464612579. The Route 1 end-to-end full theorem is presently **paper-level only**; its finite star kernel has separately passed pinned Lean and must not be confused with a full terminal.
 
 **Closest external mechanisms independently checked:** Wyner's 1975 conditional-independence information; information-theoretic approximation of nonnegative rank [Braun–Pokutta et al.](https://eccc.weizmann.ac.il/report/2013/158/); distributional quantum query composition [arXiv:2610.06835](https://arxiv.org/abs/2610.06835); [Wyner's Common Information and the Common Entropy are NP-Hard to Compute (2026)](https://arxiv.org/abs/2610.15402). **These are prior-art context, not proof dependencies.**
 
@@ -66,6 +66,23 @@ M_{\rm prod}(X)=2^m,\qquad \ln M_{\rm prod}(X)=m\ln 2.
 Given Route 1, **every \(T\)-query quantum acceptance observable** on these \(2m\) dependent bits admits a distributional classical approximation with \(\operatorname{poly}(T,\epsilon^{-1},\delta^{-1})\) observed queries, uniformly in \(m\). This extends #883's duplication witness to local parity correlations and a general class of sparse invertible linear codes. The linear-algebra mechanism itself is elementary and not claimed novel.
 
 More generally, any \(D\in GL_m(\mathbb F_2)\) with row weight \(\le a\) works for \(X=(Z,DZ)\), with latent decoder \(b=1\), \(\mathsf K_{a,1}=0\), Wyner \(m\), and full-product rank \(2^m\). This is an unbounded family, not a numerical constant refinement.
+
+### Stronger local parity example: no copied raw bit and no repeated observed functional
+
+The previous family includes \(A=Z\) and is a simple query quotient. To eliminate both that convenience and the duplicated-functional appearance, work in independent 4-bit blocks, using the following two matrices over \(\mathbb F_2\). Each parenthesized integer encodes a row mask in low-bit-first order:
+\[
+L=(3,5,7,9),\quad L^{-1}=(7,6,5,15),\qquad
+R=(6,10,11,14),\quad R^{-1}=(6,11,10,9).
+\]
+The exact 4-bit identities \(L^{-1}L=I\) and \(R^{-1}R=I\) are checked by exhausting all 16 input words in the companion verifier. The eight row masks across L and R are **all distinct**, and every observed row has weight 2 or 3, so **no observed bit is a raw latent bit and no two observed bits are functionally identical**.
+
+For \(m=4k\) independent fair latent bits, apply L and R blockwise and reveal \(X=(L^{\oplus k}Z,R^{\oplus k}Z)\). Every X bit depends on at most **3** latent bits, while each latent bit can be recovered by at most **4** observed A-block queries using \(L^{-1}\). Both observed halves are invertible linear transforms of Z. Consequently their joint matrix is a scaled permutation, and the same proof yields
+\[
+\boxed{\mathsf K_{3,4}(\nu)=0,\quad C_W(X_A;X_B)=m\text{ bits},\quad M_{\rm prod}(X)=2^m.}
+\]
+All forward and reverse **quantum** bit-oracle simulations likewise have constant query overhead because their row formulas involve at most four bits (with the usual reversible compute/uncompute convention).
+
+This is a stronger witness than literal duplication: it preserves an unbounded information gap under an explicitly **two-way, bounded-query, locally mixed representation** in which every observed coordinate is a nontrivial parity. The matrices are elementary linear coding, not independently novel mathematical machinery.
 
 ## 4. Obstruction to silently replacing log M by Wyner C_W
 
