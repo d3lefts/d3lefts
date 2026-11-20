@@ -27,6 +27,7 @@ probabilities / Radon–Nikodym disintegration is a logically separate interface
 namespace Nightfall.Route1Polylog
 
 open MeasureTheory
+open Nightfall.ProductSpace.Transfer
 
 variable {ι α : Type}
     [Fintype ι] [DecidableEq ι]
