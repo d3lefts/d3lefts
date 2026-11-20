@@ -98,7 +98,7 @@ If `I_*=0`, every positive-weight component marginal equals its reference and st
 
 ## Reproduction
 
-`python3 -I research/nightfall/mixture_aa/check_route1_star_coupling_exact.py`
+`python3 -I research/nightfall/mixture_aa/check_route1_star_coupling_independent_exact.py`
 
 The checked script is independent of the proposed proof implementation: it uses exact `fractions.Fraction` probabilities, direct residual maximal-coupling tables, original-law independent resampling and an independent posterior reconstruction for all positive-predictive-probability children. No numerical optimizer, floating tolerance, or entropy logarithm is used to certify its exact algebraic claims. Recorded tested seed: `20261119`, source SHA256 when initially run locally: `3313881ead40f997a8302d83193193062e789a2bc75bce72a87ec9be984dcca9` (recheck after repository transcription). Output is a finite regression, never a universal proof.
 
