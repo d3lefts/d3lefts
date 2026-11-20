@@ -39,6 +39,9 @@ jobs:
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1StarCoupling.olean Route1StarCoupling.lean) 2>&1 | tee -a lean-receipts/route1-maximal-kernel/compile.log
           cp research/nightfall/formalization/product_space/Route1StarMaximalBridge.lean /tmp/mathlib4/Route1StarMaximalBridge.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1StarMaximalBridge.olean Route1StarMaximalBridge.lean) 2>&1 | tee -a lean-receipts/route1-maximal-kernel/compile.log
+          for m in Route1FiniteMaxCoupling Route1FiniteJointMass Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge; do
+            test -s "/tmp/mathlib4/.lake/build/lib/lean/${m}.olean"
+          done
           ! grep -E '(^|:)error:' lean-receipts/route1-maximal-kernel/compile.log
       - name: Independently replay Lean kernel and check exact axiom sets
         shell: bash
