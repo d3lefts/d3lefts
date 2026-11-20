@@ -44,13 +44,13 @@ theorem all_levels_affine_quadratic (n : Nat)
   have hdim : Module.finrank K U ≤ Module.finrank K W + 1 := by
     dsimp [U]
     calc
-      Module.finrank K (W ⊔ K ∙ a) ≤
-          Module.finrank K W + Module.finrank K (K ∙ a) :=
+      Module.finrank K ↥(W ⊔ K ∙ a) ≤
+          Module.finrank K W + Module.finrank K ↥(K ∙ a) :=
         Submodule.finrank_add_le_finrank_add_finrank _ _
       _ ≤ Module.finrank K W + 1 := by
         gcongr
         calc
-          Module.finrank K (K ∙ a) ≤ ({a} : Set (E n)).toFinset.card :=
+          Module.finrank K ↥(K ∙ a) ≤ ({a} : Set (E n)).toFinset.card :=
             finrank_span_le_card ({a} : Set (E n))
           _ = 1 := by simp
   have hU : rowHits (R n) U ≤ (Module.finrank K U)*(Module.finrank K U) :=
