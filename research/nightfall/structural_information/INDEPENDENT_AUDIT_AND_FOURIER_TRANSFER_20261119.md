@@ -95,7 +95,7 @@ Hence `B_2(Forrelation)≥2/π`; an explicit bounded quadratic test detects stru
 
 ## 6. Independent adversarial checker, novelty and decision gate
 
-Script: `research/nightfall/structural_information/check_structural_fourier_exact.py` (separate exact Python). It checks (i) exhaustive H tables at (m,N)=(1,1),(2,2) against (F3), (ii) independent character-expansion and pairwise-kernel formulas for B_k², (iii) rational Fourier Cauchy transfers, (iv) exact BV parity witness, and (v) Walsh–Hadamard orthogonality and global boundedness for the Forrelation quadratic form. **3,158 exact integer/Fraction assertions passed locally**, with SHA-256 `170344f61355cfa31f854ae0e3fe0a4cadb8b32cced56f430a47cd4196ea2a0b` for the tested source bytes. This cannot certify Gaussian integration, universal bounds, uniqueness, or external novelty.
+Script: `research/nightfall/structural_information/check_structural_fourier_exact.py` (separate exact Python). It checks (i) exhaustive H tables at (m,N)=(1,1),(2,2) against (F3), (ii) independent character-expansion and pairwise-kernel formulas for B_k², (iii) rational Fourier Cauchy transfers, (iv) exact BV parity witness, and (v) Walsh–Hadamard orthogonality and global boundedness for the Forrelation quadratic form. **3,160 exact integer/Fraction assertions passed locally**, with SHA-256 `a97a81bd817727c7e7979e7937d0eccdd469000e2e6fcda81ded961028d82e65` for the tested source bytes. This cannot certify Gaussian integration, universal bounds, uniqueness, or external novelty.
 
 Prior-art anchors:
 - multivariate Wyner≥DTC: Li et al., IEEE TIT 2017, Eq. (4): https://isl.stanford.edu/~abbas/papers/Distributed%20Simulation%20of%20Continuous%20Random%20Variables.pdf
