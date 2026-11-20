@@ -1,0 +1,44 @@
+name: NIGHTFALL tensor-simplex frame exact audit
+
+on:
+  push:
+    branches: [nightfall-tensor-simplex-frame-audit-20261119]
+    paths:
+      - 'research/nightfall/structural_information/dichotomy_tests/check_tensor_simplex.py'
+      - 'research/nightfall/structural_information/TENSOR_SIMPLEX_FRAME_AMPLIFICATION_20261119.md'
+      - '.github/workflows/nightfall-tensor-simplex-frame.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/**'
+      - '.github/workflows/nightfall-tensor-simplex-frame.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  exact-tensor-simplex:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exhaustive finite code-distance replay
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/structural_information/dichotomy_tests/check_tensor_simplex.py | tee tensor-simplex.log
+          grep -Fqx 'TENSOR_SIMPLEX_ALL_EXACT_PASS cases=9' tensor-simplex.log
+          test "$(grep -c '^TENSOR_SIMPLEX_DISTANCE_PASS ' tensor-simplex.log)" -eq 9
+      - name: Source and replay hashes
+        if: always()
+        run: |
+          sha256sum research/nightfall/structural_information/dichotomy_tests/check_tensor_simplex.py > tensor-simplex.sha256
+          if test -f tensor-simplex.log; then sha256sum tensor-simplex.log > tensor-replay.sha256; fi
+      - name: Retain replay artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tensor-simplex-exact-replay
+          path: |
+            tensor-simplex.log
+            tensor-simplex.sha256
+            tensor-replay.sha256
+          if-no-files-found: ignore
