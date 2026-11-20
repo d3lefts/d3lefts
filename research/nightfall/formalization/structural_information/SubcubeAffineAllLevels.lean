@@ -17,13 +17,8 @@ noncomputable def affineHits (n : Nat)
   exact ((R n).filter (fun r => r - a ∈ W)).card
 
 theorem affine_subset_span (n : Nat) (W : Submodule K (E n))
-    (a : E n) :
-    (R n).filter (fun r => r - a ∈ W) ⊆
-    (R n).filter (fun r => r ∈ (W ⊔ K ∙ a)) := by
-  classical
-  intro r hr
-  obtain ⟨hr, hcos⟩ := Finset.mem_filter.mp hr
-  refine Finset.mem_filter.mpr ⟨hr, ?_⟩
+    (a r : E n) (hcos : r - a ∈ W) :
+    r ∈ (W ⊔ K ∙ a) := by
   have hdiff : r - a ∈ (W ⊔ K ∙ a) :=
     (le_sup_left : W ≤ W ⊔ K ∙ a) hcos
   have ha : a ∈ (W ⊔ K ∙ a) :=
@@ -43,7 +38,9 @@ theorem all_levels_affine_quadratic (n : Nat)
   have hct : affineHits n W a ≤ rowHits (R n) U := by
     unfold affineHits rowHits
     apply Finset.card_le_card
-    exact affine_subset_span n W a
+    intro r hr
+    obtain ⟨hr, hcos⟩ := Finset.mem_filter.mp hr
+    exact Finset.mem_filter.mpr ⟨hr, affine_subset_span n W a r hcos⟩
   have hdim : Module.finrank K U ≤ Module.finrank K W + 1 := by
     dsimp [U]
     calc
