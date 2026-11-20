@@ -1,0 +1,44 @@
+name: NIGHTFALL small-doubling PFR-frame exact finite falsifier
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/SMALL_DOUBLING_FRAME_THEOREM_20261119.md'
+      - 'research/nightfall/structural_information/check_small_doubling_frame.py'
+      - '.github/workflows/nightfall-small-doubling-frame-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  frame-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Run integer-only proof-mechanism falsifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/structural_information/check_small_doubling_frame.py | tee check-small-doubling-frame.log
+          grep -q '^PASS 4055 finite R,H cases with exact integer Fourier/Bogolyubov/frame checks$' check-small-doubling-frame.log
+          grep -q "'N4_bound': 3395" check-small-doubling-frame.log
+          grep -q "'fourfold_containment': 4055" check-small-doubling-frame.log
+          grep -q "'frame_basis_rank': 4055" check-small-doubling-frame.log
+      - name: Preserve source and test provenance (not a Lean certificate)
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/small-doubling-frame
+          cp check-small-doubling-frame.log receipts/small-doubling-frame/ 2>/dev/null || true
+          sha256sum research/nightfall/structural_information/SMALL_DOUBLING_FRAME_THEOREM_20261119.md research/nightfall/structural_information/check_small_doubling_frame.py > receipts/small-doubling-frame/SHA256SUMS
+          git rev-parse HEAD > receipts/small-doubling-frame/effective-checkout-commit.txt
+          python3 --version > receipts/small-doubling-frame/python-version.txt
+      - name: Upload exact-head checker receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: small-doubling-frame-exact-receipt
+          path: receipts/small-doubling-frame/
+          if-no-files-found: error
+          retention-days: 90
