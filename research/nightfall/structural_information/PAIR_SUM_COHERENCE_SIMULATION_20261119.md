@@ -161,6 +161,22 @@ for L-level tensor subcubes, mu=L+1 implies
 
 These bounds hold at **T=1 and the initial uniform secret**. After conditioning on parity rows, identical quotient frequencies can merge and the effective collision number can increase; the proof does not furnish a uniform gamma for the entire quotient-closed family. It provides a concrete new **positive base case and target to generalize** for Claude's influence program, not an all-T quantum advantage characterization.
 
+## Lemma I.5: quotient transfer and the exact adaptive obstruction
+
+Let W be any binary subspace, π the quotient map onto F_2^m/W, and \(\bar A=\pi(A)\), treating repeated quotient rows as the same query. For every nonzero quotient frequency \(\bar v\), fix one representative a in A for each distinct quotient row. Each unordered pair of quotient rows with XOR \(\bar v\) maps injectively to a pair of original representatives whose sum lies in the affine coset \(v+W\). Therefore
+
+    mu(pi(A)) <= |W| mu(A) = 2^(dim W) mu(A).
+
+This is a **general exact combinatorial inequality**: multiplicity can increase exponentially in the number of independent parities conditioned upon, even when initial mu is small.
+
+After any transcript of row queries spanning W, the hidden secret is uniform on an affine coset of \(W^\perp\). Restrict a one-query quantum circuit to that transcript: each original query phase becomes a known sign times a quotient character, and the sectors belonging to distinct quotient characters remain orthogonal when the original query labels are grouped. Thus the proof of Theorem I and Corollary I.4 applies with the **quotient multiplicity** mu(pi(A)) and the conditional variance v_W. In particular,
+
+    max_{g in pi(R)} Inf_g(f | transcript)
+       >= v_W^3 / (64 mu(pi(A))^2)
+       >= v_W^3 / (64 * 4^(dim W) * mu(A)^2).
+
+This is a correct **transcript-relative influence inequality** for one-query quantum acceptance functions, not a uniform polynomial lower bound across all adaptive quotients. It exhibits exactly why an attempt to promote the initial one-query influence certificate to Claude's quotient-closed hypothesis (star) fails without an additional **quotient collision control** operator. It supplies an explicit finite algebraic research target (mu under adaptively chosen quotient spans), not a resolution of the full theorem.
+
 ## General sufficient certificate: Fourier-sector coherence at T queries
 
 This extension is **also author-side**, and is not a complete characterization. A T-query algorithm's final state has the Walsh expansion
