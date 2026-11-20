@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/structural_information/SubcubeSecantSlices.lean'
+      - 'research/nightfall/formalization/structural_information/SubcubeSecantMixed.lean'
       - 'research/nightfall/structural_information/SUBCUBE_SECANT_POLYNOMIAL_20261120.md'
       - 'scripts/check_subcube_secant_structural.py'
       - '.github/workflows/nightfall-subcube-secant-lean.yml'
@@ -24,12 +25,13 @@ jobs:
           set -euo pipefail
           mkdir -p secant-receipt
           dir=research/nightfall/formalization/structural_information
-          for f in SubcubeL3 SubcubeAllSpacesL3 SubcubeAllLevels SubcubeSecantSlices; do
+          for f in SubcubeL3 SubcubeAllSpacesL3 SubcubeAllLevels SubcubeAffineAllLevels SubcubeSecantSlices SubcubeSecantMixed; do
             cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "secant-receipt/$f.log"
             ! grep -F 'error:' "secant-receipt/$f.log"
           done
           (cd /tmp/mathlib4 && lake env leanchecker SubcubeSecantSlices) 2>&1 | tee secant-receipt/leanchecker.log
+          (cd /tmp/mathlib4 && lake env leanchecker SubcubeSecantMixed) 2>&1 | tee secant-receipt/leanchecker-mixed.log
           python3 - <<'PY'
           from pathlib import Path
           import re
@@ -42,7 +44,16 @@ jobs:
           assert len(r)>=1
           allowed={'propext','Classical.choice','Quot.sound'}
           assert all(set(y.strip() for y in x.split(',') if y.strip()) <= allowed for x in r)
+          second=Path('research/nightfall/formalization/structural_information/SubcubeSecantMixed.lean').read_text()
+          assert not re.search(r'(?m)^\s*(axiom|sorry|admit)\b',second)
+          log2=Path('secant-receipt/SubcubeSecantMixed.log').read_text()
+          assert 'error:' not in log2
+          assert 'mixed_product_bound' in log2
+          reports2=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log2)
+          assert len(reports2)>=1
+          assert all(set(y.strip() for y in x.split(',') if y.strip()) <= allowed for x in reports2)
           print('SIX_WAY_SECANT_LEAN_KERNEL_PASS')
+          print('MIXED_PRODUCT_QUARTIC_KERNEL_PASS')
           PY
       - name: Independent full finite checks
         shell: bash
@@ -56,7 +67,7 @@ jobs:
         run: |
           mkdir -p secant-receipt
           git rev-parse HEAD > secant-receipt/HEAD
-          sha256sum research/nightfall/formalization/structural_information/SubcubeSecantSlices.lean scripts/check_subcube_secant_structural.py research/nightfall/structural_information/SUBCUBE_SECANT_POLYNOMIAL_20261120.md > secant-receipt/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/SubcubeSecantSlices.lean research/nightfall/formalization/structural_information/SubcubeSecantMixed.lean scripts/check_subcube_secant_structural.py research/nightfall/structural_information/SUBCUBE_SECANT_POLYNOMIAL_20261120.md > secant-receipt/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
