@@ -59,7 +59,7 @@ Choose any linearly independent row subset `B⊆R` forming a basis of `span(R)`.
 
 ## Exact obstruction to overgeneralizing the partial theorem
 
-The `K` dependence is not removable by this reasoning. If R consists of n independent standard-basis rows, then `rank(R)=n`, `K=(n+1)/2`, and `|4·R|≤Σ_{j=0}^4 binom(n,j)`. Therefore `N₄(R)≤log₂ Σ_{j≤4}binom(n,j)=O(log n)`, while the **best frame is B=R with c=c′=1** and `Λ_T=1`.
+The `K` dependence is not removable by this reasoning. If R consists of n independent standard-basis rows, then `rank(R)=n`, `K=(1+binom(n,2))/n=(n−1)/2+1/n`, and `|4·R|≤Σ_{j=0}^4 binom(n,j)`. Therefore `N₄(R)≤log₂ Σ_{j≤4}binom(n,j)=O(log n)`, while the **best frame is B=R with c=c′=1** and `Λ_T=1`.
 
 So the frame may already be cheap when K is enormous, but PFR's coset-cover parameter cannot distinguish it from the hard intermediate cases. The full Conjecture E requires a replacement invariant (e.g. a growth/dependency profile or adaptive decomposition) rather than merely bounding the same PFR parameter harder.
 
