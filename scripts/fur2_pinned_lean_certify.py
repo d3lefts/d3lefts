@@ -17,11 +17,14 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 VENDOR = ROOT / "research/nightfall/formalization/vendor/aaronson_ambainis"
 PRODUCT = ROOT / "research/nightfall/formalization/product_space/ProductRowBound.lean"
+OBSERVER = ROOT / "research/nightfall/formalization/observability"
+RANGE = ROOT / "research/nightfall/formalization/fur/FUR2RangeEight.lean"
 TARGET = ROOT / "research/nightfall/formalization/fur/FUR2AnchoredRow.lean"
 WORK = Path("/tmp/mathlib4")
 MATHLIB = "9d581dfff2e41de989072ea63abf3daf69311520"
 TOOLCHAIN = "leanprover/lean4:v4.36.0-rc2"
 NAMES = [
+    "Nightfall.MixtureAA.FUR2.quadratic_coordinate_range_eight",
     "Nightfall.MixtureAA.FUR2.disagree_inactive_transitions",
     "Nightfall.MixtureAA.FUR2.anchored_transition_row",
     "Nightfall.MixtureAA.FUR2.fiber_uniform_row_of_quadratic_transition",
@@ -37,8 +40,10 @@ def source_map() -> dict[str, Path]:
         p.relative_to(VENDOR).with_suffix("").as_posix().replace("/", "."): p
         for p in VENDOR.rglob("*.lean")
     }
-    files.update({"ProductRowBound": PRODUCT, "FUR2AnchoredRow": TARGET})
-    if any(not path.is_file() for path in (PRODUCT, TARGET)):
+    files.update({p.stem:p for p in OBSERVER.rglob("*.lean") if p.stem not in files})
+    files.update({"ProductRowBound": PRODUCT, "FUR2AnchoredRow": TARGET,
+                  "FUR2RangeEight": RANGE})
+    if any(not path.is_file() for path in (PRODUCT, TARGET, RANGE)):
         raise RuntimeError("required source file absent")
     return files
 
@@ -60,8 +65,10 @@ def dependency_order(files: dict[str, Path]) -> list[str]:
                     visit(dep)
         visited[name] = "done"
         order.append(name)
+    visit("FUR2RangeEight")
     visit("FUR2AnchoredRow")
-    assert order[-2:] == ["ProductRowBound", "FUR2AnchoredRow"]
+    assert order[-1] == "FUR2AnchoredRow"
+    assert "QuadraticRealizedRangeBudget" in order and "ProductRowBound" in order
     return order
 
 
@@ -97,7 +104,7 @@ def compile_order(order: list[str], files: dict[str,Path], receipt:Path):
         output["sources"].append({"module":mod,"original_path":str(files[mod].relative_to(ROOT)),"sha256":sha(files[mod])})
     probe=WORK/"FUR2AxiomAudit.lean"
     probe.write_text(
-       "import FUR2AnchoredRow\n" +
+       "import FUR2AnchoredRow\nimport FUR2RangeEight\n" +
        "\n".join("#print axioms "+name for name in NAMES) + "\n" +
        "\n".join("#check "+name for name in NAMES) + "\n")
     p=subprocess.run(["lake","env","lean",probe.name],cwd=WORK,text=True,
@@ -117,11 +124,12 @@ def compile_order(order: list[str], files: dict[str,Path], receipt:Path):
             raise RuntimeError("unknown Lean axiom report format: "+line)
         if not names <= permitted:
             raise RuntimeError("nonstandard axioms: "+str(names-permitted))
-    p=subprocess.run(["lake","env","leanchecker","FUR2AnchoredRow"],cwd=WORK,
-                     text=True,capture_output=True,timeout=900)
-    (receipt/"kernel-replay.txt").write_text(p.stdout+"\n"+p.stderr)
-    if p.returncode:
-        raise RuntimeError("leanchecker rejected compiled terminal")
+    for mod in ("FUR2AnchoredRow","FUR2RangeEight"):
+        p=subprocess.run(["lake","env","leanchecker",mod],cwd=WORK,
+                         text=True,capture_output=True,timeout=900)
+        (receipt/(mod+"-kernel-replay.txt")).write_text(p.stdout+"\n"+p.stderr)
+        if p.returncode:
+            raise RuntimeError("leanchecker rejected compiled terminal: "+mod)
     output["status"]="pinned-kernel-pass-conditional-theorem"
     output["compiled_modules"]=len(order)
     output["allowed_axioms"]=sorted(permitted)
