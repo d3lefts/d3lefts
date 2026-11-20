@@ -30,7 +30,7 @@ independent mathematical review. Keep efficiency benchmarks separate from
 correctness and do not collapse any of these gates.
 
 Run `python3 scripts/check_formalization_differential.py --self-test`
-(16 adversarial controls) before adopting a new computational family. For
+(18 adversarial controls) before adopting a new computational family. For
 a frozen family, also run
 `python3 scripts/check_formalization_differential.py --manifest <manifest.json> --root .`
 and independently run each manifest's recorded producer command. The audit
