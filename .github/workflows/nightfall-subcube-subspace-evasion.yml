@@ -1,0 +1,39 @@
+name: NIGHTFALL tensor subcube subspace evasiveness exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/SUBCUBE_SUBSPACE_EVASION_20261119.md'
+      - 'scripts/check_subcube_subspace_evasion.py'
+      - '.github/workflows/nightfall-subcube-subspace-evasion.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-finite-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Replay complete finite subspace and affine audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p subcube-evasive-receipt
+          python3 -I scripts/check_subcube_subspace_evasion.py 2>&1 | tee subcube-evasive-receipt/exact.log
+          grep -F 'SUBCUBE_SUBSPACE_EVASION_EXACT_FINITE_PASS' subcube-evasive-receipt/exact.log
+          sha256sum research/nightfall/structural_information/SUBCUBE_SUBSPACE_EVASION_20261119.md scripts/check_subcube_subspace_evasion.py > subcube-evasive-receipt/SHA256SUMS
+          git rev-parse HEAD > subcube-evasive-receipt/commit.txt
+          printf '%s\n' 'Scope: exact finite exhaustive checks through L=3; all-L theorem author-side, T>=2 still open' > subcube-evasive-receipt/limits.txt
+      - name: Preserve source and checker exact-head hashes
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-subcube-subspace-evasion
+          path: subcube-evasive-receipt/
+          if-no-files-found: warn
+          retention-days: 30
