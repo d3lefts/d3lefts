@@ -67,9 +67,16 @@ def discrepancy_expectation(m,N,k):
 for m,N in [(1,1),(2,2)]:
     R=1<<m
     sums=[F() for _ in range(m+N)]
+    information_deficits=F()
     for mask in range(1<<(N*R)):
         tab=[[((mask>>(j*R+s))&1) for s in range(R)] for j in range(N)]
         samples=graph(m,N,tab)
+        # Graph dual-total-correlation deficit: one bit of uncertainty per
+        # collision of the two possible seed completions in each i-fiber.
+        for i in range(m):
+            collisions=sum(all(tab[j][s]==tab[j][s^(1<<i)] for j in range(N))
+                           for s in range(R) if (s>>i)&1==0)
+            information_deficits+=F(collisions,R//2)
         for k in range(1,m+N+1):
             energy,bs=energy_direct(samples,k)
             independent=energy_pair_kernel(samples,k)
@@ -78,6 +85,8 @@ for m,N in [(1,1),(2,2)]:
             ck(all(bs.get(S,F())==0 for ell in range(1,k+1) for S in combinations(range(m),ell)),('seed-only Fourier',m,mask,k))
             sums[k-1]+=energy
         cases+=1
+    ck(information_deficits/F(1<<(N*R))==F(m,1<<N),
+       ('exact random-graph DTC deficit ensemble',m,N))
     for k,total in enumerate(sums,1):
         ck(total/F(1<<(N*R))==discrepancy_expectation(m,N,k),('exact ensemble second moment',m,N,k))
 
