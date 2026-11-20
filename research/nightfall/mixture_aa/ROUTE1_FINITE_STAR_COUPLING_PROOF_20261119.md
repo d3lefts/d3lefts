@@ -4,7 +4,7 @@
 
 ## Theorem (paper-level)
 
-Let I be finite, each A_i finite nonempty, and let nu=sum_{theta=1}^M pi_theta P_theta be an arbitrary known finite mixture of product laws P_theta=otimes_i p_theta,i. The mixture weights and coordinate masses may vanish. Let f:prod_i A_i -> [0,1] have indicator interaction degree at most d, d>=1. For any 0<epsilon,delta<1, a deterministic adaptive decision tree approximates f with nu-probability of error >epsilon at most delta, using at most
+If I is empty, f is constant and the theorem uses zero queries; henceforth assume I nonempty. Let I be finite, each A_i finite nonempty, and let nu=sum_{theta=1}^M pi_theta P_theta be an arbitrary known finite mixture of product laws P_theta=otimes_i p_theta,i. The mixture weights and coordinate masses may vanish. Let f:prod_i A_i -> [0,1] have indicator interaction degree at most d, d>=1. For any 0<epsilon,delta<1, a deterministic adaptive decision tree approximates f with nu-probability of error >epsilon at most delta, using at most
 
     ceil[(2/delta) (d^2/gamma + ln(M)*(c_d/gamma)^3)]
 
