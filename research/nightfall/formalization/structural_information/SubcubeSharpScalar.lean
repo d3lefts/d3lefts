@@ -42,6 +42,7 @@ theorem scalar_sorted (p a b : ℝ)
   have hv : 0 ≤ v := div_nonneg (by positivity) ht.le
   have hweights : w+v=1 := by
     dsimp [w, v]
+    rw [← add_div]
     apply (div_eq_iff ht.ne').2
     dsimp [t]
     ring
@@ -50,8 +51,7 @@ theorem scalar_sorted (p a b : ℝ)
     exact div_mul_cancel₀ _ ht.ne'
   have hvt : v*(t/2)=b := by
     dsimp [v]
-    field_simp [ht.ne']
-    ring
+    field_simp [ht.ne'] <;> ring
   have hpow :
       3 * (t/2)^p ≤ t^p := by
     calc
@@ -61,14 +61,17 @@ theorem scalar_sorted (p a b : ℝ)
         rw [mul_comm, ← Real.mul_rpow (by positivity) (by positivity)]
         congr 1
         ring
+  have ht2 : t / 2 ∈ Set.Ici (0:ℝ) := by
+    change 0 ≤ t / 2
+    positivity
   have hconvA :
       (w • t + v • (t/2))^p ≤ w • (t^p) + v • ((t/2)^p) :=
     (convexOn_rpow hp).2
-      (by exact le_of_lt ht) (by positivity) hw hv hweights
+      (by exact le_of_lt ht) ht2 hw hv hweights
   have hconvB :
       (w • (0:ℝ) + v • (t/2))^p ≤ w • ((0:ℝ)^p) + v • ((t/2)^p) :=
     (convexOn_rpow hp).2
-      (by simp) (by positivity) hw hv hweights
+      (by simp) ht2 hw hv hweights
   have hA : a^p ≤ w*t^p + v*(t/2)^p := by
     simpa only [smul_eq_mul, hwt, hvt, sub_add_cancel] using hconvA
   have hB : b^p ≤ v*(t/2)^p := by
@@ -76,8 +79,9 @@ theorem scalar_sorted (p a b : ℝ)
   have hbound : w*t^p + 3*v*(t/2)^p ≤ t^p := by
     calc
       w*t^p + 3*v*(t/2)^p ≤ w*t^p + v*t^p := by
-        apply add_le_add_left
-        nlinarith [mul_le_mul_of_nonneg_left hpow hv]
+        have hmul : 3*v*(t/2)^p ≤ v*t^p := by
+          nlinarith [mul_le_mul_of_nonneg_left hpow hv]
+        exact add_le_add_right hmul _
       _ = t^p := by rw [← add_mul, hweights, one_mul]
   change a^p + 2*b^p ≤ t^p
   linarith
@@ -100,15 +104,15 @@ theorem triple_rpow (p q a b c : ℝ)
     linarith
   rcases le_total a b with hab' | hba
   · rcases le_total b c with hbc' | hcb
-    · have h := sorted c b a hc hb ha hbc' hab' hbc
+    · have h := sorted c b a hc hb ha hbc' hab' (by linarith : c+b ≤ q)
       linarith
     · rcases le_total a c with hac' | hca
       · have h := sorted b c a hb hc ha hcb hac' hbc
         linarith
-      · have h := sorted b a c hb ha hc hab' hca hab
+      · have h := sorted b a c hb ha hc hab' hca (by linarith : b+a ≤ q)
         linarith
   · rcases le_total a c with hac' | hca
-    · have h := sorted c a b hc ha hb hac' hba hac
+    · have h := sorted c a b hc ha hb hac' hba (by linarith : c+a ≤ q)
       linarith
     · rcases le_total b c with hbc' | hcb
       · have h := sorted a c b ha hc hb hca hbc' hac
