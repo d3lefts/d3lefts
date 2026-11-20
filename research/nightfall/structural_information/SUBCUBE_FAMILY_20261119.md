@@ -51,10 +51,57 @@ nonempty `Z_b` contributes at least `2^L`, giving `2^L · 2^L ≤ c · 3^L`, i.e
   `T`-query algorithm gains at most `T L log₂ 3` bits (Holevo), and the exact recovery probability is
   `|T·R|/2^m ≤ 3^{LT}/2^{2^L}` (`SECRET_RECOVERY_SUMSETS`).
 
+
+## Theorem H′ (merged-symbol representations are no better; proved)
+
+Consider any exact **linear** local representation of the subcube input of the kind used in
+Theorems B and F: symbols `σ_j = M_j S ∈ F_2^{k_j}` (any sizes, so frames and merged blocks are both
+included), such that
+
+* every row `⟨1_C, S⟩` is a function of at most `c` symbols (quantum direction),
+* every symbol is computed from at most `c′` rows (classical direction; in particular `k_j ≤ c′`),
+* any `h > 3c` symbols are independent and uniform (what Theorem A needs).
+
+Then `c · c′ ≥ (4/3)^L = m^{0.415}`.
+
+*Proof.* Write `W_j` for the row space of `M_j`. Independence of any `h` symbols means any `h` of the
+`W_j` form a direct sum. A row that is a function of the symbols in `J_C` (`|J_C| ≤ c`) is a linear
+functional on them, so `1_C = ∑_{j ∈ J_C} π_j(C)` with `π_j(C) ∈ W_j`. For halves,
+`1_C + 1_{C_0} + 1_{C_1} = 0` involves at most `3c < h` of the `W_j`, so by directness
+`π_j(C) = π_j(C_0) + π_j(C_1)` for every `j`. By induction each `π_j` extends to a linear map on
+`F_2^{2^L}` with `π_j(1_C) = ∑_{z ∈ C} π_j(1_z)`, and `∑_j π_j = id`.
+
+If `π_j ≠ 0`, pick a functional `λ` with `λ ∘ π_j ≠ 0` and let `Z` be its support on points. Then
+`π_j(1_C) ≠ 0` whenever `|Z ∩ C|` is odd, which happens for at least `2^L` subcubes (code distance).
+Since `∑_j rank π_j ≥ 2^L` and `rank π_j ≤ k_j ≤ c′`, at least `2^L / c′` maps are nonzero. Counting
+pairs `(j, C)` with `π_j(1_C) ≠ 0`:
+
+    (2^L / c′) · 2^L ≤ ∑_C |J_C| ≤ c · 3^L,   so   c · c′ ≥ (4/3)^L. ∎
+
+**Consequence.** Every simulation route built so far for linear inputs (frames, merged balanced
+blocks, towers of merges) is an exact linear local representation followed by Theorem A, and all of
+them cost `m^{Ω(1)}` on subcube parities, against a subspace number `O(T log m)`. So for this family
+**either there is a quantum advantage, or the classical simulator must be of a new kind**:
+nonlinear, approximate, or adaptive in a way no fixed representation captures.
+
+## One-query evidence (heuristic, not a proof)
+
+Embed rows as nonzero rank-one tensors and add the zero tensor (phase 1, no query). One query then
+gives the state `∑_v (−1)^{g_S(v)} |v⟩` over `v ∈ (F_2^2)^L`, where `g_S(v_1, …, v_L) = S(v_1, …, v_L)` is
+the random `L`-linear form, and a Fourier transform samples `w` with probability `ĝ_S(w)²`. For a
+subspace `A` with annihilator `U`,
+
+    ∑_{w ∈ A} ĝ_S(w)² = |A| · E_{v, u ∈ U} (−1)^{g_S(v) + g_S(v + u)},
+
+an average of derivatives of `g_S`: a bias, or analytic-rank-type, statistic of a random tensor. For
+the natural choices of `U`, for example one coordinate block, giving `Pr_{v_{<L}}[S(v_1, …, v_{L−1}, ·) = 0]`,
+these concentrate around their means for random `S`, so a classical simulator can output a constant.
+A proof for all one-query algorithms would need a concentration theorem for every such statistic
+that is not determined by few rows. That is the precise target for settling the family.
+
 ## Next
 
-1. Extend Theorem H's counting to merged-symbol representations (Theorem F type), to see whether any
-   exact local representation can be cheap here.
+1. (Done: Theorem H′.)
 2. Attack the advantage question directly for `T = 1`: the acceptance probability is a PSD quadratic
    form `yᵀKy` (`tr K ≤ 1`) in the signs `y_C = (−1)^{x_C}`, which are pairwise independent with
    dependencies of weight 3 only from halving. A degree-2 influence argument under this law is the
