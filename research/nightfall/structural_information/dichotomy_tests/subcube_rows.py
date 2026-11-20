@@ -1,5 +1,5 @@
 import sys, itertools
-sys.path.insert(0,'/tmp/sumset'); from test import sumsets, maxsub
+sys.path.insert(0,'.'); from sumset_tests import sumsets, maxsub
 def subcube_rows(L):
     R=[]
     for spec in itertools.product((0,1,2),repeat=L):  # 0: z_i=0, 1: z_i=1, 2: free
