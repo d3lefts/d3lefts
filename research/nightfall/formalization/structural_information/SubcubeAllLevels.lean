@@ -40,17 +40,24 @@ instance instFD (n : Nat) : FiniteDimensional K (E n) := by
       change FiniteDimensional K (E n × E n)
       infer_instance
 
-noncomputable instance instDecEq (n : Nat) : DecidableEq (E n) :=
-  Classical.decEq _
+instance instDecEq (n : Nat) : DecidableEq (E n) := by
+  induction n with
+  | zero => change DecidableEq K; infer_instance
+  | succ n ih =>
+      letI : DecidableEq (E n) := ih
+      change DecidableEq (E n × E n)
+      infer_instance
 
 /-- At every level take the union of (r,0), (0,r), and (r,r). -/
-noncomputable def R : (n : Nat) → Finset (E n)
-  | 0 => {1}
+def R : (n : Nat) → Finset (E n)
+  | 0 => R0
   | n+1 => rowsUp (R n)
 
 /-- The exact dimension of the recursively represented tensor space. -/
 theorem finrank_E : ∀ n : Nat, Module.finrank K (E n) = 2^n
-  | 0 => by norm_num [E]
+  | 0 => by
+      change Module.finrank K K = 1
+      exact Module.finrank_self K
   | n+1 => by
       change Module.finrank K (E n × E n) = 2^(n+1)
       rw [Module.finrank_prod, finrank_E n, pow_succ]
@@ -69,11 +76,12 @@ theorem all_levels_budget (f : Nat → Nat)
   induction n with
   | zero =>
       intro W
-      have h : rowHits (R 0) W ≤ cap0 (Module.finrank K W) := rank_base0 W
+      have h : rowHits (R 0) W ≤ cap0 (Module.finrank K W) := by
+        simpa only [R] using (rank_base0 W)
       exact h.trans (hBase _)
   | succ n ih =>
       intro W
-      change rowHits (rowsUp (R n)) W ≤ f (Module.finrank K W)
+      rw [R]
       exact lift_bound (R n) f f (2^n) (finrank_E n) ih
         (by
           intro q a b c hab hac hbc
@@ -115,7 +123,8 @@ theorem all_levels_quadratic (n : Nat) (W : Submodule K (E n)) :
 
 /-- For comparison, the new recursive construction specializes definitionally to
     the formerly kernel-checked finite levels. -/
-theorem source_L3 : R 3 = R3 := rfl
+theorem source_L3 : R 3 = R3 := by
+  rfl
 
 #print axioms Nightfall.StructuralInformation.SubcubeAllLevels.finrank_E
 #print axioms Nightfall.StructuralInformation.SubcubeAllLevels.all_levels_budget
