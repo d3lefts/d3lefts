@@ -99,6 +99,11 @@ def main():
         check('grid_exact_mu',mu==2)
         if L<=5:psd_moments(R,mu,L+20)
         table.append(('grid',L,len(R),mu))
+    for n in range(2,11):
+        R=[0]+[1<<i for i in range(1,n+1)]+[(1<<i)|1 for i in range(1,n+1)]
+        C=collisions(R)
+        check('paired_latent_exact_mu',max(C.values())==n and C[1]==n)
+        table.append(('paired-latent',n,len(R),n))
     for m in range(1,6):
         R=list(range(1<<m));C=collisions(R);mu=max(C.values())
         check('BV_exact_mu',mu==2**(m-1))
