@@ -42,7 +42,7 @@ jobs:
           cp research/nightfall/formalization/product_space/Route1StarMaximalBridge.lean /tmp/mathlib4/Route1StarMaximalBridge.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1StarMaximalBridge.olean Route1StarMaximalBridge.lean) 2>&1 | tee -a lean-receipts/route1-maximal-kernel/compile.log
           test -s /tmp/mathlib4/.lake/build/lib/lean/Route1StarMaximalBridge.olean
-          ! grep -E '(^|:)error:' lean-receipts/route1-maximal-kernel/compile.log
+          ! grep -E '(^|:)error(:|\\()' lean-receipts/route1-maximal-kernel/compile.log
       - name: Independently replay Lean kernel and check exact axiom sets
         shell: bash
         run: |
@@ -71,7 +71,7 @@ jobs:
             'Nightfall.Route1StarMaximalBridge.finite_star_maximal_exists'
           ]
           Path('Route1MaximalAxiomAudit.lean').write_text(
-            'import Route1StarMaximalBridge\n' +
+            'import Route1StarMaximalTerminal\nimport Route1StarMaximalBridge\n' +
             ''.join('#print axioms '+(n if n.startswith('Nightfall.') else 'Nightfall.Route1FiniteMaxCoupling.'+n)+'\n' for n in names))
           PY
           lake env lean Route1MaximalAxiomAudit.lean 2>&1 | tee "$GITHUB_WORKSPACE/lean-receipts/route1-maximal-kernel/axioms.log"
