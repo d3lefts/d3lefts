@@ -1,0 +1,39 @@
+name: NIGHTFALL subcube one-query fiber simulation audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/SUBCUBE_ONE_QUERY_SIMULATION_20261119.md'
+      - 'scripts/check_subcube_one_query.py'
+      - '.github/workflows/nightfall-subcube-onequery-fibers.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-fiber-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Replay exact pair counts and quantum state truncation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p subcube-onequery-receipt
+          python3 -I scripts/check_subcube_one_query.py 2>&1 | tee subcube-onequery-receipt/replay.log
+          grep -F 'SUBCUBE_ONE_QUERY_SIMULATION_EXACT_AUDIT_PASS' subcube-onequery-receipt/replay.log
+          sha256sum research/nightfall/structural_information/SUBCUBE_ONE_QUERY_SIMULATION_20261119.md scripts/check_subcube_one_query.py > subcube-onequery-receipt/SHA256SUMS
+          git rev-parse HEAD > subcube-onequery-receipt/commit.txt
+          printf '%s\n' 'Author-side all-L one-query proof; exact finite tests only; no Lean, arbitrary-T or priority certification' > subcube-onequery-receipt/limits.txt
+      - name: Preserve immutable check outputs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-subcube-onequery-${{ github.run_id }}-${{ github.run_attempt }}
+          path: subcube-onequery-receipt/
+          if-no-files-found: warn
+          retention-days: 30
