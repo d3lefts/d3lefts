@@ -49,9 +49,9 @@ jobs:
           for x in reports:
               assert set(z.strip() for z in x.split(',') if z.strip())<=allowed
           s2=Path('research/nightfall/formalization/structural_information/SubcubeAllLevels.lean').read_text()
-          assert not re.search(r'(?m)^\\s*(axiom|sorry|admit)\\b',s2)
+          assert not re.search(r'(?m)^\s*(axiom|sorry|admit)\b',s2)
           log2=Path('subcube-allspaces-lean/compile-allL.log').read_text()
-          reports2=re.findall(r'depends on axioms:\\s*\\[([^\\]]*)\\]',log2)
+          reports2=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log2)
           assert len(reports2)+log2.count('does not depend on any axioms')>=4
           for x in reports2:
               assert set(z.strip() for z in x.split(',') if z.strip())<=allowed
