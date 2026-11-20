@@ -79,3 +79,21 @@ simulates subcube parities cheaply, yet Theorem I does at `T = 1`.
   `T = o(log m / log log m)` queries. Writing the adaptive `T`-query version is the next target.
 * Conceptually, Theorems H, I and K show that the classical side of a characterization needs
   **energy-based (analytic) simulators**, not only exact representations.
+
+
+## Independent B-side replay: exact finite check and the T=2 failure boundary
+
+Theorem I and Proposition J above were **already developed by Claude**. An independent derivation and checker, now archived in [PROOF_PASSPORT_SUBCUBE_T1_20261119.md](PROOF_PASSPORT_SUBCUBE_T1_20261119.md) and \`scripts/check_subcube_one_query.py\`, reproduce the same \(2\mu/(\varepsilon^2\delta)\) theorem with a quantum-positive-contraction matrix and preserve the omitted diagonal contribution exactly. The separate exact checker exhausts XOR pair-fibers for \(L=1,\dots,5\), all secret assignments for finite \(L=1,2,3\) under explicit normalized one-query projectors, and rational Parseval/Frobenius estimates; it is **finite reproduction**, not an independent proof of all \(L\) or a Lean/human review.
+
+**Explicit obstruction to a naïve T=2 extension.** Let \(a,b\) be distinct available row vectors. Use the ordinary bit oracle in its phase eigenbasis on a two-dimensional answer register, with phase \(D_r=\operatorname{diag}(1,\chi_r(s))\). Start in \((|0\rangle+|1\rangle)/\sqrt2\), query \(a\), apply \(U=\left(\begin{smallmatrix}3/5&-4/5\\4/5&3/5\end{smallmatrix}\right)\), and query \(b\). The resulting normalized state is
+\[
+|\psi_s\rangle=\frac{(3-4\chi_a)|0\rangle+
+ \chi_b(4+3\chi_a)|1\rangle}{5\sqrt2}.
+\]
+The Fourier-state components at frequencies \(0\) and \(a\) are parallel, with inner product \(-6/25\); likewise for \(b\) and \(a+b\). Hence frequency-sector orthogonality, the essential T=1 step in Theorem I, is false for general T=2 processes. Measurement in the \(|+\rangle\) basis has exact acceptance probability
+\[
+\Pr(+\mid s)=\tfrac12-\tfrac7{50}\chi_{a+b}(s),
+\]
+verified for all four parity assignments with exact rational arithmetic. This does **not** establish any quantum advantage and does **not** disprove a different \(T=2\) simulator. It rules out copying the T=1 orthogonal-frequency matrix estimate without a new operator inequality.
+
+**Status of this addendum:** independent exact finite replay + author-side elementary T2 falsifier. No new general-T bound or novelty claim.
