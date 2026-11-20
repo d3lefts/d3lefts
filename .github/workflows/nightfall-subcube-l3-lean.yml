@@ -1,0 +1,60 @@
+name: NIGHTFALL subcube L3 pinned Lean kernel gate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/SubcubeL3.lean'
+      - '.github/workflows/nightfall-subcube-l3-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  subcube-l3-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source and run independent kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p subcube-l3-lean-receipt
+          cp research/nightfall/formalization/structural_information/SubcubeL3.lean /tmp/mathlib4/SubcubeL3.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SubcubeL3.olean SubcubeL3.lean) 2>&1 | tee subcube-l3-lean-receipt/compile.log
+          ! grep -E '(^|:)error:' subcube-l3-lean-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker SubcubeL3) 2>&1 | tee subcube-l3-lean-receipt/leanchecker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('research/nightfall/formalization/structural_information/SubcubeL3.lean').read_text()
+          assert not re.search(r'\b(sorry|admit|axiom)\b',p), 'untrusted proof escape found'
+          log=Path('subcube-l3-lean-receipt/compile.log').read_text()
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          none_count=log.count('does not depend on any axioms')
+          assert len(reports)+none_count==6, f'expected 6 declarations; got {len(reports)} with axioms and {none_count} without'
+          allowed={'propext','Classical.choice','Quot.sound'}
+          for report in reports:
+              axioms={x.strip() for x in report.split(',') if x.strip()}
+              assert axioms <= allowed, f'unexpected axioms: {axioms-allowed}'
+          print('SUBCUBE_L3_PINNED_KERNEL_PASS')
+          PY
+      - name: Preserve checked head and source hashes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p subcube-l3-lean-receipt
+          git rev-parse HEAD > subcube-l3-lean-receipt/commit.txt
+          sha256sum research/nightfall/formalization/structural_information/SubcubeL3.lean > subcube-l3-lean-receipt/SHA256SUMS
+          printf '%s\n' 'Lean 4.36.0-rc2 / Mathlib 9d581dfff2e41de989072ea63abf3daf69311520' > subcube-l3-lean-receipt/toolchain.txt
+          printf '%s\n' 'Scope: explicit algebra L<=3, dimension budget and fixed quotient witnesses; not a kernel proof of unrestricted all-L S1 or adaptive T>=2 theorem.' > subcube-l3-lean-receipt/limits.txt
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: subcube-l3-pinned-lean
+          path: subcube-l3-lean-receipt/
+          retention-days: 90
+          if-no-files-found: warn
