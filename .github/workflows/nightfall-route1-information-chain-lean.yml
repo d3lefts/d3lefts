@@ -1,0 +1,70 @@
+name: NIGHTFALL finite Shannon information chain pinned Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1FiniteInformationChain.lean'
+      - '.github/workflows/nightfall-route1-information-chain-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  information-chain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install and verify active pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source-defined finite information identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/route1-information-chain
+          cp research/nightfall/formalization/product_space/Route1FiniteInformationChain.lean /tmp/mathlib4/Route1FiniteInformationChain.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1FiniteInformationChain.olean Route1FiniteInformationChain.lean) 2>&1 | tee receipts/route1-information-chain/compile.log
+          test -s /tmp/mathlib4/.lake/build/lib/lean/Route1FiniteInformationChain.olean
+          ! grep -E '(^|:)error:' receipts/route1-information-chain/compile.log
+      - name: Replay kernel and strict source axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker Route1FiniteInformationChain) 2>&1 | tee receipts/route1-information-chain/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s = Path('receipts/route1-information-chain/compile.log').read_text()
+          names = [
+             'Nightfall.Route1FiniteInformationChain.finite_information_chain',
+             'Nightfall.Route1FiniteInformationChain.finite_information_chain_reverse',
+          ]
+          for name in names:
+              if name not in s: raise SystemExit('missing axiom report: '+name)
+          reports = re.findall(r'depends on axioms:\s*\[([^\]]*)\]', s, re.S)
+          allowed = {'propext','Classical.choice','Quot.sound'}
+          for report in reports:
+              axioms = {x.strip() for x in report.split(',') if x.strip()}
+              if not axioms <= allowed: raise SystemExit('nonstandard axioms: '+str(axioms - allowed))
+          if 'sorryAx' in s: raise SystemExit('sorryAx found')
+          source=Path('research/nightfall/formalization/product_space/Route1FiniteInformationChain.lean').read_text()
+          if re.search(r'(?m)^\s*(sorry|admit|axiom)\b',source): raise SystemExit('source contains an admission/axiom')
+          print('PASS: two source-defined finite Shannon chain identities. NOT full Route1/Wyner theorem')
+          PY
+      - name: Preserve immutable compiler and source receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/route1-information-chain
+          git rev-parse HEAD > receipts/route1-information-chain/commit.txt
+          sha256sum research/nightfall/formalization/product_space/Route1FiniteInformationChain.lean > receipts/route1-information-chain/SHA256SUMS
+          cp docs/lean-compiler-lock.json receipts/route1-information-chain/lean-compiler-lock.json
+      - name: Archive evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: nightfall-route1-information-chain-kernel
+          path: receipts/route1-information-chain
+          retention-days: 90
+          if-no-files-found: error
