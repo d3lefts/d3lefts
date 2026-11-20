@@ -9,8 +9,6 @@ open Nightfall.StructuralInformation.SubcubeAllSpacesL3
 /-! The tower uses the *same* three tensor embeddings as the exact L<=3 theorem.
     All quantifiers below range over arbitrary linear subspaces, not preselected RREF matrices. -/
 
-abbrev K := ZMod 2
-
 /-- Tensor ambient spaces: E_L has dimension 2^L. -/
 def E : Nat → Type
   | 0 => K
