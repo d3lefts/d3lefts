@@ -1,0 +1,78 @@
+name: NIGHTFALL Route1 source-compatible all-degree lift Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1DegreeSourceBridge.lean'
+      - '.github/workflows/nightfall-route1-source-degree-bridge-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-degree:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source RowBound dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/route1-degree-source
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            case "$M" in
+              AaronsonAmbainis.*|ProductRowBound)
+                REL="$(printf '%s' "$M" | tr . /)"
+                mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+                cp "$P" "/tmp/mathlib4/$REL.lean"
+                (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") 2>&1 | tee -a receipts/route1-degree-source/source-closure.log
+                if [ "$M" = "ProductRowBound" ]; then break; fi
+                ;;
+            esac
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+          test -s /tmp/mathlib4/.lake/build/lib/lean/ProductRowBound.olean
+      - name: Compile source-connected d-to-d+1 latent lift
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/product_space/Route1LatentDegree.lean /tmp/mathlib4/Route1LatentDegree.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1LatentDegree.olean Route1LatentDegree.lean) 2>&1 | tee receipts/route1-degree-source/compile.log
+          cp research/nightfall/formalization/product_space/Route1DegreeSourceBridge.lean /tmp/mathlib4/Route1DegreeSourceBridge.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1DegreeSourceBridge.olean Route1DegreeSourceBridge.lean) 2>&1 | tee -a receipts/route1-degree-source/compile.log
+          ! grep -E '(^|:)error:' receipts/route1-degree-source/compile.log
+      - name: Independent kernel replay, source name and standard axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker Route1DegreeSourceBridge) 2>&1 | tee receipts/route1-degree-source/checker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/route1-degree-source/compile.log').read_text()
+          reports=re.findall(r"depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          assert len(reports)==6,('expected three base + three source axiom reports',len(reports))
+          assert 'source_latent_degree_succ' in s
+          for x in reports:
+              a={z.strip() for z in x.split(',') if z.strip()}
+              assert a <= {'Classical.choice','propext','Quot.sound'},a
+          assert 'sorryAx' not in s
+          print('PASS source RowBound-compliant general-d latent degree kernel bridge')
+          PY
+      - name: Preserve immutable source evidence
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/route1-degree-source
+          git rev-parse HEAD > receipts/route1-degree-source/commit.txt
+          sha256sum research/nightfall/formalization/product_space/Route1LatentDegree.lean research/nightfall/formalization/product_space/Route1DegreeSourceBridge.lean > receipts/route1-degree-source/SHA256SUMS
+      - name: Upload exact-head receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: route1-degree-source-lean-receipt
+          path: receipts/route1-degree-source
+          if-no-files-found: warn
+          retention-days: 90
