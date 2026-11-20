@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/mixture_aa/ROUTE1_FINITE_STAR_COUPLING_PROOF_20261119.md'
       - 'research/nightfall/mixture_aa/check_route1_star_coupling_exact.py'
+      - 'research/nightfall/mixture_aa/check_route1_posterior_drift_exact.py'
       - '.github/workflows/nightfall-route1-star-coupling-exact.yml'
   workflow_dispatch:
 permissions:
@@ -23,6 +24,13 @@ jobs:
           python3 research/nightfall/mixture_aa/check_route1_star_coupling_exact.py --seeds 12 | tee route1-star-exact.log
           grep -q 'PASS 32340 exact rational checks over 36 star-coupled finite mixtures' route1-star-exact.log
           sha256sum research/nightfall/mixture_aa/check_route1_star_coupling_exact.py | tee route1-star-source-sha256.txt
+      - name: Independent exact posterior Phi drift and variance audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/mixture_aa/check_route1_posterior_drift_exact.py --seeds 12 | tee route1-posterior-exact.log
+          grep -q 'PASS 2698 exact rational posterior Phi/variance assertions' route1-posterior-exact.log
+          sha256sum research/nightfall/mixture_aa/check_route1_posterior_drift_exact.py | tee route1-posterior-source-sha256.txt
       - name: Preserve reproducibility receipt
         if: always()
         uses: actions/upload-artifact@v4
@@ -31,5 +39,7 @@ jobs:
           path: |
             route1-star-exact.log
             route1-star-source-sha256.txt
+            route1-posterior-exact.log
+            route1-posterior-source-sha256.txt
           if-no-files-found: warn
           retention-days: 60
