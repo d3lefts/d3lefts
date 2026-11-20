@@ -69,8 +69,27 @@ distance is `Θ(n)`, `Λ = 1`, and there is no advantage (Theorem A). So within 
 transition from no advantage to advantage `≈ m` happens as the number of rows grows from linear to
 exponential in `m`, and `N_r` tracks it.
 
+## Bounded-doubling regime now closed on paper (Theorem F)
+
+The missing coset-to-local-frame step **can** be supplied when doubling \(K\) is controlled.
+\`SMALL_DOUBLING_FRAME_THEOREM_20261119.md\` proves, using GGMT PFR and an
+explicit Fourier Bogolyubov lemma, that
+\[
+  |R+R|\le K|R|\quad\Longrightarrow\quad
+  \operatorname{rank}(R)\le N_4(R)+2K^{12}+8K^{24}.
+\]
+A basis chosen from the **actual original rows** is a \((c,1,h)\)-frame
+for **every** \(h\), with \(c\le\max(1,\operatorname{rank}(R))\). Thus
+Conjecture E is established on paper whenever \(K\le\operatorname{poly}(k,T)\)
+and \(N_4\le k\). This does **not** establish unrestricted Conjecture E:
+for independent rows \(K\) can grow with the number of rows, even though
+a cost-one frame already exists. The polynomial \(K\)-loss in this
+rank-based method must be removed or replaced with a sparse frame mechanism
+for the high-doubling intermediate regime. Theorem F is **not Lean
+certified or externally refereed**; see the separate exact checker and CI.
+
 ## Next steps
 
-1. Prove Conjecture E for row sets with small doubling (`|2·R| ≤ K|R|`) via PFR.
+1. Extend the bounded-doubling Theorem F to high doubling without a polynomial loss in `K`; target sparse frames of low local cost, not rank-only bases.
 2. Locate the threshold for random rows exactly: for `n = m^α`, compute `N_r` and `Λ_T`.
 3. Check whether `N_r` is known under another name (sumset/Fourier-sampling literature).
