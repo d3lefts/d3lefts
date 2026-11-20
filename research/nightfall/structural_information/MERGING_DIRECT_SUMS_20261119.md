@@ -23,7 +23,7 @@ code of a product.
 
 Let `R′ = R_1 ⊕ ⋯ ⊕ R_q` (blocks acting on independent parts of `s`) with every `R_j`
 `p`-balanced, and let `R` be `(c₀, c₀′)`-locally equivalent to `R′`. For `T, ε, δ` put
-`H = h(2c₀T, ε, δ) = poly(c₀T, 1/ε, log 1/δ)` (the smoothing degree of Theorem A) and
+`H = h(2c₀T, ε, δ) = poly(c₀T, 1/ε, 1/δ)` (the smoothing degree of Theorem A with its currently stated general product-simulator depth; a polylog(1/δ) improvement needs a separate matching-scope theorem) and
 
     k* = max { rank R_j : d(R_j) ≤ H }      (k* = 0 if every block has d(R_j) > H).
 
@@ -33,7 +33,7 @@ Let `R′ = R_1 ⊕ ⋯ ⊕ R_q` (blocks acting on independent parts of `s`) wit
    function that needs at least `k*/2 − O(1)` classical queries, even with arbitrary parity queries.
 
 So, for every `T`, the advantage obtainable with `poly(T)` quantum queries is `k*` up to polynomial
-factors in `T, c₀, c₀′, 1/ε, log 1/δ`: the size of the largest balanced block that has a dependency
+factors in `T, c₀, c₀′, 1/ε, 1/δ`: the size of the largest balanced block that has a dependency
 short enough for `T`-query algorithms to see. **The number of blocks `q` and the total dimension
 play no role.**
 
@@ -91,3 +91,7 @@ product theorem enters the linear theory.
 2. A merging procedure for general `R`: repeatedly find the largest subspace `V` inside short sums
    (Theorem C side), merge it into a symbol, quotient, and recurse; the depth of the recursion is the
    multi-scale parameter, and PFR should bound it when doubling is small.
+
+## Quantitative and independent-review addendum (2026-11-19)
+
+The above `H` parameter is **not currently justified as polynomial only in `log(1/delta)`**: the source Theorem A uses `h = 2 k_phi max(2T,D)` and its general product simulator permits `D = poly(T,1/epsilon,1/delta)`. The displayed general dependency has therefore been corrected to `poly(1/delta)` until an appropriately scoped stronger product theorem is certified. This does not affect independence from the number of blocks. A fully explicit cactus-graph consequence, independent exact finite checker and a graph-matroid proof of block independence are in [CACTUS_BLOCK_MERGING_AUDIT_20261119.md](CACTUS_BLOCK_MERGING_AUDIT_20261119.md), proposed as an independent supporting review rather than a general proof of Conjecture E.

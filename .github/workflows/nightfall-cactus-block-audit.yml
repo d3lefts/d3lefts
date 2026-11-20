@@ -1,0 +1,49 @@
+name: NIGHTFALL cactus block independent exact audit
+
+on:
+  push:
+    branches:
+      - nightfall-cactus-block-audit-20261119
+    paths:
+      - 'research/nightfall/structural_information/dichotomy_tests/check_cactus_blocks.py'
+      - 'research/nightfall/structural_information/CACTUS_BLOCK_MERGING_AUDIT_20261119.md'
+      - '.github/workflows/nightfall-cactus-block-audit.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/dichotomy_tests/check_cactus_blocks.py'
+      - 'research/nightfall/structural_information/CACTUS_BLOCK_MERGING_AUDIT_20261119.md'
+      - 'research/nightfall/structural_information/MERGING_DIRECT_SUMS_20261119.md'
+      - '.github/workflows/nightfall-cactus-block-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  exact-cactus-blocks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python version
+        run: python3 --version
+      - name: Exact deterministic finite replay
+        run: |
+          set -euo pipefail
+          python3 -I research/nightfall/structural_information/dichotomy_tests/check_cactus_blocks.py | tee cactus-audit.log
+          grep -Fqx 'CACTUS_FINITE_PASS cases=6 marginal_checks=1620' cactus-audit.log
+          test "$(grep -c '^CACTUS_EXACT_PASS ' cactus-audit.log)" -eq 6
+      - name: Record exact source and output hashes
+        if: always()
+        run: |
+          sha256sum research/nightfall/structural_information/dichotomy_tests/check_cactus_blocks.py > cactus-checker.sha256
+          if test -f cactus-audit.log; then sha256sum cactus-audit.log > cactus-output.sha256; fi
+      - name: Upload immutable-run receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cactus-block-exact-replay
+          path: |
+            cactus-audit.log
+            cactus-checker.sha256
+            cactus-output.sha256
+          if-no-files-found: ignore
