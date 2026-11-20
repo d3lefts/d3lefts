@@ -41,9 +41,9 @@ jobs:
           p=Path("lean-receipts/fur2/manifest.json")
           obj=json.loads(p.read_text())
           assert obj["status"] == "pinned-kernel-pass-conditional-theorem"
-          assert len(obj["named_declarations"]) == 3
+          assert len(obj["named_declarations"]) == 4
           assert "not unconditional degree-two FUR" in obj["limitation"]
-          print("PASS: 3 named Lean declarations, no proof-promotion")
+          print("PASS: 4 named Lean declarations, including unconditional explicit quadratic range-eight and conditional FUR2 assembly")
           PY
       - name: Persist source, axiom and independent kernel replay evidence
         if: always()
