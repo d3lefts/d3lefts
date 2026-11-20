@@ -12,7 +12,7 @@ namespace Nightfall.MixtureAA.FUR2
 open Finset
 open Nightfall.ProductSpace.RowBound
 
-variable {ι α : Type*} [Fintype ι] [DecidableEq ι]
+variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α]
 
 def inactive : ι → Option (α × α) := fun _ => none
