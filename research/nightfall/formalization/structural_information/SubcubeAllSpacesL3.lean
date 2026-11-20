@@ -10,11 +10,11 @@ abbrev K := ZMod 2
 
 variable {V : Type*} [AddCommGroup V] [Module K V] [DecidableEq V]
 
-private def inl : V →ₗ[K] V × V := LinearMap.inl K V V
-private def inr : V →ₗ[K] V × V := LinearMap.inr K V V
-private def diag : V →ₗ[K] V × V := inl + inr
+def inl : V →ₗ[K] V × V := LinearMap.inl K V V
+def inr : V →ₗ[K] V × V := LinearMap.inr K V V
+def diag : V →ₗ[K] V × V := inl + inr
 
-private def slice (W : Submodule K (V × V)) (f : V →ₗ[K] V × V) : Submodule K V := W.comap f
+def slice (W : Submodule K (V × V)) (f : V →ₗ[K] V × V) : Submodule K V := W.comap f
 
 private def liftTwo (W : Submodule K (V × V))
   (f g : V →ₗ[K] V × V) :
@@ -68,7 +68,7 @@ private theorem inr_diag_zero (a b : V) (h : inr a + diag b = 0) : a=0 ∧ b=0 :
     simpa [hb] using ha
   · exact hb
 
-private theorem slice_rank_pairs [FiniteDimensional K V]
+theorem slice_rank_pairs [FiniteDimensional K V]
     (W : Submodule K (V × V)) :
     Module.finrank K (slice W inl) + Module.finrank K (slice W inr) ≤ Module.finrank K W ∧
     Module.finrank K (slice W inl) + Module.finrank K (slice W diag) ≤ Module.finrank K W ∧
@@ -114,7 +114,7 @@ private theorem hits_union_le {T : Type*} [AddCommGroup T] [Module K T] [Decidab
   rw [Finset.filter_union]
   exact Finset.card_union_le _ _
 
-private theorem hits_step_le (R : Finset V) (W : Submodule K (V × V)) :
+theorem hits_step_le (R : Finset V) (W : Submodule K (V × V)) :
     rowHits (rowsUp R) W ≤ rowHits R (slice W inl) +
       rowHits R (slice W inr) + rowHits R (slice W diag) := by
   have h1 := hits_union_le (R.image inl ∪ R.image inr) (R.image diag) W
@@ -164,7 +164,7 @@ def R1 : Finset E1 := rowsUp R0
 def R2 : Finset E2 := rowsUp R1
 def R3 : Finset E3 := rowsUp R2
 
-private theorem rank_base0 (W : Submodule K E0) :
+theorem rank_base0 (W : Submodule K E0) :
     rowHits R0 W ≤ cap0 (Module.finrank K W) := by
   classical
   by_cases h : (1 : E0) ∈ W
@@ -196,7 +196,7 @@ private theorem rank_base0 (W : Submodule K E0) :
 
 
 /-! ## Generic certified propagation from every W in V to every W in V × V. -/
-private theorem lift_bound [FiniteDimensional K V]
+theorem lift_bound [FiniteDimensional K V]
     (R : Finset V) (f g : Nat → Nat) (d : Nat)
     (hDim : Module.finrank K V = d)
     (hPrev : ∀ W : Submodule K V, rowHits R W ≤ f (Module.finrank K W))

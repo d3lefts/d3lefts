@@ -4,7 +4,9 @@ on:
     paths:
       - 'research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean'
       - 'research/nightfall/formalization/structural_information/SubcubeL3.lean'
+      - 'research/nightfall/formalization/structural_information/SubcubeAllLevels.lean'
       - 'scripts/check_subcube_subspace_evasion.py'
+      - 'scripts/check_subcube_scalar_budget.py'
       - 'research/nightfall/structural_information/SUBCUBE_SUBSPACE_EVASION_20261119.md'
       - '.github/workflows/nightfall-subcube-allspaces-lean.yml'
   workflow_dispatch:
@@ -31,6 +33,10 @@ jobs:
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SubcubeAllSpacesL3.olean SubcubeAllSpacesL3.lean) 2>&1 | tee subcube-allspaces-lean/compile.log
           ! grep -E '(^|:)error:' subcube-allspaces-lean/compile.log
           (cd /tmp/mathlib4 && lake env leanchecker SubcubeAllSpacesL3) 2>&1 | tee subcube-allspaces-lean/leanchecker.log
+          cp research/nightfall/formalization/structural_information/SubcubeAllLevels.lean /tmp/mathlib4/SubcubeAllLevels.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SubcubeAllLevels.olean SubcubeAllLevels.lean) 2>&1 | tee subcube-allspaces-lean/compile-allL.log
+          ! grep -E '(^|:)error:' subcube-allspaces-lean/compile-allL.log
+          (cd /tmp/mathlib4 && lake env leanchecker SubcubeAllLevels) 2>&1 | tee subcube-allspaces-lean/leanchecker-allL.log
           python3 - <<'PY'
           from pathlib import Path
           import re
@@ -42,9 +48,19 @@ jobs:
           assert len(reports)+log.count('does not depend on any axioms')>=1
           for x in reports:
               assert set(z.strip() for z in x.split(',') if z.strip())<=allowed
+          s2=Path('research/nightfall/formalization/structural_information/SubcubeAllLevels.lean').read_text()
+          assert not re.search(r'(?m)^\s*(axiom|sorry|admit)\b',s2)
+          log2=Path('subcube-allspaces-lean/compile-allL.log').read_text()
+          reports2=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log2)
+          assert len(reports2)+log2.count('does not depend on any axioms')>=4
+          for x in reports2:
+              assert set(z.strip() for z in x.split(',') if z.strip())<=allowed
+          for name in ['finrank_E','all_levels_budget','all_levels_quadratic','source_L3']:
+              assert name in log2, f'missing all-level kernel receipt {name}'
           for name in ['subcube_all_W_L3','source_rows_L3']:
               assert name in log, f'missing named theorem certificate {name}'
           print('ALLSPACES_LEAN_KERNEL_PASS')
+          print('ALL_LEVELS_QUADRATIC_KERNEL_PASS')
           PY
       - name: Replay independent exhaustive all-W RREF checker
         shell: bash
@@ -53,12 +69,18 @@ jobs:
           python3 -I scripts/check_subcube_subspace_evasion.py 2>&1 | tee subcube-allspaces-lean/exhaustive-rref.log
           grep -F 'SUBCUBE_SUBSPACE_EVASION_EXACT_FINITE_PASS' subcube-allspaces-lean/exhaustive-rref.log
           grep -F 'LEVEL_EXACT_PASS 3 linear_max [0, 1, 3, 5, 9, 11, 15, 19, 27]' subcube-allspaces-lean/exhaustive-rref.log
+      - name: Exact independent scalar-cap recurrence audit L1–L6
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I scripts/check_subcube_scalar_budget.py 2>&1 | tee subcube-allspaces-lean/scalar-dp.log
+          grep -F 'SUBCUBE_SCALAR_DYADIC_L6_EXACT_PASS' subcube-allspaces-lean/scalar-dp.log
       - name: Preserve exact-source receipts
         if: always()
         run: |
           mkdir -p subcube-allspaces-lean
           git rev-parse HEAD > subcube-allspaces-lean/commit.txt
-          sha256sum research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean research/nightfall/formalization/structural_information/SubcubeL3.lean scripts/check_subcube_subspace_evasion.py > subcube-allspaces-lean/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean research/nightfall/formalization/structural_information/SubcubeL3.lean research/nightfall/formalization/structural_information/SubcubeAllLevels.lean scripts/check_subcube_subspace_evasion.py scripts/check_subcube_scalar_budget.py > subcube-allspaces-lean/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
