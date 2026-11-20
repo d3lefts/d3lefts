@@ -62,6 +62,16 @@ Reference: L. Lin and Y. Lin, *The Minimum Stretch Spanning Tree Problem for Typ
 
 Therefore for the **restricted class of frames with reverse cost \(c'=1\)** and the explicit girth condition above, the minimum frame cost is precisely \(2\lfloor a/2\rfloor+1\), growing without bound for square grids, while \(N_r(R_G)\le2r\) remains independent of side length. This is a **negative result for the original-row-only frame strategy**, NOT a counterexample to unrestricted Conjecture E. A frame with \(c'>1\) may bypass the rigidity gate when \(cc'+1>h(2cT)\), and its optimal cost has not been bounded here. Neither this statement nor the exact tree-stretch formula is claimed as new graph theory.
 
+### Extension G3: bounded-face planar graphs
+
+The same argument is not grid-specific. For any connected plane graph whose bounded-face boundary cycles all have length at most \(\ell\), those faces generate the binary edge-cycle space. Thus any \((c,c',h)\)-frame of its edge-incidence rows with \(h\ge\max\{\ell c,cc'+1\}\) is a basis.
+
+For \(c'=1\) and \(\ell\ge2\), the second threshold is dominated by \(\ell c\) for \(c\ge1\). Consequently whenever the prescribed frame girth satisfies \(h(2cT)\ge\ell c\), the *exact restricted frame optimum* equals the graph's minimum maximum-stretch spanning-tree value:
+\[
+\boxed{\Lambda_T^{(c'=1)}(R_G)=\operatorname{TreeStretch}(G).}
+\]
+This is a scoped **transfer of the known graph-spanner parameter** into NIGHTFALL's frame language, not a new theorem about tree stretch. The restriction to \(c'=1\) is essential: with reverse sums allowed, a frame element need not correspond to an individual graph edge, and this argument no longer supplies a tree.
+
 ## 4. Consequences for Claude's merging/direct-sum theorem
 
 - Claude's paper-level balanced-direct-sum theorem can be correct and still miss grids: their square dependencies overlap at every face, and the cycle space is not a direct sum of bounded-size edge blocks.
