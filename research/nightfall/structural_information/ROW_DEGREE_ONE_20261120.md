@@ -1,7 +1,7 @@
 # Row-degree 1 for subcube parities: reduction to a Sidon constant, and evidence it is linear in L (2026-11-20)
 
 Status: Lemma S proved; the value of the Sidon constant is **conjectural** (exact for `L ≤ 2`,
-searched for `L = 3`). Not reviewed. Scripts: `dichotomy_tests/sidon_lp.py`, `sidon_tensor.py`,
+`L = 3`). Not reviewed. Scripts: `dichotomy_tests/sidon_lp.py`, `sidon_tensor.py`,
 `flat_search.py`.
 
 ## The target
@@ -27,14 +27,18 @@ degree-1 case); for a Bernstein–Vazirani subspace of dimension `k` it is `2^{k
 | --- | --- | --- | --- |
 | 1 | 3 | 1.5 | exact (all sign patterns) |
 | 2 | 9 | 2.25 | exact (all sign patterns) |
-| 3 | 27 | ≥ 3.0, ≤ 13.98 | local search and an exact MILP (incumbent 3.0, not closed in 800 s); tensor-product patterns give only 2.625 |
+| 3 | 27 | **3.0** | exact: all 2^19 normalised sign patterns, reduced to 6 456 orbits, one LP each (`sidon_exact.py`, 66 s) |
 | 4 | 81 | ≥ 2.525 | tensor-product patterns only (local search too slow at 65 536 constraints) |
 
-**Correction (2026-11-20).** `L = 1, 2` fit **both** `3(L+1)/4` and `1.5^L`; only `L = 3` separates
-them (`3.0` vs `3.375`). The best pattern found at `L = 3` gives `3.0`, but the exact MILP did not close
-(dual bound `13.98`), so `L = 3` does **not** yet rule out exponential growth. Next: exact `K(3)` by
-enumerating sign patterns up to symmetry (translations make the 8 point-rows positive, leaving
-`2^19` patterns, further reduced by the `S_3^L ⋊ S_L` action).
+**Correction and resolution (2026-11-20).** `L = 1, 2` fit both `3(L+1)/4` and `1.5^L`; only `L = 3`
+separates them (`3.0` vs `3.375`). An earlier version of this note claimed the data ruled out the
+exponential; that was wrong, since the `L = 3` value was then only a search lower bound (and the MILP
+did not close: dual bound `13.98`). `sidon_exact.py` now computes `K(3)` exactly. Translations
+`S ↦ S + a` multiply `σ_g` by `χ_g(a)`, and the 8 point rows are independent, so every pattern is
+equivalent to one with all point signs `+` (`2^19` patterns). Cube automorphisms (48) and `G ↦ −G` cut
+these to 6 456 orbits, each solved exactly by LP. Result: **`K(3) = 3.000`**, ruling out `1.5^L` at
+`L = 3` and matching `3(L+1)/4`. The same code reproduces `K(2) = 2.25`. Growth beyond `L = 3` is still
+unproved: `L = 4` has `2^65` normalised patterns.
 
 **Conjecture S.** `K(L) = Θ(L)` (possibly exactly `3(L+1)/4`).
 
