@@ -37,8 +37,7 @@ def grid(side):
     for y in range(side):
         for x in range(side):
             i=y*side+x
-            for j in ((i+1,) if x+1<side else ())+((i+side,) if y+1<side else ()):
-                v=j[0]
+            for v in ((i+1,) if x+1<side else ())+((i+side,) if y+1<side else ()):
                 edgeidx[tuple(sorted((i,v)))]=len(es)
                 es.append((i,v))
     faces=[]
