@@ -1,9 +1,9 @@
 # Stress test of Conjecture E (2026-11-19)
 
-Status: Conjecture E survives every family tested. Small exact computations turned out to be
-uninformative (finite-size saturation); the informative results are analytic, and in three explicit
-families **both directions are proved** by Theorems A and C, with a sharp threshold in `T`.
-Not reviewed.
+Status: Conjecture E survives the explored families; not independently reviewed or Lean-certified.
+The historical finite maxima may be lower bounds after timeout, and the claimed BCH/APN *sharp*
+threshold does not follow at fixed small t without checking the explicit Theorem A smoothing condition.
+Positive short-sum constructions and the separate high-wise-independence implication remain as scoped claims.
 
 ## Finite computations (historical; exactness requires rechecking)
 
