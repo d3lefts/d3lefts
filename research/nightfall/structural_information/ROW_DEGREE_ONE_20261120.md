@@ -123,8 +123,8 @@ Status of Conjecture S: exact values `1.5, 2.25, 3.0` (`L = 1, 2, 3`); flat extr
 
 ## Resolution: Conjecture S is false — `K(L)` grows exponentially (2026-11-20)
 
-**Theorem T.** `K(L) ≥ c · (3/2)^{L/2} = c · m^{0.2925}` with `c = 2^{-1/(2 ln 2)} / √(2 ln 2) ≈ 0.42`,
-so `K(L) > 3(L+1)/4` for all `L ≥ 17`. The exact values `1.5, 2.25, 3.0` for `L ≤ 3` were small-case
+**Theorem T.** `K(L) ≥ c · (3/2)^{L/2} = c · m^{0.2925}` with `c = 2^{-1/(2 ln 2)} / √(2 ln 2) ≈ 0.52`,
+so `K(L) > 3(L+1)/4` for all `L ≥ 16` (e.g. `K(20) ≥ 29.7`). The exact values `1.5, 2.25, 3.0` for `L ≤ 3` were small-case
 coincidences.
 
 *Proof* (the standard "Sidon sets are proportionally independent" counting, made explicit).
