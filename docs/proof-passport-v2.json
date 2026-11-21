@@ -283,5 +283,49 @@
       },
       "next_test": "Acquire exact source archive, checksum and pin; identify exact exported Dirichlet GRH declaration; independently rebuild and audit axioms/kernel with immutable receipt."
     }
-  ]
+  ],
+  "legacy_coverage": {
+    "registry": "docs/active-proof-passport.json",
+    "legacy_version": 16,
+    "active_claim_ids": [
+      "q2-influence",
+      "q2-observation",
+      "finite-certificate",
+      "cubic-obstruction",
+      "kaczmarz-logfree",
+      "four-shuffle",
+      "nested-address-separation",
+      "finite-palette-recovery",
+      "fair-sign-cubic",
+      "universal-spectral",
+      "certificate-acquisition",
+      "phase-block",
+      "scif-incremental-recertification",
+      "conditional-agent-safety",
+      "semantic-fencing-authority"
+    ],
+    "related_but_not_equated": {
+      "q2-influence": {
+        "v2_id": "NF-Q2-105-NATIVE-FINITE",
+        "relation": "more general finite coordinate-dependent alphabets; not identical to older common-alphabet statement"
+      }
+    },
+    "awaiting_independent_v2_source_reconciliation": [
+      "q2-observation",
+      "finite-certificate",
+      "cubic-obstruction",
+      "kaczmarz-logfree",
+      "four-shuffle",
+      "nested-address-separation",
+      "finite-palette-recovery",
+      "fair-sign-cubic",
+      "universal-spectral",
+      "certificate-acquisition",
+      "phase-block",
+      "scif-incremental-recertification",
+      "conditional-agent-safety",
+      "semantic-fencing-authority"
+    ],
+    "automatic_promotion": false
+  }
 }
