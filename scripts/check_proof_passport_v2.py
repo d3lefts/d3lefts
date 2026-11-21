@@ -30,8 +30,10 @@ def check(d, files=True):
     assert list(links) == ["q2-influence"]
     assert links["q2-influence"]["v2_id"] == "NF-Q2-105-NATIVE-FINITE"
     assert "not identical" in links["q2-influence"]["relation"]
-    assert legacy["awaiting_independent_v2_source_reconciliation"] == [
-        x for x in ids if x not in links]
+    assert legacy["source_reconciliation_manifest"] == "docs/active-passport-source-reconciliation-v2.json"
+    assert legacy["reconciled_primary_source_ids"] == ids
+    assert legacy["awaiting_independent_v2_source_reconciliation"] == []
+    assert legacy["awaiting_independent_semantic_review"] == ids
     by_id = {}
     for r in d["records"]:
         assert RECORD <= r.keys(), "required passport field absent"
