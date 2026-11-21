@@ -26,6 +26,8 @@ The `scoped-formal-evidence` label means a previously reported named Lean receip
 
 ## Current entries
 
+**Migration coverage:** all 15 original active v16 identities are enumerated and checked against their current source registry. One (Q2 influence) is related to a more general *finite* source-pinned statement, not silently equated; the other 14 await individualized v2 source reconciliation. The five new/recent Lean records and the external RH reference are additional source-scope evidence, not retroactive changes to those 15 active statuses.
+
 - Q2 heterogeneous finite (C_2\approx105.416): repository source-pinned, formal finite domain only. No infinite-product upgrade.
 - Route 1 polylog-M / Wyner abstract W: source-pinned, successful historical CI runs, original latent-kernel hypothesis retained, imported predecessors credited.
 - Tensor-subcube sharp upper bound and exact (3^L) extremizer: distinct source-pinned theorems, all-L scope, no quantum T≥2 simulation.
