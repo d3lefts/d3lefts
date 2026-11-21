@@ -73,15 +73,15 @@ Independent exact threshold check: `A <= 10107721` is necessary and sufficient (
 
 ## v0.3: sharp cyclic-versus-transitive theorem (analytic plus witnesses)
 
-For any prime (p\equiv3\pmod4) and ordered distinct triple ((a,b,c)), define (t) as the number of roots among (a,b,c) whose two other vertices both point to the root. Tournament structure gives (t=0) for a directed 3-cycle and (t=1) for a transitive triple. The exact character identity already proved above is
+For any prime \(p\equiv3\pmod4\) and ordered distinct triple \((a,b,c)\), let \(t\) count the vertices among \(a,b,c\) which are out-neighbors of both other vertices. The tournament structure gives \(t=0\) for a directed 3-cycle and \(t=1\) for a transitive triple. The exact character identity is
 
     8 N(a,b,c) = p - 3 + S(a,b,c) - 4t.
 
-Hasse's bound (|S|\le2\sqrt p) therefore gives the *orientation-aware general bounds*
+Hasse's bound \(|S|\le2\sqrt p\) therefore yields the *orientation-aware general bounds*
 
     cyclic:      N(a,b,c) <= floor((p - 3 + 2 sqrt(p))/8),
     transitive:  N(a,b,c) <= floor((p - 7 + 2 sqrt(p))/8).
 
-For (p=5591), these equal 717 and 716. They are both *sharp*: cyclic triple ((0,1,838)) has ((N,S,t)=(717,148,0)); transitive triple ((0,1,75)) has ((N,S,t)=(716,144,1)). Both triples were independently enumerated by the exact methods and verified against the character-sum identity. The general inequality is a deduction from **classical** Hasse, not a novel proof of elliptic-curve bounds, and its full generality is not Lean-certified in this PR.
+For \(p=5591\), these are 717 and 716 respectively, and *both are sharp*. The cyclic triple \((0,1,838)\) has \((N,S,t)=(717,148,0)\), while the transitive triple \((0,1,75)\) has \((N,S,t)=(716,144,1)\). Both witness triples were verified by exact modular arithmetic and the cubic character-sum identity. The general inequality is a deduction from **classical** Hasse, not a new proof of elliptic-curve bounds. Its full generality has not been Lean-certified in this PR.
 
-The exact profile-transfer test is still blocked by absence of the accepted packed-row/source archive. These geometry facts do **not** certify an exponent improvement.
+The exact sensitivity-profile transfer test remains blocked by absence of the accepted 97,594-row source archive. These geometry facts do **not** certify a better exponent.
