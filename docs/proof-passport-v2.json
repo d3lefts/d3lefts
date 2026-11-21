@@ -2,7 +2,7 @@
   "schema": "nightfall.proof-passport-overlay.v2",
   "version": 2,
   "as_of": "2026-11-21",
-  "scope": "Additive evidence overlay; 15 active v16 passport identities, 15 historical records, existing Lean provenance and recent-results registry are unchanged. No new mathematical theorem is certified by this metadata edit.",
+  "scope": "Additive evidence overlay; 15 active v16 passport identities, 11 frozen historical records, existing Lean provenance and recent-results registry are unchanged. No new mathematical theorem is certified by this metadata edit.",
   "policy": {
     "source_byte_check": "Compare repository .lean file git blob SHA-1 to recorded content; no network lookup and no compilation.",
     "receipt_check": "Run URLs and exact PR-head SHA are recorded historical references; CI success was inspected for #970/#976/#977/#978. The metadata checker does not verify GitHub's run logs or execute Lean.",
