@@ -1,5 +1,7 @@
 # Recent NIGHTFALL proof passports — 19 November 2026
 
+**21 November 2026:** For source-bound Route 1/Wyner and all-level tensor-subcube Lean evidence, see the [v2 overlay](../../../docs/proof-passport-v2.json) and [evidence-gate protocol](../2026-11-proof-passports-v2/README.md). These do **not** retroactively upgrade or rewrite the 19 November records below.
+
 This is a supplementary source-reconciliation register, **not a rewrite** of the frozen historical registry or the v16 active 15-claim snapshot.
 
 Authoritative machine ledger: [docs/recent-research.json](../../../docs/recent-research.json). Public page: [recent-research.html](../../../docs/recent-research.html).
