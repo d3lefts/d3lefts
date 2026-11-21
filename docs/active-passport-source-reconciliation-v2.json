@@ -1,0 +1,585 @@
+{
+  "schema": "nightfall.active-passport-source-reconciliation.v2",
+  "as_of": "2026-11-21",
+  "baseline_registry": "docs/active-proof-passport.json",
+  "baseline_registry_version": 16,
+  "baseline_git_blob_sha1": "4101ef99a051400010fd7f37bcc40733664f3678",
+  "review_policy": "Only source-byte identity, dossier-to-primary attribution, and previously reported receipt/lifecycle scope are reconciled. Statement equivalence, proof soundness, independent non-author review, prior art, and publishing authorization remain separate OPEN gates.",
+  "records": [
+    {
+      "id": "q2-influence",
+      "legacy_status": "lean-kernel-checked-finite-product-scope",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/quadratic-rank-observability.md",
+        "git_blob_sha1": "b58996a3213ef5bde8b6ce6bed4d4f2a713e06d0"
+      },
+      "primary_source": {
+        "path": "research/nightfall/formalization/observability/ActualSourceQ223802Terminal.lean",
+        "git_blob_sha1": "eb9d1422f14f0f742fa79e7424c269ab83b22ba2",
+        "type": "lean"
+      },
+      "supporting_sources": [],
+      "source_evidence_kind": "lean-scoped",
+      "actual_scope": "Finite common-alphabet original-product variance-squared influence with C≈105.416; distinct from the broader native heterogeneous alphabet theorem.",
+      "formal_declaration": "Nightfall.Observability.ActualSourceQ223802Terminal.actual_source_q2_23802_unconditional",
+      "receipt": {
+        "pr": 587,
+        "head_sha": "784c76669d08fa60e170c32fc379a6768c50e9e1",
+        "ci_run": 43732382337,
+        "status": "legacy-referenced-not-replayed-in-this-change"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "Strict C105 original-source theorem covers finite common alphabet, heterogeneous marginal laws, zero atoms and unrestricted canonical singleton terms; no heterogeneous alphabet TYPES, infinite-index all-L2, or higher-degree terminal.",
+        "Conditional C96.100399 uses an unproved six-B owner cover; no unconditional unrestricted sub-100 result. Pure-sector C95.063 restricts singleton components to zero.",
+        "No universal rank-r adaptive query policy or digital-twin deployment guarantee follows from the scalar theorem",
+        "Independent historical priority and non-author referee review open"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Reconstruct source-to-statement equivalence and finite-to-infinite composition independently; do not inherit native heterogeneous scope automatically."
+    },
+    {
+      "id": "q2-observation",
+      "legacy_status": "paper-proof-internal-audit",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/quadratic-rank-observability.md",
+        "git_blob_sha1": "b58996a3213ef5bde8b6ce6bed4d4f2a713e06d0"
+      },
+      "primary_source": {
+        "path": "research/nightfall/2026-11-quadratic-rank-optimal/UNIVERSAL_THEOREM.md",
+        "git_blob_sha1": "27dd0e32bb2200e8910f289531eeb404360b9608",
+        "type": "manuscript"
+      },
+      "supporting_sources": [],
+      "source_evidence_kind": "analytic-only",
+      "actual_scope": "Analytic degree-two Hilbert/rank-r whole-coordinate adaptive observation bound with posterior/selection assumptions; no terminal Lean observer declaration.",
+      "formal_declaration": null,
+      "receipt": {
+        "pr": null,
+        "head_sha": null,
+        "ci_run": null,
+        "status": "no-end-to-end-lean-receipt"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "No full-chain Lean or external non-author review; query budget not runtime",
+        "No same-model blanket equivalence between quantum, model value, and state coordinate queries",
+        "Alphabet-uniform fixed observation upper bound is false for addressed degree-two families",
+        "Strict finite scalar Q2 Lean result does not automatically certify the Hilbert/adaptive whole-coordinate observation theorem"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Formalize actual posterior drift, rank lift and hard depth together under the same original product law; independent audit of v9.2 coefficient substitution."
+    },
+    {
+      "id": "finite-certificate",
+      "legacy_status": "lean-kernel-checked-finite-product-scope",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/finite-product-influence.md",
+        "git_blob_sha1": "db65b66c5da22a39721b38413fa4724b8653e876"
+      },
+      "primary_source": {
+        "path": "research/nightfall/formalization/product_space/HeterogeneousAlphabets.lean",
+        "git_blob_sha1": "1e365ebb4c718f86807d7b37f2050c4b1011f1ec",
+        "type": "lean"
+      },
+      "supporting_sources": [
+        {
+          "path": "research/nightfall/formalization/product_space/ProductInfluence.lean",
+          "git_blob_sha1": "70f69d8caebfaef40efdf16bab63f223753c190f"
+        }
+      ],
+      "source_evidence_kind": "lean-scoped",
+      "actual_scope": "Finite coordinate-dependent alphabet variant of all-degree exponent-5/2 influence bound, importing Turturean/cube framework and finite degree equivalence.",
+      "formal_declaration": "Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence",
+      "receipt": {
+        "pr": 325,
+        "head_sha": "2e13f445894ea357c3e6a5d3920b81877a5a3a9f",
+        "ci_run": 42932085109,
+        "status": "legacy-referenced-not-replayed-in-this-change"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "No general measurable/infinite-product Lean theorem or end-to-end Hilbert/adaptive policy follows",
+        "Does not certify the separate degree-two variance-squared manuscript or its stronger numerical constant",
+        "No external human referee or novelty/priority clearance"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Independently verify exact α-dependent Lean theorem type and upstream imported pin; retain dependency credit and finite-only status."
+    },
+    {
+      "id": "cubic-obstruction",
+      "legacy_status": "exact-proof-attacks-cubic-open",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/cubic-obstruction-ledger.md",
+        "git_blob_sha1": "ef37c83cd259c8b70b85dcc34cf8ecc77831ecf9"
+      },
+      "primary_source": {
+        "path": "research/nightfall/observability-publication/CUBIC_OBSTRUCTION_NOTE.md",
+        "git_blob_sha1": "84d138d711ab185ee3dc465440fc1146ee70f49d",
+        "type": "manuscript"
+      },
+      "supporting_sources": [
+        {
+          "path": "research/nightfall/2026-11-five-closures/EXACT_BUDGET_AND_GENERAL_LP_20261111.md",
+          "git_blob_sha1": "27db776d6d743ac2b4bca7c1c5ad9433c5c897e9"
+        }
+      ],
+      "source_evidence_kind": "exact-obstruction",
+      "actual_scope": "Exact rare-gate moment counterexample to a fourth-moment shortcut, and LP obstruction; does NOT falsify unrestricted cubic exponent-two inequality.",
+      "formal_declaration": null,
+      "receipt": {
+        "pr": null,
+        "head_sha": null,
+        "ci_run": null,
+        "status": "no-end-to-end-lean-receipt"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "No counterexample to unrestricted cubic variance-squared influence was found",
+        "Not an established arbitrary-law cubic theorem; bounded-cover consequences depend on the unrefereed quadratic paper",
+        "Open draft hard cases and numerical checks do not establish novelty or universal conclusions"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Independently replay rare-atom Fraction witness and audit shared-core moment ratios; no promotion to full cubic theorem."
+    },
+    {
+      "id": "kaczmarz-logfree",
+      "legacy_status": "written-proof-exact-check-replay-priority-open",
+      "dossier": {
+        "path": "research/nightfall/2026-11-kaczmarz-logfree/PROOF_PASSPORT.md",
+        "git_blob_sha1": "0802fd89112bc294809a1593e865c67d9b3cf4b2"
+      },
+      "primary_source": {
+        "path": "research/nightfall/2026-11-kaczmarz-logfree/PROOF.md",
+        "git_blob_sha1": "c0a0259aded9957a865849242788d74eab15a530",
+        "type": "manuscript"
+      },
+      "supporting_sources": [
+        {
+          "path": "research/nightfall/2026-11-kaczmarz-logfree/exact_audit.py",
+          "git_blob_sha1": "feb0c781827c039c8825f70a8a8aeaef258683c0"
+        }
+      ],
+      "source_evidence_kind": "analytic-plus-exact-checker",
+      "actual_scope": "Best-prefix/first-hitting greedy consistent Kaczmarz bound, not arbitrary last iterate or charged row-selection runtime.",
+      "formal_declaration": null,
+      "receipt": {
+        "pr": null,
+        "head_sha": null,
+        "ci_run": null,
+        "status": "no-end-to-end-lean-receipt"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "Classical greedy maximum-distance projection and energy identity are credited; log-free corollary may be implicit in earlier literature and global originality is unverified",
+        "No high-probability fixed-time unstopped randomized iterate or end-to-end row-selection runtime claim",
+        "No independent human referee or Lean formalization and no historical Original Finding promotion"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Reproduce exact checker under independent implementation and conduct dated same-bound comparison with Steinerberger and classical greedy telescoping."
+    },
+    {
+      "id": "four-shuffle",
+      "legacy_status": "computer-assisted-exact-finite-priority-open",
+      "dossier": {
+        "path": "research/nightfall/2026-11-four-shuffle/PROOF_PASSPORT.md",
+        "git_blob_sha1": "bb21769e0efbb19046048c37e0d290b2e81e4445"
+      },
+      "primary_source": {
+        "path": "research/nightfall/2026-11-four-shuffle/README.md",
+        "git_blob_sha1": "cdcd929856a1ded400d40c82dfbb239457f6c491",
+        "type": "manuscript"
+      },
+      "supporting_sources": [
+        {
+          "path": "research/nightfall/2026-11-four-shuffle/verify_four_shuffle.py",
+          "git_blob_sha1": "1e939073e99223c029e1d2af82c6ec9009f61778"
+        }
+      ],
+      "source_evidence_kind": "finite-computational-proof",
+      "actual_scope": "Exact k=4 threshold N4=20 from upper path enumeration and independent length-19 witness; not general shuffle conjecture.",
+      "formal_declaration": null,
+      "receipt": {
+        "pr": null,
+        "head_sha": null,
+        "ci_run": null,
+        "status": "no-end-to-end-lean-receipt"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "Only k=4 is covered; the general k-shuffle conjecture remains open",
+        "Inherited factor-graph and matching method credited to Bevan, Elvey Price and Felsner",
+        "Exact finite checker and internally independent replay are not external human mathematical review or global priority clearance"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Re-execute all 302 upper paths, 24 lower factors with independent algorithm and verify original source ZIP custody."
+    },
+    {
+      "id": "nested-address-separation",
+      "legacy_status": "exact-finite-construction-priority-open",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/nested-address-separation.md",
+        "git_blob_sha1": "8a13e28b2eb193448a0a24aeed355c3594e023e2"
+      },
+      "primary_source": {
+        "path": "research/nightfall/2026-11-five-closures/EXACT_GLOBAL_QUERY_ALLOCATION.md",
+        "git_blob_sha1": "1c2e95ee4492d0944abf847a05e436344c6bf2ba",
+        "type": "manuscript"
+      },
+      "supporting_sources": [],
+      "source_evidence_kind": "exact-family-proof",
+      "actual_scope": "Exact Bayes-risk and budget allocation for specified nested-address replica family only; model granularity fixed.",
+      "formal_declaration": null,
+      "receipt": {
+        "pr": 338,
+        "head_sha": null,
+        "ci_run": null,
+        "status": "no-end-to-end-lean-receipt"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "Exact for the constructed nested-address family, not a universal degree-d upper bound",
+        "Changing address laws, replica dependence or query granularity changes the model",
+        "No comprehensive novelty search or independent human referee"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Reconstruct family-specific exact global allocation with independent finite enumeration and audit normalization conventions."
+    },
+    {
+      "id": "finite-palette-recovery",
+      "legacy_status": "analytic-candidate-finite-lean-core",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/finite-palette-recovery.md",
+        "git_blob_sha1": "b1e2faa9c0baf4c6fbcf74c4d31a1835919bac9e"
+      },
+      "primary_source": {
+        "path": "papers/exact-recovery/MANUSCRIPT.md",
+        "git_blob_sha1": "53f4779408d8f1b411b13162937086059351390e",
+        "type": "manuscript"
+      },
+      "supporting_sources": [],
+      "source_evidence_kind": "analytic-with-finite-lean-core",
+      "actual_scope": "Finite palette bounded-degree exact recovery on independent completed products with conservative R/Δ bound; infinitary selection/hybrid not kernel checked.",
+      "formal_declaration": null,
+      "receipt": {
+        "pr": null,
+        "head_sha": null,
+        "ci_run": null,
+        "status": "no-end-to-end-lean-receipt"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "No outside mathematical referee or end-to-end Lean proof for the infinitary theorem",
+        "An arbitrary null-set witness can destroy the hybrid-degree argument",
+        "No all-output-alphabet or algorithmic runtime generalization"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Audit common null sets, simultaneous Fubini, selection and precise R/Δ factor before any infinitary certificate."
+    },
+    {
+      "id": "fair-sign-cubic",
+      "legacy_status": "draft-pr-fair-sign-subclass",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/fair-sign-cubic.md",
+        "git_blob_sha1": "31f6da905c6e25659c69bc7a66bc7a743b525234"
+      },
+      "primary_source": {
+        "path": "research/nightfall/2026-11-fair-sign-quadratic/PROOF_NOTE.md",
+        "git_blob_sha1": "e71a23d3faa93e1aee86d35c5896679b803ce912",
+        "type": "manuscript"
+      },
+      "supporting_sources": [],
+      "source_evidence_kind": "analytic-subclass",
+      "actual_scope": "Fair-sign controlled and fixed-rank leaf cubic subclass proof; no arbitrary biased controls or unrestricted degree-three exponent two.",
+      "formal_declaration": null,
+      "receipt": {
+        "pr": 354,
+        "head_sha": "b7c1b6a4dd2085f83733841db448066063a44d74",
+        "ci_run": null,
+        "status": "no-end-to-end-lean-receipt"
+      },
+      "observed_pr_merged": true,
+      "lifecycle_correction": "Legacy record labels PR #354 draft/unmerged; GitHub currently reports the PR merged. Proof remains analytic and unrefereed.",
+      "remaining_limitations": [
+        "Not established for arbitrary biased control laws",
+        "Unrestricted cubic exponent-two conjecture and high-rank leaf case remain open",
+        "Draft review/finite examples are not Lean certification, human referee or global novelty"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Independent proof review of signed rank-one/fixed-rank constraints and checker replay; do not infer unrestricted cubic law."
+    },
+    {
+      "id": "universal-spectral",
+      "legacy_status": "analytic-conditional-universal-observability",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/universal-spectral.md",
+        "git_blob_sha1": "ed9f2f2f36bd8e6f0f67bba1e116cc9000306a9b"
+      },
+      "primary_source": {
+        "path": "research/nightfall/2026-11-universal-spectral-observability/PROOF_V1.md",
+        "git_blob_sha1": "e0cc8e30b768b7ae844f4dd4e5cc71b84435dd0f",
+        "type": "manuscript"
+      },
+      "supporting_sources": [
+        {
+          "path": "papers/universal-observability/PROOF_SUPPLEMENT_v1.md",
+          "git_blob_sha1": "d5da4b127e0b1065f197828255ce40be1cb8ef6c"
+        }
+      ],
+      "source_evidence_kind": "analytic-plus-partial-lean",
+      "actual_scope": "All-degree Hilbert adaptive spectral observation candidate with finite scalar kernel core but unproved full arbitrary-product posterior/rank chain.",
+      "formal_declaration": null,
+      "receipt": {
+        "pr": 332,
+        "head_sha": "b8518b8495748c11772da2c828f7b618d66573d5",
+        "ci_run": null,
+        "status": "no-end-to-end-lean-receipt"
+      },
+      "observed_pr_merged": true,
+      "lifecycle_correction": "Legacy passport says PR #332 draft; GitHub reports it merged. Manuscript inclusion does not certify Hilbert theorem.",
+      "remaining_limitations": [
+        "No complete Lean proof of universal Hilbert observer or measured-space extension",
+        "Initial-only coherence does not suffice for v6 log-free claim",
+        "Neither efficient runtime nor unrestricted degree-three exponent-two is established",
+        "The rank-r O(r/η) degree-two manuscript does not automatically improve the all-degree PSD theorem without its independent hypotheses."
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Reconstruct measurable posterior ANOVA drift and PSD sign projection under exact intended hypotheses, formalize end-to-end observer."
+    },
+    {
+      "id": "certificate-acquisition",
+      "legacy_status": "conditional-certificate-adaptive-theorem",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/certificate-acquisition.md",
+        "git_blob_sha1": "1451f5789c45876de92225c3a25c0020ff60ad50"
+      },
+      "primary_source": {
+        "path": "research/nightfall/formalization/product_space/POSTERIOR_ADAPTIVE_BRIDGE_20261110.md",
+        "git_blob_sha1": "3b311b16dd904750cd501b4d01fe7e906b99eb95",
+        "type": "manuscript"
+      },
+      "supporting_sources": [
+        {
+          "path": "research/nightfall/formalization/product_space/VariancePosteriorOneStep.lean",
+          "git_blob_sha1": "0f37d886d06d12fa9884ec5428355d39e5afdd0c"
+        }
+      ],
+      "source_evidence_kind": "conditional-with-scoped-lean",
+      "actual_scope": "Fractional-certificate observer with finite Boolean full-support product, valid cost-K rows, and separately compiled posterior one-step lemma; no universal adaptive terminal.",
+      "formal_declaration": null,
+      "receipt": {
+        "pr": 312,
+        "head_sha": null,
+        "ci_run": 42925787438,
+        "status": "legacy-referenced-not-replayed-in-this-change"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "Does not produce an unconditional dimension-free certificate cost K or general real-valued exponent-two theorem",
+        "No computational runtime guarantee for evaluating the sampling law",
+        "No end-to-end arbitrary measurable-product or full Lean theorem"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Compose source fractional-row sampler, true posterior risk update and hard stopping in a named theorem without assumed target-equivalent progress."
+    },
+    {
+      "id": "phase-block",
+      "legacy_status": "lean-checked-finite-construction-priority-open",
+      "dossier": {
+        "path": "research/nightfall/formalization/phase_block/PROOF_PASSPORT_20261111.md",
+        "git_blob_sha1": "cc8f03be84138bb5e772ef1684eb9e2eae051624"
+      },
+      "primary_source": {
+        "path": "research/nightfall/formalization/phase_block/PhaseBlock.lean",
+        "git_blob_sha1": "b148d2ab4c673e1f67337e6985b88b45a87b09e8",
+        "type": "lean"
+      },
+      "supporting_sources": [],
+      "source_evidence_kind": "lean-finite-construction",
+      "actual_scope": "Explicit F16 three-power-query map injective on 81 relative-phase tuples; not global adaptive decoding or measurement optimality.",
+      "formal_declaration": "Nightfall.PhaseBlock.eighty_one_distinct_outputs",
+      "receipt": {
+        "pr": 243,
+        "head_sha": "d3a3717e846390461c7cf2ec41553189d78267a1",
+        "ci_run": 40995299592,
+        "status": "legacy-referenced-not-replayed-in-this-change"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "No global originality/priority determination or independent human referee",
+        "81-state injectivity does not establish an end-to-end adaptive decoder or universal measurement optimality",
+        "Closed PR 252/255 adaptive evidence is not merged into main; its finite Lean scope and broader written transfer must not be conflated"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Independently replay 81-state source table and inspect the exact finite Lean declaration, with historical priority comparison."
+    },
+    {
+      "id": "scif-incremental-recertification",
+      "legacy_status": "lean-kernel-checked-finite-product-scope",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/scif-incremental-recertification.md",
+        "git_blob_sha1": "2078a52ece29d1e6b3fb958d23039ee0400860c8"
+      },
+      "primary_source": {
+        "path": "research/nightfall/formalization/observability/SCIFCompleteOriginalSource.lean",
+        "git_blob_sha1": "56df6cecf1f290f20a1ee497db8142e236bb3098",
+        "type": "lean"
+      },
+      "supporting_sources": [],
+      "source_evidence_kind": "lean-scoped",
+      "actual_scope": "Finite original-source degree-two changed-law SCIF identities and fixed-owner bound conditional on old-law owner envelope; not lifecycle optimal runtime.",
+      "formal_declaration": "Nightfall.SCIFCompleteOriginalSource.scif_complete_finite_original_source_terminal",
+      "receipt": {
+        "pr": 529,
+        "head_sha": "9a9925a7d1f57faa095971e13dd21a0dd509c05e",
+        "ci_run": 43640173972,
+        "status": "legacy-referenced-not-replayed-in-this-change"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "No optimal lifecycle complexity or O(deg(k)a²) runtime theorem; no heterogeneous alphabet types or infinite product",
+        "No source authentication, cloud/actuator enforcement or independent human priority review"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Independently inspect exact source graph/marginal recentering, graph invariance and supplied owner envelope."
+    },
+    {
+      "id": "conditional-agent-safety",
+      "legacy_status": "lean-kernel-checked-conditional-invariant",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/conditional-agent-safety.md",
+        "git_blob_sha1": "ed1f344b003155d19aaba45848e5d30254db6b44"
+      },
+      "primary_source": {
+        "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
+        "git_blob_sha1": "c0e42b193a383f7e4f7ec43728806483f9b3bf68",
+        "type": "lean"
+      },
+      "supporting_sources": [],
+      "source_evidence_kind": "lean-conditional",
+      "actual_scope": "Abstract all-horizon safety invariant conditional on complete effect mediation, faithful modeled admissibility, safe rejection and environment steps.",
+      "formal_declaration": "Nightfall.AgentSafety.arbitrary_agent_all_horizons_safe",
+      "receipt": {
+        "pr": 528,
+        "head_sha": null,
+        "ci_run": 43639554615,
+        "status": "legacy-referenced-not-replayed-in-this-change"
+      },
+      "observed_pr_merged": null,
+      "lifecycle_correction": null,
+      "remaining_limitations": [
+        "All-horizon invariant depends on externally unverified complete mediation and faithful model; no full real-world superintelligence guarantee",
+        "Admissibility is universally quantified and may not be computable; independent specialist/human review absent"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Prove actual operational non-bypass mediation, policy/source freshness and environment assumptions in target system; no physical guarantee inferred."
+    },
+    {
+      "id": "semantic-fencing-authority",
+      "legacy_status": "lean-kernel-checked-draft-branch-finite-scope",
+      "dossier": {
+        "path": "research/nightfall/2026-11-active-passports/semantic-fencing-and-security.md",
+        "git_blob_sha1": "759d3f4d20881a30c0f12a0bee0b76bf338e1de2"
+      },
+      "primary_source": {
+        "path": "research/nightfall/formalization/agent_safety/SemanticFencing.lean",
+        "git_blob_sha1": "a6145a6c6131be48bd0525dbabe88d5db5fa8a96",
+        "type": "lean"
+      },
+      "supporting_sources": [
+        {
+          "path": "research/nightfall/assurance/semantic-fencing-v0.3/README.md",
+          "git_blob_sha1": "78b24296d35ba8cbb4c261914e23540498fc33ee"
+        }
+      ],
+      "source_evidence_kind": "lean-conditional-finite",
+      "actual_scope": "Finite version-only hitting-set safety and initially-safe Bellman optimum under authenticated coherent sources and modeled effect-time boundary.",
+      "formal_declaration": "Nightfall.SemanticFencing.finite_safe_bellman_optimal",
+      "receipt": {
+        "pr": 554,
+        "head_sha": "b4fa2e2ecd6041caafa9b5e9f61fbc10a70f7f1e",
+        "ci_run": 43662280902,
+        "status": "legacy-referenced-not-replayed-in-this-change"
+      },
+      "observed_pr_merged": true,
+      "lifecycle_correction": "Legacy passport calls #554 draft/unmerged; GitHub reports merged. This is a lifecycle correction only, not deployment assurance.",
+      "remaining_limitations": [
+        "PR #554 source compiled strictly at exact draft PR head, but not merged; service owns local JSON record, not AWS deployment or an actual physical actuator",
+        "No global denial-of-service guarantee, no independent specialist proof review, no unconditional authority correctness across arbitrary agents or systems"
+      ],
+      "author_side_source_reconciled": true,
+      "independent_theorem_statement_review": false,
+      "independent_human_referee": false,
+      "prior_art_cleared": false,
+      "publication_authorized": false,
+      "next_decisive_test": "Audit exact hypothetical version/ABA/atomicity assumptions; externally test effect boundary and source trust; no deployment safety promotion."
+    }
+  ]
+}
