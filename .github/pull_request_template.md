@@ -16,6 +16,30 @@
 - [ ] No frozen witness, source hash, release asset, research history, or originality designation was silently overwritten.
 - [ ] If this is documentation-only, no theorem, novelty, competition, or publication status was promoted.
 
+## Computer-assisted formalization and independent reconstruction
+
+<!-- Complete for finite enumerations, program-produced certificates,
+or theorem proofs that import computational claims; otherwise mark N/A. -->
+
+- [ ] The **exact paper/proof version**, all imported lemmas and the source-to-code version correspondence are frozen and linked.
+- [ ] The mathematical specification, raw input bytes, expected coverage and stage DAG were frozen **before** independent implementation.
+- [ ] At least one checker was independently constructed from the **specification**, without access to reference code or intermediate answers; code lineage and shared inputs are disclosed.
+- [ ] Every stage has exact replay commands, SHA-256 input/checker/output hashes, canonical output, and a byte-for-byte differential result (or a documented alternative comparison proof).
+- [ ] The differential manifest was audited by `scripts/check_formalization_differential.py --manifest ...`; its 18 negative controls passed with `--self-test`. The original producer programs were actually executed separately.
+- [ ] Semantic formalization explicitly distinguishes **checker soundness**, finite-case **coverage/completeness**, and the **source-theorem bridge**, with named Lean receipts for each completed obligation.
+- [ ] Missing formal obligations, code-independence review, external human review, and the theorem/novelty claims remain unpromoted.
+- [ ] Correctness checks and performance measurements are reported separately.
+
+**Source specification version / hash:**
+
+**Stage and lemma coverage:**
+
+**Independent checker lineage and deliberate information isolation:**
+
+**Raw input, implementation and exact output hashes:**
+
+**Open semantic/coverage bridges:**
+
 ## Reproducibility and quality checks
 
 <!-- Mark N/A when irrelevant; record the precise source commit and CI run. -->
