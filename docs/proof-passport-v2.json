@@ -1,0 +1,331 @@
+{
+  "schema": "nightfall.proof-passport-overlay.v2",
+  "version": 2,
+  "as_of": "2026-11-21",
+  "scope": "Additive evidence overlay; 15 active v16 passport identities, 11 frozen historical records, existing Lean provenance and recent-results registry are unchanged. No new mathematical theorem is certified by this metadata edit.",
+  "policy": {
+    "source_byte_check": "Compare repository .lean file git blob SHA-1 to recorded content; no network lookup and no compilation.",
+    "receipt_check": "Run URLs and exact PR-head SHA are recorded historical references; CI success was inspected for #970/#976/#977/#978. The metadata checker does not verify GitHub's run logs or execute Lean.",
+    "promotion_rule": "No automatic status upgrade from references, metadata tests, imported hypotheses, or proof-term count. Require source+theorem+assumptions+transitive pins+named kernel replay+axiom and statement review+independent referee+dated prior art+owner release authorization.",
+    "dependency_rule": "Cycle is an error. Failure/withdrawal of any premise demotes dependent mathematical promotion until rebuilt, without erasing historical source receipts.",
+    "external_source_rule": "External reference, submitted source, site-local build, third-party kernel replay, independent semantic audit, and novel theorem are separate gates. Links do not imply complete verification.",
+    "frozen_collections": "Do not rewrite earlier claim IDs, release fingerprints or source-custody history."
+  },
+  "records": [
+    {
+      "id": "NF-Q2-105-NATIVE-FINITE",
+      "title": "Unconditional finite heterogeneous-product Q2 C105.416",
+      "assertion_status": "scoped-formal-evidence",
+      "claim_scope": "Finite coordinate index, genuinely heterogeneous finite alphabets, normalized independent marginals including zero atoms, bounded real degree-two f; variance squared bound C~105.416 B² max influence.",
+      "source": {
+        "kind": "repository",
+        "path": "research/nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean",
+        "git_blob_sha1": "b1e9f129b5636cbe5132f0c77baa65ef39149eca",
+        "repository": "d3lefts/d3lefts"
+      },
+      "formal": {
+        "declaration": "Nightfall.InfinitePiQ2NativeHeterogeneousTerminal.native_heterogeneous_q2_105416_unconditional",
+        "toolchain": "Lean 4.36.0-rc2; pinned Mathlib per original workflow",
+        "exact_statement_independently_reviewed": false
+      },
+      "receipt": {
+        "pr": 587,
+        "head_sha": "544956c90421463eea57e7843157f4431ca5f57a",
+        "run_id": 44094971286,
+        "url": "https://github.com/d3lefts/d3lefts/actions/runs/44094971286",
+        "outcome": "reported-success",
+        "replay_scope": "named-declaration PR-head evidence, not a new replay or external audit"
+      },
+      "dependencies": [],
+      "limitations": [
+        "This exact finite theorem is NOT an unconditional arbitrary-index or arbitrary measurable-alphabet theorem.",
+        "Receipt imported from 17 November claim catalogue; successful workflow not independently rerun here."
+      ],
+      "credit": "NIGHTFALL Q2 collaboration; imported source mathematics and antecedents require source-specific attribution.",
+      "review": {
+        "statement_equivalence": "pending-independent",
+        "non_author": "pending",
+        "prior_art": "pending",
+        "publication_authorization": "not-requested"
+      },
+      "certification": {
+        "kernel_replayed_in_this_change": false,
+        "independent_semantic_audit": false,
+        "worldwide_novelty": false,
+        "globally_complete": false
+      },
+      "next_test": "Independently reconstruct exact theorem statement and assumptions, pin full transitive imported source closure, replay named declaration and audit dated prior art."
+    },
+    {
+      "id": "NF-ROUTE1-POLYLOG-M",
+      "title": "Route 1 product-mixture simulation",
+      "assertion_status": "scoped-formal-evidence",
+      "claim_scope": "Finite alphabet mixture of M independent-coordinate product laws, degree d≥1 bounded f; query depth polynomial in d, 1/epsilon, 1/delta times 1+log M.",
+      "source": {
+        "kind": "repository",
+        "path": "research/nightfall/formalization/product_space/Route1PolylogSimulation.lean",
+        "git_blob_sha1": "5e2e8cd91f9a5acfac5ebcfde41f5833f6f03989",
+        "repository": "d3lefts/d3lefts"
+      },
+      "formal": {
+        "declaration": "Nightfall.Route1Polylog.route1_polylog_simulation",
+        "toolchain": "Lean 4.36.0-rc2; pinned Mathlib per original workflow",
+        "exact_statement_independently_reviewed": false
+      },
+      "receipt": {
+        "pr": 970,
+        "head_sha": "e41639b2bc569d4da9e3760722f9dfb0fd3c71a5",
+        "run_id": 44732951300,
+        "url": "https://github.com/d3lefts/d3lefts/actions/runs/44732951300",
+        "outcome": "reported-success",
+        "replay_scope": "named-declaration PR-head evidence, not a new replay or external audit"
+      },
+      "dependencies": [],
+      "limitations": [
+        "No guarantee for unrestricted correlated distributions or arbitrary continuous alphabets.",
+        "CI proves exactly named source theorem, not originality or an unconditional quantum advantage theorem."
+      ],
+      "credit": "Claude Opus 5.5 primary Route 1 proof contribution, NIGHTFALL integration; imported Aaronson–Ambainis/Turturean results credited.",
+      "review": {
+        "statement_equivalence": "pending-independent",
+        "non_author": "pending",
+        "prior_art": "pending",
+        "publication_authorization": "not-requested"
+      },
+      "certification": {
+        "kernel_replayed_in_this_change": false,
+        "independent_semantic_audit": false,
+        "worldwide_novelty": false,
+        "globally_complete": false
+      },
+      "next_test": "Independently reconstruct exact theorem statement and assumptions, pin full transitive imported source closure, replay named declaration and audit dated prior art."
+    },
+    {
+      "id": "NF-WYNER-ABSTRACT-W",
+      "title": "Exact reduction of arbitrary measurable latent W",
+      "assertion_status": "scoped-formal-evidence",
+      "claim_scope": "Given a measurable conditional product-law kernel Q from arbitrary measurable W and latent probability measure, obtain an exactly equivalent finite latent representation with equal observed law and mutual-information cost.",
+      "source": {
+        "kind": "repository",
+        "path": "research/nightfall/formalization/product_space/Route1AbstractLatentPushforward.lean",
+        "git_blob_sha1": "c44b01c7c31a3d88402677f70fca5883a70710ff",
+        "repository": "d3lefts/d3lefts"
+      },
+      "formal": {
+        "declaration": "Nightfall.Route1Polylog.abstract_latent_exact_finite_reduction",
+        "toolchain": "Lean 4.36.0-rc2; pinned Mathlib per original workflow",
+        "exact_statement_independently_reviewed": false
+      },
+      "receipt": {
+        "pr": 976,
+        "head_sha": "6cacbdee5792cfbf09a45d2478145482f63c59f3",
+        "run_id": 44755583762,
+        "url": "https://github.com/d3lefts/d3lefts/actions/runs/44755583762",
+        "outcome": "reported-success",
+        "replay_scope": "named-declaration PR-head evidence, not a new replay or external audit"
+      },
+      "dependencies": [
+        "NF-ROUTE1-POLYLOG-M"
+      ],
+      "limitations": [
+        "The kernel Q is provided; deriving a disintegration kernel from a bare joint law is NOT established.",
+        "No inference to arbitrary correlated inputs lacking a conditional product representation."
+      ],
+      "credit": "Claude Opus 5.5 Route 1/Wyner proof; NIGHTFALL collaboration and Mathlib imported lemmas.",
+      "review": {
+        "statement_equivalence": "pending-independent",
+        "non_author": "pending",
+        "prior_art": "pending",
+        "publication_authorization": "not-requested"
+      },
+      "certification": {
+        "kernel_replayed_in_this_change": false,
+        "independent_semantic_audit": false,
+        "worldwide_novelty": false,
+        "globally_complete": false
+      },
+      "next_test": "Independently reconstruct exact theorem statement and assumptions, pin full transitive imported source closure, replay named declaration and audit dated prior art."
+    },
+    {
+      "id": "NF-SUBCUBE-SHARP-ALL-L",
+      "title": "Sharp all-level tensor-subcube intersection upper bound",
+      "assertion_status": "scoped-formal-evidence",
+      "claim_scope": "For recursively defined binary tensor row family R(L) and any subspace W, rowHits(R(L),W) ≤ (dim W)^(log₂3), all tensor levels.",
+      "source": {
+        "kind": "repository",
+        "path": "research/nightfall/formalization/structural_information/SubcubeSharpAllLevels.lean",
+        "git_blob_sha1": "96632e378f8ec071f707a3d820a6857238885741",
+        "repository": "d3lefts/d3lefts"
+      },
+      "formal": {
+        "declaration": "Nightfall.StructuralInformation.SubcubeSharpAllLevels.all_levels_sharp",
+        "toolchain": "Lean 4.36.0-rc2; pinned Mathlib per original workflow",
+        "exact_statement_independently_reviewed": false
+      },
+      "receipt": {
+        "pr": 977,
+        "head_sha": "9e15771d3c818143d3c6d2fc250224bbe17c17ce",
+        "run_id": 44739986591,
+        "url": "https://github.com/d3lefts/d3lefts/actions/runs/44739986591",
+        "outcome": "reported-success",
+        "replay_scope": "named-declaration PR-head evidence, not a new replay or external audit"
+      },
+      "dependencies": [],
+      "limitations": [
+        "Not a bound for arbitrary row families, other coefficient fields, or general quantum query simulation.",
+        "A historical priority comparison with Segre/coding results remains open."
+      ],
+      "credit": "NIGHTFALL tensor-subcube collaborators; upstream coding/geometry literature requires comparison.",
+      "review": {
+        "statement_equivalence": "pending-independent",
+        "non_author": "pending",
+        "prior_art": "pending",
+        "publication_authorization": "not-requested"
+      },
+      "certification": {
+        "kernel_replayed_in_this_change": false,
+        "independent_semantic_audit": false,
+        "worldwide_novelty": false,
+        "globally_complete": false
+      },
+      "next_test": "Independently reconstruct exact theorem statement and assumptions, pin full transitive imported source closure, replay named declaration and audit dated prior art."
+    },
+    {
+      "id": "NF-SUBCUBE-SHARPNESS-ALL-L",
+      "title": "Exact 3^L tensor-subcube row cardinality and extremizer",
+      "assertion_status": "scoped-formal-evidence",
+      "claim_scope": "Full-space W=E(L) has dim W=2^L and rowHits(R(L),W)=3^L, giving sharpness of the LINEAR-subspace exponent together with #977.",
+      "source": {
+        "kind": "repository",
+        "path": "research/nightfall/formalization/structural_information/SubcubeSharpness.lean",
+        "git_blob_sha1": "c83d903d08558e911c7ddaa601c1101638fbf730",
+        "repository": "d3lefts/d3lefts"
+      },
+      "formal": {
+        "declaration": "Nightfall.StructuralInformation.SubcubeSharpness.full_space_extremizer",
+        "toolchain": "Lean 4.36.0-rc2; pinned Mathlib per original workflow",
+        "exact_statement_independently_reviewed": false
+      },
+      "receipt": {
+        "pr": 978,
+        "head_sha": "918054f4ca379ce62bbe18a301c91f8ced0becc6",
+        "run_id": 44741027976,
+        "url": "https://github.com/d3lefts/d3lefts/actions/runs/44741027976",
+        "outcome": "reported-success",
+        "replay_scope": "named-declaration PR-head evidence, not a new replay or external audit"
+      },
+      "dependencies": [
+        "NF-SUBCUBE-SHARP-ALL-L"
+      ],
+      "limitations": [
+        "Does not establish optimality of any affine-shift constant, T≥2 simulation, or secant-fiber conjecture.",
+        "Original numeric-mask compatibility beyond independently replayed finite levels is separate."
+      ],
+      "credit": "NIGHTFALL tensor-subcube collaborators; formal result not independently refereed.",
+      "review": {
+        "statement_equivalence": "pending-independent",
+        "non_author": "pending",
+        "prior_art": "pending",
+        "publication_authorization": "not-requested"
+      },
+      "certification": {
+        "kernel_replayed_in_this_change": false,
+        "independent_semantic_audit": false,
+        "worldwide_novelty": false,
+        "globally_complete": false
+      },
+      "next_test": "Independently reconstruct exact theorem statement and assumptions, pin full transitive imported source closure, replay named declaration and audit dated prior art."
+    },
+    {
+      "id": "EXTERNAL-ALPOGE-RH-20261121",
+      "title": "External Alpöge submitted RH source archive",
+      "assertion_status": "external-reference-only",
+      "claim_scope": "The website displays `theorem riemannHypothesis : RiemannHypothesis := rhOfAll`, with RiemannHypothesis defined in its pinned mathlib as critical-line location for nontrivial zeta zeros.",
+      "source": {
+        "kind": "external",
+        "url": "https://riemann.rylandgross.com/",
+        "last_observed": "2026-11-21",
+        "fingerprint": null,
+        "local_archive_replayed": false
+      },
+      "formal": {
+        "declaration": "riemannHypothesis",
+        "toolchain": "Pinned externally, exact lock not downloaded for this passport",
+        "exact_statement_independently_reviewed": false
+      },
+      "receipt": {
+        "pr": null,
+        "head_sha": null,
+        "run_id": null,
+        "url": null,
+        "outcome": "no-local-run",
+        "replay_scope": "The website's own displayed LOCAL VERIFICATION was pending when checked; separately reported external reviews must not be mistaken for a local certificate."
+      },
+      "dependencies": [],
+      "limitations": [
+        "NIGHTFALL has NOT mirrored, hashed, built, or independently kernel-replayed these sources in this change.",
+        "Dirichlet GRH needs its own exact theorem statement and independent dependency graph; not implied by this RH record.",
+        "The site's import graph is not a kernel-level proof-term dependency graph.",
+        "No transfer into NIGHTFALL mathematics is automatically certified by this reference."
+      ],
+      "credit": "Levent Alpöge and credited contributors for the submitted mathematical source; Ryland Gross site/checker; no NIGHTFALL authorship claim.",
+      "review": {
+        "statement_equivalence": "pending-independent",
+        "non_author": "pending",
+        "prior_art": "pending",
+        "publication_authorization": "not-requested"
+      },
+      "certification": {
+        "kernel_replayed_in_this_change": false,
+        "independent_semantic_audit": false,
+        "worldwide_novelty": false,
+        "globally_complete": false
+      },
+      "next_test": "Acquire exact source archive, checksum and pin; identify exact exported Dirichlet GRH declaration; independently rebuild and audit axioms/kernel with immutable receipt."
+    }
+  ],
+  "legacy_coverage": {
+    "registry": "docs/active-proof-passport.json",
+    "legacy_version": 16,
+    "active_claim_ids": [
+      "q2-influence",
+      "q2-observation",
+      "finite-certificate",
+      "cubic-obstruction",
+      "kaczmarz-logfree",
+      "four-shuffle",
+      "nested-address-separation",
+      "finite-palette-recovery",
+      "fair-sign-cubic",
+      "universal-spectral",
+      "certificate-acquisition",
+      "phase-block",
+      "scif-incremental-recertification",
+      "conditional-agent-safety",
+      "semantic-fencing-authority"
+    ],
+    "related_but_not_equated": {
+      "q2-influence": {
+        "v2_id": "NF-Q2-105-NATIVE-FINITE",
+        "relation": "more general finite coordinate-dependent alphabets; not identical to older common-alphabet statement"
+      }
+    },
+    "awaiting_independent_v2_source_reconciliation": [
+      "q2-observation",
+      "finite-certificate",
+      "cubic-obstruction",
+      "kaczmarz-logfree",
+      "four-shuffle",
+      "nested-address-separation",
+      "finite-palette-recovery",
+      "fair-sign-cubic",
+      "universal-spectral",
+      "certificate-acquisition",
+      "phase-block",
+      "scif-incremental-recertification",
+      "conditional-agent-safety",
+      "semantic-fencing-authority"
+    ],
+    "automatic_promotion": false
+  }
+}

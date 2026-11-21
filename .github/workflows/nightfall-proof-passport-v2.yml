@@ -1,0 +1,26 @@
+name: NIGHTFALL proof passport v2 evidence contract
+on:
+  pull_request:
+    paths:
+      - 'docs/proof-passport-v2.json'
+      - 'scripts/check_proof_passport_v2.py'
+      - 'research/nightfall/2026-11-proof-passports-v2/**'
+      - '.github/workflows/nightfall-proof-passport-v2.yml'
+      - 'research/nightfall/formalization/**/*.lean'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit-source-and-metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify v2 source blobs, dependency graph and 10 mutation guards
+        run: python3 scripts/check_proof_passport_v2.py --self-test
