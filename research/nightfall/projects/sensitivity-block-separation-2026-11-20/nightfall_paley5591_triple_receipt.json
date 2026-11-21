@@ -1,0 +1,86 @@
+{
+  "audit_status": "exhaustive exact finite computation; not Lean-certified or peer-reviewed",
+  "checker_sha256": "d0eaf53fcf7644c4aac7f189b24f984fb4358d0d2fb6bcad6a83f7185668bd5e",
+  "distribution": {
+    "680": 108,
+    "681": 96,
+    "682": 192,
+    "683": 366,
+    "684": 204,
+    "685": 276,
+    "686": 264,
+    "687": 210,
+    "688": 312,
+    "689": 360,
+    "690": 258,
+    "691": 366,
+    "692": 588,
+    "693": 282,
+    "694": 276,
+    "695": 432,
+    "696": 216,
+    "697": 438,
+    "698": 642,
+    "699": 342,
+    "700": 258,
+    "701": 462,
+    "702": 264,
+    "703": 324,
+    "704": 570,
+    "705": 300,
+    "706": 324,
+    "707": 348,
+    "708": 252,
+    "709": 252,
+    "710": 294,
+    "711": 210,
+    "712": 294,
+    "713": 372,
+    "714": 150,
+    "715": 138,
+    "716": 126,
+    "717": 12
+  },
+  "edge_convention": "x -> y iff (y-x) mod 5591 is a nonzero square",
+  "hasse_upper_bound": 717,
+  "implementation_agreement": true,
+  "maximum_common_outdegree": 717,
+  "minimum_common_outdegree": 680,
+  "normal_forms": [
+    [
+      0,
+      1,
+      "c"
+    ],
+    [
+      0,
+      5590,
+      "c"
+    ]
+  ],
+  "number_of_reduced_cases": 11178,
+  "prime": 5591,
+  "python_version": "3.13.5",
+  "scope": "Paley tournament T_5591 geometry only; no sensitivity exponent improvement claimed",
+  "statement": "max distinct a,b,c |Out(a) intersect Out(b) intersect Out(c)| = 717",
+  "witness_cubic_character_sum": 148,
+  "witness_root_correction_t": 0,
+  "witnesses_by_second_vertex": {
+    "1": [
+      838,
+      1356,
+      1757,
+      2583,
+      3410,
+      4666
+    ],
+    "5590": [
+      837,
+      1355,
+      1756,
+      2582,
+      3409,
+      4665
+    ]
+  }
+}
