@@ -3,7 +3,10 @@ on:
   pull_request:
     paths:
       - 'docs/proof-passport-v2.json'
+      - 'docs/active-passport-source-reconciliation-v2.json'
+      - 'docs/active-proof-passport.json'
       - 'scripts/check_proof_passport_v2.py'
+      - 'scripts/check_active_passport_source_reconciliation_v2.py'
       - 'research/nightfall/2026-11-proof-passports-v2/**'
       - '.github/workflows/nightfall-proof-passport-v2.yml'
       - 'research/nightfall/formalization/**/*.lean'
@@ -23,4 +26,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Verify v2 source blobs, dependency graph and 10 mutation guards
-        run: python3 scripts/check_proof_passport_v2.py --self-test
+        run: |
+          python3 scripts/check_proof_passport_v2.py --self-test
+          python3 scripts/check_active_passport_source_reconciliation_v2.py --self-test

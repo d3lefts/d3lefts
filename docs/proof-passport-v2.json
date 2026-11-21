@@ -2,7 +2,7 @@
   "schema": "nightfall.proof-passport-overlay.v2",
   "version": 2,
   "as_of": "2026-11-21",
-  "scope": "Additive evidence overlay; 15 active v16 passport identities, 11 frozen historical records, existing Lean provenance and recent-results registry are unchanged. No new mathematical theorem is certified by this metadata edit.",
+  "scope": "Additive evidence overlay; 15/15 active v16 passport identities individually source-byte reconciled in a separately checked manifest, 11 frozen historical records and existing proof tiers unchanged. Independent theorem/novelty review remains outstanding. This update does not certify new mathematics.",
   "policy": {
     "source_byte_check": "Compare repository .lean file git blob SHA-1 to recorded content; no network lookup and no compilation.",
     "receipt_check": "Run URLs and exact PR-head SHA are recorded historical references; CI success was inspected for #970/#976/#977/#978. The metadata checker does not verify GitHub's run logs or execute Lean.",
@@ -310,7 +310,11 @@
         "relation": "more general finite coordinate-dependent alphabets; not identical to older common-alphabet statement"
       }
     },
-    "awaiting_independent_v2_source_reconciliation": [
+    "awaiting_independent_v2_source_reconciliation": [],
+    "automatic_promotion": false,
+    "source_reconciliation_manifest": "docs/active-passport-source-reconciliation-v2.json",
+    "reconciled_primary_source_ids": [
+      "q2-influence",
       "q2-observation",
       "finite-certificate",
       "cubic-obstruction",
@@ -326,6 +330,22 @@
       "conditional-agent-safety",
       "semantic-fencing-authority"
     ],
-    "automatic_promotion": false
+    "awaiting_independent_semantic_review": [
+      "q2-influence",
+      "q2-observation",
+      "finite-certificate",
+      "cubic-obstruction",
+      "kaczmarz-logfree",
+      "four-shuffle",
+      "nested-address-separation",
+      "finite-palette-recovery",
+      "fair-sign-cubic",
+      "universal-spectral",
+      "certificate-acquisition",
+      "phase-block",
+      "scif-incremental-recertification",
+      "conditional-agent-safety",
+      "semantic-fencing-authority"
+    ]
   }
 }
