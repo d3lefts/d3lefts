@@ -1,4 +1,11 @@
-# Active mathematical Proof Passport expansion — updated 15 November 2026
+# Active mathematical Proof Passport expansion — updated 21 November 2026
+
+## 21 November 2026 — Proof Passport v2 evidence-gate overlay (no status promotion)
+
+A separate [machine-readable v2 overlay](../../../docs/proof-passport-v2.json), [process and source-closure protocol](../2026-11-proof-passports-v2/README.md) and [fail-closed metadata checker](../../../scripts/check_proof_passport_v2.py) now bind current finite Q2, Route 1/Wyner and sharp tensor-subcube named declarations to the existing Git blobs and reported exact-head CI runs. An external Alpöge RH source archive is included as **reference-only**; no local kernel replay or imported GRH theorem is asserted. The v16 15-claim registry, its older source claims and the frozen historical passports are retained as dated evidence. This overlay does not update their statuses or create an independent mathematical referee.
+
+Run: `python3 scripts/check_proof_passport_v2.py --self-test`. This tests source-blob custody, dependency structure and ten fail-closed mutations, **not Lean or the truth of the source theorem statements**. PR #981's proposed differential-formalization tests remain separately pending until merged and replayed.
+
 
 ## 15 November 2026 — v16 certificate source-custody supplement
 
