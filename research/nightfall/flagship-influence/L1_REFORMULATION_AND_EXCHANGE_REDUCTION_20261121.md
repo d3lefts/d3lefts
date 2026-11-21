@@ -49,14 +49,27 @@ $$\operatorname{Var}(f)=\sum_i\mathbb E[(TD_if)(D_if)]\ \le\ 2d^2\bigl(1+\ln 2d^
 
 The identity holds because $\mathbb E[(TD_if)(D_if)]=\sum_{S\ni i}\|f_S\|^2/|S|$, and summing over $i$ gives the variance. The inequality follows from the Lemma. ∎
 
-**Consequence.** The polynomial-degree exponent-two landmark (in the strong N-L1 form, with degree loss $d^{2+k}\log d$) follows from a single **exchange inequality**:
+**Consequence (SUPERSEDED, see §3: EXCH is false).** The polynomial-degree exponent-two landmark (in the strong N-L1 form, with degree loss $d^{2+k}\log d$) follows from a single **exchange inequality**:
 $$\textbf{(EXCH)}\qquad\mathbb E\max_i|D_if|\ \le\ C\,d^k\max_i\mathbb E|D_if|\quad\text{for bounded degree-}d\ f.$$
 
 The obstacle is now isolated as exactly the $\mathbb E\max$ versus $\max\mathbb E$ exchange, with no level sets, medians or third moments left. The v8 paper flags this same exchange in its two-sample transfer. Here it appears once, cleanly, with the analytic loss already paid (a $d^2\log d$ factor).
 
-## 3. Assessment of EXCH
+## 3. Correction: EXCH as stated is FALSE (exponential in $d$). The reduction is too lossy.
 
-- **Degree one and degree-two sign pairs:** $|D_if|$ is constant, so EXCH holds with equality.
-- **Addressing function:** the target bits are each pivotal on a $2^{-k}$ fraction of inputs, so $\mathbb E\max\approx1$. But the address bits have $\mathbb E|D_if|$ of order 1, so EXCH survives.
-- **Danger scenario:** $f$ whose pivotal coordinate wanders with $x$ while every fixed coordinate is rarely pivotal. That is AA-type behaviour, so EXCH is probably as hard as the problem. It is also a cleaner single-quantity target for adversarial search: maximize $\mathbb E\max_i|D_if|\,/\max_i\mathbb E|D_if|$ over bounded degree-$d$ polynomials. No search has been run yet.
-- **A natural proof route to try:** combine the Lemma's pointwise $\ell_1$ control with Turturean's fixed-weight all-pairs averaging. That inequality is the one known tool that averages before optimizing over coordinates.
+**Counterexample.** Take $m$ disjoint blocks of $d$ fair bits and
+$$f=\sum_{b=1}^m\prod_{j\in b}\frac{1+x_j}{2}.$$
+For $i$ in block $b$, $|D_if|=\tfrac12$ exactly when the other $d-1$ bits of block $b$ are all 1, and $D_if=0$ otherwise.
+- $\max_i\mathbb E|D_if|=2^{-d}$.
+- As $m\to\infty$, $\mathbb E\max_i|D_if|\to\tfrac12$.
+- So the ratio is about $2^{d-1}$, independent of any polynomial in $d$.
+
+Exhaustive optimisation at $n\le7$, $d\le3$ found ratios of about 2.0–2.2, consistent with this.
+
+**N-L1 survives on this family.** Here $V=m2^{-d}(1-2^{-d})$, $B=m/2$ and $L_i\approx2^{-d}$, so $V/(B\max L)\approx2$.
+
+**Diagnosis.** The Theorem pairs the global radius $B$ with a per-point maximum. When many coordinates are each pivotal by an amount much smaller than $B$, this overcounts. A correct reduction must keep the pairing $\sum_i|TD_if(x)|\,|D_if(x)|$ coordinate-resolved. It cannot pull out $\max_i$ pointwise.
+
+**What stands.**
+- The Lemma and the Theorem are true, but they are a weak inequality.
+- N-L1 (§1) remains the reformulated target, with its evidence.
+- Next step: a coordinate-resolved version, e.g. bounding $\mathbb E\sum_i|TD_if||D_if|$ by $\max_iL_i$ via Turturean-style fixed-weight averaging, or an adversarial search for N-L1 directly at larger $n$.
