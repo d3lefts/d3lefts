@@ -5,7 +5,7 @@
 - Machine-readable records: [docs/proof-passport-v2.json](../../../docs/proof-passport-v2.json)
 - Fail-closed metadata and Git blob checker: [scripts/check_proof_passport_v2.py](../../../scripts/check_proof_passport_v2.py)
 - Exact schema status: `nightfall.proof-passport-overlay.v2`
-- Run from the repository root: `python3 scripts/check_proof_passport_v2.py --self-test` (ten mutation controls).
+- Run from the repository root: `python3 scripts/check_proof_passport_v2.py --self-test` (ten mutation controls) and `python3 scripts/check_active_passport_source_reconciliation_v2.py --self-test` (14 individual-source mutation controls).
 - Separate concurrent work: [PR #981](https://github.com/d3lefts/d3lefts/pull/981) introduces differential checker lineage and staged finite-exhaustion gates; do not represent the checks as integrated until that PR merges and passes.
 
 ## Required evidence ladder (no auto-promotion)
@@ -26,7 +26,7 @@ The `scoped-formal-evidence` label means a previously reported named Lean receip
 
 ## Current entries
 
-**Migration coverage:** all 15 original active v16 identities are enumerated and checked against their current source registry. One (Q2 influence) is related to a more general *finite* source-pinned statement, not silently equated; the other 14 await individualized v2 source reconciliation. The five new/recent Lean records and the external RH reference are additional source-scope evidence, not retroactive changes to those 15 active statuses.
+**Migration coverage completed (21 November):** [15 individually source-bound records](../../../docs/active-passport-source-reconciliation-v2.json) have distinct primary proof/manuscript artifacts, Git blob hashes, the original dossier snapshot, claim scope, optional supporting checker files, the exact legacy evidence tier and the cheapest decisive next audit. [Fail-closed checker](../../../scripts/check_active_passport_source_reconciliation_v2.py) validates source bytes, named Lean declarations, evidence limits and 14 adversarial mutations. The complete v16 registry is unchanged; the existing Q2-native theorem is **related but not identical** to the common-alphabet q2-influence identity. Source index gaps: **0 of 15**. Independent mathematical statement equivalence, human referee and dated originality review: **15 of 15 still open**. Three historical lifecycle descriptions (#332/#354/#554) are corrected as merged sources without promoting their mathematical or deployment claims. The five new/recent Lean records and the external RH reference remain separate scope records, not new active IDs.
 
 - Q2 heterogeneous finite (C_2\approx105.416): repository source-pinned, formal finite domain only. No infinite-product upgrade.
 - Route 1 polylog-M / Wyner abstract W: source-pinned, successful historical CI runs, original latent-kernel hypothesis retained, imported predecessors credited.
