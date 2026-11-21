@@ -17,7 +17,7 @@ ALLOW = {"scoped-formal-evidence", "external-reference-only", "quarantined"}
 
 def check(d, files=True):
     assert d["schema"] == "nightfall.proof-passport-overlay.v2" and d["version"] == 2
-    assert re.fullmatch(r"2026-\\d{2}-\\d{2}", d["as_of"])
+    assert re.fullmatch(r"2026-\d{2}-\d{2}", d["as_of"])
     assert len(d["records"]) >= 5
     by_id = {}
     for r in d["records"]:
@@ -54,10 +54,10 @@ def check(d, files=True):
                 full=ROOT.joinpath(*p.parts)
                 assert full.is_file() and not full.is_symlink(),f"source missing {p}"
                 b=full.read_bytes()
-                blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\\0"+b).hexdigest()
+                blob=hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
                 assert blob == src["git_blob_sha1"],f"source drift {p}"
                 name=r["formal"]["declaration"].rsplit(".",1)[-1]
-                assert re.search(r"\\b(?:theorem|def)\\s+"+re.escape(name)+r"\\b",
+                assert re.search(r"\b(?:theorem|def)\s+"+re.escape(name)+r"\b",
                                  b.decode("utf-8")),f"declaration absent {name}"
         else:
             assert src["kind"] == "external" and r["assertion_status"] == "external-reference-only"
@@ -92,7 +92,7 @@ def self_test(d):
         raise AssertionError(f"BAD MUTANT ACCEPTED: {label}")
     bad("invented independent review", lambda c:c["records"][0]["review"].update(non_author="passed"))
     bad("fake kernel replay",lambda c:c["records"][0]["certification"].update(kernel_replayed_in_this_change=True))
-    bad("source swap",lambda c:c["records"][0]["source"].update(git_blob_sha1="0"*40))
+    bad("source swap",lambda c:c["records"][0]["source"].update(git_blob_sha1="invalid"))
     bad("false run",lambda c:c["records"][0]["receipt"].update(run_id=-1))
     bad("missing prerequisite",lambda c:c["records"][1].update(dependencies=["MISSING"]))
     bad("cycle",lambda c:(c["records"][1].update(dependencies=["NF-WYNER-ABSTRACT-W"]),
