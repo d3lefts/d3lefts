@@ -18,6 +18,8 @@ def main():
                 for root in tri)
         assert t in groups
         groups[t].append(value)
+    assert counts[(1, 838)] == 717  # sharp directed-cycle witness
+    assert counts[(1, 75)] == 716   # sharp transitive-triple witness
     assert len(groups[0]) == 2796 and len(groups[1]) == 8382
     assert min(groups[0]) == min(groups[1]) == 680
     assert max(groups[0]) == 717 and max(groups[1]) == 716
