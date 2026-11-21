@@ -1,4 +1,4 @@
-# NIGHTFALL — Paley(5591) triple-out-neighborhood passport, v0.2
+# NIGHTFALL — Paley(5591) triple-out-neighborhood passport, v0.3
 
 **Date:** 2026-11-20. **Status:** author-side exact finite computation, two independently implemented exhaustive checks, plus an analytic reduction to the classical Hasse bound. **Not** Lean-certified or independently peer-reviewed. **No improved block-sensitivity exponent is claimed.**
 
@@ -70,3 +70,18 @@ The two-implementation exhaustive checker was rerun on 2026-11-20. Classifying e
 The published Prove2Me periodic theorem `Sensitivity213981Formal.ThreeBoundEndpoint22CampaignComplete.periodic_upper` pins the factor `10121928` and the accepted mission describes a triple cap of `800`. Its listed proof source is an archive URL `https://chatgpt.com/library?file_id=libfile_431310a5a24c81918d3f7bda6cf4262b&account_id=personal`, with publicly reported SHA-256 `15679de91204c2f0619380925cb21f560610f5a2467627ac5de8715f34ff3ddd`. This archive was **not obtainable** from our available GitHub, public web, or file-library retrieval; its hash is a *reported target*, not a locally verified digest. The published theorem page exposes imports and the statement, not the 97,594 packed summary rows or the endpoint generator. Consequently, no replacement of `800` in the source, replay of the 22-level endpoint, or improved exponent has been performed. Do not claim that any existing checker has accepted this geometry substitution.
 
 Independent exact threshold check: `A <= 10107721` is necessary and sufficient (for integral `A>0`) to make `4*log(5591)/log(A) > 107/50`, assuming `A>1`; the condition is `5591^200 > A^107`. At `A=10121928` the old endpoint remains `2.1398136583162706859...`. 
+
+## v0.3: sharp cyclic-versus-transitive theorem (analytic plus witnesses)
+
+For any prime (p\equiv3\pmod4) and ordered distinct triple ((a,b,c)), define (t) as the number of roots among (a,b,c) whose two other vertices both point to the root. Tournament structure gives (t=0) for a directed 3-cycle and (t=1) for a transitive triple. The exact character identity already proved above is
+
+    8 N(a,b,c) = p - 3 + S(a,b,c) - 4t.
+
+Hasse's bound (|S|\le2\sqrt p) therefore gives the *orientation-aware general bounds*
+
+    cyclic:      N(a,b,c) <= floor((p - 3 + 2 sqrt(p))/8),
+    transitive:  N(a,b,c) <= floor((p - 7 + 2 sqrt(p))/8).
+
+For (p=5591), these equal 717 and 716. They are both *sharp*: cyclic triple ((0,1,838)) has ((N,S,t)=(717,148,0)); transitive triple ((0,1,75)) has ((N,S,t)=(716,144,1)). Both triples were independently enumerated by the exact methods and verified against the character-sum identity. The general inequality is a deduction from **classical** Hasse, not a novel proof of elliptic-curve bounds, and its full generality is not Lean-certified in this PR.
+
+The exact profile-transfer test is still blocked by absence of the accepted packed-row/source archive. These geometry facts do **not** certify an exponent improvement.
