@@ -19,6 +19,19 @@ def check(d, files=True):
     assert d["schema"] == "nightfall.proof-passport-overlay.v2" and d["version"] == 2
     assert re.fullmatch(r"2026-\d{2}-\d{2}", d["as_of"])
     assert len(d["records"]) >= 5
+    legacy = d["legacy_coverage"]
+    active = json.loads((ROOT / legacy["registry"]).read_text())
+    ids = [r["id"] for r in active["claims"]]
+    assert active["version"] == legacy["legacy_version"] == 16
+    assert len(ids) == 15 and len(set(ids)) == 15
+    assert legacy["active_claim_ids"] == ids
+    assert legacy["automatic_promotion"] is False
+    links = legacy["related_but_not_equated"]
+    assert list(links) == ["q2-influence"]
+    assert links["q2-influence"]["v2_id"] == "NF-Q2-105-NATIVE-FINITE"
+    assert "not identical" in links["q2-influence"]["relation"]
+    assert legacy["awaiting_independent_v2_source_reconciliation"] == [
+        x for x in ids if x not in links]
     by_id = {}
     for r in d["records"]:
         assert RECORD <= r.keys(), "required passport field absent"
