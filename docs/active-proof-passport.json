@@ -650,4 +650,12 @@
     "status": "scoped_source_matched_formal_soundness_only",
     "no_automatic_promotion": true
   }
+  ,"proof_passport_v2_overlay": {
+    "schema": "nightfall.proof-passport-overlay.v2",
+    "path": "docs/proof-passport-v2.json",
+    "as_of": "2026-11-21",
+    "relation": "additive-source-and-review-gates; no changes to v16 active claim statuses or frozen historical identities",
+    "validation": "python3 scripts/check_proof_passport_v2.py --self-test",
+    "automatic_promotion": false
+  }
 }
