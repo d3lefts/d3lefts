@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUComponentClassification.lean"
       - "docs/lean-pending-source-custody.json"
       - ".github/workflows/nightfall-bu-global-boundary.yml"
   workflow_dispatch:
@@ -41,7 +42,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for M in ProductBUIntervalStabilizer ProductBUGlobalBoundary; do
+          for M in ProductBUIntervalStabilizer ProductBUGlobalBoundary ProductBUComponentClassification; do
             src="research/nightfall/formalization/finite_field/$M.lean"
             ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -55,7 +56,8 @@ jobs:
           import re
           from pathlib import Path
           s=Path("receipts/bu-global-boundary/ProductBUGlobalBoundary.log").read_text()
-          for suffix in ("boundary_component_homeomorphic_closed_interval",
+          for suffix in ("boundary_component_diffeomorphic_closed_interval",
+                         "boundary_component_homeomorphic_closed_interval",
                          "no_free_homeomorphism_of_compact_boundary_component"):
               name="Nightfall.ProductBUGlobalBoundary."+suffix
               assert name in s, ("MISSING_DECLARATION",name)
@@ -66,7 +68,17 @@ jobs:
                   a=set()
               assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
               print("PASS named Lean theorem",name,sorted(a))
-          assert "sorryAx" not in s
+          s2=Path("receipts/bu-global-boundary/ProductBUComponentClassification.log").read_text()
+          name="Nightfall.ProductBUComponentClassification.boundary_connected_component_is_interval"
+          assert name in s2, ("MISSING_COMPONENT_DECLARATION",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s2,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s2,("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS component interval classification",sorted(a))
+          assert "sorryAx" not in s and "sorryAx" not in s2
           print("NOT PROVED: global regular zero-fiber smooth manifold-with-boundary or ProductSphereZero")
           PY
       - name: Persist exact-head source receipts
@@ -75,7 +87,7 @@ jobs:
           mkdir -p receipts/bu-global-boundary
           git rev-parse HEAD > receipts/bu-global-boundary/nightfall-commit.txt
           cat lean-toolchain > receipts/bu-global-boundary/lean-toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/{ProductBUIntervalStabilizer,ProductBUGlobalBoundary}.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUIntervalStabilizer,ProductBUGlobalBoundary,ProductBUComponentClassification}.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
