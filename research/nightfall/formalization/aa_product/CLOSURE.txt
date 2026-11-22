@@ -179,3 +179,4 @@ ProductSimulation research/nightfall/formalization/product_space/ProductSimulati
 MixtureSimulation research/nightfall/formalization/product_space/MixtureSimulation.lean
 WrightV8MedianMixed research/formalization_candidates/wright/WrightV8MedianMixed.lean
 WrightV8RowConditional research/formalization_candidates/wright/WrightV8RowConditional.lean
+WrightV8MixedFunctional research/formalization_candidates/wright/WrightV8MixedFunctional.lean
