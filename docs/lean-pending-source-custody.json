@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 34,
+  "revision": 35,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "bc64c0073f94830a32e4a64779fa06c1c16afdee",
-  "scope": "v34: 484 pending exact Lean blobs in this #1063 source-checked branch, 67 frozen historical records unchanged; 551 total checkout Lean sources. ProductBUSphereCompact is unreviewed source custody, separate from its pinned scoped Lean receipt 45057244989. No ProductSphereZero theorem or novelty promotion. Source edits must pass strict custody.",
+  "source_commit": "2b7c22162d97ef80c7899a19ae1622fe27d2c12c",
+  "scope": "v35: 485 pending exact Lean blobs, 67 frozen historical records unchanged; 552 total checkout Lean sources. New ProductBUCompactFiber is source-custody only; separate pinned Lean theorem/axiom test required. ProductSphereZero and final all-n theorem remain open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -376,6 +376,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
+      "source_blob_sha": "65635fca2be99b3f4f59e94335e6a91297cabee1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Stacked #1055/#1063 source: exact compact zero-fiber and zero-free t=1 face lemmas are candidates requiring pinned source compilation. No global regular-fiber manifold, ProductSphereZero theorem, priority, or referee status inferred."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
