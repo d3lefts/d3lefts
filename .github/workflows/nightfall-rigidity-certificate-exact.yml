@@ -1,0 +1,43 @@
+name: NIGHTFALL rigidity-to-certificate exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/RIGIDITY_TO_CERTIFICATE_PRINCIPLE_20261122.md'
+      - 'research/nightfall/structural_information/FIRST_STRIP_PRIME_ZETA_RIGIDITY_CERTIFICATE_20261122.md'
+      - 'research/nightfall/structural_information/SHIFTED_PRIME_ZETA_NATURAL_BOUNDARY_20261122.md'
+      - 'scripts/rigidity_to_certificate_exact_audit.py'
+      - '.github/workflows/nightfall-rigidity-certificate-exact.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/structural_information/RIGIDITY_TO_CERTIFICATE_PRINCIPLE_20261122.md'
+      - 'research/nightfall/structural_information/FIRST_STRIP_PRIME_ZETA_RIGIDITY_CERTIFICATE_20261122.md'
+      - 'research/nightfall/structural_information/SHIFTED_PRIME_ZETA_NATURAL_BOUNDARY_20261122.md'
+      - 'scripts/rigidity_to_certificate_exact_audit.py'
+      - '.github/workflows/nightfall-rigidity-certificate-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-arithmetic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact check with adversarial controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/rigidity_to_certificate_exact_audit.py
+          python scripts/rigidity_to_certificate_exact_audit.py
+      - name: Source and limitation receipt
+        shell: bash
+        run: |
+          git rev-parse HEAD
+          sha256sum research/nightfall/structural_information/RIGIDITY_TO_CERTIFICATE_PRINCIPLE_20261122.md research/nightfall/structural_information/FIRST_STRIP_PRIME_ZETA_RIGIDITY_CERTIFICATE_20261122.md research/nightfall/structural_information/SHIFTED_PRIME_ZETA_NATURAL_BOUNDARY_20261122.md scripts/rigidity_to_certificate_exact_audit.py
+          echo 'FINITE SYNTHETIC CHECKS ONLY: no actual zeta zero-fiber verification, analytic continuation certificate, Lean proof, or novelty claim'
