@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 47,
+  "revision": 48,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v47: pending source-exact global geometry reparsed and Atlas Nonempty branch destructuring corrected; original 67 unchanged. Complete pinned Lean replay required.",
+  "scope": "v48: source-custody exact Icc halfspace instance import + empty circle branch repair of global ATLAS classification. Historical 67 original certifications unchanged.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -479,13 +479,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean",
-      "source_blob_sha": "a848b79fafda8e1d14148b4485bdb1819e540da9",
+      "source_blob_sha": "b9c8137c7e53c45b8088b27e7b5a1ca0c12cd9a3",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Lean source repaired after #45066061552: opened ContDiff scope and destructed nested Nonempty diffeomorphism alternatives from ATLAS classification explicitly. No named kernel success yet; no full geometry promotion."
+      "receipt_scope": "2026-11-22 correction after pinned run 45066627097: explicitly import Mathlib.Geometry.Manifold.Instances.Icc (ATLAS internal non-public import does not export halfspace chart), use direct simp to eliminate empty boundary. No full theorem promotion; new named axiom kernel CI required."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
