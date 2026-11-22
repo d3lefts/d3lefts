@@ -38,7 +38,8 @@ jobs:
                  'circuit_only_empty_or_full','first_four_representation','second_four_representation']
           assert all(n in log for n in names)
           reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
-          assert len(reports)>=6, reports
+          no_axioms = re.findall(r'does not depend on any axioms', log)
+          assert len(reports)+len(no_axioms)>=6, (reports, no_axioms)
           allowed={'propext','Classical.choice','Quot.sound'}
           assert all(set(x.strip() for x in m.split(',') if x.strip()) <= allowed for m in reports)
           print('TENSOR_SIX_SITE_SOURCE_IDENTIFIED_KERNEL_PASS')
