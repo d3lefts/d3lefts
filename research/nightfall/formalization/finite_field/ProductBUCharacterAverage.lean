@@ -19,11 +19,11 @@ namespace Nightfall.ProductBUCharacterAverage
 variable {X : Type*} [AddCommGroup X]
 
 /-- Odd in the first input, even in the second input. -/
-def charU (f : X → X → ℝ) (u v : X) : ℝ :=
+noncomputable def charU (f : X → X → ℝ) (u v : X) : ℝ :=
   (f u v - f (-u) v + f u (-v) - f (-u) (-v)) / 4
 
 /-- Even in the first input, odd in the second input. -/
-def charV (f : X → X → ℝ) (u v : X) : ℝ :=
+noncomputable def charV (f : X → X → ℝ) (u v : X) : ℝ :=
   (f u v + f (-u) v - f u (-v) - f (-u) (-v)) / 4
 
 theorem charU_flip_left (f : X → X → ℝ) (u v : X) :
@@ -105,7 +105,7 @@ theorem continuous_charU (f : X → X → ℝ)
   have h3 : Continuous (fun p : X × X => f (-p.1) (-p.2)) :=
     hf.comp (hneg1.prodMk hneg2)
   have h := ((hf.sub h1).add h2).sub h3
-  simpa only [charU] using h.div_const 4
+  simpa only [charU, Pi.sub_apply, Pi.add_apply] using h.div_const 4
 
 theorem continuous_charV (f : X → X → ℝ)
     (hf : Continuous (fun p : X × X => f p.1 p.2)) :
@@ -121,7 +121,7 @@ theorem continuous_charV (f : X → X → ℝ)
   have h3 : Continuous (fun p : X × X => f (-p.1) (-p.2)) :=
     hf.comp (hneg1.prodMk hneg2)
   have h := ((hf.add h1).sub h2).sub h3
-  simpa only [charV] using h.div_const 4
+  simpa only [charV, Pi.sub_apply, Pi.add_apply] using h.div_const 4
 
 end Continuous
 
