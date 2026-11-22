@@ -1,5 +1,5 @@
 import Mathlib
-import Nightfall.ProductSphereObstruction
+import ProductSphereObstruction
 import GenuinePrefixPhase
 
 /-!
