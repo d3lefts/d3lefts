@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 44,
+  "revision": 45,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v44: 496 pending source blobs, 67 historical verified source records unchanged. Global smooth component interval and second endpoint source pending exact pinned Lean CI; no unconditional ProductSphereZero.",
+  "scope": "v45: 497 pending sources, original 67 historical verified intact. Global product-sphere geometry composition source is provisional; C∞ zero-fiber atlas and reference boundary identification remain to be constructed; no unconditional ProductSphereZero.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -426,6 +426,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source blob custody only; independent scoped pinned Lean run #45058710989 on source-identical stacked #1082 passed the named genuine zero-fiber free-action source. Global proof, ProductSphereZero and specialist novelty review remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUGlobalAssembly.lean",
+      "source_blob_sha": "d02a9e947c6e1dd5bb638035e206a04e6dc3654c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 source-custody only for global geometric composition theorem: actual compact zero-fiber, smooth 1D manifold-with-boundary *premise*, reference four-point boundary *premise*, genuine free signs, interval classification and second endpoint. Not a kernel certificate or unconditional ProductSphereZero, nor priority determination."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean",
