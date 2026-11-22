@@ -1,0 +1,68 @@
+name: NIGHTFALL real local regular-fiber injective chart on Atlas source
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBURegularGraph.lean'
+      - '.github/workflows/nightfall-product-bu-regular-graph.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bu-regular-graph-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  source-exact-regular-graph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Pin the exact ATLAS local graph source and compile
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-regular-graph
+          git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
+          git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
+          test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = "7857a2e8c32088b5002f7cafe29a21d936baf704"
+          cp /tmp/atlas-lean/MathlibExt/Geometry/Manifold/LocalGraph.lean /tmp/mathlib4/MathlibExt/Geometry/Manifold/LocalGraph.lean
+          (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/MathlibExt/Geometry/Manifold/LocalGraph.olean" MathlibExt/Geometry/Manifold/LocalGraph.lean) 2>&1 | tee receipts/bu-regular-graph/ATLAS.log
+          cp research/nightfall/formalization/finite_field/ProductBURegularGraph.lean /tmp/mathlib4/ProductBURegularGraph.lean
+          (cd /tmp/mathlib4 && lake env lean ProductBURegularGraph.lean) 2>&1 | tee receipts/bu-regular-graph/NIGHTFALL.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/bu-regular-graph/NIGHTFALL.log
+      - name: Check theorem and ordinary axioms
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/bu-regular-graph/NIGHTFALL.log").read_text()
+          name="Nightfall.ProductBURegularGraph.regular_fiber_has_local_injective_graph"
+          assert name in s, "MISSING_THEOREM"
+          x=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          if x:
+              axioms={q.strip() for q in x.group(1).split(",") if q.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s
+              axioms=set()
+          assert axioms <= {"propext","Classical.choice","Quot.sound"},axioms
+          assert "sorryAx" not in s
+          print("PASS: injective graph coordinates and level-set equality",sorted(axioms))
+          print("NOT PROVED: global or boundary manifold and ProductSphereZero")
+          PY
+      - name: Retain immutable replay inputs
+        if: always()
+        run: |
+          mkdir -p receipts/bu-regular-graph
+          git rev-parse HEAD > receipts/bu-regular-graph/NIGHTFALL-HEAD.txt
+          cat lean-toolchain > receipts/bu-regular-graph/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBURegularGraph.lean > receipts/bu-regular-graph/source.sha256
+          sha256sum /tmp/mathlib4/MathlibExt/Geometry/Manifold/LocalGraph.lean >> receipts/bu-regular-graph/source.sha256 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-regular-graph-source-receipt
+          path: receipts/bu-regular-graph
+          retention-days: 90
