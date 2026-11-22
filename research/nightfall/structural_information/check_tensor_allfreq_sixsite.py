@@ -33,7 +33,7 @@ def xor(rows):
     return z
 
 def active(circuit_words):
-    size=len(circuit_words[0])
+    size=len(next(iter(circuit_words)))
     return {j for j in range(size)
             if len({w[j] for w in circuit_words})>1}
 
