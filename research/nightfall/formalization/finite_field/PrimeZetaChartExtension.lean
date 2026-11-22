@@ -60,7 +60,7 @@ theorem chart_extension_transfer (P A H : ℂ → ℂ) (U : Set ℂ) (s : ℂ)
   · intro w hw
     change w - 1 ∈ U at hw
     have hnonzero : w - 1 ≠ (0 : ℂ) := hU (w - 1) hw
-    have hsource : F (w - 1) = A (w - 1) := hEq hw
+    have hsource : F (w - 1) = A (w - 1) := hEq (w - 1) hw
     have hdecomp : A (w - 1) = (w - 1) * P ((w - 1) + 1) + H (w - 1) :=
       hidentity (w - 1) hw
     change (F (w - 1) - H (w - 1)) / (w - 1) = P w
