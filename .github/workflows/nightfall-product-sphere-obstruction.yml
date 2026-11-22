@@ -27,7 +27,8 @@ jobs:
           python3 - <<'PY'
           import re
           source = open('/tmp/product-sphere-obstruction.log', encoding='utf-8').read()
-          for suffix in ('monomial_nonzero', 'mixed_top_coefficient', 'mixedProduct_nonzero'):
+          for suffix in ('monomial_nonzero', 'mixed_top_coefficient', 'mixedProduct_nonzero',
+                         'mixedDot_flip_left', 'mixedDot_flip_right', 'continuous_mixedDot'):
               name = 'Nightfall.ProductSphereObstruction.' + suffix
               pat = re.escape("'" + name + "' depends on axioms: [") + r'([^\]]*)\]'
               match = re.search(pat, source, re.S)
