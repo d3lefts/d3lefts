@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 38,
+  "revision": 39,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v38: 490 pending exact Lean blobs on this integration branch; original 67 historical source-matched records unchanged. ProductBUSphereCompact source is source-custody only; separate pinned CI verifies scoped named Lean declarations; no full ProductSphereZero or novelty promotion.",
+  "scope": "v39: 491 pending exact Lean source blobs with 67 frozen historical proof records unchanged; new compact fiber is source-custody only; scoped pinned Lean CI is separate. ProductSphereZero not proved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -376,6 +376,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
+      "source_blob_sha": "114c4159630eb787e494dc4aa6448dc24884e919",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-integrated exact Lean module from #1070, blob 114c4159630eb787e494dc4aa6448dc24884e919, successfully compiled on frozen Lean pin with ordinary axioms in run 45058026793. Scope: compact actual product-sphere time-slab zero fiber and exclusion of zero-free t=1 endpoint; NO global 1D manifold, ProductSphereZero or priority."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
