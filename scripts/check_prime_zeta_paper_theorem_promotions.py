@@ -46,7 +46,6 @@ def check(data, files=True):
     if files:
         source=THEOREM.read_text(encoding='utf-8')
         for text in ('## Theorem 1', '## Theorem 2', 'P\'(w)', 'natural boundary', 'evidence', 'Fröberg'):
-            # "evidence" is in the certification discussion; source is a paper proof, not automatic proof
             assert text.lower() in source.lower(), f'missing theorem input: {text}'
         assert (ROOT/'scripts/rigidity_to_certificate_exact_audit.py').exists()
     return True
