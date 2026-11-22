@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "research/nightfall/formalization/structural_information/LocalMomentRisk.lean"
+      - "research/nightfall/formalization/structural_information/LocalMomentAtoms.lean"
       - ".github/workflows/nightfall-local-moment-risk-lean.yml"
       - "docs/lean-pending-source-custody.json"
   workflow_dispatch:
@@ -23,11 +24,13 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p receipts/route1-local-moment
-          src="research/nightfall/formalization/structural_information/LocalMomentRisk.lean"
-          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
-          cp "$src" /tmp/mathlib4/LocalMomentRisk.lean
-          (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/LocalMomentRisk.olean" LocalMomentRisk.lean) 2>&1 | tee receipts/route1-local-moment/LocalMomentRisk.log
-          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/route1-local-moment/LocalMomentRisk.log
+          for M in LocalMomentRisk LocalMomentAtoms; do
+            src="research/nightfall/formalization/structural_information/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/route1-local-moment/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/route1-local-moment/$M.log"
+          done
       - name: Kernel-level named theorem and axiom gate
         shell: bash
         run: |
@@ -50,10 +53,21 @@ jobs:
                   assert f"'{name}' does not depend on any axioms" in log, name
                   axioms=set()
               assert axioms<= {"propext","Classical.choice","Quot.sound"},(name,axioms)
-          assert "sorryAx" not in log
+          atomlog=Path("receipts/route1-local-moment/LocalMomentAtoms.log").read_text()
+          for suffix in ("restrict_extend","local_factor","expectation_fiber_decomposition",
+                         "functional_moments_of_atom_marginals","exact_squared_risk_of_atom_marginals"):
+              name="Nightfall.LocalMomentAtoms."+suffix
+              m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",atomlog,re.S)
+              if m: axioms={a.strip() for a in m[1].split(",") if a.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in atomlog,name
+                  axioms=set()
+              assert axioms<= {"propext","Classical.choice","Quot.sound"},(name,axioms)
+          assert "sorryAx" not in log+atomlog
+          assert "theorem Nightfall.LocalMomentAtoms.exact_squared_risk_of_atom_marginals" in atomlog
           assert "theorem Nightfall.LocalMomentRisk.exact_squared_risk_transfer" in log
           print("PASS named all-n exact moment risk transfer; ONLY functional local agreement + leaf indicators.")
-          print("UNPROVED: equivalence of atomwise marginal equality to functional local agreement and recursive tree→leaf decomposition; full iff theorem remains open.")
+          print("PROVED: atomwise finite-marginal agreement implies all k-local expectations. OPEN: recursive tree→leaf decomposition; proposed converse and optimality.")
           PY
       - name: Immutable exact-head receipts
         if: always()
@@ -64,7 +78,7 @@ jobs:
           git rev-parse HEAD > receipts/route1-local-moment/commit.txt
           cat lean-toolchain > receipts/route1-local-moment/toolchain.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/route1-local-moment/mathlib.txt
-          sha256sum research/nightfall/formalization/structural_information/LocalMomentRisk.lean > receipts/route1-local-moment/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/LocalMomentRisk.lean research/nightfall/formalization/structural_information/LocalMomentAtoms.lean > receipts/route1-local-moment/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
