@@ -41,7 +41,7 @@ jobs:
                    Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
                    Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation; do
             src="research/nightfall/formalization/product_space/$M.lean"
-            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$src"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/phase-block-terminal/$M.log" 2>&1
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/phase-block-terminal/$M.log"
@@ -52,7 +52,7 @@ jobs:
           set -euo pipefail
           for M in PhaseBlockRoute1 PhaseBlockQuantumDegree PhaseBlockTreeCompiler PhaseBlockRoute1Terminal; do
             src="research/nightfall/formalization/structural_information/$M.lean"
-            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$src"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/phase-block-terminal/$M.log"
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/phase-block-terminal/$M.log"
@@ -66,7 +66,7 @@ jobs:
           import re
           log=Path('receipts/phase-block-terminal/PhaseBlockRoute1Terminal.log').read_text()
           name='Nightfall.PhaseBlockRoute1Terminal.phase_block_route1_simulation'
-          m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\\s*\\[([^\\]]*)\\]",log,re.S)
+          m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
           if m: axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
           else:
               assert f"'{name}' does not depend on any axioms" in log,name
