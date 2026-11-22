@@ -1,0 +1,82 @@
+name: NIGHTFALL five-pillars Hilbert and information-cover core Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/HilbertRankBudgetCore.lean'
+      - 'research/nightfall/formalization/costs/GroupInformationCoverDual.lean'
+      - '.github/workflows/nightfall-five-pillars-cores-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-exact-mathlib-cores:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile both original-source-derived structural components
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/five-pillars
+          for src in research/nightfall/formalization/observability/HilbertRankBudgetCore.lean \
+                     research/nightfall/formalization/costs/GroupInformationCoverDual.lean; do
+            name="$(basename "$src" .lean)"
+            cp "$src" "/tmp/mathlib4/$name.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean") 2>&1 | tee "receipts/five-pillars/$name.log"
+            test -s "/tmp/mathlib4/.lake/build/lib/lean/$name.olean"
+          done
+      - name: Strict named declarations, standard axiom receipts, independent kernel checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/HilbertRankBudgetCore.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.HilbertRankCore.rank_observability_from_budgets \
+            --decl Nightfall.HilbertRankCore.rank_linear_5043_from_spherical \
+            --json-out receipts/five-pillars/hilbert.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/five-pillars/hilbert.json
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/costs/GroupInformationCoverDual.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InformationCover.group_information_cover_weak_duality \
+            --decl Nightfall.InformationCover.reciprocal_KL_cover_weak_duality \
+            --json-out receipts/five-pillars/cover.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/five-pillars/cover.json
+          (cd /tmp/mathlib4 && lake env leanchecker -v HilbertRankBudgetCore) | tee receipts/five-pillars/hilbert-checker.log
+          (cd /tmp/mathlib4 && lake env leanchecker -v GroupInformationCoverDual) | tee receipts/five-pillars/cover-checker.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          for mod, names in [
+             ("HilbertRankBudgetCore", ["Nightfall.HilbertRankCore.rank_observability_from_budgets", "Nightfall.HilbertRankCore.rank_linear_5043_from_spherical"]),
+             ("GroupInformationCoverDual", ["Nightfall.InformationCover.group_information_cover_weak_duality", "Nightfall.InformationCover.reciprocal_KL_cover_weak_duality"])]:
+            raw=Path(f"receipts/five-pillars/{mod}.log").read_text()
+            audit=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",raw,re.S))
+            for n in names:
+              assert n in audit,(mod,n,"missing named axiom report")
+              assert set(t.strip() for t in audit[n].split(',') if t.strip()) <= {'Classical.choice','propext','Quot.sound'},(n,audit[n])
+            assert 'sorryAx' not in raw
+          print("PASS: four source-scoped Hilbert/group-cover declarations, standard axioms only")
+          PY
+      - name: Immutable receipt and strictly limited status
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/five-pillars
+          git rev-parse HEAD > receipts/five-pillars/head
+          sha256sum research/nightfall/formalization/observability/HilbertRankBudgetCore.lean \
+             research/nightfall/formalization/costs/GroupInformationCoverDual.lean > receipts/five-pillars/SHA256SUMS
+          echo 'Hilbert: theorem from structural budgets, not source-level rank-r D1 or causal D2. A2: fractional LP weak duality only, not adaptive KL/stopping or matching cost asymptotics.' > receipts/five-pillars/scope.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: five-pillars-lean-${{ github.run_id }}
+          path: receipts/five-pillars
+          if-no-files-found: error
