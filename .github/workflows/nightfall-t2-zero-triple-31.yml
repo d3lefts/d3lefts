@@ -1,0 +1,23 @@
+name: NIGHTFALL T2 zero-triple joint overlap 31 exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/check_t2_zero_triple_overlap_31_exact.py'
+      - 'research/nightfall/structural_information/T2_ZERO_TRIPLE_OVERLAP_31_20261122.md'
+      - '.github/workflows/nightfall-t2-zero-triple-31.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-overlap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact tuple multiplicities and algebraic 31 bound
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 -V
+          sha256sum scripts/check_t2_zero_triple_overlap_31_exact.py research/nightfall/structural_information/T2_ZERO_TRIPLE_OVERLAP_31_20261122.md
+          python3 scripts/check_t2_zero_triple_overlap_31_exact.py
+          echo 'FINITE tuple coefficient regression; Hilbert T2 theorem and independent Lean certification remain separate.'
