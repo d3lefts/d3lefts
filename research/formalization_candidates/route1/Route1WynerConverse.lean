@@ -21,6 +21,7 @@ namespace Nightfall.Route1Polylog
 
 open Finset
 open Nightfall.ProductSpace.RowBound
+open Nightfall.ProductSpace.Simulation
 open Nightfall.ProductSpace.Mixture
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
