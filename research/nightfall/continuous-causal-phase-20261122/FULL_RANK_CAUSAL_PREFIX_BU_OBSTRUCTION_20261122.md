@@ -58,6 +58,29 @@ By (A) and everywhere independence, A(z) is invertible for **all** z. It is cont
 
 This generalizes the elementary invertible **fixed**-basis change noted in merged PR #699: the coordinate transformation can now be **causal, nonlinear, and history-dependent**, while remaining an odd homeomorphism.
 
+
+### Concrete nonlinear four-dimensional calibration
+
+This theorem is not merely a linear fixed-basis change. For n=4 choose
+\[
+a_1=e_1,\quad
+a_2(y_1)=e_2+y_1e_1,\quad
+a_3(y_1,y_2)=e_3+y_2e_2,\quad
+a_4(y_1,y_2,y_3)=e_4+y_3e_3.
+\]
+Every chronological prefix is linearly independent: the 4×4 full matrix is lower-bidiagonal with unit diagonal (under the displayed coordinate ordering), and determinant 1 for every actual history. The signed causal map is the **nonlinear** odd polynomial homeomorphism
+\[
+z_1=x_1,\quad z_2=x_2+x_1^3,\quad
+z_3=x_3+z_2^2x_2,\quad
+z_4=x_4+z_3^2x_3.
+\]
+Its exact polynomial inverse follows by solving sequentially:
+\[
+x_1=z_1,\quad x_2=z_2-z_1^3,\quad
+x_3=z_3-z_2^2x_2,\quad x_4=z_4-z_3^2x_3.
+\]
+Hence no two **subsequent continuous scalar outputs**, even allowed to depend arbitrarily on x, can produce universal sign recovery in six total readings. This explicit example confirms a genuinely nonlinear causal coordinate change, not a theorem about only fixed frames. If unit-row normalization is required, divide each displayed row by its strictly positive Euclidean norm; the resulting maps remain continuous, everywhere full rank, and covered by Theorem 2, although the polynomial formulas change.
+
 ## Corollary 3: physical projectors require both topology and prefix rank loss to beat 2n−1
 
 Consider a real causal intensity protocol with continuously selected **normalized nonzero rank-one PSD projectors** \(Q_j(h)\), defined only on their attainable histories. Suppose it recovers all input signals modulo ± in \(m\le2n-2\) readings.
