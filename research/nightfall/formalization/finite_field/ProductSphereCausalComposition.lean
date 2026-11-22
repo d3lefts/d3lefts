@@ -159,6 +159,141 @@ theorem collision_of_product_sphere_zero
     exact hu0 ((smul_eq_zero.mp htwo).resolve_left (by norm_num))
   exact ⟨u, v, hu, hv, heq, hne, hne'⟩
 
+
+/-!
+## Stronger reachable-prefix continuity bridge
+
+The row function is only required to be continuous *on the set of prefixes
+actually produced by the original intensity protocol*, for each history
+length. We do not extend it continuously to virtual / unreachable histories.
+
+The list topology is the Mathlib fixed-length component topology
+(Mathlib.Topology.List). The comparison maps use only genuine prefixes.
+This closes the previous additional continuity premises in the conditional
+theorem, without Tietze and without any new topological axiom.
+-/
+
+/-- Original deterministic causal model: the continuous-linear reading
+selector is continuous only when restricted to the attainable histories. -/
+def ReachableContinuous {n : ℕ} (a : CausalRows n) : Prop :=
+  ∀ k, ContinuousOn a
+    (Set.range (GenuinePrefixPhase.transcript (amp a) k))
+
+/-- The actual transcript map is continuous, by induction through the
+attainable-prefix image. No off-image continuity is required. -/
+theorem continuous_actual_transcript {n : ℕ} (a : CausalRows n)
+    (ha : ReachableContinuous a) :
+    ∀ k, Continuous
+      (GenuinePrefixPhase.transcript (amp a) k) := by
+  intro k
+  induction k with
+  | zero =>
+      simpa [GenuinePrefixPhase.transcript] using
+        (continuous_const : Continuous (fun _ : Signal n => ([] : List ℝ)))
+  | succ j ih =>
+      have hrow : Continuous
+          (fun x : Signal n =>
+            a (GenuinePrefixPhase.transcript (amp a) j x)) := by
+        exact (ha j).comp_continuous ih
+          (fun x => ⟨x, rfl⟩)
+      have hread : Continuous
+          (fun x : Signal n =>
+            (a (GenuinePrefixPhase.transcript (amp a) j x)) x) :=
+        Continuous.clm_apply hrow continuous_id
+      have hfull : Continuous
+          (fun x : Signal n =>
+            ((a (GenuinePrefixPhase.transcript (amp a) j x)) x) ^ 2 ::
+              GenuinePrefixPhase.transcript (amp a) j x) :=
+        List.continuous_cons.comp ((hread.pow 2).prodMk ih)
+      simpa [GenuinePrefixPhase.transcript, amp] using hfull
+
+/-- The U-colour test is automatically globally continuous as a function
+of its genuine pair (u,v). It uses no fictitious virtual histories. -/
+theorem continuous_testU {n r : ℕ} (a : CausalRows n)
+    (ha : ReachableContinuous a) (i : Fin r) :
+    Continuous (fun p : (Signal n) × (Signal n) =>
+      testU a r p.1 p.2 i) := by
+  let T := GenuinePrefixPhase.transcript (amp a) i.val
+  have hT : Continuous T := continuous_actual_transcript a ha i.val
+  have hplus : Continuous (fun p : (Signal n) × (Signal n) => p.1 + p.2) :=
+    continuous_fst.add continuous_snd
+  have hminus : Continuous (fun p : (Signal n) × (Signal n) => p.1 - p.2) :=
+    continuous_fst.sub continuous_snd
+  have hrp : Continuous (fun p : (Signal n) × (Signal n) =>
+      a (T (p.1 + p.2))) := by
+    exact (ha i.val).comp_continuous (hT.comp hplus)
+      (fun p => ⟨p.1 + p.2, rfl⟩)
+  have hrm : Continuous (fun p : (Signal n) × (Signal n) =>
+      a (T (p.1 - p.2))) := by
+    exact (ha i.val).comp_continuous (hT.comp hminus)
+      (fun p => ⟨p.1 - p.2, rfl⟩)
+  have hp : Continuous (fun p : (Signal n) × (Signal n) =>
+      (a (T (p.1 + p.2))) p.1) :=
+    Continuous.clm_apply hrp continuous_fst
+  have hm : Continuous (fun p : (Signal n) × (Signal n) =>
+      (a (T (p.1 - p.2))) p.1) :=
+    Continuous.clm_apply hrm continuous_fst
+  simpa only [testU, GenuinePrefixPhase.comparison, amp, T] using hp.add hm
+
+/-- The V-colour test likewise has continuity derived from the actual
+reachable-prefix selectors, not postulated. -/
+theorem continuous_testV {n r s : ℕ} (a : CausalRows n)
+    (ha : ReachableContinuous a) (i : Fin s) :
+    Continuous (fun p : (Signal n) × (Signal n) =>
+      testV a r s p.1 p.2 i) := by
+  let j : ℕ := r + i.val
+  let T := GenuinePrefixPhase.transcript (amp a) j
+  have hT : Continuous T := continuous_actual_transcript a ha j
+  have hplus : Continuous (fun p : (Signal n) × (Signal n) => p.1 + p.2) :=
+    continuous_fst.add continuous_snd
+  have hminus : Continuous (fun p : (Signal n) × (Signal n) => p.1 - p.2) :=
+    continuous_fst.sub continuous_snd
+  have hrp : Continuous (fun p : (Signal n) × (Signal n) =>
+      a (T (p.1 + p.2))) := by
+    exact (ha j).comp_continuous (hT.comp hplus)
+      (fun p => ⟨p.1 + p.2, rfl⟩)
+  have hrm : Continuous (fun p : (Signal n) × (Signal n) =>
+      a (T (p.1 - p.2))) := by
+    exact (ha j).comp_continuous (hT.comp hminus)
+      (fun p => ⟨p.1 - p.2, rfl⟩)
+  have hp : Continuous (fun p : (Signal n) × (Signal n) =>
+      (a (T (p.1 + p.2))) p.2) :=
+    Continuous.clm_apply hrp continuous_snd
+  have hm : Continuous (fun p : (Signal n) × (Signal n) =>
+      (a (T (p.1 - p.2))) p.2) :=
+    Continuous.clm_apply hrm continuous_snd
+  simpa only [testV, GenuinePrefixPhase.comparison, amp, T, j] using hp.add hm
+
+/-- FINAL REACHABLE-PREFIX COMPOSITION, conditional only on the precisely
+typed ProductSphereZero topology theorem. The previously explicit
+test-map continuity assumptions are *derived*, not assumed.
+
+This statement is independent of a Tietze extension or of any row
+regularity at unreachable, virtual histories.
+-/
+theorem collision_of_product_sphere_zero_reachable
+    (n r s : ℕ)
+    (hBU : ProductSphereZero n r s)
+    (a : CausalRows n)
+    (ha : ReachableContinuous a) :
+    ∃ u v : Signal n, UnitVec n u ∧ UnitVec n v ∧
+      GenuinePrefixPhase.transcript (amp a) (r + s) (u + v) =
+      GenuinePrefixPhase.transcript (amp a) (r + s) (u - v) ∧
+      u + v ≠ u - v ∧
+      u + v ≠ -(u - v) := by
+  exact collision_of_product_sphere_zero n r s hBU a
+    (fun i => (continuous_testU a ha i).continuousOn)
+    (fun i => (continuous_testV a ha i).continuousOn)
+
+#print continuous_actual_transcript
+#print axioms continuous_actual_transcript
+#print continuous_testU
+#print axioms continuous_testU
+#print continuous_testV
+#print axioms continuous_testV
+#print collision_of_product_sphere_zero_reachable
+#print axioms collision_of_product_sphere_zero_reachable
+
 #print collision_of_product_sphere_zero
 #print axioms collision_of_product_sphere_zero
 #print axioms testU_flip_left
