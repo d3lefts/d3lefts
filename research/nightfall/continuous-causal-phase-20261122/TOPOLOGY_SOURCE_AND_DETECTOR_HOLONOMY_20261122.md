@@ -131,6 +131,26 @@ continuously on the **entire** ambient space of potential nonnegative earlier re
 
 **Research implication:** The physically intrinsic feedback model is already settled when every normalized detector choice is defined continuously on all nonnegative histories. The only projective-orientation loophole left by the current argument concerns selectors continuous solely on the attained (possibly multiply glued) history subsets, or detectors allowed to pass through zero/rank changes. Treat this as an exact model-scope theorem with standard covering-space prior art, NOT a new worldwide novelty claim or a Lean kernel result.
 
+
+## 4c. Exact obstruction to a tempting replacement proof: mixed antipodal parity is too weak
+
+Suppose a physically specified stage is \(y_j=x^\top Q_j(T_{j-1}(x))x\), with \(Q_j\) continuous on attained histories and normalized rank-one as in §3. For **any** such even causal transcript, define the true-history difference
+\[
+\Delta_j(u,v)=T_j(u+v)_{\!j}-T_j(u-v)_{\!j},
+\qquad (u,v)\in S^{n-1}\times S^{n-1}.
+\]
+Under either independent flip \(u\mapsto-u\) or \(v\mapsto-v\), the two input signals \(u+v,u-v\) exchange up to overall sign. The transcript is even, so **each** \(\Delta_j\) is odd under **both** antipodes. Thus the vector \(\Delta=(\Delta_1,\ldots,\Delta_m)\) has the *single mixed character* \(\varepsilon_1+\varepsilon_2\) repeated m times, not the two separately pure character blocks that drive CCFH Remark 2.7.
+
+At \(n=4\) there is an elementary, explicit nowhere-zero mixed-character map of rank **four**, hence also into six coordinates: identify \(\mathbb R^4\) with Hamilton's quaternions and define
+\[
+\Psi:S^3\times S^3\to\mathbb R^4,\qquad \Psi(u,v)=uv.
+\]
+Quaternion multiplication is bilinear, so \(\Psi(-u,v)=\Psi(u,-v)=-\Psi(u,v)\). Norm multiplicativity gives \(\|\Psi(u,v)\|=\|u\|\|v\|=1\), so it has **no zero anywhere**. Appending two zero coordinates yields a nowhere-zero mixed-character map to \(\mathbb R^6\). The associated mixed-character characteristic-class polynomial is \((\alpha+\beta)^6\), whose only potentially surviving term modulo \((\alpha^4,\beta^4)\) is \(\binom63\alpha^3\beta^3=20\alpha^3\beta^3=0\) in mod-two cohomology; quaternion multiplication provides a direct stronger witness that the equivariant map is possible. This is standard normed-division-algebra topology, **not novel**.
+
+**Crucial limitation:** \(\Psi\) is an abstract equivariant map, **not** a realizable list of squared-linear readings. The observation does NOT establish a six-reading detector policy and does NOT refute the oriented-row theorem. It definitively rules out the proof strategy of deducing the all-policy six-reading collision from the **mixed parity of actual intensity differences alone**. The previously successful proof uses the additional **continuously oriented rank-one row** to split its zero conditions into two pure characters. For projective-only detector choices on attained history subsets, the necessary extra structure remains to be identified. Preserve this as an explicit operator-family failure and stop repeating a mixed-character-only topological argument.
+
+The quaternion norm identity was separately expanded as a polynomial identity in eight independent real variables and reduces to zero exactly; the universal argument is algebraic and requires no numerical optimization.
+
 ## 5. Formalization / priority / independent audit plan
 
 - The published CCFH Remark 2.7 is the correct **external mathematical theorem**, not a Lean axiom masquerading as proof. #1010/#1024 supply only algebra, a Prop-valued topology interface and zero-padding; #1015/#1017 supply conditional causal Lean proofs. #1032/#1034/#1037/#1041 address distinct fragments of a proposed independent Lean proof of the classical zero theorem (character averaging, reference orbit, smooth approximation, sphere-only extension); full relative transversality and compact one-manifold boundary parity remain missing. **Do not duplicate source modules, falsely merge stacked branches or announce an unconditional kernel certificate.**
