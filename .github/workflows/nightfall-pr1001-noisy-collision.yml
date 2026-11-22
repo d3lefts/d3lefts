@@ -1,0 +1,76 @@
+name: NIGHTFALL causal-noise exact Lean and rational replay (draft scope)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/pr1000-phase-retrieval-robustness/**'
+      - '.github/workflows/nightfall-pr1001-noisy-collision.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-rational-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Independent Python rational replay
+        run: |
+          set -euo pipefail
+          python3 -m py_compile research/nightfall/pr1000-phase-retrieval-robustness/check_noisy_collision_exact.py
+          python3 research/nightfall/pr1000-phase-retrieval-robustness/check_noisy_collision_exact.py
+  pinned-lean-collision:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Lean compile at exact repository pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/pr1001-collision
+          cp research/nightfall/pr1000-phase-retrieval-robustness/NoisyCausalCollision.lean /tmp/mathlib4/NoisyCausalCollision.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/NoisyCausalCollision.olean NoisyCausalCollision.lean) 2>&1 | tee receipts/pr1001-collision/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/pr1001-collision/lean.log
+      - name: Exact theorem and axiom report
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/pr1001-collision/lean.log").read_text()
+          names=["Nightfall.CausalNoise.decoder_noise_floor",
+                 "Nightfall.CausalNoise.transcript_cancelled",
+                 "Nightfall.CausalNoise.cancellingNoise_bound",
+                 "Nightfall.CausalNoise.two_input_radius"]
+          for n in names:
+              m=re.search(r"'" + re.escape(n) + r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m,(n,"missing axiom receipt")
+              axioms={x.strip() for x in m.group(1).split(",") if x.strip()}
+              assert axioms <= {"propext","Classical.choice","Quot.sound"},(n,axioms)
+          assert "sorryAx" not in s
+          assert "theorem decoder_noise_floor" in s or "decoder_noise_floor" in s
+          print("PASS: four theorem axiom reports; only ordinary axioms")
+          PY
+      - name: Preserve exact-head receipts even on failure
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/pr1001-collision
+          git rev-parse HEAD > receipts/pr1001-collision/commit.txt
+          cat lean-toolchain > receipts/pr1001-collision/toolchain.txt
+          sha256sum research/nightfall/pr1000-phase-retrieval-robustness/NoisyCausalCollision.lean research/nightfall/pr1000-phase-retrieval-robustness/check_noisy_collision_exact.py > receipts/pr1001-collision/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr1001-noisy-causal-collision-source-receipt
+          path: receipts/pr1001-collision
+          if-no-files-found: warn
+          retention-days: 90
