@@ -163,6 +163,51 @@ give them the same corrupted transcript, forcing error at least
 \(R/\sqrt2\). This observation concerns the displayed fixed frames,
 not all continuous causal protocols.
 
+## A larger collision when the budget is lower
+
+There is also a multiway lower bound, not claimed sharp for \(k>2\).
+Fix \(2\le k\le n\) and a budget \(m\) for which
+\[
+\sum_{j=1}^{k}\max(0,m-(n-j))\le m.
+\]
+On the sphere of radius \(R>0\), some transcript contains all
+\(2^{k-1}\) sign classes of an orthogonal sign cube
+\[
+x_s=\frac{R}{\sqrt k}\sum_{j=1}^k s_j u_j,\qquad
+s\in\{-1,1\}^k,\quad (u_1,\ldots,u_k)\in V_{n,k}.
+\]
+Indeed, assign one surviving component to each stage so that
+component \(j\) survives at least \(\max(0,m-(n-j))\) times.
+Average the stage row over the \(2^k\) actual prefixes of the
+candidate signals. Independent flips of the \(u_j\)'s permute the
+candidates, so the average is invariant. For each stage impose
+that the averaged row annihilates all components except the
+survivor. Component \(j\) contributes at most \(n-j\) scalar
+constraints with the \(j\)-th sign character. Pad with zero
+coordinates and use [Chan–Chen–Frick–Hull, Theorem 1.1](https://arxiv.org/pdf/1902.00935).
+At the common zero, equality of actual prefixes implies equality
+of the actual rows with their average. Just one component can
+contribute to the amplitude, and its sign disappears on squaring.
+Induction gives a common transcript for the entire cube.
+
+For any common decoder output \(z\), select signs with
+\(\left|\sum_j s_j\langle u_j,z\rangle\right|\le
+\max_j|\langle u_j,z\rangle|\le\|z\|\): choose each subsequent sign
+to oppose the running sum. The error at that cube point is at least
+\[
+\left(R^2+\|z\|^2-\frac{2R\|z\|}{\sqrt k}\right)^{1/2}.
+\]
+Minimizing over \(\|z\|\ge 0\) gives \(R\sqrt{1-1/k}\); requiring
+\(\|z\|=R\) gives \(R\sqrt{2-2/\sqrt k}\).
+The case \(k=2\) recovers the sharp known-sphere obstruction.
+
+## Finite replay
+
+Run `python3 verify_balanced_ternary.py` from this directory.
+The exact-rational test passed 5,644 off-axis recoveries and 32
+axis cases; it includes zero coordinates, tied minima and small
+dyadic anchors. It does not prove the topological lower bounds.
+
 ## Formalization handoff
 
 Keep the genuine-prefix collision and equivariant zero obligations
