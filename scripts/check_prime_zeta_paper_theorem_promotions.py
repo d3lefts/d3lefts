@@ -15,9 +15,9 @@ LEDGER=ROOT/'docs/recent-research.json'
 THEOREM=ROOT/'research/nightfall/structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md'
 RECORDS={
  'prime-zeta-first-strip-paper-theorem':
-   ROOT/'research/nightfall/2026-11-recent-passports/prime-zeta-first-strip.md',
+   ROOT/'research/nightfall/2026-11-recent-passports/prime-zeta-first-strip-paper-theorem.md',
  'prime-zeta-natural-boundary-paper-theorem':
-   ROOT/'research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary.md',
+   ROOT/'research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary-paper-theorem.md',
 }
 
 def check(data, files=True):
