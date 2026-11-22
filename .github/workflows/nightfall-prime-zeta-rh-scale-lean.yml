@@ -1,0 +1,72 @@
+name: NIGHTFALL prime-zeta RH-conditional scale separation (Lean only)
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/prime_zeta/RHScaleSeparation.lean'
+      - 'research/nightfall/2026-11-recent-passports/prime-zeta-first-strip-paper-theorem.md'
+      - 'research/nightfall/structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md'
+      - '.github/workflows/nightfall-prime-zeta-rh-scale-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rh-conditional-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout exact PR source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install source-pinned Lean and Mathlib
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict named Lean proof audit (explicit RH hypothesis; NO analytic zeta proof)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/prime-zeta-rh
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/prime_zeta/RHScaleSeparation.lean \
+            --workspace /tmp/mathlib4 --timeout 600 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.PrimeZeta.real_dilation_unique \
+            --decl Nightfall.PrimeZeta.re_nat_dilation \
+            --decl Nightfall.PrimeZeta.scale_index_unique \
+            --decl Nightfall.PrimeZeta.rh_conditional_zeta_scale_unique \
+            --decl Nightfall.PrimeZeta.finite_fiber_sum \
+            --decl Nightfall.PrimeZeta.finite_fiber_zero_iff \
+            --json-out lean-receipts/prime-zeta-rh/conditional-scales.json || {
+              cat lean-receipts/prime-zeta-rh/conditional-scales.json || true
+              exit 1
+            }
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/prime-zeta-rh/conditional-scales.json
+      - name: Independent module replay with Lean kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/formalization/prime_zeta/RHScaleSeparation.lean /tmp/mathlib4/RHScaleSeparation.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/RHScaleSeparation.olean RHScaleSeparation.lean)
+          (cd /tmp/mathlib4 && lake env leanchecker RHScaleSeparation) | tee lean-receipts/prime-zeta-rh/leanchecker.log
+      - name: Preserve exact code and dependency identity
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/prime-zeta-rh
+          git rev-parse HEAD > lean-receipts/prime-zeta-rh/repository-head.txt
+          sha256sum research/nightfall/formalization/prime_zeta/RHScaleSeparation.lean > lean-receipts/prime-zeta-rh/SHA256SUMS
+          (git -C /tmp/mathlib4 rev-parse HEAD || true) > lean-receipts/prime-zeta-rh/mathlib-head.txt
+          cat lean-toolchain > lean-receipts/prime-zeta-rh/toolchain.txt
+          echo 'Only conditional dilation/finite-fiber lemmas, NOT RH or analytic prime-zeta certification.' > lean-receipts/prime-zeta-rh/scope.txt
+      - name: Archive conditional Lean receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: nightfall-prime-zeta-rh-conditional-lean
+          path: lean-receipts/prime-zeta-rh/
+          retention-days: 90
+          if-no-files-found: warn

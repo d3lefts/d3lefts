@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 45,
+  "revision": 47,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "Route 1 access-coupling integration: 509 prior pending entries preserved and one exact Lean blob registered for custody only. The separate local certificate does not amend the frozen 67-record inventory or promote the hybrid or separation examples.",
+  "scope": "Route 1 access-coupling exact source custody: 512 prior pending entries preserved and one exact Lean blob added. No changes to the frozen 67-record register, no quantum hybrid or separation certification.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -2428,6 +2428,16 @@
       "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
     },
     {
+      "path": "research/nightfall/formalization/prime_zeta/RHScaleSeparation.lean",
+      "source_blob_sha": "c4893768b6a7984b74e75b46dc118b6dcfdf0e8c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "New-to-main #1113 source; separately passed pinned named Lean plus leanchecker run 45062953520 at exact head 0fa7f2c703b144ec1f8a1addd9c7521e844fe5c6. Historical 67-record ledger is frozen; this custody entry does not auto-promote conditional source."
+    },
+    {
       "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
       "source_blob_sha": "501c47c54d65222b1a035f4937d271b95fbb2c1b",
       "classification": "unreviewed-source",
@@ -2955,7 +2965,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Exact source custody only; the separate scoped Route 1 local receipt does not certify the quantum hybrid or paper separations."
+      "receipt_scope": "Exact source custody only; separate pinned Route 1 terminal receipt does not certify the quantum hybrid or paper separations."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1DegreeSourceBridge.lean",
@@ -3656,6 +3666,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean",
+      "source_blob_sha": "939b5855e510f76ca7ec89d1666e27b45cf7d065",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Registered Git blob with separately passed named kernel proof, workflow run 45059108351; this pending ledger is not an analytic, novelty, or full raw-circuit terminal certification."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockRoute1.lean",
+      "source_blob_sha": "5f08403421e30dc8bfd0f0727c0f8a246f81f9b6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Registered Git blob with separately passed named kernel proof, workflow run 45058739792; this pending ledger is not an analytic, novelty, or full raw-circuit terminal certification."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean",

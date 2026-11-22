@@ -40,7 +40,9 @@ jobs:
                     'restricted_pair_fiber_le']
           assert all(n in log for n in expected)
           reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
-          no_axiom_lines=re.findall(r"'Nightfall\\.StructuralInformation\\.TensorT2RepeatMobius\\.[^']+' does not depend on any axioms", log)
+          no_axiom_lines=[line for line in log.splitlines()
+                    if "does not depend on any axioms" in line
+                    and "'Nightfall.StructuralInformation.TensorT2RepeatMobius." in line]
           assert len(reports)+len(no_axiom_lines)>=6, (reports,no_axiom_lines)
           assert 'sorryAx' not in log
           allowed={'propext','Classical.choice','Quot.sound'}
