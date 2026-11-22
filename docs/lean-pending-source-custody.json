@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 51,
+  "revision": 52,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "4760ceb8834c6690cc6e770acfdc469d30eae82d",
-  "scope": "v51: original 67 historical records retained; add exact unreviewed-source custody for two conditional Hilbert-budget and fractional group-information-cover Lean modules of draft PR #1138. This ledger does not promote full pillar D1/D2/A2 or certify CI.",
+  "source_commit": "4bcf4f0203f54638a414100f4e6b851f7bf3e455",
+  "scope": "v52: add two exact unreviewed-source Lean blobs for the D2 hard-budget reciprocal drift and A2 expected-KL group-cover rate/triangle; no promotion of universal source D1/D2 or stochastic A2 to end-to-end certification.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5514,6 +5514,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Draft PR #1138 D1: exact budget aggregation and numerical 5043 rank-linear scalar implication from stipulated source budgets and spherical coefficient. No universal product Hilbert budgets, spherical measure theorem or adaptive D2 certified; exact-head CI and independent review separate."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/HilbertAdaptiveDrift.lean",
+      "source_blob_sha": "c58a19682454da9a0f84292f0ae7ac5daf5aca22",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact assumed posterior quadratic drift yields 20172*r*B²/η hard budget. Source-to-posterior identification and universal Hilbert D1 absent; do not certify full theorem D."
+    },
+    {
+      "path": "research/nightfall/formalization/costs/GroupInformationCoverRate.lean",
+      "source_blob_sha": "fb3ddc2050e322941b7ee4049a80b0ff97c8fb61",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact assumed per-coordinate KL expected-query exposure yields group-cost dual lower bound and 3-cycle fractional example. Bayes/stopping/attaining group oracle A2 theorem remains unformalized."
     }
   ]
 }
