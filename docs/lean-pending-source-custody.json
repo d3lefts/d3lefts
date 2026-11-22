@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 38,
+  "revision": 39,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v38: 490 pending exact Lean blobs on this integration branch; original 67 historical source-matched records unchanged. ProductBUSphereCompact source is source-custody only; separate pinned CI verifies scoped named Lean declarations; no full ProductSphereZero or novelty promotion.",
+  "scope": "v39: 491 pending exact Lean blobs on this integration branch; original 67 historical source-matched records unchanged. PhaseRoute1Finite source registered for custody only, with separate scoped finite Lean CI; no all-B Wyner or Route 1 quantum simulation certification or novelty promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3586,6 +3586,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean",
+      "source_blob_sha": "6495ed33759de30945b455c25f3037fb894d17a2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Scoped exact-source finite three-reading and adaptive-two-query Lean lemmas passed pinned run 45058815183 with standard axioms. This custody registry attests only the immutable Git blob; it does not itself certify the theorem, all-B Wyner information argument, physical oracle transfer, independent review, or novelty."
     },
     {
       "path": "research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean",
