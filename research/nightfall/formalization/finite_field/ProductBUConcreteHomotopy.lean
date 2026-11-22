@@ -150,6 +150,32 @@ theorem H_V_contDiff (k : ℕ)
   unfold H_V refV applyParam
   fun_prop
 
+
+/-- Full parameter-and-space-time smoothness needed by ATLAS's
+GLOBAL Euclidean parametric-Sard hypothesis, not just smoothness
+of a single slice after a matrix is fixed. -/
+theorem H_U_joint_contDiff (k : ℕ)
+    (fU : V k → V k → W k)
+    (hf : ∀ i : Fin k, ContDiff ℝ (⊤ : ℕ∞)
+      (fun p : V k × V k => fU p.1 p.2 i))
+    (i : Fin k) :
+    ContDiff ℝ (⊤ : ℕ∞)
+      (fun p : Param k × ((V k × V k) × ℝ) =>
+        H_U k fU p.1 p.2.1.1 p.2.1.2 p.2.2 i) := by
+  unfold H_U refU applyParam
+  fun_prop
+
+theorem H_V_joint_contDiff (k : ℕ)
+    (fV : V k → V k → W k)
+    (hf : ∀ i : Fin k, ContDiff ℝ (⊤ : ℕ∞)
+      (fun p : V k × V k => fV p.1 p.2 i))
+    (i : Fin k) :
+    ContDiff ℝ (⊤ : ℕ∞)
+      (fun p : Param k × ((V k × V k) × ℝ) =>
+        H_V k fV p.1 p.2.1.1 p.2.1.2 p.2.2 i) := by
+  unfold H_V refV applyParam
+  fun_prop
+
 #print H_U_zero
 #print axioms H_U_zero
 #print H_V_zero
@@ -174,5 +200,9 @@ theorem H_V_contDiff (k : ℕ)
 #print axioms H_U_contDiff
 #print H_V_contDiff
 #print axioms H_V_contDiff
+#print H_U_joint_contDiff
+#print axioms H_U_joint_contDiff
+#print H_V_joint_contDiff
+#print axioms H_V_joint_contDiff
 
 end Nightfall.ProductBUConcreteHomotopy
