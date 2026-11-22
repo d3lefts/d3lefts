@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 31,
+  "revision": 32,
   "as_of": "2026-11-18 UTC",
   "source_commit": "2d805e8eabf8733cf01463af9bef9fd37e2407a8",
-  "scope": "Source custody v31: pending actual concrete parametric homotopy source b576c15d203bbfe55b70b152bef0b0fa9c346e1f, historical 67 unchanged. Not a certificate of global ProductSphereZero or causal threshold.",
+  "scope": "v32: 301 pending source-only Lean entries; original 67 intact. Added previously unregistered ProductBUPerturbation rank-one parameter repair; no automatic theorem certification.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -306,6 +306,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Original concrete two-character homotopy exact endpoints, sign laws, quadratic unit constraint and joint parameter/spacetime C-infinity candidate for parametric Sard. Pending pinned Lean/axiom CI. Parent #1032 current source blob 2bf3e3e1cb9ec4568a1afef95c4c5bf375a5ebb6 synchronized. Full fderiv, manifold and ProductSphereZero open."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUPerturbation.lean",
+      "source_blob_sha": "923eafa2ebe8be3a5c856cf7024a97620decc52a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Byte-preserving except corrected quotient association for all nonendpoint-time rank-one parameter response; source only, exact-head pinned compiler and standard axiom audit required. Concrete full fderiv and ProductSphereZero not yet certified."
     },
     {
       "path": "research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean",
