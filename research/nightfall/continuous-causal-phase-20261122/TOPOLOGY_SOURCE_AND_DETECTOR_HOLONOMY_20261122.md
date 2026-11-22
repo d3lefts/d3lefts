@@ -175,6 +175,23 @@ For n=4 the pattern is **four fixed independent coordinate readings, one continu
 
 **Limits:** This constructed protocol does **not** phase-retrieve all signals; the fifth and sixth readings deliberately ignore coordinates 3 through n and cannot resolve their relative signs. Therefore it is **not** a six-reading counterexample to the proved oriented-row count and does not settle the physical-detector count. It establishes only that the new model's nonorientability is genuinely realizable at the earliest permitted stage after a full-rank prefix. A construction of universal recovery, or a new obstruction exploiting the residual rank-one algebra, is still required.
 
+
+## 4e. General physical-regularity necessity law: no measurement savings without detector holonomy
+
+**Corollary (paper-level, exact for all n≥2).** Let a real causal sensing protocol of length \(m\le2n-2\) use continuous *normalized, nonzero rank-one projector-valued* selectors
+\[
+Q_j:H_{j-1}\to\{ww^\top:w\in S^{n-1}\},
+\]
+defined only on each actually attainable history \(H_{j-1}\), with readings \(y_j=x^\top Q_j(h)x\). If the protocol recovers every \(x\in\mathbb R^n\) up to ± sign, then **at least one** selector \(Q_j\) does **not** admit any continuous unit-row lift \(a_j:H_{j-1}\to S^{n-1}\) with \(Q_j(h)=a_j(h)a_j(h)^\top\).
+
+**Proof (contrapositive).** If every \(Q_j\) has a continuous unit-row lift on its actual history space, replace the stage by \(y_j=(a_j(h)\cdot x)^2\), which is **identically** the same observation for every original signal and history. The resulting entire protocol has continuous oriented row selectors, violating the CCFH-based all-policy \(2n-1\) lower bound in §2. Therefore some \(Q_j\) cannot lift. QED.
+
+This is a **necessary, not sufficient**, structural price of sub-\(2n-1\) measurement recovery under physical projector continuity. When the attained history spaces have ordinary covering-space hypotheses, non-liftability is equivalently nontrivial holonomy of the pulled-back tautological real line/double cover, classically detected by its first Stiefel–Whitney class. The theorem itself requires only the elementary, source-checkable **no-lift** statement; it does not assume that any suboptimal physical-detector protocol exists.
+
+**Dimension-four sharpened statement.** In a putative **six-reading** \(\mathbb R^4\) physical-detector protocol with four chronologically independent first rows, §4 implies the first five selectors lift. Therefore **a successful sixth detector must be non-liftable on the exact five-reading attained history set \(H_5\)**. Section 4d constructs an attained \(H_5\) with such a sixth-stage non-liftable selector, proving the necessary holonomy can indeed occur at that precise stage, but its protocol fails universal recovery.
+
+**Interpretation:** This is a rigorously scoped regularity–information tradeoff: the oriented-row theorem remains the base, while the only possible source of measurement savings in the broader continuous physical-detector class is a topological orientation defect in feedback histories. It is a corollary of the published CCFH theorem and the existing NIGHTFALL causal proof, plus the exact lift/non-lift construction; worldwide novelty and external human review are unestablished. Do not replace "necessary" with "if and only if."
+
 ## 5. Formalization / priority / independent audit plan
 
 - The published CCFH Remark 2.7 is the correct **external mathematical theorem**, not a Lean axiom masquerading as proof. #1010/#1024 supply only algebra, a Prop-valued topology interface and zero-padding; #1015/#1017 supply conditional causal Lean proofs. #1032/#1034/#1037/#1041 address distinct fragments of a proposed independent Lean proof of the classical zero theorem (character averaging, reference orbit, smooth approximation, sphere-only extension); full relative transversality and compact one-manifold boundary parity remain missing. **Do not duplicate source modules, falsely merge stacked branches or announce an unconditional kernel certificate.**
