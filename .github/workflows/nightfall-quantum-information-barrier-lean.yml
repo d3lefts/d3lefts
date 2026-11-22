@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/QuantumInformationBarrier.lean'
+      - 'docs/lean-pending-source-custody.json'
       - 'research/formalization_candidates/route1/Route1WynerConverse.lean'
       - 'research/nightfall/formalization/product_space/Route1WynerGeneral.lean'
       - '.github/workflows/nightfall-quantum-information-barrier-lean.yml'
