@@ -45,12 +45,47 @@ def independent_probe(k, precision=90):
         return k,format(total,'.12g'),format(bound,'.12g')
 
 
+
+ROUNDED_LOW_BASE = Q(2919, 2944)
+
+
+def rounded_window_probe(t, precision=90):
+    """Choose integer k=floor(5t/4), test mass outside prescribed [t,3t/2]."""
+    assert isinstance(t, Q) and t >= 10
+    k = (Q(5, 4)*t).numerator // (Q(5, 4)*t).denominator
+    assert k >= 1
+    assert Q(8,7)*t <= k <= Q(5,4)*t
+    # e^(1/8) <= 417/368; (7/8)*(417/368) = 2919/2944.
+    q=Q(1,8)
+    assert 1+q+(q*q/2)/(1-q/3) == Q(417,368)
+    assert Q(7,8)*Q(417,368) == ROUNDED_LOW_BASE < 1
+    with localcontext() as ctx:
+        ctx.prec=precision
+        lo = Decimal(t.numerator)/Decimal(t.denominator)
+        hi = Decimal(3)*lo/Decimal(2)
+        def survival(x):
+            term=Decimal(1)
+            total=term
+            for i in range(1,k):
+                term *= x/Decimal(i)
+                total += term
+            return (-x).exp()*total
+        outside = 1-survival(lo)+survival(hi)
+        rational = ROUNDED_LOW_BASE**k + HIGH_BASE**k
+        bound=Decimal(rational.numerator)/Decimal(rational.denominator)
+        assert 0 <= outside <= bound, (t,k,outside,bound)
+        return k, format(outside,'.12g'), format(bound,'.12g')
+
+
 def main():
     a,b=constant_audit()
     print('PASS: exact exponential brackets:',a,'<= exp(1/5) <=',b)
     for k in [1,2,5,10,20,50,100,250]:
         print('PROBE k=%d: mass outside=%s; certified algebraic upper base=%s'%independent_probe(k))
     print('PASS: 8 high-precision finite-sum probes; the written analytic argument is the proof, not the probes')
+    for t in [Q(10),Q(41,4),Q(11),Q(20),Q(101,4),Q(80),Q(100)]:
+        print('ROUNDED t=%s: k=%s; mass outside=%s; bound=%s'%(t,*rounded_window_probe(t)))
+    print('PASS: 7 prescribed-window integer-rounding probes and exact rational constant identities')
 
 
 if __name__=='__main__':
