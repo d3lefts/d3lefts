@@ -1,0 +1,49 @@
+name: NIGHTFALL product BU simultaneous smooth finite blocks
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUVectorSmooth.lean'
+      - '.github/workflows/nightfall-product-bu-vector-smoothing.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  vector-smoothing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact dependencies and kernel compile
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir=research/nightfall/formalization/finite_field
+          for M in ProductSphereObstruction ProductBUCharacterAverage ProductBUSmoothCharacterApprox ProductBUSphereSmoothApprox ProductBUVectorSmooth; do
+            ! grep -nE '\b(sorry|admit|axiom)\b' "$dir/$M.lean"
+            cp "$dir/$M.lean" "/tmp/mathlib4/$M.lean"
+          done
+          curl --fail --location --silent --show-error \
+            "https://raw.githubusercontent.com/d3lefts/d3lefts/6b29f98d2645c51fcb7119166a390b86e881d191/research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean" \
+            --output /tmp/mathlib4/ProductBUSphereExtension.lean
+          sha256sum /tmp/mathlib4/ProductBUSphereExtension.lean
+          for M in ProductSphereObstruction ProductBUCharacterAverage ProductBUSmoothCharacterApprox ProductBUSphereExtension ProductBUSphereSmoothApprox ProductBUVectorSmooth; do
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "/tmp/$M.log"
+          done
+          python3 - <<'PY'
+          import re
+          data=open('/tmp/ProductBUVectorSmooth.log').read()
+          name="Nightfall.ProductBUVectorSmooth.exists_smooth_pure_blocks_approx"
+          m=re.search(re.escape("'"+name+"' depends on axioms: [")+r'([^\]]*)\]',data,re.S)
+          if m is None:
+              assert f"'{name}' does not depend on any axioms" in data, name
+              axioms=set()
+          else:
+              axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
+          assert axioms <= {"propext","Classical.choice","Quot.sound"},(name,axioms)
+          assert "sorryAx" not in data
+          print("PASS: finite pure-character blocks admit simultaneous C-infinity approximation on original product sphere.")
+          print("OPEN: uniform nowhere-zero gap, regular zero-fiber manifold with boundary, ProductSphereZero.")
+          PY
