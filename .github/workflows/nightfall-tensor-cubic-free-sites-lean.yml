@@ -1,0 +1,70 @@
+name: NIGHTFALL all-frequency cubic tensor free-site Lean audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/TensorCubicFreeSiteBudget.lean'
+      - 'research/nightfall/structural_information/check_tensor_cubic_reference_sites.py'
+      - '.github/workflows/nightfall-tensor-cubic-free-sites-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cubic-primitive-site-budget:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Source-pinned cubic free-site Lean terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p cubic-free-site-receipt
+          dir=research/nightfall/formalization/structural_information
+          for f in SubcubeL3 TensorCubicFreeSiteBudget; do
+            cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "cubic-free-site-receipt/$f.log"
+          done
+          (cd /tmp/mathlib4 && lake env leanchecker TensorCubicFreeSiteBudget) 2>&1 | tee cubic-free-site-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/TensorCubicFreeSiteBudget.lean').read_text()
+          log=Path('cubic-free-site-receipt/TensorCubicFreeSiteBudget.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          names=['all_two_factor_tensors_use_at_most_two_rows',
+                 'extra_site_le_new_rows',
+                 'at_most_three_freely_varying_sites']
+          assert all(n in log for n in names)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          assert len(reports)>=3
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert all(set(z.strip() for z in r.split(',') if z.strip())<=allowed for r in reports)
+          print('TENSOR_CUBIC_THREE_FREE_SITES_KERNEL_PASS_SCOPED')
+          PY
+      - name: Independent exact adversarial circuit-replay and interval certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/structural_information/check_tensor_cubic_reference_sites.py | tee cubic-free-site-receipt/independent-exact.log
+          grep -q 'REFERENCE_PARTITION_BELL5_EXACT_PASS' cubic-free-site-receipt/independent-exact.log
+          grep -q 'minimum-rank-four collisions=' cubic-free-site-receipt/independent-exact.log
+          grep -q 'MINIMUM_REFERENCE_NECESSARY' cubic-free-site-receipt/independent-exact.log
+          grep -q 'INTEGER_CROSSOVER_CERTIFIED: cubic first L=36' cubic-free-site-receipt/independent-exact.log
+          grep -q 'CUBIC_REFERENCE_SITE_EXACT_PASS' cubic-free-site-receipt/independent-exact.log
+      - name: Preserve immutable source receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p cubic-free-site-receipt
+          git rev-parse HEAD > cubic-free-site-receipt/HEAD
+          sha256sum research/nightfall/formalization/structural_information/TensorCubicFreeSiteBudget.lean research/nightfall/structural_information/check_tensor_cubic_reference_sites.py research/nightfall/structural_information/TENSOR_T2_ALLFREQ_CUBIC_REFERENCE_PROOF_20261122.md > cubic-free-site-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: cubic-free-site-receipt
+          path: cubic-free-site-receipt/
+          retention-days: 90
