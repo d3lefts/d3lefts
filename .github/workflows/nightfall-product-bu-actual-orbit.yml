@@ -1,0 +1,76 @@
+name: NIGHTFALL actual zero-fiber boundary orbit contradiction (Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUActualFiberOrbit.lean'
+      - '.github/workflows/nightfall-product-bu-actual-orbit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bu-actual-orbit-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  real-fiber-orbit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Source-exact Lean closure from actual zero fiber to interval contradiction
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-actual-orbit
+          d=research/nightfall/formalization/finite_field
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBUFiberFreeAction ProductBUIntervalStabilizer ProductBUComponentOrbit ProductBUActualFiberOrbit; do
+            src="$d/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom)\\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-actual-orbit/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-actual-orbit/$M.log"
+          done
+      - name: Named terminal theorem and ordinary-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path("receipts/product-bu-actual-orbit/ProductBUActualFiberOrbit.log")
+          s=p.read_text()
+          name="Nightfall.ProductBUActualFiberOrbit.reference_orbit_cannot_bound_actual_interval"
+          assert name in s, "MISSING_ACTUAL_FIBER_THEOREM"
+          match=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          if match:
+              axioms={x.strip() for x in match.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s
+              axioms=set()
+          assert axioms <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
+          assert 'sorryAx' not in s
+          source=Path('research/nightfall/formalization/finite_field/ProductBUActualFiberOrbit.lean').read_text()
+          body=source.split("theorem reference_orbit_cannot_bound_actual_interval",1)[1].split("#check",1)[0]
+          assert "ProductSphereZero" not in body
+          assert "eU_no_fixed" in body and "eV_no_fixed" in body and "eUV_no_fixed" in body
+          print("PASS actual zero-fiber orbit contradiction with no assumed freeness",sorted(axioms))
+          print("REMAINING: actual one-dimensional boundary-manifold and endpoint-orbit geometry.")
+          PY
+      - name: Pin reproducibility receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-actual-orbit
+          git rev-parse HEAD > receipts/product-bu-actual-orbit/source-head.txt
+          cat lean-toolchain > receipts/product-bu-actual-orbit/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUComponentOrbit,ProductBUActualFiberOrbit}.lean > receipts/product-bu-actual-orbit/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-actual-orbit-source-receipt
+          path: receipts/product-bu-actual-orbit
+          retention-days: 90
+          if-no-files-found: warn
