@@ -5,6 +5,7 @@ on:
     paths:
       - 'research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean'
       - 'research/nightfall/formalization/finite_field/GenuinePrefixPhase.lean'
+      - 'research/nightfall/formalization/finite_field/ConditionalPhaseThreshold.lean'
       - '.github/workflows/nightfall-pr1000-product-causal-composition.yml'
   workflow_dispatch:
 
@@ -25,7 +26,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p receipts/pr1000-product-causal
-          for M in ProductSphereObstruction GenuinePrefixPhase ProductSphereCausalComposition; do
+          for M in ProductSphereObstruction GenuinePrefixPhase ProductSphereCausalComposition ConditionalPhaseThreshold; do
             cp "research/nightfall/formalization/finite_field/$M.lean" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/pr1000-product-causal/$M.log"
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/pr1000-product-causal/$M.log"
@@ -49,7 +50,8 @@ jobs:
             'Nightfall.ProductSphereCausal.continuous_actual_transcript',
             'Nightfall.ProductSphereCausal.continuous_testU',
             'Nightfall.ProductSphereCausal.continuous_testV',
-            'Nightfall.ProductSphereCausal.collision_of_product_sphere_zero_reachable'
+            'Nightfall.ProductSphereCausal.collision_of_product_sphere_zero_reachable',
+            'Nightfall.ProductSphereCausal.no_continuous_causal_exact_recovery_below'
           ]
           for name in names:
             hit=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
@@ -63,6 +65,8 @@ jobs:
           assert re.search(r'∀\s*\(i\s*:\s*Fin s\),\s*ContinuousOn',s), 'V_CONTINUITY_ABSENT'
           assert 'theorem Nightfall.ProductSphereCausal.collision_of_product_sphere_zero_reachable' in s
           assert 'ReachableContinuous a' in s
+          assert 'theorem Nightfall.ProductSphereCausal.no_continuous_causal_exact_recovery_below' in s
+          assert 'ExactRecovery a m' in s
           assert 'ProductSphereZero n r s' in s
           print('PASS: genuine causal physical collision from reachable-only continuous rows conditional solely on ProductSphereZero.')
           print('NOT PROVED: ProductSphereZero. The reachable-only selector -> test continuity bridge is independently named and audited.')
@@ -74,7 +78,7 @@ jobs:
           mkdir -p receipts/pr1000-product-causal
           git rev-parse HEAD > receipts/pr1000-product-causal/commit.txt
           cat lean-toolchain > receipts/pr1000-product-causal/toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/{ProductSphereObstruction,GenuinePrefixPhase,ProductSphereCausalComposition}.lean > receipts/pr1000-product-causal/SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/{ProductSphereObstruction,GenuinePrefixPhase,ProductSphereCausalComposition,ConditionalPhaseThreshold}.lean > receipts/pr1000-product-causal/SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
