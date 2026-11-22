@@ -1,174 +1,215 @@
-# Product Borsuk–Ulam obstruction for continuous causal phaseless sensing
-Version: v0.1 | 2026-11-22 | **PROVISIONAL MATHEMATICAL PROOF — independent audit and Lean pending**
+# Continuous causal real phase retrieval: product-sphere obstruction
 
-## Precisely scoped claim
+**NIGHTFALL checkpoint v0.2 — 2026-11-22.**
+**Status: PROVISIONAL ALL-POLICY PROOF.** Not Lean-certified; not independently
+reviewed; novelty not established. Keep separate from merged certificates
+[#695](https://github.com/d3lefts/d3lefts/pull/695) and
+[#699](https://github.com/d3lefts/d3lefts/pull/699).
 
-For integer (n\ge2), let a length-(m) causal intensity protocol consist of row maps
-[
-a_j:H_{j-1}\longrightarrow\mathbb R^n,\quad
-H_{j-1}=\{T_{j-1}(x):x\in\mathbb R^n\},
-]
-where (a_j) is **continuous in the subspace topology on reachable histories**,
-(a_1) is constant, and (\|a_j(h)\|_2\le1). Set (T_0(x)=()) and
-[
-T_j(x)=\big(T_{j-1}(x),[a_j(T_{j-1}(x))\cdot x]^2\big).
-]
+## 1. Claim and assumptions
 
-**Proposed theorem (unreviewed):** If (m\le 2n-2), there exist
-(x_+,x_-\in\mathbb R^n), with (x_+\ne x_-) and (x_+\ne -x_-),
-such that (T_m(x_+)=T_m(x_-)). In fact a collision occurs with
-(x_+=u+v, x_-=u-v) for **unit** (u,v\in S^{n-1}).
+For \(n\ge 2\), a length-\(m\) continuous causal real intensity protocol
+has rows \(a_j:H_{j-1}\to \mathbb R^n\), continuous in the **subspace
+topology on the attainable previous-transcript set**
+\(H_{j-1}=\{T_{j-1}(x):x\in\mathbb R^n\}\), and
+\(\|a_j(h)\|_2\le1\). A first-stage row is constant. Define
 
-Together with the classical fixed full-spark (2n-1) upper construction
-(already Lean-certificated in [#695](https://github.com/d3lefts/d3lefts/pull/695)),
-this **would prove** (m_{\mathrm{cont}}(n)=2n-1) for all (n\ge2),
-including the flagship (m_{\mathrm{cont}}(4)=7).
-This conclusion has NOT been independently reviewed or Lean checked.
-Do not describe it as a certified breakthrough or novel theorem.
+\[
+T_0(x)=(),\qquad
+T_j(x)=\left(T_{j-1}(x),
+  \big(a_j(T_{j-1}(x))\cdot x\big)^2\right).
+\]
 
-## Mechanism: a two-colour artificial common transcript
+**Provisional theorem.** If \(1\le m\le2n-2\), then there exist
+\(u,v\in S^{n-1}\) for which
+\[
+T_m(u+v)=T_m(u-v),\qquad
+u+v\ne u-v,\quad u+v\ne -(u-v).
+\]
+Consequently the optimal number, assuming the proof passes review, is
+\[
+\boxed{m_{\mathrm{cont}}(n)=2n-1,\quad n\ge2.}
+\]
+The \(2n-1\) upper bound is attained by an ordinary fixed full-spark
+frame, formally proved in the scope of PR #695.
 
-Choose a colour (\chi(j)\in\{U,V\}) for each reading so that
-(r=\#\chi^{-1}(U)\le n-1, s=\#\chi^{-1}(V)\le n-1).
-Such a colouring exists whenever (m\le 2n-2).
-Temporarily suppose all (a_j) are defined continuously on all
-nonnegative histories (the reachable-only issue is discharged below).
+**In particular** the six-reading question in \(\mathbb R^4\)
+would be answered negatively: \(m_{\mathrm{cont}}(4)=7\).
+This is an actual *all-causal-prefix* claim, not the prior
+coordinate-first obstruction, and requires its own review.
 
-For (u,v\in S^{n-1}), recursively define the artificial common history
-(h_0(u,v)=()), the row (b_j=a_j(h_{j-1})), and:
-[
+## 2. Mechanism: the two-colour virtual history
+
+Colour each stage either U or V. Choose numbers \(r\) of U-stages and
+\(s\) of V-stages with \(r+s=m\) and \(r,s\le n-1\), possible because
+\(m\le2n-2\). For the moment take each policy row to be globally
+continuous on all nonnegative history vectors. This stronger temporary
+assumption is removed in Section 4.
+
+For \((u,v)\in S^{n-1}\times S^{n-1}\), inductively construct a
+**virtual common history** \(h_j(u,v)\) and obstruction scalar \(g_j\).
+Start \(h_0=()\), put \(b_j=a_j(h_{j-1})\), and use
+
+\[
 \begin{array}{c|c|c}
-\chi(j)&g_j(u,v)&h_j(u,v)\\ \hline
-U&b_j\cdot u&(h_{j-1},(b_j\cdot v)^2)\\
-V&b_j\cdot v&(h_{j-1},(b_j\cdot u)^2).
+\text{colour }j & g_j(u,v) & h_j(u,v)\\ \hline
+\mathrm{U} & b_j\cdot u &
+  (h_{j-1},(b_j\cdot v)^2)\\
+\mathrm{V} & b_j\cdot v &
+  (h_{j-1},(b_j\cdot u)^2)
 \end{array}
-]
+\]
 
-**Key induction:** Every (h_j(u,v)) is continuous and invariant under
-either sign flip (u\mapsto-u) or (v\mapsto-v).
-Consequently the (U)-coloured coordinates (g_j) are odd in (u)
-and even in (v); the (V)-coloured coordinates are even in (u)
-and odd in (v). The map
-[
-g:S^{n-1}\times S^{n-1}\to\mathbb R^r\oplus\mathbb R^s
-]
-is (G=(\mathbb Z/2)^2)-equivariant for separate antipodal actions on
-the two spheres and the corresponding sign representations in the codomain.
+The \(h_j\) are *not claimed reachable* for arbitrary \((u,v)\).
+Their purpose is to create an equivariant map.
 
-### Topological zero certificate (standard, requires independent source review)
+**Parity induction:** \(h_0\) is invariant under either independent sign
+flip. If \(h_{j-1}\) is invariant, then so is \(b_j\), and the squared
+value used in the next virtual observation is invariant. Thus
+\(h_j(-u,v)=h_j(u,-v)=h_j(u,v)\). At a U-stage,
+\(g_j(-u,v)=-g_j(u,v)\) and \(g_j(u,-v)=g_j(u,v)\).
+At a V-stage the signs are reversed. Therefore
 
-Let (B=\mathbb RP^{n-1}\times\mathbb RP^{n-1}),
-with tautological real line bundles (L_U,L_V). Equivariance makes
-(g) a continuous section of (E=L_U^{\oplus r}\oplus L_V^{\oplus s}).
-Write (\alpha,\beta\in H^1(B;\mathbb F_2)) for their first
-Stiefel–Whitney classes. By the Whitney product formula,
-[
-w_m(E)=\alpha^r\beta^s\ne0\quad\text{in}\quad
+\[
+g=(g_1,\dots,g_m):
+S^{n-1}\times S^{n-1}\longrightarrow
+\mathbb R^r_{\mathrm{sign}\ U}\oplus
+\mathbb R^s_{\mathrm{sign}\ V}
+\]
+
+is continuous and equivariant for **separate** antipodal actions
+of \(G=(\mathbb Z/2)^2\).
+
+## 3. Topological zero certificate (audit dependency)
+
+Consider \(B=\mathbb RP^{n-1}\times\mathbb RP^{n-1}\).
+The equivariant map \(g\) defines a section of
+
+\[
+E=L_U^{\oplus r}\oplus L_V^{\oplus s}\longrightarrow B
+\]
+
+where \(L_U,L_V\) are pullbacks of tautological real line bundles.
+With mod-two degree-one generators \(\alpha,\beta\),
+
+\[
 H^*(B;\mathbb F_2)=
-\mathbb F_2[\alpha,\beta]/(\alpha^n,\beta^n).
-]
-The indicated nonzero top Stiefel–Whitney class prohibits a nowhere-vanishing
-section of rank-(m) bundle (E). Therefore (g(u,v)=0) for some unit
-(u,v). This uses **separate** \((\mathbb Z/2)^2\) sign symmetries, not
-a diagonal-only Borsuk–Ulam argument.
+  \mathbb F_2[\alpha,\beta]/(\alpha^n,\beta^n).
+\]
 
-### Collision induction
+The top Stiefel–Whitney class is
 
-At such a zero, let (x_+=u+v, x_-=u-v).
-Induct on (j). Suppose their true previous transcripts both equal
-(h_{j-1}). Their (j)-th row is then (b_j).
-If colour (U), (b_j\cdot u=g_j=0), so both outcomes equal
-((b_j\cdot v)^2=h_j[j]). If colour (V), (b_j\cdot v=0), so both
-outcomes equal ((b_j\cdot u)^2=h_j[j]).
-Thus (T_m(x_+)=T_m(x_-)=h_m).
-Because both (u,v) have norm one, equality (x_+=x_-) would imply
-(v=0), and (x_+=-x_-) would imply (u=0); both are impossible.
-Also \(\|x_\pm\|\le2\).
+\[
+w_m(E)=w_1(L_U)^r w_1(L_V)^s
+      =\alpha^r\beta^s\ne0
+\]
+because \(r,s\le n-1\). A nowhere-zero section of a real rank-\(m\)
+vector bundle has vanishing top Stiefel–Whitney class. Hence the
+section must vanish: there are unit \(u,v\) for which **every**
+\(g_j(u,v)=0\).
 
-## Reachable-history continuity: compact restriction and extension
+This uses a classical standard zero theorem for product spheres;
+the topological dependency is **not yet independently audited for
+the precise representation**. See the separate-symmetry literature
+(Chan–Chen–Frick–Hull, 2019,
+https://arxiv.org/abs/1902.00935).
 
-**This is essential, not optional.** Artificial (h_j(u,v)) need not
-be attainable histories away from the zero set. It would be invalid to
-evaluate an (a_j) defined only on reachable histories there.
+## 4. Reachable-only histories: compact extension bridge
 
-Take the original protocol restricted to the compact input ball
-(K=\{x:\|x\|\le2\}).
-Every (T_j\vert_K) is continuous by induction, so the reachable
-prefix image (H_j^K=T_j(K)) is compact and closed in Euclidean space.
-The restriction (a_{j+1}\vert_{H_j^K}) is continuous and bounded.
-Coordinatewise Tietze extension, followed if desired by projection
-onto the closed unit ball, gives a continuous global row map
-\(\widetilde a_{j+1}:\mathbb R^{j}\to\mathbb R^n\)
-agreeing with the original row on (H_j^K). For (j=0), use
-the same fixed row. By induction, the extended protocol agrees with
-the original on **every input in (K)**. Apply the artificial-history
-construction to the extended protocol. Its two colliding inputs lie in
-(K), so the same collision holds for the original protocol.
+**Critical gap avoided:** It is invalid to evaluate a policy defined
+only on reachable histories at an arbitrary virtual \(h_j\).
 
-**Audit dependency:** independently verify compactness, subspace
-continuity, exact extension agreement, and that artificial histories
-are evaluated only against the extended maps.
+Let \(K=\{x\in\mathbb R^n:\|x\|_2\le2\}\). For each \(j\), the original
+\(T_j\) is continuous by causal composition; therefore
+\(H_j^K=T_j(K)\) is compact (hence closed) in Euclidean transcript space.
+The restriction of the next row to \(H_j^K\) is a bounded continuous
+vector-valued function. Extend its coordinate functions from this
+closed set to all of \(\mathbb R^j\) by Tietze's theorem.
+Optionally project the resulting vector continuously onto the unit
+ball, which preserves the original values because they already have
+norm at most one. This supplies globally continuous rows
+\(\widetilde a_j\).
 
-## Why existing PRs do not already certify this
+By causal induction, the globally extended protocol agrees with the
+original for **every** \(x\in K\). Importantly, this step does not assume
+that the full unbounded reachable-history image is closed.
 
-- [#695](https://github.com/d3lefts/d3lefts/pull/695) proves sharp
-  **unrestricted** causal (n+1) and **fixed** (2n-1) counts.
-- [#699](https://github.com/d3lefts/d3lefts/pull/699) proves an
-  obstruction for (n) coordinate-square prefix readings and one
-  continuous final row. Its proof does not use the universal two-colour
-  equivariant-history reduction.
-- The claimed new step here is an **all-policy** continuity lower
-  bound, independent of any fixed prefix. Full-cone topology alone
-  does not provide the six-reading obstruction in dimension four.
+Perform Sections 2–3 using \(\widetilde a_j\). The resulting pair
+\(x_+=u+v\), \(x_-=u-v\) lies in \(K\), as \(\|u\|=\|v\|=1\).
+It remains to check the virtual history is the true common history
+**at the simultaneous zero**, not everywhere.
 
-## Independent auditing and novelty gates
+## 5. Collision induction at the topological zero
 
-1. **Topology B:** independently prove/refute that every separately
-   equivariant map
-   (S^{n-1}\times S^{n-1}\to\mathbb R^r_{\mathrm{sgn}U}
-   \oplus\mathbb R^s_{\mathrm{sgn}V}) must vanish for
-   (r,s\le n-1). Inspect the vector-bundle action and top
-   Stiefel–Whitney class.
-2. **Model B:** attack the reachable-only extension, continuity of
-   (T_j), norm bounds, dependence on actual histories, and all
-   antipodal/zero-support cases.
-3. **Numerical B:** independently replay the exact rational parity
-   checks and the deliberately adaptive (n=4,m=6) collision stress
-   example. Neither numerical test proves the topology claim.
-4. **Prior art B:** check classical complement property, equivariant
-   product-sphere BU (Chan–Chen–Frick–Hull, 2019,
-   https://arxiv.org/abs/1902.00935), and Ullrich's
-   2026 adaptive BU paper (https://arxiv.org/abs/2610.33781).
-   The latter is about general adaptive continuous measurements and
-   is **not** itself a sourced priority determination for this theorem.
-5. **Formal B:** write a Lean topology lemma for the product-space
-   zero, then the pure causal recursion and the reachable-image
-   extension bridge. Existing certificates do not establish this.
-6. **Novelty:** do not claim independently new literature or external
-   proof certification until specialist review.
+At \(g(u,v)=0\), define \(x_\pm=u\pm v\).
+At stage \(j=1\), previous histories coincide with \(h_0=()\).
+Inductively assume both previous true transcripts equal \(h_{j-1}\);
+then both use the same row \(b_j\).
 
-### Reproduction and status
+If colour U, \(b_j\cdot u=g_j=0\), and both
+\((b_j\cdot x_+)^2\) and \((b_j\cdot x_-)^2\) equal
+\((b_j\cdot v)^2\). If colour V, \(b_j\cdot v=0\), and both
+true readings equal \((b_j\cdot u)^2\). Both agree with the virtual
+\(j\)-th observation. Inducting yields
 
-Local test commands, before branch upload:
-`python verify_phase_parity_exact.py`
-→ 120 exact rational sign-invariance tests, dimensions 2–6, pass;
-`python phase_collision_probe.py`
-→ seeded polynomial continuous adaptive (n=4,m=6) policy, numerical
-colliding signals with max direct transcript discrepancy 1.53e-16.
-These are ***illustrations/checks***, not a substitute for topology.
+\[
+\widetilde T_m(x_+)=\widetilde T_m(x_-)=h_m.
+\]
 
-**Status:** mathematical proof candidate (not yet non-author-reviewed);
-not Lean-certified; not independently established as novel;
-no public publication/submission authorized.
+The same equality holds for the original protocol because both
+signals belong to \(K\). Since
+\(x_+-x_-=2v\ne0\) and \(x_++x_-=2u\ne0\),
+they are not related by global sign. This proves the conditional-on-
+Section-3 lower-bound argument.
 
-## Potential transfer
+## 6. Source, independent audit, and status gates
 
-The lower-bound mechanism uses only that each query is a continuous
-causally chosen linear functional followed by an **even**
-observation function. The same artificial-history proof appears to
-extend to continuous even scalar responses
-\(y_j=\varphi_j(a_j(h)\cdot x)\),
-using (h_j=\varphi_j(b_j\cdot v)) or
-(\varphi_j(b_j\cdot u)).
-This transfer is separately provisional. It does not assert a matching
-(2n-1) upper bound when the even response is non-injective.
+**Source foundations.** [PR #695](https://github.com/d3lefts/d3lefts/pull/695)
+is the pinned Lean certificate for the unrestricted adaptive
+\(n+1\) and fixed \(2n-1\) counts. [PR #699](https://github.com/d3lefts/d3lefts/pull/699)
+is the pinned Lean coordinate-first obstruction. Neither certifies
+the present universal result.
+
+**Independent checks this session.**
+- Exact-rational parity replay: 120 cases, \(n=2,\ldots,6\), passed.
+  See verify_parity_exact.py. This checks the algebraic induction,
+  not topology or existence.
+- A genuinely history-dependent six-reading \(\mathbb R^4\) policy was
+  stress-tested with a seeded SciPy root solve; the direct transcript
+  difference was approximately \(1.53\cdot10^{-16}\). See
+  phase_collision_probe.py. This is numerical evidence only.
+- Current literature scan recovered the classical fixed complement
+  property, product-sphere Borsuk–Ulam methods, and
+  [Ullrich's 2026 adaptive continuous-measurement Borsuk–Ulam paper](https://arxiv.org/abs/2610.33781).
+  These must be read at source level for scope and priority before any
+  original-contribution claim.
+
+**Separate adversarial reviews required.**
+1. **Topology:** independently reproduce/refute the nonzero
+   Stiefel–Whitney class calculation and representation-bundle link.
+2. **Causal model:** check the virtual-history inductive equations,
+   each parity claim, the compact reachable-set extension, and every
+   zero-support/antipodal edge case. Seek an explicit counterexample.
+3. **Numerical:** replay both scripts on a pinned environment and
+   cross-check actual, not just virtual, observations. Numeric tests
+   cannot prove the all-policy claim.
+4. **Prior art:** compare at the exact model level (continuous
+   **row choice**, not merely continuous measurement maps) and
+   establish priority only with dated sources.
+5. **Lean:** formalize product equivariant zero + extension bridge,
+   then the transcript collision and fixed upper, and check axioms.
+
+**Certification ladder:** plausible paper argument -> independent
+mathematical audit -> kernel certificate -> prior-art novelty decision.
+Current status is **provisional paper argument only**. No external
+submission, merge to main, or publication is authorized by this file.
+
+## 7. Mechanism transfer, separately provisional
+
+The same lower-bound argument appears to hold for **any continuous even
+scalar response** \(y_j=\varphi_j(a_j(h)\cdot x)\):
+use virtual \(h_j=\varphi_j(b_j\cdot v)\) or
+\(\varphi_j(b_j\cdot u)\); evenness gives both parities.
+This does NOT establish a \(2n-1\) matching upper bound for arbitrary
+even \(\varphi_j\). Test this generalization only after the primary
+claim is independently sound.
