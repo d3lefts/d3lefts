@@ -62,4 +62,4 @@ PR #1024, now merged, proposes an alternative paper proof of the **classical max
 
 ## Discovery graph
 
-Discovery graph: continuous causal phase retrieval → actual-prefix representation → independent antipodal characters → maximal product-sphere topology statement (UNPROVED) → zero-padding transfer (this PR) → conditional collision Lean theorem (already merged source) → exact phase-retrieval threshold, still conditional in formalization.
+Continuous causal phase retrieval → actual-prefix representation → independent antipodal characters → maximal product-sphere topology statement (UNPROVED) → zero-padding transfer (already merged #1024) → conditional collision Lean theorem (already integrated on main) → exact phase-retrieval threshold, still conditional in formalization.
