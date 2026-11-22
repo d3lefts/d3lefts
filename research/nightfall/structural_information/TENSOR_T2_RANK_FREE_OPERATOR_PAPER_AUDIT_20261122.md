@@ -36,9 +36,13 @@ This is valid for any noncommuting positive contraction P, using 0≤P²≤I and
 
 Choose the heavy original-row labels H0={a∈R:p_a≥η or q_a≥η}, with |H0|≤2/η. Let W=F₂-span(H0). If a nonzero-frequency z lies outside W, every tuple with XOR z contains a label outside W; that label is nonzero and light at the corresponding first or second query stage.
 
+## Group A: pairwise-distinct slot labels with primitive nonzero entries
+
+**Disjoint partition clarification (independent parallel audit #1068):** Classify any four-slot tuple containing *any repeated label*, including two or more zero labels, as Group B first. Among the remaining all-slot-pairwise-distinct tuples, the nonzero entries are either primitive (Group A) or, if all four are nonzero and the total frequency is nonzero, have exactly one zero-XOR triple (Group C). The counting invariant B_{4,L} may overcount primitive tuples with repeated zero labels, but these are excluded from the actual Group A coefficient contribution. This overcount affects only a bound, not the decomposition identity.
+
 ## Group A: primitive four-slot contributions
 
-Erase zero slots and collect the remaining nonzero distinct labels. If they have no nonempty zero-XOR subset, they form a primitive representation of their nonzero frequency z. The new six-site result gives at most B_{4,L} ordered such lifts per z. By pointwise Cauchy-Schwarz in each frequency, sum of squared Fourier coefficients outside W ≤ B_{4,L}×4η. Their L² tail is therefore ≤2sqrt(B_{4,L}η).
+With all four original slot labels pairwise distinct by the preceding partition, erase at most one zero slot and collect the remaining nonzero labels. If they have no nonempty zero-XOR subset, they form a primitive representation of their nonzero frequency z. The new six-site result gives at most B_{4,L} ordered such lifts per z. By pointwise Cauchy-Schwarz in each frequency, sum of squared Fourier coefficients outside W ≤ B_{4,L}×4η. Their L² tail is therefore ≤2sqrt(B_{4,L}η).
 
 ## Group B: all repeated-label cases
 
@@ -117,3 +121,7 @@ We may use the much sharper M=2L+2 from the tensor T1 work for a better constant
 - Do not publish or call a certified breakthrough without exact-source full Lean verification, adversarial non-author mathematical review, and specialist same-model priority audit. A formal implication from explicit hypotheses is not an unconditional formalization.
 
 **Outcome:** a full, mathematically explicit *author-side* O(L^6) route now exists, replacing only the unverified sharp primitive-count argument with the simpler published-circuit-based all-frequency bound. Separate independent referee and Lean gates remain open.
+
+## Parallel-instance reconciliation (2026-11-22)
+
+PR [#1068](https://github.com/d3lefts/d3lefts/pull/1068), an independent parallel branch, states the same general binary-label four-fiber simulation criterion and independently compares unordered-support versus ordered-tuple exact enumeration, including K4/M2=(24,2) independent labels and (16,4),(348,6),(2004,8) tensor depths L=1,2,3. It explicitly warns that repeated zero labels must be assigned to the repeated-label group before the primitive-group frequency sum. The clarified disjoint partition above incorporates this audit. Credit #1068 for independently discovering the general formulation and for its disjointness check; do not count our closely related theorem as a separate novel result.
