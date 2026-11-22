@@ -1,0 +1,53 @@
+{
+  "claim": "https://cairn-commons.com/claims/C-10",
+  "status": "PASS: assistant-authored exact arithmetic replay; NOT independent external peer review",
+  "run_date_utc": "2026-11-22",
+  "repository_branch": "cairn-c10-evidence-reconciliation-20261122",
+  "input": {
+    "retrieved_from": "connected Google Drive archived owner-approved public release (same checksum as GitHub release)",
+    "public_release_url": "https://github.com/d3lefts/d3lefts/releases/tag/nightfall-research-2026-10-28",
+    "archive_name": "NIGHTFALL_Curated_Math_Evidence_CANDIDATE_v2_20261029.zip",
+    "archive_size_bytes": 11882806,
+    "archive_sha256": "f01702cd554a727711dfdff2908cc21b28b715689885ae8eadf562bdef878d23",
+    "zip_member": "programs/erdos-overlap/frozen-witness/heights_u70.txt",
+    "member_size_bytes": 2156159,
+    "member_sha256": "a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e",
+    "zip_crc": "PASS",
+    "N": 131072,
+    "D": "2^70",
+    "unit_mass": "77371252455336267181195264"
+  },
+  "checker": {
+    "source": "verify_erdos_gmp_c10.cpp",
+    "source_sha256": "e640e82bb42ee9cbed0055634080175426f69ce84c03678c6dd7d32b1a8b086f",
+    "source_git_blob_sha": "643c79b57c36c0094fc1fe1334a2b67ad48d3a0b",
+    "method": "GMP carry-free base 2^160 nonnegative packed integer convolution; enumerate all signed coefficients; independently direct sum 9 shifts",
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "command": "g++ -std=c++17 -O2 verify_erdos_gmp_c10.cpp -lgmpxx -lgmp -o verify_erdos_gmp_c10 && ./verify_erdos_gmp_c10 heights_u70.txt"
+  },
+  "result": {
+    "all_signed_lags_checked": 262143,
+    "score_numerator": "34788888032212764146872525963225147703298526879",
+    "score_denominator": "91343852333181432387730302044767688728495783936",
+    "unique_maximizer_lag": -17280,
+    "runner_up_lag": 36482,
+    "runner_up_numerator": "34788888032196508685160787678357375369567622621",
+    "direct_sum_shifts": [
+      -131071,
+      -17280,
+      -17281,
+      -17279,
+      0,
+      36482,
+      131071,
+      237,
+      -237
+    ]
+  },
+  "limitations": [
+    "This evidence is a new assistant-authored check; it is not an independent non-author mathematical referee.",
+    "The original NTT/CRT verifier and witness-specific seven-scale/other ancillary claims were not rerun in this check.",
+    "Cairn C-10 has not been modified or had artifacts attached; platform authentication/upload remains outstanding.",
+    "Reproducing this vector does not independently prove a lower bound, global optimum, priority, or a valid 131072-element Arena submission."
+  ]
+}

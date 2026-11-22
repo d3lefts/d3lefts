@@ -47,7 +47,7 @@ The download script verifies the two approved ZIPs and extracts the **exact fixe
 
 The [Optimization Constants C₁b page](https://teorth.github.io/optimizationproblems/constants/1b.html) lists Atris's exact 114,688-cell bound `0.38085855031642856010...`, independently replayed by C. Toledo on 18 October 2026. Our `Q` is approximately `2.18019839923485×10⁻⁶` **smaller** under the common normalized continuous overlap definition. Recheck the external registry and literature **on the review date** before awarding priority.
 
-[EinsteinArena leaderboard](https://einsteinarena.com/problems/erdos-min-overlap) separately displays NIGHTFALL-DevinWright rank 1 at about `0.3808564`; its accepted source input remains unrecovered ([issue #6](https://github.com/d3lefts/d3lefts/issues/6)). The released 131,072-cell witness is **too long** for the Arena's 100,000-entry cap; it must not be represented as the accepted competition payload.
+[EinsteinArena leaderboard](https://einsteinarena.com/problems/erdos-min-overlap) **was observed showing NIGHTFALL-DevinWright rank 3** at about `0.3808564` in the accessible web snapshot (checked 22 November 2026), behind Blob and AncientScience-Evolve-2. **This is a snapshot, not confirmation of the current leaderboard; newer results may supersede it.** The earlier rank-1 snapshot is historical, not current. [Issue #6](https://github.com/d3lefts/d3lefts/issues/6) records November 2 recovery of the original 2,048-cell accepted JSON and receipt-hash match, while direct live Arena API reconciliation remains open. The released **131,072-cell mathematical witness is a different object**, **too long** for the Arena's 100,000-entry cap, and must not be represented as the accepted competition payload.
 
 An unrelated 4,096-cell `0.380856` value was [shown to arise from a normalization defect](https://www.benzanghi.com/blog/erdos-minimum-overlap-technical); its corrected value is approximately `0.38094895`. Distinguish by integer mass, grid denominator, full hash and exact score; do not conflate these constructions.
 
@@ -78,5 +78,12 @@ This is a **prepared contribution specification**, not an upstream submission. S
 - **Internally reproducible explicit construction:** yes, subject to the publicly inspectable evidence and existing CI checks.
 - **External human mathematical referee:** open.
 - **Global novelty/priority:** unconfirmed pending a dated exhaustive comparison.
-- **Arena first place:** reported by its live leaderboard; accepted payload identity separate.
+- **Einstein Arena leaderboard:** historically rank 1 on an October snapshot; rank 3 in the accessible 22 November web-reader snapshot (potentially stale; live status unconfirmed). Accepted 2,048-cell payload hash recovered in issue #6; independent live API confirmation separate. The 131,072-cell mathematical witness is not an eligible Arena submission.
 - **Exact determination of the minimum-overlap constant:** no.
+
+
+## Cairn Commons claim C-10: November 2026 external-objection reconciliation
+
+[C-10](https://cairn-commons.com/claims/C-10) currently has four objections and no attachments. Its 21 October claim predates this 29 October **public curated release**, and the reviewers were not given the existing public ZIP and pinned exact checker. Their reported objection is a missing witness and reproduction path, not an identified counterexample. The claim also includes Wetch's not-independently-replayed lower bound in the headline, which must be separated from the constructive upper result.
+
+See the [22 November 2026 claim-specific reconciliation, executable commands, exact artifact hashes, reviewer response, and promotion gates](CAIRN_C10_EVIDENCE_RECONCILIATION_20261122.md). **The repository publication does not fix the unattached Cairn claim**: the owner must attach the 2,156,159-byte public heights file, link its stable release/checker, correct the claim's headline and request a genuinely external reproduction. Until then Cairn remains **proof disputed**; the public CI success is internal release evidence, not an external peer-review upgrade.
