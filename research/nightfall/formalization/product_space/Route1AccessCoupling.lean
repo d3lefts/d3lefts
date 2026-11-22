@@ -115,9 +115,11 @@ theorem target_miss_bound (f : Input ι α → ℝ) (a : Input ι α → ι → 
   apply Finset.sum_congr rfl
   intro i _
   by_cases hxy : x i = y i
-  · simp [miss, hxy, hxy.symm]
+  · have hnot : ¬ x i ≠ y i := fun h => h hxy
+    have hnot' : ¬ y i ≠ x i := fun h => h hxy.symm
+    simp only [miss, if_neg hnot, if_neg hnot', mul_zero]
   · have hyx : y i ≠ x i := Ne.symm hxy
-    simp [miss, hxy, hyx]
+    simp only [miss, if_pos hxy, if_pos hyx, mul_one]
 
 /-- Per-anchor, path-weighted transfer. The entire reference-to-actual
 coupling may be correlated. Only conditional marginal mismatch is bounded. -/
