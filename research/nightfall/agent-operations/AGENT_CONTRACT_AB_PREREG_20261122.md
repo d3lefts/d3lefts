@@ -45,3 +45,7 @@ Blinded, cross-instance study of actual theorem review cycles using matched sour
 ## Amendment A1: harness invocation correction, before data collection
 
 Initial CI run [45057145126](https://github.com/d3lefts/d3lefts/actions/runs/45057145126) terminated in all three jobs with JSONDecodeError before producing any role measurement artifacts, because the benchmark used `just --quiet <task>` and then required task stdout. The documented baseline command catalogue uses `@` recipes already (preventing echo); the benchmark now calls `just <task>` so the task receipt is visible, with diagnostics identifying which mode returns invalid JSON. All 3 roles, 3 tasks, 4 modes, 8 repetitions, randomization seeds, timing statistics and mutations remain unchanged. This is an interface-harness repair, **not** exclusion of an inconvenient outcome. The original failed CI remains accessible.
+
+## Amendment A2: diagnostic f-string typo, before data collection
+
+After Amendment A1, run [45057241972](https://github.com/d3lefts/d3lefts/actions/runs/45057241972) failed immediately in all three jobs at Python parse time: a diagnostic f-string accidentally contained literal `\\u0027` tokens instead of source-legal quotation marks. The diagnostic now reports mode and exception without inspecting output bytes. The `just` invocation repair remains. There were again no usable trial artifacts. Fixed in source commit `0e5b55d402919c06ea26c55b5401a41bef907e38`; no changes to hypothesis, number of repetitions, randomized order, underlying tasks or negative controls.
