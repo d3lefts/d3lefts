@@ -1,0 +1,63 @@
+name: NIGHTFALL product BU interval stabilizer topological certificate
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean'
+      - '.github/workflows/nightfall-product-bu-interval-stabilizer.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean'
+      - '.github/workflows/nightfall-product-bu-interval-stabilizer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  interval-stabilizer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact pinned Lean compile of interval fixedpoint and no-free-action
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-interval-stabilizer
+          cp research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean /tmp/mathlib4/ProductBUIntervalStabilizer.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ProductBUIntervalStabilizer.olean ProductBUIntervalStabilizer.lean) 2>&1 | tee receipts/product-bu-interval-stabilizer/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/product-bu-interval-stabilizer/lean.log
+      - name: Strict standard-axiom gate on both topological terminals
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/product-bu-interval-stabilizer/lean.log").read_text()
+          for n in ("interval_endomap_has_fixed_point","no_fixedpoint_free_invariant_interval"):
+              q="Nightfall.ProductBUInterval."+n
+              m=re.search(r"'"+re.escape(q)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m,("MISSING",q)
+              a={z.strip() for z in m.group(1).split(',') if z.strip()}
+              assert a <= {"propext","Classical.choice","Quot.sound"},(q,a)
+          assert "theorem Nightfall.ProductBUInterval.no_fixedpoint_free_invariant_interval" in s
+          assert "sorryAx" not in s
+          print("PASS: nonidentity free-action interval-component stabilization is impossible.")
+          print("UNPROVED: actual zero-fiber manifold, component homeomorphism, full ProductSphereZero.")
+          PY
+      - name: Preserve reproducibility receipts
+        if: always()
+        run: |
+          mkdir -p receipts/product-bu-interval-stabilizer
+          git rev-parse HEAD > receipts/product-bu-interval-stabilizer/commit.txt
+          cat lean-toolchain > receipts/product-bu-interval-stabilizer/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean > receipts/product-bu-interval-stabilizer/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-interval-stabilizer-lean-receipt
+          path: receipts/product-bu-interval-stabilizer
+          if-no-files-found: warn
+          retention-days: 90
