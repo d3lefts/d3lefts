@@ -49,7 +49,11 @@ jobs:
           names=["Nightfall.CausalNoise.decoder_noise_floor",
                  "Nightfall.CausalNoise.transcript_cancelled",
                  "Nightfall.CausalNoise.cancellingNoise_bound",
-                 "Nightfall.CausalNoise.two_input_radius"]
+                 "Nightfall.CausalNoise.two_input_radius",
+                 "Nightfall.CausalNoise.ball_erasure",
+                 "Nightfall.CausalNoise.transcript_zero_at_level",
+                 "Nightfall.CausalNoise.transcript_level_noise",
+                 "Nightfall.CausalNoise.levelNoise_bound"]
           for n in names:
               m=re.search(r"'" + re.escape(n) + r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
               assert m,(n,"missing axiom receipt")
@@ -57,7 +61,7 @@ jobs:
               assert axioms <= {"propext","Classical.choice","Quot.sound"},(n,axioms)
           assert "sorryAx" not in s
           assert "theorem decoder_noise_floor" in s or "decoder_noise_floor" in s
-          print("PASS: four theorem axiom reports; only ordinary axioms")
+          print("PASS: eight theorem axiom reports; only ordinary axioms")
           PY
       - name: Preserve exact-head receipts even on failure
         if: always()
