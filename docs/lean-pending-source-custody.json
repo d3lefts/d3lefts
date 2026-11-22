@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 44,
+  "revision": 45,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
   "scope": "v44: 498 pending Lean source blobs and original 67 historical source-matched records unchanged. Genuine covering charts smooth gluing theorem registered as unreviewed only; ProductSphereZero still requires construction of actual local charts.",
@@ -399,13 +399,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUCompatibleAtlas.lean",
-      "source_blob_sha": "1a34d789b6f9c70b94e70a63b437db31d7f6bc20",
+      "source_blob_sha": "cf2afd9d0bbd26da7880393fc6ef2ac3adf6765d",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 source custody only: derives ChartedSpace and IsManifold∞ from genuine covering open partial homeomorphisms and exact smooth overlaps. Does not construct those charts for actual product-sphere F or certify maximal ProductSphereZero. Independent pinned Lean compile and axiom audit required."
+      "receipt_scope": "2026-11-22 source custody only. Lean source repaired to open ContDiff ∞ notation and instance reducibility following failed exact-head CI 45061577066; new exact-head compiler/axiom replay required. No actual zero-fiber atlas or ProductSphereZero is asserted."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
