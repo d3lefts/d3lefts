@@ -20,12 +20,15 @@ open Nightfall.StructuralInformation.SubcubeL3
 set_option maxRecDepth 20000
 set_option maxHeartbeats 20000000
 
-def xorFold (s : Finset Nat) : Nat :=
-  (s.sort (· ≤ ·)).foldl Nat.xor 0
+/-- Exact XOR for source rows with at most eight coordinate bits (L<=3). -/
+def xorLow8 (s : Finset Nat) : Nat :=
+  (Finset.range 8).sum (fun bit =>
+    if (s.filter (fun r => Nat.testBit r bit = true)).card % 2 = 1
+    then 2 ^ bit else 0)
 
 def primitiveFiber (rows : Finset Nat) (k : Nat) : Finset (Finset Nat) :=
   (rows.powersetCard k).filter (fun s =>
-    xorFold s = 1 ∧ ∀ t ∈ s.powersetCard 3, xorFold t ≠ 0)
+    xorLow8 s = 1 ∧ ∀ t ∈ s.powersetCard 3, xorLow8 t ≠ 0)
 
 /-- All source-level original-row 2-XOR representations at depth 1. -/
 theorem primitive_two_L1 : (primitiveFiber rows1 2).card = 1 := by decide
