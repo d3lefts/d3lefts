@@ -233,7 +233,7 @@ theorem continuous_testU {n r : ℕ} (a : CausalRows n)
   have hm : Continuous (fun p : (Signal n) × (Signal n) =>
       (a (T (p.1 - p.2))) p.1) :=
     Continuous.clm_apply hrm continuous_fst
-    change Continuous ((fun p : (Signal n) × (Signal n) => (a (T (p.1 + p.2))) p.1) + (fun p : (Signal n) × (Signal n) => (a (T (p.1 - p.2))) p.1))
+  change Continuous ((fun p : (Signal n) × (Signal n) => (a (T (p.1 + p.2))) p.1) + (fun p : (Signal n) × (Signal n) => (a (T (p.1 - p.2))) p.1))
   exact hp.add hm
 
 /-- The V-colour test likewise has continuity derived from the actual
@@ -263,7 +263,7 @@ theorem continuous_testV {n r s : ℕ} (a : CausalRows n)
   have hm : Continuous (fun p : (Signal n) × (Signal n) =>
       (a (T (p.1 - p.2))) p.2) :=
     Continuous.clm_apply hrm continuous_snd
-    change Continuous ((fun p : (Signal n) × (Signal n) => (a (T (p.1 + p.2))) p.2) + (fun p : (Signal n) × (Signal n) => (a (T (p.1 - p.2))) p.2))
+  change Continuous ((fun p : (Signal n) × (Signal n) => (a (T (p.1 + p.2))) p.2) + (fun p : (Signal n) × (Signal n) => (a (T (p.1 - p.2))) p.2))
   exact hp.add hm
 
 /-- FINAL REACHABLE-PREFIX COMPOSITION, conditional only on the precisely
