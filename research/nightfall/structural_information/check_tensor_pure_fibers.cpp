@@ -48,6 +48,21 @@ int main(int argc,char**argv) {
   uint64_t zero=0;for(U r:rows)zero+=get(p,r);
   assert(zero%3==0);zero/=3;
   assert(zero==uint64_t(L)*n/3);
+  // Complete ordered pair-frequency classification.  Row frequencies have
+  // p=L, non-row frequencies p=3 (two varying sites) or p=1 (>=3 sites).
+  uint64_t nrow=0,nthree=0,none=0;
+  for (const auto& kv:p) {
+   if(R.count(kv.first)) {++nrow; assert(kv.second==(uint32_t)L);}
+   else if(kv.second==3) ++nthree;
+   else {assert(kv.second==1); ++none;}
+  }
+  assert(nrow==(uint64_t)n);
+  assert(nthree==2*uint64_t(n/3)*choose(L,2));
+  uint64_t expected_one=0;
+  for(int h=3;h<=L;h++)
+   expected_one+=uint64_t(n)*(uint64_t(1)<<(h-1))*choose(L,h);
+  assert(none==expected_one);
+  assert(nrow+nthree+none==p.size());
   auto count=[&](U z) {
    uint64_t two=get(p,z), inR=R.count(z)?1:0;
    uint64_t ordered=0;
@@ -68,7 +83,7 @@ int main(int argc,char**argv) {
   assert(a[2]==4*choose(L,2));
   assert(a[4]==5*choose(L,2)+30*choose(L,3));
   cout<<"L="<<L<<" rows="<<n<<" fibers="<<p.size()
-      <<" zero-triples="<<zero<<" primitive 1,2,3,4="
+      <<" zero-triples="<<zero<<" p3freq="<<nthree<<" p1freq="<<none<<" primitive 1,2,3,4="
       <<a[0]<<","<<a[1]<<","<<a[2]<<","<<a[4]
       <<" TOTAL="<<(a[0]+a[1]+a[2]+a[4])<<" PASS\n"<<flush;
  }
