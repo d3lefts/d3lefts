@@ -82,7 +82,7 @@ theorem product_weighted_perturbation_surjective (k : ℕ)
 /-- An explicit radial direction solves an arbitrary tangent equation
 for the unit-sphere norm constraint; this is the second part of the
 augmented Euclidean parametric-Sard surjectivity check. -/
-def radialDirection (k : ℕ) (u : Fin (k + 1) → ℝ) (r : ℝ) :
+noncomputable def radialDirection (k : ℕ) (u : Fin (k + 1) → ℝ) (r : ℝ) :
     Fin (k + 1) → ℝ := fun j => (r / 2) * u j
 
 theorem radial_direction_right_inverse (k : ℕ)
