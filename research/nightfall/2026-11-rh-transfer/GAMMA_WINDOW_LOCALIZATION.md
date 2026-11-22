@@ -125,6 +125,16 @@ Combining these yields a valid **lower bound** `E >= 2 sqrt(ABx)` and a **constr
 
 This does **not** improve Alpöge's asymptotics: his `m,k,n` are not independent free controls; they satisfy representation-theoretic and arithmetic feasibility conditions. As a cheapest decisive transfer test, extract the *actual allowed range* and dependency order of these parameters from the pinned source, then ask whether any other NIGHTFALL problem has two proven, opposing costs with these constraints. Do not claim a new optimization record by ignoring those conditions.
 
+## NIGHTFALL research-priority transition
+
+- **Direct RH rediscovery:** historical/superseded as a flagship objective following the external formal proof and independent kernel checks. Keep prior RH/Hankel derivations and counterexamples intact; do not retroactively assert they proved RH.
+- **Hankel operators:** preserve exact finite-rank positivity certificates and analytic failures for independent mathematical value. Reopen only with a sharp standalone theorem, a demonstrable transfer beyond the already proved RH statement, or a material reduction in formal proof complexity.
+- **Active reusable analysis:** isolate the actual localized Landau zero-exclusion dependency and source-pinned arithmetic parameter restrictions. The elementary gamma-window results above are complete as written; **the full Landau and theta-lift bridges are open**.
+- **Other flagship work:** do not divert resources from the source-scoped two-query tensor-subcube simulation problem, the degree/variance frontier, or exact certificate review merely to optimize gamma concentration constants.
+- **Independent reviewer challenge:** first reproduce the prescribed-window statement, verify its integer floor constants and the exponential moment proof without reading `check_rh_window_gamma.py`; then determine whether a materially stronger statement is needed by the source.
+
+The portfolio transition is a **priority recommendation**, not a claim of a new discovery or a deletion of historical records.
+
 ## Audit / stop rule
 
 - **Best verified construction:** exact rational gamma-tail constants with a short, complete paper proof; no formal kernel certificate and no new analytic number-theory theorem.
