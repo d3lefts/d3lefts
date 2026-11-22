@@ -1,10 +1,30 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 30,
-  "as_of": "2026-11-18 UTC",
-  "source_commit": "2d805e8eabf8733cf01463af9bef9fd37e2407a8",
-  "scope": "Exact pending source custody includes newly promoted original-product heat-bath source, with frozen 67 historical records untouched. Scoped original-head pinned Lean CI for the pointwise source-level identity is separately recorded; full infinite-product L² terminal not certified. Two exact new original-product conditional tensor and Hilbert-projection files enrolled as pending source custody, with separate strict named source CI; no unconditional Q2 terminal or novelty promotion. Reconciled source-identical merged 4.36 named receipts for original-product finite-label, bounded source-conditional and label L2 isometry bridges; no historic ledger mutation or infinite-product theorem promotion. Reconciles seven extra original-source Lean blobs merged by parallel Q2 sessions (including source heat-bath and L2 bridges) as unreviewed custody without claiming unrestricted Q2 or overriding prior receipts. Reconcile changed merged SourceBoundedCondExp blob after strict source-level subSigma generalization while preserving older source receipt. Add exact merged supported-native C105.416 original source blob without promoting infinite-product or unreviewed claims. Reconcile three merged exact Lean source receipts for positive atom a.e. extraction, actual finite Boolean labels, and original-product all-L2 operator intertwinning; claim gates remain unreviewed and end-to-end infinite theorem open. Three main-merged original Q2 results on actual source law: label mean/variance, finite-label Hilbert residual degree/influence, and native positive-atom weighted L2 vanishing; source custody only, no unrestricted terminal promotion. Source-certified original-product coordinate influence equality, native triple residual to pointwise degree, finite original-coordinate Boolean test factoring reconciled by exact immutable source blobs; no final infinite-product Q2 promotion. Revision 29 enrolls 13 previously unregistered merged Q2 source blobs into unreviewed custody, preserving the historical 67-file certified ledger and all separate named compiler receipts; this is not a proof promotion.",
+  "revision": 31,
+  "as_of": "2026-11-22 UTC",
+  "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
+  "scope": "v31 source-only repair: 548 Lean blobs in untruncated Git subtree 081f532dae1def74e3a5570f95fba868e80c9992; frozen 67 historical successful-head entries unchanged; prior 299 source-custody entries unchanged; 182 new exact Git blobs added as unreviewed. The custody ledger does not certify theorem types, kernel proofs, axioms or novelty; separate exact-head receipts retain their own scope.",
   "sources": [
+    {
+      "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
+      "source_blob_sha": "a389e02a2b0bf67cd8336a7dad17f3a436b686e2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Beta.lean",
+      "source_blob_sha": "36e2d006b5420500a58eb96b726056ccf34dc2e4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
       "source_blob_sha": "c0e42b193a383f7e4f7ec43728806483f9b3bf68",
@@ -34,6 +54,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean",
+      "source_blob_sha": "e2cec16b123b97b216bb19652fe9524a2c40756e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
     },
     {
       "path": "research/nightfall/formalization/agent_safety/SemanticFencing.lean",
@@ -96,6 +126,56 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/binary_grothendieck/BinaryGrothendieckQ2.lean",
+      "source_blob_sha": "aab9e95a8a78c4c571f85303b4e4a2bbd6e37636",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/dq2/DQ2BinarySection.lean",
+      "source_blob_sha": "fb1ae4b38222398982508e4bb0bac747fb9ff994",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/dq2/DQ2HeatBathScoreTransfer.lean",
+      "source_blob_sha": "716ab5717b28f361874e7ce612172c1b377aa0ca",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/CausalPhaseConditional.lean",
+      "source_blob_sha": "2d62d1deedd8fcb7d4059ceadb9b138c50bb9f7f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ConditionalPhaseThreshold.lean",
+      "source_blob_sha": "5b054d46092e1b32017ab10fee8756c585595dc2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ContinuousPhaseAllDimensions.lean",
@@ -228,6 +308,16 @@
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/GenuinePrefixPhase.lean",
+      "source_blob_sha": "584d95ffca013872e5b19e0e30ac039440d36810",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/InfiniteFieldAdaptiveLower.lean",
       "source_blob_sha": "7d4c1f73c64e90bf06cef3347ae411ae2c80d595",
       "classification": "unreviewed-source",
@@ -288,6 +378,36 @@
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUParityReference.lean",
+      "source_blob_sha": "199ce3190ac576b7e17c239018179a5829034b30",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean",
+      "source_blob_sha": "c3103ddee98a0e5e43f06a2e449b810af218e9cd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductSphereObstruction.lean",
+      "source_blob_sha": "27e5199f32d22edf51f8c52b19560bb4399c6df7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
       "path": "research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean",
       "source_blob_sha": "1fbf20ee1bfa3c586c5de99032e4e380e5fff3bd",
       "classification": "unreviewed-source",
@@ -296,6 +416,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/fur/FUR2AnchoredRow.lean",
+      "source_blob_sha": "efc3330f5417af2c45ec90f971153b65ef679db1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/fur/FUR2RangeEight.lean",
+      "source_blob_sha": "35a406b3081dc1ebeed5b08b965fb81fe38ba21c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
       "path": "research/nightfall/formalization/observability/ActualESCanonicalPairGraph.lean",
@@ -1392,6 +1532,86 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
+      "path": "research/nightfall/formalization/observability/AnchoredEnergyTransfer.lean",
+      "source_blob_sha": "79dc9b2e4b2e10a08237f921186efad7f12c1a49",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/AnchoredRangeBudget.lean",
+      "source_blob_sha": "e9f533ae93c953ec32c61cb889a8212e7dbabda1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CubicContractionBinarySource.lean",
+      "source_blob_sha": "a47e0947b873a54bcd28015655157c8942fe5369",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CubicContractionHierarchyScalar.lean",
+      "source_blob_sha": "da820f3f09792451b276713d943e36e7c9389c09",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CubicContractionOperator.lean",
+      "source_blob_sha": "17074ffe94b16e7042a606e079678c5f59b99fba",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CubicTopCover105416.lean",
+      "source_blob_sha": "4d3aee54433e7ed8c35f1329d357c3d0027a75f5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CubicTopCoverEnergy.lean",
+      "source_blob_sha": "37d26d2f15bb3aa138dc87fec61278b5317643bc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/CubicTopCoverProjection.lean",
+      "source_blob_sha": "a2970695ccb86cede91a6c8127362a06490ea571",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ExactFiveCoverObstruction.lean",
       "source_blob_sha": "16e228ef88a87eec7908fdc829735dd63419094a",
       "classification": "unreviewed-source",
@@ -1400,6 +1620,56 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source merged to main from finite five-cover source theorem PR #573 run 43677348342. This pending-custody entry is only a blob custody record; see independently audited pinned CI for named theorem certification. No external review or priority implied."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/FairCubicRainbowConditional.lean",
+      "source_blob_sha": "f5af5082be952738659537132d51e64130a7d39a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/HighOrderCoreCover105416.lean",
+      "source_blob_sha": "6d6027fa7e2b68b6da9c89b0b7e037ce10195947",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/HilbertFromScalarKhintchine.lean",
+      "source_blob_sha": "0ef895e357fdb269178e2b5702a2b444a191acae",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean",
+      "source_blob_sha": "b8bf2615e21069b53033b02cd36fa39b3ee01c5a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/OriginalSourceJointHybrid.lean",
+      "source_blob_sha": "d207927d6997e41ca22997b34721ebdb40ac5e78",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
       "path": "research/nightfall/formalization/observability/Q2529ScalarObstruction.lean",
@@ -1858,6 +2128,16 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/observability/SharpTwoSignKhintchine.lean",
+      "source_blob_sha": "c5a82ef2f94f42e98274e7c472770917efb477c4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
       "path": "research/nightfall/formalization/observability/ShiftedC23802Bernstein.lean",
       "source_blob_sha": "bfdb5236ac512e813d291e4f59dd10344ff08d98",
       "classification": "unreviewed-source",
@@ -1938,6 +2218,36 @@
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
+      "path": "research/nightfall/formalization/observability/SourceProjectionContraction.lean",
+      "source_blob_sha": "db1c484febaf1927ecb57066ecf9cecc4c363a25",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/SourceTotalVariance.lean",
+      "source_blob_sha": "0058df533151f6f54d2b7dc62cbc9784101eee38",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/TwoBlockKhinchinTransfer.lean",
+      "source_blob_sha": "8a013405044404814bc86ff261be0939ebda9b92",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
       "path": "research/nightfall/formalization/permission/AdaptiveKLMonitoring.lean",
       "source_blob_sha": "e2aab1b9f3f41f08bf3b1e4031621e61bc550426",
       "classification": "unreviewed-source",
@@ -1958,6 +2268,16 @@
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
+      "path": "research/nightfall/formalization/permission/PricePermissionFenceDual.lean",
+      "source_blob_sha": "3f0a976643d50b9a7c7efc82d6389419055722bb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/permission/RevisionIndistinguishability.lean",
       "source_blob_sha": "41813a89565a93ac8a58baf45d6421d01aedc47a",
       "classification": "unreviewed-source",
@@ -1966,6 +2286,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/permission/RobustObservationHull.lean",
+      "source_blob_sha": "c7dd20689d52dd091a143da954f6e6bb90e04984",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
     },
     {
       "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
@@ -2048,6 +2378,306 @@
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
     },
     {
+      "path": "research/nightfall/formalization/product_space/ApproximateMixtureSimulation.lean",
+      "source_blob_sha": "70ffb658339bcfdf8a9df11ed43ff807f7519576",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/CoherentBlockOraclePullback.lean",
+      "source_blob_sha": "9dd5f0e12d29a3596c1caec1cf83b43e8d686d74",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ComponentIdentification.lean",
+      "source_blob_sha": "d19beed667f2375d73f14eb8bcdc7b74b648bbbb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ComponentIdentificationWeightedTournament.lean",
+      "source_blob_sha": "b22381502f4303fd56a5a0c768da3373b5190f9e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/CubePrintedAA.lean",
+      "source_blob_sha": "e1da3f8ca10e02d4c8601b8fe4c5311aaf9a4630",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/DiagonalMixtureRank.lean",
+      "source_blob_sha": "e88277c1255f51984c408258c0fdee92d7db8d10",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/FUR2TransportAudit.lean",
+      "source_blob_sha": "179507e433b932e4b08031e55305df26dfda9c3a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LatentComponentArithmetic.lean",
+      "source_blob_sha": "c0a58e4c8ec7379b8e78e95cedb511947e770f97",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LatentComponentCertifiedCore.lean",
+      "source_blob_sha": "a5461f555ca7077712b5670462d1a748d146bc22",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LatentExpectationEvaluation.lean",
+      "source_blob_sha": "379a0174fd0693de99b96c4ae68ea1927510fe80",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LatentLikelihoodRatio.lean",
+      "source_blob_sha": "1e006414cfc6d8661f8bd6f49673bee2a94fd232",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/LatentProductInterpolationDegree.lean",
+      "source_blob_sha": "1e791711506c144e8acd4d9a4239f9796b9e3b7c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeBhattacharyya.lean",
+      "source_blob_sha": "0a40ca8ff3bf20193bb7f55fddc4aef54ead8dce",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeBoundedK.lean",
+      "source_blob_sha": "0e4e6ccdceb2a3edc78100027a06fbbc55b65d76",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeCertificate.lean",
+      "source_blob_sha": "8c4c66fb708f0e576f4caa1fe4525d470a881fe7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeClassifierTerminal.lean",
+      "source_blob_sha": "11b4031bb69937421fe3dbc7d0bb9dda96fd16d0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeFiniteTests.lean",
+      "source_blob_sha": "15c57791bf8ec2ba3d9d7d947608a026aa1b3dfe",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeIntegrated.lean",
+      "source_blob_sha": "59fa4dc387f10cca5cb5046ddfc0e04806888d4e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeLargeGaps.lean",
+      "source_blob_sha": "fac2eeccd27ae301b361641f5e6bff997fedd057",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeLikelihoodDecision.lean",
+      "source_blob_sha": "db1a0d9f0158da6a675272654f0a033060d5746a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeObservationPushforward.lean",
+      "source_blob_sha": "ee90d0112e69e3ae498dda9f3b685da9de32c841",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeOriginalClassifier.lean",
+      "source_blob_sha": "284e4fff20f3adfddb20a5444dc7902d89895bd0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeProductDisintegration.lean",
+      "source_blob_sha": "09b512d51560ebe57fa489098f9a1ea5afb63f87",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeTVHellinger.lean",
+      "source_blob_sha": "c4a34155c79ac793c7ebba55c324382a579aa003",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeWeightedOriginal.lean",
+      "source_blob_sha": "0c7214263379d642a444f319d6e7031e87ff0e0f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MarginFreeWeightedTree.lean",
+      "source_blob_sha": "27a367c551d7d335508a5d3d9019bcdc98bb42eb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MixedDifferenceDegree.lean",
+      "source_blob_sha": "dfcb0e1e55a082d30a9c6bf354ae611ea7c4c582",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/MixtureSimulation.lean",
+      "source_blob_sha": "6985a9ad4574d1a850d511ae8b66fc0b89aac8a9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PinnedConditionalStability.lean",
+      "source_blob_sha": "f063086c3bd294c4db5be905fd7efbeeb1ce652e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ProductSimulation.lean",
+      "source_blob_sha": "20bd62a563266bebd59e84440567cf1a9090020e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
       "path": "research/nightfall/formalization/product_space/Q2AllDimensions.lean",
       "source_blob_sha": "16e4a28103817917f057820a53e47f25702812bb",
       "classification": "unreviewed-source",
@@ -2076,6 +2706,476 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumCircuitMixtureSimulation.lean",
+      "source_blob_sha": "21aad22f9b847b5e466eb02ab9c397db23097c94",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumCircuitNormalization.lean",
+      "source_blob_sha": "ac68b7f3a31a4a7613778bb6a2e1c4a275809687",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumCircuitPaths.lean",
+      "source_blob_sha": "53577524675ac3edec2e9584f223b3c9412eae05",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumCircuitSimulation.lean",
+      "source_blob_sha": "c2fdc5e302c8b07d58c62bbc605cadf7bb39fb25",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumHybridTelescope.lean",
+      "source_blob_sha": "dcd8c3ab4694becad980575518a27efe765489d6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumHybridWeightedExpectation.lean",
+      "source_blob_sha": "a5950598e8cccd686f2318ec2506cfdf9a20661d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumMixtureSimulation.lean",
+      "source_blob_sha": "facc303289425677d69b567f3b4c9e5d938ffac8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumOracleMismatch.lean",
+      "source_blob_sha": "82ec58fbad290d3b27ec1c8a2f41a66ba76a3af8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumPathDegree.lean",
+      "source_blob_sha": "4ddac652e1d9822262669ba47d26349c3d37e576",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumValueOracleDiscrepancy.lean",
+      "source_blob_sha": "0d152f3cc3652590050a688fb54059b2c7ca97fa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1AbstractLatentPushforward.lean",
+      "source_blob_sha": "c44b01c7c31a3d88402677f70fca5883a70710ff",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1DegreeSourceBridge.lean",
+      "source_blob_sha": "5502bc64b30d9d0e8472ca8eacd0b6b6b53649da",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1DensityDomination.lean",
+      "source_blob_sha": "b7c374eca9db076e01a97e6a0b2e1a4fe43551ae",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1Entropy.lean",
+      "source_blob_sha": "9fb860367262505452702d32e52de5eb2d1e8f1a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1FiniteJointMass.lean",
+      "source_blob_sha": "7f0e8c3efc7b4f4eee204fcb0ddd39f712d11421",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1FiniteMaxCoupling.lean",
+      "source_blob_sha": "4102b656a4510555339a1adc40747bd2735f00bc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1KeyLemma.lean",
+      "source_blob_sha": "e33ba43261e8de60d3b006f7b0384d4f6718f943",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1LatentDegree.lean",
+      "source_blob_sha": "b2ca091cba5d8cc2166a518cdb10f0e63d949731",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1Lift.lean",
+      "source_blob_sha": "e15aa9a418124210bcd40efced284072916d2a4f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1MaximalConditionalKernel.lean",
+      "source_blob_sha": "3dcb28ec9bb97ac6e300275b6fa22212a4479e0a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1PolylogSimulation.lean",
+      "source_blob_sha": "5e2e8cd91f9a5acfac5ebcfde41f5833f6f03989",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1PolylogTools.lean",
+      "source_blob_sha": "4bbadc01ce383168ecea30cd01fbfd1189599f91",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1StarCoupling.lean",
+      "source_blob_sha": "41f98c40e5024bef180f13a9a091eaa684477171",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1StarMaximalBridge.lean",
+      "source_blob_sha": "f7aae6acdbf6ce6a9fe8360f56d1dea3245985ae",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1StarMaximalTerminal.lean",
+      "source_blob_sha": "2fe4c308b9cf13e1bb952b7ed47f10fafc2adb52",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1WynerGeneral.lean",
+      "source_blob_sha": "4e896cdcf97c62e2640694e077f8b36f54e2105e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1WynerSimulation.lean",
+      "source_blob_sha": "fa6e5edbfee883187071447726b3945fd14e52a6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongAdaptiveSeedCompiler.lean",
+      "source_blob_sha": "9464a04e2ca66074cf84471cd3f434d583d0ef7b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongConditionalSeedKernel.lean",
+      "source_blob_sha": "dad3261f338a4a190e0bfe124ab466c4fa9a00ec",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongDyadicRounding.lean",
+      "source_blob_sha": "64b2ff3a5b0e1e4c10b0692a514542ac409d40e0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMarkovEndpoint.lean",
+      "source_blob_sha": "b95921b0517cd2e445966305280455c33fa10e66",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMarkovInterior.lean",
+      "source_blob_sha": "16098c96ad1a55d04be26997c0e0c851babb804f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMarkovInterval.lean",
+      "source_blob_sha": "f2d52b362fa087f137f3f15cbdbf6fc3803d899f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMarkovPathStability.lean",
+      "source_blob_sha": "75bb465753206acb8578e71724cefd380503d56d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMarkovRescale.lean",
+      "source_blob_sha": "91d846db6e6c636beef301fbbd67975286d22f34",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMarkovTwoPath.lean",
+      "source_blob_sha": "e02d4426f936e02eee4e6f5d18e5388096f3edaa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMixtureDuel.lean",
+      "source_blob_sha": "d428277a16d2a32d0b4f8950b9390d50a2b70e46",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMixtureTerminalConditional.lean",
+      "source_blob_sha": "7acd63057872b0bfeddfe3735e64838ca962f9b4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMixtureTournament.lean",
+      "source_blob_sha": "a8bd609e39ae12f2a6849ef3caf04300593952c9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongMixtureUnion.lean",
+      "source_blob_sha": "e2a637e27b36a9ed6ab3a2bb02cefbfb612e5c88",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongOneSidedCoupling.lean",
+      "source_blob_sha": "b2dca73579466499e9b8548492a971c75b0d9287",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongProductTransferConditional.lean",
+      "source_blob_sha": "cf0a80cf93448a901948869c15ef2ccf88d3a349",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongSeedDerandomize.lean",
+      "source_blob_sha": "a3f1433a488713ba143d9dac236d359c15c27a99",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongSeedFixing.lean",
+      "source_blob_sha": "04ee328ec13c47a314b9abc94aa14ed03e683b80",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongSmoothingAmplifier.lean",
+      "source_blob_sha": "ab302ff43ebe18c5b6dff21cf66caa57bb5e616c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongSmoothingPolynomial.lean",
+      "source_blob_sha": "af7a0a8e1f7d262f36cda9c84ae1716e29ebd670",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/StrongSmoothingUniform.lean",
+      "source_blob_sha": "4416814f498f801d4a0f9ce0106a0dcbd66de877",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
       "path": "research/nightfall/formalization/q2_99/Q299ConditionalAndNoGo.lean",
@@ -2398,6 +3498,136 @@
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
+      "path": "research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean",
+      "source_blob_sha": "988246fed292c8dd75c1ec2eefc0620695804825",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeAllLevels.lean",
+      "source_blob_sha": "eaad62f8d039d6c08c1aa306a1092c991da26926",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeAllSpacesL3.lean",
+      "source_blob_sha": "a3e930727156689dd0eff9dcbd1c57f9ac4eea1b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeL3.lean",
+      "source_blob_sha": "e32734b8214cb77e6502879764f2c0e4d56f2abb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeSecantAffine.lean",
+      "source_blob_sha": "0ef9ccec314a8b5f50e209dfc0973f3948683795",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeSecantAllLevels.lean",
+      "source_blob_sha": "a4a2369a0d8a8c4371282804525d4d8eef4d978b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeSecantMixed.lean",
+      "source_blob_sha": "2596fb1c5eff2c6d905dda7f2ec19b6bb147ced8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeSecantScalar.lean",
+      "source_blob_sha": "c50eda52fa7c184641fb40122b36e849887fc3ca",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeSecantSlices.lean",
+      "source_blob_sha": "9bec3f2782f0f0c02b1222fdafbec8c14fc66317",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeSecantTransfer.lean",
+      "source_blob_sha": "9a3eb60b7d10f6e20dd5b21dbf75460a0633a818",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeSharpAllLevels.lean",
+      "source_blob_sha": "96632e378f8ec071f707a3d820a6857238885741",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeSharpness.lean",
+      "source_blob_sha": "c83d903d08558e911c7ddaa601c1101638fbf730",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean",
+      "source_blob_sha": "9bb1796e391eea7a503bc9c1a4d794f08aba7470",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
       "path": "research/nightfall/formalization/swansea_v5/SwanseaV5UnionConvolution.lean",
       "source_blob_sha": "84b51f629d4814a771487cbac98e5b5cd8782da8",
       "classification": "unreviewed-source",
@@ -2424,6 +3654,16 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/universal/FullRowScalarTensorization.lean",
+      "source_blob_sha": "f6a373de125dc0cc9acb53208298e054b14527b9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfiniteEfronSteinTransfer.lean",
       "source_blob_sha": "3488f7adf891c6169478733e4d30165933a21c4b",
       "classification": "unreviewed-source",
@@ -2438,6 +3678,46 @@
         "named_declaration": "Nightfall.InfiniteEfronSteinTransfer.positive_coordinate_if_positive_variance",
         "run": 43630294034
       }
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiAAProductTerminal.lean",
+      "source_blob_sha": "b94a266dc09da7812715e89af3d35f9cc767c7f4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteIndicators.lean",
+      "source_blob_sha": "1eeb46bd2d61f0963a6609d837357a6e3e19a333",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiAllDegreeFiniteResidualBridge.lean",
+      "source_blob_sha": "e3fd5dfa38a198e86d2731b273d5bda1a3502e2b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiAllDegreeLabelTransfer.lean",
+      "source_blob_sha": "9b5493d176f1d12a80ae4c0b1ab6f2bbfaee38fb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiCountableSupport.lean",
@@ -2529,6 +3809,16 @@
         "kernel": "strict_named_compilation",
         "theorem_scope": "bounded original-source/label condExp intertwined a.e., not arbitrary L2 operator"
       }
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2CellAverage.lean",
+      "source_blob_sha": "5cba0ae2e5c855a681d44ae4ed4fca8515940d2f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2CellLabelProjection.lean",
@@ -2799,6 +4089,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged heterogeneous-to-tagged finite alphabet original-source operator; source custody only. Not finite-measure influence transport or infinite Q2 terminal."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean",
+      "source_blob_sha": "37673af7af8f0f0d7a2c2d3ae272842c87a167cd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Hoeffding degree-two bridge to the a.e. infinite-product C105.416 terminal; integrated lake build/check receipt requested by the PR adding it. Source custody only: no historical-ledger promotion, human review or novelty status is inferred."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2InactiveFiniteLabel.lean",
@@ -3170,6 +4470,16 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean",
+      "source_blob_sha": "837b6066d1dfc1c6b7b294434542555e1d87a817",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2UniformInfluence.lean",
       "source_blob_sha": "169be77bb9a98ce96638e4d6976c81720ea86a13",
       "classification": "unreviewed-source",
@@ -3210,6 +4520,36 @@
       "receipt_scope": "Post-checkpoint source present at main 62ee3725a673; no named Lean declaration, kernel proof, peer review or priority is certified by this pending-custody entry. Verify separate CI receipts and exact theorem hypotheses before promotion."
     },
     {
+      "path": "research/nightfall/formalization/universal/Q2BernsteinFamilySharpLower.lean",
+      "source_blob_sha": "6683b6d29d1882dcc7631c6e6d24962990d7d295",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/SelectorOverlapWeighted.lean",
+      "source_blob_sha": "7daaacc89e7b5c9147a5217d89499a7ac73a08b2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/UE2ConditionalImplications.lean",
+      "source_blob_sha": "cd53000cce207881fe50a6e4042f0c5b64bcaab6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
       "path": "research/nightfall/formalization/universal/UniversalAuthorityFrontier.lean",
       "source_blob_sha": "1a2fe1012d577fcb7f25f733e44dbb0dad7cda3a",
       "classification": "unreviewed-source",
@@ -3226,64 +4566,544 @@
       }
     },
     {
-      "path": "research/nightfall/formalization/universal/InfinitePiQ2CellAverage.lean",
-      "source_blob_sha": "5cba0ae2e5c855a681d44ae4ed4fca8515940d2f",
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/AllPairsDefs.lean",
+      "source_blob_sha": "d1512485ab940b7519e650d228ecb8b51916f893",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean",
-      "source_blob_sha": "837b6066d1dfc1c6b7b294434542555e1d87a817",
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Affine.lean",
+      "source_blob_sha": "4a0d1bc319585834ddb9bd51b781d5596bdb3aaf",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean",
-      "source_blob_sha": "e2cec16b123b97b216bb19652fe9524a2c40756e",
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Algebra.lean",
+      "source_blob_sha": "6c7725028dbbc2552df0cd23095ec67e2a43b421",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/permission/PricePermissionFenceDual.lean",
-      "source_blob_sha": "3f0a976643d50b9a7c7efc82d6389419055722bb",
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Basic.lean",
+      "source_blob_sha": "082cd1460cb5ce12138bb87413bb8cb59eca289b",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/permission/RobustObservationHull.lean",
-      "source_blob_sha": "c7dd20689d52dd091a143da954f6e6bb90e04984",
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Fourier.lean",
+      "source_blob_sha": "eec4788ac7273abcfaa649eefbbe6048526bd6c2",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean",
-      "source_blob_sha": "37673af7af8f0f0d7a2c2d3ae272842c87a167cd",
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Poly.lean",
+      "source_blob_sha": "54c8c3780a85c34f198c56025649092d8fd80aff",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Hoeffding degree-two bridge to the a.e. infinite-product C105.416 terminal; integrated lake build/check receipt requested by the PR adding it. Source custody only: no historical-ledger promotion, human review or novelty status is inferred."
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/Positivity.lean",
+      "source_blob_sha": "9a8f86e2afd7fcb012f0489af3d92974ed2469c2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Bridge/PrintedAA.lean",
+      "source_blob_sha": "f3b195a54a06da474601720ce982f2d633290a60",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Conjecture.lean",
+      "source_blob_sha": "d7f37e2c7d17372971ecc8d238e036b17a24ed01",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Defs.lean",
+      "source_blob_sha": "c2b55d07e2d3af9e3a2106458079552df9e33693",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetBij/Basic.lean",
+      "source_blob_sha": "363ca819564e27a79cbbc0b30b924425ac7e3ec5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetBij/Identity.lean",
+      "source_blob_sha": "82d3c58e6b66a2a432f519d5f2a487dfe36cae66",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetBij/Main.lean",
+      "source_blob_sha": "e22bb56a2745d49bf34206d87c71d641ae3b231e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetBij/Perm.lean",
+      "source_blob_sha": "4ca578bba0ff6d0fc6c76bcc89dd250939ebede9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetDefs.lean",
+      "source_blob_sha": "d7e25b058e670c702f502024ad9bf7679d4144f2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetLow/Basic.lean",
+      "source_blob_sha": "a05c00c7e6f986d3593a4117eba7936decf8a7cc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetLow/Count.lean",
+      "source_blob_sha": "e605b373006f41f88eca22b1e081f91d029228d4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetLow/Degree.lean",
+      "source_blob_sha": "d170afd8f63f87413414177817b61803d0d57d64",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetLow/Main.lean",
+      "source_blob_sha": "e74294d7eac69bdbb1d69c50cfdb96abd9f6e545",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetLow/NonZero.lean",
+      "source_blob_sha": "ab6a38bece1d8f9614d23464c8b73f2e8aea82fb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetLow/RowOps.lean",
+      "source_blob_sha": "784d3df166a2d7157ae8787f23e78cb5fe5f1418",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetLow/Unit.lean",
+      "source_blob_sha": "e58e8dbe03e5d2895d37c345c46e4b9cbc1d3577",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/DetTheorem.lean",
+      "source_blob_sha": "d922176ab325d87f9b835d1a324c48741be76395",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Dual/Core.lean",
+      "source_blob_sha": "3a7c38a848e47e1e70d8d350199b39222f308c87",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Dual/Cover.lean",
+      "source_blob_sha": "c7f440abb181b7675b7228c6eb26a7e45163f1ee",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Dual/Functional.lean",
+      "source_blob_sha": "2eed45815d2658ba30a8677eaef41334bb052b2b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Dual/Main.lean",
+      "source_blob_sha": "8dffa46c30373195f0d885f9de395c9167b97107",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Dual/Row.lean",
+      "source_blob_sha": "adf3d0b5d028ab8d1fbd770ae70f702f751fa704",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Dual/RowAux.lean",
+      "source_blob_sha": "1d2578f19f98eec6cc88c2a7d0234c036a0af067",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Dual/Sets.lean",
+      "source_blob_sha": "2203fcbeccf8a74dc7d7ac06f5dacd52f4cb2505",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Level/Basic.lean",
+      "source_blob_sha": "6eee8494a3a52088f705d79f88a7f35cfe002eb7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Level/Integral.lean",
+      "source_blob_sha": "f4b688aae6eace39c0d5b197c133d94ae0b08e92",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Pack/Blocks.lean",
+      "source_blob_sha": "4df0775243ab0067d690da88752f429014233841",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Pack/Gate.lean",
+      "source_blob_sha": "4d827f31dbe54d0403c8a525821db26bd58214aa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Pack/Main.lean",
+      "source_blob_sha": "265453b0f96258da55d69f7fc0a85ab39631fba4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Pack/Packing.lean",
+      "source_blob_sha": "8670a4cecd62aff3f78f86ce9074022007b3e9fe",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Pack/Scaled.lean",
+      "source_blob_sha": "27fc22a801d079ea3afec0894315bff67af2cf51",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Row/Block.lean",
+      "source_blob_sha": "aec6f1ce24a7a4ae034782facbf9db63b1b16eff",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Row/Chi.lean",
+      "source_blob_sha": "d756eef4e84ef5ca6ed8794bb3c75a6a918f130e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Row/Degree.lean",
+      "source_blob_sha": "5f91dd9e417a4fbb025850a401b13748f532dec2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Row/Extension.lean",
+      "source_blob_sha": "1ef3ae7202b281d146a3cb4e524abce29533cc24",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Row/Gadget.lean",
+      "source_blob_sha": "9411ba197d111aafff1c393302aa4c2f00aa89b6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Row/Main.lean",
+      "source_blob_sha": "4e38e5571d49d5d4f45d7df78681ccf07dbd846d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Row/Markov.lean",
+      "source_blob_sha": "ac4d328f7cc21da35470f38dec1db7ac78caf314",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Row/Sensitivity.lean",
+      "source_blob_sha": "2931fcd828e1bf131e40acc4dd9fa97a1529eef0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/RowDefs.lean",
+      "source_blob_sha": "4ba294ad575cf0b17b6b5a07690f2a5bdba07a8b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/Statements.lean",
+      "source_blob_sha": "71c1a0cdbbabbb65e7069b300f96d6f44cae2eb9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/TwoSided/Antipodal.lean",
+      "source_blob_sha": "82409ec519e6c141eaa8ba3f1f755db490cb1ae5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/TwoSided/Basic.lean",
+      "source_blob_sha": "f8b7765bfe4245e65caed142c2cb2d2258476c23",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/TwoSided/CauchySchwarz.lean",
+      "source_blob_sha": "03003625a47d1579dc9757e9f77271307d0d9134",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/TwoSided/Overlap.lean",
+      "source_blob_sha": "c3b319abe096d528d3e490aa7627c68c05ba70a4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/pr1000-phase-retrieval-robustness/CausalCollisionAlgebra.lean",
+      "source_blob_sha": "9a9b94d700151f52a10c19188b756ac61e355647",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/pr1000-phase-retrieval-robustness/EnvelopeErasure.lean",
+      "source_blob_sha": "5ec63eb29a88dd058a4428f5b087858df533064b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/pr1000-phase-retrieval-robustness/NoisyCausalCollision.lean",
+      "source_blob_sha": "b6fcc14718e13450712566563ba26d516af6e58a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     }
   ]
 }
