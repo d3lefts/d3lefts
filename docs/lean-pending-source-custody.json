@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 47,
+  "revision": 48,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v47 fixed-base Lean custody with 513 pending sources and original 67 historical source-matched unchanged. Reconciles merged PR #1113 RHScaleSeparation as unreviewed only after strict custody checker detected pre-existing missing registration; mixed-character and pure phase-risk Lean sources pending new exact-head run; ProductSphereZero still not proved in Lean.",
+  "scope": "v48: 514 pending exact Lean source identities; original 67 historical source-matched unchanged. Added scoped ProductBUScaledPrefix as unreviewed-source only, with ProductSphereZero explicitly pending. Parent v47 source registry retained; reconcile parallel updates before main merge.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -516,6 +516,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source custody only. Pinned external ATLAS parametric Sard ordinary-axiom replay in merged #1048; theorem-level regular parameter existence in this branch is not yet source-certified. ProductSphereZero remains open."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUScaledPrefix.lean",
+      "source_blob_sha": "04dd20e7f77c05f55fc4f790502d9547a684974e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 direct scaled genuine-prefix, radius-ball conditional lemma. ProductSphereZero is an explicit hypothesis; exact-head pinned Lean kernel and standard-axiom receipt pending. No complete topology theorem, novel priority, or independent review is implied."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUSmoothInverse.lean",
