@@ -14,7 +14,7 @@ published Lovitz-Petrov tensor circuit support bound.
 
 namespace Nightfall.StructuralInformation.TensorSymmetricDifferenceXor
 
-variable {I : Type*} {G : Type*} [AddCommGroup G]
+variable {I : Type*} {G : Type*} [DecidableEq I] [AddCommGroup G]
 
 /-- Equal total row sums imply equal sums of the two nonshared
 parts. This holds even without exponent-two; it is useful for
