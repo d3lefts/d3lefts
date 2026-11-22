@@ -1,0 +1,71 @@
+name: NIGHTFALL concrete product BU homotopy (Lean)
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUConcreteHomotopy.lean'
+      - '.github/workflows/nightfall-product-bu-concrete-homotopy.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUConcreteHomotopy.lean'
+      - '.github/workflows/nightfall-product-bu-concrete-homotopy.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  concrete-homotopy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original parent sources and actual parametric family on frozen Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-concrete-homotopy
+          dir=research/nightfall/formalization/finite_field
+          for M in ProductSphereObstruction ProductBUParityReference ProductBUPerturbation ProductBUAugmentedRank ProductBUConcreteHomotopy; do
+            cp "$dir/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-concrete-homotopy/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-concrete-homotopy/$M.log"
+          done
+      - name: Audit 12 named terminal theorems and ordinary Lean axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/product-bu-concrete-homotopy/ProductBUConcreteHomotopy.log').read_text()
+          names=['H_U_zero','H_V_zero','H_U_one','H_V_one',
+             'H_U_flip_left','H_U_flip_right','H_V_flip_left','H_V_flip_right',
+             'normDefect_zero_iff','normDefect_neg',
+             'H_U_contDiff','H_V_contDiff']
+          for suffix in names:
+            name='Nightfall.ProductBUConcreteHomotopy.'+suffix
+            assert 'theorem '+name in s,("MISSING_TERMINAL",name)
+            m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+            assert m or "'"+name+"' does not depend on any axioms" in s,("NO_AXIOM_RECEIPT",name)
+            xs={x.strip() for x in m.group(1).split(',') if x.strip()} if m else set()
+            assert xs <= {'propext','Classical.choice','Quot.sound'},(name,xs)
+          assert 'sorryAx' not in s
+          print('PASS actual two-character H_A,B exact endpoints and C∞ scalar components')
+          print('UNPROVED: concrete augmented fderiv, global regular fiber, ProductSphereZero')
+          PY
+      - name: Preserve exact run/source identity
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-concrete-homotopy
+          git rev-parse HEAD > receipts/product-bu-concrete-homotopy/commit.txt
+          cat lean-toolchain > receipts/product-bu-concrete-homotopy/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUConcreteHomotopy,ProductBUAugmentedRank,ProductBUPerturbation}.lean > receipts/product-bu-concrete-homotopy/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-concrete-homotopy-lean
+          path: receipts/product-bu-concrete-homotopy
+          if-no-files-found: warn
+          retention-days: 90
