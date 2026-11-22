@@ -45,7 +45,11 @@ jobs:
             'Nightfall.GenuinePrefixPhase.causal_collision_of_genuine_prefix_zeros',
             'Nightfall.ProductSphereCausal.collision_of_product_sphere_zero',
             'Nightfall.ProductSphereCausal.testU_flip_left',
-            'Nightfall.ProductSphereCausal.testV_flip_right'
+            'Nightfall.ProductSphereCausal.testV_flip_right',
+            'Nightfall.ProductSphereCausal.continuous_actual_transcript',
+            'Nightfall.ProductSphereCausal.continuous_testU',
+            'Nightfall.ProductSphereCausal.continuous_testV',
+            'Nightfall.ProductSphereCausal.collision_of_product_sphere_zero_reachable'
           ]
           for name in names:
             hit=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
@@ -57,8 +61,11 @@ jobs:
           assert re.search(r'ProductSphereZero\s+n\s+r\s+s\s*→',s), 'TOPOLOGY_HYPOTHESIS_ABSENT'
           assert re.search(r'∀\s*\(i\s*:\s*Fin r\),\s*ContinuousOn',s), 'U_CONTINUITY_ABSENT'
           assert re.search(r'∀\s*\(i\s*:\s*Fin s\),\s*ContinuousOn',s), 'V_CONTINUITY_ABSENT'
-          print('PASS: genuine causal physical collision conditional on ProductSphereZero and the two test continuity properties.')
-          print('NOT PROVED: ProductSphereZero, admissible selector -> test continuity (reachable-only).')
+          assert 'theorem Nightfall.ProductSphereCausal.collision_of_product_sphere_zero_reachable' in s
+          assert 'ReachableContinuous a' in s
+          assert 'ProductSphereZero n r s' in s
+          print('PASS: genuine causal physical collision from reachable-only continuous rows conditional solely on ProductSphereZero.')
+          print('NOT PROVED: ProductSphereZero. The reachable-only selector -> test continuity bridge is independently named and audited.')
           PY
       - name: Preserve exact-head receipts
         if: always()
