@@ -1,0 +1,67 @@
+name: NIGHTFALL phase-block Route 1 finite decoder (exact + Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/phase_route1_decode_exact.py'
+      - 'research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean'
+      - 'research/nightfall/structural_information/PHASE_ROUTE1_DECODER_TRANSFER_20261122.md'
+      - '.github/workflows/nightfall-phase-route1-decoder.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-phase-code:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Independent exact integer enumeration
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/nightfall/structural_information/phase_route1_decode_exact.py
+          python3 -m py_compile "$src"
+          sha256sum "$src"
+          python3 -B "$src" > /tmp/phase-route1-exact.log
+          tail -n 1 /tmp/phase-route1-exact.log
+          grep -q 'PASS: exact 8-signal frame' /tmp/phase-route1-exact.log
+          python3 - <<'PY'
+          import json
+          raw=open('/tmp/phase-route1-exact.log',encoding='utf8').readline().strip()
+          data=json.loads(raw)
+          assert data['three_reading_exact_reconstructions']==32
+          assert data['adaptive_depth_two_policies_ruled_out']==544
+          assert data['min_codeword_hamming_distance']==2
+          assert data['full_route1_lean_certificate'] is False
+          assert data['external_priority_check_complete'] is False
+          print("PASS: 32 triple inversions, 544 adaptive 2-query trees rejected")
+          PY
+      - name: Pinned Lean actual oracle statement and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean
+          ! grep -nE '\\b(sorry|admit|axiom)\\b' "$src"
+          sha256sum "$src"
+          cp "$src" /tmp/mathlib4/PhaseRoute1Finite.lean
+          (cd /tmp/mathlib4 && lake env lean PhaseRoute1Finite.lean) 2>&1 | tee /tmp/phase-route1-lean.log
+          python3 - <<'PY'
+          import re
+          log=open('/tmp/phase-route1-lean.log',encoding='utf8').read()
+          for suffix in ('any_three_decode','no_adaptive_two_decode',
+                         'no_single_coordinate_flip'):
+              full='Nightfall.PhaseRoute1Finite.'+suffix
+              m=re.search(re.escape("'"+full+"' depends on axioms: [")+r'([^\\]]*)\\]',log,re.S)
+              if m is None:
+                  assert f"'{full}' does not depend on any axioms" in log, full
+                  axioms=set()
+              else:
+                  axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
+              assert axioms <= {'propext','Classical.choice','Quot.sound'},(full,axioms)
+              print(full,sorted(axioms))
+          assert 'sorryAx' not in log
+          print('PASS: three exact finite oracle lemmas; all-B Wyner and Route1 composition remain paper-level')
+          PY
