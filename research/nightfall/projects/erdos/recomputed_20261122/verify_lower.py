@@ -9,6 +9,8 @@ from pathlib import Path
 from fractions import Fraction as Q
 import base64, hashlib, io, json, zipfile
 
+if not __debug__: raise SystemExit("Python -O disables certificate assertions")
+
 ROOT = Path(__file__).resolve().parent
 BUNDLE = '38ab33cb54bbe3a1d070c14e86280ed9bba09af83ce83230deeec77901d67718'
 ROWS = '87f57049b951c0d576cb868778f11b1514ab83ef5821500dc3205fd5df609cd3'
