@@ -1,0 +1,53 @@
+name: NIGHTFALL strict pending Lean source custody (no automatic certification)
+
+on:
+  pull_request:
+    paths:
+      - "docs/lean-pending-source-custody.json"
+      - "docs/lean-certificate-provenance.json"
+      - "scripts/test_lean_certificate_provenance.cjs"
+      - "scripts/lean_certificate_registry.py"
+      - ".github/workflows/nightfall-strict-lean-custody.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/lean-pending-source-custody.json"
+      - "docs/lean-certificate-provenance.json"
+      - "scripts/test_lean_certificate_provenance.cjs"
+      - "scripts/lean_certificate_registry.py"
+      - ".github/workflows/nightfall-strict-lean-custody.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      NIGHTFALL_ALLOW_UNREVIEWED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce frozen 67-record source-pinned register and byte-identical pending file hashes
+        run: node scripts/test_lean_certificate_provenance.cjs
+      - name: Independently replay source register, reject extras, and emit uncertified scope
+        run: python3 scripts/lean_certificate_registry.py --audit --json-out /tmp/nightfall-lean-source-audit.json
+      - name: Assert absence of unregistered and auto-promoted source entries
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("/tmp/nightfall-lean-source-audit.json").read_text())
+          assert d["inventory_count"] == 67
+          assert d["current_checkout_source_integrity"] is True
+          assert d["registered_source_integrity"] is True
+          assert d["unreviewed_source_count"] == d["current_checkout_lean_source_count"] - 67
+          assert d["fresh_compiler_replay"] is False
+          assert d["same_pin_all_modules_compiled"] is False
+          assert d["universal_theorem_certified"] is False
+          assert d["worldwide_priority_verified"] is False
+          assert all(item["classification"] == "unreviewed-source" for item in d["unreviewed_sources"])
+          print("PASS: exact Lean source custody without unreviewed->certified promotion",
+                d["current_checkout_lean_source_count"], d["unreviewed_source_count"])
+          PY
