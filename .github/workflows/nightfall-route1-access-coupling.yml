@@ -16,31 +16,49 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
-      - name: Compile pinned AA and mixture closure in dependency order
-        shell: bash
-        run: |
-          set -euo pipefail
-          while read -r M P; do
-            [ -z "$M" ] && continue
-            REL="$(printf '%s' "$M" | tr '.' '/')"
-            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
-            cp "$P" "/tmp/mathlib4/$REL.lean"
-            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/log-$M.txt")
-            ! grep -q 'declaration uses .sorry' "/tmp/log-$M.txt"
-          done < research/nightfall/formalization/aa_product/CLOSURE.txt
-      - name: Compile Route 1 chain (merged star coupling and latent degree, then polylog modules)
+      - name: Compile exact transitive repository closure
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p receipts/route1-access
-          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
-                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
-                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral; do
-            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
-            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 \
-              | tee "receipts/route1-access/$M.log"
+          # Retain the source-verified AA import order, but omit unrelated roots.
+          python3 - <<'PY' > /tmp/route1-access-closure.txt
+          from pathlib import Path
+          import re
+          root = Path("research/nightfall/formalization/product_space")
+          pairs = [tuple(line.split()) for line in
+                   Path("research/nightfall/formalization/aa_product/CLOSURE.txt").read_text().splitlines()
+                   if line.strip()]
+          more = ("Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling "
+                  "Route1FiniteJointMass Route1MaximalConditionalKernel Route1StarCoupling "
+                  "Route1StarMaximalBridge Route1PolylogTools Route1Entropy Route1KeyLemma "
+                  "Route1Lift Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral")
+          pairs.extend((n, str(root / (n + ".lean"))) for n in more.split())
+          mapping = dict(pairs)
+          mapping["Route1AccessCoupling"] = str(root / "Route1AccessCoupling.lean")
+          wanted = set()
+          def visit(m):
+              if m in wanted:
+                  return
+              wanted.add(m)
+              source = Path(mapping[m]).read_text()
+              for x in re.findall(r"^(?:(?:public|meta) +)?import +(?:all +)?([^ \t\r\n]+)", source, re.M):
+                  if x in mapping:
+                      visit(x)
+          visit("Route1AccessCoupling")
+          for m, p in pairs:
+              if m in wanted:
+                  print(m, p)
+          PY
+          wc -l /tmp/route1-access-closure.txt
+          cp /tmp/route1-access-closure.txt receipts/route1-access/closure.txt
+          while read -r M P; do
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") 2>&1 | tee "receipts/route1-access/$M.log"
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/route1-access/$M.log"
-          done
+          done < /tmp/route1-access-closure.txt
       - name: Compile coupled-source theorem and independently replay the kernel
         shell: bash
         run: |
