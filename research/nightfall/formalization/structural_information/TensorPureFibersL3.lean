@@ -21,7 +21,7 @@ set_option maxRecDepth 20000
 set_option maxHeartbeats 20000000
 
 def xorFold (s : Finset Nat) : Nat :=
-  s.toList.foldl Nat.xor 0
+  (s.sort (· ≤ ·)).foldl Nat.xor 0
 
 def primitiveFiber (rows : Finset Nat) (k : Nat) : Finset (Finset Nat) :=
   (rows.powersetCard k).filter (fun s =>
