@@ -1,0 +1,65 @@
+name: NIGHTFALL product BU reference endpoint t0 full rank
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean'
+      - '.github/workflows/nightfall-product-bu-endpoint-rank.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean'
+      - '.github/workflows/nightfall-product-bu-endpoint-rank.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  endpoint-rank:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact source on pinned Lean Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-endpoint-rank
+          for M in ProductSphereObstruction ProductBUParityReference ProductBUEndpointRank; do
+            cp "research/nightfall/formalization/finite_field/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-endpoint-rank/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-endpoint-rank/$M.log"
+          done
+      - name: Audit all endpoint witness theorems and axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/product-bu-endpoint-rank/ProductBUEndpointRank.log").read_text()
+          for n in ["reference_first_sq_one","endpoint_radial_inverse","endpoint_spatial_full_rank_witness"]:
+              q="Nightfall.ProductBUEndpointRank."+n
+              m=re.search(r"'"+re.escape(q)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m,("MISSING",q)
+              a={z.strip() for z in m.group(1).split(',') if z.strip()}
+              assert a <= {"propext","Classical.choice","Quot.sound"},(q,a)
+          assert "theorem Nightfall.ProductBUEndpointRank.endpoint_spatial_full_rank_witness" in s
+          assert "sorryAx" not in s
+          print("PASS: all-dimensional reference t=0 spatial Jacobian inverse, only ordinary axioms.")
+          print("OPEN: concrete fderiv identification, all-t regular fibers, manifold construction, group parity.")
+          PY
+      - name: Preserve source and toolchain receipt
+        if: always()
+        run: |
+          mkdir -p receipts/product-bu-endpoint-rank
+          git rev-parse HEAD > receipts/product-bu-endpoint-rank/commit.txt
+          cat lean-toolchain > receipts/product-bu-endpoint-rank/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean > receipts/product-bu-endpoint-rank/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-endpoint-rank-source-receipt
+          path: receipts/product-bu-endpoint-rank
+          if-no-files-found: warn
+          retention-days: 90
