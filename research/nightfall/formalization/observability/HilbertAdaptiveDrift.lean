@@ -30,7 +30,7 @@ theorem reciprocal_step
   apply (le_div_iff₀ hq).mpr
   calc
     (1 / p + κ) * q = q / p + κ * q := by ring
-    _ ≤ (1 - κ * q) + κ * q := add_le_add_right hdiv _
+    _ ≤ (1 - κ * q) + κ * q := add_le_add_left hdiv _
     _ = 1 := by ring
 
 /-- Every nonnegative trajectory with a uniform quadratic decrease
