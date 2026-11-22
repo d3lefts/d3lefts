@@ -94,9 +94,11 @@ theorem plus_minus_distinct (u v : V2) (hu : u ≠ 0) (hv : v ≠ 0) :
       apply Prod.ext
       · have e := congrArg Prod.fst h
         change u.1 + v.1 = u.1 - v.1 at e
+        change v.1 = (0 : ℝ)
         linarith
       · have e := congrArg Prod.snd h
         change u.2 + v.2 = u.2 - v.2 at e
+        change v.2 = (0 : ℝ)
         linarith
     exact hv hv0
   · intro h
@@ -104,9 +106,11 @@ theorem plus_minus_distinct (u v : V2) (hu : u ≠ 0) (hv : v ≠ 0) :
       apply Prod.ext
       · have e := congrArg Prod.fst h
         change u.1 + v.1 = -(u.1 - v.1) at e
+        change u.1 = (0 : ℝ)
         linarith
       · have e := congrArg Prod.snd h
         change u.2 + v.2 = -(u.2 - v.2) at e
+        change u.2 = (0 : ℝ)
         linarith
     exact hu hu0
 
@@ -144,7 +148,10 @@ theorem two_readings_not_injective (a : V2) (b : ℝ → V2)
   have hroot' : dot (b (intensity a v)) v = 0 := hroot
   have hsecond : intensity (b (intensity a v)) (u + v) =
       intensity (b (intensity a v)) (u - v) := by
-    simp [intensity, dot_add, dot_sub, hroot']
+    change (dot (b (intensity a v)) (u + v)) ^ 2 =
+      (dot (b (intensity a v)) (u - v)) ^ 2
+    rw [dot_add, dot_sub, hroot']
+    ring
   refine ⟨u + v, u - v, ?_,
     (plus_minus_distinct u v hu hv).1,
     (plus_minus_distinct u v hu hv).2⟩
