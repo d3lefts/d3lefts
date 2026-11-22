@@ -132,7 +132,10 @@ for _ in range(30):
     def f(x):
         return F(1,2)+sum((w*(2*x[i]-1)/den
                            for w,i in zip(weights,supports)),F(0))
-    t=random_adaptive_tree(n,3)
+    # The generic binary tree was generated for signs {-1,+1}.
+    # Convert each {0,1} table answer to its equivalent sign label.
+    tree_on_signs=random_adaptive_tree(n,3)
+    t=lambda x:tree_on_signs(tuple(2*v-1 for v in x))
     assert all(0<=f(x)<=1 for x in states)
     assert weighted(Q,lambda x:(f(x)-t(x))**2)==weighted(
         V,lambda x:(f(x)-t(x))**2)
