@@ -136,7 +136,25 @@ theorem hidden_normalizer_factorization
       (Fintype.prod_sum (fun i (bit : Bool) =>
         coordinateLikelihood G β i bit h)).symm
 
+/-- Actual normalized Bayesian posterior factorization: conditioned on
+any legal finite adaptive grouped-noise transcript, the hidden-sign
+posterior is a product of per-coordinate likelihood ratios.
+The formula also holds under zero likelihood using ℝ's 0/0=0
+convention; probabilistic interpretation requires positive mass. -/
+theorem posterior_factorization
+    (G : Q → I → Prop) (β : I → ℝ)
+    (policy : History I Q → Q) (h : History I Q)
+    (hlegal : Legal policy h) (ν : I → Bool) :
+    transcriptMass G β policy ν h /
+        (∑ ξ : I → Bool, transcriptMass G β policy ξ h) =
+      ∏ i, coordinateLikelihood G β i (ν i) h /
+        (∑ bit : Bool, coordinateLikelihood G β i bit h) := by
+  rw [transcript_factorization, legalWeight_of_legal policy h hlegal,
+    hidden_normalizer_factorization G β policy h hlegal]
+  simp only [one_mul, Finset.prod_div_distrib]
+
 end Nightfall.GroupAdaptiveLikelihood
 
 #print axioms Nightfall.GroupAdaptiveLikelihood.transcript_factorization
 #print axioms Nightfall.GroupAdaptiveLikelihood.hidden_normalizer_factorization
+#print axioms Nightfall.GroupAdaptiveLikelihood.posterior_factorization
