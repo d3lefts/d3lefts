@@ -1,0 +1,23 @@
+name: NIGHTFALL parity-oracle source-query separation exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/PARITY_APPENDED_ORACLE_SEPARATION_20261122.md'
+      - 'scripts/check_parity_oracle_separation_exact.py'
+      - '.github/workflows/nightfall-parity-oracle-risk.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact source and sharp false-threshold fixture
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 -V
+          sha256sum scripts/check_parity_oracle_separation_exact.py research/nightfall/structural_information/PARITY_APPENDED_ORACLE_SEPARATION_20261122.md
+          python3 scripts/check_parity_oracle_separation_exact.py
+          echo 'SOURCE-SCOPED finite exact checks only, NOT an all-T kernel certificate.'
