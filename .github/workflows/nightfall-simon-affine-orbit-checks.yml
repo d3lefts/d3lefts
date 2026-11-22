@@ -1,0 +1,46 @@
+name: NIGHTFALL Simon finite affine-orbit exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/SIMON_FIXED_DEGREE_AFFINE_ORBIT_TRANSFER_20261122.md'
+      - 'scripts/simon_k4_exact_audit.py'
+      - 'scripts/simon_affine_k5_rank_exact.py'
+      - 'scripts/simon_k4_symbolic_certificate.py'
+      - '.github/workflows/nightfall-simon-affine-orbit-checks.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/structural_information/SIMON_FIXED_DEGREE_AFFINE_ORBIT_TRANSFER_20261122.md'
+      - 'scripts/simon_k4_exact_audit.py'
+      - 'scripts/simon_affine_k5_rank_exact.py'
+      - 'scripts/simon_k4_symbolic_certificate.py'
+      - '.github/workflows/nightfall-simon-affine-orbit-checks.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-finite-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy sympy
+      - name: Run symbolic and exhaustive checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/simon_k4_symbolic_certificate.py scripts/simon_k4_exact_audit.py scripts/simon_affine_k5_rank_exact.py
+          python scripts/simon_k4_symbolic_certificate.py
+          python scripts/simon_k4_exact_audit.py
+          python scripts/simon_affine_k5_rank_exact.py
+      - name: Print reproducibility receipt
+        shell: bash
+        run: |
+          git rev-parse HEAD
+          sha256sum research/nightfall/structural_information/SIMON_FIXED_DEGREE_AFFINE_ORBIT_TRANSFER_20261122.md scripts/simon_k4_symbolic_certificate.py scripts/simon_k4_exact_audit.py scripts/simon_affine_k5_rank_exact.py
+          echo "Scope: finite and rational-function checks, NOT arbitrary-degree Lean kernel certification or novelty clearance"
