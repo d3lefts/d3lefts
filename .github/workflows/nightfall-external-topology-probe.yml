@@ -28,6 +28,8 @@ jobs:
             MathlibExt/MeasureTheory/Measure/ImageNull.lean \
             MathlibExt/Geometry/Manifold/Sard.lean \
             MathlibExt/Geometry/Manifold/ParametricSard.lean \
+            MathlibExt/Geometry/Manifold/LocalGraph.lean \
+            MathlibExt/Geometry/Manifold/LocalParametrization.lean \
             MathlibExt/Geometry/Manifold/RiemannianMetricExistence.lean \
             MathlibExt/Geometry/Manifold/OneDimensional.lean; do
             cp "/tmp/atlas-lean/$p" "/tmp/mathlib4/$p"
@@ -42,6 +44,8 @@ jobs:
             MathlibExt/MeasureTheory/Measure/ImageNull \
             MathlibExt/Geometry/Manifold/Sard \
             MathlibExt/Geometry/Manifold/ParametricSard \
+            MathlibExt/Geometry/Manifold/LocalGraph \
+            MathlibExt/Geometry/Manifold/LocalParametrization \
             MathlibExt/Geometry/Manifold/RiemannianMetricExistence \
             MathlibExt/Geometry/Manifold/OneDimensional; do
             mkdir -p ".lake/build/lib/lean/$(dirname "$M")"
