@@ -1,0 +1,57 @@
+name: NIGHTFALL tensor pair-spectrum local Lean certificate
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/TensorPairFibersLocal.lean'
+      - '.github/workflows/nightfall-tensor-pair-spectrum-local.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  local-fibers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and kernel-check full depth-two pair-frequency classification
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir=research/nightfall/formalization/structural_information
+          mkdir -p tensor-pair-local-receipt
+          for f in SubcubeL3 TensorPairFibersLocal; do
+            cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "tensor-pair-local-receipt/$f.log"
+          done
+          (cd /tmp/mathlib4 && lake env leanchecker TensorPairFibersLocal) 2>&1 | tee tensor-pair-local-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/TensorPairFibersLocal.lean').read_text()
+          log=Path('tensor-pair-local-receipt/TensorPairFibersLocal.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          terminal=['row_pair_L1','row_pair_L2','nonrow_pair_L2']
+          assert all(name in log for name in terminal)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          assert len(reports)>=3
+          assert all(set(n.strip() for n in r.split(',') if n.strip())<=
+                     {'propext','Classical.choice','Quot.sound'} for r in reports)
+          print('TENSOR_PAIR_LOCAL_PINNED_KERNEL_PASS')
+          PY
+      - name: Archive exact head and source hashes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p tensor-pair-local-receipt
+          git rev-parse HEAD > tensor-pair-local-receipt/HEAD
+          sha256sum research/nightfall/formalization/structural_information/SubcubeL3.lean research/nightfall/formalization/structural_information/TensorPairFibersLocal.lean > tensor-pair-local-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: tensor-pair-local-receipt
+          path: tensor-pair-local-receipt/
+          retention-days: 90
