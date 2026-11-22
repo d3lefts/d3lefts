@@ -66,7 +66,7 @@ section/retraction, preserving interaction degree. If \(\eta_i(y)\le\eta\),
 \tag{2}
 \]
 The alternative hypotheses in (1) are stronger for particular tasks:
-unbounded conditional displacements can be harmless on coordinates
+large conditional mismatch probabilities can be harmless on coordinates
 irrelevant to both the tree path and weighted target variation.
 
 [Route 1 / Wyner](https://github.com/d3lefts/d3lefts/pull/970) supplies
@@ -199,6 +199,81 @@ zero for the access-coupling reference. This comparison is about
 the structural **certificate cost**, not a lower bound on all
 classical decision trees or a claim of quantum advantage.
 
+For every fixed higher moment order \(h\ge2\), the same conclusion
+holds after choosing the block length \(k\ge h+3\). The block
+parity characters other than the distinguished pair have degrees
+\(k\) and \(k-2>h\), so all order-\(h\) marginals of the target
+equal those of independent distinguished pairs (each with
+correlation \(\rho\)) and independent fair unused coordinates.
+For the upper-bound reference replace the pairwise-independent
+\(A_j\)'s by \(h\)-wise independent labels: sample a uniform
+degree-\(<h\) polynomial over \(\mathbb F_{2^m}\) with
+\(m=\lceil\log_2(\max(b,2))\rceil\), evaluate it at \(b\)
+distinct field points, and apply a fixed nonzero binary linear
+functional. Vandermonde interpolation guarantees independent
+uniform evaluations on every collection of at most \(h\)
+points. Again set \(B_j=A_jE_j\), leave all unused bits
+independent and fair, and take the polynomial coefficients as
+the latent. Conditional productization is exact and this costs
+at most \(hm\ln2\). Any set of at most \(h\) observed coordinates
+uses at most \(h\) first-bit labels. Thus the best reference
+matching **all** marginals up to any fixed order \(h\) has
+common information \(\Theta_{h,\rho}(\log b)\). In particular
+\(h\) can be chosen to be the fixed order needed by the
+exact-moment transfer theorem (for the fixed degree and query
+targets under comparison), before choosing \(k\).
+
+### Density domination cannot give the same bounded structural charge
+
+The same example also excludes every fixed-factor dominating reference
+with bounded common information. Suppose \(Q'\ge\nu/R_0\) pointwise for
+\(R_0\ge1\), and put \(E=\{\text{all blocks have even parity}\}\).
+Write \(q=Q'(E)\ge1/R_0\). Fix any conditional-product latent \(W\)
+for \(Q'\), and let \(q_w=\Pr(E\mid W=w)\). Conditional on \(w\),
+\(q_w=\prod_{j=1}^b e_j(w)\), where \(e_j\) is the conditional
+even-parity probability of block \(j\). If a bit in block \(j\)
+has minority probability \(\beta_i(w)\), the product parity formula
+implies \(\beta_i(w)\le1-e_j(w)\): the absolute parity expectation
+is at most \(1-2\beta_i(w)\).
+Let \(m(w)\) be any modal word choosing a more likely symbol in each
+coordinate. Conditional-product independence and linearity give
+\[
+\mathbb E[d_H(X,m(w))\mid W=w]
+\le k\sum_j(1-e_j(w))\le k\ln(1/q_w)
+\quad(q_w>0).
+\]
+For \(q_w<1/b\), bound that component's contribution to
+\(\mathbb E[d_H(X,m(W))\,\mathbf1_E]\) by \(q_w n\le k\),
+where \(n=bk\). For \(q_w\ge1/b\), use the preceding unconditional
+component bound \(k\ln b\). Integrating over \(w\) yields
+\[
+q\,\mathbb E[d_H(X,m(W))\mid E]\le k(1+\ln b).
+\]
+Knowing \(W\), the vector of bit disagreements with \(m(W)\)
+determines \(X\). By entropy subadditivity and concavity of binary
+entropy \(h_2\) in nats, multiply the conditional entropy bound by
+\(q\) and apply \(q h_2(v)\le h_2(qv)\) to obtain
+\[
+q H(X\mid W,E)\le
+n h_2((1+\ln b)/b),\qquad b\ge6 .
+\]
+Here the bound's argument is at most \(1/2\), so monotonicity applies.
+By pointwise domination, \(Q'(\cdot\mid E)\) is a mixture with
+weight \(1/(R_0q)\) on \(\nu\), hence
+\(q H(X\mid E)\ge H(\nu)/R_0\).
+Because \(E\) is determined by \(X\), the mutual-information
+chain rule gives \(I(W;X)\ge q I(W;X\mid E)\).
+Taking the infimum over conditional-product latents,
+\[
+C_W(Q')\ge \frac{H(\nu)}{R_0}-n h_2((1+\ln b)/b)
+\ge \frac{b(k-2)\ln2}{R_0}-O(k\ln^2 b).
+\]
+Thus every bounded-factor density-dominating reference has
+common information linear in \(b\) for large \(b\), despite
+the uniform product reference having constant per-access error
+under the displayed coupling. Again this is a separation of
+sufficient-condition costs, not an algorithmic lower bound.
+
 ## 4. Prior art and certification boundary
 
 - Bennett–Bernstein–Brassard–Vazirani, *Strengths and Weaknesses of
@@ -222,3 +297,4 @@ classical decision trees or a claim of quantum advantage.
   does not assert that coupling defeats every such mechanism; the
   exact-two-marginal obstruction addresses the specific low-Wyner
   comparison stated above.
+
