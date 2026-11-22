@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/finite_field/ProductBUCharacterAverage.lean'
       - 'research/nightfall/formalization/finite_field/ProductBUPerturbation.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUInterval.lean'
       - '.github/workflows/nightfall-product-bu-character-average.yml'
   workflow_dispatch:
 permissions:
@@ -22,7 +23,7 @@ jobs:
         run: |
           set -euo pipefail
           dir=research/nightfall/formalization/finite_field
-          for M in ProductSphereObstruction ProductBUCharacterAverage ProductBUPerturbation; do
+          for M in ProductSphereObstruction ProductBUCharacterAverage ProductBUPerturbation ProductBUInterval; do
             ! grep -nE '\b(sorry|admit|axiom)\b' "$dir/$M.lean"
             cp "$dir/$M.lean" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "/tmp/$M.log"
@@ -39,7 +40,9 @@ jobs:
                'continuous_charU','continuous_charV'),
             'Nightfall.ProductBUPerturbation.':
               ('applyParam_rankOne_unit','weighted_perturbation_surjective',
-               'product_weighted_perturbation_surjective')
+               'product_weighted_perturbation_surjective'),
+            'Nightfall.ProductBUInterval.':
+              ('interval_has_fixedPoint','homeomorphic_interval_has_fixedPoint')
           }
           for prefix,names in sources.items():
               mod=prefix.rstrip('.').split('.')[-1]
