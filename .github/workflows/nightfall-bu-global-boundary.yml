@@ -9,6 +9,8 @@ on:
       - "research/nightfall/formalization/finite_field/ProductBUTimeZeroOrbit.lean"
       - "research/nightfall/formalization/finite_field/ProductBUFinalGeometricReduction.lean"
       - "research/nightfall/formalization/finite_field/ProductBUAxisBoundaryTerminal.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUCompatibleAtlas.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUActualAtlasTerminal.lean"
       - "docs/lean-pending-source-custody.json"
       - ".github/workflows/nightfall-bu-global-boundary.yml"
   workflow_dispatch:
@@ -47,7 +49,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBUFiberFreeAction ProductBUIntervalStabilizer ProductBUComponentOrbit ProductBUActualFiberOrbit ProductBUGlobalBoundary ProductBUComponentClassification ProductBUComponentEndpoints ProductBUGlobalAssembly ProductBUTimeZeroOrbit ProductBUFinalGeometricReduction ProductBUReferenceFace ProductBUAxisBoundaryTerminal; do
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBUFiberFreeAction ProductBUIntervalStabilizer ProductBUComponentOrbit ProductBUActualFiberOrbit ProductBUGlobalBoundary ProductBUComponentClassification ProductBUComponentEndpoints ProductBUGlobalAssembly ProductBUTimeZeroOrbit ProductBUFinalGeometricReduction ProductBUReferenceFace ProductBUAxisBoundaryTerminal ProductBUCompatibleAtlas ProductBUActualAtlasTerminal; do
             src="research/nightfall/formalization/finite_field/$M.lean"
             ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -127,6 +129,17 @@ jobs:
               axioms=set()
           assert axioms <= {"propext","Classical.choice","Quot.sound"},(name,axioms)
           print("PASS real signed-axis boundary-point-free global terminal",sorted(axioms))
+          actual=Path("receipts/bu-global-boundary/ProductBUActualAtlasTerminal.log").read_text()
+          actual_name="Nightfall.ProductBUActualAtlasTerminal.impossible_of_actual_covering_halfspace_atlas"
+          assert actual_name in actual,("MISSING_ACTUAL_COVERING_ATLAS",actual_name)
+          hit=re.search(r"'"+re.escape(actual_name)+r"' depends on axioms:\s*\[([^\]]*)\]",actual,re.S)
+          if hit: ax={q.strip() for q in hit.group(1).split(",") if q.strip()}
+          else:
+              assert f"'{actual_name}' does not depend on any axioms" in actual,("NO_ATLAS_AXIOM_RECEIPT",actual_name)
+              ax=set()
+          assert ax <= {"propext","Classical.choice","Quot.sound"},(actual_name,ax)
+          assert "sorryAx" not in actual
+          print("PASS actual zero-fiber compatible-chart to global boundary contradiction",sorted(ax))
           assert all("sorryAx" not in x for x in (s,s2,s3,s4,data))
           print("NOT PROVED: global regular zero-fiber smooth manifold-with-boundary or ProductSphereZero")
           PY
@@ -136,7 +149,7 @@ jobs:
           mkdir -p receipts/bu-global-boundary
           git rev-parse HEAD > receipts/bu-global-boundary/nightfall-commit.txt
           cat lean-toolchain > receipts/bu-global-boundary/lean-toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/{ProductBUGlobalBoundary,ProductBUComponentClassification,ProductBUComponentEndpoints,ProductBUGlobalAssembly,ProductBUTimeZeroOrbit,ProductBUFinalGeometricReduction,ProductBUAxisBoundaryTerminal}.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUGlobalBoundary,ProductBUComponentClassification,ProductBUComponentEndpoints,ProductBUGlobalAssembly,ProductBUTimeZeroOrbit,ProductBUFinalGeometricReduction,ProductBUAxisBoundaryTerminal,ProductBUCompatibleAtlas,ProductBUActualAtlasTerminal}.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
