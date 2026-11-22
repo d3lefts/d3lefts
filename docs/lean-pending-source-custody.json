@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 46,
+  "revision": 47,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v46: 499 pending Lean sources and 67 historical source-matched records preserved. Corrected explicit Mathlib EuclideanSpace import in ATLAS submersion specialization following failed first wrapper run 45061965936. Quantitative collision remains a conditional theorem target; global ProductSphereZero unproved.",
+  "scope": "v47: 500 pending Lean sources and 67 historical source-matched records preserved. Added separately source-hashed conditional squared sign-orbit decoder-risk theorem. Original ATLAS submersion import repaired; global ProductSphereZero, concrete smooth half-space atlas and all-n end-to-end proof remain unproved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -406,6 +406,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact source-identity custody of scoped pure-character topology composition. Full ProductSphereZero and global boundary manifold still unproved. Pinned Lean pre-integration run #45059393121 succeeded on byte-identical source."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUDecoderRiskFloor.lean",
+      "source_blob_sha": "2eddc81492ee2b8536a000e2fac5526b82c82e48",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 decoder-independent exact squared sign-orbit risk floor, conditional on ProductSphereZero and reachable-continuous rank-one causal transcript collision. CI and independent Lean theorem review pending. Does NOT prove global product-sphere zero or full R-ball extension."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
