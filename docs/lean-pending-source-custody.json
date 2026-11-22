@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 33,
+  "revision": 34,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v33: 483 pending exact Lean blobs, 67 frozen historical records unchanged; 550 total main Lean sources. New ProductBUSphereExtension source is unreviewed. Future additions and edits must pass strict source custody workflow on research/nightfall/**/*.lean, not only on manifest changes.",
+  "source_commit": "7591276ab8fa23c39aae117b645fbb549b9c1cf1",
+  "scope": "v34: 485 pending exact Lean blobs, 67 frozen historical records unchanged; 552 total research Lean sources at this source checkpoint. New prime-zeta bridge modules remain unreviewed-source in frozen registry despite separate named scoped CI; no end-to-end analytic theorem or novelty certification.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -376,6 +376,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean",
+      "source_blob_sha": "5be0bae4a3d3a75d06fa94b019f7043f76ad615e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source SHA custody only. The separate targeted pinned Lean compile is not carried into the frozen 67 historical registry; no unconditional prime-zeta boundary or residue analytic theorem, no non-author review, no worldwide novelty verified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/PrimeZetaChartExtension.lean",
+      "source_blob_sha": "b52e90e3c2ae4cc4109e53ae8ce681f6c40e60f9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source SHA custody only. The separate targeted pinned Lean compile is not carried into the frozen 67 historical registry; no unconditional prime-zeta boundary or residue analytic theorem, no non-author review, no worldwide novelty verified."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
