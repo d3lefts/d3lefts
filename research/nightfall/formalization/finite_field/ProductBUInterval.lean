@@ -22,14 +22,14 @@ theorem interval_has_fixedPoint
   obtain ⟨F, hF⟩ :=
     ContinuousMap.exists_restrict_eq (isClosed_Icc : IsClosed J) fsub
   have hzero : F 0 = ((f ⟨0, by norm_num⟩).1 : ℝ) := by
-    have h := congrArg (fun T : C(J, ℝ) => T ⟨0, by norm_num⟩) hF
+    have h := congrArg (fun T : C(J, ℝ) => T ⟨0, by dsimp [J]; norm_num⟩) hF
     exact h
   have hone : F 1 = ((f ⟨1, by norm_num⟩).1 : ℝ) := by
-    have h := congrArg (fun T : C(J, ℝ) => T ⟨1, by norm_num⟩) hF
+    have h := congrArg (fun T : C(J, ℝ) => T ⟨1, by dsimp [J]; norm_num⟩) hF
     exact h
   have h0 : 0 ≤ F 0 - 0 := by
     rw [hzero]
-    exact (f ⟨0, by norm_num⟩).2.1
+    simpa only [sub_zero] using (f ⟨0, by norm_num⟩).2.1
   have h1 : F 1 - 1 ≤ 0 := by
     rw [hone]
     linarith [(f ⟨1, by norm_num⟩).2.2]
