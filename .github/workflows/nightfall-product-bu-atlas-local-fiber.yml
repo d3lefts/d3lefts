@@ -1,0 +1,77 @@
+name: NIGHTFALL Atlas one-dimensional regular fiber local chart kernel certificate
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/nightfall-product-bu-atlas-local-fiber.yml'
+      - 'research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  local-zero-fiber:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Retrieve frozen Atlas source and compile local fiber dependency chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-atlas-local-fiber
+          git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
+          git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
+          test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = "7857a2e8c32088b5002f7cafe29a21d936baf704"
+          for M in LocalGraph LocalParametrization; do
+            src="/tmp/atlas-lean/MathlibExt/Geometry/Manifold/$M.lean"
+            dst="/tmp/mathlib4/MathlibExt/Geometry/Manifold/$M.lean"
+            mkdir -p "$(dirname "$dst")"
+            cp "$src" "$dst"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$dst"
+            sha256sum "$dst" >> receipts/product-bu-atlas-local-fiber/ATLAS-SHA256SUMS
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/MathlibExt/Geometry/Manifold/$M.olean" "MathlibExt/Geometry/Manifold/$M.lean") 2>&1 | tee "receipts/product-bu-atlas-local-fiber/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-atlas-local-fiber/$M.log"
+          done
+          src="research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean"
+          ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+          cp "$src" /tmp/mathlib4/ProductBURegularFiberLocal.lean
+          (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/ProductBURegularFiberLocal.olean" ProductBURegularFiberLocal.lean) 2>&1 | tee receipts/product-bu-atlas-local-fiber/NIGHTFALL.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/product-bu-atlas-local-fiber/NIGHTFALL.log
+      - name: Enforce source-exact named theorem and standard axiom receipt
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path("receipts/product-bu-atlas-local-fiber/NIGHTFALL.log").read_text()
+          name="Nightfall.ProductBURegularFiberLocal.regular_fiber_has_local_one_dimensional_chart"
+          assert name in log, ("MISSING_THM",name)
+          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+          if m:
+              axioms={v.strip() for v in m[1].split(",") if v.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in log
+              axioms=set()
+          assert axioms <= {"propext","Classical.choice","Quot.sound"}, axioms
+          assert "sorryAx" not in log
+          print("PASS 1D local regular fiber chart; ordinary axioms:",sorted(axioms))
+          print("SCOPE ONLY: no global 1-manifold boundary or ProductSphereZero terminal")
+          PY
+      - name: Retain immutable source receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-atlas-local-fiber
+          git rev-parse HEAD > receipts/product-bu-atlas-local-fiber/NIGHTFALL-HEAD.txt
+          git -C /tmp/atlas-lean rev-parse HEAD > receipts/product-bu-atlas-local-fiber/ATLAS-COMMIT.txt || true
+          cat lean-toolchain > receipts/product-bu-atlas-local-fiber/lean-toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean > receipts/product-bu-atlas-local-fiber/NIGHTFALL-SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-atlas-local-fiber
+          path: receipts/product-bu-atlas-local-fiber
+          retention-days: 90
+          if-no-files-found: warn
