@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 46,
+  "revision": 47,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v46: 512 pending exact Lean source blobs; 67 frozen historical receipts unchanged. Two independent phase-block named Lean modules have passing pinned source receipts but full raw-oracle Route1 terminal remains provisional.",
+  "scope": "v47: 513 pending source-only Lean blobs; original 67 verified records frozen. New time-oriented regular zero-graph awaits exact-head compiler. No ProductSphereZero terminal.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -516,6 +516,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Late parallel source merge, exact blob custody only. Does not certify ProductSphereZero, topological extension proof, named Lean kernel, or originality."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUTimeOrientedIFT.lean",
+      "source_blob_sha": "f817e05a01284f6703e75d311d05fbe79bac642c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact time-oriented local implicit zero-graph via pinned Mathlib IFT. Pinned Lean compiler and ordinary-axiom audit separate from this source-only custody. Does not construct global zero-fiber halfspace chart nor unconditional ProductSphereZero."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean",
