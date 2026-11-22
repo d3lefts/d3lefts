@@ -1,6 +1,6 @@
-# PR #1000 — Information–regularity–robustness frontier for causal phase retrieval
+# PR #1000 / #1001 — Information–regularity–robustness frontier for causal phase retrieval
 
-**Status (2026-11-22):** DRAFT RESEARCH CHARTER / PR RESERVATION ONLY. No new breakthrough, general noise theorem, Lean proof, independent specialist review, or priority claim is asserted. Do not merge to main based on this charter.
+**Status (2026-11-22):** DRAFT RESEARCH CHARTER, hosted in PR #1001 and linked to audit PR #1000. No new breakthrough, general noise theorem, Lean proof, independent specialist review, or priority claim is asserted. Do not merge to main based on this charter.
 
 ## Objective and source boundaries
 
@@ -69,7 +69,8 @@ No assumption of a target inequality, an assumed collision or a hand-coded numer
 
 ## Claim/certificate registry
 
-- PR #1000 at opening: **research charter / conjecture-and-falsification stage**.
+- PR #1000 at opening: **independent non-author audit of PR #995; scope and Lean/priority gates remain open**.
+- PR #1001 at opening: **research charter / conjecture-and-falsification stage**, complementary to #1000.
 - Known elementary indistinguishability bound in this charter: **paper derivation; not independent, not Lean-certified, not novelty-reviewed**.
 - Claims in #997/#999: **inherited author-side paper-level statements**, NOT upgraded here.
 - New sharp robustness theorem: **not yet discovered**.
