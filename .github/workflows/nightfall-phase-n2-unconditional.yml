@@ -39,7 +39,7 @@ jobs:
           import re
           text=Path("receipts/phase-n2/PlanarTwoRowsDirect.log").read_text()
           name="Nightfall.PlanarTwoRowsDirect.two_readings_not_injective"
-          assert "theorem " + name in text, "DECLARATION_TYPE_UNVERIFIED"
+          assert name in text, "DECLARATION_TYPE_UNVERIFIED"
           a=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",text,re.S)
           if a is None:
               assert f"'{name}' does not depend on any axioms" in text, "MISSING_AXIOM_RECEIPT"
@@ -49,7 +49,7 @@ jobs:
           assert found <= {'propext','Classical.choice','Quot.sound'},found
           assert 'sorryAx' not in text
           source=Path('research/nightfall/formalization/finite_field/PlanarTwoRowsDirect.lean').read_text()
-          assert 'ProductSphereZero' not in source.split('theorem two_readings_not_injective',1)[1].split('#check',1)[0]
+          assert "theorem two_readings_not_injective (a : V2) (b : ℝ → V2)" in source\n          assert "(hb : Continuous b)" in source\n          assert "ProductSphereZero" not in source.split("theorem two_readings_not_injective",1)[1].split("#check",1)[0]
           print('PASS self-contained globally-continuous planar two-row theorem; exact Lean theorem and axiom receipt',found)
           print('SCOPE: n=2 and global second-selector continuity only; reachable-only and all-dimensional ProductSphereZero still open.')
           PY
