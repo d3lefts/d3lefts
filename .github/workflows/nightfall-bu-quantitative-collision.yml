@@ -1,0 +1,71 @@
+name: NIGHTFALL exact quantitative causal collision (conditional topology)
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/finite_field/ProductBUQuantitativeCollision.lean"
+      - "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean"
+      - "research/nightfall/formalization/finite_field/ProductSphereObstruction.lean"
+      - "research/nightfall/formalization/finite_field/GenuinePrefixPhase.lean"
+      - ".github/workflows/nightfall-bu-quantitative-collision.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scoped-quantitative-collision:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build exact original-source dependency closure in topological order
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-quantitative-collision
+          for module in ProductSphereObstruction GenuinePrefixPhase ProductSphereCausalComposition ProductBUQuantitativeCollision; do
+            f="research/nightfall/formalization/finite_field/${module}.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$f"
+            cp "$f" "/tmp/mathlib4/${module}.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${module}.olean" "${module}.lean") 2>&1 | tee "receipts/bu-quantitative-collision/${module}.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-quantitative-collision/${module}.log"
+            sha256sum "$f" >> receipts/bu-quantitative-collision/sources.sha256
+          done
+      - name: Check named exact theorem scope and ordinary Lean axioms
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path("receipts/bu-quantitative-collision/ProductBUQuantitativeCollision.log").read_text()
+          for name in (
+              "Nightfall.ProductBUQuantitativeCollision.sqNorm_add_self_of_unit",
+              "Nightfall.ProductBUQuantitativeCollision.exact_plus_minus_separation",
+              "Nightfall.ProductBUQuantitativeCollision.quantitative_collision_of_product_sphere_zero",
+          ):
+              assert name in log, ("MISSING_NAMED_THEOREM", name)
+              hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if hit:
+                  axioms={a.strip() for a in hit.group(1).split(",") if a.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in log, ("MISSING_AXIOM_REPORT",name)
+                  axioms=set()
+              assert axioms <= {"propext","Classical.choice","Quot.sound"},(name,axioms)
+              print("PASS",name,sorted(axioms))
+          assert "sorryAx" not in log
+          print("SCOPE: ProductSphereZero is an explicit theorem HYPOTHESIS. No universal zero formalization claimed.")
+          PY
+      - name: Freeze exact source, compiler pin and head identity
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/bu-quantitative-collision
+          git rev-parse HEAD > receipts/bu-quantitative-collision/repo-head.txt
+          cat lean-toolchain > receipts/bu-quantitative-collision/toolchain.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-quantitative-collision-receipt
+          path: receipts/bu-quantitative-collision
+          retention-days: 90
