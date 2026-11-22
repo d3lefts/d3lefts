@@ -40,7 +40,9 @@ jobs:
                'continuous_charU','continuous_charV'),
             'Nightfall.ProductBUPerturbation.':
               ('applyParam_rankOne_unit','weighted_perturbation_surjective',
-               'product_weighted_perturbation_surjective'),
+               'product_weighted_perturbation_surjective',
+               'radial_direction_right_inverse',
+               'augmented_constraint_parameter_surjective'),
             'Nightfall.ProductBUInterval.':
               ('interval_has_fixedPoint','homeomorphic_interval_has_fixedPoint')
           }
