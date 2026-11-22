@@ -1,0 +1,18 @@
+{
+  "schema": "nightfall-theorem-contract/v1",
+  "source": "research/nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean",
+  "targets": [
+    {
+      "declaration": "Nightfall.InfinitePiQ2NativeHeterogeneousTerminal.native_heterogeneous_q2_105416_unconditional",
+      "expected_type": "∀ {ι : Type} [Fintype ι] [DecidableEq ι] [Nonempty ι] (A : ι → Type) [∀ i, Fintype (A i)] [∀ i, Nonempty (A i)] (p : (i : ι) → A i → ℝ) (hp : ∀ i a, 0 ≤ p i a) (hp1 : ∀ i, ∑ a : A i, p i a = 1) (f : ((i : ι) → A i) → ℝ) (hf : Nightfall.InfinitePiQ2DegreeRetraction.PointwiseDegreeTwo f) (B : ℝ) (hB : 0 ≤ B) (hbound : ∀ x, |f x| ≤ B) (M : ℝ) (hM : 0 ≤ M) (hI : ∀ i, Nightfall.InfinitePiQ2NativeHeterogeneousTerminal.nativeInfluence A p f i ≤ M), (Nightfall.InfinitePiQ2NativeHeterogeneousTerminal.nativeVariance A p f)^2 ≤ ((2*(1+Real.sqrt 2))*Real.sqrt 3+11901/6250)^2*B^2*M"
+    }
+  ],
+  "review_status": "author-transcribed-from-source; independent mathematical statement equivalence pending",
+  "claim_identity": "NF-Q2-105-NATIVE-FINITE",
+  "statement_scope": "finite index; dependent finite alphabets; zero atom marginal support; pointwise degree <=2; square variance bound; original source theorem only",
+  "limitations": [
+    "This Lean-compiled challenge, if passed, establishes only the precise finite theorem type, not an infinite-product or adaptive theorem.",
+    "Statement was written after observing the source theorem; non-author independent challenge review is still required.",
+    "No PASS status is claimed until the exact pinned Lean workflow succeeds."
+  ]
+}
