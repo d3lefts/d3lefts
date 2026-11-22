@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 43,
+  "revision": 44,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "Source-custody revision 43: 497 pending exact Lean sources, 67 historical source-matched records untouched. Added reference t0 face and C-infinity open-inverse proof sources, both with separately successful scoped Lean receipts. Global ProductSphereZero and all-n terminal unproved.",
+  "scope": "v44: 498 pending Lean source blobs and original 67 historical source-matched records unchanged. Genuine covering charts smooth gluing theorem registered as unreviewed only; ProductSphereZero still requires construction of actual local charts.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -396,6 +396,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source-integrated exact Lean module from #1070, blob 114c4159630eb787e494dc4aa6448dc24884e919, successfully compiled on frozen Lean pin with ordinary axioms in run 45058026793. Scope: compact actual product-sphere time-slab zero fiber and exclusion of zero-free t=1 endpoint; NO global 1D manifold, ProductSphereZero or priority."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUCompatibleAtlas.lean",
+      "source_blob_sha": "1a34d789b6f9c70b94e70a63b437db31d7f6bc20",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 source custody only: derives ChartedSpace and IsManifold∞ from genuine covering open partial homeomorphisms and exact smooth overlaps. Does not construct those charts for actual product-sphere F or certify maximal ProductSphereZero. Independent pinned Lean compile and axiom audit required."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
@@ -798,8 +808,8 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
-      "path": "research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean",
-      "source_blob_sha": "52a79d96044154ff8638d7a02e853b8255bd765f",
+      "path": "research/nightfall/formalization/observability/ActualSourceANOVA.lean",
+      "source_blob_sha": "29e98f82d8fe57497fc5d88b34cb7ea045146340",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -808,8 +818,8 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
-      "path": "research/nightfall/formalization/observability/ActualSourceANOVA.lean",
-      "source_blob_sha": "29e98f82d8fe57497fc5d88b34cb7ea045146340",
+      "path": "research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean",
+      "source_blob_sha": "52a79d96044154ff8638d7a02e853b8255bd765f",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -3768,8 +3778,8 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/SubcubeSharpness.lean",
-      "source_blob_sha": "c83d903d08558e911c7ddaa601c1101638fbf730",
+      "path": "research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean",
+      "source_blob_sha": "9bb1796e391eea7a503bc9c1a4d794f08aba7470",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -3778,8 +3788,8 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean",
-      "source_blob_sha": "9bb1796e391eea7a503bc9c1a4d794f08aba7470",
+      "path": "research/nightfall/formalization/structural_information/SubcubeSharpness.lean",
+      "source_blob_sha": "c83d903d08558e911c7ddaa601c1101638fbf730",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -4177,16 +4187,6 @@
       }
     },
     {
-      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean",
-      "source_blob_sha": "d361023a0ae311ce2ed3b83d828f2e42ef49c94f",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Merged finite C105.416 positive-support repair terminal, dated named Lean receipt is separately auditable. Pending historical ledger registration is source custody only; not novel/unrestricted infinite theorem."
-    },
-    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportRepair.lean",
       "source_blob_sha": "0ef04eae9c92f18ae6da2d8382f178307585609e",
       "classification": "unreviewed-source",
@@ -4195,6 +4195,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact Git blob registered from merged protected-main source a8142aacf0ad2d4d7864d7693af679140da436a0. Custody only, not a new named-declaration Lean receipt, external review, or originality/priority certificate; any existing scoped compiler evidence is tracked separately."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean",
+      "source_blob_sha": "d361023a0ae311ce2ed3b83d828f2e42ef49c94f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged finite C105.416 positive-support repair terminal, dated named Lean receipt is separately auditable. Pending historical ledger registration is source custody only; not novel/unrestricted infinite theorem."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteTestLabelRealization.lean",
