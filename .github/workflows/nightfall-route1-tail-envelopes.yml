@@ -1,0 +1,37 @@
+name: NIGHTFALL Route1 tail envelope exact audit (finite, not Lean)
+on:
+  pull_request:
+    paths:
+      - 'scripts/check_route1_tail_envelopes_exact.py'
+      - 'research/nightfall/structural_information/ROUTE1_SHARP_TAIL_ENVELOPES_20261122.md'
+      - '.github/workflows/nightfall-route1-tail-envelopes.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tail-envelope-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Replay exact moment and polynomial-envelope checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/check_route1_tail_envelopes_exact.py
+          mkdir -p receipts/route1-tail-envelopes
+          python3 scripts/check_route1_tail_envelopes_exact.py | tee receipts/route1-tail-envelopes/check.log
+          git rev-parse HEAD > receipts/route1-tail-envelopes/head
+          sha256sum scripts/check_route1_tail_envelopes_exact.py \
+             research/nightfall/structural_information/ROUTE1_SHARP_TAIL_ENVELOPES_20261122.md \
+             > receipts/route1-tail-envelopes/SHA256SUMS
+          echo 'Finite checker; universal Hoeffding/Jackson bounds are paper proofs, not Lean or external review.' > receipts/route1-tail-envelopes/scope.txt
+      - name: Preserve source-scoped audit receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: route1-tail-envelopes-${{ github.run_id }}
+          path: receipts/route1-tail-envelopes
+          if-no-files-found: warn
