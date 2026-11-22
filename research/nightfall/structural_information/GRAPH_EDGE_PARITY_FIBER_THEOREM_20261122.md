@@ -31,7 +31,7 @@ For maximum degree Δ, the number of vertices in N_k(S) is at most |S| Σ_{j=0}^
 
 **Sharp scope:** the bound controls **primitive** supports, not all walks/edge-multisets of length k, and it alone gives no full T-query quantum simulator at higher T. Repeated-label and nonprimitive zero-subsum terms require independent Hilbert-space energy bounds; already at T=2 these remain the independent review and Lean gates of #1068.
 
-## 3. Theorem W — connected bridgeless graph sources have maximal Wyner cost
+## 3. Theorem W — connected bridgeless graph sources have maximal Wyner cost (special case of concurrent #1095)
 
 Assume G is **connected** and **bridgeless** (equivalently, every edge lies in some cycle). The raw vector X=(χ_{a_e}(s))_{e∈E} is uniform on a binary linear code of dimension |V|−1; its entropy is (|V|−1)ln2 nats.
 
@@ -39,7 +39,7 @@ Every edge lies in a cycle, and each cycle has deterministic parity product +1. 
 
     C_W(X) = (|V|−1) ln 2.                                 (W1)
 
-The result is independent of positive-atom floor and applies to any supplied conditional-product measurable latent. The support rectangle is prior mathematical machinery (see #987); this is a concrete source specialization.
+**Parallel-work reconciliation:** concurrent draft [PR #1095](https://github.com/d3lefts/d3lefts/pull/1095) has a strictly more general paper identity for connected graphs with b bridges: C_W=(|V|−1−b)ln2. Its all-affine-code free-axis theorem subsumes this section's bridgeless case. Preserve #1095's proof credit and independent checker; the distinct new result here is the bounded-degree all-k primitive-forest fiber localization and its conditional T2 application.\n\nThe result is independent of positive-atom floor and applies to any supplied conditional-product measurable latent. The support rectangle is prior mathematical machinery (see #987); this is a concrete source specialization.
 
 **Necessary hypothesis demonstration:** a bridge e can be flipped alone by choosing opposite vertex-bit offsets on the two connected sides. In a graph that is a path, the raw edge signs are fully independent, C_W=0, and support contains Hamming-one pairs. Thus never promote W1 without bridgelessness.
 
