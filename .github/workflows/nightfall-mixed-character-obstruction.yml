@@ -1,0 +1,25 @@
+name: NIGHTFALL mixed-character exact obstruction replay
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/continuous-phase-norm-threshold-20261122/check_mixed_character_obstruction.py'
+      - 'research/nightfall/continuous-phase-norm-threshold-20261122/MIXED_CHARACTER_BINARY_OBSTRUCTION.md'
+      - '.github/workflows/nightfall-mixed-character-obstruction.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-binary-obstruction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Syntax and exact polynomial cross-check
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/nightfall/continuous-phase-norm-threshold-20261122/check_mixed_character_obstruction.py
+          python3 -m py_compile "$src"
+          python3 -B "$src"
