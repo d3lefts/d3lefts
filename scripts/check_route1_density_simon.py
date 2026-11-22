@@ -7,7 +7,7 @@ mixture domination, or a human novelty review. Run with Python 3.11+ stdlib.
 from collections import Counter
 from fractions import Fraction as F
 from itertools import combinations, permutations, product
-from math import comb, factorial, lgamma, log
+from math import comb, factorial, lgamma, log, prod
 from random import Random
 
 SEED = 20261121
@@ -38,8 +38,8 @@ def simon_tables(m):
 def integer_product_min(S, W):
     """Q_i(a)=W[i][a]/sum_b W[i][b]; use integer cross multiplication."""
     numerator = min(
-        product(W[i][tab[i]] for i in range(len(W))) for tab in S)
-    denominator = product(sum(row) for row in W)
+        prod(W[i][tab[i]] for i in range(len(W))) for tab in S)
+    denominator = prod(sum(row) for row in W)
     return F(numerator, denominator)
 
 def random_weights(N):
@@ -72,11 +72,11 @@ for m in range(1, 4):
         for trial in range(200):
             W = random_weights(N)
             V = random_weights(N)
-            dW = product(sum(row) for row in W)
-            dV = product(sum(row) for row in V)
+            dW = prod(sum(row) for row in W)
+            dV = prod(sum(row) for row in V)
             qmin = min(
-                (F(product(W[i][tab[i]] for i in range(N)), 2 * dW)
-                 + F(product(V[i][tab[i]] for i in range(N)), 2 * dV))
+                (F(prod(W[i][tab[i]] for i in range(N)), 2 * dW)
+                 + F(prod(V[i][tab[i]] for i in range(N)), 2 * dV))
                 for tab in S)
             assert 0 <= qmin <= 1
             stats["mixture_candidates"] += 1
