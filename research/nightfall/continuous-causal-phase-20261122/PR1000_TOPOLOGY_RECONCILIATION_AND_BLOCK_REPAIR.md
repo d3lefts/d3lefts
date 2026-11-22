@@ -12,9 +12,9 @@ Original independently audited flagship argument: #995, audited in stacked #1000
 
 ## 2. Formal simplification contributed here
 
-ProductSpherePadding.lean proves in the pinned kernel that the single maximal proposition implies every subcritical ProductSphereZero n p q, p,q≤n−1, by zero-padding both test maps. Every original sign and continuity requirement survives padding, and the zero of the padded maps restricts to a zero of the unpadded maps. No theorem-shaped topology axiom is introduced.
+The same maximal-to-subcritical zero-padding theorem is **already kernel-checked and merged in PR #1024**, as ProductBUParityReference.lean / square_implies_productSphereZero (pinned receipt run 45051980891). Both independent U/V sign characters and continuous-on-sphere restrictions survive zero padding; a zero of the padded maps restricts to the smaller codomain. The provisional alternate proof from draft #1027 passed an independent Lean compile (run 45052179146), but adds no mathematical scope and is **not being merged as duplicate code**.
 
-This is a transfer/representation lemma, not the missing topological zero theorem. Its useful consequence is that both formal routes may refer to ONE shared topology certificate when it eventually exists; parallel agents must not try to certify unrelated zero statements independently.
+This is a transfer/representation lemma, not the missing topological zero theorem. Both formal routes should reuse the already merged #1024 theorem and ONE shared topological certificate if it eventually exists; parallel agents should not duplicate source declarations.
 
 ## 3. Scoped repair of PR #1000 Theorem B's nonlinearity extension
 
@@ -39,7 +39,7 @@ The complementary sum V=S−U≤C. Therefore both groups carry at most n−1 blo
 ## 5. Explicit status / independent review
 
 - Conditional causal collision and reachable-only continuity: Lean-checkable, already pinned in #1015 and independently via #1017, with no claim of unconditional topology.
-- Zero-padding topology transfer: exact Lean source and dedicated CI in #1027; promote only after the exact-head run succeeds.
+- Zero-padding topology transfer: already merged #1024 and Lean-certified at run 45051980891; an independently compiled duplicate in #1027 is intentionally excluded from this merge.
 - Full ProductSphereZero (pure-character): still UNPROVED in Lean; #1003 remains the proof target.
 - Mixed-character zero for known-radius sphere: a SEPARATE topological statement. The pure-character padding lemma does not discharge it; #1012 and #1018 supply geometry/algebra but no topological existence proof.
 - Theorem B bounded compact-extension and two-bin criterion: checked paper arguments here, not kernel-certified or independently refereed; #1004 must attack both.
@@ -47,6 +47,19 @@ The complementary sum V=S−U≤C. Therefore both groups carry at most n−1 blo
 
 ## 6. Merge / dedup decision
 
-Do not bulk-merge the source copies inside draft #1017 onto main: the source of #1008 and the terminal of #1015 already live there, and #1017 assumes a stronger topology family without improving the mathematical conclusion. Keep the exact SHA and successful CI receipt as an independent alternate-source audit, and close #1017 as superseded only after reconciling #1027's merge receipt. Merge the small new zero-padding lemma and this evidence note, preserving #1000 as a separate non-author audit into #995 until its own branch/merge status is resolved.
+Do not bulk-merge the source copies inside draft #1017 onto main: the source of #1008 and the terminal of #1015 already live there, and #1017 assumes a stronger topology family without improving the mathematical conclusion. Keep the exact SHA and successful CI receipt as an independent alternate-source audit, and close #1017 as superseded once this reconciliation note lands. The padding lemma has already merged in #1024, so this PR merges ONLY the new scope-reconciliation and paper-level block-extension repair. Preserve #1000 as a separate non-author audit into #995 until its own branch/merge status is resolved.
+
+## 7. Independent assessment of PR #1024 parity/cobordism paper route
+
+PR #1024, now merged, proposes an alternative paper proof of the **classical maximal pure-character zero theorem**, but explicitly does NOT claim a Lean proof. The skeleton is mathematically coherent under the named external theorems, and has an auditable dependency boundary:
+
+1. Let N=n-1≥1. On S^N×S^N with G=(Z/2)^2, use the smooth equivariant reference map F0(u,v)=(u_1,...,u_N,v_1,...,v_N). The zero set has four points, one free G orbit. In hemisphere coordinates its derivative on tangent spaces is an isomorphism; transverse-reference proof is currently paper-level.
+2. For a hypothetical nowhere-zero continuous equivariant F, compactness gives a strictly positive norm minimum. Smooth approximation followed by character-weighted finite averaging produces a smooth equivariant nowhere-zero F1 with a controlled gap.
+3. Consider the straight homotopy between F0 and F1. The **crucial exact hypothesis** for a formal proof is a relative transversality result for the induced vector-bundle section over (S^N×S^N)/G × [0,1], leaving collars at BOTH ends unchanged. End-point transversality at t=0 is inherited from the F0 derivative; zero-free-ness at t=1 implies a zero-free collar. Without a collar-preserving perturbation, the boundary count is invalid. The group acts freely, avoiding orbifold fixed-point complications.
+4. After relative transversality, the quotient zero locus is a compact one-dimensional manifold with boundary. Its boundary has one orbit from t=0 and none from t=1, contradicting the even boundary cardinality of a compact 1-manifold.
+
+**No independent specialist or kernel review of these external smooth/topological prerequisites is claimed.** The cheapest new decisive formal experiment is to locate compatible Lean/Mathlib imports for *relative transversality with boundary fixed* and compact 1-manifold boundary parity, before doing significant proof engineering. PR #1024's seven Lean declarations certify only reference algebra/signs and the zero-padding reduction, not the cobordism theorem. This paper route may reduce the need to formalize full Stiefel-Whitney class theory, but does not establish that its Lean development will be cheaper.
+
+## Discovery graph
 
 Discovery graph: continuous causal phase retrieval → actual-prefix representation → independent antipodal characters → maximal product-sphere topology statement (UNPROVED) → zero-padding transfer (this PR) → conditional collision Lean theorem (already merged source) → exact phase-retrieval threshold, still conditional in formalization.
