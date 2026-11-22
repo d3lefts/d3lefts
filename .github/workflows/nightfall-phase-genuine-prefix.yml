@@ -1,0 +1,42 @@
+name: NIGHTFALL genuine-prefix phase algebra
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/GenuinePrefixPhase.lean'
+      - '.github/workflows/nightfall-phase-genuine-prefix.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  causal-algebra:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and audit named declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          src="research/nightfall/formalization/finite_field/GenuinePrefixPhase.lean"
+          ! grep -nE '\b(sorry|admit)\b' "$src"
+          cp "$src" /tmp/mathlib4/GenuinePrefixPhase.lean
+          (cd /tmp/mathlib4 && lake env lean GenuinePrefixPhase.lean) 2>&1 | tee /tmp/phase-receipt.log
+          python3 - <<'PY'
+          import re
+          names = ('transcript_neg', 'comparison_flip_right', 'comparison_flip_left',
+                   'causal_collision_of_genuine_prefix_zeros', 'omitted_intensity_eq')
+          data = open('/tmp/phase-receipt.log').read()
+          for suffix in names:
+              name = 'Nightfall.GenuinePrefixPhase.' + suffix
+              m = re.search(re.escape("'" + name + "' depends on axioms: [") + r'([^\]]*)\]', data, re.S)
+              if m is None:
+                  assert f"'{name}' does not depend on any axioms" in data, name
+                  found = set()
+              else:
+                  found = {x.strip() for x in m[1].split(',') if x.strip()}
+              assert found <= {'propext', 'Classical.choice', 'Quot.sound'}, (name, found)
+              print(f'{name}: {sorted(found)}')
+          PY
