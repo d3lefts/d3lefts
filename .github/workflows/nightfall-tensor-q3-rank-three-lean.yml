@@ -1,0 +1,57 @@
+name: NIGHTFALL q3 tensor matrix rank-three source Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/TensorThreeFactorRankCover.lean'
+      - '.github/workflows/nightfall-tensor-q3-rank-three-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  q3-rank-cover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and kernel-check all 512 matrices
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tensor-q3-receipt
+          src=research/nightfall/formalization/structural_information/TensorThreeFactorRankCover.lean
+          cp "$src" /tmp/mathlib4/TensorThreeFactorRankCover.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/TensorThreeFactorRankCover.olean TensorThreeFactorRankCover.lean) 2>&1 | tee tensor-q3-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker TensorThreeFactorRankCover) 2>&1 | tee tensor-q3-receipt/kernel.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          s=Path('research/nightfall/formalization/structural_information/TensorThreeFactorRankCover.lean').read_text()
+          log=Path('tensor-q3-receipt/compile.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          names=['all_three_terms_source',
+            'every_3x3_binary_matrix_uses_at_most_three_rows',
+            'rank_three_source_oracle_cover']
+          assert all(n in log for n in names)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          assert len(reports)>=3
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert all(set(v.strip() for v in a.split(',') if v.strip())<=allowed for a in reports)
+          print('Q3_SOURCE_THREE_RANK_ONE_TERMINAL_KERNEL_PASS')
+          PY
+      - name: Preserve exact input and hashes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p tensor-q3-receipt
+          git rev-parse HEAD > tensor-q3-receipt/HEAD
+          sha256sum research/nightfall/formalization/structural_information/TensorThreeFactorRankCover.lean > tensor-q3-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: tensor-q3-receipt
+          path: tensor-q3-receipt/
+          retention-days: 90
