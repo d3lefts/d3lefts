@@ -4,6 +4,10 @@ on:
     paths:
       - 'research/nightfall/formalization/finite_field/ProductSpherePadding.lean'
       - '.github/workflows/nightfall-pr1000-productsphere-padding.yml'
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductSpherePadding.lean'
+      - '.github/workflows/nightfall-pr1000-productsphere-padding.yml'
   workflow_dispatch:
 permissions:
   contents: read
