@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/structural_information/TensorT2Cancellation.lean'
       - '.github/workflows/nightfall-tensor-t2-cancellation-lean.yml'
       - 'research/nightfall/structural_information/check_tensor_t2_primitive_independent.py'
+      - 'research/nightfall/structural_information/check_tensor_pure_fibers.cpp'
   workflow_dispatch:
 permissions:
   contents: read
@@ -46,12 +47,19 @@ jobs:
         run: |
           set -euo pipefail
           python3 research/nightfall/structural_information/check_tensor_t2_primitive_independent.py | tee tensor-t2-cancellation-receipt/exact-fibers.log
+      - name: Exact independent pair-XOR contraction through tensor level seven
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -O3 -std=c++17 -Wall -Wextra -Werror research/nightfall/structural_information/check_tensor_pure_fibers.cpp -o /tmp/tensor_pure_fibers
+          /tmp/tensor_pure_fibers 7 | tee tensor-t2-cancellation-receipt/pure-fibers.log
+          grep -q 'L=7.*TOTAL=1247 PASS' tensor-t2-cancellation-receipt/pure-fibers.log
       - name: Persist source and receipt
         if: always()
         run: |
           mkdir -p tensor-t2-cancellation-receipt
           git rev-parse HEAD > tensor-t2-cancellation-receipt/commit.txt
-          sha256sum research/nightfall/formalization/structural_information/TensorT2Cancellation.lean research/nightfall/structural_information/check_tensor_t2_primitive_independent.py > tensor-t2-cancellation-receipt/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/TensorT2Cancellation.lean research/nightfall/structural_information/check_tensor_t2_primitive_independent.py research/nightfall/structural_information/check_tensor_pure_fibers.cpp > tensor-t2-cancellation-receipt/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
