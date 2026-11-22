@@ -8,7 +8,6 @@ on:
       - "docs/lean-certificate-provenance.json"
       - "scripts/test_lean_certificate_provenance.cjs"
       - "scripts/lean_certificate_registry.py"
-      - "scripts/test_lean_certificate_provenance.cjs"
       - ".github/workflows/nightfall-strict-lean-custody.yml"
   push:
     branches: [main]
@@ -18,7 +17,6 @@ on:
       - "docs/lean-certificate-provenance.json"
       - "scripts/test_lean_certificate_provenance.cjs"
       - "scripts/lean_certificate_registry.py"
-      - "scripts/test_lean_certificate_provenance.cjs"
       - ".github/workflows/nightfall-strict-lean-custody.yml"
   workflow_dispatch:
 
