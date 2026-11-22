@@ -1,0 +1,57 @@
+name: NIGHTFALL Lean warrant coverage (metadata; not a kernel build)
+
+on:
+  pull_request:
+    paths:
+      - "docs/lean-warrant-bridge-v1.json"
+      - "docs/lean-certificate-provenance.json"
+      - "docs/lean-pending-source-custody.json"
+      - "docs/active-proof-passport.json"
+      - "docs/active-passport-source-reconciliation-v2.json"
+      - "docs/recent-research.json"
+      - "docs/proof-passport-v2.json"
+      - "docs/lean-proof-passport-overlay.json"
+      - "research/nightfall/**/*.lean"
+      - "research/nightfall/2026-11-lean-warrants/**"
+      - "research/nightfall/2026-11-recent-passports/**"
+      - "scripts/check_lean_warrant_coverage.py"
+      - ".github/workflows/nightfall-lean-warrant-coverage.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/lean-warrant-bridge-v1.json"
+      - "docs/lean-certificate-provenance.json"
+      - "docs/lean-pending-source-custody.json"
+      - "docs/active-proof-passport.json"
+      - "docs/active-passport-source-reconciliation-v2.json"
+      - "docs/recent-research.json"
+      - "docs/proof-passport-v2.json"
+      - "docs/lean-proof-passport-overlay.json"
+      - "research/nightfall/**/*.lean"
+      - "research/nightfall/2026-11-lean-warrants/**"
+      - "research/nightfall/2026-11-recent-passports/**"
+      - "scripts/check_lean_warrant_coverage.py"
+      - ".github/workflows/nightfall-lean-warrant-coverage.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  known-certificate-warrants:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail-closed source, declaration and warrant reconciliation (with negative controls)
+        run: |
+          python3 scripts/check_lean_warrant_coverage.py \
+            --self-test --json-out lean-receipts/known-warrant-coverage.json
+      - name: Keep inspectable report even if gate fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-known-lean-warrant-coverage
+          path: lean-receipts/known-warrant-coverage.json
+          retention-days: 30
+          if-no-files-found: warn
