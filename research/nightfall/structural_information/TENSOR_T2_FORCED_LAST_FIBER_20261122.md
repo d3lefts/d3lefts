@@ -52,3 +52,15 @@ These are *thresholds of theoretical upper-bound formulas*, not quantum runtime 
 The new independent source script check_tensor_forced_last_count.py exhaustively checks the general cardinality injection over finite binary-label sets (including zero), deliberately excludes repeated-slot/zero-residual tuples, confirms exact Group-A four-slot maxima 312 at L=2 and 1992 at L=3, and computes threshold comparisons using integer arithmetic. The only additional mathematical inputs to the bound (2) are the already claimed source-six-site support consequence of the **published Lovitz–Petrov Corollary 21** and the pair-fiber M2.
 
 Do not conflate this with all-depth Lean certification: the underlying product-tensor support theorem remains sourced externally at paper level; K4^distinct is a *model-faithful* Group A subcount; group B/C quantum energy still needs independent unrestricted-complex proof and a Lean terminal. No novelty clearance beyond the quantitative refinement of NIGHTFALL's candidate theorem.
+
+
+## Fixed-order transfer (not a higher-query quantum theorem)
+
+Exactly the same source argument applies to ordered k-slot tuples for **every fixed k≥2**, provided all k labels are pairwise distinct and their nonzero entries are primitive. Lovitz–Petrov bounds the union of variation supports by 2k−2 for equal-XOR primitive references. Define N_k=1+k·3^(2k−2) and the actual original-label nonzero ordered pair-XOR maximum M2. For each support choice U, all k alternate labels belong to a set of at most N_k labels. Fix the first k−2 labels. If the XOR of the last two were zero, those two labels would be equal in F₂ and violate pairwise distinctness. Thus one may complete with at most min(N_k,M2) choices for the final ordered pair, proving the all-frequency **paper-level** count
+
+    K_k^distinct(L) ≤ N_k^(k−2) min(N_k,M2)
+       · sum_{j=0}^{min(L,2k−2)} binom(L,j).
+
+This reduces the earlier generic overcount N_k^k by at least N_k and potentially N_k²/M2, without changing its O_k(L^(2k−2)) polynomial degree. The identity is an abstract finite-group completion bound plus the inherited published tensor-circuit support theorem. **It does not imply a T-query quantum simulator for T≥3**: those paths require independent higher-order Hilbert interference estimates.
+
+The Lean sibling module TensorT2RepeatMobius.lean additionally targets three source-specific finite algebra lemmas: forced uniqueness of the fourth label, nonzero XOR of a distinct final pair, and monotonicity of pair-XOR fibers under a restricted candidate set. These are not by themselves a certified counting theorem until matched to the tensor source and successfully kernel checked.
