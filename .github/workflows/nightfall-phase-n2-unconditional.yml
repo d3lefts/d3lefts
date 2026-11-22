@@ -60,7 +60,7 @@ jobs:
           git rev-parse HEAD > receipts/phase-n2/head.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/phase-n2/mathlib-head.txt
           cat lean-toolchain > receipts/phase-n2/toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/{PlanarTwoRowsDirect}.lean > receipts/phase-n2/SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/PlanarTwoRowsDirect.lean > receipts/phase-n2/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
