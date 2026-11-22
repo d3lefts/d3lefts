@@ -35,10 +35,12 @@ jobs:
           assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
           assert 'error:' not in log
           expected=['mobius_repeated_when_no_two_disjoint_pairs',
-                    'mobius_repeated_nonzero_xor','improved_T2_pair_constant']
+                    'mobius_repeated_nonzero_xor','improved_T2_pair_constant',
+                    'fourth_label_unique','distinct_pair_xor_nonzero',
+                    'restricted_pair_fiber_le']
           assert all(n in log for n in expected)
           reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
-          assert len(reports)>=3, reports
+          assert len(reports)>=6, reports
           allowed={'propext','Classical.choice','Quot.sound'}
           assert all(set(x.strip() for x in m.split(',') if x.strip())<=allowed for m in reports)
           print('TENSOR_T2_REPEAT_MOBIUS_KERNEL_PASS')
