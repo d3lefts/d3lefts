@@ -1,0 +1,47 @@
+name: NIGHTFALL external topology source compatibility probe (NOT certification)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/nightfall-external-topology-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  topology-compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Fetch immutable external topology source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
+          git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
+          test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = 7857a2e8c32088b5002f7cafe29a21d936baf704
+          mkdir -p /tmp/mathlib4/MathlibExt/Geometry/Manifold
+          mkdir -p /tmp/mathlib4/MathlibExt/MeasureTheory/Measure
+          for p in \
+            MathlibExt/MeasureTheory/Measure/ImageNull.lean \
+            MathlibExt/Geometry/Manifold/Sard.lean \
+            MathlibExt/Geometry/Manifold/ParametricSard.lean; do
+            cp "/tmp/atlas-lean/$p" "/tmp/mathlib4/$p"
+            sha256sum "/tmp/mathlib4/$p"
+          done
+      - name: Source-exact Mathlib 4.36 compatibility build
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for M in \
+            MathlibExt/MeasureTheory/Measure/ImageNull \
+            MathlibExt/Geometry/Manifold/Sard \
+            MathlibExt/Geometry/Manifold/ParametricSard; do
+            mkdir -p ".lake/build/lib/lean/$(dirname "$M")"
+            echo "=== probing $M ==="
+            lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "/tmp/$(basename "$M").log"
+          done
+          echo "PASS: external source compiles against NIGHTFALL active Lean pin; this is NOT a ProductSphereZero proof"
