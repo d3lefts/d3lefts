@@ -127,7 +127,7 @@ theorem sqNorm_plus_minus_difference (n : ℕ) (u v : Fin n → ℝ) :
   simp only [Pi.add_apply, Pi.sub_apply]
   rw [← Finset.sum_sub_distrib]
   calc
-    (∑ i, (u i + v i) ^ 2 - (u i - v i) ^ 2) =
+    (∑ i, ((u i + v i) ^ 2 - (u i - v i) ^ 2)) =
       ∑ i, 4 * (u i * v i) := by
         apply Finset.sum_congr rfl
         intro i hi
@@ -161,6 +161,7 @@ theorem plus_minus_sign_distinct (n : ℕ) (u v : Fin n → ℝ)
       ext i
       have hi := congrArg (fun w : Fin n → ℝ => w i) h
       simp only [Pi.add_apply, Pi.sub_apply] at hi
+      change v i = (0 : ℝ)
       linarith
     exact hv0 hzero
   · intro h
@@ -168,6 +169,7 @@ theorem plus_minus_sign_distinct (n : ℕ) (u v : Fin n → ℝ)
       ext i
       have hi := congrArg (fun w : Fin n → ℝ => w i) h
       simp only [Pi.add_apply, Pi.sub_apply, Pi.neg_apply] at hi
+      change u i = (0 : ℝ)
       linarith
     exact hu0 hzero
 
