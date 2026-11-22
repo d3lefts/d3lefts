@@ -1,0 +1,73 @@
+name: NIGHTFALL block-local quantum path polynomial to Route1 degree Lean
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean"
+      - ".github/workflows/nightfall-phase-block-quantum-degree-lean.yml"
+      - "docs/lean-pending-source-custody.json"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-path-degree:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source matched Route1 degree foundation and quantum bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/phase-block-quantum-degree
+          for M in Route1LatentDegree PhaseBlockQuantumDegree; do
+            if [[ "$M" == Route1LatentDegree ]]; then
+              src="research/nightfall/formalization/product_space/$M.lean"
+            else
+              src="research/nightfall/formalization/structural_information/$M.lean"
+            fi
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/phase-block-quantum-degree/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/phase-block-quantum-degree/$M.log"
+          done
+      - name: Exact named theorem, type and allowed axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path("receipts/phase-block-quantum-degree/PhaseBlockQuantumDegree.log").read_text()
+          for suffix in ("touched_card_le","pathAmp_local","effectTerm_supported","effectValue_degree"):
+              name="Nightfall.PhaseBlockQuantumDegree."+suffix
+              m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m: axioms={x.strip() for x in m[1].split(",") if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in log,name
+                  axioms=set()
+              assert axioms <= {"propext","Classical.choice","Quot.sound"},(name,axioms)
+          assert "sorryAx" not in log
+          assert "theorem Nightfall.PhaseBlockQuantumDegree.effectValue_degree" in log
+          assert "DegreeLE (effectValue" in log
+          print("PASS finite complex-path oracle effect degree≤2T (Route1 degree foundation)")
+          print("OPEN actual arbitrary circuit→path coefficients, 0≤effect≤I, Route1 tree and 3-read terminal.")
+          PY
+      - name: Source-pin receipt
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/phase-block-quantum-degree
+          git rev-parse HEAD > receipts/phase-block-quantum-degree/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/phase-block-quantum-degree/mathlib.txt
+          cat lean-toolchain > receipts/phase-block-quantum-degree/toolchain.txt
+          sha256sum research/nightfall/formalization/product_space/Route1LatentDegree.lean research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean > receipts/phase-block-quantum-degree/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: phase-block-quantum-degree-${{ github.run_id }}
+          path: receipts/phase-block-quantum-degree
+          retention-days: 90
