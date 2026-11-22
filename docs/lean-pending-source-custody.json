@@ -2,7 +2,7 @@
   "schema": "nightfall-lean-pending-source-custody-v1",
   "revision": 41,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "ec5d5f6a3eda2ada5a0c582b6a76a526a56a794b",
+  "source_commit": "1ccda48d429ef696548cf6394e0aea8f8fb8b0e0",
   "scope": "Source-custody revision 41: 493 pending Lean blobs; historical 67 certified source records unchanged. New ProductBUReferenceFace is pending its own scoped pinned Lean receipt. No full maximal ProductSphereZero theorem or unconditional causal threshold.",
   "sources": [
     {
@@ -439,7 +439,7 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean",
-      "source_blob_sha": "8139e939f318979a9dd5452c71a1d7f8d6214624",
+      "source_blob_sha": "fb885c8fd0664896ed4aaeb890c40cf8620a520e",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
