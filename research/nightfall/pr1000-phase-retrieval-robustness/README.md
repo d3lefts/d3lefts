@@ -21,17 +21,21 @@ The decoder Delta maps complete observed transcripts to R^n / {+1,-1}; no decode
 
 Keep *observation* noise separate from row perturbations and finite-precision row selection. The stronger global-prefix continuity is intentional and must not be conflated with the reachable-prefix-only continuity in #997/#999. At sigma=0, explicitly prove any transfer between these classes; do not assume it.
 
+## New source-local result: exact high-noise saturation (paper theorem, no novelty promotion)
+
+See BALL_ERASURE_SATURATION.md, NoisyCausalCollision.lean, and check_ball_erasure_exact.py. The elementary zero-versus-y floor below is **strictly superseded** by whole-ball erasure: every input with norm squared <= 2 sigma can produce the same observed sigma transcript. Consequently for n>=2 and ball domain E_m >= min(R, sqrt(2 sigma)); if sigma >= R²/2, E_m(n,r,R;sigma) = R for every annulus and every finite m (unrestricted decoder). The sphere-constrained-output value is sqrt(2)R. These are rigorous paper-level derivations but **not** a new low-noise sharp rate, specialist-reviewed novelty, or fully Lean-certified geometric terminal. The radius-two saturation argument must be formalized independently.
+
 ## Baselines, not novelty
 
 - Trivial monotonicity: E_m(n,r,R;sigma) is nondecreasing in sigma; upper bounded by the radius of an admissible constant decoder.
-- For r=0 and 0 < sigma <= R^2, the two inputs x=0 and y=sqrt(sigma) v (unit v) can be forced to share the zero observed transcript: choose noise e_j=-<a_j(0,...,0),y>^2 for y, and zero noise for x. Every |e_j| <= sigma. Thus E_m(n,0,R;sigma) >= sqrt(sigma)/2 for every m and every normalized causal policy. This is an elementary indistinguishability observation, **not** a novel contribution.
+- Superseded/weaker historical baseline (kept for audit): for r=0 and 0 < sigma <= R^2, the two inputs x=0 and y=sqrt(sigma) v (unit v) can be forced to share the zero observed transcript: choose noise e_j=-<a_j(0,...,0),y>^2 for y, and zero noise for x. Every |e_j| <= sigma. Thus E_m(n,0,R;sigma) >= sqrt(sigma)/2 for every m and every normalized causal policy. This is an elementary indistinguishability observation, **not** a novel contribution.
 - #999 exhibits a fixed near-hyperplane family with near-optimal *noiseless* error but a conditioning obstruction for those specific frames. That obstruction does NOT prove impossibility for all causal policies.
 - At sigma=0, #999's claim E_(2n-2)(n,r,R;0) = (R-r)/2 is for its reachable-prefix model. Treat its proof and the extension-to-global-prefix question as pending formal review, not as a Lean theorem.
 - Do not conjecture a discontinuity at sigma -> 0 merely because a particular near-coplanar construction loses stability; quantify the best joint construction as its geometric parameter changes.
 
 ## Primary questions / success thresholds
 
-1. **Sharp noise/accuracy law.** At m=2n-2 and 0<=r<R, determine E_m(n,r,R;sigma), or a two-sided uniform sharp-order bound in sigma, n, r, R, with explicit assumptions and constants. Find the Pareto frontier between excess error tau over the purported noiseless infimum and required noise precision sigma. Is an adaptive improvement over optimal fixed frames possible?
+1. **Sharp noise/accuracy law below the now-established saturation regime.** At m=2n-2 and 0<=r<R, determine E_m(n,r,R;sigma), or a two-sided uniform sharp-order bound in sigma, n, r, R, with explicit assumptions and constants. Find the Pareto frontier between excess error tau over the purported noiseless infimum and required noise precision sigma. Is an adaptive improvement over optimal fixed frames possible?
 2. **Known-norm transition.** Repeat at m=2n-3 for D = sphere(R), for both unrestricted and sphere-valued decoders, *as a separate theorem/model*.
 3. **Regularity operator.** If global continuity is too weak for a uniform rate, compare bounded selector Lipschitz constant L and/or bounded decoder stability; prove an obstruction or sharp constructive bound that charges this resource explicitly.
 4. **Transfer theorem.** Identify a reusable, dimension-explicit indistinguishability/conditioning principle for continuous adaptive sensing, not merely a constant fitted to one frame.
