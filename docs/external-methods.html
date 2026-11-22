@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NIGHTFALL external-method case study: the prime-circulant permanent disproof, attributed proofs, exact finite invariants, and generalizable operators.">
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/external-methods.html">
+<title>From conjecture to certificate — NIGHTFALL</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="ethereal-theme.css"><link rel="stylesheet" href="two-skies.css">
+<script src="site.js" defer></script><script src="ethereal-theme.js" defer></script>
+<style>
+.em-main{padding:clamp(42px,7vw,86px) 0 98px;max-width:1040px}
+.em-kicker,.em-label{font:600 11px/1.6 var(--mono,monospace);letter-spacing:.075em;text-transform:uppercase;color:var(--muted)}
+.em-main h1{font:400 clamp(47px,7.8vw,94px)/1.02 var(--serif,serif);letter-spacing:-.045em;max-width:970px;margin:18px 0 26px}
+.em-lede{font-size:clamp(17px,2.4vw,21px);line-height:1.7;max-width:790px}
+.em-ledger{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:48px 0 65px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.em-ledger div{padding:22px 18px 24px 0}.em-ledger dt{font:600 11px var(--mono,monospace);text-transform:uppercase;color:var(--muted)}.em-ledger dd{margin:9px 0 0;line-height:1.55}
+.em-section{padding:38px 0;border-top:1px solid var(--line)}.em-main h2{font:400 clamp(30px,4vw,48px)/1.1 var(--serif,serif);margin:4px 0 20px}.em-main p,.em-main li{line-height:1.75}.em-main a{text-decoration:underline;text-underline-offset:4px}
+.em-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:25px 0}.em-card{border:1px solid var(--line);padding:22px;min-width:0}.em-card h3{font:500 22px/1.2 var(--serif,serif);margin:10px 0}.em-card p{font-size:14px}
+.em-formula{font:500 clamp(23px,4vw,36px)/1.3 var(--serif,serif);padding:25px 0}
+.em-code{padding:18px;overflow-x:auto;border:1px solid var(--line);font:13px/1.7 var(--mono,monospace);white-space:pre-wrap;overflow-wrap:anywhere}
+.em-main details{border-top:1px solid var(--line);padding:17px 0}.em-main summary{cursor:pointer;font-weight:600}.em-main summary:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+.em-main .em-small{font-size:13px;color:var(--muted)}.em-notice{border-left:3px solid currentColor;padding:4px 0 4px 20px}
+@media(max-width:740px){.em-ledger{grid-template-columns:1fr}.em-ledger div{border-bottom:1px solid var(--line)}.em-grid{grid-template-columns:1fr}.em-main h1{letter-spacing:-.02em}}
+</style>
+</head>
+<body><a class="skip" href="#main">Skip to case study</a><div class="topline"></div>
+<header class="header"><div class="wrap header-inner"><a class="brand" href="index.html"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>EXTERNAL METHODS / RESEARCH INTEGRITY</span></span></a><button class="menu-toggle" id="menu-button" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button><nav class="nav" id="site-nav" aria-label="Primary navigation"><a href="research.html">Research library</a><a href="recent-research.html">Current work</a><a href="review.html">Review</a><a href="evidence.html">Evidence</a></nav></div></header>
+<main id="main" class="wrap em-main">
+<p class="em-kicker">Outside work, credited precisely · 22 November 2026</p>
+<h1>A conjecture falls.<br><em>A method remains.</em></h1>
+<p class="em-lede">This is an external research case study, not a NIGHTFALL mathematical discovery. It records what changed in a 1979 conjecture about circulant permanents, where the published argument draws its strength, and which techniques could transfer to our own verified research.</p>
+<dl class="em-ledger">
+<div><dt>Original question</dt><dd>Nemeth, Seberry and Shu · 1979 · Minc’s Conjecture 27</dd></div>
+<div><dt>Current outcome</dt><dd>Disproved by others; claimed quadratic lower bound in November 2026</dd></div>
+<div><dt>Evidence boundary</dt><dd>External analytic manuscript not independently source-certified here; exact finite cross-check available</dd></div>
+</dl>
+<section class="em-section" aria-labelledby="statement">
+<p class="em-label">01 / Statement and limit</p>
+<h2 id="statement">Exactly which conjecture?</h2>
+<p>For each prime p, choose any subset S of residues mod p. The binary circulant A<sub>S</sub> has entry 1 precisely when the column-minus-row residue lies in S. The conjecture said the number V(p) of distinct permanents among <em>all</em> such matrices was O(p).</p>
+<p class="em-formula">External claim: V(p) ≥ c p<sup>2</sup> for all sufficiently large primes.</p>
+<p>The November 20 argument is due to <strong>Cinna Davis and GPT-6.2 Astra</strong>; Yair Lavi maintains the historical problem record and explicitly credits them. The construction uses dense supports with p/3 ≤ |S| ≤ 2p/3. It does <strong>not</strong> resolve Resta–Sburlati's fixed-small-row-sum conjecture, including the four-ones-per-row case.</p>
+<p><a href="https://yair-lavi.com/mincs-list/conjecture-27/index.html">Read Lavi’s up-to-date problem record</a> · <a href="https://github.com/1337isnot1337/solved-conjectures/blob/d2ef0e62a395160883375b74cc84f20e003b4912/docs/nss/quadratic-refinement.md">Read the source-pinned quadratic argument</a></p>
+</section>
+<section class="em-section" aria-labelledby="operators"><p class="em-label">02 / Transferable operators</p><h2 id="operators">Three things worth reusing.</h2>
+<div class="em-grid">
+<article class="em-card"><p class="em-label">Representation</p><h3>Fourier before brute force.</h3><p>Diagonalize the circulant and control a few exceptional modes separately from the spectral bulk. A fourth-moment bound can replace individual estimates on every frequency.</p></article>
+<article class="em-card"><p class="em-label">Construction</p><h3>Randomize; then repair.</h3><p>Obtain an approximate Fourier profile through Bernoulli sampling, fix the exact support size, and steer the first harmonic with swaps without breaking the bulk budget.</p></article>
+<article class="em-card"><p class="em-label">Separation</p><h3>Use an exact invariant.</h3><p>Prime cyclic translation forces per(A<sub>S</sub>) ≡ |S| (mod p). Different row sums in the selected range cannot collide even when their numerical permanents are enormous.</p></article>
+</div>
+<p>Another key improvement is <strong>centering before taking absolute values</strong>: when Z=p/T for T with Gamma(p+1,1) law, E[Z]=1 and Var(Z)=1/(p−1). A first-order Taylor term cancels in expectation, making second-order errors O(1/p) <em>when the required derivative and tail bounds really hold</em>.</p>
+</section>
+<section class="em-section" aria-labelledby="evidence"><p class="em-label">03 / Evidence and replay</p><h2 id="evidence">What can actually be checked?</h2>
+<p>An original, standard-library-only checker exhaustively verifies 172 binary supports across p=2, 3, 5, 7; it compares two independently formulated exact permanent algorithms for p≤5, checks all affine symmetries and the modular congruence, and includes a negative control.</p>
+<pre class="em-code"><code>python3 scripts/check_circulant_permanent_invariants.py</code></pre>
+<p><a href="https://github.com/d3lefts/d3lefts/blob/main/scripts/check_circulant_permanent_invariants.py">Inspect the finite checker source</a> · <a href="https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-external-methods-nss/README.md">Read the research ingestion and open audit gates</a></p>
+<p class="em-notice"><strong>Verification limit.</strong> Finite integer tests confirm only these finite invariants. They do not prove the asymptotic quadratic bound. The uniform quantitative permanent approximation used by the authors traces to Divoux–Wang, <a href="https://arxiv.org/abs/2610.23755">arXiv:2610.23755</a>; a source-by-source independent check of the extracted O(1/p) rate remains pending.</p>
+<details><summary>What must be checked before any stronger status?</summary><p>Read the cited analytic proposition and proof at the version used by the authors; verify all quantifiers for the fixed spectral gap, matrix entries including zeros, the gamma tail and rook-polynomial error. Separately check that O(√p) swaps preserve the fourth-moment control. Only then evaluate a new, explicitly scoped theorem certificate. No automatic promotion follows from passing our finite checker.</p></details>
+<details><summary>How does this inform NIGHTFALL's own work?</summary><p>Test spectral moment control in phase-retrieval recovery and product-space observability; look for centered error cancellations in quantum-simulation estimates; and use symmetry and modular labels to separate constructions before expensive optimization. These are proposed experiments, not proved transfers.</p></details>
+</section>
+<p class="em-small">Source attribution: Nemeth–Seberry–Shu (1979); Eades–Praeger–Seberry (1983); Bernasconi–Codenotti–Crespi–Resta (1999); Resta–Sburlati (2003); Davis and GPT-6.2 Astra (November 20, 2026); curated historical status by Yair Lavi. NIGHTFALL's contribution on this page is independent finite replication and methodological analysis only.</p>
+</main></body></html>
