@@ -1,0 +1,39 @@
+name: NIGHTFALL independent tensor T2 rank-free finite audit (NOT theorem)
+
+on:
+  pull_request:
+    paths:
+      - "scripts/check_tensor_t2_rankfree_independent.py"
+      - "scripts/check_tensor_t2_rankfree_coherence.py"
+      - "research/nightfall/structural_information/TENSOR_T2_RANKFREE_INDEPENDENT_AUDIT_20261122.md"
+      - ".github/workflows/nightfall-t2-rankfree-independent.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/check_tensor_t2_rankfree_independent.py"
+      - "scripts/check_tensor_t2_rankfree_coherence.py"
+      - "research/nightfall/structural_information/TENSOR_T2_RANKFREE_INDEPENDENT_AUDIT_20261122.md"
+      - ".github/workflows/nightfall-t2-rankfree-independent.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pin exact source and syntax
+        run: |
+          sha256sum scripts/check_tensor_t2_rankfree_independent.py scripts/check_tensor_t2_rankfree_coherence.py
+          python3 -m py_compile scripts/check_tensor_t2_rankfree_independent.py scripts/check_tensor_t2_rankfree_coherence.py
+      - name: Independent tensor finite geometry sanity and cubic witnesses
+        run: python3 scripts/check_tensor_t2_rankfree_independent.py
+      - name: Independent coherent four-path quantum classification in exact rational arithmetic
+        run: python3 scripts/check_tensor_t2_rankfree_coherence.py
+      - name: Reject accidental promotion to a general theorem
+        run: |
+          grep -q "paper theorem still provisional" research/nightfall/structural_information/TENSOR_T2_RANKFREE_INDEPENDENT_AUDIT_20261122.md
+          grep -q "not yet an independent theorem" research/nightfall/structural_information/TENSOR_T2_RANKFREE_INDEPENDENT_AUDIT_20261122.md
