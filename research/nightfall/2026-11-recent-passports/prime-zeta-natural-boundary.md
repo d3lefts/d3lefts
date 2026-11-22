@@ -29,3 +29,8 @@ No RH assumption. The claim applies to ordinary holomorphic analytic continuatio
 ## Certification and priority
 
 **Promoted to scoped paper theorem only.** No named Lean kernel certificate, no independent specialist referee, and no global novelty clearance. The known boundary of P is classical, not original. The shift argument is a direct corollary whose first-priority remains unresolved. Review task: [issue #1040](https://github.com/d3lefts/d3lefts/issues/1040). Do not apply a "certified" or "novel" label from the paper proof or GitHub CI.
+
+
+## 22 November 2026 direct prior-art correction
+
+The natural boundary of P at Re(w)=0 is explicitly attributed to Landau–Walfisz (1920) and Fröberg (1968) in MathWorld: https://mathworld.wolfram.com/PrimeZetaFunction.html . The derived Re(s)=−1 theorem is **a shifted-boundary corollary**, not a new natural-boundary mechanism. This strengthens source attribution but does not constitute independent review of the A⁺ proof.
