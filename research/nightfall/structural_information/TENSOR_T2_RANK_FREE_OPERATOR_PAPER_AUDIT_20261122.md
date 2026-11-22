@@ -125,3 +125,10 @@ We may use the much sharper M=2L+2 from the tensor T1 work for a better constant
 ## Parallel-instance reconciliation (2026-11-22)
 
 PR [#1068](https://github.com/d3lefts/d3lefts/pull/1068), an independent parallel branch, states the same general binary-label four-fiber simulation criterion and independently compares unordered-support versus ordered-tuple exact enumeration, including K4/M2=(24,2) independent labels and (16,4),(348,6),(2004,8) tensor depths L=1,2,3. It explicitly warns that repeated zero labels must be assigned to the repeated-label group before the primitive-group frequency sum. The clarified disjoint partition above incorporates this audit. Credit #1068 for independently discovering the general formulation and for its disjointness check; do not count our closely related theorem as a separate novel result.
+
+
+## Non-author internal paper audit cross-reference
+
+A separate parallel author instance posted a **full independent operator-energy rederivation** in [issue #1021 comment #7083589329](https://github.com/d3lefts/d3lefts/issues/1021#issuecomment-7083589329): same first/second light frame inequality, six grouped equality events including the cross-stage F_b contraction, 57 higher equality intersections, and four zero-triple survivor cases with signed overlap subtraction. The author reports **no operator-energy counterexample** and derives the same 145√M term.
+
+This is meaningful within-team adversarial corroboration but **not an external non-author mathematical referee or a Lean kernel certificate**; both derivations rely on the same underlying mathematical identities and must still withstand specialist review. The parallel audit also independently identified Lovitz's 2018 local-dimension-two circuit bound, which must be credited before Lovitz–Petrov 2023. This is another attribution correction, not an independent new circuit theorem.
