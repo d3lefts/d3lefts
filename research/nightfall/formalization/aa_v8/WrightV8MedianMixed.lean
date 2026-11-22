@@ -32,9 +32,10 @@ theorem mixed_cube_amgm (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
     pow_le_pow_left₀ hst hamgm 3
   calc
     8 * (u * Real.sqrt u) * (v * Real.sqrt v) =
-        (2 * (s * t)) ^ 3 := by
+        8 * (s ^ 2 * s) * (t ^ 2 * t) := by
           change 8 * (u * s) * (v * t) = 8 * (s ^ 2 * s) * (t ^ 2 * t)
           rw [hs, ht]
+    _ = (2 * (s * t)) ^ 3 := by ring
     _ ≤ (u + v) ^ 3 := hpow
 
 /-- Applies the mixed-cubic inequality to a pair crossing an arbitrary level. -/
