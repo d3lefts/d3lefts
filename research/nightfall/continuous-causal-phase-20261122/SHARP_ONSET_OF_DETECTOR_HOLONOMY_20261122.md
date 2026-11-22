@@ -31,6 +31,21 @@ is homeomorphic (by diagonalizing the positive eigenvalues) to \(S^{r-1}\times\m
 
 **Scope test:** The theorem requires the stage-two response to be even in the **actual signal**, not merely that an arbitrary transcript has two entries. It holds for PSD rank-one through full-rank \(Q_1,Q_2\) and arbitrary nonnegative causal gains. It also holds when the second reading is a continuous, nonlinear, even detector response. No compactness of the global history image and no external Borsuk–Ulam theorem are used.
 
+
+### Adversarial edge case: contractible history can fail to be closed
+
+Take n=2, Q1=e1e1ᵀ and the unit second row
+\[
+a_2(t)=\frac{(1,t-1)}{\sqrt{1+(t-1)^2}}.
+\]
+For each t≠1 the two chronological rows are independent, so the attainable y2 fiber at first output t is **all** [0,∞). At t=1 the second row becomes e1 and y2 is forced to 1. Consequently
+\[
+H_2=\bigl(([0,\infty)\setminus\{1\})\times[0,\infty)\bigr)\ \cup\ \{(1,1)\},
+\]
+which is **not closed** in the ambient plane: points \((1+1/k,0)\in H_2\) converge to (1,0) outside H2. A witness for each k is \(x_1=\sqrt{1+1/k}\), \(x_2=-k\sqrt{1+1/k}\), giving the second reading zero exactly.
+
+Nevertheless \(q(t)=t/[1+(t-1)^2]\) is a continuous attained section, and the same vertical straight-line deformation \(R_\lambda\) contracts the entire nonclosed H2 onto its graph. This explicitly falsifies any attempt to replace Theorem A's contractibility proof by a blanket assertion that *all attainable history spaces are closed*. It also reinforces why the original #995 paper used **compact restricted histories** in the Tietze route, and why the independent genuine-prefix proof needs no such extension.
+
 ## Theorem B. Sharp earliest rank-one orientation defect
 
 Assume \(n\ge2\). At every stage j, a *normalized physical rank-one detector selector* is a continuous map
