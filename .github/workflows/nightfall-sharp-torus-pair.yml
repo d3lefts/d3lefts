@@ -1,0 +1,23 @@
+name: NIGHTFALL all-size triangular torus pair-fiber exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/SHARP_TORUS_PAIR_FIBER_20261122.md'
+      - 'scripts/check_triangular_torus_pair_exact.py'
+      - '.github/workflows/nightfall-sharp-torus-pair.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-offset-table:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replay exact integer six-offset enumeration and modular exceptions
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 -V
+          sha256sum scripts/check_triangular_torus_pair_exact.py research/nightfall/structural_information/SHARP_TORUS_PAIR_FIBER_20261122.md
+          python3 scripts/check_triangular_torus_pair_exact.py
+          echo 'All-L proof is paper-level; finite arithmetic is NOT Lean or independent peer review.'
