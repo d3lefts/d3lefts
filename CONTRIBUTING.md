@@ -106,6 +106,14 @@ For formal review formats see [the external-review protocol](research/nightfall/
 
 Preserve negative controls, failed counterexample searches, withdrawn claims, and historical versions with reasons. Do not confuse *no counterexample found* with *theorem proved*. Do not claim an old red CI run is green; cite the actual successful rerun and commit.
 
+## Exact Lean source custody on every PR
+
+Every new or modified `research/nightfall/**/*.lean` source **must** be accompanied, in the same PR, by an exact Git-blob SHA entry or update in [the pending-source custody ledger](docs/lean-pending-source-custody.json), unless the historical certificate registry has a separate, source-verified and reviewed update. The [strict custody workflow](.github/workflows/nightfall-strict-lean-custody.yml) now runs on Lean source changes as well as manifest edits, with `NIGHTFALL_ALLOW_UNREVIEWED=0` for both PR and protected-main checks. An unregistered or hash-mutated source is a CI failure; do not suppress the failure by granting blanket approval or changing the environment flag.
+
+For a source without a verified named theorem receipt, record `classification: "unreviewed-source"`, `ci_source_match_status: "no-verified-receipt"`, `historical_run: null`, `historical_head: null`, `global_priority: "unverified"` and its actual Git blob hash. A successful separate Lean build does **not** automatically change the older custody record. Keep the 67 frozen historical certificates immutable; formal certification requires separate exact-head theorem, axiom, kernel and human semantic review.
+
+Before merging a Lean-containing PR, run `node scripts/test_lean_certificate_provenance.cjs` and `python3 scripts/lean_certificate_registry.py --audit` at its actual head. The strict CI also inserts an intentionally unregistered source and mutates a registered source in a temporary runner checkout to prove the checks fail closed, then restores the original bytes. Maintainers should configure the strict workflow as a required branch-protection check; the workflow alone does not establish that repository administration setting.
+
 ## Attribution, licensing and responsible disclosure
 
 Credit original mathematicians, human research directors, contributors, review authors, and substantial AI-generated work accurately. The project does not use AI persona names to imply independent human collaborators. A reviewer should specify whether their check is author-internal, independently implemented, formal-kernel, or external.

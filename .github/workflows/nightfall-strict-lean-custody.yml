@@ -3,6 +3,7 @@ name: NIGHTFALL strict pending Lean source custody (no automatic certification)
 on:
   pull_request:
     paths:
+      - "research/nightfall/**/*.lean"
       - "docs/lean-pending-source-custody.json"
       - "docs/lean-certificate-provenance.json"
       - "scripts/test_lean_certificate_provenance.cjs"
@@ -11,6 +12,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "research/nightfall/**/*.lean"
       - "docs/lean-pending-source-custody.json"
       - "docs/lean-certificate-provenance.json"
       - "scripts/test_lean_certificate_provenance.cjs"
@@ -31,6 +33,29 @@ jobs:
       - uses: actions/checkout@v4
       - name: Enforce frozen 67-record source-pinned register and byte-identical pending file hashes
         run: node scripts/test_lean_certificate_provenance.cjs
+      - name: "Negative controls: fail on unregistered and mutated Lean source blobs"
+        run: |
+          set -eu
+          sentinel="research/nightfall/formalization/finite_field/NightfallUnregisteredSentinel.lean"
+          printf 'theorem sourceMustNotBeApproved : True := by trivial\n' > "$sentinel"
+          if node scripts/test_lean_certificate_provenance.cjs >/tmp/unregistered-source.log 2>&1; then
+            echo "FAIL: unregistered Lean source was accepted"
+            rm -f "$sentinel"
+            exit 1
+          fi
+          grep -q "Unregistered Lean sources in protected checkout" /tmp/unregistered-source.log
+          rm "$sentinel"
+          existing="research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean"
+          cp "$existing" /tmp/NightfallSourcePreMutation.lean
+          printf '\n-- mutation must invalidate exact hash custody\n' >> "$existing"
+          if node scripts/test_lean_certificate_provenance.cjs >/tmp/mutated-source.log 2>&1; then
+            echo "FAIL: changed Lean blob was accepted"
+            cp /tmp/NightfallSourcePreMutation.lean "$existing"
+            exit 1
+          fi
+          grep -q "Pending Lean source mutated" /tmp/mutated-source.log
+          cp /tmp/NightfallSourcePreMutation.lean "$existing"
+          node scripts/test_lean_certificate_provenance.cjs
       - name: Independently replay source register, reject extras, and emit uncertified scope
         run: python3 scripts/lean_certificate_registry.py --audit --json-out /tmp/nightfall-lean-source-audit.json
       - name: Assert absence of unregistered and auto-promoted source entries

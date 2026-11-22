@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 32,
+  "revision": 33,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v32: previous exact main source custody preserved; one additional independently identified ProductBUOrbitCertificate.lean Git blob bb9b3ed27b4f6011e90b6859948688a790af2785 enrolled strictly as unreviewed source. No theorem or kernel certification implied.",
+  "scope": "v33: 483 pending exact Lean blobs, 67 frozen historical records unchanged; 550 total main Lean sources. New ProductBUSphereExtension source is unreviewed. Future additions and edits must pass strict source custody workflow on research/nightfall/**/*.lean, not only on manifest changes.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -396,6 +396,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean",
+      "source_blob_sha": "c4541cd216dc7ab3169e14f2632378dbc57be966",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Late parallel source merge, exact blob custody only. Does not certify ProductSphereZero, topological extension proof, named Lean kernel, or originality."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean",
