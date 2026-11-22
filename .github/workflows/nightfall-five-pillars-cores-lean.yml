@@ -80,8 +80,10 @@ jobs:
             research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean \
             --workspace /tmp/mathlib4 --strict --timeout 1800 \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.GroupAdaptiveLikelihood.legalWeight_of_legal \
             --decl Nightfall.GroupAdaptiveLikelihood.transcript_factorization \
             --decl Nightfall.GroupAdaptiveLikelihood.hidden_normalizer_factorization \
+            --decl Nightfall.GroupAdaptiveLikelihood.posterior_factorization \
             --json-out receipts/five-pillars/group-likelihood.json
           python3 research/nightfall/formalization/product_space/check_receipts.py receipts/five-pillars/group-likelihood.json
           (cd /tmp/mathlib4 && lake env leanchecker -v HilbertRankBudgetCore) | tee receipts/five-pillars/hilbert-checker.log
@@ -97,14 +99,14 @@ jobs:
              ("GroupInformationCoverDual", ["Nightfall.InformationCover.group_information_cover_weak_duality", "Nightfall.InformationCover.reciprocal_KL_cover_weak_duality"]),
              ("HilbertAdaptiveDrift", ["Nightfall.HilbertAdaptiveDrift.reciprocal_step", "Nightfall.HilbertAdaptiveDrift.quadratic_drift_depth_bound", "Nightfall.HilbertAdaptiveDrift.hard_budget_from_quadratic_drift", "Nightfall.HilbertAdaptiveDrift.rank_20172_budget_from_posterior_drift"]),
              ("GroupInformationCoverRate", ["Nightfall.InformationCoverRate.expected_group_cost_lower", "Nightfall.InformationCoverRate.triangle_late_cost_lower", "Nightfall.InformationCoverRate.triangle_late_cost_upper", "Nightfall.InformationCoverRate.triangle_singleton_cost_upper"]),
-             ("GroupAdaptiveLikelihood", ["Nightfall.GroupAdaptiveLikelihood.transcript_factorization", "Nightfall.GroupAdaptiveLikelihood.hidden_normalizer_factorization"])]:
+             ("GroupAdaptiveLikelihood", ["Nightfall.GroupAdaptiveLikelihood.legalWeight_of_legal", "Nightfall.GroupAdaptiveLikelihood.transcript_factorization", "Nightfall.GroupAdaptiveLikelihood.hidden_normalizer_factorization", "Nightfall.GroupAdaptiveLikelihood.posterior_factorization"])]:
             raw=Path(f"receipts/five-pillars/{mod}.log").read_text()
             audit=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",raw,re.S))
             for n in names:
               assert n in audit,(mod,n,"missing named axiom report")
               assert set(t.strip() for t in audit[n].split(',') if t.strip()) <= {'Classical.choice','propext','Quot.sound'},(n,audit[n])
             assert 'sorryAx' not in raw
-          print("PASS: fourteen scoped Hilbert/group-cover declarations, standard axioms only")
+          print("PASS: sixteen scoped Hilbert/group-cover declarations, standard axioms only")
           PY
       - name: Immutable receipt and strictly limited status
         if: always()
