@@ -151,6 +151,30 @@ Quaternion multiplication is bilinear, so \(\Psi(-u,v)=\Psi(u,-v)=-\Psi(u,v)\). 
 
 The quaternion norm identity was separately expanded as a polynomial identity in eight independent real variables and reduces to zero exactly; the universal argument is algebraic and requires no numerical optimization.
 
+
+## 4d. Sharpness of the first possible orientation-defect stage, in every dimension
+
+The prefix lemma in §4 says that if the first n rows are chronologically independent, the selectors for readings 1 through n+1 can be continuously lifted whenever specified by nonzero normalized projectors on their attained histories. **This stage barrier is sharp, even under the full-rank-prefix assumption.**
+
+**Proposition (constructive).** For every \(n\ge2\), there is an \((n+1)\)-reading normalized continuous *oriented-row* protocol whose first n rows are the independent coordinate rows, and a continuous, normalized, rank-one physical detector selector for **reading n+2** on its exact attained \((n+1)\)-history space, with **no continuous oriented-row lift**.
+
+**Proof.** Take the first n measurements \(d_i=x_i^2\). For reading n+1 choose the globally continuous normalized row
+\[
+a_{n+1}(d)=\frac{(1,g(d_1,d_2),0,\ldots,0)}{\sqrt{1+g(d_1,d_2)^2}}
+\]
+with \(g\) exactly as in §3. The attainable histories consist of all vectors
+\[
+(d_1,\ldots,d_n,z), \qquad
+d_i\ge0,\quad z=F_\pm(d_1,d_2),
+\]
+with each \(F_\pm\) precisely the two-sheet function in §3. Up to permutation of coordinates this is the **topological product** \(H_3^{(2D)}\times[0,\infty)^{n-2}\), with both factor projections continuous.
+
+Define the proposed reading-(n+2) detector by pulling back the no-lift projector \(Q\) of §3 along the projection onto \((d_1,d_2,z)\), and embed its 2×2 matrix as the upper-left block of an n×n matrix with all other entries zero. It remains a continuous trace-one rank-one PSD projection on the **actual attained histories**. If a continuous unit-vector row lift existed on this larger history domain, restrict it to the closed slice \(d_3=\cdots=d_n=0\). Its last n−2 coordinates must vanish because the projector has no support there, and its first two coordinates would give a continuous row lift of the §3 nonorientable projector on \(H_3^{(2D)}\), contradiction.
+
+For n=4 the pattern is **four fixed independent coordinate readings, one continuous fifth row, and one physically continuous non-liftable sixth rank-one detector**. This explicitly realizes the geometric regularity phenomenon at the exact numerical frontier of the broader six-versus-seven project. QED.
+
+**Limits:** This constructed protocol does **not** phase-retrieve all signals; the fifth and sixth readings deliberately ignore coordinates 3 through n and cannot resolve their relative signs. Therefore it is **not** a six-reading counterexample to the proved oriented-row count and does not settle the physical-detector count. It establishes only that the new model's nonorientability is genuinely realizable at the earliest permitted stage after a full-rank prefix. A construction of universal recovery, or a new obstruction exploiting the residual rank-one algebra, is still required.
+
 ## 5. Formalization / priority / independent audit plan
 
 - The published CCFH Remark 2.7 is the correct **external mathematical theorem**, not a Lean axiom masquerading as proof. #1010/#1024 supply only algebra, a Prop-valued topology interface and zero-padding; #1015/#1017 supply conditional causal Lean proofs. #1032/#1034/#1037/#1041 address distinct fragments of a proposed independent Lean proof of the classical zero theorem (character averaging, reference orbit, smooth approximation, sphere-only extension); full relative transversality and compact one-manifold boundary parity remain missing. **Do not duplicate source modules, falsely merge stacked branches or announce an unconditional kernel certificate.**
