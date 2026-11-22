@@ -11,14 +11,11 @@ from sympy import Matrix, Rational
 
 COLORS = [
  [4,4,3,1,3,3,0,0,2,1,1,2,4,4,2,3],
- [1,1,2,4,1,0,4,4,0,4,1,3,2],
+ [1,1,2,4,1,0,4,4,0,4,1,2,3,1,3,2],
  [3,0,4,0,3,2,4,0,4,1,1,3,1,1,0,3],
  [1,3,0,3,1,3,4,3,4,3,0,2,4,4,0,2],
  [4,3,4,2,3,3,4,1,0,1,0,4,2,3,2,4],
 ]
-# The second row below is the complete 16-coordinate coloring, replacing
-# the shortened row above.  Guard the literal input before any enumeration.
-COLORS[1]=[1,1,2,4,1,0,4,4,0,4,1,2,3,1,3,2]
 
 def configurations(rank):
     # Source rank-3 representative: {0,e1,e2,e1+e2,e3}, a unique 4-circuit.
