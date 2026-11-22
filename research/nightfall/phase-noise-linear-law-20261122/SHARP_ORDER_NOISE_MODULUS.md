@@ -36,6 +36,12 @@ E_2(2,0,R;\sigma)\le R/2+18\sigma/R.
 
 Thus the minimax excess error is Theta(sigma/R), with a sharp *exponent* 1 and unoptimized constants. The lower is conditional on the source-level nontrivial topological collision statement in #997, not on a new Lean proof in this PR. The inequality also implies E_2(2,0,R;0)=R/2 by taking sigma down to zero and using the same collision lower bound. No strict advantage for adaptive rows at the level of the noise **exponent** follows, since Theorem B already uses fixed rows.
 
+## Consequence: selection regularity is not the exponent bottleneck in 2D
+
+For every prescribed nonnegative Lipschitz bound L on the noisy-prefix **row-selection maps**, the same Theta(sigma/R) excess holds at n=2,m=2: fixed rows have history-Lipschitz constant **zero**, and the lower bound applies to the larger unrestricted class. This finding therefore excludes a separation in the *noise exponent* based only on selector-history Lipschitz regularity in this particular minimax model. It does **not** establish equality of sharp constants, efficient decoding, or stability of the row parameters as sigma changes.
+
+The chosen second row has transverse coefficient beta=2 sqrt(sigma)/R and consequently depends on the **known noise budget**. This dependence must not be silently replaced by one fixed frame used for all sigma. The paper-level nonattainment result in draft #999 suggests that a sigma-independent fixed frame cannot attain the noiseless R/2 benchmark; that separate conclusion still requires its own audit. Row implementation noise, decoder Lipschitz constraints, and higher-dimensional cases remain outside this theorem.
+
 ## Proof of Theorem A: inflate any exact collision
 
 Scale R=1 and write s=sigma/R^2 <=1/64. Because phaseless transcripts are even, change the sign of y and exchange signals if necessary to write
