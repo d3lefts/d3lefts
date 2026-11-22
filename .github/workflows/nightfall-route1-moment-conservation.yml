@@ -1,0 +1,38 @@
+name: NIGHTFALL exact query risk moment-conservation audit (finite, not Lean)
+on:
+  pull_request:
+    paths:
+      - 'scripts/check_route1_moment_conservation_exact.py'
+      - 'research/nightfall/structural_information/LOW_DEGREE_QUERY_RISK_CONSERVATION_20261121.md'
+      - '.github/workflows/nightfall-route1-moment-conservation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-moment-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Run exact rational adaptive-tree and sharp-threshold checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/check_route1_moment_conservation_exact.py
+          mkdir -p receipts/route1-moment
+          python3 scripts/check_route1_moment_conservation_exact.py \
+            | tee receipts/route1-moment/exact.log
+          git rev-parse HEAD > receipts/route1-moment/head
+          sha256sum scripts/check_route1_moment_conservation_exact.py \
+                    research/nightfall/structural_information/LOW_DEGREE_QUERY_RISK_CONSERVATION_20261121.md \
+                    > receipts/route1-moment/SHA256SUMS
+          echo 'All tests exact Fraction; finite tests do not prove the universal result or clear novelty.' > receipts/route1-moment/scope.txt
+      - name: Upload immutable source-scoped checker receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: route1-moment-exact-${{ github.run_id }}
+          path: receipts/route1-moment
+          if-no-files-found: warn
