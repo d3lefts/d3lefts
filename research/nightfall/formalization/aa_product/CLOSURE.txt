@@ -177,3 +177,5 @@ AaronsonAmbainis.Conjecture research/nightfall/formalization/vendor/aaronson_amb
 CubePrintedAA research/nightfall/formalization/product_space/CubePrintedAA.lean
 ProductSimulation research/nightfall/formalization/product_space/ProductSimulation.lean
 MixtureSimulation research/nightfall/formalization/product_space/MixtureSimulation.lean
+WrightV8MedianMixed research/formalization_candidates/wright/WrightV8MedianMixed.lean
+WrightV8RowConditional research/formalization_candidates/wright/WrightV8RowConditional.lean
