@@ -1,0 +1,55 @@
+name: NIGHTFALL tensor XOR symmetric-difference Lean kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/TensorSymmetricDifferenceXor.lean'
+      - '.github/workflows/nightfall-tensor-symmetric-xor-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  xor-exchange:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source-level exponent-two exchange and replay in Lean kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tensor-xor-exchange-receipt
+          src=research/nightfall/formalization/structural_information/TensorSymmetricDifferenceXor.lean
+          cp "$src" /tmp/mathlib4/TensorSymmetricDifferenceXor.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/TensorSymmetricDifferenceXor.olean TensorSymmetricDifferenceXor.lean) 2>&1 | tee tensor-xor-exchange-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker TensorSymmetricDifferenceXor) 2>&1 | tee tensor-xor-exchange-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/TensorSymmetricDifferenceXor.lean').read_text()
+          log=Path('tensor-xor-exchange-receipt/compile.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          names=['equal_sums_imply_equal_differences','equal_sums_imply_zero_symmetric_difference']
+          assert all(n in log for n in names)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          none=re.findall(r'does not depend on any axioms',log)
+          assert len(reports)+len(none)>=2
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert all(set(x.strip() for x in m.split(',') if x.strip())<=allowed for m in reports)
+          print('TENSOR_SYMMETRIC_DIFFERENCE_XOR_KERNEL_PASS_SCOPED')
+          PY
+      - name: Exact source receipt
+        if: always()
+        run: |
+          mkdir -p tensor-xor-exchange-receipt
+          git rev-parse HEAD > tensor-xor-exchange-receipt/HEAD
+          sha256sum research/nightfall/formalization/structural_information/TensorSymmetricDifferenceXor.lean > tensor-xor-exchange-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: tensor-xor-exchange-receipt
+          path: tensor-xor-exchange-receipt/
+          retention-days: 90
