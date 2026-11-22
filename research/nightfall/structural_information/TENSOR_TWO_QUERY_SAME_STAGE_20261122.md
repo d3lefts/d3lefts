@@ -114,6 +114,36 @@ rows can occur only from four pairwise-distinct labels. Cross-stage
 repetitions such as \(a=b'\) are still allowed in \(h\): the
 same-stage reduction does **not** yet control their aggregate.
 
+
+## Exact negative control: coherent remainder need not shrink with tensor depth
+
+For the rational orthogonal four-sector circuit encoded in
+check_two_query_dephasing_exact.py, let the available phases be
+\(D=\{0,a,b,a+b\}\), for any distinct nonzero \(a,b\in R_L\)
+with \(a+b\in R_L\). On uniform independent
+\((\chi_a,\chi_b)\), its exactly computed residual is
+\[
+h(s)=(-1)^{\langle a+b,s\rangle}
+    \frac{4608}{40625}
+\]
+up to the choice of sign conventions for row labels. Therefore
+\[
+\|h\|_{L^2(s)}=\frac{4608}{40625}
+\quad\text{for every }L\ge1.
+\]
+At each tensor depth, such a triple exists: vary one local factor
+through the three nonzero vectors of \(\mathbb F_2^2\), and fix the
+remaining local factors. The two corresponding linear functionals on
+uniform \(s\) are independent, while the third is their XOR.
+
+**Consequence:** no theorem of the form
+\(\sup_{\text{two-query circuits}}\|h\|_2=o_{L\to\infty}(1)\)
+can be true for this same-stage dephasing. This is an **exact algebraic
+counterexample to one tempting proof shortcut**, not a counterexample
+to polynomial classical row-query simulation: the example depends
+on only three available rows. The next certificate must recognize
+and cheaply simulate large but low-complexity residuals.
+
 ## Reproduction and audit
 
 - Exact rational four-sector example:
