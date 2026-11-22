@@ -16,7 +16,10 @@ def exact_constants():
     assert Q(25, 64) + Q(1, 128) == Q(51, 128) < Q(1, 2)
     assert 2 * (1 + 4 * MAX_S) <= Q(17, 8)
     assert Q(16) * MAX_S + 2 * MAX_S == Q(18) * MAX_S
-    assert Q(1, 2) - Q(33, 32) * Q(1, 64) - Q(1, 8) * Q(1, 64) > 0
+    assert Q(1, 2) - Q(5, 4) * Q(1, 64) == Q(123, 256) > Q(12, 25)
+    assert Q(123, 256) * (1 - Q(1, 32768)) - Q(1, 128) > 0
+    assert Q(3, 8) * Q(5, 3) * (1 - Q(1, 64)) == Q(315, 512) > Q(1, 2)
+    assert 1 - Q(1, 128)**2 / 6 >= Q(3, 4)
     assert (1 - Q(1, 64)) * Q(3, 2) > 1
     # sqrt(1+u) >= 1+u/3 when 0<=u<=3
     for u in [Q(0), Q(1, 1024*16), Q(1, 16), Q(1), Q(3)]:
@@ -54,7 +57,7 @@ def geometric_inflate(x,y,s):
             yp=(0,math.sqrt(s)) if abs(x[1])<1e-12 else (
                 -x[1]/a*math.sqrt(s), x[0]/a*math.sqrt(s))
         mode="radial"
-    elif d*d>=1+s/16:
+    elif d*d>=1+s/2:
         yp=y
         mode="already"
     else:
@@ -64,13 +67,13 @@ def geometric_inflate(x,y,s):
         cos_angle=max(-1,min(1,ux*bx+uy*by))
         sin_angle=abs(ux*by-uy*bx)
         theta=math.atan2(sin_angle,cos_angle)
-        phi=s/8
+        phi=s/2
         side=1 if ux*by-uy*bx>=0 else -1
         yp=(b*(math.cos(theta+phi)*ux-side*math.sin(theta+phi)*uy),
             b*(math.cos(theta+phi)*uy+side*math.sin(theta+phi)*ux))
         mode="rotation"
     assert norm2(yp)<=1+1e-11, (x,y,s,yp,mode)
-    assert dist_pm(x,yp)**2>=1+s/16-1e-10,(x,y,s,mode,dist_pm(x,yp))
+    assert dist_pm(x,yp)**2>=1+s/2-1e-10,(x,y,s,mode,dist_pm(x,yp))
     # Maximal intensity perturbation over all unit rows is bounded by a
     # Cauchy inequality; probe an additional independent direction.
     for angle in [0, math.pi/4, math.pi/2, RNG.random()*math.pi]:
@@ -142,7 +145,7 @@ if __name__ == "__main__":
     exact_constants()
     counts=geometric_tests()
     fibers=fiber_tests()
-    print("PASS exact rational inequalities and square-root lower expansion")
+    print("PASS 8x stronger exact rational collision-inflation guards and square-root lower expansion")
     print("PASS geometry modes:",counts)
     print("PASS compatible two-row sampled fibers:",fibers)
     print("PASS negative control: parallel rows fail")
