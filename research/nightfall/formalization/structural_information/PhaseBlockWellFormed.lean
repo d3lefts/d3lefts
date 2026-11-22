@@ -31,7 +31,7 @@ open Nightfall.PhaseBlockRoute1Terminal
 open Nightfall.PhaseBlockActualCircuit
 open Nightfall.Route1Polylog
 
-variable {B κ : Type*} [Fintype B] [DecidableEq B] [Fintype κ]
+variable {B κ : Type} [Fintype B] [DecidableEq B] [Fintype κ]
 
 /-- For physically norm-preserving fixed and oracle gates, the scalar
 acceptance bound on *all actual phase-block inputs* is a theorem rather
