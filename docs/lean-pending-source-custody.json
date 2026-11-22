@@ -408,6 +408,16 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBURegularParameter.lean",
+      "source_blob_sha": "be3537e8cca05cd2895b3b46a1725cc890a0aeae",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Pinned external ATLAS parametric Sard ordinary-axiom replay in merged #1048; theorem-level regular parameter existence in this branch is not yet source-certified. ProductSphereZero remains open."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean",
       "source_blob_sha": "c4541cd216dc7ab3169e14f2632378dbc57be966",
       "classification": "unreviewed-source",
