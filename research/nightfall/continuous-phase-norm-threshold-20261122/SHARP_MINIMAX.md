@@ -20,7 +20,7 @@ Then
 Continuity means continuity of the vector-valued selector on genuinely
 reachable histories, as in #997. The infimum is unchanged if every row
 must have norm at most one. On the unit ball the exact value is \(1/2\).
-The proof does not claim an attaining fixed protocol.
+The fixed-protocol infimum is the same but is not attained; a continuous adaptive protocol attains it.
 
 **Lower bound.** The separated collision theorem from #997 gives two
 inputs with the same transcript and quotient distance \(R-r\) for
@@ -71,55 +71,87 @@ including \(x=0\). Its error from the midpoint decoder is at
 most \((R-r)/2+2R\eta_\varepsilon\). Let \(\varepsilon\to0\).
 No continuity of the decoder is asserted.
 
-## Exact minimax infimum on a known sphere
+## The optimum is attained by a continuous adaptive policy
 
-On the known sphere of radius \(R>0\), the analogous error infimum at
-\(2n-3\) readings is \(R/\sqrt2\) for unrestricted outputs, or
+Let \(d=n-1\) and \(K=\sum_{j=1}^d3^{j-1}\). Read the first \(d\)
+coordinate intensities, so \(m_j=|x_j|\) is known. In one further
+batch of \(d\) readings, measure with the rows
+\[
+a_i=e_i+\lambda\sum_{j\ne i,\ j\le d}
+    \frac{m_i^2\,3^{j-1}}{\max(m_i,m_j)}e_j
+    +\frac{\lambda m_i^2}{4R}e_n,\qquad
+\lambda=\frac{1}{2R(K+1)}.
+\]
+Take a coefficient of the form \(0/0\) to be zero. Since
+\(m_i^2/\max(m_i,m_j)\le m_i\) where defined, each row depends
+continuously on the reachable prefixes. Normalize each row if
+needed and undo its known scale at decoding; its \(i\)-th
+coefficient is one before normalization.
+
+If some \(m_i>0\), choose an index \(i\) of smallest positive
+magnitude *at decoding*, and orient the signal with \(x_i=m_i\).
+The total perturbation of the amplitude \(\langle a_i,x\rangle\)
+away from \(m_i\) has absolute value at most
+\(\lambda m_i^2(K+1/4)\le m_i/2\).
+Thus the positive square root gives that amplitude. Subtract
+\(m_i\) and divide by \(\lambda m_i^2\). Each nonzero \(x_j\),
+\(j\ne i\), has \(m_j\ge m_i\), so the result is
+\[
+\sum_{j\ne i,\ j\le d}3^{j-1}\operatorname{sgn}(x_j)
+    +\frac{x_n}{4R}.
+\]
+The last summand lies in \([-1/4,1/4]\). Rounding to the nearest
+integer recovers the signed ternary digits uniquely (take
+\(\operatorname{sgn}(0)=0\)); the remainder recovers \(x_n\).
+Both steps are exact. No discontinuous minimum-selection operation
+takes place in the sensing policy.
+
+The only ambiguous fiber is the \(e_n\)-axis, on which all
+observations vanish. Its sign quotient is \([r,R]\), so its
+midradius vector attains error exactly \((R-r)/2\).
+This proves the infimum is a **minimum** among continuous
+adaptive protocols, for every \(n\ge2\).
+
+**No fixed protocol attains that minimum.** If its rows span a
+proper subspace, choose a unit vector \(e\) in their common
+kernel and \(w\) orthogonal to \(e\). The orthogonal pair
+\(R(w\pm e)/\sqrt2\) has identical readings, forcing error
+at least \(R/\sqrt2>(R-r)/2\).
+If the rows span \(\mathbb R^n\), split them into groups of
+\(n-1\). Their kernels each contain a unit vector, and one
+can select nonparallel vectors \(u,v\) from these kernels
+(otherwise both kernels are the same line). Set
+\(a=(R+r)/2\) and \(b=(R-r)/2\); both \(au+bv\) and \(au-bv\)
+have norms strictly between \(r\) and \(R\), since
+\(|\langle u,v\rangle|<1\). Their common transcript and distance
+\(2b\) follow from the split kernel constraints. Scale both by
+the same factor slightly larger than one, keeping both in the
+annulus. They still have a common transcript and their new
+quotient distance is strictly greater than \(R-r\).
+Thus the fixed-protocol infimum is the same, but is never attained.
+
+## Exact minimax error on a known sphere
+
+On the known sphere of radius \(R>0\), the analogous minimum
+at \(2n-3\) readings is \(R/\sqrt2\) for unrestricted outputs, or
 \(R\sqrt{2-\sqrt2}\) if outputs must also have norm \(R\).
 For the lower bounds use the orthogonal collision in #997. In the
 sphere-valued case, an output \(z\) of norm \(R\) cannot have inner
 products of absolute value greater than \(R^2/\sqrt2\) with both
 members of an orthogonal pair, by Bessel's inequality.
 
-For the matching upper bounds, use \(2n-3\) rows of the same
-near-hyperplane construction, with the same definition of
-\(\eta_\varepsilon\). In a nonsingleton fiber pick a reference
-\(x\), and let \(y\ne\pm x\) be another member. In the annihilator
-partition at least one block has \(n-1\) rows; after replacing
-\(y\) by \(-y\) if necessary, \(v=(x-y)/2\) belongs to the kernel
-of this block and its unit direction is within sine
-\(\eta_\varepsilon\) of the \(e\)-axis. Because the norms of
-\(x,y\) agree, \(u=(x+y)/2\) is orthogonal to \(v\), so
-\(\|P_W v\|\le\eta_\varepsilon\|v\|\) and
-\(|\langle u,e\rangle|\le\eta_\varepsilon\|u\|\).
-For the reflection \(J=I-2ee^\top\) these give
-\[
-\|y-Jx\|\le2(\|P_W v\|+|\langle u,e\rangle|)
-\le 4R\eta_\varepsilon.
-\]
-Every quotient point in the fiber other than the reference is
-therefore within \(4R\eta_\varepsilon\) of \([Jx]\).
-Choose the sign of \(Jx\) to have nonnegative inner product with
-\(x\) and decode to their ambient midpoint, or to its normalization
-to norm \(R\) for the sphere-valued decoder. In the first case
-both reference classes are within \(R/\sqrt2\) of the midpoint;
-in the second they are within \(R\sqrt{2-\sqrt2}\) of the normalized
-midpoint since the angle between the chosen representatives is at
-most \(\pi/2\). The error on the entire fiber is at most the
-claimed infimum plus \(4R\eta_\varepsilon\), which tends to zero.
+For attainment use a fixed full-spark frame of \(2(n-1)-1\) rows
+on \(W=e^\perp\). It retrieves the projection \(w=P_Wx\) up to
+sign. The known norm determines the other coordinate's absolute
+value \(t=\sqrt{R^2-\|w\|^2}\). Thus each quotient fiber consists
+of at most two classes with representatives \(w+te,w-te\).
+Choose the signs of the representatives to have nonnegative
+inner product, and decode to their midpoint, or its normalization
+to norm \(R\) if required. An angle of at most \(\pi/2\) gives
+the respective worst-case bounds \(R/\sqrt2\) and
+\(R\sqrt{2-\sqrt2}\), so both are attained without adaptivity.
 
-## Two boundary facts
-
-**Attainment in dimension two.** For \(R>0\), read \(h=x_1^2\),
-then use the continuous row \((1,\sqrt h/(2R))\) (normalize
-if needed and undo its known scale at decoding). When \(h>0\),
-choose the representative \(x_1=\sqrt h\). Because \(|x_2|\le R\),
-the unsquared second reading is at least \(\sqrt h/2>0\), so its
-positive square root determines \(x_2\). At \(h=0\) the two readings
-both vanish and the whole remaining fiber is the \(e_2\)-axis
-intersected with the annulus. Its quotient is the interval \([r,R]\);
-output its midpoint. This protocol attains the bound for \(n=2\).
-The argument does not settle attainment for \(n\ge3\).
+## Noise caveat
 
 **The near-coplanar construction is not uniformly robust to noise.**
 If normalized rows have \(\max_i|\langle a_i,e\rangle|\le\gamma\),
