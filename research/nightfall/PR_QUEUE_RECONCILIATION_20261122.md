@@ -80,3 +80,18 @@ The user expressly requested that outstanding pull requests be merged or closed 
 - **Analytic research:** #999, #1002, #1011, #1024 and other proof candidates remain paper-level until non-author mathematical review, same-model prior-art search and appropriate kernel/interval certification.
 - **External systems:** repository evidence changes are not an external Cairn attachment, an Einstein Arena submission, an external refereeing decision, or a website deployment by themselves.
 - **Future work:** use issues and fresh focused PRs for independently reviewed next steps, rather than silently reopening or replacing historical research results. Closing research drafts neither falsifies them nor grants novelty.
+
+
+## Late-arrival addendum — final queue clearance
+
+After the first zero-open snapshot, two parallel contributors opened new PRs.
+Both were reconciled without suppressing review obligations:
+
+| PR | Outcome | Reason |
+| --- | --- | --- |
+| [#1026](https://github.com/d3lefts/d3lefts/pull/1026) | Closed unmerged; source head 5ecbfdfc8d3d4736e278caecee89a8ac8323b1a5 preserved | Access-local corruption Route 1 extension had its source Lean job in progress and no independent theorem review; mathematical status paper candidate |
+| [#1027](https://github.com/d3lefts/d3lefts/pull/1027) | Closed unmerged; source head 9abbe2e0cb596241a08458d94c89b2cc58624106 preserved | Conditional ProductSphereZero zero-padding has sanity evidence but dedicated pinned Lean job #45052182592 had not finished; maximal-rank topological hypothesis still unproved |
+
+**Final observed repository state:** GitHub's open-PR query returned an empty array (0 open pull requests) after these closures. This is a point-in-time snapshot; parallel contributors may create new PRs later.
+
+**Additional custody:** Scoped phase retrieval alternate #995, internal audit #1000 and topology reference #1024 were merged as research/conditional results. Unique phase-noise source #1011 and conditional Lean sources #1015/#1017 were source-preservingly integrated around stacked merge conflicts. The rank-free T2 paper candidate #1016 remains unmerged for independent review [issue #1021](https://github.com/d3lefts/d3lefts/issues/1021). Strict website source custody remains blocked in [issue #1025](https://github.com/d3lefts/d3lefts/issues/1025), regardless of successful Pages deployments.
