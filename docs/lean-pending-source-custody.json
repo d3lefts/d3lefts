@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 35,
+  "revision": 36,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v33: 483 pending exact Lean blobs, 67 frozen historical records unchanged; 550 total main Lean sources. New ProductBUSphereExtension source is unreviewed. Future additions and edits must pass strict source custody workflow on research/nightfall/**/*.lean, not only on manifest changes.\nAdd exact-scoped unreviewed interval-component Lean source for strict custody.",
+  "scope": "v36: Preserve every latest main custody record plus new exact unreviewed interval stabilizer source; record a strictly scoped kernel theorem separate from topology and priority.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -378,6 +378,16 @@
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
+      "source_blob_sha": "8314fd4cfca632a9a2ae7da85e863ea8cb0ed7e4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Pending source-custody record only. Independent exact-head pinned Lean result 45055510914 supports the named t=0 algebraic Jacobian inverse, but is not recognized by this manifest as a full global proof passport; ProductSphereZero, full derivative and manifold parity remain unproved."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
       "source_blob_sha": "2c1e0e4a732081131225d85e36d8fa3ca9ea0dd9",
       "classification": "unreviewed-source",
@@ -406,6 +416,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBURegularParameter.lean",
+      "source_blob_sha": "be3537e8cca05cd2895b3b46a1725cc890a0aeae",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Pinned external ATLAS parametric Sard ordinary-axiom replay in merged #1048; theorem-level regular parameter existence in this branch is not yet source-certified. ProductSphereZero remains open."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean",
