@@ -372,3 +372,25 @@ whether the spectrum of the reachable-state compressed effect has
 a polynomially bounded soft tail at meaningful \(\kappa\), rather
 than asking only for a small accepting-projector rank.
 No such universal upper bound is established here.
+
+
+### Exact minimizer check for the full-span example
+
+The centered absolute-trace objective has its minimum at any
+median eigenvalue. Here the 5th and 6th eigenvalues are \(9/20\)
+and \(11/20\), giving \(\Theta_0=17/20\).
+
+For the soft-tail objective, the exact minimizer \(\lambda=11/20\)
+is also globally valid, not just a trial point. If
+\(\lambda\le11/20\), the \(9/10\) outlier alone costs at least
+\(9/10-1/10-11/20=1/4\). If
+\(11/20\le\lambda\le4/5\), the five \(9/20\) eigenvalues
+and the outlier cost at least
+\(5(\lambda-11/20)+(4/5-\lambda)
+ =4\lambda-39/20\ge1/4\).
+If \(\lambda\ge4/5\), the five lower eigenvalues cost at least
+\(5(4/5-11/20)=5/4\).
+Thus \(\Theta_{1/10}=1/4\) exactly.
+The checker separately minimizes the convex piecewise-linear
+objectives over all exact rational breakpoints, not just the
+chosen center.
