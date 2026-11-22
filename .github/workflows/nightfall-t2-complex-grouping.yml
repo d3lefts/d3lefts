@@ -1,0 +1,24 @@
+name: NIGHTFALL T2 complex operator identities exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/BINARY_CHARACTER_FIBER_T2_TRANSFER_20261122.md'
+      - 'scripts/check_t2_complex_grouping_exact.py'
+      - '.github/workflows/nightfall-t2-complex-grouping.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-complex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pin exact symbolic arithmetic
+        run: python3 -m pip install --user sympy==1.14.0
+      - name: Replay complex cancellation and zero-triple negative controls
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum scripts/check_t2_complex_grouping_exact.py research/nightfall/structural_information/BINARY_CHARACTER_FIBER_T2_TRANSFER_20261122.md
+          python3 scripts/check_t2_complex_grouping_exact.py
+          echo 'FINITE COMPLEX IDENTITIES ONLY. No Lean kernel replay or theorem promotion.'
