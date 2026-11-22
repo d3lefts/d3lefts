@@ -1,6 +1,6 @@
 # Rank-free two-query binary-character simulation: complete Hilbert-energy proof
 
-**NIGHTFALL, proof revision v3 — 2026-11-22.** Source theorem extends the existing tensor-subcube Hilbert argument in #1016/#1059 and its abstract binary-label formulation in #1068; mathematical mechanism, identities and attribution are preserved. **Status: complete author-side analytic paper proof** for *all finite-dimensional complex Hilbert spaces*, *arbitrary effects \(0\le P\le I\)* and *all finite binary label sets*. It has passed a new, separately implemented finite multi-rank numerical attack, but **independent mathematical review, Lean kernel formalization, dated same-scope global novelty clearance and authorized publication remain OPEN**. Do not interpret “complete paper proof” as “Lean-certified” or “world-first theorem.”
+**NIGHTFALL, proof revision v3 — 2026-11-22.** Source theorem extends the existing tensor-subcube Hilbert argument in #1016/#1059 and its abstract binary-label formulation in #1068; mathematical mechanism, identities and attribution are preserved. **Status: complete author-side analytic paper proof** for *all complex Hilbert spaces (including infinite-dimensional)*, *arbitrary effects \(0\le P\le I\)* and *all finite binary label sets*. It has passed a new, separately implemented finite multi-rank numerical attack, but **independent mathematical review, Lean kernel formalization, dated same-scope global novelty clearance and authorized publication remain OPEN**. Do not interpret “complete paper proof” as “Lean-certified” or “world-first theorem.”
 
 ## Research contract and fixed model
 
@@ -11,7 +11,7 @@
  O_s=\sum_{a\in D}\chi_a(s)\Pi_a,\quad
  \Psi_s=O_s U O_s\psi,\quad f(s)=\langle\Psi_s,P\Psi_s\rangle .
 \]
-The finite complex Hilbert space \(\mathcal H\) is arbitrary; the \(\Pi_a\) are orthogonal **projections** with \(\Pi_a\Pi_b=0\) for \(a\ne b\) and \(\sum_a\Pi_a=I\); \(\|\psi\|=1\), \(U\) unitary and \(P=P^*\) an arbitrary effect \(0\preceq P\preceq I\), *not* assumed to be a projection or rank bounded. Initial/final fixed unitaries are absorbed into \(\psi,P\). The \(a=0\) positive oracle sector can be nonzero. The circuit \(f\), but not the secret \(s\), is known for nonuniform classical preprocessing. Only the **number of raw classical oracle queries**, not classical runtime, is bounded.
+The complex Hilbert space \(\mathcal H\) is arbitrary and may be infinite-dimensional; the index set \(D\) is finite, so all path sums and frames below have finite rank; the \(\Pi_a\) are orthogonal **projections** with \(\Pi_a\Pi_b=0\) for \(a\ne b\) and \(\sum_a\Pi_a=I\); \(\|\psi\|=1\), \(U\) unitary and \(P=P^*\) an arbitrary effect \(0\preceq P\preceq I\), *not* assumed to be a projection or rank bounded. Initial/final fixed unitaries are absorbed into \(\psi,P\). The \(a=0\) positive oracle sector can be nonzero. The circuit \(f\), but not the secret \(s\), is known for nonuniform classical preprocessing. Only the **number of raw classical oracle queries**, not classical runtime, is bounded.
 
 Set the **ordered**, **nonzero-frequency** pair fiber
 \[
@@ -41,16 +41,16 @@ and
 \left\lceil\frac{2(2\sqrt K+145\sqrt M)^2}{\varepsilon^2\delta}\right\rceil
 \right\}.}\tag{T2}
 \]
-There is **no dimension, rank, trace, nonzero-mass floor, oracle-label independence or runtime hypothesis**. The distribution is *uniform on \(V^*\)*; no analogous nonuniform-source assertion follows without further work.
+There is **no finite-dimensionality, effect rank, effect trace, nonzero-mass floor, oracle-label independence or runtime hypothesis**. The distribution is *uniform on \(V^*\)*; no analogous nonuniform-source assertion follows without further work.
 
-### Lemma 1 — frame lightness and unrestricted complex energy
+### Lemma 1 — frame lightness and unrestricted complex energy (including infinite Hilbert spaces)
 
 Let
 \[
 \psi_a=\Pi_a\psi,\quad t_{ba}=\Pi_bU\psi_a,\quad
 p_a=\|\psi_a\|^2,\quad q_b=\sum_a\|t_{ba}\|^2.
 \]
-Then \(\sum_a p_a=\sum_b q_b=\sum_{a,b}\|t_{ba}\|^2=1\). Put \(G=\sum_{a,b}|t_{ba}\rangle\langle t_{ba}|\), so \(G\succeq0\), \({\rm Tr}G=1\).
+Then \(\sum_a p_a=\sum_b q_b=\sum_{a,b}\|t_{ba}\|^2=1\). Put \(G=\sum_{a,b}|t_{ba}\rangle\langle t_{ba}|\), so \(G\succeq0\), \({\rm Tr}G=1\). Since \(D\) is finite, \(G\) and every \(G_\ell\) are **positive finite-rank trace-class** operators even for an infinite-dimensional \(\mathcal H\). Consequently all cyclic finite-rank trace identities and inequalities below are legitimate, with no trace or rank assumption on the bounded effect \(P\).
 
 For \(0<\eta<1\) define first-light labels by \(p_a<\eta\), second-light labels by \(q_b<\eta\). The two restricted positive frames satisfy **separately**
 \[
@@ -235,3 +235,8 @@ It lies in \((0,1)\) for the stated parameters and \(K,M\ge1\). Parseval gives \
 8. **Prior art and priority:** standard quantum query model, Fourier character orthogonality, PSD trace pinching are antecedents; Lovitz–Petrov 2023 gives tensor circuit controls, not the abstract operator lemma. GMNR, BDST 2026 and Li 2026 must be compared by exact oracle/access/error scope. No dated same-scope novelty clearance yet. Human owner controls submission/publication.
 
 **Status classification:** **complete mathematical paper proof**, **reproducible finite adversarial checks**, **NOT Lean-kernel-certified**, **NOT independently mathematically refereed**, **NOT cleared as globally novel**. The theorem's validity and proof-checking status must not be conflated.
+
+
+### Extension note — why infinite-dimensional complex Hilbert spaces are included
+
+No step in Lemmas 1–5 requires \(\dim\mathcal H<\infty\). The index set \(D\) is finite. Thus \(G=\sum_{a,b}|t_{ba}\rangle\langle t_{ba}|\), its light restrictions, and all grouped frames are finite-rank positive operators, hence trace class. For bounded \(P\), products such as \(G_\ell PGP\) and \(PGP\) are trace class, the trace is cyclic with bounded factors, and \(\operatorname{Tr}(G_\ell PGP)\le\eta\operatorname{Tr}(PGP)\) remains valid. Pinching is a **finite** sum of bounded orthogonal projections, with no convergence issue; the direct sums over \(a\in D\) are finite; every \(F_b,Z,\widehat T_e\) is a finite vector sum. The finite-source Walsh projection is unaffected. Therefore the same proof establishes (T2) on arbitrary (even nonseparable) complex Hilbert spaces with a **finite** label alphabet and a bounded effect \(0\le P\le I\). This is an analytic extension of the same mechanism, **not** a second independent discovery or Lean certificate.
