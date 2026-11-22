@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/structural_information/AffineWynerFibers.lean'
       - 'research/nightfall/formalization/structural_information/AffineWynerSupport.lean'
       - '.github/workflows/nightfall-affine-wyner-fibers-lean.yml'
+      - 'scripts/check_affine_wyner_rectangles_exact.py'
   workflow_dispatch:
 
 permissions:
@@ -34,6 +35,11 @@ jobs:
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean") 2>&1 | tee "receipts/affine-wyner-fibers/$name.log"
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/affine-wyner-fibers/$name.log"
           done
+      - name: Independent exact small-field regression and negative control
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_affine_wyner_rectangles_exact.py 2>&1 | tee receipts/affine-wyner-fibers/finite-audit.log
       - name: Independent kernel replay and fail-closed axiom gate
         shell: bash
         run: |
