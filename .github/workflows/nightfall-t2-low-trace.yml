@@ -11,6 +11,9 @@ on:
       - "research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py"
       - "research/nightfall/structural_information/check_t2_behavioral_effect_exact.py"
       - "research/nightfall/structural_information/TENSOR_TWO_QUERY_BEHAVIORAL_EFFECT_20261122.md"
+      - "scripts/check_tensor_t2_rankfree_independent.py"
+      - "scripts/check_tensor_t2_rankfree_coherence.py"
+      - "research/nightfall/structural_information/TENSOR_T2_RANKFREE_INDEPENDENT_AUDIT_20261122.md"
       - ".github/workflows/nightfall-t2-low-trace.yml"
   pull_request:
     paths:
@@ -22,6 +25,9 @@ on:
       - "research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py"
       - "research/nightfall/structural_information/check_t2_behavioral_effect_exact.py"
       - "research/nightfall/structural_information/TENSOR_TWO_QUERY_BEHAVIORAL_EFFECT_20261122.md"
+      - "scripts/check_tensor_t2_rankfree_independent.py"
+      - "scripts/check_tensor_t2_rankfree_coherence.py"
+      - "research/nightfall/structural_information/TENSOR_T2_RANKFREE_INDEPENDENT_AUDIT_20261122.md"
       - ".github/workflows/nightfall-t2-low-trace.yml"
 
 jobs:
@@ -42,6 +48,7 @@ jobs:
           sha256sum research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py
           sha256sum research/nightfall/structural_information/check_t2_behavioral_effect_exact.py
           sha256sum research/nightfall/structural_information/TENSOR_TWO_QUERY_BEHAVIORAL_EFFECT_20261122.md
+          sha256sum scripts/check_tensor_t2_rankfree_independent.py scripts/check_tensor_t2_rankfree_coherence.py
       - name: Compile exact checker
         run: |
           python -m py_compile research/nightfall/structural_information/check_tensor_t2_low_trace.py
@@ -49,6 +56,7 @@ jobs:
           python -m py_compile research/nightfall/structural_information/check_t2_soft_spectrum_exact.py
           python -m py_compile research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py
           python -m py_compile research/nightfall/structural_information/check_t2_behavioral_effect_exact.py
+          python -m py_compile scripts/check_tensor_t2_rankfree_independent.py scripts/check_tensor_t2_rankfree_coherence.py
       - name: Replay direct circuit, Fourier, and conditional expectation
         run: python research/nightfall/structural_information/check_tensor_t2_low_trace.py
       - name: Check compressed centered-effect high-rank projector
@@ -59,3 +67,7 @@ jobs:
         run: python research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py
       - name: Exact behaviorally equivalent high-rank POVM countercheck
         run: python research/nightfall/structural_information/check_t2_behavioral_effect_exact.py
+      - name: Independent rank-free T2 finite matrix, XOR and primitive-lift checks (NOT theorem)
+        run: |
+          python scripts/check_tensor_t2_rankfree_independent.py
+          python scripts/check_tensor_t2_rankfree_coherence.py
