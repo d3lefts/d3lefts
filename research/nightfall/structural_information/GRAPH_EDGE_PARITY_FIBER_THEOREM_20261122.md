@@ -1,7 +1,7 @@
 # Bounded-degree graph-edge characters: uniform primitive XOR fibers against high Wyner dependence
 
 **NIGHTFALL / 2026-11-22 / v1.0**  
-**Status:** all-graph *paper-level exact combinatorial theorem*, independently formulated proof but not Lean-certified or cleared against all prior art; finite exact checker included. **Its quantum simulation consequence is CONDITIONAL on the still-uncertified generic complex two-query operator theorem in #1068**. Existing forest/graphic-matroid facts and Wyner/support-rectangle mechanisms are not original to NIGHTFALL.
+**Status:** all-graph *paper-level exact combinatorial theorem*, author-side proof but not independently Lean-certified or cleared against all prior art; finite exact checker included. **Its quantum simulation consequence is CONDITIONAL on the still-uncertified generic complex two-query operator theorem in #1068**. Existing forest/graphic-matroid facts and Wyner/support-rectangle mechanisms are not original to NIGHTFALL.
 
 ## 1. Exact original-oracle model
 
@@ -56,7 +56,7 @@ For integer L≥4, take V=(Z/LZ)² and undirected edges in directions (1,0), (0,
 
 The exact finite checker independently enumerates primitive edge forests and original label tuples, verifies the source rank and edge-cycle constraints, checks the triangle-overlap connectivity and bridge-negative control, and gives:
 
-| Triangular torus | Vertices | Edges | Primitive ordered K₄ | Ordered M₂ | Independent triangle constraints |
+| Triangular torus | Vertices | Edges | Primitive ordered K₄ | Ordered M₂ | Triangle count |
 |---|---:|---:|---:|---:|---|
 | L=3 (degenerate short wrap) | 9 | 27 | 2400 | 12 | 27 triangles, not 2L² |
 | L=4 | 16 | 48 | 1464 | 6 | 32 triangles |
