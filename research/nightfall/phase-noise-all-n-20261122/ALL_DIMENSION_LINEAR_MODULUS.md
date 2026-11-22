@@ -2,6 +2,10 @@
 
 NIGHTFALL research checkpoint, 22 November 2026. **New author-side paper theorem candidate.** This file is not a Lean certificate, an independent non-author review, a dated priority decision, or an authorization to publish. The upper-bound proof below is independent of the topological lower bound's validity; the two-sided corollary explicitly imports the paper-level exact-collision result from merged PR #997 and the geometric inflation from merged PR #1009.
 
+## Cross-instance prior-result reconciliation (same day)
+
+**PR #1011 preceded this manuscript in the same research session.** The parallel instance independently proposed the *same all-dimensional ball upper exponent* by a different proof: singular-value partitioning of small factors across the near-coplanar frame. Its author-side upper proof and additional positive-annulus / known-sphere extensions are separate and need individual review. This PR #1020 contributes an **alternative polynomial evaluation + Mahler-product certificate**, with exact-rational constants and self-contained reconstruction. The common high-level all-n statement must be credited jointly and **must not** be represented as two independent novelty claims. PR #1011's source history includes older #1009 bounds (sigma/(96R)); #1009 on main now has the stronger sigma/(12R) bound. Reconcile those files before any PR #1011 merge, and preserve the two proof lineages.
+
 ## Objective, model, and claim
 
 Fix integer n>=2, radius R>0 and noise budget 0<sigma<=R^2/64. Write m=2n-2. We consider normalized deterministic real squared-linear measurements: at stage j an arbitrary globally continuous selector on **all noisy prefixes** chooses row a_j, ||a_j||_2<=1, and observes z_j=(a_j . x)^2+e_j with |e_j|<=sigma. Decoder outputs a class modulo the global sign, with quotient distance d_pm(x,y)=min(||x-y||,||x+y||). Let E_m(n,0,R;sigma) denote the infimum worst-case reconstruction error on the full radius-R ball. Policies are allowed to depend on the declared sigma; decoders may use noncomputable feasible-fiber selection.
