@@ -1,0 +1,41 @@
+name: NIGHTFALL C1b exact upper and conditional lower replay
+
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/projects/erdos/**"
+      - "research/nightfall/projects/erdos-overlap-paper.md"
+      - ".github/workflows/nightfall-c1b-exact-replay.yml"
+  push:
+    paths:
+      - "research/nightfall/projects/erdos/**"
+      - "research/nightfall/projects/erdos-overlap-paper.md"
+      - ".github/workflows/nightfall-c1b-exact-replay.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstruct SHA-pinned 131072-cell witness and check complete exact spectrum
+        run: bash research/nightfall/projects/erdos/recomputed_20261122/replay.sh
+      - name: Reject optimized Python which disables proof assertions
+        run: |
+          if python3 -O research/nightfall/projects/erdos/recomputed_20261122/verify_lower.py; then
+            echo "BUG: lower verifier accepted disabled assertions"
+            exit 1
+          fi
+          if python3 -O research/nightfall/projects/erdos/recomputed_20261122/reconstruct_upper.py; then
+            echo "BUG: upper reconstruction accepted disabled assertions"
+            exit 1
+          fi
+      - name: Certificate attribution and scope
+        run: |
+          echo "Upper: exact 262143 finite signed-shift arithmetic and affine continuum interpolation"
+          echo "Lower: ONLY rational intermediate mean cover, inherited Wetch/Arb analytic premises"
+          echo "No external non-author review, global optimum, or Arena submission asserted"
