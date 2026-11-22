@@ -1,0 +1,36 @@
+name: NIGHTFALL Route 1 shared information drift Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1SharedDrift.lean'
+      - '.github/workflows/nightfall-route1-shared-drift.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  shared-drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and audit shared drift and telescoping
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp "research/nightfall/formalization/product_space/Route1SharedDrift.lean" /tmp/mathlib4/Route1SharedDrift.lean
+          (cd /tmp/mathlib4 && lake env lean Route1SharedDrift.lean) 2>&1 | tee /tmp/shared-drift-receipt.log
+          python3 - <<'PY'
+          import re
+          data = open('/tmp/shared-drift-receipt.log').read()
+          reports = dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]", data, re.S))
+          for suffix in ('selected_task_drift_le_total','layer_drift_telescope'):
+              name = 'Nightfall.Route1SharedDrift.' + suffix
+              assert name in reports, name
+              found = {x.strip() for x in reports[name].split(',') if x.strip()}
+              assert found <= {'propext','Classical.choice','Quot.sound'}, (name, found)
+              print(name, sorted(found))
+          assert 'sorryAx' not in data
+          PY
