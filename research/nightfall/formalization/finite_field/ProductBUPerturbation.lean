@@ -144,7 +144,7 @@ theorem weighted_perturbation_surjective_nonzero (k : ℕ)
   intro i
   rw [congrFun (applyParam_rankOne_unit k u hu
     (fun i => y i / (t * (1 - t)))) i]
-  field_simp [ht]
+  exact mul_div_cancel_left₀ (y i) ht
 
 /-- The nonzero-weight augmented linear parameter/norm-gradient right
 inverse, valid for every real t with t ≠ 0 and t ≠ 1. -/
