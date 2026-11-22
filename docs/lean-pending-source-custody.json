@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 50,
+  "revision": 51,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v50: original 67 historical records retained; added 3 exact BU concrete family algebraic source blobs from passed sibling source CI, unreviewed-source custody only.",
+  "source_commit": "4760ceb8834c6690cc6e770acfdc469d30eae82d",
+  "scope": "v51: original 67 historical records retained; add exact unreviewed-source custody for two conditional Hilbert-budget and fractional group-information-cover Lean modules of draft PR #1138. This ledger does not promote full pillar D1/D2/A2 or certify CI.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5494,6 +5494,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/costs/GroupInformationCoverDual.lean",
+      "source_blob_sha": "27ac8bdb150c9af61ba6e90146fe048139a9d02a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Draft PR #1138 A2: exact general group fractional-cover weak-duality core, not full adaptive KL/Bayes risk/sequential stopping/matching asymptotics. Exact-head Lean and independent leanchecker receipts are separate; no peer review or novelty claim."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/HilbertRankBudgetCore.lean",
+      "source_blob_sha": "5566cb729c0a084ae6dbe91f4ee0b61dba1555fd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Draft PR #1138 D1: exact budget aggregation and numerical 5043 rank-linear scalar implication from stipulated source budgets and spherical coefficient. No universal product Hilbert budgets, spherical measure theorem or adaptive D2 certified; exact-head CI and independent review separate."
     }
   ]
 }
