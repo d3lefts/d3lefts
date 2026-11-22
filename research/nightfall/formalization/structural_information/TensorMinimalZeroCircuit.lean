@@ -30,7 +30,7 @@ theorem exists_minimal_zero_circuit
     ∃ E : Finset I, E ⊆ S ∧ IsMinimalZeroCircuit f E := by
   classical
   induction S using Finset.strongInductionOn with
-  | h S ih =>
+  | _ S ih =>
     by_cases hminimal : ∀ T : Finset I, T ⊂ S → T.Nonempty →
         (∑ i ∈ T, f i) ≠ 0
     · exact ⟨S, Finset.Subset.refl S, hne, hzero, hminimal⟩
