@@ -1,0 +1,22 @@
+name: NIGHTFALL binary T2 primitive/pair fiber exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/BINARY_CHARACTER_FIBER_T2_TRANSFER_20261122.md'
+      - 'scripts/check_binary_phase_fibers_exact.py'
+      - '.github/workflows/nightfall-binary-t2-fibers.yml'
+  workflow_dispatch:
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact source and binary-label combinatorial regression
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum scripts/check_binary_phase_fibers_exact.py research/nightfall/structural_information/BINARY_CHARACTER_FIBER_T2_TRANSFER_20261122.md
+          python3 scripts/check_binary_phase_fibers_exact.py
+          echo 'NOTE: finite XOR counts are not a quantum operator or Lean proof certificate.'
