@@ -1,0 +1,46 @@
+name: NIGHTFALL conditional continuous causal phase theorem
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/CausalPhaseConditional.lean'
+      - 'research/nightfall/formalization/finite_field/ProductSphereObstruction.lean'
+      - 'research/nightfall/formalization/finite_field/GenuinePrefixPhase.lean'
+      - '.github/workflows/nightfall-phase-conditional-terminal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conditional-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact source closure and audit terminal axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in GenuinePrefixPhase ProductSphereObstruction CausalPhaseConditional; do
+            src="research/nightfall/formalization/finite_field/$f.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "/tmp/$f.log"
+          done
+          python3 - <<'PY'
+          import re
+          data = open('/tmp/CausalPhaseConditional.log').read()
+          names = ('continuous_history', 'continuous_causal_collision_of_productSphereZero',
+                   'no_universal_continuous_causal_below_threshold')
+          for suffix in names:
+              name = 'Nightfall.CausalPhaseConditional.' + suffix
+              m = re.search(re.escape("'" + name + "' depends on axioms: [") + r'([^\]]*)\]', data, re.S)
+              if m is None:
+                  assert f"'{name}' does not depend on any axioms" in data, name
+                  found = set()
+              else:
+                  found = {x.strip() for x in m[1].split(',') if x.strip()}
+              assert found <= {'propext', 'Classical.choice', 'Quot.sound'}, (name, found)
+              print(f'{name}: {sorted(found)}')
+          PY
