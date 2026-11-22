@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 40,
+  "revision": 41,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v40: preserve historical records and register exact merged-source candidate for three independent antipodal homeomorphisms, without auto-promoting to an unconditional theorem.",
+  "scope": "v41: 493 pending immutable Lean blobs; preserves all v40 and original 67 source records. PhaseRoute1Finite exact-source custody only; CI 45058815183 supports the three finite lemmas, but not the general-B Wyner theorem or physical query composition.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3606,6 +3606,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean",
+      "source_blob_sha": "6495ed33759de30945b455c25f3037fb894d17a2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Integrated from #1083 identical Git blob 6495ed33759de30945b455c25f3037fb894d17a2; exact finite Lean CI 45058815183 passed three named statements and standard axiom check. Custody ledger does not establish full Route 1 composition, all-B Wyner information, independent referee review, or novelty."
     },
     {
       "path": "research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean",
