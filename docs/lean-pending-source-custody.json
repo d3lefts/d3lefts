@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 45,
+  "revision": 46,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v45: 510 pending exact-source entries; add merged #1113 RH-conditional Lean module as unreviewed in historical registry despite separate named kernel receipt. Historical 67-record certificate list remains unchanged; no RH or analytic prime-zeta theorem promoted.",
+  "scope": "v46: 512 pending exact Lean source blobs; 67 frozen historical receipts unchanged. Two independent phase-block named Lean modules have passing pinned source receipts but full raw-oracle Route1 terminal remains provisional.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3656,6 +3656,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean",
+      "source_blob_sha": "939b5855e510f76ca7ec89d1666e27b45cf7d065",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Registered Git blob with separately passed named kernel proof, workflow run 45059108351; this pending ledger is not an analytic, novelty, or full raw-circuit terminal certification."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockRoute1.lean",
+      "source_blob_sha": "5f08403421e30dc8bfd0f0727c0f8a246f81f9b6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Registered Git blob with separately passed named kernel proof, workflow run 45058739792; this pending ledger is not an analytic, novelty, or full raw-circuit terminal certification."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean",
