@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 55,
+  "revision": 56,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "99138d1ca1c26bf887699f2911bab090c315dae2",
-  "scope": "v55: source-pinned proof repair of matched three-cycle A2 dual cost bound; no automatic source-theorem promotion.",
+  "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
+  "scope": "v56: actual grouped A2 source likelihood and Bayes posterior algebra candidate registered at exact git blob; no full adaptive KL/stopping/SPRΤ terminal or universal Hilbert theorem claimed.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5537,7 +5537,7 @@
     },
     {
       "path": "research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean",
-      "source_blob_sha": "903874f1777f094136199f3c3f338adc4921a4a9",
+      "source_blob_sha": "0d24d26aefdc35675a43f01f2c8ff1d990d6c2c8",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
