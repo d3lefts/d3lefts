@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 46,
+  "revision": 47,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v46 clean-main: 512 pending exact source entries, 67 historical source-matched records unmodified. The pure quantitative and decoder-risk named Lean terminal passed at head 2dd69478539c02f19932c68e3abb4e92140757c6 (run 45065543797); new mixed-character conditional Lean source added and pending exact integrated CI. Global ProductSphereZero and ProductSphereMixedZero are hypotheses, not theorems.",
+  "scope": "v47 fixed-base Lean custody with 513 pending sources and original 67 historical source-matched unchanged. Reconciles merged PR #1113 RHScaleSeparation as unreviewed only after strict custody checker detected pre-existing missing registration; mixed-character and pure phase-risk Lean sources pending new exact-head run; ProductSphereZero still not proved in Lean.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -2456,6 +2456,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/prime_zeta/RHScaleSeparation.lean",
+      "source_blob_sha": "c4893768b6a7984b74e75b46dc118b6dcfdf0e8c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source identity inherited from protected main merged PR #1113, commit 618cd40f3bac7942ac6d1602624595204dab3598; earlier baseline CI found this source unregistered. Added for strict custody only. Any separate Lean receipt must be audited; no claim of new RH certification or priority is made here."
     },
     {
       "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
