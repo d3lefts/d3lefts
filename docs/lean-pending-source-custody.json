@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 48,
+  "revision": 49,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v48: source-custody exact Icc halfspace instance import + empty circle branch repair of global ATLAS classification. Historical 67 original certifications unchanged.",
+  "scope": "v49: explicit interval-alias chart typeclass exposure in global ATLAS boundary classification; original 67 immutable records preserved, pinned Lean run required.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -479,13 +479,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean",
-      "source_blob_sha": "b9c8137c7e53c45b8088b27e7b5a1ca0c12cd9a3",
+      "source_blob_sha": "2dd4eb4802ddabfce3f719b37d7429d64733df16",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 correction after pinned run 45066627097: explicitly import Mathlib.Geometry.Manifold.Instances.Icc (ATLAS internal non-public import does not export halfspace chart), use direct simp to eliminate empty boundary. No full theorem promotion; new named axiom kernel CI required."
+      "receipt_scope": "Fix for pinned run 45067783740: original ProductBUInterval.I01 was def alias opaque to automatic typeclass search. Explicit instance on alias for canonical Set.Icc 0 1 halfspace chart, plus import/circle case fixes; source exact CI required. No ProductSphereZero proof claimed."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
