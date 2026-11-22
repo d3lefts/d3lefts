@@ -33,3 +33,8 @@ Let D=lcm(F_λ) and integer A=Σ_m μ(m)(D/m)r_m. Given a *complete certified fi
 ## Scope limits
 
 No use of RH; no claim of constructing nontrivial rational-dilation zero collisions. This does not establish analytic continuation through the natural boundary at Re(s)=−1, nor classify k≥2 formal sources as reachable analytic germs.
+
+
+## 22 November 2026 direct prior-art correction
+
+MathWorld, *Prime Zeta Function*, equations (10)–(11) and the following discussion, already explicitly treats the single-valued meromorphic P', its scaled-zeta-zero residues, addition of coincident residues, and removability when the total residue is zero: https://mathworld.wolfram.com/PrimeZetaFunction.html . The NIGHTFALL statement is therefore a **direct corollary for the shifted deformation**, not an original discovery of residue-cancellation theory. This is a positive correctness reference and a negative originality control; the exact shifted corollary's publication priority is not exhaustively settled.
