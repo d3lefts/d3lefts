@@ -72,6 +72,26 @@ No statistical sampling or Gaussian assumption enters. The lower bound also hold
 
 **Important restriction:** the underlying source theorem concerns *real rank-one squared-linear sensing* with deterministic reachable-continuous row policies. It does not automatically cover complex phase, known-norm sphere-only recovery, rank-k blocks, discontinuous row choice, arbitrary adaptive oracle models, or noisy adaptive control with random selection unless those are separately formalized.
 
+## Stronger known-radius branch: mixed-character zero, one fewer reading
+
+**Conditional, paper proof only. Do not deduce this from the pure-character zero theorem.** In the existing `ProductSphereObstruction.lean` source the distinct predicate `ProductSphereMixedZero n r s` forces simultaneous vanishing of two pure-character blocks AND a third mixed character (odd in each sphere factor). Its candidate coefficient is
+
+    alpha^(n-1) beta^(n-2) (alpha + beta)
+      = alpha^(n-1) beta^(n-1) != 0
+
+in the truncated mod-2 product cohomology algebra. This nonvanishing is Lean-certified as finite algebra in the original source, **not** as a topology theorem. The mixed topological existence theorem remains unproved in Lean.
+
+Take `r+s=m<=2n-3` and choose `r<=n-1, s<=n-2` (or the reversed split). Apply a postulated `ProductSphereMixedZero n r s` to the genuine-prefix test maps and `fM(u,v)=mixedDot(n,u,v)`, which has the required odd/odd antipodal character. The resulting unit u,v obey both the causal comparison zeros and `u·v=0`. By the *same* source causal collision induction, `x=u+v` and `y=u-v` have the same full transcript and **both have squared norm exactly 2**. Rescaling with `lambda=R/sqrt(2)` through the exact causal-history scaling lemma gives
+
+    ||x'||_2 = ||y'||_2 = R,
+    d_pm(x',y') = sqrt(2) R,
+    max decoder error >= R/sqrt(2),
+    max squared decoder error >= R^2/2.
+
+The last decoder minimax lower bound is pointwise on one of two indistinguishable **known-radius** inputs, so its conceptual consequence is stronger than the unknown-radius ball result for protocols with at most `2n-3` readings. It does not assert the bound is minimax sharp or establish the known-radius optimal reading count. For randomized decoding, the same-output distribution and the two-point Euclidean inequality yield `sup E[d_pm^2]>=R^2/2`.
+
+**Separate gates:** (i) the mixed topology predicate must be proved rather than assumed; (ii) the genuine-prefix induction must be composed with the actual mixed witness; (iii) the scaling and known-radius statements should be compiled in Lean; (iv) independently check prior art in known-norm adaptive phase retrieval. An earlier pure `ProductSphereZero` receipt, if obtained, would not discharge gate (i).
+
 ## Source provenance and novelty gates
 
 - Original topological input: classical product Borsuk–Ulam / Stiefel–Whitney obstruction, including Chan–Chen–Frick–Hull (2019) and the Ramos-type product-sphere theorem literature (e.g. [2019 overview](https://arxiv.org/abs/1902.00935)). **Do not claim novelty of that theorem.**
