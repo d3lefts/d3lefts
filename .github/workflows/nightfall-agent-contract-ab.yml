@@ -1,0 +1,94 @@
+name: NIGHTFALL agent contract A/B benchmark (no proof certification)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-operations/benchmark_agent_contract.py'
+      - 'research/nightfall/agent-operations/AGENT_CONTRACT_AB_PREREG_20261122.md'
+      - '.github/workflows/nightfall-agent-contract-ab.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  compare-role-isolated-runners:
+    name: Orchestration benchmark — ${{ matrix.role }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        role: [constructor, independent-reproducer, auditor]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: extractions/setup-just@f8a3cce218d9f83db3a2ecd90e41ac3de6cdfd9b
+        with:
+          just-version: '1.59.0'
+      - uses: hustcer/setup-nu@1b8faed9a8ff673c8ce0beae243e0b72d0787241
+        with:
+          version: '0.117.0'
+          check-latest: false
+      - name: A/B benchmark on same source, independently defined checker commands
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile research/nightfall/agent-operations/benchmark_agent_contract.py
+          python3 research/nightfall/agent-operations/benchmark_agent_contract.py bench \
+            --role "${{ matrix.role }}" --repeats 8 \
+            --out "/tmp/agent-contract-ab-${{ matrix.role }}.json"
+          python3 - <<'PY'
+          import json,os
+          role=os.environ["ROLE"]
+          data=json.load(open(f"/tmp/agent-contract-ab-{role}.json"))
+          assert data["schema"]=="nightfall.agent-contract-ab-measurement.v1"
+          assert len(data["primary_records"]) == 3*8*4
+          assert len(data["negative_controls"]) == 7*2
+          assert all(r["checker_output_equal"] for r in data["primary_records"])
+          assert all(not r["accepted"] for r in data["negative_controls"]
+                     if r["control_kind"]=="reject-required")
+          assert data["mathematical_certification"] is False
+          print(f"PASS: {role} 96 equivalent checker executions and 14 mutant checks, no theorem claim")
+          PY
+        env:
+          ROLE: ${{ matrix.role }}
+      - name: Archive exact raw role-specific trial records
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: agent-contract-raw-${{ matrix.role }}
+          path: /tmp/agent-contract-ab-${{ matrix.role }}.json
+          if-no-files-found: error
+          retention-days: 90
+  aggregate:
+    name: Aggregate without pooling incompatible source revisions
+    runs-on: ubuntu-latest
+    needs: compare-role-isolated-runners
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: agent-contract-raw-*
+          merge-multiple: true
+          path: /tmp/agent-contract-raw
+      - name: Independent summary of 3 role-isolated samples
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/agent-operations/benchmark_agent_contract.py summarize \
+            --inputs \
+              /tmp/agent-contract-raw/agent-contract-ab-constructor.json \
+              /tmp/agent-contract-raw/agent-contract-ab-independent-reproducer.json \
+              /tmp/agent-contract-raw/agent-contract-ab-auditor.json \
+            --out /tmp/agent-contract-ab-summary.json
+      - name: Archive summary and scope limitations
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: agent-contract-ab-summary
+          path: /tmp/agent-contract-ab-summary.json
+          if-no-files-found: error
+          retention-days: 90
