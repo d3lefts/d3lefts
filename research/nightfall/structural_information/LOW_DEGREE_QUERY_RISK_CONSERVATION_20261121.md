@@ -1,5 +1,5 @@
 # Local moment conservation for bounded-degree decision-tree simulation
-**NIGHTFALL research checkpoint v1.0 — 2026-11-21/22.** Status: complete short mathematical proof, exact rational regression below, NOT Lean-certified or priority-cleared.
+**NIGHTFALL research checkpoint v1.1 — 2026-11-21/22.** Status: complete short mathematical proof, exact rational regression below, NOT Lean-certified or priority-cleared.
 
 ## Objective and source-reconciliation
 
@@ -67,6 +67,47 @@ For desired (ε,δ), take ε₀=ε sqrt(δ/2), δ₀=ε²δ/2, so the RHS is ≤
 If Q is a mixture of M product measures, the **same** merged source theorem has s> C_W(Q) and one can set s=ln M+1. If Q is one product law, M=1. The original Route1 constants A_d(τ), B_d(τ) and τ must be substituted at (ε₀,δ₀) to obtain the explicit q; nothing here replaces or re-proves them. Do not claim a Lean kernel certificate for this composition until the tree-degree proof and marginal law bridge are formalized.
 
 **Caveat:** the threshold transfers squared loss **exactly**, not the event probability itself. The [0,1]-clipping plus Markov conversion is essential. Example: the even-parity law on 3 signs agrees with uniform law through k=2, and f=(3+X₁+X₂+X₃)/6 has degree1; E_ν f²=E_Q f²=1/3 but Pr_ν(f>1/2)=1/4 while Pr_Q(f>1/2)=1/2.
+
+## Theorem 3b: high-probability transfer with no Markov error rescaling
+
+A stronger consequence conserves **higher loss moments** and transfers tail probabilities with a gap in the threshold, avoiding the second-moment Markov tolerance penalty.
+
+Assume f,t:X→[0,1], f has interaction degree≤d and t has decision-tree depth≤q. Fix a positive integer m. If ν and Q agree on coordinate marginals through
+
+    k ≥ K_m := max(2m d, (2m−1)d+q),
+
+then the raw error Z(x)=(f(x)−t(x))²∈[0,1] has the **same first m raw moments under ν and Q**:
+
+    E_ν[Z^j] = E_Q[Z^j], for all integers 0≤j≤m.
+
+*Proof:* Expand (f−t)^(2j). Its pure f^(2j) term has interaction degree≤2jd; its mixed terms f^a t^(2j−a), 0≤a≤2j−1, have degree≤a d+q because t^b, b≥1, is still the same depth-q decision tree with leaf labels raised to the b-th power. Thus all nonzero terms have locality at most max(2jd,(2j−1)d+q). Coordinate-marginal matching transfers each expectation exactly. ∎
+
+**Tail transfer theorem.** Fix 0≤a<a+γ≤1. Then
+
+    Pr_ν[Z≥a+γ] ≤ Pr_Q[Z>a] + 1/(γ sqrt(m)).
+
+*Certificate via positive Bernstein polynomial:* Let h:[0,1]→[0,1] be the ramp h=0 on [0,a], h(z)=(z−a)/γ on [a,a+γ], and h=1 above a+γ. Its degree-m Bernstein polynomial is
+
+    B_m h(z)=Σ_{j=0}^m h(j/m) binom(m,j) z^j (1−z)^(m−j).
+
+Because its expectation is a linear combination of raw moments through order m, E_ν B_m h(Z)=E_Q B_m h(Z). Moreover, for Y∼Bin(m,z),
+
+    |B_m h(z)−h(z)|
+      ≤ (1/γ) E|Y/m−z|
+      ≤ (1/γ) sqrt(z(1−z)/m)
+      ≤ 1/(2γ sqrt(m)).
+
+Hence |E_ν h(Z)−E_Q h(Z)|≤1/(γ sqrt(m)). Since 1_{Z≥a+γ}≤h(Z)≤1_{Z>a}, the claimed tail inequality follows. All constants are explicit; nothing assumes independence, product structure, global density bounds or interval approximation outside [0,1]. ∎
+
+Equivalently, for 0≤ε₀<ε₁≤1,
+
+    Pr_ν[|f−t|≥ε₁]
+      ≤ Pr_Q[|f−t|>ε₀]
+        + 1/[(ε₁²−ε₀²) sqrt(m)].
+
+For ε₀=ε/2, ε₁=ε, choose m≥16/(9 ε⁴ η²) to make the additive tail penalty ≤η. Here the marginal-order requirement is K_m=O(d/(ε⁴η²)+q). If Q is the original Route1 source law, this composes with its genuine depth-q decision tree after clipping its leaf labels. It can retain Q's original failure budget δ₀ (up to additive η), instead of scaling it by ε²δ as in the simpler MSE/Markov transfer. The price is substantially higher marginal agreement strength k. This is a **mathematical/paper-level transfer**, not yet a pinned Lean certificate or an efficiency claim for constructing the Bernstein polynomial.
+
+**No direct Simon claim:** Simon and independent uniform outputs do not have exactly matching even two-entry marginals, so Theorem 3b does not produce a Simon simulator. The separate open problem is a quantitatively stable *approximate*-moment version controlled by a usable operator norm, rather than a naive coefficient count.
 
 ## Theorem 4: arbitrarily large global density cost with exactly zero local risk distortion
 
