@@ -2,7 +2,7 @@ name: NIGHTFALL phase-block to Route1 exact finite certificate
 on:
   pull_request:
     paths:
-      - "research/nightfall/structural_information/PHASE_BLOCK_ROUTE1_COMPILER_20261122.md"
+      - "research/nightfall/structural_information/PHASE_BLOCK_ROUTE1_KERNEL_CORE_20261122.md"
       - "scripts/check_phase_block_route1_exact.py"
       - ".github/workflows/nightfall-phase-block-route1-exact.yml"
   workflow_dispatch:
