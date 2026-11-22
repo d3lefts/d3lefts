@@ -1,0 +1,71 @@
+name: NIGHTFALL affine-code exact rectangle fiber Lean
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/AffineWynerFibers.lean'
+      - 'research/nightfall/formalization/structural_information/AffineWynerSupport.lean'
+      - '.github/workflows/nightfall-affine-wyner-fibers-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-fibers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile parent and exact fiber theorem from original sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/affine-wyner-fibers
+          git rev-parse HEAD | tee receipts/affine-wyner-fibers/head.txt
+          for name in AffineWynerSupport AffineWynerFibers; do
+            src="research/nightfall/formalization/structural_information/$name.lean"
+            ! grep -nE '(^|[[:space:]])(sorry|admit|axiom)[[:space:]]' "$src"
+            sha256sum "$src" | tee -a receipts/affine-wyner-fibers/source.sha256
+            cp "$src" "/tmp/mathlib4/$name.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean") 2>&1 | tee "receipts/affine-wyner-fibers/$name.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/affine-wyner-fibers/$name.log"
+          done
+      - name: Independent kernel replay and fail-closed axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker AffineWynerSupport) 2>&1 | tee receipts/affine-wyner-fibers/parent-leanchecker.log
+          (cd /tmp/mathlib4 && lake env leanchecker AffineWynerFibers) 2>&1 | tee receipts/affine-wyner-fibers/fiber-leanchecker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('receipts/affine-wyner-fibers/AffineWynerFibers.log').read_text()
+          allowed={'Classical.choice','propext','Quot.sound'}
+          for name in (
+              'update_free_in_affine_code',
+              'mix_free_in_affine_code',
+              'complete_free_fiber',
+              'rectangular_support_iff_nonfree_fixed',
+          ):
+              full='Nightfall.AffineWyner.'+name
+              match=re.search(r"'"+re.escape(full)+r"' depends on axioms:\s*\[([^\]]*)\]",p)
+              if match:
+                  axioms={x.strip() for x in match.group(1).split(',') if x.strip()}
+                  assert axioms <= allowed,(full,axioms)
+              else:
+                  assert f"'{full}' does not depend on any axioms" in p,full
+          assert 'sorryAx' not in p
+          print('PASS: exact rectangle fibers, standard axioms only')
+          PY
+      - name: Upload source-exact kernel receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightfall-affine-wyner-fibers
+          path: receipts/affine-wyner-fibers
+          if-no-files-found: warn
+          retention-days: 90
