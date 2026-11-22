@@ -170,6 +170,43 @@ for L,m in ((6,2),(8,3)):
     # comparison follows from the separately proved Bernstein error bound.
     stats["higher_bernstein_equalities"]+=1
 
+# Algebraically independent reverse-direction checker: every local atom
+# through max(2d,d+q) can be recovered from a *small finite set* of
+# admissible squared-risk queries. No assumption of equal marginals.
+n=4; d=1; q=2
+U=uniform(n)
+PB=[F(1,3),F(2,5),F(3,7),F(4,9)]
+V={x:prod(PB[i] if x[i]==1 else 1-PB[i]
+          for i in range(n)) for x in U}
+assert sum(V.values())==1
+def delta(g):
+    return weighted(V,g)-weighted(U,g)
+def indicator(x,J,a):
+    return F(int(all(x[i]==v for i,v in zip(J,a))))
+for z in range(max(2*d,d+q)+1):
+    for S in combinations(range(n),z):
+        for assignment in product((-1,1),repeat=z):
+            truth=delta(lambda x:indicator(x,S,assignment))
+            if z<=2*d:
+                As=S[:min(d,z)];Bs=S[min(d,z):]
+                aa=assignment[:min(d,z)];ba=assignment[min(d,z):]
+                u=lambda x:indicator(x,As,aa)
+                v=lambda x:indicator(x,Bs,ba)
+                p=lambda x:(u(x)+v(x))/2
+                recovered=2*delta(lambda x:p(x)**2)-(
+                    delta(lambda x:u(x)**2)+delta(lambda x:v(x)**2))/2
+                assert recovered==truth,(S,assignment,truth,recovered)
+                stats["iff_reverse_2d_atoms"]+=1
+            if z<=d+q:
+                As=S[:min(d,z)];Bs=S[min(d,z):]
+                aa=assignment[:min(d,z)];ba=assignment[min(d,z):]
+                u=lambda x:indicator(x,As,aa)
+                v=lambda x:indicator(x,Bs,ba)
+                recovered=(delta(lambda x:u(x)**2)+delta(lambda x:v(x)**2)
+                           -delta(lambda x:(u(x)-v(x))**2))/2
+                assert recovered==truth,(S,assignment,truth,recovered)
+                stats["iff_reverse_dq_atoms"]+=1
+
 print("PASS sharp marginal-order conservation of degree-d query risk")
 for key in sorted(stats): print(key+":",stats[key])
 print("SCOPE: exact finite checks; universal law mathematical proof only, "
