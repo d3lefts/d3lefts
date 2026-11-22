@@ -7,6 +7,9 @@ No topology axiom or ProductSphereZero premise is used.
 -/
 namespace Nightfall.PhaseN2Unconditional
 
+noncomputable section
+set_option maxHeartbeats 2000000
+
 open Nightfall.CausalPhaseConditional
 open Nightfall.GenuinePrefixPhase
 open Nightfall.ProductSphereObstruction
@@ -119,7 +122,9 @@ theorem two_readings_not_injective (rows : Rows 2)
     comparison (oracle rows) 1 u (arc t) (arc t)
   have hu : u ≠ 0 := kernelVector_ne_zero a0
   have hg : Continuous g := by
-    have hcmp := continuous_test rows hrows 1 Prod.snd continuous_snd
+    have hcmp : Continuous (fun p : V2 × V2 =>
+        comparison (oracle rows) 1 p.1 p.2 p.2) :=
+      continuous_test rows hrows 1 (fun p => p.2) continuous_snd
     have hp : Continuous (fun t : ℝ => (u, arc t)) :=
       continuous_const.prodMk continuous_arc
     exact hcmp.comp hp
