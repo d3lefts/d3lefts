@@ -1,0 +1,63 @@
+name: NIGHTFALL product BU compact zero fiber (scoped Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean'
+      - '.github/workflows/nightfall-product-bu-compact-zero-fiber.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-fiber:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile actual merged-and-stacked source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir=research/nightfall/formalization/finite_field
+          mkdir -p receipts/bu-compact-fiber
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber; do
+            cp "$dir/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-compact-fiber/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-compact-fiber/$M.log"
+          done
+      - name: Strict named theorem and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/bu-compact-fiber/ProductBUCompactFiber.log").read_text()
+          for name in ("zeroFiber_isCompact","zeroFiber_mem","zeroFiber_no_one_face"):
+              full="Nightfall.ProductBUCompactFiber."+name
+              assert full in s,("NO_NAMED_TERMINAL",full)
+              m=re.search(r"'" + re.escape(full) + r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m or f"'{full}' does not depend on any axioms" in s,("MISSING_AX_REPORT",full)
+              axioms={x.strip() for x in m.group(1).split(',') if x.strip()} if m else set()
+              assert axioms <= {"propext","Classical.choice","Quot.sound"},(full,axioms)
+          assert "sorryAx" not in s
+          print("PASS exact compact time-slab zero fiber; t=1 excluded if F1 is nowhere zero")
+          print("NOT PROVED: regular 1D manifold with boundary or maximal ProductSphereZero")
+          PY
+      - name: Exact provenance and hashes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/bu-compact-fiber
+          git rev-parse HEAD > receipts/bu-compact-fiber/commit.txt
+          cat lean-toolchain > receipts/bu-compact-fiber/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUSphereCompact,ProductBUCompactFiber}.lean > receipts/bu-compact-fiber/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-compact-zero-fiber-exact-source
+          path: receipts/bu-compact-fiber
+          if-no-files-found: warn
+          retention-days: 90
