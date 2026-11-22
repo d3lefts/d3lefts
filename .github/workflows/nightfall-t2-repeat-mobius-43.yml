@@ -1,0 +1,23 @@
+name: NIGHTFALL T2 four-slot Mobius 43 exact certificate
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/check_t2_repeat_mobius_43_exact.py'
+      - 'research/nightfall/structural_information/T2_REPEAT_PARTITION_MOBIUS_43_20261122.md'
+      - '.github/workflows/nightfall-t2-repeat-mobius-43.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-coefficient-identity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact source hashes and formal tuple equality regression
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 -V
+          sha256sum scripts/check_t2_repeat_mobius_43_exact.py research/nightfall/structural_information/T2_REPEAT_PARTITION_MOBIUS_43_20261122.md
+          python3 scripts/check_t2_repeat_mobius_43_exact.py
+          echo 'FOUR-SLOT combinatorial identity only; quantum Hilbert theorem is PAPER and not Lean-certified.'
