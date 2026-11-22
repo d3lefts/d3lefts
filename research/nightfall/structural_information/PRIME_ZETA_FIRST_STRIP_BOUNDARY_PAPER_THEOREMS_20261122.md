@@ -90,3 +90,10 @@ This promotion authorizes **paper-level theorem presentation with full assumptio
 **External sources, priority caution:** Fröberg, *On the prime zeta function*, BIT 8 (1968) 187–202, DOI 10.1007/BF01933420; MathWorld, *Prime Zeta Function* (attributes the natural boundary to Landau–Walfisz 1920); NIST DLMF §25.10 zero-free line; existing 2015 Pacific Journal of Mathematics discussion of prime-zeta natural boundaries. A literature search supports the classical inputs, but does not establish that the shifted-deformation corollaries are first discoveries. Full Fröberg text and a named specialist review remain uninspected.
 
 **Next decisive independent checks:** (1) reconstruct the compact-uniform tail and each residue without citing #1035; (2) check branch-independent holomorphic-extension logic; (3) verify \(H_3\) across every nonreal boundary point and the classical theorem's all-branch scope; (4) reconcile publication priority from primary texts. Failures trigger demotion.
+
+
+## 2026-11-22 direct prior-art correction: the residue mechanism is classical
+
+The currently accessible MathWorld article *Prime Zeta Function*, equations (10)–(11) and the paragraphs immediately after them, explicitly states **all** of the following for P itself: (i) the Möbius-inversion and logarithmic-derivative identities, (ii) single-valued meromorphic continuation of P' into Re(w)>0, (iii) residues μ(m)r_{mλ}/m at scaled nontrivial zeta zeros, and (iv) addition of coincident residues and removability when their sum vanishes. Source: https://mathworld.wolfram.com/PrimeZetaFunction.html ; checked 2026-11-22. Thus **none of (i)–(iv) is new mathematics contributed by NIGHTFALL**.
+
+The first-strip theorem for A⁺ is the **shifted corollary** obtained using the September manuscript's A⁺=sP(s+1)+H. The classical natural boundary of P is likewise prior art, and the boundary at Re(s)=−1 is its transfer through this holomorphic decomposition. No global originality claim is warranted for either. Future publication must foreground the classical provenance and identify any additional nontrivial contribution separately.
