@@ -57,6 +57,27 @@ theorem mixedProduct_nonzero (n : ℕ) (hn : 2 ≤ n) :
   rw [mixed_top_coefficient n hn] at hval
   simp at hval
 
+/-- The mixed character is represented geometrically by the ordinary dot product. -/
+def mixedDot (n : ℕ) (u v : Fin n → ℝ) : ℝ :=
+  ∑ i, u i * v i
+
+/-- The mixed coordinate changes sign under the first antipode. -/
+theorem mixedDot_flip_left (n : ℕ) (u v : Fin n → ℝ) :
+    mixedDot n (-u) v = -mixedDot n u v := by
+  simp [mixedDot, Finset.sum_neg_distrib]
+
+/-- The mixed coordinate also changes sign under the second antipode. -/
+theorem mixedDot_flip_right (n : ℕ) (u v : Fin n → ℝ) :
+    mixedDot n u (-v) = -mixedDot n u v := by
+  simp [mixedDot, Finset.sum_neg_distrib]
+
+/-- The geometric mixed-character coordinate is continuous. -/
+theorem continuous_mixedDot (n : ℕ) :
+    Continuous (fun p : (Fin n → ℝ) × (Fin n → ℝ) =>
+      mixedDot n p.1 p.2) := by
+  unfold mixedDot
+  fun_prop
+
 /-- Unit vectors, represented by sum-of-squares to make the interface
 independent of coordinate norm conventions. -/
 def UnitVec (n : ℕ) (u : Fin n → ℝ) : Prop :=
@@ -97,6 +118,9 @@ def ProductSphereZero (n r s : ℕ) : Prop :=
 #print axioms monomial_nonzero
 #print axioms mixed_top_coefficient
 #print axioms mixedProduct_nonzero
+#print axioms mixedDot_flip_left
+#print axioms mixedDot_flip_right
+#print axioms continuous_mixedDot
 #check ProductSphereZero
 
 end Nightfall.ProductSphereObstruction
