@@ -1,0 +1,84 @@
+name: NIGHTFALL Atlas regular 1D level-set local chart kernel replay
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean'
+      - '.github/workflows/nightfall-product-bu-atlas-levelset.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: atlas-levelset-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  local-levelset:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Fetch exact ATLAS local graph and parametrization sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-atlas-levelset
+          git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
+          git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
+          test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = 7857a2e8c32088b5002f7cafe29a21d936baf704
+          mkdir -p /tmp/mathlib4/MathlibExt/Geometry/Manifold
+          for M in LocalGraph LocalParametrization; do
+            src="/tmp/atlas-lean/MathlibExt/Geometry/Manifold/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom)\\b' "$src"
+            cp "$src" "/tmp/mathlib4/MathlibExt/Geometry/Manifold/$M.lean"
+            sha256sum "$src" >> receipts/product-bu-atlas-levelset/ATLAS-SHA256SUMS
+          done
+      - name: Compile pinned Atlas closure and exact local-chart specialization
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in LocalGraph LocalParametrization; do
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/MathlibExt/Geometry/Manifold/$M.olean" "MathlibExt/Geometry/Manifold/$M.lean") 2>&1 | tee "receipts/product-bu-atlas-levelset/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-atlas-levelset/$M.log"
+          done
+          f="research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean"
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom)\\b' "$f"
+          cp "$f" /tmp/mathlib4/ProductBURegularFiberLocal.lean
+          (cd /tmp/mathlib4 && lake env lean ProductBURegularFiberLocal.lean) 2>&1 | tee receipts/product-bu-atlas-levelset/Nightfall.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/product-bu-atlas-levelset/Nightfall.log
+      - name: Check named theorem and standard-axiom closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/product-bu-atlas-levelset/Nightfall.log").read_text()
+          name="Nightfall.ProductBURegularFiberLocal.regular_fiber_has_local_one_dimensional_chart"
+          assert name in s, "MISSING_DECLARATION"
+          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          if m:
+              axioms={t.strip() for t in m.group(1).split(",") if t.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s
+              axioms=set()
+          assert axioms <= {"propext","Classical.choice","Quot.sound"},axioms
+          assert "sorryAx" not in s
+          print("PASS: source-exact ATLAS local 1D regular level-set chart with ordinary axioms only",sorted(axioms))
+          print("No global manifold-with-boundary or ProductSphereZero is asserted by this theorem.")
+          PY
+      - name: Retain source hashes and toolchain receipt
+        if: always()
+        run: |
+          mkdir -p receipts/product-bu-atlas-levelset
+          git rev-parse HEAD > receipts/product-bu-atlas-levelset/commit.txt
+          cat lean-toolchain > receipts/product-bu-atlas-levelset/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean > receipts/product-bu-atlas-levelset/NIGHTFALL-SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-atlas-local-levelset-receipt
+          path: receipts/product-bu-atlas-levelset
+          retention-days: 90
+          if-no-files-found: warn
