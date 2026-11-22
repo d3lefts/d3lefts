@@ -1,0 +1,64 @@
+name: NIGHTFALL T2 zero-triple 31 scoped Lean kernel
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean'
+      - 'research/nightfall/structural_information/T2_ZERO_TRIPLE_OVERLAP_31_20261122.md'
+      - 'scripts/check_t2_zero_triple_overlap_31_exact.py'
+      - '.github/workflows/nightfall-t2-zero-triple-31-lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-exact-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Pin source and run Lean/leanchecker with axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p t2-overlap-31-receipt
+          src=research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean
+          cp "$src" /tmp/mathlib4/T2ZeroTripleOverlap31.lean
+          git rev-parse HEAD | tee t2-overlap-31-receipt/commit.txt
+          sha256sum "$src" research/nightfall/structural_information/T2_ZERO_TRIPLE_OVERLAP_31_20261122.md scripts/check_t2_zero_triple_overlap_31_exact.py | tee t2-overlap-31-receipt/SHA256SUMS
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2ZeroTripleOverlap31.olean T2ZeroTripleOverlap31.lean) 2>&1 | tee t2-overlap-31-receipt/lean.log
+          (cd /tmp/mathlib4 && lake env leanchecker T2ZeroTripleOverlap31) 2>&1 | tee t2-overlap-31-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean')
+          s=p.read_text()
+          log=Path('t2-overlap-31-receipt/lean.log').read_text()
+          expected=['survivor_is_total','two_zero_triple_survivors_equal',
+                    'three_survivors_force_fourth_zero','pair_energy_coefficient_le_31']
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log and 'sorryAx' not in log
+          for name in expected:
+              assert 'Nightfall.StructuralInformation.T2ZeroTripleOverlap.'+name in log, (name,log[-3000:])
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          noaxioms=[x for x in log.splitlines() if 'does not depend on any axioms' in x and 'T2ZeroTripleOverlap.' in x]
+          assert len(reports)+len(noaxioms)>=4,(reports,noaxioms)
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert all(set(y.strip() for y in x.split(',') if y.strip())<=allowed for x in reports)
+          print('T2_ZERO_TRIPLE_31_SCOPED_KERNEL_PASS')
+          PY
+      - name: Exact tuple multiplicity regression
+        run: |
+          set -euo pipefail
+          python3 scripts/check_t2_zero_triple_overlap_31_exact.py | tee t2-overlap-31-receipt/exact.log
+          grep -q 'PASS exact all-groups paper coefficient' t2-overlap-31-receipt/exact.log
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: t2-overlap-31-receipt
+          path: t2-overlap-31-receipt/
+          retention-days: 90
