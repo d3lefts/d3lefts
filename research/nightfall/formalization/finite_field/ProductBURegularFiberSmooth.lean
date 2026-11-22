@@ -95,7 +95,7 @@ theorem _root_.ContDiff.exists_localSmoothGraph_of_surjective_fderiv
     simpa [g] using hF'At.eventually_apply_eq_iff_implicitFunction (by simp) hInv
   have hgAt : ContDiffAt ℝ (⊤ : ℕ∞) g z₀.1 := by
     simpa [g] using hF'At.contDiffAt_implicitFunction (by simp) hInv
-  obtain ⟨U, hU, hgU⟩ := hgAt.contDiffOn (m := ⊤) le_rfl (by simp)
+  obtain ⟨U, hU, hgU⟩ := hgAt.contDiffOn (m := (⊤ : ℕ∞)) le_rfl (by simp)
   have hUfst : ∀ᶠ p in 𝓝 z₀, p.1 ∈ U :=
     continuousAt_fst.preimage_mem_nhds hU
   let W := {p : G × F | (F' p = F' z₀ ↔ g p.1 = p.2) ∧ p.1 ∈ U}
