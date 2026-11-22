@@ -130,6 +130,51 @@ theorem augmented_constraint_parameter_surjective (k : ℕ)
     have hi := hB i
     linarith
 
+
+/-- The exact parameter right inverse works for *every real time* except
+t = 0,1; positivity of t is mathematically unnecessary. This is
+needed because Euclidean parametric Sard checks all t ∈ ℝ. -/
+theorem weighted_perturbation_surjective_nonzero (k : ℕ)
+    (u : Fin (k + 1) → ℝ) (hu : UnitVec (k + 1) u)
+    (t : ℝ) (ht : t * (1 - t) ≠ 0)
+    (y : Fin k → ℝ) :
+    ∃ A : Param k,
+      ∀ i : Fin k, t * (1 - t) * applyParam k A u i = y i := by
+  refine ⟨rankOne k u (fun i => y i / (t * (1 - t))), ?_⟩
+  intro i
+  rw [congrFun (applyParam_rankOne_unit k u hu
+    (fun i => y i / (t * (1 - t)))) i]
+  field_simp
+
+/-- The nonzero-weight augmented linear parameter/norm-gradient right
+inverse, valid for every real t with t ≠ 0 and t ≠ 1. -/
+theorem augmented_constraint_parameter_surjective_nonzero (k : ℕ)
+    (u v : Fin (k + 1) → ℝ)
+    (hu : UnitVec (k + 1) u) (hv : UnitVec (k + 1) v)
+    (t : ℝ) (ht : t * (1 - t) ≠ 0)
+    (rU rV : ℝ)
+    (baseU baseV targetU targetV : Fin k → ℝ) :
+    ∃ du dv : Fin (k + 1) → ℝ, ∃ A B : Param k,
+      2 * mixedDot (k + 1) u du = rU ∧
+      2 * mixedDot (k + 1) v dv = rV ∧
+      (∀ i : Fin k, baseU i + t * (1 - t) * applyParam k A u i = targetU i) ∧
+      (∀ i : Fin k, baseV i + t * (1 - t) * applyParam k B v i = targetV i) := by
+  obtain ⟨A,hA⟩ := weighted_perturbation_surjective_nonzero k u hu t ht
+    (fun i => targetU i - baseU i)
+  obtain ⟨B,hB⟩ := weighted_perturbation_surjective_nonzero k v hv t ht
+    (fun i => targetV i - baseV i)
+  refine ⟨radialDirection k u rU, radialDirection k v rV,
+    A, B, radial_direction_right_inverse k u hu rU,
+    radial_direction_right_inverse k v hv rV, ?_, ?_⟩
+  · intro i
+    have hi := hA i
+    linarith
+  · intro i
+    have hi := hB i
+    linarith
+
+#print axioms weighted_perturbation_surjective_nonzero
+#print axioms augmented_constraint_parameter_surjective_nonzero
 #print axioms radial_direction_right_inverse
 #print axioms augmented_constraint_parameter_surjective
 #print axioms applyParam_rankOne_unit
