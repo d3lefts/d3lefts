@@ -1,0 +1,126 @@
+name: NIGHTFALL phase-block Route 1 bridge and exact oracle checker
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/PhaseBlockEight.lean'
+      - 'research/nightfall/formalization/product_space/PhaseBlockLocality.lean'
+      - 'research/nightfall/formalization/product_space/PhaseBlockRoute1.lean'
+      - 'research/nightfall/structural_information/check_phase_block_route1_exact.py'
+      - 'research/nightfall/structural_information/PHASE_BLOCK_ROUTE1_BRIDGE_20261122.md'
+      - '.github/workflows/nightfall-phase-block-route1.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  finite-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact finite decoder, rectangle and negative controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/structural_information/check_phase_block_route1_exact.py | tee /tmp/phase-block-exact.json
+          python3 - <<'PY'
+          import json
+          j=json.load(open('/tmp/phase-block-exact.json'))
+          assert j['adaptive_minimax_depth_fixed_four_rows']==3
+          assert j['one_block_min_hamming']==2
+          assert j['two_block_min_hamming']==2 and j['two_block_codewords']==64
+          assert j['extra_unrestricted_row_one_query_separates'] is True
+          assert j['mathematical_theorem_kernel_checked'] is False
+          print('PASS exact enumeration, two algorithms and negative row-model controls')
+          PY
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Pinned finite Lean two modules and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in PhaseBlockEight PhaseBlockLocality; do
+            file="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom)([[:space:]]|$)' "$file"
+            cp "$file" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "/tmp/$M.log"
+            ! grep -qE '(^|:)error:|declaration uses .sorry' "/tmp/$M.log"
+          done
+          python3 - <<'PY'
+          import re
+          for module,names in {
+              'PhaseBlockEight':(
+                'any_three_separate','adaptive_two_readings_not_enough',
+                'no_axis_adjacent_codewords'),
+              'PhaseBlockLocality':(
+                'local_pullback','pullback_support_card_le',
+                'finite_pullback_supports')
+          }.items():
+              s=open('/tmp/'+module+'.log',encoding='utf8').read()
+              for name in names:
+                  qualified='Nightfall.'+module+'.'+name
+                  # Namespace for module PhaseBlockEight, locality explicit.
+                  if module=='PhaseBlockEight':
+                      qualified='Nightfall.PhaseBlockEight.'+name
+                  if module=='PhaseBlockLocality':
+                      qualified='Nightfall.PhaseBlockLocality.'+name
+                  m=re.search(re.escape("'"+qualified+"' depends on axioms: [")+r'([^\]]*)\]',s,re.S)
+                  if m is None:
+                      assert "'"+qualified+"' does not depend on any axioms" in s,(module,name)
+                  else:
+                      axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
+                      assert axioms <= {'propext','Classical.choice','Quot.sound'},(qualified,axioms)
+                  print('PASS named finite lemma:',qualified)
+              assert 'sorryAx' not in s
+          PY
+  route1-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build exact pinned product-space and Route 1 dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") 2>&1 | tee "/tmp/phase-base-$M.log"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift \
+                   Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral \
+                   PhaseBlockLocality PhaseBlockRoute1; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "/tmp/phase-$M.log"
+            ! grep -qE '(^|:)error:|declaration uses .sorry' "/tmp/phase-$M.log"
+          done
+      - name: Check actual composition theorem signatures and axiom dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker PhaseBlockRoute1) 2>&1 | tee /tmp/phase-leanchecker.log
+          python3 - <<'PY'
+          import re
+          s=open('/tmp/phase-PhaseBlockRoute1.log',encoding='utf8').read()
+          for name in (
+              'Nightfall.PhaseBlockRoute1.pulled_raw_terms_have_degree',
+              'Nightfall.PhaseBlockRoute1.route1_for_phase_encoded_raw_terms',
+          ):
+              m=re.search(re.escape("'"+name+"' depends on axioms: [")+r'([^\]]*)\]',s,re.S)
+              if m is None:
+                  assert "'"+name+"' does not depend on any axioms" in s,name
+                  axioms=set()
+              else:
+                  axioms={z.strip() for z in m.group(1).split(',') if z.strip()}
+              assert axioms <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
+              print(name,sorted(axioms))
+          assert 'sorryAx' not in s
+          print('PASS: exact source conditional Route 1 composition; arbitrary quantum polynomial bridge remains external')
+          PY
