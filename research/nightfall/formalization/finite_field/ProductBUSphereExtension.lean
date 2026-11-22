@@ -41,7 +41,7 @@ theorem spherePair_isClosed (n : ℕ) :
     simpa [UnitVec] using
       (isClosed_eq hn2
         (continuous_const : Continuous (fun _ : V n × V n => (1 : ℝ))))
-  simpa [SpherePair, Set.setOf_and] using hc1.inter hc2
+  simpa [SpherePair, Set.ofPred_and] using hc1.inter hc2
 
 /-- Any real-valued map continuous on the product sphere extends to
 a globally continuous ambient map agreeing EXACTLY at every point
@@ -57,7 +57,7 @@ theorem exists_continuous_extension (n : ℕ)
       Continuous g ∧ Set.EqOn g f (SpherePair n) := by
   let s : Set (V n × V n) := SpherePair n
   have hs : IsClosed s := spherePair_isClosed n
-  let fsub : C(s, ℝ) := ⟨fun p => f p.1, hf.continuous_restrict⟩
+  let fsub : C(s, ℝ) := ⟨fun p => f p.1, hf.domRestrict⟩
   obtain ⟨G, hG⟩ := ContinuousMap.exists_restrict_eq hs fsub
   refine ⟨G, G.continuous, ?_⟩
   intro x hx
