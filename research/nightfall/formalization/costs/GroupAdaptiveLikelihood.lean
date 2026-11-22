@@ -70,6 +70,29 @@ noncomputable def coordinateLikelihood
     componentMass G β i ν q (u i) *
       coordinateLikelihood G β i ν rest
 
+/-- A *computable* causal legality indicator, defined without a
+decision procedure for an arbitrary history-level proposition. -/
+noncomputable def legalWeight
+    (policy : History I Q → Q) : History I Q → ℝ
+  | [] => 1
+  | (q, _) :: rest =>
+    (if q = policy rest then 1 else 0) * legalWeight policy rest
+
+theorem legalWeight_of_legal
+    (policy : History I Q → Q) :
+    ∀ h : History I Q, Legal policy h → legalWeight policy h = 1 := by
+  intro h
+  induction h with
+  | nil =>
+      intro _
+      rfl
+  | cons step rest ih =>
+      intro hlegal
+      rcases step with ⟨q, u⟩
+      change q = policy rest ∧ Legal policy rest at hlegal
+      rcases hlegal with ⟨hq, hr⟩
+      simp [legalWeight, hq, ih hr]
+
 /-- No external conditional-independence premise:
 the history probability **itself** factorizes across the true hidden bits;
 causal group-selection factors are independent of ν once history is fixed. -/
@@ -78,22 +101,18 @@ theorem transcript_factorization
     (policy : History I Q → Q) (ν : I → Bool)
     (h : History I Q) :
     transcriptMass G β policy ν h =
-      (if Legal policy h then (1 : ℝ) else 0) *
+      legalWeight policy h *
         ∏ i, coordinateLikelihood G β i (ν i) h := by
   classical
   induction h with
   | nil =>
-      simp [transcriptMass, Legal, coordinateLikelihood]
+      simp [transcriptMass, legalWeight, coordinateLikelihood]
   | cons step rest ih =>
       rcases step with ⟨q, u⟩
-      simp only [transcriptMass, Legal, coordinateLikelihood]
+      simp only [transcriptMass, legalWeight, coordinateLikelihood]
       rw [ih]
-      by_cases hq : q = policy rest
-      · by_cases hr : Legal policy rest
-        · simp [hq, hr, groupMass, Finset.prod_mul_distrib,
-            mul_assoc, mul_comm, mul_left_comm]
-        · simp [hq, hr]
-      · simp [hq]
+      simp only [groupMass, Finset.prod_mul_distrib]
+      ring
 
 /-- Source-normalizer factorization for every legal adaptive transcript.
 The prior is independent uniform signs, so this identity supplies its
@@ -111,7 +130,8 @@ theorem hidden_normalizer_factorization
       apply Finset.sum_congr rfl
       intro ν hν
       rw [transcript_factorization]
-      simp [hlegal]
+      rw [legalWeight_of_legal policy h hlegal]
+      simp
     _ = ∏ i, ∑ bit : Bool, coordinateLikelihood G β i bit h :=
       (Fintype.prod_sum (fun i (bit : Bool) =>
         coordinateLikelihood G β i bit h)).symm
