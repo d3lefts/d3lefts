@@ -56,7 +56,18 @@ jobs:
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/v8/unconditional-four.json
           (cd /tmp/mathlib4 && lake env leanchecker -v WrightV8PointwiseFour)
-          sha256sum "$P" > lean-receipts/v8/source-sha256.txt
+          Q=research/nightfall/formalization/aa_v8/WrightV8FiniteFourEndpoint.lean
+          cp "$Q" /tmp/mathlib4/WrightV8FiniteFourEndpoint.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WrightV8FiniteFourEndpoint.olean WrightV8FiniteFourEndpoint.lean)
+          python3 scripts/lean_bridge.py "$Q" \
+            --workspace /tmp/mathlib4 --timeout 2400 --strict \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --decl Nightfall.Wright.UnconditionalFour.finite_product_influence_rho_four \
+            --json-out lean-receipts/v8/finite-four-endpoint.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/v8/finite-four-endpoint.json
+          (cd /tmp/mathlib4 && lake env leanchecker -v WrightV8FiniteFourEndpoint)
+          sha256sum "$P" "$Q" > lean-receipts/v8/source-sha256.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
