@@ -1,0 +1,79 @@
+name: NIGHTFALL Route 1 access-coupled source Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1AccessCoupling.lean'
+      - '.github/workflows/nightfall-route1-access-coupling.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  route1-polylog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned AA and mixture closure in dependency order
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/log-$M.txt")
+            ! grep -q 'declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile Route 1 chain (merged star coupling and latent degree, then polylog modules)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/route1-access
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 \
+              | tee "receipts/route1-access/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/route1-access/$M.log"
+          done
+      - name: Compile coupled-source theorem and independently replay the kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          P="research/nightfall/formalization/product_space/Route1AccessCoupling.lean"
+          cp "$P" /tmp/mathlib4/Route1AccessCoupling.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1AccessCoupling.olean Route1AccessCoupling.lean) 2>&1 | tee receipts/route1-access/terminal.log
+          (cd /tmp/mathlib4 && lake env leanchecker -v Route1AccessCoupling) 2>&1 | tee receipts/route1-access/leanchecker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          data=Path('receipts/route1-access/terminal.log').read_text()
+          reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",data,re.S))
+          for suffix in ('eval_eq_of_touched','transfer_access_risk','route1_wyner_access_coupled'):
+              name='Nightfall.Route1AccessCoupling.'+suffix
+              assert name in reports, (name, reports)
+              found={x.strip() for x in reports[name].split(',') if x.strip()}
+              assert found <= {'Classical.choice','propext','Quot.sound'}, (name,found)
+              print(name, sorted(found))
+          assert 'sorryAx' not in data
+          PY
+      - name: Preserve evidence
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/route1-access
+          git rev-parse HEAD > receipts/route1-access/commit.txt
+          sha256sum research/nightfall/formalization/product_space/Route1AccessCoupling.lean > receipts/route1-access/SHA256SUMS
+      - name: Upload receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: route1-access-lean-receipt
+          path: receipts/route1-access
+          if-no-files-found: warn
+          retention-days: 90
