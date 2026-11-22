@@ -1,0 +1,63 @@
+name: NIGHTFALL unconditional planar continuous causal obstruction (Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/PhaseN2Unconditional.lean'
+      - '.github/workflows/nightfall-phase-n2-unconditional.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  planar-source-closure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Pin source and compile dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/phase-n2
+          for M in GenuinePrefixPhase ProductSphereObstruction CausalPhaseConditional PhaseN2Unconditional; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/phase-n2/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/phase-n2/$M.log"
+          done
+      - name: Verify named theorem and ordinary axioms
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          text=Path("receipts/phase-n2/PhaseN2Unconditional.log").read_text()
+          name="Nightfall.PhaseN2Unconditional.two_readings_not_injective"
+          assert "theorem " + name in text, "DECLARATION_TYPE_UNVERIFIED"
+          a=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",text,re.S)
+          assert a, "MISSING_AXIOM_RECEIPT"
+          found={v.strip() for v in a[1].split(',') if v.strip()}
+          assert found <= {'propext','Classical.choice','Quot.sound'},found
+          assert 'sorryAx' not in text
+          source=Path('research/nightfall/formalization/finite_field/PhaseN2Unconditional.lean').read_text()
+          assert 'ProductSphereZero' not in source.split('theorem two_readings_not_injective',1)[1].split('#check',1)[0]
+          print('PASS unconditional planar theorem; exact Lean theorem and axiom receipt',found)
+          print('SCOPE: n=2 only; all-dimensional ProductSphereZero remains open.')
+          PY
+      - name: Preserve source closure hashes and logs
+        if: always()
+        run: |
+          mkdir -p receipts/phase-n2
+          git rev-parse HEAD > receipts/phase-n2/head.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/phase-n2/mathlib-head.txt
+          cat lean-toolchain > receipts/phase-n2/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/{GenuinePrefixPhase,ProductSphereObstruction,CausalPhaseConditional,PhaseN2Unconditional}.lean > receipts/phase-n2/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: phase-n2-source-receipt-${{ github.run_id }}
+          path: receipts/phase-n2
+          retention-days: 90
