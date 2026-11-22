@@ -163,8 +163,37 @@ def audit_zero_fiber():
     print("PASS zero-fiber safeguard: 64 diagonal paths, M=10, f=1")
 
 
+
+def audit_dilute_l3():
+    # Explicit nonzero-tail case where the RHS is strictly below one.
+    # D has 27 rows plus virtual zero. psi and w are uniform on
+    # 25 sectors with rational amplitude 1/5, while U cyclically
+    # permutes sectors. No initial/final sector is heavy at eta=1/20.
+    D = rows(3)
+    assert len(D) == 28
+    sectors = list(range(1,25))
+    freq = Counter()
+    for a in sectors:
+        b = a+1
+        freq[D[a] ^ D[b]] += F(1,25)
+    assert 0 not in freq
+    assert len(freq) == 24
+    M = max(Counter(a^b for a in D for b in D if a != b).values())
+    assert M == 8
+    mse_parseval = sum((v*v for v in freq.values()),F(0))
+    mse_direct = sum(
+        (sum((F(1,25)*chi(z,s) for z in freq),F(0))**2
+         for s in range(256)),F(0))/256
+    assert mse_direct == mse_parseval == F(24,625)
+    theta = F(1,20)
+    assert F(1,25) < theta
+    assert 0 < mse_direct < M*(theta+theta) < 1
+    print("PASS dilute L3: nonzero MSE=24/625, bound=4/5, 0 queries")
+
+
 if __name__ == "__main__":
     for L in (1,2):
         for k in (1,2):
             audit(L,k)
     audit_zero_fiber()
+    audit_dilute_l3()
