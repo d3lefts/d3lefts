@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean"
+      - "research/nightfall/formalization/finite_field/PrimeZetaChartExtension.lean"
       - ".github/workflows/nightfall-prime-zeta-analytic-bridge-lean.yml"
   workflow_dispatch:
 permissions:
@@ -22,11 +23,13 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p receipts/prime-zeta-analytic
-          src="research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean"
-          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
-          cp "$src" /tmp/mathlib4/PrimeZetaAnalyticBridge.lean
-          (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/PrimeZetaAnalyticBridge.olean" PrimeZetaAnalyticBridge.lean) 2>&1 | tee receipts/prime-zeta-analytic/PrimeZetaAnalyticBridge.log
-          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/prime-zeta-analytic/PrimeZetaAnalyticBridge.log
+          for M in PrimeZetaAnalyticBridge PrimeZetaChartExtension; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/prime-zeta-analytic/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/prime-zeta-analytic/$M.log"
+          done
       - name: Exact named declaration and axiom control
         shell: bash
         run: |
@@ -48,7 +51,17 @@ jobs:
                   assert "'"+name+"' does not depend on any axioms" in content, ('MISSING_AXIOMS',name)
                   axioms=set()
               assert axioms <= {'propext','Classical.choice','Quot.sound'}, (name,axioms)
-          assert 'sorryAx' not in content
+          chart=Path('receipts/prime-zeta-analytic/PrimeZetaChartExtension.log').read_text()
+          for suffix in ('chart_extension_transfer','chart_boundary_transfer'):
+              name='Nightfall.PrimeZetaChartExtension.'+suffix
+              found=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",chart,re.S)
+              if found:
+                  axioms={x.strip() for x in found.group(1).split(',') if x.strip()}
+              else:
+                  assert "'"+name+"' does not depend on any axioms" in chart, ('MISSING_AXIOMS',name)
+                  axioms=set()
+              assert axioms <= {'propext','Classical.choice','Quot.sound'}, (name,axioms)
+          assert 'sorryAx' not in content+chart
           assert 'theorem Nightfall.PrimeZetaAnalyticBridge.analyticAt_shifted_iff' in content
           print('PASS: local analytic bridge and integer cancellation, no new axioms.')
           print('OPEN: construction of P, normal convergence of P prime-series derivative, classical natural boundary, local branch semantics.')
@@ -62,7 +75,7 @@ jobs:
           git rev-parse HEAD > receipts/prime-zeta-analytic/source-commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/prime-zeta-analytic/mathlib-commit.txt
           cat lean-toolchain > receipts/prime-zeta-analytic/lean-toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean > receipts/prime-zeta-analytic/SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean research/nightfall/formalization/finite_field/PrimeZetaChartExtension.lean > receipts/prime-zeta-analytic/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
