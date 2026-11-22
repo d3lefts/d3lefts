@@ -1,4 +1,5 @@
 import Route1WynerGeneral
+import Route1DensityDomination
 
 /-!
 # NIGHTFALL Route 1 / Wyner quantitative converse
@@ -94,6 +95,41 @@ theorem wyner_converse_from_approximation_hardness
     linarith
   simpa only [B, A, K] using hlimit
 
+
+/-- Exact finite-law transfer of the *actual merged* Route1 simulator:
+    if ν is pointwise dominated by R Q, every Q-guarantee is inherited
+    by ν with its error-probability bound multiplied by R.
+
+    The theorem does not assume Q has any particular mixture shape:
+    callers can supply the separate existing Wyner-CI premise for Q.
+    Its depth bound is unchanged, and it does not claim grouped-coordinate
+    oracle semantics (that is a later formalization obligation). -/
+theorem route1_wyner_dominated
+    (ν Q : (ι → α) → ℝ)
+    (hQ0 : ∀ x, 0 ≤ Q x) (hQ1 : ∑ x, Q x = 1)
+    (R : ℝ) (hR : 0 ≤ R)
+    (hdom : ∀ x, ν x ≤ R * Q x)
+    (f : (ι → α) → ℝ) (hf01 : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
+    (d : ℕ) (hd : 1 ≤ d) (hdeg : HasProdDegreeLE f d)
+    (τ : ℝ) (hτ : 0 < τ) (hτ1 : τ ≤ 1)
+    (ε : ℝ) (hε : 0 < ε)
+    (n : ℕ) (hn : 0 < n)
+    (s : ℝ) (hs : wynerGen Q < s) :
+    ∃ t : DTree ι α, (∀ x, t.queries x ≤ n) ∧
+      (∑ x, ν x * (if ε < |f x - t.eval x| then (1 : ℝ) else 0)) ≤
+        R * (((Real.pi ^ 2 * (d : ℝ) ^ 2 / 2) / (2 * gam d τ) +
+          s / (etaC d τ ^ 2 * w0C
+            (Real.pi ^ 2 * (d : ℝ) ^ 2 / 2) d τ)) / n +
+          τ / ε ^ 2) := by
+  obtain ⟨t, htq, herr⟩ := route1_wyner_general Q hQ0 hQ1
+    f hf01 d hd hdeg τ hτ hτ1 ε hε n hn s hs
+  refine ⟨t, htq, ?_⟩
+  have hchange :=
+    Nightfall.Route1DensityDomination.event_probability_dominated
+      ν Q R hdom (fun x => ε < |f x - t.eval x|)
+  exact hchange.trans (mul_le_mul_of_nonneg_left herr hR)
+
 end Nightfall.Route1Polylog
 
 #print axioms Nightfall.Route1Polylog.wyner_converse_from_approximation_hardness
+#print axioms Nightfall.Route1Polylog.route1_wyner_dominated
