@@ -1,8 +1,27 @@
 # Erdős minimum-overlap: witness identity, certification scope, and prior-art baseline
 
+> **22 November 2026 registry update — supersedes the historical "strongest" label below.**
+> A recovered **October 22 PhaseShift V3** 131,072-cell mathematical upper witness
+> has been hash-reconstructed and verified by two distinct full signed-shift
+> integer implementations, establishing
+> \(\mu\le34788888032172582064857141282352546289212755441/91343852333181432387730302044767688728495783936
+> =0.380856370117589426107\ldots\).
+> Witness SHA-256: **46ba45724bb7ff98f6b28b4b7ef3bcf2390f747db8ca290ae0f2f0eaba63c59c**;
+> unique maximum lag **-17354**; runner-up tied at **±5962**.
+> The strongest *located* NIGHTFALL lower deduction is **conditionally**
+> \(\mu>0.3806274746266857709\), with original Wetch analytic and central/outer
+> Arb integrations **not** independently rerun. See the [source-pinned new
+> passport](recomputed_20261122/README.md) and [one-command replay](recomputed_20261122/replay.sh).
+> The October 29 curated public C-10 artifact SHA-256
+> a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e
+> **remains valid under its original separate identity**; do not silently substitute
+> the new witness in the Cairn submission. Neither result is a worldwide
+> optimality/priority claim or an independently reviewed two-sided theorem.
+
+
 **Research lead:** Devin J. Wright. **Source audit:** 2026-10-28. **Purpose:** remove ambiguity between exact mathematical certificates, competition submissions, and third-party bounds.
 
-## Exact mathematical witness — strongest NIGHTFALL internal object
+## Historical October 29 public C-10 witness (now superseded internally)
 
 - **Type:** explicit step-function **upper bound**, not a global lower bound and not a value of the unknown constant.
 - **Cells:** 131,072 uniform pieces on [0,2].
