@@ -80,6 +80,16 @@ No statistical sampling or Gaussian assumption enters. The lower bound also hold
 - Quantitative phase-orbit separation and scale-transfer are direct mathematical corollaries; no comprehensive global priority search for this specific minimax formulation has been completed. The retrieved 2026 phase-retrieval minimax papers use other (notably Gaussian) observation models, so they do not settle this exact priority comparison.
 - External and internal proof stages must remain distinct: source-custody hashes -> named Lean kernel receipts -> concrete global `ProductSphereZero` theorem -> reachable-history terminal -> date-pinned priority -> potential scientific publication. No automatic promotion.
 
+## Adversarial prior-art/source audit — November 22
+
+- The pinned ATLAS `MathlibExt/Geometry/Manifold/SubmersionOfSurjectiveMFDeriv.lean` has a genuinely proved C∞ submersion theorem and builds explicit local projection coordinates. This is a **reused external theorem** and is only a bridge.
+- The **different** pinned ATLAS `v1/Atlas/ProjectionTheory/code/BorsukUlam.lean` explicitly ends its ordinary sphere theorem with `by sorry`. **Exclude it from every proof closure.** It cannot close NIGHTFALL's stronger equivariant product-sphere theorem, irrespective of its filename or declaration.
+- Classical topological ancestor: Chan–Chen–Frick–Hull, *An optimal Borsuk–Ulam theorem for products of spheres and Stiefel manifolds* (2019); the general equivariant zero obstruction is not a NIGHTFALL discovery.
+- Recent stability/minimax literature includes `The condition number in phase retrieval from intensity measurements` (2026) and `Minimax lower bounds for amplitude-based phase retrieval` (2026), the latter with Gaussian design and additive Gaussian noise. Their models are not the deterministic reachable-continuous sensing policy studied here; the comparison is **incomplete**, not a global novelty certification.
+- The independent mathematical reviewer must check whether the exact two-point risk statement has any earlier source under adaptive sensing, and inspect the sign-quotient risk proof rather than accept a green CI for an unrelated algebraic declaration.
+
+**Source/merge gate:** GitHub reports PR #1111 as `dirty` / conflicting with main after contemporaneous parallel source-custody updates. This is a merge-integration condition, not a mathematical proof counterexample. Reconcile the full source registry by exact blob identity with the latest main before merge; never overwrite 67 historical source-matched records or other agents' new pending entries.
+
 ## Budget and next decisive test
 
 Run the pinned `nightfall-bu-quantitative-collision.yml` CI on the exact PR head. Confirm the full four-source Lean import closure, named type and ordinary axioms; if compilation fails, repair rather than downgrade the gate. Run `python3 scripts/check_phase_causal_scaling_exact.py` to check the independent rational scaling identity and its mutation control. Then prioritize **the actual half-space zero-fiber charts at t=0**: isolate a local smooth graph with nonnegative time as a chart coordinate using #1052’s reference spatial Jacobian inverse, prove overlaps with #1111's interior local projections, and feed the resulting concrete atlas to #1108 and #1106. Stop without a topology promotion if any of those steps is still missing.
