@@ -18,6 +18,36 @@ For a new scholarly claim, supply a unique stable ID; quantified primary source;
 
 Run `python3 scripts/check_research_archive.py --self-test` in addition to source-specific mathematical checks. The new workflow tests **archive metadata and dependency integrity only**; it is not a proof assistant. Changes to the journal release status, licensing, or public frozen evidence require explicit owner review.
 
+## Exact computational lemmas: independent differential gate
+
+Where a formal proof imports a finite enumeration or computed certificate,
+use [the staged verification protocol](research/nightfall/AGENT_VERIFICATION_PROTOCOL.md#exact-staged-differential-formalization-4ct-inspired-v1).
+The recommended construction is: frozen primary-source version and formal
+specification → staged lemma DAG → independent implementation from the
+**specification** and inputs alone → canonical exact output comparison →
+Lean checker soundness and finite-case coverage → source-theorem bridge →
+independent mathematical review. Keep efficiency benchmarks separate from
+correctness and do not collapse any of these gates.
+
+Run `python3 scripts/check_formalization_differential.py --self-test`
+(18 adversarial controls) before adopting a new computational family. For
+a frozen family, also run
+`python3 scripts/check_formalization_differential.py --manifest <manifest.json> --root .`
+and independently run each manifest's recorded producer command. The audit
+checks source and output bytes and exact canonical NDJSON agreement; it does
+**not** execute producers, prove implementation independence, certify the
+mathematical semantics of the checker, or establish exhaustive coverage.
+The manifest's claim-boundary fields deliberately remain false. Never
+infer a completed theorem merely from matching C++/Python/Rust/Lean outputs
+or a Lean-verified implementation subroutine.
+
+This requirement follows the staged A.1–A.6 checks and version-aware
+independent implementations associated with
+[Inoue et al., arXiv:2603.24880v3](https://arxiv.org/abs/2603.24880v3),
+not an import of their source code. Reference checker and independently
+written checker must have recorded, reviewable lineages; source-level
+similarity needs separate human assessment.
+
 ## Choose the right contribution
 
 | Contribution | What to provide |

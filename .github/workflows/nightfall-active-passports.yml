@@ -6,6 +6,10 @@ on:
       - 'docs/lean-proof-passport-overlay.json'
       - 'docs/proof-object-passport.json'
       - 'scripts/check_proof_object_passport.cjs'
+      - 'scripts/check_formalization_differential.py'
+      - 'research/nightfall/AGENT_VERIFICATION_PROTOCOL.md'
+      - 'CONTRIBUTING.md'
+      - '.github/pull_request_template.md'
       - 'scripts/check_price_permission_optimality_passport.cjs'
       - 'scripts/check_bellman_policy_passport.cjs'
       - 'scripts/check_robust_observation_hull_passport.cjs'
@@ -60,6 +64,8 @@ jobs:
           node scripts/test_unrestricted_terminal_passport.cjs
           node scripts/test_lean_certificate_provenance.cjs
           node scripts/test_discovery_system_identity.cjs
+      - name: Test fail-closed staged differential evidence contract (not a theorem check)
+        run: python3 scripts/check_formalization_differential.py --self-test
       - name: Independently replay finite addressed-family tester in two arithmetic implementations
         run: |
           python3 research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py
