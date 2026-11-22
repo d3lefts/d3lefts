@@ -62,7 +62,13 @@ theorem spherePair_isCompact (n : ℕ) :
   have h : IsCompact
       ({u : V n | UnitVec n u} ×ˢ {v : V n | UnitVec n v}) :=
     (unitSphere_isCompact n).prod (unitSphere_isCompact n)
-  simpa [SpherePair, Set.prod, Set.mem_setOf_eq] using h
+  have heq :
+      (({u : V n | UnitVec n u} ×ˢ {v : V n | UnitVec n v}) :
+        Set (V n × V n)) = SpherePair n := by
+    ext p
+    simp only [Set.mem_prod, Set.mem_setOf_eq, SpherePair]
+  rw [heq] at h
+  exact h
 
 /-- For n=k+1 the product sphere is genuinely nonempty. -/
 theorem spherePair_nonempty (k : ℕ) :
@@ -162,7 +168,7 @@ theorem continuousOn_pureEnergy (n k : ℕ)
           (fun _ : V n × V n => (0 : ℝ)) (SpherePair n))
     | @insert i s hi ih =>
       have h := (hcU i).pow 2 |>.add ih
-      simpa only [Finset.sum_insert hi] using h
+      simpa only [Finset.sum_insert hi, Pi.add_apply, Pi.pow_apply] using h
   have hV (s : Finset (Fin k)) :
       ContinuousOn (fun p : V n × V n =>
         ∑ i ∈ s, (fV p.1 p.2 i)^2) (SpherePair n) := by
@@ -173,7 +179,7 @@ theorem continuousOn_pureEnergy (n k : ℕ)
           (fun _ : V n × V n => (0 : ℝ)) (SpherePair n))
     | @insert i s hi ih =>
       have h := (hcV i).pow 2 |>.add ih
-      simpa only [Finset.sum_insert hi] using h
+      simpa only [Finset.sum_insert hi, Pi.add_apply, Pi.pow_apply] using h
   exact (hU Finset.univ).add (hV Finset.univ)
 
 /-- Under a hypothetical absence of common zeros, finite energy
@@ -198,7 +204,7 @@ theorem exists_positive_energy_gap (n k : ℕ) (hn : 1 ≤ n)
     rcases hz.eq_or_lt with h | h
     · exact False.elim ((hnozero p hp) ((pureEnergy_eq_zero_iff n k fU fV p).mp h.symm))
     · exact h
-  obtain ⟨m,hm⟩ : ∃ m : ℕ, n = m + 1 := by omega
+  obtain ⟨m,hm⟩ : ∃ m : ℕ, n = m + 1 := ⟨n - 1, by omega⟩
   subst n
   exact positive_uniform_gap m (pureEnergy (m + 1) k fU fV) hcont hpos
 
