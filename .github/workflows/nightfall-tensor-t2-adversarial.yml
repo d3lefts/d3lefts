@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/structural_information/check_tensor_t2_complex_group_energy_exact.py'
       - 'research/nightfall/structural_information/check_tensor_all_frequency_primitive_L4.cpp'
+      - 'research/nightfall/structural_information/check_tensor_fixed_rank2_fibers.cpp'
       - '.github/workflows/nightfall-tensor-t2-adversarial.yml'
   workflow_dispatch:
 permissions:
@@ -26,13 +27,20 @@ jobs:
           g++ -std=c++17 -O3 -Wall -Wextra -Werror research/nightfall/structural_information/check_tensor_all_frequency_primitive_L4.cpp -o /tmp/check_t2_allfreq
           /tmp/check_t2_allfreq | tee t2-adversarial-receipt/all-frequencies.log
           grep -q 'PASS exact all-frequency primitive histogram L<=4' t2-adversarial-receipt/all-frequencies.log
+      - name: Exact fixed-rank-two nonrow polynomial replay through depth seven
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -std=c++17 -O3 -Wall -Wextra -Werror research/nightfall/structural_information/check_tensor_fixed_rank2_fibers.cpp -o /tmp/check_rank2_fixed
+          /tmp/check_rank2_fixed 2>&1 | tee t2-adversarial-receipt/fixed-rank2.log
+          grep -q 'PASS fixed-rank-two tensor-core polynomial exact through L=7' t2-adversarial-receipt/fixed-rank2.log
       - name: Persist exact source identity and limitations
         if: always()
         shell: bash
         run: |
           mkdir -p t2-adversarial-receipt
           git rev-parse HEAD > t2-adversarial-receipt/HEAD
-          sha256sum research/nightfall/structural_information/check_tensor_t2_complex_group_energy_exact.py research/nightfall/structural_information/check_tensor_all_frequency_primitive_L4.cpp > t2-adversarial-receipt/SHA256SUMS
+          sha256sum research/nightfall/structural_information/check_tensor_t2_complex_group_energy_exact.py research/nightfall/structural_information/check_tensor_all_frequency_primitive_L4.cpp research/nightfall/structural_information/check_tensor_fixed_rank2_fibers.cpp > t2-adversarial-receipt/SHA256SUMS
           printf '%s\n' 'FINITE AUDIT ONLY: L<=2 complex amplitudes; L<=4 primitive all-frequency counts; no all-L quantum simulation theorem.' > t2-adversarial-receipt/SCOPE.txt
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
