@@ -54,12 +54,14 @@ jobs:
           for suffix in ('any_three_decode','no_adaptive_two_decode',
                          'no_single_coordinate_flip'):
               full='Nightfall.PhaseRoute1Finite.'+suffix
-              m=re.search(re.escape("'"+full+"' depends on axioms: [")+r'([^\\]]*)\\]',log,re.S)
+              prefix="'"+full+"' depends on axioms: ["
+              line=next((line for line in log.splitlines() if line.startswith(prefix)),None)
+              m=None if line is None else line[len(prefix):].removesuffix("]")
               if m is None:
                   assert f"'{full}' does not depend on any axioms" in log, full
                   axioms=set()
               else:
-                  axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
+                  axioms={x.strip() for x in m.split(',') if x.strip()}
               assert axioms <= {'propext','Classical.choice','Quot.sound'},(full,axioms)
               print(full,sorted(axioms))
           assert 'sorryAx' not in log
