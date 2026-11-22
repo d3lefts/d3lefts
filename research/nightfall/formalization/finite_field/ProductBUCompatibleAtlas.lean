@@ -45,13 +45,13 @@ theorem smooth_manifold_of_compatible_covering_charts
       ContDiffOn ℝ (∞ : ℕ∞ω)
         ((𝓡∂ 1) ∘ (charts i).symm ≫ₕ charts j ∘ (𝓡∂ 1).symm)
         ((𝓡∂ 1).symm ⁻¹'
-            ((charts i).symm ≫ₕ charts j).source ∩ range (𝓡∂ 1))) :
+            ((charts i).symm ≫ₕ charts j).source ∩ Set.range (𝓡∂ 1))) :
     letI : ChartedSpace (EuclideanHalfSpace 1) X :=
       chartedSpaceOfCoveringCharts charts cover
     IsManifold (𝓡∂ 1) ∞ X := by
   letI : ChartedSpace (EuclideanHalfSpace 1) X :=
     chartedSpaceOfCoveringCharts charts cover
-  apply IsManifold.isManifold_of_contDiffOn (𝓡∂ 1) ∞ X
+  apply isManifold_of_contDiffOn (𝓡∂ 1) ∞ X
   intro e e' he he'
   change e ∈ Set.range charts at he
   change e' ∈ Set.range charts at he'
