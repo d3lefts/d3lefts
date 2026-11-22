@@ -108,5 +108,47 @@ class AgentTasksTest(unittest.TestCase):
             tasks.verify_receipt(mutated)
 
 
+
+    def test_replay_on_same_clean_checkout(self):
+        result = tasks.replay_receipt(self.receipt)
+        self.assertTrue(result["replay_bound_to_this_checkout"])
+        self.assertTrue(result["same_checker_source_reexecuted"])
+        self.assertFalse(result["independent_math_audit"])
+        self.assertFalse(result["mathematical_certification"])
+        self.assertEqual(result["source_commit"], self.receipt["source"]["git_head"])
+
+    def test_structurally_plausible_tampering_is_caught_by_replay(self):
+        # Structural syntax validation deliberately does NOT catch valid-length
+        # forged checksums: the stricter same-checkout replay MUST do so.
+        for kind in ("git_head", "anchor_sha256", "stdout_sha256"):
+            with self.subTest(kind=kind):
+                mutated = copy.deepcopy(self.receipt)
+                if kind == "git_head":
+                    old = mutated["source"]["git_head"]
+                    mutated["source"]["git_head"] = ("0" if old[0] != "0" else "1") + old[1:]
+                elif kind == "anchor_sha256":
+                    key = sorted(mutated["source"]["anchor_sha256"])[0]
+                    old = mutated["source"]["anchor_sha256"][key]
+                    mutated["source"]["anchor_sha256"][key] = ("0" if old[0] != "0" else "1") + old[1:]
+                else:
+                    old = mutated["execution"]["stdout_sha256"]
+                    mutated["execution"]["stdout_sha256"] = ("0" if old[0] != "0" else "1") + old[1:]
+                tasks.verify_receipt(mutated)  # structurally valid is not attested
+                with self.assertRaises(ValueError):
+                    tasks.replay_receipt(mutated)
+
+    def test_dirty_worktree_cannot_be_replay_attested(self):
+        mutated = copy.deepcopy(self.receipt)
+        mutated["source"]["worktree_dirty"] = True
+        tasks.verify_receipt(mutated)
+        with self.assertRaisesRegex(ValueError, "clean working tree"):
+            tasks.replay_receipt(mutated)
+
+    def test_forged_success_cannot_be_replay_attested(self):
+        mutated = copy.deepcopy(self.receipt)
+        mutated["certification"]["independent_semantic_audit"] = True
+        with self.assertRaises(ValueError):
+            tasks.replay_receipt(mutated)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

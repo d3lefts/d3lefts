@@ -29,13 +29,26 @@ export def task-run [name: string, --problem: string = "NIGHTFALL-PROGRAM", --ro
 }
 
 export def task-verify [receipt: string] {
-  let result = (^python3 scripts/nightfall_agent_tasks.py verify $receipt | complete)
+  let result = (^python3 scripts/nightfall_agent_tasks.py replay $receipt | complete)
   if $result.exit_code != 0 {
     error make {msg: $"Agent receipt rejected (exit ($result.exit_code)): ($result.stderr)"}
   }
   let data = ($result.stdout | from json)
+  if $data.valid_structure != true or $data.replay_bound_to_this_checkout != true or $data.mathematical_certification != false or $data.independent_math_audit != false {
+    error make {msg: "Receipt replay did not establish scoped same-checker source and output binding"}
+  }
+  $data
+}
+
+# Structural-only inspection of archival receipts. Never authenticates output bytes.
+export def task-structure [receipt: string] {
+  let result = (^python3 scripts/nightfall_agent_tasks.py verify $receipt | complete)
+  if $result.exit_code != 0 {
+    error make {msg: $"Receipt structure rejected (exit ($result.exit_code)): ($result.stderr)"}
+  }
+  let data = ($result.stdout | from json)
   if $data.valid_structure != true or $data.mathematical_certification != false {
-    error make {msg: "Receipt validation crossed certification boundary"}
+    error make {msg: "Receipt structure unexpectedly claims mathematical certification"}
   }
   $data
 }
