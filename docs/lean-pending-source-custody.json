@@ -2,8 +2,8 @@
   "schema": "nightfall-lean-pending-source-custody-v1",
   "revision": 46,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "618cd40f3bac7942ac6d1602624595204dab3598",
-  "scope": "v46: 512 pending exact-blob source records. Also reconciles #1113 conditional prime-zeta module missing from main source custody; separate passing Lean run 45062953520 is NOT a provenance auto-promotion. Exact #1111 quantitative risk modules remain pending kernel CI.",
+  "source_commit": "4837a9559e399e48ed8715cd14faf061fa7d9547",
+  "scope": "v46: 512 unreviewed-source custody entries; reconciles merged #1113 RH module and two conditional quantitative-risk Lean modules. New compiler receipt required on exact merged-source branch; no ProductSphereZero hypothesis discharge.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
