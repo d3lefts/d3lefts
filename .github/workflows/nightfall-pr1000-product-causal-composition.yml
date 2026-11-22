@@ -54,8 +54,9 @@ jobs:
             assert a <= {'propext','Classical.choice','Quot.sound'},(name,a)
           assert 'sorryAx' not in s
           assert 'theorem Nightfall.ProductSphereCausal.collision_of_product_sphere_zero' in s
-          assert 'hBU : ProductSphereZero' in s
-          assert 'hcontU :' in s and 'hcontV :' in s
+          assert re.search(r'ProductSphereZero\s+n\s+r\s+s\s*→',s), 'TOPOLOGY_HYPOTHESIS_ABSENT'
+          assert re.search(r'∀\s*\(i\s*:\s*Fin r\),\s*ContinuousOn',s), 'U_CONTINUITY_ABSENT'
+          assert re.search(r'∀\s*\(i\s*:\s*Fin s\),\s*ContinuousOn',s), 'V_CONTINUITY_ABSENT'
           print('PASS: genuine causal physical collision conditional on ProductSphereZero and the two test continuity properties.')
           print('NOT PROVED: ProductSphereZero, admissible selector -> test continuity (reachable-only).')
           PY
