@@ -4,6 +4,7 @@ on:
     paths:
       - "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean"
       - "research/nightfall/formalization/finite_field/ProductBUComponentClassification.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean"
       - "docs/lean-pending-source-custody.json"
       - ".github/workflows/nightfall-bu-global-boundary.yml"
   workflow_dispatch:
@@ -42,7 +43,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for M in ProductBUIntervalStabilizer ProductBUGlobalBoundary ProductBUComponentClassification; do
+          for M in ProductBUIntervalStabilizer ProductBUGlobalBoundary ProductBUComponentClassification ProductBUComponentEndpoints; do
             src="research/nightfall/formalization/finite_field/$M.lean"
             ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -78,7 +79,17 @@ jobs:
               a=set()
           assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
           print("PASS component interval classification",sorted(a))
-          assert "sorryAx" not in s and "sorryAx" not in s2
+          s3=Path("receipts/bu-global-boundary/ProductBUComponentEndpoints.log").read_text()
+          name="Nightfall.ProductBUComponentEndpoints.exists_second_endpoint_of_smooth_boundary_component"
+          assert name in s3, ("MISSING_SECOND_ENDPOINT",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s3,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s3, ("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS actual component second boundary endpoint",sorted(a))
+          assert "sorryAx" not in s and "sorryAx" not in s2 and "sorryAx" not in s3
           print("NOT PROVED: global regular zero-fiber smooth manifold-with-boundary or ProductSphereZero")
           PY
       - name: Persist exact-head source receipts
@@ -87,7 +98,7 @@ jobs:
           mkdir -p receipts/bu-global-boundary
           git rev-parse HEAD > receipts/bu-global-boundary/nightfall-commit.txt
           cat lean-toolchain > receipts/bu-global-boundary/lean-toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/{ProductBUIntervalStabilizer,ProductBUGlobalBoundary,ProductBUComponentClassification}.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUIntervalStabilizer,ProductBUGlobalBoundary,ProductBUComponentClassification,ProductBUComponentEndpoints}.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
