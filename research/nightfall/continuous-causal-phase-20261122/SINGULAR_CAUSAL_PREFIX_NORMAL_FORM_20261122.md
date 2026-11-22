@@ -69,6 +69,49 @@ where the attainable fourth-history fiber pinches from an interval to **at most 
 
 **Precisely what is ruled out:** all fixed-basis and all globally independent causal four-prefix architectures, irrespective of continuous nonlinear downstream outputs. **Not ruled out:** schemes with a rank-loss locus in the fourth row, or already in one of the first three, and downstream nonliftability. The current result is a structural representation and a decisively narrowed construction search, not a proof of universal impossibility.
 
+
+## Theorem S3: simultaneous rank collapse and normalized holonomy in an actual R⁴ five-reading history
+
+The two necessary conditions from the earlier full-rank-prefix no-go—**rank loss within the first four rows** and **non-liftable normalized projector feedback**—are *geometrically compatible*. Here is a single, explicit causal construction where both occur, with the first three sensing rows independent everywhere and the detector holonomy arising already at reading FIVE. This is **not** a universally recovering six-reading strategy.
+
+**First four readings.** In R⁴ read \(d_1=x_1^2,\ d_2=x_2^2,\ d_3=x_3^2\) with the fixed standard basis. Let
+\[
+c(d)=(d_1-2)^2+(d_2-2)^2-1,\qquad
+a_4(d)=\frac{(1,1,0,c(d))}{\sqrt{2+c(d)^2}},
+\]
+and query \(y_4=(a_4(d)\cdot x)^2\). This fourth row is globally continuous and normalized on H3=[0,∞)³. It is independent of the first three rows exactly where c(d)≠0; its rank-drop locus \(D=\{c(d)=0\}\) is a circle entirely within \(d_1,d_2\ge1\), times the free \(d_3\ge0\) coordinate. For \(d\notin D\), x4 can vary freely so the possible fourth reading y4 fills all [0,∞). On D, x4 drops out and
+\[
+H_4(d)=\{f_-(d),f_+(d)\},\quad
+f_\pm(d)=\frac{(\sqrt{d_1}\pm\sqrt{d_2})^2}{2}.
+\]
+These two values are distinct everywhere on D, since \(f_+-f_-=2\sqrt{d_1d_2}>0\). This is an instance of S2 with a *genuine two-sheet interior pinching*, not a nominal rank label.
+
+**Continuous fifth projector.** For \(s\in[0,1]\) set \(v(s)=(\cos(\pi s),\sin(\pi s),0,0)\) and \(P(s)=v(s)v(s)^\top\). Note \(P(0)=P(1)=e_1e_1^\top\). Let \(U=\{d:c(d)<0\}\), the open cylinder over the disk bounded by D; here d1,d2>1. On the attained history H4, define
+\[
+Q_5(d,y_4)=
+\begin{cases}
+P\!\left(\operatorname{clip}_{[0,1]}\dfrac{y_4-f_-(d)}{f_+(d)-f_-(d)}\right), &d\in U,\\
+P(0),&d\notin U .
+\end{cases}
+\]
+The inside denominator is strictly positive (even uniformly positive on closure U), and \(Q_5\) is a normalized rank-one orthogonal projector at every attained history. To verify continuity at d∈D, use the **exact attained fiber formula**: any history at d∈D has y4=f_− or f_+. Along inside histories approaching either, the clipped parameter tends to 0 or 1, and both P values equal P(0). Outside histories have Q5=P(0). Thus Q5 is continuous in the **relative topology of H4**, including at support boundaries (U stays away from d1=0 and d2=0).
+
+**Closed-loop no-lift certificate.** Fix \(d_b=(3,2,1)\in D\) and ε=1/2. For s∈[0,1], form two attained history arcs with
+\[
+d_{\rm in}(s)=(3-\varepsilon\sin(\pi s),\,2,\,1),\quad
+d_{\rm out}(s)=(3+\varepsilon\sin(\pi s),\,2,\,1),
+\]
+\[
+y(s;d)=(1-s)f_-(d)+s f_+(d).
+\]
+For 0<s<1 the inside arc lies in U and the outside arc lies in {c>0}; at s=0,1 both arcs meet at the **same** two boundary histories, \((d_b,f_-(d_b))\) and \((d_b,f_+(d_b))\). Every point of either arc is actually attained: the fourth-reading fiber is the full ray whenever c≠0, and the endpoint values are genuine sign-sheet outputs when c=0. On the inside arc \(Q_5=P(s)\) makes one **projective half-turn**; on the outside arc \(Q_5=P(0)\) is constant. Joining the arcs produces a closed loop whose pulled-back real-line double cover has monodromy −1: an oriented unit row following P(s) changes sign across the inside arc, while one following P(0) cannot change sign across the outside arc. Thus **no globally continuous unit-row lift of Q5 exists on the actual H4**.
+
+**Exactly what is proved:** A normalized rank-one *physical* detector at reading five can become non-orientable after the fourth sensing row loses rank on a compact **interior** history circle, despite full chronological rank through reading three. This is the earliest possible non-liftable fifth selector in the first-three-full-rank R⁴ architecture (H3 itself is an orthant, so Q4 lifts). This rigorously realizes the *two distinct necessary structural costs* in one architecture.
+
+**Exactly what is not proved:** The resulting five readings, or any sixth detector appended to them, are **not** shown to universally recover real four-dimensional signals. In fact the explicit Q5 acts only in the first two signal coordinates, and is not presented as a phase decoder. The 2n−1 physical-detector threshold in the attained-history category remains open. Classical projective half-turn holonomy is credited as old topology; priority for this specific causal history construction needs independent review.
+
+**Next decisive test:** keep this explicit rank-pinching H4 and ask whether *any* continuous normalized projector Q6 on its actual H5 can globally separate the remaining sign classes; either produce an exact collision proof specific to this H4 family or design a stronger fifth projector and certify all support boundaries. Do not infer recovery from non-liftability alone.
+
 ## Adversarial audit checklist and provenance
 
 - Validate the cofactor kernel identity and continuous normalization, including d_i=0 and n=2. Any singularity in the *first n−1* row matrix violates the theorem's assumptions; do not pretend this normal form applies there.
