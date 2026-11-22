@@ -60,6 +60,32 @@ It grows as Θ(NlnN); the elementary uniform-Q baseline is exponentially poor in
 
 **Limit:** This lower bound is for M=1 only. Mixtures of product laws can specialize on different support regions. It does NOT establish any lower bound simultaneously involving M, κ and D∞. That is the direct structural research gap.
 
+## Simon: exact M-product dominating family (all N, all t)
+
+For every integer t in [N/2,N], uniformly choose a t-element subset A of the N output symbols and independently sample each of the N table outputs uniformly in A. This is a mixture Q_t of
+
+  M_t=binom(N,t)
+
+product distributions, one per output subset. A valid Simon table x uses **exactly N/2 distinct symbols**, each twice. Precisely binom(N/2,t−N/2) subsets A contain all of them. Hence Q_t is constant on Simon's entire promise support:
+
+  Q_t(x)=binom(N/2,t−N/2)/[binom(N,t)·t^N]   for every x in S_N.
+
+Its pointwise domination factor is therefore not an estimate but **exact**:
+
+  R_t=binom(N,t)·t^N / [L_N·binom(N/2,t−N/2)],
+  D∞(ν_S||Q_t)=ln R_t.
+
+At t=N, M=1 and R=N^N/L_N: the optimal single-product reference. At t=N/2, M=binom(N,N/2) and R=M·(N/2)^N/L_N, which is strictly better for N≥2 but uses exponentially many components.
+
+For fixed k with 0≤k≤N/2 and t=N−k,
+
+  M=binom(N,k),
+  R_{N−k}/R_N=[binom(N,k)/binom(N/2,k)]·(1−k/N)^N.
+
+As N→∞ with **k fixed**, the ratio tends to (2/e)^k while M∼N^k/k!. Thus polynomial-size mixtures **in this particular family** improve R by constant factors rather than eliminating the exponential density penalty. This does *not* prove any lower bound for arbitrary mixtures, adaptive output-coordinate-specific component laws, or fixed block partitions.
+
+Small exact benchmark: N=4 and L_N=36. M=1 gives R=64/9; t=3, M=4 gives R=9/2; t=2, M=6 gives R=8/3. This is the first nontrivial M>1 Simon envelope with completely explicit probabilities and a finite exact checker.
+
 ## Simon: direct collision-coupling classical hardness
 
 Let a classical algorithm query at most q distinct truth-table addresses, each returning the entire N-symbol output, and guess a fixed hidden-shift bit s_j. Let a fake oracle return a fresh uniform unused output symbol at each queried address, independent of s. Couple the true Simon oracle to the fake oracle by using the same random label whenever a new XOR coset is observed. Transcripts are identical until two queried addresses differ by the hidden shift. Conditional on the fake transcript, s is still uniform among N−1 nonzero differences. At most C(q,2) distinct queried-address differences exist. Thus the probability of divergence is at most q(q−1)/(2(N−1)).
