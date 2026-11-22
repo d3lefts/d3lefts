@@ -35,16 +35,16 @@ This simulates the acceptance probability of **every one-query finite-dimensiona
 
 No graph localization bound K₄ or rank-free T2 theorem is needed for QG1; it depends only on the elementary **pair** classification and already existing T1 energy theorem.
 
-## 3. A PHYSICAL phased-intensity-source corollary
+## 3. A phase-retrieval intensity-data corollary under explicit coherent-oracle access
 
 Consider the exact phase-retrieval ensemble of unit-sphere real signals `x_v=σ_v/√n`, σ_v∈{±1}, modulo a global sign, with permitted **unit-norm** squared-linear edge sensors
 
     a_{uv}=(e_u+e_v)/√2,
     y_{uv}=|a_{uv}·x|²=(1+σ_uσ_v)/n∈{0,2/n}.
 
-A single **actual classical intensity reading** returns the binary character `χ_{uv}=n y_{uv}−1`. A single coherent reversible indexed bit response query, with the known encoding `d_e=1−n y_e/2`, and response register `|−⟩`, phase-kicks back `(−1)^{d_e}=χ_e`. This is proved by an elementary source-exact circuit identity in `GRAPH_INTENSITY_PHASE_ORACLE_BRIDGE_20261122.md`; its finite n=3,4 exact symbolic tests have an explicit wrong-|+⟩ negative control.
+A single **actual classical intensity reading** returns the binary character `χ_{uv}=n y_{uv}−1`. **Assuming an ideal reversible indexed quantum response-bit oracle on those same exact intensity symbols**, a single coherent call, with the known encoding `d_e=1−n y_e/2`, and response register `|−⟩`, phase-kicks back `(−1)^{d_e}=χ_e`. This is proved by an elementary source-exact circuit identity in `GRAPH_INTENSITY_PHASE_ORACLE_BRIDGE_20261122.md`; its finite n=3,4 exact symbolic tests have an explicit wrong-|+⟩ negative control.
 
-Therefore (QG1) holds **as a paper-level statement** for any quantum circuit whose only unknown-data dependence is **one coherent call of this phase-kickback intensity-bit oracle**, with deterministic, nonadaptive classical *real intensity measurements* and output-acceptance approximation.
+This phase-kickback identity does **not** assert that a laboratory optical detector supports coherent superposition queries or that a destructive measurement can be made into a unitary for free. Under the stated idealized oracle convention, (QG1) holds **as a paper-level statement** for any quantum circuit whose only unknown-data dependence is **one coherent call of this phase-kickback intensity-bit oracle**, with deterministic, nonadaptive classical *real intensity measurements* and output-acceptance approximation.
 
 If G is connected, global zero-error reconstruction of the entire sign class requires exactly n−1 legal edge-intensity measurements, by a binary transcript count and spanning-tree decoder. If G is connected and bridgeless, the **raw intensity-coordinate Wyner information** is `(n−1)ln2` (special case of the stronger concurrent [#1095](https://github.com/d3lefts/d3lefts/pull/1095) formula `(n−1−b)ln2`). On a connected triangular torus (Δ=6), triangle parity constraints also prevent the simple high-order independent-bit moment transfer, the raw source has no duplicated oracle labels, and no nontrivial *original-edge* independent block partition exists.
 
