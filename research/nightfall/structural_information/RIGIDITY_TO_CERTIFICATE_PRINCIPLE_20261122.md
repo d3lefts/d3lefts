@@ -1,4 +1,4 @@
-# NIGHTFALL: A Rigidity-to-Certificate Principle (v1.0)
+# NIGHTFALL: A Rigidity-to-Certificate Principle (v1.1)
 
 **Date:** 2026-11-22. **Status:** elementary proved conditional corollaries and an exact arithmetic checker; general framework is a synthesis of classical finite-dimensional duality, arithmetic integrality, and the original source-rigidity theorem. Not Lean-checked, not externally reviewed, not priority-cleared.
 
@@ -12,9 +12,23 @@ Inputs/feasible set: (i) source maps with finite collision fibers; (ii) analytic
 
 Strongest external predecessors examined this session: classical Prony/super-resolution stability and confluent Vandermonde analysis (Batenkov and Yomdin, SIAM 2013; 2014/2025 works), standard norming-set/dual-certificate and Hahn-Banach arguments, and Candela–González-Sánchez–Szegedy, *On F_2^omega-affine-exchangeable probability measures* (Studia Mathematica 279, 2024). These own broad mechanisms; **no general novelty claim**.
 
-Best verified advance: under the September paper's **stated Conditional Local Germ Decomposition**, the fiber's singular-germ quotient is rank one and the exact integer numerator is a necessary-and-sufficient test for local holomorphic removability. There are an arithmetic gap, modular noncancellation certificates, and a precise monodromy noise threshold. Exact checker with 1,700 synthetic fibers and rational probe matrices passed locally. A 2.5x sharper threshold than a naive denominator-times-condition-number bound is demonstrated in one rational toy system; not a scientific record.
+Best verified advance: **the first shifted layer (k=1) now has an unconditional local removability classification**, proved by combining the classical meromorphic continuation of P'(w) on Re w>0 with the September paper's holomorphic first-layer remainder. The isolated higher-layer local-germ quotient is rank one and exactly decidable under the original conditional decomposition hypotheses. There are an arithmetic gap, modular noncancellation certificates, and a precise monodromy noise threshold. Exact checker with 1,700 synthetic fibers and rational probe matrices passed locally. A 2.5x sharper threshold than a naive denominator-times-condition-number bound is demonstrated in one rational toy system; not a scientific record.
 
 Independent audit: reconstruct the conditional analytic hypothesis directly from the manuscript; attack the alleged global continuation implications; independently verify integer and p-adic proofs; audit the probe operator against the Simon paper's source-specific test norm. Stop rule: if any conditional hypothesis is missing, demote the holomorphic-removability conclusion to a statement solely about the isolated finite channels. Cheapest decisive experiment: check the local-germ proposition's common prefactor and holomorphic remainder, then replay the modular cancellation and noisy reconstruction checks. Scope limits and prior-art status travel with these results.
+
+## 0. New unconditional first-strip upgrade (version 1.1)
+
+A separate source-level proof is in **FIRST_STRIP_PRIME_ZETA_RIGIDITY_CERTIFICATE_20261122.md**. For lambda=rho/n with nontrivial zeta zero rho and s0=lambda-1, the Möbius derivative
+
+  P'(w) = Σ_{m>=1} μ(m) ζ'(mw)/ζ(mw)
+
+converges normally in its tail and defines a single-valued meromorphic function on Re w>0. Its residue at the nonreal point lambda is exactly M(lambda)=Σ_{m∈F_lambda} μ(m)r_m/m. Thus the local prime-zeta germ has the complete form M(lambda)log(w-lambda)+holomorphic, **without** the original manuscript's separately assumed local continuation hypothesis.
+
+The manuscript's proved first-layer identity A_plus(s)=sP(s+1)+H(s), H holomorphic Re s>−1, then gives for every s0=lambda−1 in the first strip
+
+  A_plus(s)=s M(lambda) log(s-s0)+holomorphic.
+
+Consequently the **full first-strip local continuation is holomorphically removable iff M(lambda)=0, unconditionally** (relative to classical zeta meromorphic continuation). The all-layer statement below remains conditional for k>=2. The source paper's all-layer 'complete germ cancellation open' language is not contradicted outside this first-strip scope. Broad prime-zeta continuation is classical; global originality not established.
 
 ## I. Finite singular-mode reduction
 
@@ -166,7 +180,7 @@ whose certificate cost is **2/eps** and diverges as eps->0. No dimension- or mod
 
 The Simon result uses affine action of AGL(m,2) on address sets and label permutations. Its finite invariant directions at k<=5 and exact k=6 structural dimension D_6=24 are documented in #1013/#1023. Here the calibrated-probe theorem identifies precisely the **conditioning** obligation. Under the all-k affine-rank interpolation lemma still awaiting independent audit, Simon would have bounded inverse probes at each fixed k and therefore a uniform distortion certificate Γ_k<=C_k/N. There is **no rational-integer cancellation lattice** available for arbitrary bounded test functions, and no justification for importing the prime-zeta modular obstruction into Simon.
 
-For the September prime-zeta paper, the integer arithmetic makes exact cancellation decidable *once the complete finite fiber and local analytic model are supplied*. It does **not** make the analytic continuation assumption or zero-fiber enumeration automatic. The two papers instantiate different modules of the same conditional general scheme: rigidity → finite modes → (discrete gap OR norming probes) → exact or robust certificate.
+For the September prime-zeta paper, the integer arithmetic makes exact cancellation decidable once the complete finite fiber is supplied **in the first strip**, because the classical prime-zeta derivative and the source manuscript's first-layer localization supply local continuation. In higher layers, local analytic continuation remains a separate hypothesis; the checker does not make zero-fiber enumeration automatic. The two papers instantiate different modules of the same conditional general scheme: rigidity → finite modes → (discrete gap OR norming probes) → exact or robust certificate.
 
 ## V. Evidence, audit and priority
 
@@ -178,7 +192,7 @@ For the September prime-zeta paper, the integer arithmetic makes exact cancellat
 
 ## VI. Discovery graph
 
-**Prime-zeta** source map → same-layer dilation rigidity → finite active fiber → rank-one logarithmic mode → integer numerator A_lambda → modular noncancellation / monodromy + gap → conditional complete local cancellation decision → blocker: justify local continuation and fiber completeness.
+**Prime-zeta** source map → same-layer dilation rigidity → finite active fiber → rank-one logarithmic mode → integer numerator A_lambda → modular noncancellation / monodromy + gap → **unconditional local first-strip cancellation decision** (conditional higher layers) → blockers: complete zero-fiber certificate, higher-layer analytic continuation and prior-art audit.
 
 **Simon** input affine action → finitely many orbit types at fixed k → pure-degree invariant modes → random affine pullback probes → inverse-conditioned dual certificate → conditional Γ_k O(1/N) → blocker: independent all-k rank-filtration audit and useful growth of C_k.
 
