@@ -61,5 +61,66 @@ def run_checks() -> None:
     print(f"PASS: {checked} exact supports; independent brute-force cross-check for p<=5")
 
 
+
+def permanent_from_rows(row_masks: list[int]) -> int:
+    """Exact subset DP for an arbitrary (possibly nonabelian) Cayley matrix."""
+    n = len(row_masks)
+    dp = [0] * (1 << n)
+    dp[0] = 1
+    for mask in range(1, 1 << n):
+        row = mask.bit_count() - 1
+        allowed = mask & row_masks[row]
+        while allowed:
+            b = allowed & -allowed
+            dp[mask] += dp[mask ^ b]
+            allowed ^= b
+    return dp[-1]
+
+
+def brute_from_rows(row_masks: list[int]) -> int:
+    """Different formulation: enumerate bijections, only for selected test cases."""
+    n = len(row_masks)
+    return sum(all(row_masks[i] & (1 << sigma[i]) for i in range(n))
+               for sigma in permutations(range(n)))
+
+
+def dihedral_multiply(i: int, j: int) -> int:
+    """D8 as (rotation mod 4, reflection bit); identity is 0."""
+    a, b = i % 4, i // 4
+    c, d = j % 4, j // 4
+    return (a + (1 if b == 0 else -1) * c) % 4 + 4 * ((b + d) % 2)
+
+
+def group_check(size: int, prime: int, multiply, label: str) -> None:
+    for subset_mask in range(1 << size):
+        rows = [0] * size
+        for x in range(size):
+            for s in range(size):
+                if subset_mask & (1 << s):
+                    rows[x] |= 1 << multiply(x, s)
+        result = permanent_from_rows(rows)
+        assert result % prime == subset_mask.bit_count() % prime, (label, subset_mask, result)
+        if label.startswith("D8") and subset_mask < 8:
+            assert result == brute_from_rows(rows), (label, subset_mask, result)
+    print(f"{label}: all {1 << size} supports satisfy the p-group congruence modulo {prime}")
+
+
+def run_group_checks() -> None:
+    group_check(4, 2, lambda x, s: (x + s) % 4, "C4")
+    group_check(8, 2, lambda x, s: (x + s) % 8, "C8")
+    group_check(8, 2, dihedral_multiply, "D8 (nonabelian)")
+    # Scope control: the analogous congruence is false for arbitrary groups.
+    counterexamples = []
+    for mask in range(1 << 6):
+        rows = [sum(1 << ((x + s) % 6) for s in range(6) if mask & (1 << s)) for x in range(6)]
+        value = permanent_from_rows(rows)
+        if value % 2 != mask.bit_count() % 2:
+            counterexamples.append((mask, value))
+    assert counterexamples, "Expected a counterexample for non-p-group C6"
+    mask, value = counterexamples[0]
+    print(f"C6 scope control: S-mask={mask}, permanent={value}, per mod 2 != |S| mod 2")
+
+
 if __name__ == '__main__':
     run_checks()
+    run_group_checks()
