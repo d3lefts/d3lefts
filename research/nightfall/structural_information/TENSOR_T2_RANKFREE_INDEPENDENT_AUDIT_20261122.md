@@ -15,6 +15,26 @@ The PR's candidate uses a four-slot coefficient decomposition into primitive all
 
 Under the exact \(2\)-dimensional local field, a nonzero product-tensor circuit \(E\) of size \(k\) has \(\sum_j(d_j(E)-1)\le k-2\). This underlies the proposed three-free-sites encoding for primitive four-slot XOR representations. The intermediate combinatorial encoding and **all** quantum grouped-coefficient estimates still require an independent complete proof reconstruction.
 
+## Paper-level reconstruction: polynomial primitive XOR-lift bound
+
+**Scoped lemma (not Lean certified):** For fixed nonzero \(z\), among ordered four-slot tuples of *distinct* labels from \(R_L\cup\{0\}\) whose nonzero labels are linearly independent over \(\mathbb F_2\) and XOR to \(z\), the number is at most
+\[
+K_L=5^4(1+4\cdot3^6)^4\sum_{j=0}^{\min(3,L)}\binom Lj=O(L^3).
+\]
+For \(L=1\), direct enumeration handles the degenerate one-factor case. For \(L\ge2\), here is an independently written proof of the structural counting dependency in PR #1016, assuming the published Lovitz–Petrov circuit corollary.
+
+Choose a minimal-cardinality reference set \(A\subset R_L\), \(|A|\le4\), independent with XOR \(z\). Let another independent representation \(B\subset R_L\), \(|B|\le4\), have the same XOR. Then \(A\triangle B\) is a zero-sum binary matroid dependence and partitions into disjoint minimal dependent circuits \(E_i\). Each circuit intersects **both** \(A\) and \(B\), since each of those sets is independent. Write \(r_i=|E_i\cap A|\ge1\), \(k_i=|E_i\cap B|\ge1\), with \(\sum_i k_i\le4\).
+
+Let \(V_i\) be the sites where the tensor factors of \(E_i\) vary, and \(U_i\subset V_i\) the sites where the old rows \(E_i\cap A\) vary. Lovitz–Petrov Corollary 21 gives \(|V_i|\le r_i+k_i-2\). Crucially \(|U_i|\ge r_i-1\): immediate for \(r_i=1,2\); for \(r_i=3\), independence of three old tensors requires at least two varying binary two-dimensional sites, since one varying site spans dimension at most two; for \(r_i=4\), the entire reference set \(A\) lies in this circuit, and if it varied in at most two sites, its XOR \(z\) would be a two-mode \(2\times2\) tensor of rank at most two, contradicting the minimal reference size four. Therefore
+\[
+|V_i\setminus U_i|\le k_i-1,\quad
+\big|\bigcup_i(V_i\setminus U_i)\big|
+ \le\sum_i(k_i-1)\le 4-\#\{E_i\}\le3.
+\]
+Also \(|\bigcup_iV_i|\le\sum_i(r_i+k_i-2)\le6\). Thus at most three **free site indices** need be chosen among \(L\) locations; variation forced by old rows is already known. Assign each of up to four reference rows to one of at most four circuits or a shared-row bucket (at most \(5^4\) assignments). Once that assignment and free sites are fixed, each of four ordered new labels is either zero/shared or agrees outside at most six varying sites with one of at most four old rows, with at most \(3^6\) nonzero-factor variations. This yields \(5^4(1+4\cdot3^6)^4\sum_{j\le3}\binom Lj\).
+
+The lower family in the exact checker gives \(\binom L3\) distinct unordered primitive four-row representations for one fixed nonzero frequency, so this **representation multiplicity** has growth order \(\Theta(L^3)\). That conclusion concerns multiplicity, **not** a matching classical query lower bound. This reconstructs one substantial combinatorial ingredient; it **does not** verify the six repeated-label operator-group estimates or the zero-triple coefficient bound for all quantum circuits.
+
 ## Preregistered finite tests and results
 
 The two audit scripts were written independently of the candidate branch code and first executed locally in exact Python rational/bitwise arithmetic. Inputs, predicted competing outcomes, and results:
