@@ -1,9 +1,11 @@
-name: NIGHTFALL Nushell agent interface pilot (not proof certification)
+name: NIGHTFALL cross-shell agent contract (orchestration only)
 on:
   pull_request:
     paths:
-      - 'research/nightfall/agent-operations/passport-preflight.nu'
-      - 'research/nightfall/agent-operations/NUSHELL_AGENT_PILOT_RFC_20261122.md'
+      - 'justfile'
+      - 'scripts/nightfall_agent_tasks.py'
+      - 'scripts/test_nightfall_agent_tasks.py'
+      - 'research/nightfall/agent-operations/**'
       - '.github/workflows/nightfall-nushell-agent-pilot.yml'
   workflow_dispatch:
 permissions:
@@ -12,54 +14,106 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
-  compare-contract:
+  verify-agent-contract:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - uses: hustcer/setup-nu@1b8faed9a8ff673c8ce0beae243e0b72d0787241 # v3, immutable SHA
+      - uses: extractions/setup-just@f8a3cce218d9f83db3a2ecd90e41ac3de6cdfd9b # v3.1.0
+        with:
+          just-version: '1.59.0'
+      - uses: hustcer/setup-nu@1b8faed9a8ff673c8ce0beae243e0b72d0787241 # immutable v3
         with:
           version: '0.117.0'
           check-latest: false
-      - name: Preserve existing authoritative Python proof passport gate
+      - name: Python contract adversarial tests and no-change preflight
         shell: bash
         run: |
           set -euo pipefail
-          python3 scripts/check_proof_passport_v2.py --self-test
-      - name: Compare Nu read-only summary against independent Python projection
-        shell: bash
-        run: |
-          set -euo pipefail
+          just --version
           nu --version
-          nu research/nightfall/agent-operations/passport-preflight.nu docs/proof-passport-v2.json > /tmp/nightfall-nu-summary.json
+          python3 -m py_compile scripts/nightfall_agent_tasks.py scripts/test_nightfall_agent_tasks.py
+          python3 scripts/test_nightfall_agent_tasks.py
+          python3 scripts/check_proof_passport_v2.py --self-test
+          just --list
+          just preflight
+      - name: Verify Python and Nu read-only passport reports
+        shell: bash
+        run: |
+          set -euo pipefail
+          nu research/nightfall/agent-operations/passport-preflight.nu docs/proof-passport-v2.json > /tmp/nightfall-nu-preflight.json
+          python3 scripts/nightfall_agent_tasks.py list > /tmp/nightfall-python-catalogue.json
+          nu -c 'use research/nightfall/agent-operations/task-interface.nu *; task-list | to json -r' > /tmp/nightfall-nu-catalogue.json
+          python3 scripts/nightfall_agent_tasks.py run passport --problem NIGHTFALL-PROGRAM --role independent-reproducer > /tmp/nightfall-python-task.json
+          nu -c 'use research/nightfall/agent-operations/task-interface.nu *; task-run passport --problem NIGHTFALL-PROGRAM --role independent-reproducer | to json -r' > /tmp/nightfall-nu-task.json
           python3 - <<'PY'
           import collections,json
-          src=json.load(open('docs/proof-passport-v2.json',encoding='utf8'))
-          got=json.load(open('/tmp/nightfall-nu-summary.json',encoding='utf8'))
-          expected=collections.Counter(x['assertion_status'] for x in src['records'])
-          assert got['kind']=='nightfall.agent-preflight.v1'
-          assert got['schema']==src['schema']
-          assert got['record_count']==len(src['records'])
-          assert got['status_counts']==[
-              {'status':k,'count':v} for k,v in sorted(expected.items())
-          ]
-          assert got['mathematical_certification'] is False
-          assert got['semantic_review'] is False
-          print('PASS: Nushell summary agrees with independent Python read of source JSON')
-          bad=dict(src)
-          bad['schema']='nightfall.INVALID'
-          json.dump(bad,open('/tmp/invalid-nu-schema.json','w'))
-          duplicate=dict(src)
-          duplicate['records']=[dict(x) for x in src['records']]
-          duplicate['records'][-1]['id']=duplicate['records'][0]['id']
-          json.dump(duplicate,open('/tmp/invalid-nu-duplicate.json','w'))
+          doc=json.load(open('docs/proof-passport-v2.json',encoding='utf8'))
+          summary=json.load(open('/tmp/nightfall-nu-preflight.json',encoding='utf8'))
+          cat_py=json.load(open('/tmp/nightfall-python-catalogue.json',encoding='utf8'))
+          cat_nu=json.load(open('/tmp/nightfall-nu-catalogue.json',encoding='utf8'))
+          task_py=json.load(open('/tmp/nightfall-python-task.json',encoding='utf8'))
+          task_nu=json.load(open('/tmp/nightfall-nu-task.json',encoding='utf8'))
+          expected=collections.Counter(x['assertion_status'] for x in doc['records'])
+          assert summary['status_counts']==[
+              {'status':k,'count':v} for k,v in sorted(expected.items())]
+          assert summary['mathematical_certification'] is False
+          assert summary['semantic_review'] is False
+          assert cat_py==cat_nu and cat_py['proof_certification'] is False
+          for t in (task_py,task_nu):
+              assert t['schema']=='nightfall.agent-task-receipt.v1'
+              assert t['task']=='passport'
+              assert t['execution']['status']=='PASS'
+              assert t['certification']=={'mathematical_theorem':False,
+                'independent_semantic_audit':False,'global_priority':False}
+          for key in ('task','problem_id','agent_role_claimed','command',
+                      'source','toolchain','scope','certification'):
+              assert task_py[key]==task_nu[key],key
+          for key in ('status','exit_code','timed_out','stdout_sha256','stderr_sha256',
+                      'stdout_bytes','stderr_bytes'):
+              assert task_py['execution'][key]==task_nu['execution'][key],key
+          print('PASS: Nu and Python agree on metadata, hashes, roles, scope, exit status; no proof promotion')
           PY
-          for mutant in /tmp/invalid-nu-schema.json /tmp/invalid-nu-duplicate.json; do
-            if nu research/nightfall/agent-operations/passport-preflight.nu "$mutant" > /tmp/invalid-nu-output.txt 2>&1; then
-              echo "::error::Nushell accepted deliberately invalid input $mutant"
+      - name: Fail-closed receipt verification and adversarial Nu controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp /tmp/nightfall-python-task.json /tmp/agent-valid-receipt.json
+          python3 scripts/nightfall_agent_tasks.py verify /tmp/agent-valid-receipt.json
+          nu -c 'use research/nightfall/agent-operations/task-interface.nu *; task-verify /tmp/agent-valid-receipt.json | to json -r'
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/agent-valid-receipt.json',encoding='utf8'))
+          bad=dict(d)
+          bad['certification']=dict(d['certification'],mathematical_theorem=True)
+          json.dump(bad,open('/tmp/agent-forged-proof.json','w'))
+          bad=dict(d)
+          bad['execution']=dict(d['execution'],status='FAIL')
+          json.dump(bad,open('/tmp/agent-forged-status.json','w'))
+          bad=dict(d)
+          bad['source']=dict(d['source'],git_head='unknown')
+          json.dump(bad,open('/tmp/agent-bad-source.json','w'))
+          PY
+          for bad in /tmp/agent-forged-proof.json /tmp/agent-forged-status.json /tmp/agent-bad-source.json; do
+            if python3 scripts/nightfall_agent_tasks.py verify "$bad"; then
+              echo "::error::Python accepted forged receipt $bad"
+              exit 1
+            fi
+            if nu -c 'use research/nightfall/agent-operations/task-interface.nu *; task-verify $env.BAD_RECEIPT' > /dev/null 2>&1; then
+              echo "::error::Nushell accepted forged receipt $bad"
               exit 1
             fi
           done
-          echo 'PASS: wrong schema and duplicate IDs both rejected'
+          python3 - <<'PY'
+          import json
+          doc=json.load(open('docs/proof-passport-v2.json',encoding='utf8'))
+          doc['records'][-1]['id']=doc['records'][0]['id']
+          json.dump(doc,open('/tmp/agent-bad-passport.json','w'))
+          PY
+          if nu research/nightfall/agent-operations/passport-preflight.nu /tmp/agent-bad-passport.json > /dev/null 2>&1; then
+            echo "::error::Nu accepted duplicate passport ID"
+            exit 1
+          fi
+          echo 'PASS: forged proofs, statuses, invalid Git SHA and duplicate IDs fail closed'
