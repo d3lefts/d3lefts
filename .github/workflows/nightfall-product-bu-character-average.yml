@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/finite_field/ProductBUCharacterAverage.lean'
       - 'research/nightfall/formalization/finite_field/ProductBUPerturbation.lean'
       - 'research/nightfall/formalization/finite_field/ProductBUInterval.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUReferenceJacobian.lean'
       - '.github/workflows/nightfall-product-bu-character-average.yml'
   workflow_dispatch:
 permissions:
@@ -23,7 +24,7 @@ jobs:
         run: |
           set -euo pipefail
           dir=research/nightfall/formalization/finite_field
-          for M in ProductSphereObstruction ProductBUCharacterAverage ProductBUPerturbation ProductBUInterval; do
+          for M in ProductSphereObstruction ProductBUParityReference ProductBUOrbitCertificate ProductBUCharacterAverage ProductBUPerturbation ProductBUInterval ProductBUReferenceJacobian; do
             ! grep -nE '\b(sorry|admit|axiom)\b' "$dir/$M.lean"
             cp "$dir/$M.lean" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "/tmp/$M.log"
@@ -46,7 +47,10 @@ jobs:
                'weighted_perturbation_surjective_nonzero',
                'augmented_constraint_parameter_surjective_nonzero'),
             'Nightfall.ProductBUInterval.':
-              ('interval_has_fixedPoint','homeomorphic_interval_has_fixedPoint')
+              ('interval_has_fixedPoint','homeomorphic_interval_has_fixedPoint'),
+            'Nightfall.ProductBUReferenceJacobian.':
+              ('referenceDirection_tail','referenceDirection_radial',
+               'reference_augmented_jacobian_surjective')
           }
           for prefix,names in sources.items():
               mod=prefix.rstrip('.').split('.')[-1]
