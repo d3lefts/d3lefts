@@ -89,7 +89,7 @@ theorem canonical_radius_budget_four
         (Nightfall.ProductSpace.Influence.disagree_update_single x j (b j) hmem')
       exact Finset.mem_singleton.mpr hieq.symm
     simpa using (Finset.card_le_card hsub)
-  have hc : (1 : ℝ) * (1 - Real.cos (Real.pi / (1 : ℝ))) ≤ 2 := by
+  have hc : ((1 : ℕ) : ℝ) * (1 - Real.cos (Real.pi / ((1 : ℕ) : ℝ))) ≤ 2 := by
     norm_num [Real.cos_pi]
   have hblock :
       ∑ j, |f x - f (y j)| ≤ 4 * (d : ℝ) ^ 2 := by
