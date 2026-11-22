@@ -66,7 +66,7 @@ theorem weighted_mixed_crossing_budget
         ((r - f y) * Real.sqrt (r - f y)) ≤
         (f x - f y) ^ 3 :=
       mixed_cube_of_crossing (f x - r) (r - f y) (f x - f y)
-        hx0 hy0 (by ring)
+        hx0 hy0 (by linarith)
     rw [max_eq_left (show (0 : ℝ) ≤ f x - f y by linarith)]
     unfold crossingProduct
     calc
