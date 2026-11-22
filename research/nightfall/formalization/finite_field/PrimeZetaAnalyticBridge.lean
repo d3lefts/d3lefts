@@ -48,7 +48,9 @@ theorem analyticAt_shifted_iff (P H : ℂ → ℂ) (s : ℂ)
     have hpShift : AnalyticAt ℂ (fun t : ℂ => P (t + 1)) s := by
       exact (analyticAt_iff_analytic_fun_mul hid hs).2 hm
     have htranslate : AnalyticAt ℂ (fun w : ℂ => w - 1) (s + 1) := by fun_prop
-    have hp := hpShift.fun_comp htranslate
+    have hp : AnalyticAt ℂ (fun w : ℂ => P ((w - 1) + 1)) (s + 1) := by
+      apply AnalyticAt.fun_comp_of_eq hpShift htranslate
+      ring
     convert hp using 1
     ext w
     congr 1
@@ -56,12 +58,15 @@ theorem analyticAt_shifted_iff (P H : ℂ → ℂ) (s : ℂ)
   · intro hP
     have htranslate : AnalyticAt ℂ (fun t : ℂ => t + 1) s := by fun_prop
     have hpShift : AnalyticAt ℂ (fun t : ℂ => P (t + 1)) s :=
-      hP.fun_comp htranslate
+      by
+        apply AnalyticAt.fun_comp_of_eq hP htranslate
+        ring
     have hid : AnalyticAt ℂ (fun t : ℂ => t) s := by fun_prop
     have hprod : AnalyticAt ℂ (fun t : ℂ => t * P (t + 1)) s :=
       hid.fun_mul hpShift
     have hsum := hprod.fun_add hH
-    simpa only [shiftedTerm] using hsum
+    change AnalyticAt ℂ (fun t : ℂ => t * P (t + 1) + H t) s
+    exact hsum
 
 /-- Exact pointwise analytic-obstruction transfer for a given branch.
 To derive a NATURAL BOUNDARY of a specific Dirichlet series, one must
