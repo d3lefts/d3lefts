@@ -17,7 +17,6 @@ source-exact integration obligation for ProductSphereZero.
 namespace Nightfall.ProductBURegularGraph
 
 open scoped Topology
-noncomputable section
 
 /-- Extract a genuine one-dimensional graph coordinate from the regular
 level-set theorem, not only an immersed local parametrization. -/
