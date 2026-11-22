@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 46,
+  "revision": 47,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "4837a9559e399e48ed8715cd14faf061fa7d9547",
-  "scope": "v46: 512 unreviewed-source custody entries; reconciles merged #1113 RH module and two conditional quantitative-risk Lean modules. New compiler receipt required on exact merged-source branch; no ProductSphereZero hypothesis discharge.",
+  "source_commit": "bd0229834ace4c81990e916f976308e0dba84cb2",
+  "scope": "v47: 514 exact pending source blobs, preserving frozen 67 verified historical receipts. Latest main phase-block decoder/quantum core and conditional ProductBU collision/risk modules are source-custodied without automatic proof promotion. Risk theorem named source/axiom CI 45065752294 passed on unmodified Lean blobs, ProductSphereZero remains an explicit hypothesis.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -2455,7 +2455,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "New-to-main source merged in #1113 with separate passing exact-head named Lean kernel/leanchecker run 45062953520. This historical 67-record register does not auto-promote later proofs; public theorem is RH-conditional only."
+      "receipt_scope": "New-to-main #1113 source; separately passed pinned named Lean plus leanchecker run 45062953520 at exact head 0fa7f2c703b144ec1f8a1addd9c7521e844fe5c6. Historical 67-record ledger is frozen; this custody entry does not auto-promote conditional source."
     },
     {
       "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
@@ -3676,6 +3676,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean",
+      "source_blob_sha": "939b5855e510f76ca7ec89d1666e27b45cf7d065",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Registered Git blob with separately passed named kernel proof, workflow run 45059108351; this pending ledger is not an analytic, novelty, or full raw-circuit terminal certification."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockRoute1.lean",
+      "source_blob_sha": "5f08403421e30dc8bfd0f0727c0f8a246f81f9b6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Registered Git blob with separately passed named kernel proof, workflow run 45058739792; this pending ledger is not an analytic, novelty, or full raw-circuit terminal certification."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean",
