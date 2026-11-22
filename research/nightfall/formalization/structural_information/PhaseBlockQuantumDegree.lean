@@ -1,4 +1,4 @@
-import Route1PolylogTools
+import Route1LatentDegree
 
 /-!
 # Block-local quantum path sums have Route1 interaction degree at most 2T
@@ -18,7 +18,6 @@ nonlocal oracle matrices.
 namespace Nightfall.PhaseBlockQuantumDegree
 
 open Finset
-open Nightfall.Route1Polylog
 open Nightfall.Route1LatentDegree
 
 variable {B P : Type*} [Fintype B] [DecidableEq B]
@@ -98,25 +97,25 @@ from exact single-block factors in the path expansion. -/
 theorem effectValue_degree (T : ℕ) (site : P → Fin T → B)
     (coeff : P → ℂ) (kernel : P → Fin T → Fin 8 → ℂ)
     (E : P → P → ℂ) :
-    HasProdDegreeLE (effectValue T site coeff kernel E) (2 * T) := by
+    DegreeLE (effectValue T site coeff kernel E) (2 * T) := by
   classical
   unfold effectValue
-  apply deg_of_terms
-    (γ := P × P)
-    (F := fun pq x => effectTerm T site coeff kernel E pq.1 pq.2 x)
-    (S := fun pq => touched T site pq.1 ∪ touched T site pq.2)
+  apply Nightfall.Route1LatentDegree.degree_sum
+    (g := fun pq : P × P => effectTerm T site coeff kernel E pq.1 pq.2)
     (d := 2 * T)
-  · intro pq
-    left
-    calc
+  intro pq
+  apply Nightfall.Route1LatentDegree.degree_of_supported
+    (S := touched T site pq.1 ∪ touched T site pq.2)
+    (f := effectTerm T site coeff kernel E pq.1 pq.2)
+    (d := 2 * T)
+  · exact effectTerm_supported T site coeff kernel E pq.1 pq.2
+  · calc
       (touched T site pq.1 ∪ touched T site pq.2).card ≤
         (touched T site pq.1).card +
           (touched T site pq.2).card := Finset.card_union_le _ _
       _ ≤ T + T := Nat.add_le_add
         (touched_card_le T site pq.1) (touched_card_le T site pq.2)
       _ = 2 * T := by omega
-  · intro pq
-    exact effectTerm_supported T site coeff kernel E pq.1 pq.2
 
 #print axioms Nightfall.PhaseBlockQuantumDegree.touched_card_le
 #print axioms Nightfall.PhaseBlockQuantumDegree.pathAmp_local
