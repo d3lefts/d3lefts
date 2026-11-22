@@ -1,0 +1,73 @@
+name: NIGHTFALL product BU boundary-orbit component contradiction (Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean'
+      - '.github/workflows/nightfall-product-bu-component-orbit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: product-bu-component-orbit-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  exact-closure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Source-exact dependency closure on pinned Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-component-orbit
+          for M in ProductBUIntervalStabilizer ProductBUComponentOrbit; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)\\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-component-orbit/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-component-orbit/$M.log"
+          done
+      - name: Verify named declaration and normal axiom closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          data=Path("receipts/product-bu-component-orbit/ProductBUComponentOrbit.log").read_text()
+          names=("no_free_component_point_exchange","no_free_single_four_orbit_boundary_component")
+          for suffix in names:
+              name="Nightfall.ProductBUComponentOrbit."+suffix
+              assert name in data, ("MISSING_DECLARATION",name)
+              hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",data,re.S)
+              if hit:
+                  axioms={x.strip() for x in hit.group(1).split(",") if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in data, ("MISSING_AX_REPORT",name)
+                  axioms=set()
+              assert axioms <= {"propext","Classical.choice","Quot.sound"}, (name,axioms)
+              print("PASS",name,sorted(axioms))
+          assert "sorryAx" not in data
+          print("Scope: boundary orbit plus existing interval component -> contradiction.")
+          print("This is NOT an unconditional ProductSphereZero theorem.")
+          PY
+      - name: Preserve exact-source receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-component-orbit
+          git rev-parse HEAD > receipts/product-bu-component-orbit/commit.txt
+          cat lean-toolchain > receipts/product-bu-component-orbit/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBU{IntervalStabilizer,ComponentOrbit}.lean > receipts/product-bu-component-orbit/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-component-orbit-lean-receipt
+          path: receipts/product-bu-component-orbit
+          retention-days: 90
+          if-no-files-found: warn
