@@ -1,5 +1,5 @@
 # Local moment conservation for bounded-degree decision-tree simulation
-**NIGHTFALL research checkpoint v1.2 — 2026-11-21/22.** Status: complete short mathematical proof, exact rational regression below, NOT Lean-certified or priority-cleared.
+**NIGHTFALL research checkpoint v1.3 — 2026-11-21/22.** Status: complete short mathematical proof, exact rational regression below, NOT Lean-certified or priority-cleared.
 
 ## Objective and source-reconciliation
 
@@ -150,6 +150,34 @@ Every set of ≤L−1 coordinates misses at least one coordinate in each L-eleme
 for all r≥1. In contrast, a density-only transfer with Q would pay 2^r. With L,d,q fixed while r increases, this is an **unbounded exponential-in-r quantitative improvement in the transfer coefficient** for this explicit class. The support is edge-free, so its Wyner common information on original coordinates is H(ν)=r(L−1)ln2, also linear in r, by PR #987's support theorem (prior-art caution). This shows global C_W and D∞ alone cannot measure the difficulty of every *low-degree, shallow-query* task.
 
 **Independent checker:** scripts/check_route1_moment_conservation_exact.py, fixed-seed but all arithmetic Fraction/integer. Exhaustively compares the two laws over small parity-block systems for randomly generated low-degree f and arbitrarily adaptive depth-q trees, independently audits exact k-wise marginals, both sharpness constructions, biased product tilts, and the tail-event failure. Finite checks cannot prove universal theorems.
+
+## Simon obstruction: approximate marginals do NOT justify multiplicative Gram transfer
+
+This is the direct link back to PR #987 and an adversarial counterexample to the next tempting but incorrect operator.
+
+Let N=2^m≥4. Let ν_S be the standard injectively labeled Simon law on the full truth table, and U the independent uniform N-symbol output law. Choose **four distinct input addresses** a,b,c,d with a⊕b=c⊕d≠0 (a parallelogram). Let
+
+    h(x)=1{x_a=x_b} · 1{x_c=x_d}.
+
+It is [0,1]-valued, and has interaction degree **four** in the N-symbol table-entry coordinates. Under ν_S, injectivity of the labels implies h=1 exactly when the secret shift equals a⊕b. Hence
+
+    E_ν_S[h²] = E_ν_S[h] = 1/(N−1).
+
+Under the independent law U, the two equalities on disjoint address pairs have independent probabilities 1/N, so
+
+    E_U[h²] = 1/N².
+
+Thus their **relative degree-four squared-risk ratio** is
+
+    E_ν_S[h²] / E_U[h²] = N²/(N−1) = Θ(N),
+
+while the **absolute** discrepancy is only
+
+    1/(N−1)−1/N² = Θ(1/N).
+
+For q=0 and f=h, t≡0, the relative quadratic-form comparison requires a factor growing linearly with N even though the specific loss contributes only O(1/N) in absolute terms. This kills any hope that a straightforward multiplicative finite-degree Gram/PSD comparison to U will be uniformly inexpensive for Simon. One must seek **additive or smooth task-relative risk transfer** that discounts rare collisions rather than treating all relative amplifications equally.
+
+This four-point identity is elementary, is exactly checked at N=4 and N=8 in the finite auditor, and is **not** presented as a novel published theorem. It clarifies the next operator's essential design constraint; high-degree/sup-norm Fourier coefficient issues remain unresolved.
 
 ## Limitations and next decisive research experiment
 
