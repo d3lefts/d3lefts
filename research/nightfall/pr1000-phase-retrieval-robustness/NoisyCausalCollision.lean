@@ -48,7 +48,7 @@ theorem transcript_zero (p : Policy E) (m : ℕ) :
   induction m with
   | zero => rfl
   | succ k ih =>
-      simp [transcript, ih]
+      simpa [transcript, ih, List.replicate_succ]
 
 /-- Construct, rather than assume, the adversarial noise that cancels the
 reading of a nonzero signal on the all-zero observed-prefix path. -/
@@ -133,6 +133,66 @@ theorem decoder_noise_floor
   · rw [transcript_zero, transcript_cancelled]
   · rw [transcript_zero, transcript_cancelled]
     simpa [dpm] using two_input_radius (decoder (List.replicate m 0)) y
+
+
+/-- Constant observed intensity on input zero, for any number of adaptive stages. -/
+theorem transcript_zero_at_level (p : Policy E) (σ : ℝ) (m : ℕ) :
+    transcript p (0 : E) (fun _ => σ) m = List.replicate m σ := by
+  induction m with
+  | zero => rfl
+  | succ k ih =>
+      simpa [transcript, ih, List.replicate_succ]
+
+/-- Exact adversarial noise forcing *any* low-norm input to follow the same
+all-σ observed history. This handles the actual corrupted-prefix recursion. -/
+def levelNoise (p : Policy E) (x : E) (σ : ℝ) (k : ℕ) : ℝ :=
+  σ - ((p.row k (List.replicate k σ)) x) ^ 2
+
+/-- The entire low-norm ball can be erased to one common transcript. -/
+theorem transcript_level_noise (p : Policy E) (x : E) (σ : ℝ) (m : ℕ) :
+    transcript p x (levelNoise p x σ) m = List.replicate m σ := by
+  induction m with
+  | zero => rfl
+  | succ k ih =>
+      simp [transcript, ih, levelNoise, List.replicate_succ]
+      <;> ring
+
+/-- The exact threshold: input intensity at most 2σ fits the symmetric
+per-reading noise budget [-σ,σ]. -/
+theorem levelNoise_bound (p : Policy E) (x : E) (σ : ℝ)
+    (hσ : 0 ≤ σ) (hx : ‖x‖ ^ 2 ≤ 2 * σ) (k : ℕ) :
+    |levelNoise p x σ k| ≤ σ := by
+  let c : ℝ := (p.row k (List.replicate k σ)) x
+  have hc : |c| ≤ ‖x‖ := p.bounded k (List.replicate k σ) x
+  have hprod : 0 ≤ (‖x‖ - |c|) * (‖x‖ + |c|) := by
+    apply mul_nonneg
+    · exact sub_nonneg.mpr hc
+    · exact add_nonneg (norm_nonneg _) (abs_nonneg _)
+  have hsquare : |c| ^ 2 = c ^ 2 := by
+    simp
+  have hcsq : c ^ 2 ≤ 2 * σ := by
+    nlinarith
+  change |σ - c ^ 2| ≤ σ
+  apply abs_le.mpr
+  constructor
+  · nlinarith [sq_nonneg c]
+  · nlinarith [sq_nonneg c]
+
+/-- Source-exact quantitative erasure of every point in the entire
+radius-sqrt(2σ) ball, for *arbitrary* causal selection. This is the
+formalized mechanism for the full-information-collapse theorem.
+The geometric Chebyshev-radius argument is a separate proof obligation. -/
+theorem ball_erasure (p : Policy E) (x : E) (m : ℕ) (σ : ℝ)
+    (hσ : 0 ≤ σ) (hx : ‖x‖ ^ 2 ≤ 2 * σ) :
+    (∀ k, |levelNoise p x σ k| ≤ σ) ∧
+      transcript p x (levelNoise p x σ) m = List.replicate m σ := by
+  exact ⟨levelNoise_bound p x σ hσ hx, transcript_level_noise p x σ m⟩
+
+#print ball_erasure
+#print axioms ball_erasure
+#print axioms transcript_zero_at_level
+#print axioms transcript_level_noise
+#print axioms levelNoise_bound
 
 #print decoder_noise_floor
 #print axioms decoder_noise_floor
