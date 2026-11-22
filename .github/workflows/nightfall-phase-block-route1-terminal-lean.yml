@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/structural_information/PhaseBlockRoute1Terminal.lean'
+      - 'research/nightfall/formalization/structural_information/PhaseBlockGrouping.lean'
+      - 'research/nightfall/formalization/structural_information/PhaseBlockActualCircuit.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockTreeCompiler.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockRoute1.lean'
@@ -46,11 +48,21 @@ jobs:
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/phase-block-terminal/$M.log" 2>&1
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/phase-block-terminal/$M.log"
           done
+      - name: Compile existing physical matrix-oracle circuit normal form
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in QuantumCircuitPaths QuantumPathDegree QuantumCircuitNormalization QuantumCircuitSimulation; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/phase-block-terminal/$M.log" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/phase-block-terminal/$M.log"
+          done
       - name: Compile physical phase source and exact end-to-end terminal
         shell: bash
         run: |
           set -euo pipefail
-          for M in PhaseBlockRoute1 PhaseBlockQuantumDegree PhaseBlockTreeCompiler PhaseBlockRoute1Terminal; do
+          for M in PhaseBlockRoute1 PhaseBlockGrouping PhaseBlockQuantumDegree PhaseBlockTreeCompiler PhaseBlockRoute1Terminal PhaseBlockActualCircuit; do
             src="research/nightfall/formalization/structural_information/$M.lean"
             ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -74,6 +86,17 @@ jobs:
           assert axioms <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
           assert 'sorryAx' not in log
           assert f'theorem {name}' in log
+          actual=Path('receipts/phase-block-terminal/PhaseBlockActualCircuit.log').read_text()
+          for suffix in ('auxRaw_sum','actual_circuit_block_degree','actual_circuit_route1_simulation'):
+              name2='Nightfall.PhaseBlockActualCircuit.'+suffix
+              m2=re.search(r"'" + re.escape(name2) + r"' depends on axioms:\s*\[([^\]]*)\]",actual,re.S)
+              if m2: axs={x.strip() for x in m2.group(1).split(',') if x.strip()}
+              else:
+                  assert f"'{name2}' does not depend on any axioms" in actual,name2
+                  axs=set()
+              assert axs <= {'propext','Classical.choice','Quot.sound'},(name2,axs)
+          assert 'sorryAx' not in actual
+          assert 'theorem Nightfall.PhaseBlockActualCircuit.actual_circuit_route1_simulation' in actual
           print('PASS: genuine Route1 scalar simulation terminal with 3 raw sensor reads per queried block.')
           print('OPEN: arbitrary circuit syntax to path expansion, PSD/effect [0,1] source predicate, raw Wyner entropy Lean, independent priority and review.')
           PY
@@ -85,7 +108,7 @@ jobs:
           git rev-parse HEAD > receipts/phase-block-terminal/source-head.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/phase-block-terminal/mathlib-head.txt
           cat lean-toolchain > receipts/phase-block-terminal/compiler-pin.txt
-          sha256sum research/nightfall/formalization/structural_information/PhaseBlock{Route1,QuantumDegree,TreeCompiler,Route1Terminal}.lean > receipts/phase-block-terminal/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/PhaseBlock{Route1,Grouping,QuantumDegree,TreeCompiler,Route1Terminal,ActualCircuit}.lean > receipts/phase-block-terminal/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
