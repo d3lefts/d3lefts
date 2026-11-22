@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 41,
+  "revision": 42,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v41: 493 pending immutable Lean blobs; preserves all v40 and original 67 source records. PhaseRoute1Finite exact-source custody only; CI 45058815183 supports the three finite lemmas, but not the general-B Wyner theorem or physical query composition.",
+  "source_commit": "56b42b525ad7a614f0e9e5591c40c4f7eef92c89",
+  "scope": "Source custody revision 42, 494 pending sources, frozen historical 67 untouched. ProductBUSmoothInverse remains a scoped candidate pending actual Lean kernel receipt, not full topological certification.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -456,6 +456,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source custody only. Pinned external ATLAS parametric Sard ordinary-axiom replay in merged #1048; theorem-level regular parameter existence in this branch is not yet source-certified. ProductSphereZero remains open."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUSmoothInverse.lean",
+      "source_blob_sha": "827afac9c159ca5e219c0a7a5d16f33bf0e28fcd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Reusable continuous inverse regularity theorem, exact source pending pinned Lean/axiom compilation; helps repair smooth local graph #1073 by checking derivative invertibility on all source, not assuming C-infinity neighborhood from a single point. No full ProductSphereZero or global manifold theorem."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUSphereCompact.lean",
