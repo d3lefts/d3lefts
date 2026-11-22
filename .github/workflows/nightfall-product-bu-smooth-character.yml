@@ -1,0 +1,71 @@
+name: NIGHTFALL product BU smooth character approximation (stacked)
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUSmoothCharacterApprox.lean'
+      - '.github/workflows/nightfall-product-bu-smooth-character.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUSmoothCharacterApprox.lean'
+      - '.github/workflows/nightfall-product-bu-smooth-character.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smooth-character:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact source at installed pinned Lean/Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-smooth-char
+          for M in ProductBUCharacterAverage ProductBUSmoothCharacterApprox; do
+            cp "research/nightfall/formalization/finite_field/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-smooth-char/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-smooth-char/$M.log"
+          done
+      - name: Exact theorem statement / ordinary axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/product-bu-smooth-char/ProductBUSmoothCharacterApprox.log").read_text()
+          names=[
+            "charU_uniform_error","charV_uniform_error",
+            "contDiff_charU","contDiff_charV",
+            "exists_smooth_charU_approx","exists_smooth_charV_approx"
+          ]
+          for name in names:
+              n="Nightfall.ProductBUSmooth."+name
+              m=re.search(r"'"+re.escape(n)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m,("MISSING_AXIOM_RECEIPT",n)
+              a={v.strip() for v in m.group(1).split(',') if v.strip()}
+              assert a <= {"propext","Classical.choice","Quot.sound"},(n,a)
+          assert "sorryAx" not in s
+          assert "theorem Nightfall.ProductBUSmooth.exists_smooth_charU_approx" in s
+          assert "theorem Nightfall.ProductBUSmooth.exists_smooth_charV_approx" in s
+          print("PASS: globally continuous pure-character maps have arbitrarily accurate smooth pure-character approximants.")
+          print("OPEN: continuous extension from sphere product, relative transversality, compact boundary parity.")
+          PY
+      - name: Preserve source SHA and pin
+        if: always()
+        run: |
+          mkdir -p receipts/product-bu-smooth-char
+          git rev-parse HEAD > receipts/product-bu-smooth-char/commit.txt
+          cat lean-toolchain > receipts/product-bu-smooth-char/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUCharacterAverage,ProductBUSmoothCharacterApprox}.lean > receipts/product-bu-smooth-char/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-smooth-character-receipt
+          path: receipts/product-bu-smooth-char
+          retention-days: 90
+          if-no-files-found: warn
