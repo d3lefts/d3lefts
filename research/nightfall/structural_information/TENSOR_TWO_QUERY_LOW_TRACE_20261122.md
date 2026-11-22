@@ -131,7 +131,7 @@ nontrivial rational-orthogonal inter-query mixing: direct amplitudes,
 Fourier coefficients, parity-conditioned amplitude averages,
 vector Parseval, (1) and (4), and bounded prediction. The L=2
 tests have genuinely nonzero discarded amplitude energy.
-These are finite checks only.
+The checker also includes an exact L=3 rank-one, 25-sector dilute example with a cyclically mixing inter-query permutation: its conditional amplitude tail has genuine nonzero mean-squared norm 24/625 and the certified generic bound is 4/5 < 1, with zero heavy queried rows. The 64-path zero-fiber negative control demonstrates why the zero character must be retained. These are finite checks only.
 
 **Independent audit tasks:**
 1. Re-derive (2) using finite-dimensional trace/Bessel without assuming
