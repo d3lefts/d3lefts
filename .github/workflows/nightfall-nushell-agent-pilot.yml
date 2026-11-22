@@ -101,7 +101,7 @@ jobs:
               echo "::error::Python accepted forged receipt $bad"
               exit 1
             fi
-            if nu -c 'use research/nightfall/agent-operations/task-interface.nu *; task-verify $env.BAD_RECEIPT' > /dev/null 2>&1; then
+            if BAD_RECEIPT="$bad" nu -c 'use research/nightfall/agent-operations/task-interface.nu *; task-verify $env.BAD_RECEIPT' > /dev/null 2>&1; then
               echo "::error::Nushell accepted forged receipt $bad"
               exit 1
             fi
