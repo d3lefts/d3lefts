@@ -60,6 +60,7 @@ def audit_pair(reference, candidate, word_to_mask):
         u |= v
         remains -= found
         partitions += 1
+    assert len(u)<=len(reference)+len(candidate)-2,(len(u),reference,candidate)
     assert len(u)<=6,(len(u),reference,candidate)
     for a in candidate:
         assert any(all(a[j]==b[j] for j in range(len(a)) if j not in u)
