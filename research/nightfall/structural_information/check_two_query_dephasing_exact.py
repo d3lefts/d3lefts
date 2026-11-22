@@ -101,7 +101,8 @@ def main():
     assert all(independently_expanded(s) == values[s][:4]
                for s in range(4))
     assert all(0 <= values[s][i] <= 1 for s in range(4) for i in range(4))
-    assert any(values[s][5] != 0 for s in range(4))
+    assert all(values[s][5] == -F(4608, 40625)*chi(3,s) for s in range(4))
+    assert all(values[s][5]*values[s][5] == F(4608,40625)**2 for s in range(4))
     print("PASS: exact rational direct-circuit/path decomposition, 4/4 secrets")
     print("Exact coherent remainders:", [str(values[s][5]) for s in range(4)])
     print("No universal T2 theorem is certified by this finite test.")
