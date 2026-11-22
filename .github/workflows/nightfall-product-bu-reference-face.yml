@@ -1,0 +1,62 @@
+name: NIGHTFALL exact t=0 reference zero-face (Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean'
+      - '.github/workflows/nightfall-product-bu-reference-face.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reference-face:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and check exact source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-reference-face
+          dir=research/nightfall/formalization/finite_field
+          for M in ProductSphereObstruction ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereExtension ProductBUSphereCompact ProductBUCompactFiber ProductBUReferenceFace; do
+            cp "$dir/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-reference-face/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-reference-face/$M.log"
+          done
+      - name: Verify named Lean theorems and ordinary axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          text=Path("receipts/product-bu-reference-face/ProductBUReferenceFace.log").read_text()
+          for suffix in ("referenceZero_eq_signedAxes", "zeroFiber_time_zero_iff"):
+            name="Nightfall.ProductBUReferenceFace."+suffix
+            assert "theorem "+name in text, ("MISSING_THEOREM", name)
+            m=re.search("'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",text,re.S)
+            assert m or ("'"+name+"' does not depend on any axioms") in text,("MISSING_AXIOMS",name)
+            axioms={p.strip() for p in m.group(1).split(",") if p.strip()} if m else set()
+            assert axioms <= {"propext","Classical.choice","Quot.sound"},(name,axioms)
+          assert "sorryAx" not in text
+          print("PASS exact t=0 four-axis reference fiber, no unproved topology")
+          PY
+      - name: Preserve source provenance and logs
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-reference-face
+          git rev-parse HEAD > receipts/product-bu-reference-face/commit.txt
+          cat lean-toolchain > receipts/product-bu-reference-face/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean > receipts/product-bu-reference-face/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-reference-face-exact-lean
+          path: receipts/product-bu-reference-face
+          if-no-files-found: warn
+          retention-days: 90
