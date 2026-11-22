@@ -22,9 +22,9 @@ whose output \(g\in[0,1]\) approximates the acceptance \(f\) with
 Here
 \[
 M=\max\bigl(1,\max_{z\ne0}\#\{(x,y)\in D^2:x+y=z\}\bigr),\quad
-K_L=\sum_{j=0}^{\min(6,L)}\binom Lj (1+4\cdot3^j)^4 .
+K_L=5^4(1+4\cdot3^6)^4\sum_{j=0}^{\min(3,L)}\binom Lj .
 \]
-Thus the cost is \(O(L^6/(\varepsilon^2\delta))\); Section 2 gives
+Thus the cost is \(O(L^3/(\varepsilon^2\delta))\); Section 2 gives
 \(M=O(L^2)\) independently of sharper two-fiber results. Classical offline
 preprocessing and evaluation time are unrestricted; the conclusion
 is distributional acceptance approximation, not quantum state sampling.
@@ -83,7 +83,7 @@ by partitioning terms and using the triangle inequality.
 Call an ordered tuple of distinct slots primitive when, after discarding
 any zero entry, the remaining set of rows has no nonempty zero-sum subset.
 For \(z\ne0\) with a primitive representation by at most four rows, fix
-one underlying set \(C\). For any other \(C'\), their symmetric
+one underlying set \(C\) of minimum cardinality. For any other \(C'\), their symmetric
 difference has zero sum and partitions into disjoint minimal nonempty
 zero-sum sets, by repeatedly extracting one. These are circuits in the
 binary vector matroid; every one meets both \(C\) and \(C'\) by primitivity.
@@ -97,15 +97,43 @@ the local nonzero factor varies, since over \(\mathbb F_2\) any two distinct
 nonzero vectors are nonproportional. For \(L=1\) this count is immediate.
 
 The union of varying sites of the disjoint circuits has size at most
-\(8-2=6\) when nonempty; if \(C'=C\) take this site set empty.
-Outside these sites every new row agrees with an old row from its
-circuit; a shared row agrees with itself. For any fixed set of \(j\)
-sites each ordered slot has at most \(1+4\cdot3^j\) choices, including
-the possible zero slot. Hence the number of primitive ordered lifts
-is at most \(K_L\), giving outside-\(W\) norm \(2\sqrt{K_L\eta}\).
-For pair sums the same proof uses reference size at most two and
-at most two varying sites; all nonzero ordered pair sums are primitive
-after deleting zero. This also establishes \(M=O(L^2)\).
+\(8-2=6\) when nonempty. More importantly, at most **three** of these
+sites need to be chosen freely. In a circuit with \(r\) old and \(k\)
+new rows, the old rows vary in \(d_{\rm old}\) sites. They are linearly
+independent as a subset of the primitive reference set, so
+\(r\le2^{d_{\rm old}}\). For \(r\le3\), this implies
+\(r+k-2-d_{\rm old}\le k-1\). If \(r=4\), the circuit contains the
+entire minimal reference set. Its rows must vary in at least three
+sites: otherwise factor out the fixed factors to get a two-mode
+\(2\times2\) tensor, whose matrix rank is at most two. Then \(z\)
+would have a shorter product-tensor representation. Again
+\(r+k-2-d_{\rm old}\le k-1\).
+The old rows within each circuit therefore specify forced sites,
+and the total number of freely chosen sites is at most the number
+of new rows minus the number of circuits, hence at most three.
+With no circuits the possible site set is empty.
+
+There are at most \(5^4\) assignments of the reference rows to
+one of four labeled circuits or the shared set. For each assignment
+and choice of the at most three free sites, the forced sites are
+known. Outside the resulting union (size at most six), every new
+row agrees with an old row in its circuit; shared rows are fixed.
+Each ordered slot has at most \(1+4\cdot3^6\) choices, including zero.
+This proves the stated \(K_L\) and gives outside-\(W\) norm
+\(2\sqrt{K_L\eta}\). For pair sums the simpler \(8\to4\) site
+count bounds \(M=O(L^2)\), which suffices for the theorem.
+
+The exponent three is sharp for primitive four-lift multiplicity
+(not asserted sharp for simulation query cost). For \(z=e_0^{\otimes L}\)
+choose any three sites \(i<j<k\). Put \(e_2=e_0+e_1\) and define four
+rows with \((i,j,k)\) factors \((e_2,e_0,e_0)\),
+\((e_1,e_2,e_0)\), \((e_1,e_1,e_1)\), and \((e_1,e_1,e_2)\),
+all other factors \(e_0\). They sum to \(z\). They are independent:
+apply a local functional killing \(e_1\) but not \(e_2\) at site \(i\)
+to isolate the first row, repeat at \(j\) for the second, and use
+independence of the two remaining factors at \(k\).
+The varied site set is exactly \(\{i,j,k\}\), so these give at
+least \(\binom L3\) distinct unordered primitive representations.
 
 ## 3. Repeated labels: six equality events
 
