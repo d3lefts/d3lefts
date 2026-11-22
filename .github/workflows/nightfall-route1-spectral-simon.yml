@@ -1,0 +1,37 @@
+name: NIGHTFALL Route1 low-degree spectral stability exact audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/check_route1_spectral_simon_exact.py'
+      - 'research/nightfall/structural_information/ROUTE1_SPECTRAL_RISK_SIMON_20261122.md'
+      - '.github/workflows/nightfall-route1-spectral-simon.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  spectral-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Independent spectral and Simon exact audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/check_route1_spectral_simon_exact.py
+          mkdir -p receipts/route1-spectral
+          python3 scripts/check_route1_spectral_simon_exact.py | tee receipts/route1-spectral/check.log
+          git rev-parse HEAD > receipts/route1-spectral/head
+          sha256sum scripts/check_route1_spectral_simon_exact.py \
+            research/nightfall/structural_information/ROUTE1_SPECTRAL_RISK_SIMON_20261122.md \
+            > receipts/route1-spectral/SHA256SUMS
+          echo 'Exact finite checks only. All-N proof is paper-level; no Lean or priority clearance.' > receipts/route1-spectral/scope.txt
+      - name: Preserve immutable source-scoped audit receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: route1-spectral-${{ github.run_id }}
+          path: receipts/route1-spectral
+          if-no-files-found: warn
