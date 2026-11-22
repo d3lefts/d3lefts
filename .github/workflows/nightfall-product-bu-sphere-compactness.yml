@@ -29,7 +29,9 @@ jobs:
           import re
           source=open('/tmp/ProductBUSphereCompact.log').read()
           names=['unitVec_coordinate_abs_le_one','unitVec_coordinate_mem_Icc',
-                 'unitSphere_isCompact','spherePair_isCompact','spherePair_nonempty']
+                 'unitSphere_isCompact','spherePair_isCompact','spherePair_nonempty',
+                 'positive_uniform_gap','pureEnergy_nonneg','pureEnergy_eq_zero_iff',
+                 'continuousOn_pureEnergy','exists_positive_energy_gap']
           for suffix in names:
               name='Nightfall.ProductBUSphereCompact.'+suffix
               m=re.search(re.escape("'"+name+"' depends on axioms: [")+r'([^\]]*)\]',source,re.S)
