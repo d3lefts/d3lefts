@@ -62,7 +62,8 @@ theorem exists_continuous_extension (n : ℕ)
   refine ⟨G, G.continuous, ?_⟩
   intro x hx
   have h := congrArg (fun H : C(s, ℝ) => H ⟨x,hx⟩) hG
-  simpa [fsub] using h
+  change G x = f x at h
+  exact h
 
 #print spherePair_isClosed
 #print axioms spherePair_isClosed
