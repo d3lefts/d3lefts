@@ -8,6 +8,7 @@ on:
       - 'research/nightfall/structural_information/check_tensor_t2_primitive_independent.py'
       - 'research/nightfall/structural_information/check_tensor_pure_fibers.cpp'
       - 'research/nightfall/structural_information/check_tensor_t2_group_energy_exact.py'
+      - 'research/nightfall/structural_information/check_tensor_pure_support_coefficients.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -50,6 +51,12 @@ jobs:
           set -euo pipefail
           python3 research/nightfall/structural_information/check_tensor_t2_group_energy_exact.py | tee tensor-t2-cancellation-receipt/t2-group-energy.log
           grep -q 'PASS: exact finite arbitrary-rank-style audit only' tensor-t2-cancellation-receipt/t2-group-energy.log
+      - name: Independent exact source-level primitive support coefficients
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/structural_information/check_tensor_pure_support_coefficients.py | tee tensor-t2-cancellation-receipt/local-support-coefficients.log
+          grep -q 'PASS: complete finite local coefficient table k<=4' tensor-t2-cancellation-receipt/local-support-coefficients.log
       - name: Kernel-check exact local primitive coefficients at L<=3
         shell: bash
         run: |
@@ -92,7 +99,7 @@ jobs:
         run: |
           mkdir -p tensor-t2-cancellation-receipt
           git rev-parse HEAD > tensor-t2-cancellation-receipt/commit.txt
-          sha256sum research/nightfall/formalization/structural_information/TensorT2Cancellation.lean research/nightfall/formalization/structural_information/TensorPureFibersL3.lean research/nightfall/structural_information/check_tensor_t2_primitive_independent.py research/nightfall/structural_information/check_tensor_pure_fibers.cpp research/nightfall/structural_information/check_tensor_t2_group_energy_exact.py > tensor-t2-cancellation-receipt/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/TensorT2Cancellation.lean research/nightfall/formalization/structural_information/TensorPureFibersL3.lean research/nightfall/structural_information/check_tensor_t2_primitive_independent.py research/nightfall/structural_information/check_tensor_pure_fibers.cpp research/nightfall/structural_information/check_tensor_t2_group_energy_exact.py research/nightfall/structural_information/check_tensor_pure_support_coefficients.py > tensor-t2-cancellation-receipt/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
