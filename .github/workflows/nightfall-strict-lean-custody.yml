@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Enforce frozen 67-record source-pinned register and byte-identical pending file hashes
         run: node scripts/test_lean_certificate_provenance.cjs
-      - name: Negative controls: fail on unregistered and mutated Lean source blobs
+      - name: "Negative controls: fail on unregistered and mutated Lean source blobs"
         run: |
           set -eu
           sentinel="research/nightfall/formalization/finite_field/NightfallUnregisteredSentinel.lean"
