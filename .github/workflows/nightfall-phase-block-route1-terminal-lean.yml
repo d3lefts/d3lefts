@@ -5,6 +5,7 @@ on:
       - 'research/nightfall/formalization/structural_information/PhaseBlockRoute1Terminal.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockGrouping.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockActualCircuit.lean'
+      - 'research/nightfall/formalization/structural_information/PhaseBlockWellFormed.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockTreeCompiler.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockRoute1.lean'
@@ -62,7 +63,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for M in PhaseBlockRoute1 PhaseBlockGrouping PhaseBlockQuantumDegree PhaseBlockTreeCompiler PhaseBlockRoute1Terminal PhaseBlockActualCircuit; do
+          for M in PhaseBlockRoute1 PhaseBlockGrouping PhaseBlockQuantumDegree PhaseBlockTreeCompiler PhaseBlockRoute1Terminal PhaseBlockActualCircuit PhaseBlockWellFormed; do
             src="research/nightfall/formalization/structural_information/$M.lean"
             ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -97,6 +98,21 @@ jobs:
               assert axs <= {'propext','Classical.choice','Quot.sound'},(name2,axs)
           assert 'sorryAx' not in actual
           assert 'theorem Nightfall.PhaseBlockActualCircuit.actual_circuit_route1_simulation' in actual
+          wf=Path('receipts/phase-block-terminal/PhaseBlockWellFormed.log').read_text()
+          for suffix in ('wellFormed_born_on_phase_code',
+                         'normalized_phase_block_route1_simulation'):
+              named='Nightfall.PhaseBlockWellFormed.'+suffix
+              mx=re.search(r"'" + re.escape(named) + r"' depends on axioms:\s*\[([^\]]*)\]",wf,re.S)
+              if mx:
+                  axs={x.strip() for x in mx.group(1).split(',') if x.strip()}
+              else:
+                  assert f"'{named}' does not depend on any axioms" in wf,named
+                  axs=set()
+              assert axs <= {'propext','Classical.choice','Quot.sound'},(named,axs)
+              print(named,sorted(axs))
+          assert 'sorryAx' not in wf
+          assert 'theorem Nightfall.PhaseBlockWellFormed.normalized_phase_block_route1_simulation' in wf
+          print('PASS: physical WellFormed discharges bounded Born premise, same 3*n raw cost.')
           print('PASS: genuine Route1 scalar simulation terminal with 3 raw sensor reads per queried block.')
           print('OPEN: arbitrary circuit syntax to path expansion, PSD/effect [0,1] source predicate, raw Wyner entropy Lean, independent priority and review.')
           PY
@@ -108,7 +124,7 @@ jobs:
           git rev-parse HEAD > receipts/phase-block-terminal/source-head.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/phase-block-terminal/mathlib-head.txt
           cat lean-toolchain > receipts/phase-block-terminal/compiler-pin.txt
-          sha256sum research/nightfall/formalization/structural_information/PhaseBlock{Route1,Grouping,QuantumDegree,TreeCompiler,Route1Terminal,ActualCircuit}.lean > receipts/phase-block-terminal/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/PhaseBlock{Route1,Grouping,QuantumDegree,TreeCompiler,Route1Terminal,ActualCircuit,WellFormed}.lean > receipts/phase-block-terminal/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
