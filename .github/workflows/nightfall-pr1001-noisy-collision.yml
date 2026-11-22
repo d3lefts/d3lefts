@@ -22,6 +22,8 @@ jobs:
           set -euo pipefail
           python3 -m py_compile research/nightfall/pr1000-phase-retrieval-robustness/check_noisy_collision_exact.py
           python3 research/nightfall/pr1000-phase-retrieval-robustness/check_noisy_collision_exact.py
+          python3 -m py_compile research/nightfall/pr1000-phase-retrieval-robustness/check_ball_erasure_exact.py
+          python3 research/nightfall/pr1000-phase-retrieval-robustness/check_ball_erasure_exact.py
   pinned-lean-collision:
     runs-on: ubuntu-latest
     timeout-minutes: 120
@@ -70,7 +72,7 @@ jobs:
           mkdir -p receipts/pr1001-collision
           git rev-parse HEAD > receipts/pr1001-collision/commit.txt
           cat lean-toolchain > receipts/pr1001-collision/toolchain.txt
-          sha256sum research/nightfall/pr1000-phase-retrieval-robustness/NoisyCausalCollision.lean research/nightfall/pr1000-phase-retrieval-robustness/check_noisy_collision_exact.py > receipts/pr1001-collision/SHA256SUMS
+          sha256sum research/nightfall/pr1000-phase-retrieval-robustness/NoisyCausalCollision.lean research/nightfall/pr1000-phase-retrieval-robustness/check_noisy_collision_exact.py research/nightfall/pr1000-phase-retrieval-robustness/check_ball_erasure_exact.py > receipts/pr1001-collision/SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
