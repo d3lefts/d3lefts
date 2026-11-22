@@ -1,0 +1,71 @@
+name: NIGHTFALL prime-zeta analytic bridge named Lean certificate
+
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean"
+      - ".github/workflows/nightfall-prime-zeta-analytic-bridge-lean.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scoped-analytic-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact Lean source on pinned Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/prime-zeta-analytic
+          src="research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean"
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+          cp "$src" /tmp/mathlib4/PrimeZetaAnalyticBridge.lean
+          (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/PrimeZetaAnalyticBridge.olean" PrimeZetaAnalyticBridge.lean) 2>&1 | tee receipts/prime-zeta-analytic/PrimeZetaAnalyticBridge.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/prime-zeta-analytic/PrimeZetaAnalyticBridge.log
+      - name: Exact named declaration and axiom control
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          content=Path('receipts/prime-zeta-analytic/PrimeZetaAnalyticBridge.log').read_text()
+          names=('analyticAt_shifted_iff',
+                 'shifted_not_analytic_of_source_not_analytic',
+                 'shifted_log_coefficient_eq_zero_iff',
+                 'cleared_integer_coefficient_eq_zero_iff')
+          for suffix in names:
+              name='Nightfall.PrimeZetaAnalyticBridge.'+suffix
+              found=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",content,re.S)
+              if found:
+                  axioms={x.strip() for x in found.group(1).split(',') if x.strip()}
+              else:
+                  assert "'"+name+"' does not depend on any axioms" in content, ('MISSING_AXIOMS',name)
+                  axioms=set()
+              assert axioms <= {'propext','Classical.choice','Quot.sound'}, (name,axioms)
+          assert 'sorryAx' not in content
+          assert 'theorem Nightfall.PrimeZetaAnalyticBridge.analyticAt_shifted_iff' in content
+          print('PASS: local analytic bridge and integer cancellation, no new axioms.')
+          print('OPEN: construction of P, normal convergence of P prime-series derivative, classical natural boundary, local branch semantics.')
+          PY
+      - name: Source hash and Mathlib pin receipt
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/prime-zeta-analytic
+          git rev-parse HEAD > receipts/prime-zeta-analytic/source-commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/prime-zeta-analytic/mathlib-commit.txt
+          cat lean-toolchain > receipts/prime-zeta-analytic/lean-toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean > receipts/prime-zeta-analytic/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-prime-zeta-analytic-bridge-${{ github.run_id }}
+          path: receipts/prime-zeta-analytic
+          retention-days: 90
