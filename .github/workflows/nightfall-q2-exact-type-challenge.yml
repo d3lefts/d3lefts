@@ -38,9 +38,17 @@ jobs:
           mkdir -p lean-receipts/q2-challenge
           python3 - <<'PY'
           from pathlib import Path
-          from scripts.nightfall_q2_certify import local_sources, closure, sha256, ROOT
+          from scripts.nightfall_q2_certify import closure, sha256, ROOT, SOURCE_ROOT
           import json, shutil, subprocess
-          files=local_sources()
+          # Ignore namespaced third-party vendor code when resolving NIGHTFALL
+          # basename imports; vendor contains multiple unrelated Basic.lean.
+          files={}
+          for source in sorted(SOURCE_ROOT.rglob("*.lean")):
+              if "vendor" in source.relative_to(SOURCE_ROOT).parts:
+                  continue
+              if source.stem in files:
+                  raise ValueError(f"Ambiguous non-vendor module {source.stem}: {files[source.stem]} vs {source}")
+              files[source.stem]=source
           ordered=closure("InfinitePiQ2NativeHeterogeneousTerminal", files)
           workspace=Path("/tmp/mathlib4")
           out=workspace/".lake/build/lib/lean"
