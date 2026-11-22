@@ -49,3 +49,41 @@ jobs:
             lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "/tmp/$(basename "$M").log"
           done
           echo "PASS: Sard, parametric Sard and one-dimensional manifold sources compile on pin; NOT the zero theorem"
+
+      - name: Audit imported Sard and one-manifold theorem axiom dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          cat > ExternalProductTopologyAxioms.lean <<'LEAN'
+          import MathlibExt.Geometry.Manifold.ParametricSard
+          import MathlibExt.Geometry.Manifold.OneDimensional
+          #check MathlibExt.Geometry.Manifold.ParametricSardWanted.parametricSard
+          #check MathlibExt.Geometry.Manifold.OneDimensionalWanted.compact_connected_one_manifold_with_boundary_classification
+          #print axioms MathlibExt.Geometry.Manifold.ParametricSardWanted.parametricSard
+          #print axioms MathlibExt.Geometry.Manifold.OneDimensionalWanted.compact_connected_one_manifold_with_boundary_classification
+          #print axioms MathlibExt.Geometry.Manifold.SardWanted.sard_theorem
+          LEAN
+          lake env lean ExternalProductTopologyAxioms.lean 2>&1 | tee /tmp/ExternalProductTopologyAxioms.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path('/tmp/ExternalProductTopologyAxioms.log').read_text()
+          names=[
+            'MathlibExt.Geometry.Manifold.ParametricSardWanted.parametricSard',
+            'MathlibExt.Geometry.Manifold.OneDimensionalWanted.compact_connected_one_manifold_with_boundary_classification',
+            'MathlibExt.Geometry.Manifold.SardWanted.sard_theorem',
+          ]
+          allowed={'propext','Classical.choice','Quot.sound'}
+          for name in names:
+            m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+            if m:
+              found={a.strip() for a in m.group(1).split(',') if a.strip()}
+            else:
+              assert f"'{name}' does not depend on any axioms" in log, ('MISSING_AXIOM_RECEIPT',name)
+              found=set()
+            assert found <= allowed,('NONSTANDARD_AXIOMS',name,found)
+            print('EXACT IMPORT AXIOM PASS',name,sorted(found))
+          assert 'sorryAx' not in log
+          PY
+          echo "PASS: external Sard/manifold theorem axiom closure; NOT an unconditional ProductSphereZero proof"
