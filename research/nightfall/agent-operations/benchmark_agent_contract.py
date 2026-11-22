@@ -53,7 +53,7 @@ def invocation(task: str, mode: str, role: str) -> list[str]:
         return [sys.executable, "scripts/nightfall_agent_tasks.py", "run", task,
                 "--problem", "NIGHTFALL-AB", "--role", role]
     if mode == "just-contract":
-        return ["just", "--quiet", task]
+        return ["just", task]
     if mode == "nushell-contract":
         # Each argument originates from a frozen allowlist, not arbitrary user input.
         expression = ("use research/nightfall/agent-operations/task-interface.nu *; "
@@ -205,7 +205,10 @@ def bench(role: str, repeats: int, output: Path) -> None:
                     if result["stdout_sha256"] != reference_sha[task]:
                         raise RuntimeError(f"legacy checker output drift: {task}")
                 else:
-                    receipt = parse_json(result["_stdout"])
+                    try:
+                        receipt = parse_json(result["_stdout"])
+                    except (ValueError, UnicodeDecodeError) as exc:
+                        raise RuntimeError(f"invalid JSON receipt for mode={mode}; stdout={result[\u0027_stdout\u0027][:200]!r}; stderr={result[\u0027_stderr\u0027][-200:]!r}") from exc
                     audit_receipt(receipt, task, role, reference_sha[task],
                                   mode, source_commit)
                     if control_base is None and mode == "python-contract":
