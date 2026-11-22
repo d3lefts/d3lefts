@@ -1,0 +1,107 @@
+name: NIGHTFALL AA v8 upstream pin and interface replay
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/nightfall-aa-v8-upstream-pin.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upstream-pin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 95
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4.33.0 for immutable Turturean pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --no-modify-path --default-toolchain leanprover/lean4:v4.33.0
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Clone and verify exact upstream revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/physical-superintelligence/aaronson-ambainis.git /tmp/aa
+          git -C /tmp/aa checkout --detach 2a6ceaef872ae993708950f951989134084b851a
+          test "$(git -C /tmp/aa rev-parse HEAD)" = 2a6ceaef872ae993708950f951989134084b851a
+          grep -Fx 'leanprover/lean4:v4.33.0' /tmp/aa/lean-toolchain
+          grep -F 'rev = "v4.33.0"' /tmp/aa/lakefile.toml
+          mkdir -p "$GITHUB_WORKSPACE/aa-receipts"
+          git -C /tmp/aa rev-parse HEAD > "$GITHUB_WORKSPACE/aa-receipts/upstream-commit.txt"
+      - name: Full upstream make check (imports, placeholder audit, build, axioms)
+        shell: bash
+        working-directory: /tmp/aa
+        run: |
+          set -euo pipefail
+          lake exe cache get
+          make check 2>&1 | tee "$GITHUB_WORKSPACE/aa-receipts/upstream-make-check.log"
+      - name: Full upstream Lean kernel replay
+        shell: bash
+        working-directory: /tmp/aa
+        run: |
+          set -euo pipefail
+          make replay 2>&1 | tee "$GITHUB_WORKSPACE/aa-receipts/upstream-kernel-replay.log"
+      - name: Check exact three input interfaces and printed axioms
+        shell: bash
+        working-directory: /tmp/aa
+        run: |
+          set -euo pipefail
+          cat > PinnedV8Interfaces.lean <<'LEAN'
+          import AaronsonAmbainis.Chain
+          import AaronsonAmbainis.TwoSided.CauchySchwarz
+          import AaronsonAmbainis.Level.Integral
+          #check AaronsonAmbainis.antipodalInequality
+          #check AaronsonAmbainis.antipodal_of_det
+          #check AaronsonAmbainis.abstract_cs
+          #check AaronsonAmbainis.Level.level_integration
+          #check AaronsonAmbainis.meanIncrementBound
+          #check AaronsonAmbainis.influenceBound
+          #print axioms AaronsonAmbainis.antipodalInequality
+          #print axioms AaronsonAmbainis.abstract_cs
+          #print axioms AaronsonAmbainis.Level.level_integration
+          #print axioms AaronsonAmbainis.influenceBound
+          LEAN
+          lake env lean PinnedV8Interfaces.lean 2>&1 | tee "$GITHUB_WORKSPACE/aa-receipts/pinned-interface-axioms.log"
+      - name: Compile current NIGHTFALL product-space transfer against original upstream
+        shell: bash
+        working-directory: /tmp/aa
+        run: |
+          set -euo pipefail
+          P="$GITHUB_WORKSPACE/research/nightfall/formalization/product_space"
+          for m in ProductSpaceTwoSidedBridge ProductRowBound ProductInfluence EfronSteinDegree HeterogeneousAlphabets; do
+            cp "$P/$m.lean" "$m.lean"
+            lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean" 2>&1 | tee "$GITHUB_WORKSPACE/aa-receipts/$m.log"
+          done
+          cat > NightfallV8Interfaces.lean <<'LEAN'
+          import HeterogeneousAlphabets
+          #check Nightfall.ProductSpace.Transfer.weighted_product_reciprocal
+          #check Nightfall.ProductSpace.Transfer.localized_two_sided_product
+          #check Nightfall.ProductSpace.Influence.integrated_incr
+          #check Nightfall.ProductSpace.Influence.weighted_cs
+          #check Nightfall.ProductSpace.Influence.product_influence
+          #check Nightfall.ProductSpace.EfronStein.prodDegree_iff_esDegree
+          #check Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence
+          #print axioms Nightfall.ProductSpace.Influence.product_influence
+          #print axioms Nightfall.ProductSpace.Heterogeneous.heterogeneous_influence
+          LEAN
+          lake env lean NightfallV8Interfaces.lean 2>&1 | tee "$GITHUB_WORKSPACE/aa-receipts/nightfall-interface-axioms.log"
+      - name: Hash original sources and compiler receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p aa-receipts
+          (cd /tmp/aa && sha256sum lean-toolchain lakefile.toml AaronsonAmbainis/Statements.lean AaronsonAmbainis/TwoSided/Antipodal.lean AaronsonAmbainis/TwoSided/CauchySchwarz.lean AaronsonAmbainis/Level/Integral.lean AaronsonAmbainis/Average/Influence.lean) > aa-receipts/upstream-inputs-sha256.txt
+          (cd research/nightfall/formalization/product_space && sha256sum ProductSpaceTwoSidedBridge.lean ProductRowBound.lean ProductInfluence.lean EfronSteinDegree.lean HeterogeneousAlphabets.lean) > aa-receipts/nightfall-inputs-sha256.txt
+          echo "nightfall_pr_head=$GITHUB_SHA" > aa-receipts/commit-metadata.txt
+          echo 'upstream=2a6ceaef872ae993708950f951989134084b851a' >> aa-receipts/commit-metadata.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightfall-aa-v8-upstream-pin-replay
+          path: aa-receipts/
+          retention-days: 30
