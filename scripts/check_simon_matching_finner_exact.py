@@ -99,20 +99,32 @@ def exact_mixture_check(N, partition, components, support):
     return R
 
 def decoder_fiber_check(N, support):
-    # Verify failure of EVERY nonadaptive query set smaller than ceil(b/2),
-    # for EVERY supported input and EVERY candidate block B. Together with
-    # transcript consistency, this checks the finite adaptive lower-bound
-    # mechanism. It does not prove it for arbitrary N.
+    # Independent stronger point-3 audit: for a block of b addresses,
+    # sum_s internal_pairs_s(B)=choose(b,2). Thus there exists a shift
+    # with >= b-floor(choose(b,2)/(N-1)) distinct cosets touching B.
+    # At fewer than that many queries EVERY observed transcript must
+    # be consistent with two different target-block values.
     for b in range(1, N + 1):
         for B in combinations(range(N), b):
-            for q in range(ceil(b / 2)):
+            hs = [sum(i in B and j in B for i, j in matching(N, s))
+                  for s in range(1, N)]
+            assert sum(hs) == comb(b, 2), (N, B, hs)
+            improved = b - comb(b, 2) // (N - 1)
+            assert b - min(hs) >= improved
+            assert improved >= ceil(b / 2), (N, B, improved)
+            stats["decoder_shift_bounds"] += 1
+            for q in range(improved):
                 for asked in combinations(range(N), q):
                     fibers = defaultdict(set)
                     for x in support:
                         fibers[tuple(x[i] for i in asked)].add(
                             tuple(x[i] for i in B))
-                    assert all(len(v) > 1 for v in fibers.values())
+                    assert all(len(v) > 1 for v in fibers.values()), (
+                        "adaptive transcript indistinguishability violated",
+                        N, B, asked)
                     stats["decoder_fibers"] += 1
+            if b == 2 and N >= 4:
+                assert improved == 2, "half-block lower bound is not tight"
 
 for N in (2, 4, 8):
     if N == 2:
@@ -144,6 +156,13 @@ for N in (2, 4, 8):
         assert sum(hs) == sum(comb(len(B), 2) for B in partition)
         b = max(len(B) for B in partition)
         assert min(hs) * 2 * (N - 1) <= N * (b - 1)
+        for B in partition:
+            internal = [sum(i in B and j in B for i, j in matching(N,s))
+                        for s in range(1,N)]
+            assert sum(internal) == comb(len(B), 2)
+            assert len(B) - min(internal) >= (
+                len(B) - comb(len(B), 2)//(N-1))
+            stats["decoder_shift_bounds"] += 1
         stats["matching_partitions"] += 1
         for trial in range(3 if N <= 4 else 2):
             weights = random_block_weights(N, partition)
