@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/observability/HilbertRankBudgetCore.lean'
       - 'research/nightfall/formalization/costs/GroupInformationCoverDual.lean'
+      - 'docs/lean-pending-source-custody.json'
       - '.github/workflows/nightfall-five-pillars-cores-lean.yml'
   workflow_dispatch:
 permissions:
