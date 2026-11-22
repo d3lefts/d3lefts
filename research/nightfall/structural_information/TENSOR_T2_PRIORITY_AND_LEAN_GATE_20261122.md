@@ -1,4 +1,4 @@
-# NIGHTFALL tensor T2 — global-priority search and Lean certification ledger v1 (2026-11-22)
+# NIGHTFALL tensor T2 — global-priority search and Lean certification ledger v2 (2026-11-22)
 
 **Source under audit:** [PR #1016](https://github.com/d3lefts/d3lefts/pull/1016), initial reviewed head `537411f2b1bab7e073f430f06d475325576dd99c`. Its parent [PR #1002](https://github.com/d3lefts/d3lefts/pull/1002) is merged, but its analytic full-circuit claims are not Lean theorem statements. **No new publication, external review, or global-priority claim is authorized by this ledger.**
 
@@ -43,7 +43,7 @@ Scope: public indexed scholarly results on tensor/Segre row families, product-te
 
 **Scope:** The finite tests support the primitive collision classification through `L=4`. They do not prove `K_L=O(L^3)`, check arbitrary quantum circuits, certify the constant 145 or exclude an all-L counterexample. The author manuscript uses Lovitz–Petrov Theorem 4 and a further minimum-cardinality 4-set argument; independently reproduce the latter, especially its `r=4` two-variable rank reduction.
 
-**Scoped Lean file:** `research/nightfall/formalization/structural_information/TensorT2Cancellation.lean`, with a pinned CI workflow. Proves, with explicit exponent-two hypothesis, all six four-path repeated-label XOR cancellations, zero-pair equivalence and overlapping-zero-triple uniqueness. These are actual mathematical subclaims needed for Section 3/4 of the proposed theorem, but **NOT the coefficient bounds**, **NOT the product tensor circuit splitting theorem**, and **NOT a two-query classical simulator**. Treat the Lean claims as *submitted for kernel replay* until CI is inspected.
+**Scoped Lean file:** `research/nightfall/formalization/structural_information/TensorT2Cancellation.lean`, with a pinned CI workflow. Proves, with explicit exponent-two hypothesis, all six four-path repeated-label XOR cancellations, zero-pair equivalence and overlapping-zero-triple uniqueness. These are actual mathematical subclaims needed for Section 3/4 of the proposed theorem, but **NOT the coefficient bounds**, **NOT the product tensor circuit splitting theorem**, and **NOT a two-query classical simulator**. **Verified:** scoped exact-head Lean compile, `leanchecker` and standard-axiom audit **PASS** in [run #45052357652](https://github.com/d3lefts/d3lefts/actions/runs/45052357652), commit `ed78403581bc311e0c3bfc8abf810eab04d2b546`, source Git blob `ccdf378c38a06f51c7158f4138370dbc55fce778`. All three named terminal axioms are exactly `[propext]`. Exact finite L<=4 checker passed in the same run. Receipt artifact: [14765833389](https://github.com/d3lefts/d3lefts/actions/runs/45052357652/artifacts/14765833389).
 
 ## Independent adversarial audit route (predeclared)
 
@@ -55,4 +55,4 @@ Scope: public indexed scholarly results on tensor/Segre row families, product-te
 
 **Cheapest decisive next experiment:** independently audit the `r=4` Lovitz–Petrov-to-free-site inference and full mixed high-rank energy estimate. Expected outcomes: independently derived full proof, a counterexample, or a remaining named lemma. Preserve whichever occurs; do not promote automatically.
 
-**Status as of this ledger:** manuscript candidate; finite enumerations exact through L=4; inherited sharp row theorem Lean certified; new cancellation lemmas under kernel CI; **complete T=2 theorem not Lean-certified**, human-referee and worldwide-priority gates open.
+**Status as of this ledger:** manuscript candidate; finite enumerations exact through L=4; inherited sharp row theorem Lean certified; new cancellation lemmas **Lean kernel-certified at the exact source**; **complete T=2 theorem not Lean-certified**, human-referee and worldwide-priority gates open.
