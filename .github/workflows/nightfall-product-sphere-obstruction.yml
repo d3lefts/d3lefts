@@ -1,0 +1,44 @@
+name: NIGHTFALL product-sphere exact obstruction coefficients
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductSphereObstruction.lean'
+      - '.github/workflows/nightfall-product-sphere-obstruction.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  topological-interface:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile checked finite coefficient algebra and audit axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          src="research/nightfall/formalization/finite_field/ProductSphereObstruction.lean"
+          ! grep -nE '\b(sorry|admit)\b' "$src"
+          cp "$src" /tmp/mathlib4/ProductSphereObstruction.lean
+          (cd /tmp/mathlib4 && lake env lean ProductSphereObstruction.lean) 2>&1 | tee /tmp/product-sphere-obstruction.log
+          python3 - <<'PY'
+          import re
+          source = open('/tmp/product-sphere-obstruction.log', encoding='utf-8').read()
+          for suffix in ('monomial_nonzero', 'mixed_top_coefficient', 'mixedProduct_nonzero',
+                         'mixedDot_flip_left', 'mixedDot_flip_right', 'continuous_mixedDot'):
+              name = 'Nightfall.ProductSphereObstruction.' + suffix
+              pat = re.escape("'" + name + "' depends on axioms: [") + r'([^\]]*)\]'
+              match = re.search(pat, source, re.S)
+              if match:
+                  axioms = {s.strip() for s in match.group(1).split(',') if s.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in source, name
+                  axioms = set()
+              assert axioms <= {'propext', 'Classical.choice', 'Quot.sound'}, (name, axioms)
+              print(name, sorted(axioms))
+          assert 'Nightfall.ProductSphereObstruction.ProductSphereZero' in source
+          print("ProductSphereZero is a stated Prop, not a proved theorem")
+          PY
