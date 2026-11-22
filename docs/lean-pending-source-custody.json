@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 54,
+  "revision": 55,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "1b3205e5cd52949bf67a2d16eac4251e95ef4bc6",
-  "scope": "v54: exact unreviewed adaptive group response/likelihood source for A2 added; no full A2 theorem or D1/D2 kernel status promotion.",
+  "source_commit": "99138d1ca1c26bf887699f2911bab090c315dae2",
+  "scope": "v55: source-pinned proof repair of matched three-cycle A2 dual cost bound; no automatic source-theorem promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5527,7 +5527,7 @@
     },
     {
       "path": "research/nightfall/formalization/costs/GroupInformationCoverRate.lean",
-      "source_blob_sha": "fb3ddc2050e322941b7ee4049a80b0ff97c8fb61",
+      "source_blob_sha": "8088f895f379ac43100dc4a86dc91994d5dbddfc",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
