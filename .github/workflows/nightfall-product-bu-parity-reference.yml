@@ -29,7 +29,8 @@ jobs:
           import re
           s = open('/tmp/ProductBUParityReference.log', encoding='utf8').read()
           for suffix in ('refU_flip_left','refU_flip_right','refV_flip_left',
-                         'refV_flip_right','unit_tail_zero_first_sign','reference_zero_signs'):
+                         'refV_flip_right','unit_tail_zero_first_sign','reference_zero_signs',
+                         'square_implies_productSphereZero'):
               name = 'Nightfall.ProductBUParity.' + suffix
               m = re.search(re.escape("'" + name + "' depends on axioms: [") + r'([^\]]*)\]', s, re.S)
               if m is None:
