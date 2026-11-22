@@ -82,11 +82,16 @@ theorem continuous_test {n : ℕ} (r : Rows n) (hr : ReachableContinuous r)
   have hminus := hrow.comp (continuous_fst.sub continuous_snd)
   have h1 := (continuous_mixedDot n).comp (hplus.prodMk hw)
   have h2 := (continuous_mixedDot n).comp (hminus.prodMk hw)
-  simpa [Function.comp_def, comparison, oracle, history, length_transcript] using h1.add h2
+  have hsum := h1.add h2
+  change Continuous (fun z : Vec n × Vec n =>
+    mixedDot n (r j (history r j (z.1 + z.2))) (w z) +
+    mixedDot n (r j (history r j (z.1 - z.2))) (w z)) at hsum
+  simpa [comparison, oracle, history, length_transcript] using hsum
 
 theorem test_neg_arg {n : ℕ} (r : Rows n) (j : ℕ) (u v z : Vec n) :
     comparison (oracle r) j u v (-z) = -comparison (oracle r) j u v z := by
-  simp [comparison, oracle_neg] <;> ring
+  simp [comparison, oracle_neg]
+  ring
 
 theorem nonsign_of_unit {n : ℕ} {u v : Vec n}
     (hu : UnitVec n u) (hv : UnitVec n v) :
@@ -172,6 +177,7 @@ theorem no_universal_continuous_causal_below_threshold {n : ℕ}
         exact congrArg List.tail ht
   exact ⟨x, y, shorten _ hm hc, hne, hn⟩
 
+#check no_universal_continuous_causal_below_threshold
 #print axioms continuous_history
 #print axioms continuous_causal_collision_of_productSphereZero
 #print axioms no_universal_continuous_causal_below_threshold
