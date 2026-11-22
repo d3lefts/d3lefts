@@ -16,7 +16,7 @@ for a,b in [(0,4),(1,4),(4,4),(9,4),(1,1),(4,1)]:
     assert delta==4*z*isqrt(a)*isqrt(b)/(1+z*z)
     assert (delta==0)==(a*b==0 or z==0)
 # rational projector path nodes: angles 0,45,90,135,180 degrees
-vectors=[(F(1),F(0)),(F(1),F(1)),(F(0),F(1)),(F(-1),F(1)),(F(-1),F(0))]
+vectors=[(F(1),F(0)),(F(1),F(1)),(F(0),F(1)),(F(-1),F(1)),(F(1),F(0))]
 projectors=[]
 for x,y in vectors:
     d=x*x+y*y
