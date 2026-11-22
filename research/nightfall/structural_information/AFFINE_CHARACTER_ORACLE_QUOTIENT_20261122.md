@@ -83,3 +83,22 @@ This is a precise falsifiable illustration that raw Wyner common information can
 - **Certificate target:** a Lean finite-character quotient lemma with projection algebra, followed by one kernel source-to-existing-Route1/AA interface for a standard phase oracle. Do **not** treat the symbolic test as that certificate.
 
 **Source graph:** product AA/quantum degree (#858/#974) → source-affine character quotient (this note) → independent-character law and exact C_W separation → candidate generic T2 (draft #1068) → pending quantum Hilbert audit.
+
+
+## 5. Canonical source-support quotient (strengthened representation theorem)
+
+The oracle equality (1), and the exact two-query acceptance identity (2), **do not require uniformity**. More generally let `S⊂V*` be the nonempty actual support of *any* secret law, pick `s₀∈S`, and let `H=span_{F₂}{s+s₀:s∈S}` (the direction space of the affine hull). Then the same `S₀,Q_h` decomposition is exact for **every** s∈S with h=s+s₀, regardless of its law.
+
+**Maximality / complete characterization.** For any two labels a,b∈V and any nonempty support S, the following are equivalent:
+
+1. `χ_a(s)=σ χ_b(s)` for all s∈S, for some source-independent fixed sign σ∈{±1};
+2. `χ_{a+b}(s)` is constant on S;
+3. `a+b∈H^⊥`.
+
+The sign is necessarily `σ=χ_{a+b}(s₀)`. Proof: divide the characters (same as multiply over ±1), evaluate at s₀ to fix σ, and test constancy on all differences s+s₀, which generate H. Thus `V/H^⊥` is the **coarsest quotient identifying exactly source-equivalent oracle characters up to fixed signs**, even when the source is nonuniform or not affine-uniform. Any different quotient that merges inequivalent classes changes at least one source-visible character and cannot preserve *all* phase-oracle projectors by this fixed-sign grouping.
+
+For an arbitrary source law, exact circuit reduction and one-query representative access remain valid; **the T2 bound does not automatically transfer**, since the distribution of h may not be uniform on H and Walsh orthogonality can fail. Example: support S={0,e₀,e₁}⊂F₂² with the uniform *three-point* law has Eχ_{e₀}=1/3 rather than 0. The reduction identifies only deterministic equivalences, not a general correlated-distribution simulator. This separates representation validity from Fourier/measure assumptions.
+
+The exact checker additionally tests all 16² pairs of four-bit labels on five support sets (singleton, affine, nonaffine and full-space cases), verifying all three character criteria and the fixed-sign formula; a deliberate nonaffine Walsh-orthogonality negative control passes. These tests are still finite, not a Lean proof.
+
+**Novelty qualifier:** this maximality is elementary character-duality algebra, not claimed new prior art. Its operational value is an exact, support-aware preprocessing operator with zero extra oracle queries and an explicit failure boundary for source laws outside the uniform-affine setting.
