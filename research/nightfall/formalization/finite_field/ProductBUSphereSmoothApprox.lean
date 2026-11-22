@@ -101,7 +101,7 @@ theorem exists_smooth_sphere_charU_approx (n : ℕ)
       charU F u v = f u v := by
     intro u v hu hv
     exact charU_extension_agrees n f F
-      (fun a b ha hb => hEq (a,b) ⟨ha,hb⟩)
+      (fun a b ha hb => hEq (show (a,b) ∈ SpherePair n from ⟨ha,hb⟩))
       hleft hright u v hu hv
   obtain ⟨g, hgsm, hgap, hgl, hgr⟩ :=
     exists_smooth_charU_approx n (charU F)
@@ -136,7 +136,7 @@ theorem exists_smooth_sphere_charV_approx (n : ℕ)
       charV F u v = f u v := by
     intro u v hu hv
     exact charV_extension_agrees n f F
-      (fun a b ha hb => hEq (a,b) ⟨ha,hb⟩)
+      (fun a b ha hb => hEq (show (a,b) ∈ SpherePair n from ⟨ha,hb⟩))
       hleft hright u v hu hv
   obtain ⟨g, hgsm, hgap, hgl, hgr⟩ :=
     exists_smooth_charV_approx n (charV F)
