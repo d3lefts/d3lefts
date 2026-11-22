@@ -98,6 +98,32 @@ with Q(2,2)=0. Its determinant vanishes because \(r^2=z_1^2+z_2^2\), its trace i
 
 This can be used as the **third stage after two fixed coordinate-square readings**, because those actual prior histories fill the whole orthant. Thus the normalized/nonvanishing hypothesis in the full-history projector corollary cannot be discarded. The winding mechanism is classical real-eigenvector/Berry-sign holonomy, not an original topological invariant; its realization as a *causal detector-selection regularity failure* is the scoped research synthesis.
 
+
+## Theorem V: sharp robustness of a forced detector zero
+
+The rank-drop construction in Theorem IV has a **quantitative topological persistence threshold** for perturbations of the *detector map*, which is different from measurement-noise robustness.
+
+Let \(D=\{z\in\mathbb R^2:\|z\|\le1\}\), and restrict the explicit Theorem IV detector to D (translated to the interior of the history orthant):
+\[
+Q(z)=\frac1{2(1+\|z\|)}
+\begin{pmatrix}
+\|z\|+z_1&z_2\\ z_2&\|z\|-z_1
+\end{pmatrix}.
+\]
+On the boundary circle \(\partial D\), \(Q=\lambda P\), where \(\lambda=\operatorname{tr}Q=\tfrac12\) and \(P\) is the once-winding, non-liftable real line projector.
+
+**Sharp theorem.** If \(Q':D\to\mathrm{Sym}_+^n\) is continuous of rank at most one and
+\[
+\sup_{z\in\partial D}\|Q'(z)-Q(z)\|_{\rm op}<\tfrac12,
+\]
+then **Q' vanishes at some point of D**. The constant \(1/2\) is optimal: there exists a nonvanishing continuous rank-one PSD \(Q'\) on the disk with boundary deviation exactly \(1/2\).
+
+**Proof.** At any boundary point, \(\|Q\|_{\rm op}=\lambda=1/2\), so the strict bound excludes \(Q'=0\). If the nonzero ranges of Q and Q' were orthogonal, the operator norm of their difference would be at least \(\lambda\). Hence their normalized rank-one projectors are **never orthogonal** on the boundary and have pointwise operator distance \(<1\). Theorem III therefore homotopes their boundary line maps. The Q boundary line is once winding (nontrivial in \(\pi_1(\mathbb RP^1)\) mod two); Q' has the same nonzero first Stiefel–Whitney class on that loop. If Q' never vanished on D, its normalized line map would extend continuously across the disk, making its boundary loop null-homotopic. Contradiction.
+
+For sharpness fix any unit vector e1 in the 2D plane and take \(Q'(z)\equiv\lambda e_1e_1^\top\). This is continuous rank one and never zero. For every boundary z, \(0\preceq Q(z)\preceq\lambda I\) and \(0\preceq Q'(z)\preceq\lambda I\), so \(-\lambda I\preceq Q(z)-Q'(z)\preceq\lambda I\), giving operator deviation \(\le\lambda\). At the boundary point where P is orthogonal to e1, the deviation is exactly \(\lambda\). Thus the threshold is optimal. QED.
+
+**Transfer:** The same proof holds for any continuous rank≤1 PSD detector on a disk with constant positive boundary trace \(\lambda\) and **nontrivial orientation holonomy** of its normalized boundary line. It also extends to a disk embedded in an arbitrary actual history space: the zero is forced *inside that disk*. This establishes a sharp **robust topological zero**, not a phase-retrieval query lower bound, noise-stable inversion modulus, or new discovery of Berry phase.
+
 ## The decisive single-flagship open problem
 
 Define \(m_{\rm att,proj}(n)\) as the exact query optimum for normalized, continuous nonzero rank-one projector selections defined only on attained histories. The source-proved bounds are
