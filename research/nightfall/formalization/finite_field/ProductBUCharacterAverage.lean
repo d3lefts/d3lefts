@@ -103,7 +103,7 @@ theorem charU_error_le (f g : X → X → ℝ) (ε : ℝ)
     ring
   have htri : |a - b + c - d| ≤ |a| + |b| + |c| + |d| := by
     have hA := abs_sub (a - b + c) d
-    have hB := abs_add (a - b) c
+    have hB := abs_add_le (a - b) c
     have hC := abs_sub a b
     linarith
   have hbound : |a - b + c - d| ≤ 4 * ε := by
@@ -115,7 +115,7 @@ theorem charU_error_le (f g : X → X → ℝ) (ε : ℝ)
     dsimp [a,b,c,d] at *
     linarith
   rw [heq, abs_div, abs_of_pos (by norm_num : (0 : ℝ) < 4)]
-  exact (div_le_iff₀ (by norm_num : (0 : ℝ) < 4)).mpr hbound
+  exact (div_le_iff₀ (by norm_num : (0 : ℝ) < 4)).mpr (by nlinarith [hbound])
 
 /-- The second character projection is the first after swapping factors. -/
 theorem charV_eq_charU_swap (f : X → X → ℝ) (u v : X) :
