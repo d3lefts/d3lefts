@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/structural_information/TensorT2RepeatMobius.lean'
       - 'research/nightfall/structural_information/check_t2_repeat_mobius_exact.py'
+      - 'research/nightfall/structural_information/check_tensor_forced_last_count.py'
       - '.github/workflows/nightfall-t2-repeat-mobius-lean.yml'
   workflow_dispatch:
 permissions:
@@ -50,13 +51,21 @@ jobs:
           grep -q 'NONZERO_XOR_MOBIUS_EXACT_PASS' mobius-repeat-receipt/exact-quadruples.log
           grep -q 'ZERO_FREQUENCY_COUNTEREXAMPLE_PASS' mobius-repeat-receipt/exact-quadruples.log
           grep -q 'RATIONAL_CONSTANT_35_PASS' mobius-repeat-receipt/exact-quadruples.log
+      - name: Exact forced-last and pair-XOR completion gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/structural_information/check_tensor_forced_last_count.py | tee mobius-repeat-receipt/forced-last.log
+          grep -q 'FORCED_PAIR_COMPLETION_EXACT_PASS' mobius-repeat-receipt/forced-last.log
+          grep -q 'TENSOR_GROUP_A_EXACT_PASS: L=3 max=1992' mobius-repeat-receipt/forced-last.log
+          grep -q 'RATIONAL_CROSSOVER_CERTIFIED: capped first upper-bound crossover L=38' mobius-repeat-receipt/forced-last.log
       - name: Immutable source receipts
         if: always()
         shell: bash
         run: |
           mkdir -p mobius-repeat-receipt
           git rev-parse HEAD > mobius-repeat-receipt/commit.txt
-          sha256sum research/nightfall/formalization/structural_information/TensorT2RepeatMobius.lean research/nightfall/structural_information/check_t2_repeat_mobius_exact.py > mobius-repeat-receipt/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/TensorT2RepeatMobius.lean research/nightfall/structural_information/check_t2_repeat_mobius_exact.py research/nightfall/structural_information/check_tensor_forced_last_count.py > mobius-repeat-receipt/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
