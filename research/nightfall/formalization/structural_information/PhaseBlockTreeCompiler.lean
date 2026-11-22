@@ -48,16 +48,16 @@ def decodeTriple (v : Fin 3 → Fin 26) : Fin 8 :=
 
 theorem decodeTriple_correct (s : Fin 8) :
     decodeTriple (tripleRead s) = s := by
-  decide
+  fin_cases s <;> decide
 
 /-- Real physical four-sensor table induced by independent hidden blocks. -/
-def rawTable {B : Type*} (x : B → Fin 8) : B × Fin 4 → Fin 26 :=
+def rawTable {B : Type} (x : B → Fin 8) : B × Fin 4 → Fin 26 :=
   fun pos => rawReading (x pos.1) pos.2
 
 /-- The actual existing decision-tree type is preserved, with a new query
 alphabet and raw-address space. Each hidden block read is replaced by
 exactly three physical sensor queries, and decoder lookup is free. -/
-def compileTree {B : Type*} :
+def compileTree {B : Type} :
     DTree B (Fin 8) → DTree (B × Fin 4) (Fin 26)
   | .leaf v bad => .leaf v bad
   | .node b cont =>
@@ -68,7 +68,7 @@ def compileTree {B : Type*} :
 
 /-- **Source-exact terminal semantics:** compiled physical sensor tree
 returns exactly the same scalar as the decoded-block Route1 tree. -/
-theorem compileTree_eval {B : Type*}
+theorem compileTree_eval {B : Type}
     (t : DTree B (Fin 8)) (x : B → Fin 8) :
     (compileTree t).eval (rawTable x) = t.eval x := by
   induction t with
@@ -83,7 +83,7 @@ theorem compileTree_eval {B : Type*}
 
 /-- The raw physical access count equals EXACTLY three times the original
 adaptive decoded-block query count, for every hidden input separately. -/
-theorem compileTree_queries {B : Type*}
+theorem compileTree_queries {B : Type}
     (t : DTree B (Fin 8)) (x : B → Fin 8) :
     (compileTree t).queries (rawTable x) = 3 * t.queries x := by
   induction t with
