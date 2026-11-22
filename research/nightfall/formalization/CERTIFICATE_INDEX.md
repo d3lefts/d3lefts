@@ -1,5 +1,8 @@
 # NIGHTFALL Lean certificates — consolidated audit
 
+> **22 November 2026 addition — named Lean scientific warrants:** The dated 67-source historical registry and the pending-source custody file below are source-classification checkpoints, **not** a complete census of named Lean-certified theorems. See the [additive six-family warrant bridge](../../../docs/lean-warrant-bridge-v1.json), [individual theorem warrants](../2026-11-lean-warrants/README.md), [fail-closed metadata checker](../../../scripts/check_lean_warrant_coverage.py), and [independent full-history census issue #1124](https://github.com/d3lefts/d3lefts/issues/1124). Later named exact-head receipts can coexist with an old `no-verified-receipt` pending-custody label; do not silently rewrite the frozen ledger or equate pending files with failed Lean proofs. All-history named-receipt coverage remains **not established**; this addition does not execute Lean.
+
+
 **Additional strictly compiled Lean support (#520):** [run 43637631337](https://github.com/d3lefts/d3lefts/actions/runs/43637631337) proves arbitrary product sigma-algebra cylinder generation, measurable-event countable coordinate support, and real measurable-observable countable coordinate support. Exact blobs tracked in [unrestricted terminal proof-scope manifest](../../../docs/unrestricted-terminal-proof-scope-20261114.json). The all-L² original-source unconditional Lean endpoint remains OPEN.
 
 ## 14 November 2026 supplemental current-source certification
