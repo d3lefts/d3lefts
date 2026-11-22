@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 52,
+  "revision": 53,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "4bcf4f0203f54638a414100f4e6b851f7bf3e455",
-  "scope": "v52: add two exact unreviewed-source Lean blobs for the D2 hard-budget reciprocal drift and A2 expected-KL group-cover rate/triangle; no promotion of universal source D1/D2 or stochastic A2 to end-to-end certification.",
+  "source_commit": "84cd88697ddac9905bd2c58ed0374fb85e546568",
+  "scope": "v53: exact-Hilbert recurrence source repair after pinned compiler proof attack; two recent sources remain unreviewed-custody until successful exact-head replay. Full D1/D2 and A2 original-source terminals still open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5517,7 +5517,7 @@
     },
     {
       "path": "research/nightfall/formalization/observability/HilbertAdaptiveDrift.lean",
-      "source_blob_sha": "c58a19682454da9a0f84292f0ae7ac5daf5aca22",
+      "source_blob_sha": "5fb47463d0e7d726731573fa6d7b5931ef08b124",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
