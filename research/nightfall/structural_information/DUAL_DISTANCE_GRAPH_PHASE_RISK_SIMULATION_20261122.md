@@ -77,6 +77,12 @@ The quantum model is explicitly an **ideal coherent reversible response-bit orac
 
 For connected bridgeless graphs, draft #1095's paper-level affine-code support-rectangle computation gives raw coordinate multivariate Wyner CI = (n-1) bits, and complete sign-class reconstruction needs n-1 binary edge reads. High-girth bridgeless graph families of unbounded size therefore have growing raw common information and full-reconstruction cost while **fixed-T scalar acceptance** admits Q original-edge reads independent of n. The comparison is between *different tasks*: full decoding versus acceptance prediction; it is not a lower bound on all raw-source algorithms for a particular acceptance target.
 
+### Explicit infinite separation family: chordless cycles
+
+Choose the chordless cycle G=C_n on n vertices (and n original fixed edge sensors), with n>max(4T,2T+Q). Its actual observed uniform edge-bit distribution is the even-parity affine code of length n: all n-1 bit patterns of a spanning path occur uniformly and the closing edge bit is their XOR. The dual code has precisely one nonzero word, the all-one vector of weight n, so g=n. Theorem B applies for **every** fixed T with exactly Q legal original-intensity classical reads, independently of n. This makes the existential high-girth graph family concrete, without invoking an asymptotic random-regular-graph girth theorem.
+
+By the no-Hamming-edge support-rectangle argument, all n raw edge coordinates jointly have multivariate Wyner common information C_W=n-1 bits, while exact full sign-class reconstruction among 2^(n-1) equiprobable classes requires n-1 binary observations. The same physical query menu is used for both claims, but the *tasks differ*. In particular no claim is made that every quantum acceptance task requires n-1 classical queries, that the quantum algorithm computes the whole codeword, or that this family gives a competitive record for quantum advantage.
+
 ## Exact negative control and finite checker contract
 
 A 4-cycle has parity b0 XOR b1 XOR b2 XOR b3=0. Let f(b)=1[b0=b1], a degree-2 bounded observable, and the legal depth-2 tree D(b)=1[b2=b3]. Under uniform independent edge bits the exact squared risk is 1/2; under the actual four-cycle code f=D always, risk=0. Thus the strict g>k moment threshold cannot in general be weakened to g>=k for d=2,Q=2,k=max(4,4)=4. This does **not** refute an alternative algorithm on 4-cycles.
