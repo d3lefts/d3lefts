@@ -15,7 +15,7 @@ or unverified smoothness of the specific product-sphere zero fiber is hidden.
 The latter global geometric construction remains a separate obligation.
 -/
 
-open scoped Topology Manifold
+open scoped Topology Manifold ContDiff
 open Manifold
 
 namespace Nightfall.ProductBUComponentEndpoints
