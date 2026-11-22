@@ -1,4 +1,4 @@
-# NIGHTFALL tensor T2 — global-priority search and Lean certification ledger v2 (2026-11-22)
+# NIGHTFALL tensor T2 — global-priority search and Lean certification ledger v3 (2026-11-22)
 
 **Source under audit:** [PR #1016](https://github.com/d3lefts/d3lefts/pull/1016), initial reviewed head `537411f2b1bab7e073f430f06d475325576dd99c`. Its parent [PR #1002](https://github.com/d3lefts/d3lefts/pull/1002) is merged, but its analytic full-circuit claims are not Lean theorem statements. **No new publication, external review, or global-priority claim is authorized by this ledger.**
 
@@ -60,3 +60,14 @@ Scope: public indexed scholarly results on tensor/Segre row families, product-te
 ## Repository state reconciliation — parallel PR hygiene (2026-11-22)
 
 Parallel research administration **closed unmerged** the original [#1016](https://github.com/d3lefts/d3lefts/pull/1016) paper-candidate PR for hygiene, explicitly **without claiming its disproof**. Its source remains preserved on branch `research/tensor-t2-rank-free-primitive-20261122` at head `537411f2b1bab7e073f430f06d475325576dd99c`. The main open audit gate is [issue #1021](https://github.com/d3lefts/d3lefts/issues/1021). This [draft audit PR #1029](https://github.com/d3lefts/d3lefts/pull/1029) remains open and adds **independently source-pinned scoped** Lean/finite certificates, but does not supersede the full paper proof. Do not silently promote either to an unconditional theorem or close #1021 based solely on these scoped successes.
+
+## Priority search expansion v3: 2026 fixed-round theorem (critical comparator)
+
+A second broader public search found **Guy Blanc, Jordan Docter, Carmen Strassle and Li-Yang Tan**, [*Quantum Speedups Require Structure or Depth*](https://arxiv.org/abs/2608.19158), arXiv posted **2026-08-19**, FOCS 2026. Its Theorem 1 proves that for a **uniform input to the ordinary independent-coordinate oracle** on `N` bits, a `t`-query `d`-round quantum circuit's acceptance probability is approximable on a `1-delta` fraction of inputs using
+`2^{O(d^2)} (t log(1/delta)/epsilon)^{O(d)}` classical queries. For `t=d=2` this is already a dimension-free polynomial bound **in its own distributional model**. Their theorem must be cited as foundational and stronger than claiming a novel generic constant-round simulation result.
+
+**Why #1016 is not logically subsumed by their theorem:** in our model the observable oracle response vector is `x_a=(-1)^{a.s}` for `a in R_L`, with `s` uniform on `F_2^{2^L}`. The `3^L` observable bits are **not independent**. Because `R_L` spans `F_2^{2^L}`, the response distribution is uniform on a linear subcode of **exactly `2^{2^L}`** words among `2^{3^L}` unconstrained response words, with density `2^{2^L-3^L}`. Their independent-oracle `1-delta` statement can put *all* its exceptional inputs in this tiny subcode; conditioning naively requires delta to be exponentially small in `3^L-2^L`, which makes its general simulation bound non-polynomial in `L`. Therefore no black-box transfer of their theorem closes our correlated-code problem. Conversely, there may be other techniques or prior results that do; external priority is not cleared.
+
+**Revised significance/novelty language:** Our candidate is an original-row, nonuniform, nonadaptive simulation on a **correlated linear-code promise distribution**, with explicit `O(L^3/(epsilon^2 delta))` row-query bound, should the complete quantum proof pass. Do **not** claim discovery of fixed-two-query simulation without qualifying the distribution: the general independent-bit version already exists, and may have better constants/asymptotics in its own model. The generic source paper is compulsory prior art and not a minor related-work citation.
+
+**Publication gate added:** assign a reviewer specifically to scrutinize this independent-oracle versus codeword-distribution distinction and whether the FOCS argument has a general code-source extension not captured by its stated Theorem 1.
