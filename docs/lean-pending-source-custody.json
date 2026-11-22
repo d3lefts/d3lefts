@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 53,
+  "revision": 54,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "84cd88697ddac9905bd2c58ed0374fb85e546568",
-  "scope": "v53: exact-Hilbert recurrence source repair after pinned compiler proof attack; two recent sources remain unreviewed-custody until successful exact-head replay. Full D1/D2 and A2 original-source terminals still open.",
+  "source_commit": "1b3205e5cd52949bf67a2d16eac4251e95ef4bc6",
+  "scope": "v54: exact unreviewed adaptive group response/likelihood source for A2 added; no full A2 theorem or D1/D2 kernel status promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5534,6 +5534,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact assumed per-coordinate KL expected-query exposure yields group-cost dual lower bound and 3-cycle fractional example. Bayes/stopping/attaining group oracle A2 theorem remains unformalized."
+    },
+    {
+      "path": "research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean",
+      "source_blob_sha": "903874f1777f094136199f3c3f338adc4921a4a9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual finite adaptive grouped noisy-sign oracle response and history likelihood factorization; source posterior normalization. No Bayesian risk theorem, sequential KL lower, optional stopping or matching SPRT upper. Exact-head green CI required."
     }
   ]
 }
