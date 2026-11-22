@@ -115,3 +115,8 @@ A specialist prior-art audit is required to establish whether this specific firs
 7. Attempt the k>=2 bridge only after finding a valid path across P's natural boundary; do not infer it by repeating the k=1 proof.
 
 **Status:** self-contained author-side paper proof; arithmetic tests are synthetic; no actual nontrivial multi-member dilation fiber produced; no non-author proof review or Lean kernel certificate.
+
+
+## Addendum: ordinary analytic continuation stops at Re(s)=-1
+
+See SHIFTED_PRIME_ZETA_NATURAL_BOUNDARY_20261122.md for the paper-level proof using the classical prime-zeta natural boundary. The higher-layer caveat is stronger than a missing technical continuation estimate: for the original A_plus, the entire line Re(s)=-1 is a natural boundary. Therefore k>=2 candidate source germs are not accessible by ordinary analytic continuation from the defining domain. They remain formal algebraic source coordinates unless an explicitly different continuation/summation framework is introduced.
