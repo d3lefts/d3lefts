@@ -28,7 +28,8 @@ def xorLow8 (s : Finset Nat) : Nat :=
 
 def primitiveFiber (rows : Finset Nat) (k : Nat) : Finset (Finset Nat) :=
   (rows.powersetCard k).filter (fun s =>
-    xorLow8 s = 1 ∧ ∀ t ∈ s.powersetCard 3, xorLow8 t ≠ 0)
+    xorLow8 s = 1 ∧
+      ((s.powersetCard 3).filter (fun t => xorLow8 t = 0)).card = 0)
 
 /-- All source-level original-row 2-XOR representations at depth 1. -/
 theorem primitive_two_L1 : (primitiveFiber rows1 2).card = 1 := by decide
