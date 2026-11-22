@@ -75,23 +75,25 @@ theorem canonical_radius_budget_four
     change max (f x - fiberLo f x j) (fiberHi f x j - f x) ≤ R
     exact max_le (by linarith) (by linarith)
   have hN : ∀ i : ι,
-      (Finset.univ.filter (fun j : ι => i ∈ disagree x (y j))).card ≤ 1 := by
+      (Finset.univ.filter (fun j : ι => i ∈ RowBound.disagree x (y j))).card ≤ 1 := by
     intro i
     have hsub :
-        (Finset.univ.filter (fun j : ι => i ∈ disagree x (y j))) ⊆
+        (Finset.univ.filter (fun j : ι => i ∈ RowBound.disagree x (y j))) ⊆
           ({i} : Finset ι) := by
       intro j hj
-      have hmem : i ∈ disagree x (Function.update x j (b j)) := by
+      have hmem : i ∈ RowBound.disagree x (Function.update x j (b j)) := by
         simpa only [y] using (Finset.mem_filter.mp hj).2
+      have hmem' : i ∈ Transfer.disagree x (Function.update x j (b j)) := by
+        simpa [RowBound.disagree, Transfer.disagree] using hmem
       have hieq : i = j := Finset.mem_singleton.mp
-        (disagree_update_single x j (b j) hmem)
-      simpa [hieq]
+        (Influence.disagree_update_single x j (b j) hmem')
+      exact Finset.mem_singleton.mpr hieq.symm
     simpa using (Finset.card_le_card hsub)
   have hc : (1 : ℝ) * (1 - Real.cos (Real.pi / (1 : ℝ))) ≤ 2 := by
     norm_num [Real.cos_pi]
   have hblock :
       ∑ j, |f x - f (y j)| ≤ 4 * (d : ℝ) ^ 2 := by
-    have h := Selector.product_block_inequality d f hf hd x y 1 1
+    have h := RowBound.product_block_inequality d f hf hd x y 1 1
       (by decide) hN hc
     simpa using h
   exact (Finset.sum_le_sum (fun j _ => hradius j)).trans hblock
