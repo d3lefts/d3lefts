@@ -1,0 +1,24 @@
+name: NIGHTFALL graph unit-intensity coherent phase oracle exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/GRAPH_INTENSITY_PHASE_ORACLE_BRIDGE_20261122.md'
+      - 'scripts/check_graph_intensity_quantum_bridge_exact.py'
+      - '.github/workflows/nightfall-graph-intensity-phase-bridge.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-coherent-bridge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pin exact rational symbolic dependency
+        run: python3 -m pip install --user sympy==1.14.0
+      - name: Replay exact one-coherent-query kickback and negative controls
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum scripts/check_graph_intensity_quantum_bridge_exact.py research/nightfall/structural_information/GRAPH_INTENSITY_PHASE_ORACLE_BRIDGE_20261122.md
+          python3 scripts/check_graph_intensity_quantum_bridge_exact.py
+          echo 'SCOPED finite coherent-response equality, NOT a quantum T2 simulator or Lean theorem.'
