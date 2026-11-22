@@ -1,6 +1,6 @@
 # NIGHTFALL agent toolchain RFC: Nushell pilot, evidence-first contract
 
-**2026-11-22 · proposal, not a mandatory team migration.** The authoritative
+**2026-11-22 · implemented as the default interface for new tasks; no blanket migration.** The authoritative
 certificate stack remains pinned Lean/Mathlib, exact independent checkers,
 Git source blobs, Proof Passport v2, and source-scoped GitHub Actions.
 
@@ -9,8 +9,8 @@ Git source blobs, Proof Passport v2, and source-scoped GitHub Actions.
 Adopt a **shell-agnostic task and evidence contract** for all agents.
 Offer Nushell 0.117.0 as the preferred interactive *structured-data
 orchestration shell*, not as the sole permitted interpreter and not as
-the source of proof truth. Consider a version-pinned justfile as the
-single agent command catalogue once a pilot shows reproducible gains.
+the source of proof truth. The repository now provides a static `justfile`, an allowlisted
+`nightfall_agent_tasks.py` dispatcher, and the typed `task-interface.nu` view.
 
 Do NOT convert existing stable Bash CI/bootstrap steps, Python exact
 checkers, Node/JS application checks, or Lean source files merely
@@ -56,7 +56,7 @@ Do not use arrival time / agent identity as proof evidence.
 - **Independent auditing:** verifier B derives checks from the specification
   rather than copying A's implementation; share immutable input hashes.
 
-## Prototype delivered with this RFC
+## Implemented scope and tested prototype
 
 The read-only `passport-preflight.nu` summarizes the checked-in
 `docs/proof-passport-v2.json` as JSON, failing on malformed schema/version
@@ -64,10 +64,11 @@ or duplicate IDs. It explicitly emits `mathematical_certification: false`
 and `semantic_review: false`. It is NOT a replacement for
 `scripts/check_proof_passport_v2.py` or the source/axiom checks.
 
-CI pins Nushell 0.117.0 and the setup action commit, first runs the
-Python passport validator, then compares Nu's JSON summary to an
-independently computed Python expectation and requires negative
-mutants to fail. Nu is not installed by the canonical Lean setup action.
+CI pins `just` 1.59.0 and Nushell 0.117.0 with full setup action SHAs, runs
+original Python validators, compares Nu/Python task receipts and requires
+forged successes, proof flags, source IDs and duplicate input IDs to fail.
+Nu is not installed by the canonical Lean setup action. An agent may use
+Python directly if `just` or Nu is unavailable.
 
 ## Pilot and promotion criteria
 
@@ -77,7 +78,7 @@ aggregation, and (3) exact-checker orchestration. Pre-register outcome
 metrics: wall-clock seconds, setup seconds, unhandled exit failures,
 lines of task glue, source-hash mismatches, and full check agreement.
 
-Promote Nu as the preferred interactive agent shell ONLY if all:
+Promote a **mandatory all-agent runtime migration or claimed productivity gain** only if all:
 1. One current-branch CI run passes on the pinned version and all
    negative tests fail as intended.
 2. No loss of standard-axiom/Lean/evidence validators and zero false green.
@@ -110,4 +111,6 @@ External documentation consulted this session:
 - Immutable setup action used in the pilot:
   https://github.com/hustcer/setup-nu/commit/1b8faed9a8ff673c8ce0beae243e0b72d0787241
 
-**Status:** proposal + pilot; certification and originality statuses unchanged.
+**Status:** operational interface implemented; Nu preferred but optional;
+no speedup claimed and no proof/priority statuses changed. Full migration
+and any outcome/efficiency claim remain gated on the A/B study.
