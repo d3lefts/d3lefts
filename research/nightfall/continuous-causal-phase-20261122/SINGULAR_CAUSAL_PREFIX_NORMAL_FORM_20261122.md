@@ -110,7 +110,22 @@ For 0<s<1 the inside arc lies in U and the outside arc lies in {c>0}; at s=0,1 b
 
 **Exactly what is not proved:** The resulting five readings, or any sixth detector appended to them, are **not** shown to universally recover real four-dimensional signals. In fact the explicit Q5 acts only in the first two signal coordinates, and is not presented as a phase decoder. The 2n−1 physical-detector threshold in the attained-history category remains open. Classical projective half-turn holonomy is credited as old topology; priority for this specific causal history construction needs independent review.
 
-**Next decisive test:** keep this explicit rank-pinching H4 and ask whether *any* continuous normalized projector Q6 on its actual H5 can globally separate the remaining sign classes; either produce an exact collision proof specific to this H4 family or design a stronger fifth projector and certify all support boundaries. Do not infer recovery from non-liftability alone.
+**Decisive test resolved negatively:** Theorem S4 below proves that NO continuous sixth scalar reading can rescue this particular first-five construction. Switch to a genuinely four-coordinate-coupled fourth/fifth detector family before any further construction work; do not infer recovery from non-liftability alone.
+
+
+### Independent adversarial kill: no sixth continuous scalar can rescue this explicit construction
+
+The construction above demonstrates the *compatibility* of rank collapse and normalized detector holonomy, but its particular sensing rows omit coordinate 3 after the initial coordinate-square stage. This makes the entire five-reading prefix **irreparably non-identifying with only one continuous reading left**.
+
+**Theorem S4 (exact no-go for the S3 policy).** Let \(T_5\) be the five-reading causal transcript of Theorem S3. For any continuous sixth scalar observation \(F:\mathbb R^4\to\mathbb R\) — including any continuous sixth rank-one physical detector selected from the attained five-reading histories — the combined six-output map \((T_5(x),F(x))\) cannot recover every \(x\in\mathbb R^4\) up to global sign.
+
+**Proof.** Set \(u=e_3\) and take \(v\in S^2\subset\mathrm{span}(e_1,e_2,e_4)\). For both \(x_\pm=u\pm v\), the first three coordinate-square outputs are identical. The fourth row has coefficient \(a_{4,3}=0\), so its reading depends on v but not the sign of u, and is identical for x±. The fifth projector Q5 acts only in the span of e1,e2; hence its reading is likewise unaffected by the e3 sign, and both true five-reading histories agree for **every** v. The sixth output difference
+\[
+D(v)=F(u+v)-F(u-v)
+\]
+is continuous and odd on S². Any continuous odd scalar map S²→R has a zero (ordinary Borsuk–Ulam, or a path from v to −v and the intermediate value theorem). At that v, both six-reading transcripts agree. The pair u±v is not related by global sign because u and v are nonzero with disjoint supports. QED.
+
+**Research consequence:** Do **not** try to optimize or solve for Q6 while holding the S3 first-five detector design fixed. This is a provably dead-end architecture. A viable six-reading candidate must couple **all four signal coordinates** before the final stage, while still arranging the early prefix rank-collapse and a nonliftable physical sensor. This is a stronger design requirement than merely producing a history loop. It has been certified only as a paper proof via ordinary BU; no human referee/Lean scope is implied.
 
 ## Adversarial audit checklist and provenance
 
