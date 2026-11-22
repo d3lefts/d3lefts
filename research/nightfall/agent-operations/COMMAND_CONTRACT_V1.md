@@ -9,7 +9,7 @@ mathematical audit.
 
 From the repository root:
 
-\`\`\`sh
+```sh
 just --list
 just preflight
 just passport
@@ -17,44 +17,44 @@ just compiler-lock
 just differential-guards
 just research-archive
 just lake-manifest
-\`\`\`
+```
 
-For machines without \`just\`, every command has an equivalent Python entry:
+For machines without `just`, every command has an equivalent Python entry:
 
-\`\`\`sh
+```sh
 python3 scripts/nightfall_agent_tasks.py list
 python3 scripts/nightfall_agent_tasks.py run passport
 python3 scripts/nightfall_agent_tasks.py run compiler-lock
 python3 scripts/nightfall_agent_tasks.py run differential-guards
 python3 scripts/nightfall_agent_tasks.py run research-archive
 python3 scripts/nightfall_agent_tasks.py run lake-manifest
-\`\`\`
+```
 
-The \`justfile\` is a **static menu**, not a generic shell-execution bridge.
+The `justfile` is a **static menu**, not a generic shell-execution bridge.
 The Python dispatcher owns a finite allowlist of existing trusted checkers.
 Unknown tasks fail; no string from an agent is interpreted as a shell command.
-\`just preflight\` runs the five commands, but its success is a **program
+`just preflight` runs the five commands, but its success is a **program
 metadata/control preflight**, not a Lean build or a proof of any theorem.
 
 ## Preferred Nushell interface
 
 Pin Nushell to version **0.117.0** for the pilot (CI pins the setup action
-to commit \`1b8faed9a8ff673c8ce0beae243e0b72d0787241\`). Use it for typed
+to commit `1b8faed9a8ff673c8ce0beae243e0b72d0787241`). Use it for typed
 exploration, filtering and inspection:
 
-\`\`\`nu
+```nu
 use research/nightfall/agent-operations/task-interface.nu *
 task-list | get tasks | select name scope
 task-run passport | get execution
 task-run compiler-lock --problem NIGHTFALL-PHASE --role auditor
-\`\`\`
+```
 
-\`task-run\` checks the external process's nonzero exit code via Nushell
-\`complete\`, parses JSON only after success, checks receipt schema and
+`task-run` checks the external process's nonzero exit code via Nushell
+`complete`, parses JSON only after success, checks receipt schema and
 certification flags, and refuses silent failure. It invokes **the same
-Python dispatcher** used by \`just\`.
+Python dispatcher** used by `just`.
 
-\`passport-preflight.nu\` is a separate non-authoritative structured
+`passport-preflight.nu` is a separate non-authoritative structured
 view of Proof Passport v2; always keep the existing Python passport validator.
 
 Nushell is preferred for interactive structured work, **optional** for
@@ -64,7 +64,7 @@ Lean remain valid where their respective checkers require them.
 ## Reproducible task receipt
 
 A task run emits exactly one machine-readable JSON object on stdout
-(\`nightfall.agent-task-receipt.v1\`). It contains:
+(`nightfall.agent-task-receipt.v1`). It contains:
 
 - task ID and fixed command array, problem ID and **claimed** agent role;
 - complete Git HEAD, dirty-worktree flag and SHA-256 anchor digests for the
@@ -83,14 +83,14 @@ when exact output replay matters.
 
 To preserve a result without overwriting existing evidence:
 
-\`\`\`sh
+```sh
 python3 scripts/nightfall_agent_tasks.py run passport \
   --problem NIGHTFALL-PHASE --role auditor \
   --receipt /tmp/nightfall-passport-receipt.json
 python3 scripts/nightfall_agent_tasks.py verify /tmp/nightfall-passport-receipt.json
-\`\`\`
+```
 
-\`verify\` validates the receipt's internal **structure** and consistency.
+`verify` validates the receipt's internal **structure** and consistency.
 It is not a cryptographic attestation, re-run, substantive verifier, or
 independent review. Do not label it a proof certificate.
 
@@ -98,7 +98,7 @@ independent review. Do not label it a proof certificate.
 
 | Question | Authoritative gate |
 | --- | --- |
-| Is a theorem kernel-checked? | Pinned Lean 4.36.0-rc2 source build, exact statement, \`#print axioms\`, strict Lean bridge receipt, independent semantic review |
+| Is a theorem kernel-checked? | Pinned Lean 4.36.0-rc2 source build, exact statement, `#print axioms`, strict Lean bridge receipt, independent semantic review |
 | Did a finite result replay exactly? | Frozen input and independent implementation with exact arithmetic/checker |
 | Is evidence provenance sound? | Git source/blob hashes, Proof Passport v2, archived output artifacts |
 | Is a research result original and significant? | Dated worldwide prior-art and independent specialist review |
@@ -106,14 +106,14 @@ independent review. Do not label it a proof certificate.
 
 Lean's existing per-theorem interface remains direct, not rewritten:
 
-\`\`\`sh
+```sh
 python3 scripts/lean_bridge.py PATH_TO_THEOREM.lean \
   --decl Fully.Qualified.theorem --strict \
   --contract PATH_TO_REVIEWED_CONTRACT.json
-\`\`\`
+```
 
 Use the repo's pinned toolchain setup and source-specific CI; never take a
-PASS from \`just compiler-lock\` or \`just lake-manifest\` as kernel replay.
+PASS from `just compiler-lock` or `just lake-manifest` as kernel replay.
 Existing exact checkers continue to be called from their original source;
 the dispatcher currently exposes their **contract self-tests**, not the
 substantive frozen-data replay of arbitrary submissions.
@@ -127,7 +127,7 @@ command contract, but **must not share their source-checker implementation**
 where independence is required. Aggregate exact evidence and disagreements
 in the corresponding proof passport. Never self-promote a PASS.
 
-CI: \`.github/workflows/nightfall-nushell-agent-pilot.yml\` pins \`just\`
+CI: `.github/workflows/nightfall-nushell-agent-pilot.yml` pins `just`
 and Nu, runs all task contracts, compares Nu and Python structured results,
 retains the original passport self-tests, and checks forged proof flags,
 forged PASS status, bad source identifiers and duplicate passport IDs.
