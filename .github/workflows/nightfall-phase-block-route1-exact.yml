@@ -28,5 +28,5 @@ jobs:
         run: |
           set -euo pipefail
           git rev-parse HEAD
-          sha256sum scripts/check_phase_block_route1_exact.py research/nightfall/structural_information/PHASE_BLOCK_ROUTE1_COMPILER_20261122.md
+          sha256sum scripts/check_phase_block_route1_exact.py research/nightfall/structural_information/PHASE_BLOCK_ROUTE1_KERNEL_CORE_20261122.md
           echo "FINITE INTEGER CODE + ZERO-ERROR ADAPTIVE QUERY LOWER BOUND. Not Lean or quantum operator CI."

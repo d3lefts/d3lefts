@@ -1,0 +1,30 @@
+name: NIGHTFALL T2 prior-art rank baseline exact audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/check_t2_rank_baseline_exact.py'
+      - 'research/nightfall/structural_information/T2_COMPLEX_HILBERT_PRIOR_ART_AND_RANK_BASELINE_20261122.md'
+      - '.github/workflows/nightfall-t2-priorart-rank-baseline.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-source-and-crossover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact integer rank and fair-baseline crossover audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 --version
+          sha256sum scripts/check_t2_rank_baseline_exact.py research/nightfall/structural_information/T2_COMPLEX_HILBERT_PRIOR_ART_AND_RANK_BASELINE_20261122.md
+          python3 -B scripts/check_t2_rank_baseline_exact.py | tee t2-priority-check.log
+          grep -q 'GF2_SPAN_PASS L=4 rows=81 rank=16' t2-priority-check.log
+          grep -q 'RANK_BASELINE_CROSSOVER_EXACT_PASS L=60' t2-priority-check.log
+          grep -q 'PROMOTION_GATE: paper conditional' t2-priority-check.log
+          echo 'T2_PRIORART_EXACT_BASELINE_PASS'

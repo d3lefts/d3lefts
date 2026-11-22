@@ -88,3 +88,10 @@ strip restriction, sign of μ, multiplicity, and the finite
 fiber equation independently (issue #1040). The RH-conditional
 lemma cannot be promoted to a claim that the entire analytic
 first-strip theorem is Lean-certified.
+
+
+## 22 November 2026 v3 — independently replayed conditional Lean scope
+
+The branch/head-specific [named Lean and independent kernel CI run 45062953520](https://github.com/d3lefts/d3lefts/actions/runs/45062953520) **PASSED** at exact source head `0fa7f2c703b144ec1f8a1addd9c7521e844fe5c6`. Its six named declarations include `real_dilation_unique`, `re_nat_dilation`, `scale_index_unique`, `rh_conditional_zeta_scale_unique`, `finite_fiber_sum`, and `finite_fiber_zero_iff`. Source blob: `c4893768b6a7984b74e75b46dc118b6dcfdf0e8c`. The action used pinned Lean and Mathlib, strict declaration/axiom checks with permitted `propext`, `Classical.choice`, and `Quot.sound`, plus a separate `leanchecker` replay. The exact source was merged to `main` by [PR #1113](https://github.com/d3lefts/d3lefts/pull/1113), merge commit `618cd40f3bac7942ac6d1602624595204dab3598`.
+
+**Status promotion limited to the explicitly RH-conditional algebraic-scale lemma and finite-sum lemmas: named Lean + kernel replay passed.** The `hRH` proposition is an explicit theorem argument; the imported hypotheses are *not* discharged. This does not elevate the paper-level analytic first-strip local continuation, squarefree residue-to-holomorphy equivalence, or natural boundary to Lean certification. Historical 67-record source register remains frozen, with this later Lean file recorded in pending source custody; that administrative classification must not override the separately verified named CI receipt. External novelty and independent human analytic review remain open.
