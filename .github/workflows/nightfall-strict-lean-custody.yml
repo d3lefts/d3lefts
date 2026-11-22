@@ -3,18 +3,22 @@ name: NIGHTFALL strict pending Lean source custody (no automatic certification)
 on:
   pull_request:
     paths:
+      - "research/nightfall/**/*.lean"
       - "docs/lean-pending-source-custody.json"
       - "docs/lean-certificate-provenance.json"
       - "scripts/test_lean_certificate_provenance.cjs"
       - "scripts/lean_certificate_registry.py"
+      - "scripts/test_lean_certificate_provenance.cjs"
       - ".github/workflows/nightfall-strict-lean-custody.yml"
   push:
     branches: [main]
     paths:
+      - "research/nightfall/**/*.lean"
       - "docs/lean-pending-source-custody.json"
       - "docs/lean-certificate-provenance.json"
       - "scripts/test_lean_certificate_provenance.cjs"
       - "scripts/lean_certificate_registry.py"
+      - "scripts/test_lean_certificate_provenance.cjs"
       - ".github/workflows/nightfall-strict-lean-custody.yml"
   workflow_dispatch:
 
