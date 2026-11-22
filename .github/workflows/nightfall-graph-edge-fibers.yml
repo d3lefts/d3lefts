@@ -1,0 +1,23 @@
+name: NIGHTFALL bounded-degree graph edge XOR fiber exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/GRAPH_EDGE_PARITY_FIBER_THEOREM_20261122.md'
+      - 'scripts/check_graph_edge_xor_fibers_exact.py'
+      - '.github/workflows/nightfall-graph-edge-fibers.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-forest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run two independent finite GF2 forest/fiber counts
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 -V
+          sha256sum scripts/check_graph_edge_xor_fibers_exact.py research/nightfall/structural_information/GRAPH_EDGE_PARITY_FIBER_THEOREM_20261122.md
+          python3 scripts/check_graph_edge_xor_fibers_exact.py
+          echo 'FINITE source checks only, NOT an all-graph Lean or quantum theorem certificate.'
