@@ -208,7 +208,7 @@ def bench(role: str, repeats: int, output: Path) -> None:
                     try:
                         receipt = parse_json(result["_stdout"])
                     except (ValueError, UnicodeDecodeError) as exc:
-                        raise RuntimeError(f"invalid JSON receipt for mode={mode}; stdout={result[\u0027_stdout\u0027][:200]!r}; stderr={result[\u0027_stderr\u0027][-200:]!r}") from exc
+                        raise RuntimeError(f"invalid JSON receipt for mode={mode}: {str(exc)}") from exc
                     audit_receipt(receipt, task, role, reference_sha[task],
                                   mode, source_commit)
                     if control_base is None and mode == "python-contract":
