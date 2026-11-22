@@ -40,8 +40,9 @@ theorem boundary_component_diffeomorphic_closed_interval
   obtain ⟨x, hx⟩ := hboundary
   rcases
       MathlibExt.Geometry.Manifold.OneDimensionalWanted.compact_connected_one_manifold_with_boundary_classification M
-    with ⟨e⟩ | ⟨e⟩
-  · have hpre : e ⁻¹' (ModelWithCorners.boundary (I := 𝓡 1) Circle) =
+    with hCircle | hInterval
+  · obtain ⟨e⟩ := hCircle
+    have hpre : e ⁻¹' (ModelWithCorners.boundary (I := 𝓡 1) Circle) =
         ModelWithCorners.boundary (I := 𝓡∂ 1) M := by
       exact e.preimage_boundary (by simp)
     have hx' : e x ∈ ModelWithCorners.boundary (I := 𝓡 1) Circle := by
@@ -53,7 +54,8 @@ theorem boundary_component_diffeomorphic_closed_interval
       ModelWithCorners.Boundaryless.boundary_eq_empty
     rw [hC] at hx'
     exact False.elim (Set.not_mem_empty _ hx')
-  · exact ⟨e⟩
+  · obtain ⟨e⟩ := hInterval
+    exact ⟨e⟩
 
 
 /-- Forget the smooth equivalence to obtain the same genuine topological
