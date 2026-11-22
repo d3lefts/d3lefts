@@ -38,3 +38,11 @@ No use of RH; no claim of constructing nontrivial rational-dilation zero collisi
 ## 22 November 2026 direct prior-art correction
 
 MathWorld, *Prime Zeta Function*, equations (10)–(11) and the following discussion, already explicitly treats the single-valued meromorphic P', its scaled-zeta-zero residues, addition of coincident residues, and removability when the total residue is zero: https://mathworld.wolfram.com/PrimeZetaFunction.html . The NIGHTFALL statement is therefore a **direct corollary for the shifted deformation**, not an original discovery of residue-cancellation theory. This is a positive correctness reference and a negative originality control; the exact shifted corollary's publication priority is not exhaustively settled.
+
+## Exact public-ledger identity (v1, 2026-11-22)
+
+**Claim:** For every λ=ρ/n from a nontrivial ζ zero, A⁺ has local germ s M(λ) log(s−(λ−1))+holomorphic; complete local removability is equivalent to the finite Möbius residue M(λ)=0.
+
+**Limit:** Not an independently certified or first-priority result. Does not prove an actual multi-member zero fiber, global all-layer continuation, or RH. Dated specialist prior-art audit open. The P' residue-cancellation mechanism is already public classical prior art, not original NIGHTFALL mathematics.
+
+**Source:** https://github.com/d3lefts/d3lefts/pull/1043
