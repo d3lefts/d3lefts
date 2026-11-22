@@ -2,8 +2,8 @@ import Mathlib
 
 /-! Unconditional planar 2-reading intensity collision via an IVT polynomial arc.
 No ProductSphereZero, topology oracle, or custom axiom. This scalar row model
-uses global continuity of the second-row selector; reachable-only continuity
-will require a separate exact-model bridge. -/
+assumes continuity of the second-row selector only on the actually
+attainable first-intensity range. No Tietze extension is required. -/
 
 namespace Nightfall.PlanarTwoRowsDirect
 noncomputable section
@@ -114,10 +114,10 @@ theorem plus_minus_distinct (u v : V2) (hu : u ≠ 0) (hv : v ≠ 0) :
         linarith
     exact hu hu0
 
-/-- Unconditional two-reading impossibility for a globally continuous
-history-selected planar squared-linear intensity row. -/
+/-- Unconditional two-reading impossibility for a second-row selector
+continuous only on the set of physically attainable first intensities. -/
 theorem two_readings_not_injective (a : V2) (b : ℝ → V2)
-    (hb : Continuous b) :
+    (hb : ContinuousOn b (Set.range (intensity a))) :
     ∃ x y : V2, protocol a b x = protocol a b y ∧
       x ≠ y ∧ x ≠ -y := by
   let u : V2 := kernel a
@@ -125,8 +125,9 @@ theorem two_readings_not_injective (a : V2) (b : ℝ → V2)
   have harg : Continuous (fun t : ℝ => intensity a (arc t)) := by
     dsimp [intensity, dot, arc]
     fun_prop
-  have hbcomp : Continuous (fun t : ℝ => b (intensity a (arc t))) :=
-    hb.comp harg
+  have hbcomp : Continuous (fun t : ℝ => b (intensity a (arc t))) := by
+    apply continuousOn_univ.mp
+    exact hb.comp harg.continuousOn (fun t _ => ⟨arc t, rfl⟩)
   have hg : Continuous g := by
     exact ((continuous_fst.comp hbcomp).mul
       (continuous_fst.comp arc_continuous)).add
