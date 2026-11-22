@@ -27,7 +27,7 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
-      - name: Compile the exact 182-module closure (vendored Turturean modules + NIGHTFALL) in dependency order
+      - name: Compile the exact 183-module closure (vendored Turturean modules + NIGHTFALL) in dependency order
         shell: bash
         run: |
           set -euo pipefail
@@ -63,6 +63,13 @@ jobs:
             --json-out lean-receipts/aa-product-v8/mixed-functional.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             lean-receipts/aa-product-v8/mixed-functional.json
+          python3 scripts/lean_bridge.py research/formalization_candidates/wright/WrightV8MixedWeightRemoval.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Wright.MixedWeightRemoval.mixed_third_moment_product \
+            --json-out lean-receipts/aa-product-v8/mixed-weight-removal.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/aa-product-v8/mixed-weight-removal.json
           python3 scripts/lean_bridge.py research/formalization_candidates/wright/WrightV8RowConditional.lean \
             --workspace /tmp/mathlib4 --strict --timeout 1800 \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
@@ -75,10 +82,12 @@ jobs:
             lean-receipts/aa-product-v8/row.json
           (cd /tmp/mathlib4 && lake env leanchecker -v WrightV8MedianMixed)
           (cd /tmp/mathlib4 && lake env leanchecker -v WrightV8MixedFunctional)
+          (cd /tmp/mathlib4 && lake env leanchecker -v WrightV8MixedWeightRemoval)
           (cd /tmp/mathlib4 && lake env leanchecker -v WrightV8RowConditional)
           sha256sum research/formalization_candidates/wright/WrightV8MedianMixed.lean \
                     research/formalization_candidates/wright/WrightV8RowConditional.lean \
                     research/formalization_candidates/wright/WrightV8MixedFunctional.lean \
+                    research/formalization_candidates/wright/WrightV8MixedWeightRemoval.lean \
             > lean-receipts/aa-product-v8/source-sha256.txt
           cp -r lean-receipts/aa-product-v8/. lean-receipts/aa-product/
       - name: Strict named-theorem and standard axiom audit
