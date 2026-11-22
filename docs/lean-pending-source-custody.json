@@ -3008,6 +3008,16 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/product_space/Route1AccessCoupling.lean",
+      "source_blob_sha": "1c586e361cb63290e8deabd2781867e3e2e931c5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only. Separate named Lean replay covers the classical transfer, with the operational quantum hybrid and paper separations outside its certificate."
+    },
+    {
       "path": "research/nightfall/formalization/product_space/Route1DegreeSourceBridge.lean",
       "source_blob_sha": "5502bc64b30d9d0e8472ca8eacd0b6b6b53649da",
       "classification": "unreviewed-source",
