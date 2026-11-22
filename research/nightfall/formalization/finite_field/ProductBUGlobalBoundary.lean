@@ -1,3 +1,4 @@
+import Mathlib.Geometry.Manifold.Instances.Icc
 import MathlibExt.Geometry.Manifold.OneDimensional
 import ProductBUIntervalStabilizer
 
@@ -53,7 +54,7 @@ theorem boundary_component_diffeomorphic_closed_interval
     have hC : ModelWithCorners.boundary (I := 𝓡 1) Circle = ∅ :=
       ModelWithCorners.Boundaryless.boundary_eq_empty
     rw [hC] at hx'
-    exact False.elim (Set.not_mem_empty _ hx')
+    simpa using hx'
   · obtain ⟨e⟩ := hInterval
     exact ⟨e⟩
 
