@@ -49,7 +49,9 @@ jobs:
           assert found <= {'propext','Classical.choice','Quot.sound'},found
           assert 'sorryAx' not in text
           source=Path('research/nightfall/formalization/finite_field/PlanarTwoRowsDirect.lean').read_text()
-          assert "theorem two_readings_not_injective (a : V2) (b : ℝ → V2)" in source\n          assert "(hb : ContinuousOn b (Set.range (intensity a)))" in source\n          assert "ProductSphereZero" not in source.split("theorem two_readings_not_injective",1)[1].split("#check",1)[0]
+          assert "theorem two_readings_not_injective (a : V2) (b : ℝ → V2)" in source
+          assert "(hb : ContinuousOn b (Set.range (intensity a)))" in source
+          assert "ProductSphereZero" not in source.split("theorem two_readings_not_injective",1)[1].split("#check",1)[0]
           print('PASS exact reachable-history planar two-row theorem; exact Lean theorem and axiom receipt',found)
           print('SCOPE: n=2 reachable-only continuity; all-dimensional ProductSphereZero still open.')
           PY
