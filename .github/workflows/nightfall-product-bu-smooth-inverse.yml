@@ -1,0 +1,58 @@
+name: NIGHTFALL C-infinity open local inverse scope (Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUSmoothInverse.lean'
+      - '.github/workflows/nightfall-product-bu-smooth-inverse.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smooth-inverse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Pinned source compile and ordinary axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-smooth-inverse
+          f=research/nightfall/formalization/finite_field/ProductBUSmoothInverse.lean
+          cp "$f" /tmp/mathlib4/ProductBUSmoothInverse.lean
+          (cd /tmp/mathlib4 && lake env lean ProductBUSmoothInverse.lean) 2>&1 | tee receipts/product-bu-smooth-inverse/Lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/product-bu-smooth-inverse/Lean.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/product-bu-smooth-inverse/Lean.log').read_text()
+          for suffix in ('inverse_contDiffOn_of_source_derivative_invertible',
+                         'eventually_derivative_invertible'):
+              name='Nightfall.ProductBUSmoothInverse.'+suffix
+              assert 'theorem '+name in s, ('MISSING_THEOREM',name)
+              m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m or "'"+name+"' does not depend on any axioms" in s,('MISSING_AXIOMS',name)
+              xs={x.strip() for x in m.group(1).split(',') if x.strip()} if m else set()
+              assert xs <= {'propext','Classical.choice','Quot.sound'},(name,xs)
+          assert 'sorryAx' not in s
+          print('PASS C-infinity local inverse on invertible derivative source')
+          print('NOT PROVED: product-sphere smooth global atlas or zero theorem')
+          PY
+      - name: Preserve source provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-smooth-inverse
+          git rev-parse HEAD > receipts/product-bu-smooth-inverse/commit.txt
+          cat lean-toolchain > receipts/product-bu-smooth-inverse/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUSmoothInverse.lean > receipts/product-bu-smooth-inverse/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-smooth-inverse-exact-source
+          path: receipts/product-bu-smooth-inverse
+          if-no-files-found: warn
+          retention-days: 90
