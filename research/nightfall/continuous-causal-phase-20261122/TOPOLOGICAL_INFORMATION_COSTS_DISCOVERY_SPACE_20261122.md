@@ -53,7 +53,7 @@ Then **the following statements are equivalent**:
 For any exact universally recovering real causal rank≤1 PSD protocol with \(m\le2n-2\) stages, at least one stage j must have a **nontrivial line bundle \(L_{P_j}\) on \(U_j=\{h\in H_{j-1}:\operatorname{tr}Q_j(h)>0\}\)**, equivalently a non-liftable normalized direction map. If all stages had trivial bundles, Theorem I would produce continuous signed rows with identical readings at every reachable history, contradicting the CCFH-based all-policy lower bound from #995/#1000. This is a *necessary*, NOT sufficient, criterion. Do not infer existence of a successful sub-\(2n-1\) protocol from the non-lift examples.
 
 **Special cases:**
-- If every \(H_{j-1}\) is simply connected and each Q_j is nonzero normalized, all row lifts exist and **2n−1** is necessary.
+- If every \(H_{j-1}\) is **contractible** (or locally path-connected and simply connected) and each Q_j is nonzero normalized, all row lifts exist and **2n−1** is necessary. Bare triviality of the fundamental group without covering-space hypotheses is not used.
 - If the normalized Q_j are given continuously on the full history orthants, all lift and **2n−1** is necessary.
 - If the first n actual row choices are chronologically independent along every history, their n-length attainable domain is exactly the orthant. Non-liftability for normalized projectors cannot first arise until the **(n+2)-nd** detector. The construction in PR #1047 §4d attains this onset (but intentionally fails recovery).
 
