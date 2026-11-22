@@ -96,11 +96,13 @@ theorem mixed_third_moment_product
   by_cases hAe : A.Nonempty
   swap
   · have hAe' : A = ∅ := Finset.not_nonempty_iff_eq_empty.mp hAe
-    simpa [hAe'] using hR
+    have hzero : upSet p f r = ∅ := hAe'
+    simpa [hzero] using hR
   by_cases hBe : B.Nonempty
   swap
   · have hBe' : B = ∅ := Finset.not_nonempty_iff_eq_empty.mp hBe
-    simpa [hBe'] using hR
+    have hzero : downSet p f r = ∅ := hBe'
+    simpa [hzero] using hR
   obtain ⟨x0, hx0⟩ := hAe
   obtain ⟨y0, hy0⟩ := hBe
   have hAx : ∀ x ∈ A, r < f x :=
@@ -190,7 +192,7 @@ theorem mixed_third_moment_product
       one_div_le_one_div_of_le hnormpos (hK x)
     have hq : (∑ j, a x j / upperMoment f r x)⁻¹ =
         upperMoment f r x / (∑ j, a x j) := by
-      rw [Finset.sum_div, inv_div]
+      rw [← Finset.sum_div, inv_div]
     rw [hq]
     calc
       prodMass p x * upperMoment f r x / K =
@@ -211,7 +213,7 @@ theorem mixed_third_moment_product
       one_div_le_one_div_of_le hnormpos (hK y)
     have hq : (∑ j, a y j / lowerMoment f r y)⁻¹ =
         lowerMoment f r y / (∑ j, a y j) := by
-      rw [Finset.sum_div, inv_div]
+      rw [← Finset.sum_div, inv_div]
     rw [hq]
     calc
       prodMass p y * lowerMoment f r y / K =
