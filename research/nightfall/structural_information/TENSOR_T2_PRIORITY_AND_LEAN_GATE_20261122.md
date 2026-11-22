@@ -56,3 +56,7 @@ Scope: public indexed scholarly results on tensor/Segre row families, product-te
 **Cheapest decisive next experiment:** independently audit the `r=4` Lovitz–Petrov-to-free-site inference and full mixed high-rank energy estimate. Expected outcomes: independently derived full proof, a counterexample, or a remaining named lemma. Preserve whichever occurs; do not promote automatically.
 
 **Status as of this ledger:** manuscript candidate; finite enumerations exact through L=4; inherited sharp row theorem Lean certified; new cancellation lemmas **Lean kernel-certified at the exact source**; **complete T=2 theorem not Lean-certified**, human-referee and worldwide-priority gates open.
+
+## Repository state reconciliation — parallel PR hygiene (2026-11-22)
+
+Parallel research administration **closed unmerged** the original [#1016](https://github.com/d3lefts/d3lefts/pull/1016) paper-candidate PR for hygiene, explicitly **without claiming its disproof**. Its source remains preserved on branch `research/tensor-t2-rank-free-primitive-20261122` at head `537411f2b1bab7e073f430f06d475325576dd99c`. The main open audit gate is [issue #1021](https://github.com/d3lefts/d3lefts/issues/1021). This [draft audit PR #1029](https://github.com/d3lefts/d3lefts/pull/1029) remains open and adds **independently source-pinned scoped** Lean/finite certificates, but does not supersede the full paper proof. Do not silently promote either to an unconditional theorem or close #1021 based solely on these scoped successes.
