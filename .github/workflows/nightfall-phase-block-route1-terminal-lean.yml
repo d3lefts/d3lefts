@@ -6,6 +6,8 @@ on:
       - 'research/nightfall/formalization/structural_information/PhaseBlockGrouping.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockActualCircuit.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockWellFormed.lean'
+      - 'research/nightfall/structural_information/check_phase_wyner_correlated.py'
+      - 'research/nightfall/structural_information/PHASE_WYNER_CORRELATED_SOURCE_20261122.md'
       - 'research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockTreeCompiler.lean'
       - 'research/nightfall/formalization/structural_information/PhaseBlockRoute1.lean'
@@ -133,3 +135,31 @@ jobs:
           name: phase-block-route1-terminal-${{ github.run_id }}
           path: receipts/phase-block-terminal
           retention-days: 90
+
+  correlated-rational:
+    name: Exact correlated-source rational controls (not Wyner optimization)
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify shared-latent law, 5/16 correlation and raw support rigidity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile research/nightfall/structural_information/check_phase_wyner_correlated.py
+          python3 research/nightfall/structural_information/check_phase_wyner_correlated.py | tee /tmp/correlated-phase.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/correlated-phase.json'))
+          assert d['schema']=='nightfall.correlated-phase-wyner-finite.v1'
+          assert d['pair_event_exact']=='5/16'
+          assert d['pair_event_independence_reference']=='1/4'
+          assert d['shared_latent_entropy_bits']==1
+          assert [r['B'] for r in d['finite_B_checks']]==[1,2,3]
+          assert all(r['minimum_raw_hamming']==2 for r in d['finite_B_checks'])
+          assert d['lean_terminal_certified'] is False
+          assert d['novelty_certified'] is False
+          print('PASS: exact rational finite correlation and independent-raw support checks')
+          PY
