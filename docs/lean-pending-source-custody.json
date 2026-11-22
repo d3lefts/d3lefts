@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 43,
+  "revision": 44,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "Source-custody revision 43: 497 pending exact Lean sources, 67 historical source-matched records untouched. Added reference t0 face and C-infinity open-inverse proof sources, both with separately successful scoped Lean receipts. Global ProductSphereZero and all-n terminal unproved.",
+  "scope": "Pending custody revision 44: 498 Lean source blobs tracked; 67 historical source certified rows immutable. New regular inverse restriction is not a ProductSphereZero certificate.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -436,6 +436,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact unreviewed source custody, new I01 subtype membership tactic repair. Pinned theorem CI must be replayed at this blob; no ProductSphereZero claim."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUInverseRestriction.lean",
+      "source_blob_sha": "c2614ac3372c2c91a72ec62bf435ea9cfc3867cf",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "New exact C-infinity smooth partial-homeomorphism inverse restriction to open derivative-invertibility locus, imported from #1096. Pinned Lean CI pending; no global product-sphere zero or manifold-boundary theorem."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
