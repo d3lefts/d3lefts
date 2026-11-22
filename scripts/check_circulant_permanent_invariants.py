@@ -121,6 +121,53 @@ def run_group_checks() -> None:
     print(f"C6 scope control: S-mask={mask}, permanent={value}, per mod 2 != |S| mod 2")
 
 
+
+def permanent_weighted(rows: list[list[int]]) -> int:
+    """Exact integer DP for a matrix of arbitrary (including negative) weights."""
+    n = len(rows)
+    dp = [0] * (1 << n)
+    dp[0] = 1
+    for mask in range(1, 1 << n):
+        i = mask.bit_count() - 1
+        active = mask
+        while active:
+            b = active & -active
+            j = b.bit_length() - 1
+            dp[mask] += rows[i][j] * dp[mask ^ b]
+            active ^= b
+    return dp[-1]
+
+
+def check_weighted_group(size: int, prime: int, multiply, weights: list[int]) -> None:
+    rows = [[0] * size for _ in range(size)]
+    for i in range(size):
+        for g, w in enumerate(weights):
+            rows[i][multiply(i, g)] = w
+    value = permanent_weighted(rows)
+    assert value % prime == sum(weights) % prime, (size, prime, weights, value)
+
+
+def run_weighted_checks() -> None:
+    from itertools import product
+    count = 0
+    for weights in product(range(-2, 3), repeat=3):
+        check_weighted_group(3, 3, lambda i, g: (i + g) % 3, list(weights))
+        count += 1
+    for weights in product(range(-2, 3), repeat=4):
+        check_weighted_group(4, 2, lambda i, g: (i + g) % 4, list(weights))
+        count += 1
+    for seed in range(24):
+        weights = [((seed + 1) * (i + 2) % 7) - 3 for i in range(8)]
+        check_weighted_group(8, 2, dihedral_multiply, weights)
+        count += 1
+    for seed in range(24):
+        weights = [((seed + 2) * (i + 3) % 11) - 5 for i in range(9)]
+        check_weighted_group(9, 3, lambda i, g: (i + g) % 9, weights)
+        count += 1
+    print(f"Weighted Cayley congruence: {count} exact integer matrices PASS (C3, C4, C9 and D8)")
+
+
 if __name__ == '__main__':
     run_checks()
     run_group_checks()
+    run_weighted_checks()
