@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 43,
+  "revision": 44,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "Source-custody revision 43: 497 pending exact Lean sources, 67 historical source-matched records untouched. Added reference t0 face and C-infinity open-inverse proof sources, both with separately successful scoped Lean receipts. Global ProductSphereZero and all-n terminal unproved.",
+  "scope": "Scoped tensor-T2 integration from current main: 497 earlier pending source custody entries preserved; 12 new exact-blob Lean modules added; 67 frozen historical source-certified records unmodified. Quantum simulation and published source splitting NOT Lean-certified.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3786,6 +3786,126 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorCircuitSupportBudget.lean",
+      "source_blob_sha": "ad9a87f31f57b235f46fdbba6d5b3149f3c1dcae",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorCircuitSupportBudget); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorCubicFreeSiteBudget.lean",
+      "source_blob_sha": "8c7bfe0dbbc76a63cb5ec77b70ae903e137f0bf9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorCubicFreeSiteBudget); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorFixedRank2Local.lean",
+      "source_blob_sha": "03293ab2c3bd5157f2aebb90eb2b0257581e7238",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorFixedRank2Local); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorMinimalZeroCircuit.lean",
+      "source_blob_sha": "da2590f72add9146e0f88136fb600a8f2d92ff98",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorMinimalZeroCircuit); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorPairFibersLocal.lean",
+      "source_blob_sha": "78c5bcf1004ff8c20fd71507f5d54b7a55622d0a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorPairFibersLocal); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorPureFibersL3.lean",
+      "source_blob_sha": "a95d366ec353aae9a1297df387f5052848be31ad",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorPureFibersL3); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorSixSiteCircuit.lean",
+      "source_blob_sha": "0b56015d5d99ef22a63a3f03c066c9eb3a738958",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorSixSiteCircuit); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorSymmetricDifferenceXor.lean",
+      "source_blob_sha": "e96886569955d646e2cdea35dc75c32253c803f6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorSymmetricDifferenceXor); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorT2Cancellation.lean",
+      "source_blob_sha": "ccdf378c38a06f51c7158f4138370dbc55fce778",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorT2Cancellation); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorT2RepeatMobius.lean",
+      "source_blob_sha": "0bf2b6c0177405d74650c5448fe237755b9f040c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorT2RepeatMobius); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorThreeFactorRankCover.lean",
+      "source_blob_sha": "8a8d40e038860ba028bb58c46b0237619fe9afb8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorThreeFactorRankCover); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/TensorZeroCircuitDecomposition.lean",
+      "source_blob_sha": "2fba680439f8f642f6056eac14612bbfa18e8d9d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorZeroCircuitDecomposition); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
       "path": "research/nightfall/formalization/swansea_v5/SwanseaV5UnionConvolution.lean",
