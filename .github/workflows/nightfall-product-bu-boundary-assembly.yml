@@ -1,0 +1,70 @@
+name: NIGHTFALL product BU global interval-endpoint boundary assembly (Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUBoundaryAssembly.lean'
+      - '.github/workflows/nightfall-product-bu-boundary-assembly.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bu-boundary-assembly-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  boundary-assembly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact-source proof dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-boundary-assembly
+          for M in ProductBUIntervalStabilizer ProductBUComponentOrbit ProductBUBoundaryAssembly; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-boundary-assembly/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-boundary-assembly/$M.log"
+          done
+      - name: Named theorem axiom and scope gate
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/bu-boundary-assembly/ProductBUBoundaryAssembly.log").read_text()
+          for suffix in ("interval_opposite_endpoints_distinct","no_free_four_orbit_when_component_endpoints_are_boundary"):
+              name="Nightfall.ProductBUBoundaryAssembly."+suffix
+              assert name in s, ("MISSING_NAMED_THEOREM",name)
+              m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              if m:
+                  a={v.strip() for v in m.group(1).split(",") if v.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in s
+                  a=set()
+              assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+              print("PASS",name,sorted(a))
+          assert "sorryAx" not in s
+          src=Path("research/nightfall/formalization/finite_field/ProductBUBoundaryAssembly.lean").read_text()
+          assert "theorem no_free_four_orbit_when_component_endpoints_are_boundary" in src
+          print("SCOPE: interval component + authentic boundary assumptions; actual global manifold remains to be formalized")
+          PY
+      - name: Preserve source hashes and toolchain receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/bu-boundary-assembly
+          git rev-parse HEAD > receipts/bu-boundary-assembly/HEAD.txt
+          cat lean-toolchain > receipts/bu-boundary-assembly/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBU{IntervalStabilizer,ComponentOrbit,BoundaryAssembly}.lean > receipts/bu-boundary-assembly/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-boundary-assembly-lean-receipt
+          path: receipts/bu-boundary-assembly
+          retention-days: 90
