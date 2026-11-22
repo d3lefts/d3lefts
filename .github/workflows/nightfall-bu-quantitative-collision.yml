@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - "research/nightfall/formalization/finite_field/ProductBUQuantitativeCollision.lean"
+      - "scripts/check_phase_causal_scaling_exact.py"
       - "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean"
       - "research/nightfall/formalization/finite_field/ProductSphereObstruction.lean"
       - "research/nightfall/formalization/finite_field/GenuinePrefixPhase.lean"
@@ -19,6 +20,8 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
+      - name: Replay exact rational scaling and antipodal-risk checks
+        run: python3 scripts/check_phase_causal_scaling_exact.py
       - name: Build exact original-source dependency closure in topological order
         shell: bash
         run: |
