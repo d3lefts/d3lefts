@@ -78,6 +78,60 @@ theorem product_weighted_perturbation_surjective (k : ℕ)
   obtain ⟨B,hB⟩ := weighted_perturbation_surjective k v hv t ht ht1 yV
   exact ⟨A,B,hA,hB⟩
 
+
+/-- An explicit radial direction solves an arbitrary tangent equation
+for the unit-sphere norm constraint; this is the second part of the
+augmented Euclidean parametric-Sard surjectivity check. -/
+def radialDirection (k : ℕ) (u : Fin (k + 1) → ℝ) (r : ℝ) :
+    Fin (k + 1) → ℝ := fun j => (r / 2) * u j
+
+theorem radial_direction_right_inverse (k : ℕ)
+    (u : Fin (k + 1) → ℝ) (hu : UnitVec (k + 1) u) (r : ℝ) :
+    2 * mixedDot (k + 1) u (radialDirection k u r) = r := by
+  have hnorm : (∑ j : Fin (k + 1), (u j) ^ 2) = 1 := hu
+  unfold mixedDot radialDirection
+  calc
+    2 * (∑ j : Fin (k + 1), u j * (r / 2 * u j)) =
+        2 * ((r / 2) * (∑ j : Fin (k + 1), u j ^ 2)) := by
+          congr 1
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro j hj
+          ring
+    _ = r := by rw [hnorm]; ring
+
+/-- Full algebraic right inverse of the combined norm constraints and
+pure-character perturbation blocks. Any *already existing* derivative
+contributions in the target can be cancelled by the independent A/B
+parameter directions. This is a finite-dimensional algebra theorem
+only, not a Lean proof of the differential or parametric Sard step. -/
+theorem augmented_constraint_parameter_surjective (k : ℕ)
+    (u v : Fin (k + 1) → ℝ)
+    (hu : UnitVec (k + 1) u) (hv : UnitVec (k + 1) v)
+    (t : ℝ) (ht : 0 < t) (ht1 : t < 1)
+    (rU rV : ℝ)
+    (baseU baseV targetU targetV : Fin k → ℝ) :
+    ∃ du dv : Fin (k + 1) → ℝ, ∃ A B : Param k,
+      2 * mixedDot (k + 1) u du = rU ∧
+      2 * mixedDot (k + 1) v dv = rV ∧
+      (∀ i : Fin k, baseU i + t * (1 - t) * applyParam k A u i = targetU i) ∧
+      (∀ i : Fin k, baseV i + t * (1 - t) * applyParam k B v i = targetV i) := by
+  obtain ⟨A,hA⟩ := weighted_perturbation_surjective k u hu t ht ht1
+    (fun i => targetU i - baseU i)
+  obtain ⟨B,hB⟩ := weighted_perturbation_surjective k v hv t ht ht1
+    (fun i => targetV i - baseV i)
+  refine ⟨radialDirection k u rU, radialDirection k v rV,
+    A, B, radial_direction_right_inverse k u hu rU,
+    radial_direction_right_inverse k v hv rV, ?_, ?_⟩
+  · intro i
+    have hi := hA i
+    linarith
+  · intro i
+    have hi := hB i
+    linarith
+
+#print axioms radial_direction_right_inverse
+#print axioms augmented_constraint_parameter_surjective
 #print axioms applyParam_rankOne_unit
 #print axioms weighted_perturbation_surjective
 #print axioms product_weighted_perturbation_surjective
