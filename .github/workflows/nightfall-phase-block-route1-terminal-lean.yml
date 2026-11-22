@@ -42,7 +42,8 @@ jobs:
           mkdir -p receipts/phase-block-terminal
           for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
                    Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
-                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation; do
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
+                   Route1WynerSimulation Route1WynerGeneral; do
             src="research/nightfall/formalization/product_space/$M.lean"
             ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -100,7 +101,8 @@ jobs:
           assert 'theorem Nightfall.PhaseBlockActualCircuit.actual_circuit_route1_simulation' in actual
           wf=Path('receipts/phase-block-terminal/PhaseBlockWellFormed.log').read_text()
           for suffix in ('wellFormed_born_on_phase_code',
-                         'normalized_phase_block_route1_simulation'):
+                         'normalized_phase_block_route1_simulation',
+                         'normalized_wyner_phase_block_route1_simulation'):
               named='Nightfall.PhaseBlockWellFormed.'+suffix
               mx=re.search(r"'" + re.escape(named) + r"' depends on axioms:\s*\[([^\]]*)\]",wf,re.S)
               if mx:
@@ -112,7 +114,7 @@ jobs:
               print(named,sorted(axs))
           assert 'sorryAx' not in wf
           assert 'theorem Nightfall.PhaseBlockWellFormed.normalized_phase_block_route1_simulation' in wf
-          print('PASS: physical WellFormed discharges bounded Born premise, same 3*n raw cost.')
+          print('PASS: WellFormed discharges Born premise; full correlated hidden-law Wyner charge, same 3*n raw cost.')
           print('PASS: genuine Route1 scalar simulation terminal with 3 raw sensor reads per queried block.')
           print('OPEN: arbitrary circuit syntax to path expansion, PSD/effect [0,1] source predicate, raw Wyner entropy Lean, independent priority and review.')
           PY
