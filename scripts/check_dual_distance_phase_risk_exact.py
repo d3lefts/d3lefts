@@ -123,11 +123,34 @@ def check_cycle_risk():
     return risk(unif), risk(code)
 
 
+def check_independent_correlated_noise():
+    """A correlated exogenous mask preserves all short uniform marginals."""
+    edges = [(0, 1), (1, 2), (2, 3), (3, 4), (4, 0)]
+    source = {sum(((bits[u] ^ bits[v]) << i) for i, (u, v) in enumerate(edges))
+              for bits in product((0, 1), repeat=5)}
+    assert len(source) == 16
+    masks = ((0, Fraction(1, 3)), (0b10110, Fraction(2, 3)))
+    for k in range(5):
+        for idx in combinations(range(5), k):
+            counts = Counter()
+            for x in source:
+                for noise, probability in masks:
+                    counts[project(x ^ noise, idx)] += probability / len(source)
+            assert len(counts) == 1 << k
+            assert set(counts.values()) == {Fraction(1, 1 << k)}
+    # Illegal transfer when noise depends on the hidden source: N=X -> Y=0.
+    dependent_observations = {x ^ x for x in source}
+    assert dependent_observations == {0}
+    assert {project(y, (0,)) for y in dependent_observations} != {(0,), (1,)}
+
+
 if __name__ == '__main__':
     na = check_affine_codes()
     ng = check_graphs()
     before, after = check_cycle_risk()
+    check_independent_correlated_noise()
     assert ng == 1098
     print(f'PASS: {na} affine-code cosets (m=1..4), {ng} simple graphs (n=2..5)')
     print(f'PASS: shortest dual/cycle negative controls; C4 MSE product={before}, cut={after}')
+    print('PASS: arbitrary-correlated exogenous noise fixture; dependent-noise falsifier')
     print('SCOPE: exact finite checks only; not analytic or Lean certification')
