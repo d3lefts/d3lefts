@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 45,
+  "revision": 46,
   "as_of": "2026-11-22 UTC",
   "source_commit": "618cd40f3bac7942ac6d1602624595204dab3598",
-  "scope": "v45: 511 pending exact-blob Lean sources on main-derived quantitative branch. Newly registered two #1111 conditional-risk modules without certification promotion. Frozen historical 67 records unchanged.",
+  "scope": "v46: 512 pending exact-blob source records. Also reconciles #1113 conditional prime-zeta module missing from main source custody; separate passing Lean run 45062953520 is NOT a provenance auto-promotion. Exact #1111 quantitative risk modules remain pending kernel CI.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -2446,6 +2446,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+    },
+    {
+      "path": "research/nightfall/formalization/prime_zeta/RHScaleSeparation.lean",
+      "source_blob_sha": "c4893768b6a7984b74e75b46dc118b6dcfdf0e8c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "New-to-main source merged in #1113 with separate passing exact-head named Lean kernel/leanchecker run 45062953520. This historical 67-record register does not auto-promote later proofs; public theorem is RH-conditional only."
     },
     {
       "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
