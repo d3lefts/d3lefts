@@ -7,7 +7,7 @@ Seed and all loops fixed. Author-side checks, not an independent human referee.
 """
 from fractions import Fraction as F
 from itertools import combinations, permutations, product
-from math import asin, factorial, log, pi, sqrt
+from math import asin, factorial, log, pi, sqrt, prod
 from random import Random
 
 SEED = 20261121
@@ -82,7 +82,7 @@ for m in range(1, 5):
             # Parseval: independently compute all 2^m Walsh coefficients.
             coeffs = []
             for mask in range(M):
-                z = sum(cm[x] * product(v[x][i] for i in range(m)
+                z = sum(cm[x] * prod(v[x][i] for i in range(m)
                                       if (mask >> i) & 1)
                         for x in range(M)) / M
                 coeffs.append(z)
