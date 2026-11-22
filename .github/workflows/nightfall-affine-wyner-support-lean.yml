@@ -38,7 +38,7 @@ jobs:
           from pathlib import Path
           import re
           s=Path('receipts/affine-wyner/lean.log').read_text()
-          for name in ('axis_mem_of_codewords_differ','nonfree_coordinate_fixed','rectangular_support_nonfree_singleton'):
+          for name in ('axis_mem_of_codewords_differ','nonfree_coordinate_fixed','rectangular_support_nonfree_singleton','supported_product_nonfree_dirac'):
               full='Nightfall.AffineWyner.'+name
               match=re.search(r"'"+re.escape(full)+r"' depends on axioms:\s*\[([^\]]*)\]",s)
               if match:
