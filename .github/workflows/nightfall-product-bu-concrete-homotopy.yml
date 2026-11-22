@@ -31,7 +31,7 @@ jobs:
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-concrete-homotopy/$M.log"
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-concrete-homotopy/$M.log"
           done
-      - name: Audit 12 named terminal theorems and ordinary Lean axioms
+      - name: Audit 14 named terminal theorems and ordinary Lean axioms
         shell: bash
         run: |
           set -euo pipefail
@@ -42,7 +42,7 @@ jobs:
           names=['H_U_zero','H_V_zero','H_U_one','H_V_one',
              'H_U_flip_left','H_U_flip_right','H_V_flip_left','H_V_flip_right',
              'normDefect_zero_iff','normDefect_neg',
-             'H_U_contDiff','H_V_contDiff']
+             'H_U_contDiff','H_V_contDiff','H_U_joint_contDiff','H_V_joint_contDiff']
           for suffix in names:
             name='Nightfall.ProductBUConcreteHomotopy.'+suffix
             assert 'theorem '+name in s,("MISSING_TERMINAL",name)
