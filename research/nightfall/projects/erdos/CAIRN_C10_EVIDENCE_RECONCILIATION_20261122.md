@@ -4,6 +4,21 @@
 **Research:** NIGHTFALL / PHASESHIFT; research lead Devin J. Wright  
 **Decision:** The public-source packaging objection has an existing GitHub-release remedy, but **C-10 remains disputed and externally unreproduced on Cairn** until its claim record is updated and a non-author reviewer actually checks the numeric witness. This document does not promote theorem, originality, or leaderboard status.
 
+> **Registry supersession (22 November 2026, merged PR #993):**
+> C-10's original public October 29 witness with SHA-256
+> a574c280f8839503c90076507a27f4c819455fb2512fae6a43b6a17f6a784b8e
+> still proves its own exact upper bound and should **not be rewritten**.
+> A *separate, stronger* archived October 22 PhaseShift V3 witness was recovered:
+> \(\mu\le0.38085637011758942610704804175087023177\ldots\),
+> SHA-256 46ba45724bb7ff98f6b28b4b7ef3bcf2390f747db8ca290ae0f2f0eaba63c59c.
+> Its hash-pinned reproducibility package and conditional eight-row lower update
+> are now [merged on main](recomputed_20261122/README.md) in
+> [PR #993](https://github.com/d3lefts/d3lefts/pull/993).
+> References below to the "strongest located" C-10/VI upper mean the strongest
+> **of that frozen public claim lineage only**, not the strongest NIGHTFALL
+> construction recovered by November 22. The Cairn platform claim remains
+> unchanged until independently edited/reviewed.
+
 ## Scope of the claim worth testing
 
 The proposed mathematical statement is the explicit **upper bound only**:
