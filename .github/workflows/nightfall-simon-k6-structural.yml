@@ -1,0 +1,32 @@
+name: NIGHTFALL Simon k6 structural audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/simon_k6_affine_structural_audit.py'
+      - 'research/nightfall/structural_information/SIMON_FIXED_DEGREE_THEOREM_PROOF_AUDIT_20261122.md'
+      - 'research/nightfall/structural_information/SIMON_GLOBAL_PRIORITY_RECONCILIATION_20261122.md'
+      - '.github/workflows/nightfall-simon-k6-structural.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  orbit-structure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent exact affine orbit and stabilizer checker
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/simon_k6_affine_structural_audit.py
+          python scripts/simon_k6_affine_structural_audit.py
+      - name: Source-scoped verification receipt
+        run: |
+          git rev-parse HEAD
+          sha256sum scripts/simon_k6_affine_structural_audit.py research/nightfall/structural_information/SIMON_FIXED_DEGREE_THEOREM_PROOF_AUDIT_20261122.md research/nightfall/structural_information/SIMON_GLOBAL_PRIORITY_RECONCILIATION_20261122.md
+          echo 'Finite k=6 orbit combinatorics only. No universal-k or Lean theorem replay. No external priority certification.'
