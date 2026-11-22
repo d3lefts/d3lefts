@@ -40,6 +40,13 @@ jobs:
           cp research/nightfall/pr1000-phase-retrieval-robustness/NoisyCausalCollision.lean /tmp/mathlib4/NoisyCausalCollision.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/NoisyCausalCollision.olean NoisyCausalCollision.lean) 2>&1 | tee receipts/pr1001-collision/lean.log
           ! grep -E '(^|:)error:|declaration uses .sorry' receipts/pr1001-collision/lean.log
+      - name: Compile general bounded-response erasure operator
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/pr1000-phase-retrieval-robustness/EnvelopeErasure.lean /tmp/mathlib4/EnvelopeErasure.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/EnvelopeErasure.olean EnvelopeErasure.lean) 2>&1 | tee receipts/pr1001-collision/envelope.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/pr1001-collision/envelope.log
       - name: Exact theorem and axiom report
         shell: bash
         run: |
@@ -47,7 +54,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          s=Path("receipts/pr1001-collision/lean.log").read_text()
+          s=Path("receipts/pr1001-collision/lean.log").read_text()+Path("receipts/pr1001-collision/envelope.log").read_text()
           names=["Nightfall.CausalNoise.decoder_noise_floor",
                  "Nightfall.CausalNoise.transcript_cancelled",
                  "Nightfall.CausalNoise.cancellingNoise_bound",
@@ -55,7 +62,10 @@ jobs:
                  "Nightfall.CausalNoise.ball_erasure",
                  "Nightfall.CausalNoise.transcript_zero_at_level",
                  "Nightfall.CausalNoise.transcript_level_noise",
-                 "Nightfall.CausalNoise.levelNoise_bound"]
+                 "Nightfall.CausalNoise.levelNoise_bound",
+                 "Nightfall.EnvelopeErasure.envelope_erasure",
+                 "Nightfall.EnvelopeErasure.transcript_erased",
+                 "Nightfall.EnvelopeErasure.erasingNoise_bound"]
           for n in names:
               m=re.search(r"'" + re.escape(n) + r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
               assert m,(n,"missing axiom receipt")
@@ -63,7 +73,7 @@ jobs:
               assert axioms <= {"propext","Classical.choice","Quot.sound"},(n,axioms)
           assert "sorryAx" not in s
           assert "theorem decoder_noise_floor" in s or "decoder_noise_floor" in s
-          print("PASS: eight theorem axiom reports; only ordinary axioms")
+          print("PASS: eleven theorem axiom reports; only ordinary axioms")
           PY
       - name: Preserve exact-head receipts even on failure
         if: always()
@@ -72,7 +82,7 @@ jobs:
           mkdir -p receipts/pr1001-collision
           git rev-parse HEAD > receipts/pr1001-collision/commit.txt
           cat lean-toolchain > receipts/pr1001-collision/toolchain.txt
-          sha256sum research/nightfall/pr1000-phase-retrieval-robustness/NoisyCausalCollision.lean research/nightfall/pr1000-phase-retrieval-robustness/check_noisy_collision_exact.py research/nightfall/pr1000-phase-retrieval-robustness/check_ball_erasure_exact.py > receipts/pr1001-collision/SHA256SUMS
+          sha256sum research/nightfall/pr1000-phase-retrieval-robustness/NoisyCausalCollision.lean research/nightfall/pr1000-phase-retrieval-robustness/check_noisy_collision_exact.py research/nightfall/pr1000-phase-retrieval-robustness/check_ball_erasure_exact.py research/nightfall/pr1000-phase-retrieval-robustness/EnvelopeErasure.lean > receipts/pr1001-collision/SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
