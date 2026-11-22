@@ -21,7 +21,7 @@ The remaining *geometric* obligations are precisely
 This does not assert unconditional ProductSphereZero or introduce an axiom.
 -/
 
-open scoped Manifold Topology
+open scoped Manifold Topology ContDiff
 open Manifold
 
 namespace Nightfall.ProductBUAxisBoundaryTerminal
