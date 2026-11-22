@@ -1,0 +1,27 @@
+name: NIGHTFALL continuous-causal phase algebra sanity (NOT proof certification)
+
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/continuous-causal-phase-20261122/**"
+      - ".github/workflows/nightfall-continuous-causal-phase-sanity.yml"
+  push:
+    paths:
+      - "research/nightfall/continuous-causal-phase-20261122/**"
+      - ".github/workflows/nightfall-continuous-causal-phase-sanity.yml"
+
+jobs:
+  exact-parity-replay:
+    name: 120 exact rational parity tests (not topology)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Python syntax compilation
+        run: |
+          python -m py_compile research/nightfall/continuous-causal-phase-20261122/verify_parity_exact.py
+          python -m py_compile research/nightfall/continuous-causal-phase-20261122/phase_collision_probe.py
+      - name: Exact parity replay
+        run: python research/nightfall/continuous-causal-phase-20261122/verify_parity_exact.py
