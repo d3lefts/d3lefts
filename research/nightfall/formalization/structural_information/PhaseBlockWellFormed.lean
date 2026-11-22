@@ -22,6 +22,7 @@ must independently pass its pinned kernel/source audit.
 namespace Nightfall.PhaseBlockWellFormed
 
 open Finset
+open Nightfall.ProductSpace.RowBound
 open Nightfall.ProductSpace.Simulation
 open Nightfall.ProductSpace.Mixture
 open Nightfall.ProductSpace.QuantumCircuitSimulation
