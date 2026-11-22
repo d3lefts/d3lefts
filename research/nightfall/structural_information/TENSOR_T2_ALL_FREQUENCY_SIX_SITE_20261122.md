@@ -69,3 +69,28 @@ The tail lemma above is still a *substantive independent proof obligation*: espe
 4. If the O(L^6) bridge survives independent review, isolate a complete kernel theorem with explicit query count. If it fails, preserve the counterexample and demote. Do not merge to the main research registry or announce a competitive record on finite checks.
 
 Mechanism graph: correlated phase-oracle → primitive XOR supports → circuit decomposition → LP active-mode control → O(L^6) all-frequency cardinality → frame-energy Fourier tail → nonuniform original-row classical estimator → query certificate. Bound is sufficient, not known sharp; author-side proof only.
+
+
+## v2: all fixed-order primitive frequencies, without relying on T1 sharp pair bounds
+
+**General paper theorem (published tensor-circuit support imported):** For each k≥1, z≠0, define Q_k(z) as ordered k-tuples in (R_L∪{0})^k whose distinct nonzero entries have XOR z and form a primitive (zero-subset-free) family. Then
+
+    |Q_k(z)| ≤ B_{k,L}
+       := (1 + k*3^(2k-2))^k * sum_{j=0}^{min(2k-2,L)} binom(L,j)
+        = O_k(L^(2k-2)).
+
+**Proof:** Repeat the preceding symmetric-difference decomposition with both reference and alternative primitive subsets of size at most k. The disjoint circuit union has |U|≤|C|+|C'|−2≤2k−2. Each alternative nonzero tuple entry agrees outside U with some of ≤k reference rows. For given |U|=j the number of candidate labels is ≤1+k3^j, counting label zero. Overcount ordered k-tuples and sum over U. For k=1, two different one-row representations of z cannot occur and the formula holds trivially. For L=1 the circuit statement follows directly from the three nonzero local vectors; for L≥2 use published Lovitz–Petrov Corollary 21.
+
+This gives **two independent quantities**, using the SAME published circuit theorem:
+- primitive four-lift bound B_{4,L}=(1+4*3^6)^4 Σ_{j≤6} C(L,j) = O(L^6);
+- all nonzero ordered pair-XOR multiplicities (no primitivity issue for nonzero sums) M_L ≤ B_{2,L}=(1+2*3²)^2 Σ_{j≤2} C(L,j) = O(L²).
+
+The earlier claimed exact M_L=2L+2 is a much sharper optional improvement, separately documented in PR #1029; **it is no longer a dependency** for a polynomial T2 query theorem. Substituting M_L≤B_{2,L} in the Section 2 Fourier estimate gives the fully self-contained (relative to published LP plus the still-to-be formally audited operator-energy estimates) sufficient query bound
+
+    Q_class ≤ min {3^L,
+      ceil[2(2 sqrt(B_{4,L})+145 sqrt(B_{2,L}))²/(ε²δ)]}
+      = O(L^6/(ε²δ)).
+
+The value of the general k theorem is a reusable *finite-frequency algebraic mechanism*. At higher quantum query orders T, k=2T yields a primitive Fourier-frequency count O_T(L^(4T-2)), but **does not** by itself control repeated-label interference or give a T-query simulator. Do not claim such an extension before a separate quantum contraction theorem.
+
+Prior-art boundaries: Lovitz–Petrov's 2023 circuit support bound and Wang–Yuan's 2026 effective-active-mode exchange result are inherited. Our possible contribution is the explicit all-nonzero-frequency binary-label count and correlated-oracle simulation application, subject to dated specialist search and human review. Full Lean theorem remains open.
