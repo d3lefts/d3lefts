@@ -1,0 +1,69 @@
+name: NIGHTFALL exact scaled genuine-prefix phase collision (topology explicit)
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/finite_field/ProductBUScaledPrefix.lean"
+      - ".github/workflows/nightfall-bu-scaled-prefix.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scaled-prefix-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Build exact product-sphere causal and risk closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-scaled-prefix
+          for module in ProductSphereObstruction GenuinePrefixPhase ProductSphereCausalComposition ProductBUQuantitativeCollision ProductBUDecoderRiskFloor ProductBUMixedRadius ProductBUScaledPrefix; do
+            f="research/nightfall/formalization/finite_field/${module}.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$f"
+            cp "$f" "/tmp/mathlib4/${module}.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/${module}.olean" "${module}.lean") 2>&1 | tee "receipts/bu-scaled-prefix/${module}.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-scaled-prefix/${module}.log"
+            sha256sum "$f" >> receipts/bu-scaled-prefix/sources.sha256
+          done
+      - name: Assert named signatures and only standard axioms
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path("receipts/bu-scaled-prefix/ProductBUScaledPrefix.log").read_text()
+          for name in (
+              "continuous_scaledTestU",
+              "continuous_scaledTestV",
+              "scaled_causal_collision_of_product_sphere_zero",
+              "sqNorm_smul",
+              "unit_sqNorm_add_le_four",
+              "unit_sqNorm_sub_le_four",
+              "ball_collision_of_product_sphere_zero",
+          ):
+              full="Nightfall.ProductBUScaledPrefix."+name
+              m=re.search(r"'"+re.escape(full)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m:
+                  axioms={x.strip() for x in m.group(1).split(",") if x.strip()}
+                  assert axioms <= {"propext","Classical.choice","Quot.sound"},(full,axioms)
+              else:
+                  assert f"'{full}' does not depend on any axioms" in log,full
+              print("PASS",full)
+          assert "sorryAx" not in log
+          print("TOPOLOGY STATUS: ProductSphereZero is still an explicit premise.")
+          PY
+      - name: Freeze exact head and compiler
+        if: always()
+        run: |
+          mkdir -p receipts/bu-scaled-prefix
+          git rev-parse HEAD > receipts/bu-scaled-prefix/repo-head.txt
+          cat lean-toolchain > receipts/bu-scaled-prefix/toolchain.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-scaled-prefix-receipt
+          path: receipts/bu-scaled-prefix
+          retention-days: 90
