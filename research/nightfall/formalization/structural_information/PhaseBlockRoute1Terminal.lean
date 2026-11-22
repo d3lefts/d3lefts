@@ -31,7 +31,7 @@ open Nightfall.Route1Polylog
 open Nightfall.PhaseBlockQuantumDegree
 open Nightfall.PhaseBlockTreeCompiler
 
-variable {B Path : Type*} [Fintype B] [DecidableEq B]
+variable {B Path : Type} [Fintype B] [DecidableEq B]
 variable [Fintype Path] [DecidableEq Path]
 
 /-- The supplied independent-block distribution. No latent mixing cost:
