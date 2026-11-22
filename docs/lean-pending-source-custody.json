@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 42,
+  "revision": 43,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v42: rebase source-identical interval/fiber orbit composition onto current main, retaining all prior records and withholding global theorem promotion.",
+  "scope": "v43: 499 pending exact Lean sources, historical 67 verified records unchanged. Added four source-preserved global boundary/connected component/actual zero-fiber assembly modules. These remain UNREVIEWED pending named exact-head Lean and axiom CI, global C∞ fiber structure remains an explicit premise, no ProductSphereZero certification.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -398,6 +398,26 @@
       "receipt_scope": "Source-integrated exact Lean module from #1070, blob 114c4159630eb787e494dc4aa6448dc24884e919, successfully compiled on frozen Lean pin with ordinary axioms in run 45058026793. Scope: compact actual product-sphere time-slab zero fiber and exclusion of zero-free t=1 endpoint; NO global 1D manifold, ProductSphereZero or priority."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentClassification.lean",
+      "source_blob_sha": "0b552294d1f853215356c4a2fee73e5bddbe0878",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 scoped component classification using compactness, local connectedness, open-submanifold inheritance and ATLAS. Compile/axiom check is separate; the particular zero-fiber manifold-with-boundary and ProductSphereZero remain open."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
+      "source_blob_sha": "86013f1a76f34ca049098d92561b6318ef056f8f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact Git source custody for second boundary endpoint derived from compact smooth component and ATLAS interval diffeo. Not yet independently Lean compiled/axiom audited; does not establish smooth manifold structure on real zero fiber or the ProductSphereZero theorem."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
       "source_blob_sha": "07ec9863d19a25196e2a84e187b36a500da6bfba",
       "classification": "unreviewed-source",
@@ -426,6 +446,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source blob custody only; independent scoped pinned Lean run #45058710989 on source-identical stacked #1082 passed the named genuine zero-fiber free-action source. Global proof, ProductSphereZero and specialist novelty review remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUGlobalAssembly.lean",
+      "source_blob_sha": "d02a9e947c6e1dd5bb638035e206a04e6dc3654c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 source-custody only for global geometric composition theorem: actual compact zero-fiber, smooth 1D manifold-with-boundary *premise*, reference four-point boundary *premise*, genuine free signs, interval classification and second endpoint. Not a kernel certificate or unconditional ProductSphereZero, nor priority determination."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean",
+      "source_blob_sha": "49d0ddb3cf2ce56886ddadf76dcc63d93b196fda",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact-source custody; source upgraded to retain smooth interval diffeomorphism. All named Lean proof and ATLAS classification dependencies require separate pinned CI. Actual zero-fiber global manifold is not certified."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
@@ -778,8 +818,8 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
-      "path": "research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean",
-      "source_blob_sha": "52a79d96044154ff8638d7a02e853b8255bd765f",
+      "path": "research/nightfall/formalization/observability/ActualSourceANOVA.lean",
+      "source_blob_sha": "29e98f82d8fe57497fc5d88b34cb7ea045146340",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -788,8 +828,8 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
-      "path": "research/nightfall/formalization/observability/ActualSourceANOVA.lean",
-      "source_blob_sha": "29e98f82d8fe57497fc5d88b34cb7ea045146340",
+      "path": "research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean",
+      "source_blob_sha": "52a79d96044154ff8638d7a02e853b8255bd765f",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -3748,8 +3788,8 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/SubcubeSharpness.lean",
-      "source_blob_sha": "c83d903d08558e911c7ddaa601c1101638fbf730",
+      "path": "research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean",
+      "source_blob_sha": "9bb1796e391eea7a503bc9c1a4d794f08aba7470",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -3758,8 +3798,8 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean",
-      "source_blob_sha": "9bb1796e391eea7a503bc9c1a4d794f08aba7470",
+      "path": "research/nightfall/formalization/structural_information/SubcubeSharpness.lean",
+      "source_blob_sha": "c83d903d08558e911c7ddaa601c1101638fbf730",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -4157,16 +4197,6 @@
       }
     },
     {
-      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean",
-      "source_blob_sha": "d361023a0ae311ce2ed3b83d828f2e42ef49c94f",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Merged finite C105.416 positive-support repair terminal, dated named Lean receipt is separately auditable. Pending historical ledger registration is source custody only; not novel/unrestricted infinite theorem."
-    },
-    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportRepair.lean",
       "source_blob_sha": "0ef04eae9c92f18ae6da2d8382f178307585609e",
       "classification": "unreviewed-source",
@@ -4175,6 +4205,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact Git blob registered from merged protected-main source a8142aacf0ad2d4d7864d7693af679140da436a0. Custody only, not a new named-declaration Lean receipt, external review, or originality/priority certificate; any existing scoped compiler evidence is tracked separately."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean",
+      "source_blob_sha": "d361023a0ae311ce2ed3b83d828f2e42ef49c94f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged finite C105.416 positive-support repair terminal, dated named Lean receipt is separately auditable. Pending historical ledger registration is source custody only; not novel/unrestricted infinite theorem."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteTestLabelRealization.lean",

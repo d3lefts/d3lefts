@@ -1,0 +1,118 @@
+name: NIGHTFALL global 1D boundary classification to free-action contradiction (Lean)
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUComponentClassification.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUGlobalAssembly.lean"
+      - "docs/lean-pending-source-custody.json"
+      - ".github/workflows/nightfall-bu-global-boundary.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bu-global-boundary-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  global-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact ATLAS source retrieval and full 1D classification closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-global-boundary
+          git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
+          git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
+          test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = "7857a2e8c32088b5002f7cafe29a21d936baf704"
+          for M in             MathlibExt/MeasureTheory/Measure/ImageNull             MathlibExt/Geometry/Manifold/Sard             MathlibExt/Geometry/Manifold/ParametricSard             MathlibExt/Geometry/Manifold/RiemannianMetricExistence             MathlibExt/Geometry/Manifold/OneDimensional; do
+            dst="/tmp/mathlib4/$M.lean"
+            mkdir -p "$(dirname "$dst")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$M")"
+            cp "/tmp/atlas-lean/$M.lean" "$dst"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$dst"
+            sha256sum "$dst" >> receipts/bu-global-boundary/ATLAS-SHA256SUMS
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-global-boundary/$(basename "$M").log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-global-boundary/$(basename "$M").log"
+          done
+      - name: Compile original IVT and the global boundary assembly theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBUFiberFreeAction ProductBUIntervalStabilizer ProductBUComponentOrbit ProductBUActualFiberOrbit ProductBUGlobalBoundary ProductBUComponentClassification ProductBUComponentEndpoints ProductBUGlobalAssembly; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-global-boundary/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-global-boundary/$M.log"
+          done
+      - name: Check named theorem signatures and standard axiom closure
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          s=Path("receipts/bu-global-boundary/ProductBUGlobalBoundary.log").read_text()
+          for suffix in ("boundary_component_diffeomorphic_closed_interval",
+                         "boundary_component_homeomorphic_closed_interval",
+                         "no_free_homeomorphism_of_compact_boundary_component"):
+              name="Nightfall.ProductBUGlobalBoundary."+suffix
+              assert name in s, ("MISSING_DECLARATION",name)
+              hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in s,("NO_AX_RECEIPT",name)
+                  a=set()
+              assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+              print("PASS named Lean theorem",name,sorted(a))
+          s2=Path("receipts/bu-global-boundary/ProductBUComponentClassification.log").read_text()
+          name="Nightfall.ProductBUComponentClassification.boundary_connected_component_is_interval"
+          assert name in s2, ("MISSING_COMPONENT_DECLARATION",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s2,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s2,("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS component interval classification",sorted(a))
+          s3=Path("receipts/bu-global-boundary/ProductBUComponentEndpoints.log").read_text()
+          name="Nightfall.ProductBUComponentEndpoints.exists_second_endpoint_of_smooth_boundary_component"
+          assert name in s3, ("MISSING_SECOND_ENDPOINT",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s3,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s3, ("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS actual component second boundary endpoint",sorted(a))
+          s4=Path("receipts/bu-global-boundary/ProductBUGlobalAssembly.log").read_text()
+          name="Nightfall.ProductBUGlobalAssembly.actual_smooth_four_orbit_zero_fiber_impossible"
+          assert name in s4, ("MISSING_GLOBAL_COMPOSITION",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s4,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s4, ("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS actual global zero-fiber composition",sorted(a))
+          assert all("sorryAx" not in x for x in (s,s2,s3,s4))
+          print("NOT PROVED: global regular zero-fiber smooth manifold-with-boundary or ProductSphereZero")
+          PY
+      - name: Persist exact-head source receipts
+        if: always()
+        run: |
+          mkdir -p receipts/bu-global-boundary
+          git rev-parse HEAD > receipts/bu-global-boundary/nightfall-commit.txt
+          cat lean-toolchain > receipts/bu-global-boundary/lean-toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUGlobalBoundary,ProductBUComponentClassification,ProductBUComponentEndpoints,ProductBUGlobalAssembly}.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-global-boundary-source-axiom-receipt
+          path: receipts/bu-global-boundary
+          retention-days: 90
