@@ -1,4 +1,4 @@
-# NIGHTFALL: A Rigidity-to-Certificate Principle (v1.1)
+# NIGHTFALL: A Rigidity-to-Certificate Principle (v1.2)
 
 **Date:** 2026-11-22. **Status:** elementary proved conditional corollaries and an exact arithmetic checker; general framework is a synthesis of classical finite-dimensional duality, arithmetic integrality, and the original source-rigidity theorem. Not Lean-checked, not externally reviewed, not priority-cleared.
 
@@ -29,6 +29,12 @@ The manuscript's proved first-layer identity A_plus(s)=sP(s+1)+H(s), H holomorph
   A_plus(s)=s M(lambda) log(s-s0)+holomorphic.
 
 Consequently the **full first-strip local continuation is holomorphically removable iff M(lambda)=0, unconditionally** (relative to classical zeta meromorphic continuation). The all-layer statement below remains conditional for k>=2. The source paper's all-layer 'complete germ cancellation open' language is not contradicted outside this first-strip scope. Broad prime-zeta continuation is classical; global originality not established.
+
+## 0.b The natural boundary is shifted to Re(s)=-1 (version 1.2)
+
+A new **unconditional paper-level deduction from classical prime-zeta natural-boundary theory** is documented in SHIFTED_PRIME_ZETA_NATURAL_BOUNDARY_20261122.md. The classical P(w) has a natural boundary at Re(w)=0. The September decomposition A_plus(s)=sP(s+1)+H(s) has a remainder H(s) extending analytically across every nonreal point s=-1+it: its k=2 term is P(s+2), regular at 1+it for t!=0 by the zeta zero-free line Re(w)=1, while its k>=3 tail is normally convergent for Re(s)>-2. Thus an extension of A_plus through such a point would extend P through Re(w)=0, impossible. The point s=-1 is then excluded by neighborhood continuation. Hence the **entire line Re(s)=-1 is a natural boundary** of the original deformation.
+
+This means the first-strip local classification is the ordinary analytic frontier. Formal sources with k>=2 are behind the natural boundary and must NOT be described as accessible germs of the original analytically continued function without a new generalized continuation notion. This supersedes any suggestion that only a technical all-layer local-remainder audit remains.
 
 ## I. Finite singular-mode reduction
 
@@ -192,7 +198,7 @@ For the September prime-zeta paper, the integer arithmetic makes exact cancellat
 
 ## VI. Discovery graph
 
-**Prime-zeta** source map → same-layer dilation rigidity → finite active fiber → rank-one logarithmic mode → integer numerator A_lambda → modular noncancellation / monodromy + gap → **unconditional local first-strip cancellation decision** (conditional higher layers) → blockers: complete zero-fiber certificate, higher-layer analytic continuation and prior-art audit.
+**Prime-zeta** source map → same-layer dilation rigidity → finite active fiber → rank-one logarithmic mode → integer numerator A_lambda → modular noncancellation / monodromy + gap → **unconditional local first-strip cancellation decision** → **Re(s)=-1 natural boundary blocks ordinary access to k>=2** → blockers: complete zero-fiber certificate, alternative continuation concepts and novelty audit.
 
 **Simon** input affine action → finitely many orbit types at fixed k → pure-degree invariant modes → random affine pullback probes → inverse-conditioned dual certificate → conditional Γ_k O(1/N) → blocker: independent all-k rank-filtration audit and useful growth of C_k.
 
