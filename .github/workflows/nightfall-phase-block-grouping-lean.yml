@@ -1,0 +1,58 @@
+name: NIGHTFALL deterministic coordinate grouping degree Lean
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/structural_information/PhaseBlockGrouping.lean"
+      - ".github/workflows/nightfall-phase-block-grouping-lean.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  no-degree-inflation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile source-exact grouping theorem and base degree algebra
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/grouping
+          for M in Route1LatentDegree PhaseBlockGrouping; do
+            if [[ "$M" == Route1LatentDegree ]]; then
+              src="research/nightfall/formalization/product_space/$M.lean"
+            else
+              src="research/nightfall/formalization/structural_information/$M.lean"
+            fi
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/grouping/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/grouping/$M.log"
+          done
+      - name: Named axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path('receipts/grouping/PhaseBlockGrouping.log').read_text()
+          for suffix in ('grouped_supported','grouped_degree'):
+              name='Nightfall.PhaseBlockGrouping.'+suffix
+              match=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              assert match is not None,name
+              assert {x.strip() for x in match[1].split(',') if x.strip()} <= {'propext','Classical.choice','Quot.sound'}
+          assert 'sorryAx' not in log
+          assert 'theorem Nightfall.PhaseBlockGrouping.grouped_degree' in log
+          print('PASS general original-coordinate-to-block degree bound, no inflation.')
+          PY
+      - name: Exact pinned receipt
+        if: always()
+        shell: bash
+        run: |
+          git rev-parse HEAD
+          git -C /tmp/mathlib4 rev-parse HEAD
+          sha256sum research/nightfall/formalization/structural_information/PhaseBlockGrouping.lean
