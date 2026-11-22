@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 34,
+  "revision": 35,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v34: 483 pending exact Lean blobs, 67 frozen historical records unchanged; 550 total main Lean sources. New ProductBUSphereExtension source is unreviewed. Future additions and edits must pass strict source custody workflow on research/nightfall/**/*.lean, not only on manifest changes. New t=0 endpoint source explicitly unreviewed in custody despite independent scoped CI.",
+  "scope": "v35: preserve all current main custody sources, plus exact interval fixedpoint Lean source verified separately by CI 45056525240, still unreviewed in global ledger.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -386,6 +386,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Pending source-custody record only. Independent exact-head pinned Lean result 45055510914 supports the named t=0 algebraic Jacobian inverse, but is not recognized by this manifest as a full global proof passport; ProductSphereZero, full derivative and manifold parity remain unproved."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
+      "source_blob_sha": "2c1e0e4a732081131225d85e36d8fa3ca9ea0dd9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact unreviewed source custody, new I01 subtype membership tactic repair. Pinned theorem CI must be replayed at this blob; no ProductSphereZero claim."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
