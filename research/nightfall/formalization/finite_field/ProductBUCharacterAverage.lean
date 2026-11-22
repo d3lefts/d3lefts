@@ -86,6 +86,50 @@ theorem charV_charU_zero (f : X → X → ℝ) (u v : X) :
   simp only [charU, charV, neg_neg]
   ring
 
+
+/-- The character projector is nonexpansive in the uniform scalar
+error bound. This is the exact stability step needed after approximating
+a continuous map by a smooth map, before the topological parity argument. -/
+theorem charU_error_le (f g : X → X → ℝ) (ε : ℝ)
+    (h : ∀ u v, |f u v - g u v| ≤ ε) (u v : X) :
+    |charU f u v - charU g u v| ≤ ε := by
+  let a := f u v - g u v
+  let b := f (-u) v - g (-u) v
+  let c := f u (-v) - g u (-v)
+  let d := f (-u) (-v) - g (-u) (-v)
+  have heq : charU f u v - charU g u v =
+      (a - b + c - d) / 4 := by
+    dsimp [a,b,c,d,charU]
+    ring
+  have htri : |a - b + c - d| ≤ |a| + |b| + |c| + |d| := by
+    have hA := abs_sub (a - b + c) d
+    have hB := abs_add (a - b) c
+    have hC := abs_sub a b
+    linarith
+  have hbound : |a - b + c - d| ≤ 4 * ε := by
+    have ha := h u v
+    have hb := h (-u) v
+    have hc := h u (-v)
+    have hd := h (-u) (-v)
+    dsimp [a,b,c,d] at htri
+    dsimp [a,b,c,d] at *
+    linarith
+  rw [heq, abs_div, abs_of_pos (by norm_num : (0 : ℝ) < 4)]
+  exact (div_le_iff₀ (by norm_num : (0 : ℝ) < 4)).mpr hbound
+
+/-- The second character projection is the first after swapping factors. -/
+theorem charV_eq_charU_swap (f : X → X → ℝ) (u v : X) :
+    charV f u v = charU (fun x y => f y x) v u := by
+  simp only [charU, charV]
+  ring
+
+theorem charV_error_le (f g : X → X → ℝ) (ε : ℝ)
+    (h : ∀ u v, |f u v - g u v| ≤ ε) (u v : X) :
+    |charV f u v - charV g u v| ≤ ε := by
+  rw [charV_eq_charU_swap, charV_eq_charU_swap]
+  exact charU_error_le (fun x y => f y x) (fun x y => g y x)
+    ε (fun x y => h y x) v u
+
 section Continuous
 
 variable [TopologicalSpace X] [ContinuousNeg X]
@@ -135,6 +179,9 @@ end Continuous
 #print axioms charV_idempotent
 #print axioms charU_charV_zero
 #print axioms charV_charU_zero
+#print axioms charU_error_le
+#print axioms charV_eq_charU_swap
+#print axioms charV_error_le
 #print axioms continuous_charU
 #print axioms continuous_charV
 
