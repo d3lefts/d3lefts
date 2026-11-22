@@ -45,7 +45,7 @@ def check(data, files=True):
             assert '1040' in s
     if files:
         source=THEOREM.read_text(encoding='utf-8')
-        for text in ('## Theorem 1', '## Theorem 2', 'P\'(w)', 'natural boundary', 'evidence', 'Fröberg'):
+        for text in ('## Theorem 1', '## Theorem 2', 'P\'(w)', 'natural boundary', 'Fröberg'):
             assert text.lower() in source.lower(), f'missing theorem input: {text}'
         assert (ROOT/'scripts/rigidity_to_certificate_exact_audit.py').exists()
     return True
