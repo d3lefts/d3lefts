@@ -64,7 +64,7 @@ The graph theorem `GRAPH_EDGE_PARITY_FIBER_THEOREM_20261122.md` proves **on pape
 
 ## 4. Conditional research payoff: exact phase-retrieval oracle with constant T=2 acceptance simulation
 
-**If and only if the full abstract rank-free T2 operator theorem in #1068 passes independent proof audit**, these graph bounds plus P1/P2 give, for every two-query phase-kickback quantum circuit on the **actual indexed intensity-response oracle**, a deterministic, nonadaptive classical algorithm approximating its **acceptance probability** on all but a δ fraction of uniform restricted signals, using
+**Conditional on the full abstract rank-free T2 operator theorem in #1068 surviving independent proof audit**, these graph bounds plus P1/P2 give, for every two-query phase-kickback quantum circuit on the **actual indexed intensity-response oracle**, a deterministic, nonadaptive classical algorithm approximating its **acceptance probability** on all but a δ fraction of uniform restricted signals, using
 
     Q_intensity ≤ min{|E|,ceil[2(2√F_{4,Δ}+145√max{2(Δ+1),6})²/(ε²δ)]}.   (P4, CONDITIONAL)
 
@@ -80,4 +80,4 @@ P4 applies to quantum circuits whose secret dependence is obtained by the **phas
 
 **Cheapest decisive experiment:** `scripts/check_graph_intensity_quantum_bridge_exact.py` tests n=3 and n=4 graph intensities using exact integer/rational arithmetic and explicitly constructs indexed response XOR matrices plus |−⟩, checks phase kickback for every assignment/superposition at one query, and a negative control with the wrong response-state |+⟩. Such finite tests do **not** prove P4 or an all-T physical compiler.
 
-**References/credit:** standard phase kickback, elementary graphic incidence and real frame intensity identities; NIGHTFALL #995 (different continuous model), #970/#976 (Route1 information), #974 (archived matrix oracle), #1016/#1059/#1068 (rank-free T2 source and audit). No novelty claim for phase kickback or graph spanning-tree inversion.
+**Parallel-work reconciliation:** [PR #1095](https://github.com/d3lefts/d3lefts/pull/1095) has already independently constructed an unnormalized ±1 graph-intensity compiler and a stronger exact graph-bridge Wyner information theorem C_W=(n−1−b)ln2. This note is complementary: it uses **unit-sphere signals and unit sensing rows**, supplies the **one-coherent-response-call phase-kickback model**, and combines it with the *bounded-degree all-k primitive-fiber* theorem, conditional on the still-open general T2 operator bound. Neither note should claim first discovery of graph-intensity/parity arithmetic.\n\n**References/credit:** standard phase kickback, elementary graphic incidence and real frame intensity identities; NIGHTFALL #995 (different continuous model), #970/#976 (Route1 information), #974 (archived matrix oracle), #1016/#1059/#1068 (rank-free T2 source and audit). No novelty claim for phase kickback or graph spanning-tree inversion.
