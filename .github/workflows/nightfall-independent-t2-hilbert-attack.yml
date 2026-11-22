@@ -1,0 +1,26 @@
+name: NIGHTFALL independent rank-free two-query complex frame attack
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md'
+      - 'scripts/audit_t2_rankfree_frames_independent.py'
+      - '.github/workflows/nightfall-independent-t2-hilbert-attack.yml'
+  workflow_dispatch:
+
+jobs:
+  independent-complex-attack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pin independent numeric linear algebra checker
+        run: python3 -m pip install --user numpy==2.3.5
+      - name: Source-hashed matrix frame, six cancellation and four triple tests
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 -V
+          python3 -c 'import numpy as np; print("numpy", np.__version__)'
+          sha256sum scripts/audit_t2_rankfree_frames_independent.py research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md
+          python3 scripts/audit_t2_rankfree_frames_independent.py
+          echo 'NOTE: finite random and exact tests are FALSIFIERS, never a theorem or Lean certificate.'
