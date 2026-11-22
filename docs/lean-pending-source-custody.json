@@ -36,6 +36,16 @@
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
+      "path": "research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean",
+      "source_blob_sha": "e2cec16b123b97b216bb19652fe9524a2c40756e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/agent_safety/SemanticFencing.lean",
       "source_blob_sha": "a6145a6c6131be48bd0525dbabe88d5db5fa8a96",
       "classification": "unreviewed-source",
@@ -286,6 +296,36 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUCharacterAverage.lean",
+      "source_blob_sha": "0600c8e3287ef7bf761575b49095fbbe9bd90dde",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 product-sphere topology supporting Lean source. Exact Git blob custody only; branch-level CI is separate. Does NOT certify ProductSphereZero, transversality, regular zero-locus, complete all-n theorem, independent novelty, or a human specialist review."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUInterval.lean",
+      "source_blob_sha": "2d2ba9ce109473222748834b846c8291fba65674",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 product-sphere topology supporting Lean source. Exact Git blob custody only; branch-level CI is separate. Does NOT certify ProductSphereZero, transversality, regular zero-locus, complete all-n theorem, independent novelty, or a human specialist review."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUPerturbation.lean",
+      "source_blob_sha": "151878db6dde757770f711c32bca3645f01f7eb0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 product-sphere topology supporting Lean source. Exact Git blob custody only; branch-level CI is separate. Does NOT certify ProductSphereZero, transversality, regular zero-locus, complete all-n theorem, independent novelty, or a human specialist review."
     },
     {
       "path": "research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean",
@@ -1958,6 +1998,16 @@
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
+      "path": "research/nightfall/formalization/permission/PricePermissionFenceDual.lean",
+      "source_blob_sha": "3f0a976643d50b9a7c7efc82d6389419055722bb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/permission/RevisionIndistinguishability.lean",
       "source_blob_sha": "41813a89565a93ac8a58baf45d6421d01aedc47a",
       "classification": "unreviewed-source",
@@ -1966,6 +2016,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/permission/RobustObservationHull.lean",
+      "source_blob_sha": "c7dd20689d52dd091a143da954f6e6bb90e04984",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
     },
     {
       "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
@@ -2531,6 +2591,16 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2CellAverage.lean",
+      "source_blob_sha": "5cba0ae2e5c855a681d44ae4ed4fca8515940d2f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2CellLabelProjection.lean",
       "source_blob_sha": "98ec9085bfa368d94133c05b3c8ec720c0d32fa8",
       "classification": "unreviewed-source",
@@ -2799,6 +2869,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Merged heterogeneous-to-tagged finite alphabet original-source operator; source custody only. Not finite-measure influence transport or infinite Q2 terminal."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean",
+      "source_blob_sha": "37673af7af8f0f0d7a2c2d3ae272842c87a167cd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Hoeffding degree-two bridge to the a.e. infinite-product C105.416 terminal; integrated lake build/check receipt requested by the PR adding it. Source custody only: no historical-ledger promotion, human review or novelty status is inferred."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2InactiveFiniteLabel.lean",
@@ -3170,6 +3250,16 @@
       }
     },
     {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean",
+      "source_blob_sha": "837b6066d1dfc1c6b7b294434542555e1d87a817",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
+    },
+    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2UniformInfluence.lean",
       "source_blob_sha": "169be77bb9a98ce96638e4d6976c81720ea86a13",
       "classification": "unreviewed-source",
@@ -3224,66 +3314,6 @@
         "named_declaration": "Nightfall.UniversalAuthorityFrontier.exact_authorization_iff_conflict_separation",
         "run": 43630294034
       }
-    },
-    {
-      "path": "research/nightfall/formalization/universal/InfinitePiQ2CellAverage.lean",
-      "source_blob_sha": "5cba0ae2e5c855a681d44ae4ed4fca8515940d2f",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
-    },
-    {
-      "path": "research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean",
-      "source_blob_sha": "837b6066d1dfc1c6b7b294434542555e1d87a817",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Merged PR #776: integrated pinned Lean 4.36.0-rc2 `lake build Nightfall` + `lake check` passed (run 44171646200) with standard-axiom named audit of infinitePi_q2_105416_ae; earlier per-module receipts runs 44151332468 and 44167592199. Recorded here as source custody only: no historical-ledger promotion, human review or novelty status is inferred."
-    },
-    {
-      "path": "research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean",
-      "source_blob_sha": "e2cec16b123b97b216bb19652fe9524a2c40756e",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
-    },
-    {
-      "path": "research/nightfall/formalization/permission/PricePermissionFenceDual.lean",
-      "source_blob_sha": "3f0a976643d50b9a7c7efc82d6389419055722bb",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
-    },
-    {
-      "path": "research/nightfall/formalization/permission/RobustObservationHull.lean",
-      "source_blob_sha": "c7dd20689d52dd091a143da954f6e6bb90e04984",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
-    },
-    {
-      "path": "research/nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean",
-      "source_blob_sha": "37673af7af8f0f0d7a2c2d3ae272842c87a167cd",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Hoeffding degree-two bridge to the a.e. infinite-product C105.416 terminal; integrated lake build/check receipt requested by the PR adding it. Source custody only: no historical-ledger promotion, human review or novelty status is inferred."
     }
   ]
 }
