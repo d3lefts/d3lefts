@@ -67,7 +67,7 @@ theorem triangle_late_cost_lower
     (fun _ : Fin 3 => (1 : ℝ))
     N (fun _ : Fin 3 => (1 / 2 : ℝ))
     hN (by intro i; norm_num) hcoverage
-    (by intro q; simp [triangle_uniform_dual q])
+    (by intro q; simpa [one_div] using (triangle_uniform_dual q).le)
   norm_num [Fin.sum_univ_three] at h ⊢
   exact h
 
