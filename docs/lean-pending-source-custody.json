@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 40,
+  "revision": 41,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v40: preserve historical records and register exact merged-source candidate for three independent antipodal homeomorphisms, without auto-promoting to an unconditional theorem.",
+  "source_commit": "ec5d5f6a3eda2ada5a0c582b6a76a526a56a794b",
+  "scope": "Source-custody revision 41: 493 pending Lean blobs; historical 67 certified source records unchanged. New ProductBUReferenceFace is pending its own scoped pinned Lean receipt. No full maximal ProductSphereZero theorem or unconditional causal threshold.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -436,6 +436,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean",
+      "source_blob_sha": "8139e939f318979a9dd5452c71a1d7f8d6214624",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Explicit reference zero-set equals four signed axis pairs and the same t=0 endpoint of an actual compact zero fiber with correctly matched zero set. Pending strict Lean CI; does NOT prove regular fiber manifold-with-boundary, ProductSphereZero, or priority."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean",
