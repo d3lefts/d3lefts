@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 49,
+  "revision": 50,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v49: exact source-only registration of time-oriented implicit-function zero graph; historical 67 unchanged, ProductSphereZero topology still unproved.",
+  "scope": "v50: exact source custody of genuine open partial homeomorphism on local zero fiber; original 67 certificates unaffected, pending Lean full theorem unresolved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -446,6 +446,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact unreviewed source custody, new I01 subtype membership tactic repair. Pinned theorem CI must be replayed at this blob; no ProductSphereZero claim."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean",
+      "source_blob_sha": "ecd3a89fe1d4bbfd41495f81536002637b125937",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Constructs an actual open partial homeomorphism of local zero-fiber subtype from continuous exact graph on open ambient neighborhood, no ChartedSpace assumption. Source exact Lean compiler/axiom receipt pending; C∞ overlap, physical halfspace and full ProductSphereZero not proved."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
