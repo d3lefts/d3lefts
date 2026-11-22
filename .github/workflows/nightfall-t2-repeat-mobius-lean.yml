@@ -1,0 +1,65 @@
+name: NIGHTFALL T2 repeated-label Mobius Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/TensorT2RepeatMobius.lean'
+      - 'research/nightfall/structural_information/check_t2_repeat_mobius_exact.py'
+      - '.github/workflows/nightfall-t2-repeat-mobius-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobius-four-slot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Source-exact Lean compilation and kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p mobius-repeat-receipt
+          src=research/nightfall/formalization/structural_information/TensorT2RepeatMobius.lean
+          cp "$src" /tmp/mathlib4/TensorT2RepeatMobius.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/TensorT2RepeatMobius.olean TensorT2RepeatMobius.lean) 2>&1 | tee mobius-repeat-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker TensorT2RepeatMobius) 2>&1 | tee mobius-repeat-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/TensorT2RepeatMobius.lean').read_text()
+          log=Path('mobius-repeat-receipt/compile.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          expected=['mobius_repeated_when_no_two_disjoint_pairs',
+                    'mobius_repeated_nonzero_xor','improved_T2_pair_constant']
+          assert all(n in log for n in expected)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          assert len(reports)>=3, reports
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert all(set(x.strip() for x in m.split(',') if x.strip())<=allowed for m in reports)
+          print('TENSOR_T2_REPEAT_MOBIUS_KERNEL_PASS')
+          PY
+      - name: Independent Gaussian-rational all-quadruple check
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/structural_information/check_t2_repeat_mobius_exact.py | tee mobius-repeat-receipt/exact-quadruples.log
+          grep -q 'NONZERO_XOR_MOBIUS_EXACT_PASS' mobius-repeat-receipt/exact-quadruples.log
+          grep -q 'ZERO_FREQUENCY_COUNTEREXAMPLE_PASS' mobius-repeat-receipt/exact-quadruples.log
+          grep -q 'RATIONAL_CONSTANT_35_PASS' mobius-repeat-receipt/exact-quadruples.log
+      - name: Immutable source receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p mobius-repeat-receipt
+          git rev-parse HEAD > mobius-repeat-receipt/commit.txt
+          sha256sum research/nightfall/formalization/structural_information/TensorT2RepeatMobius.lean research/nightfall/structural_information/check_t2_repeat_mobius_exact.py > mobius-repeat-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: mobius-repeat-receipt
+          path: mobius-repeat-receipt/
+          retention-days: 90
