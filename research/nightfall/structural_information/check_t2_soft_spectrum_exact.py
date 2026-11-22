@@ -57,12 +57,23 @@ def main():
     center=F(1,2)
     theta=sum((abs(x-center) for x in mu),Z)
     assert theta==F(17,20)
+    # For the piecewise-linear convex trace objective, a minimizer
+    # occurs at one of the effect eigenvalues or an endpoint.
+    assert min(sum((abs(x-z) for x in mu),Z)
+               for z in set(mu)|{Z,ONE}) == theta
     # Center at 11/20 and soft-threshold at kappa=1/10.
     lam=F(11,20); kappa=F(1,10)
     soft=[(ONE if x>=lam else -ONE)*max(abs(x-lam)-kappa,Z) for x in mu]
     assert soft==[Z]*9+[F(1,4)]
     soft_trace=sum((abs(x) for x in soft),Z)
     assert soft_trace==F(1,4)
+    # Continuous lambda optimization is exactly checkable via the
+    # complete set of breakpoints mu_i +/- kappa, and endpoints.
+    knots={Z,ONE}
+    for x in mu:
+        knots |= {z for z in (x-kappa,x+kappa) if Z<=z<=ONE}
+    objective=lambda z: sum((max(abs(x-z)-kappa,Z) for x in mu),Z)
+    assert min(objective(z) for z in knots)==soft_trace
     assert max(abs(x-lam-b) for x,b in zip(mu,soft))==kappa
     assert soft_trace < theta
     eps=F(1,2)
