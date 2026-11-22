@@ -3,7 +3,7 @@
   "version": 1,
   "as_of": "2026-11-22",
   "frozen_legacy_registry_unchanged": true,
-  "scope": "Updated source-checked research dispatch through Nov 22. Frozen historical catalogue and originality whitelist remain unchanged. A merged PR is not independent review; finite replay is not an all-instance proof; named Lean receipts apply only to exact declarations and heads.",
+  "scope": "Nov 22 evidence-custody revision: 25 source-scoped claims; new finite-replay runs are metadata distinct from named Lean kernel run fields. Merged source is not a peer-review or priority certificate; see each exact-scope proof passport.",
   "status_definitions": {
     "merged-lean": "Merged / named Lean",
     "branch-lean": "PR-head / named Lean",
@@ -329,7 +329,7 @@
       "next": "Extend/verify generator equivalence, review interpretation of the affine exponent.",
       "source": "https://github.com/d3lefts/d3lefts/pull/977",
       "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/44739986591",
-      "passport": "https://github.com/d3lefts/d3lefts/pull/977",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/tensor-sharp-row-lean.md",
       "status_label": "Merged / named Lean"
     },
     {
@@ -349,7 +349,7 @@
       "next": "Independent review of theorem statements and apply to high-cost conditional quantum interference.",
       "source": "https://github.com/d3lefts/d3lefts/pull/980",
       "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/44789814739",
-      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/structural_information/SUBCUBE_SECANT_POLYNOMIAL_20261120.md",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/tensor-secant-quartic-lean.md",
       "status_label": "Merged / named Lean"
     },
     {
@@ -357,7 +357,7 @@
       "title": "Wyner-information finite-mixture decision-tree simulation",
       "tier": "merged-lean",
       "pr": 970,
-      "run": null,
+      "run": 44732951300,
       "head": "e41639b2bc569d4da9e3760722f9dfb0fd3c71a5",
       "declaration": "Nightfall.Route1WynerGeneral.route1_wyner_general",
       "claim": "A product-mixture source admits the stated decision-tree approximation bound with a common-information charge, under the theorem's bounded-degree and source hypotheses.",
@@ -368,8 +368,8 @@
       "credit": "Wyner common information and Aaronson–Ambainis/product influence foundations; NIGHTFALL formalization.",
       "next": "Audit circuit-to-functional transfer and transcript-specific stopping without hidden oracle costs.",
       "source": "https://github.com/d3lefts/d3lefts/pull/970",
-      "receipt": "",
-      "passport": "https://github.com/d3lefts/d3lefts/pull/970",
+      "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/44732951300",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/wyner-route1-lean.md",
       "status_label": "Merged / named Lean"
     },
     {
@@ -377,7 +377,7 @@
       "title": "Two-query same-stage interference reduction and exact obstruction",
       "tier": "analytic",
       "pr": 996,
-      "run": 45047595645,
+      "run": null,
       "head": "9205fd89797a416053d90a16e170923db7333aaa",
       "declaration": "Paper-level dephasing/pinching argument; no named Lean terminal",
       "claim": "Same-stage terms of every two-query acceptance expression reduce to one-query acceptance functions; a coherent remainder survives and can have depth-independent nonzero norm.",
@@ -389,15 +389,16 @@
       "next": "Attack high-rank coherent residual or a valid quantum-hard family.",
       "source": "https://github.com/d3lefts/d3lefts/pull/996",
       "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/45047595645",
-      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/structural_information/TENSOR_TWO_QUERY_SAME_STAGE_20261122.md",
-      "status_label": "Merged / exact finite, paper candidate"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/tensor-t2-dephasing.md",
+      "status_label": "Merged / exact finite, paper candidate",
+      "finite_run": 45047595645
     },
     {
       "id": "tensor-t2-task-effect",
       "title": "Task-equivalent measurement-effect simulation certificate",
       "tier": "analytic",
       "pr": 1002,
-      "run": 45050473197,
+      "run": null,
       "head": "75e7cba9907baad4345322a69d49eb881fa74d05",
       "declaration": "Author-side operator inequality and finite SDP formulation; not Lean certified",
       "claim": "For two-query parity circuits with ordered nonzero pair-fiber cap M, an author-side simulator pays O(M Θ_task/(ε²δ)), where Θ_task minimizes centered trace norm over behaviorally equivalent terminal effects.",
@@ -409,8 +410,9 @@
       "next": "Independent adversarial proof and literature review; investigate whether Θ_task can be uniformly polynomial in L.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1002",
       "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/45050473197",
-      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/structural_information/TENSOR_TWO_QUERY_BEHAVIORAL_EFFECT_20261122.md",
-      "status_label": "Merged / paper candidate + exact finite"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/tensor-t2-task-effect.md",
+      "status_label": "Merged / paper candidate + exact finite",
+      "finite_run": 45050473197
     },
     {
       "id": "continuous-causal-phase",
@@ -429,7 +431,7 @@
       "next": "Review Stiefel zero hypotheses and formalize topological theorem without assuming it as a new axiom.",
       "source": "https://github.com/d3lefts/d3lefts/pull/997",
       "receipt": "",
-      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/continuous-phase-norm-threshold-20261122/PROOF_PASSPORT.md",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/continuous-causal-phase.md",
       "status_label": "Merged / paper theorem candidate"
     },
     {
@@ -449,7 +451,7 @@
       "next": "Independent adversarial proof of adaptive decoder, boundary/tie cases and fixed nonattainment.",
       "source": "https://github.com/d3lefts/d3lefts/pull/999",
       "receipt": "",
-      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/continuous-phase-norm-threshold-20261122/SHARP_MINIMAX.md",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/phase-minimax-attainment.md",
       "status_label": "Merged / paper theorem candidate"
     },
     {
@@ -469,7 +471,7 @@
       "next": "Test integration into sensitivity recurrence and independent reproduction of orientation cases.",
       "source": "https://github.com/d3lefts/d3lefts/pull/982",
       "receipt": "",
-      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/sensitivity-block-separation-2026-11-20/NIGHTFALL_PALEY5591_GEOMETRY_PASSPORT.md",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/paley-5591-exact.md",
       "status_label": "Merged / exact finite"
     },
     {
@@ -489,7 +491,7 @@
       "next": "Independently check all-k proof dependencies and obstruction at larger k.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1013",
       "receipt": "",
-      "passport": "https://github.com/d3lefts/d3lefts/pull/1013",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/simon-orbit-k5.md",
       "status_label": "Merged / finite replay + open proof"
     },
     {
@@ -509,7 +511,7 @@
       "next": "Verify attachment and reviewer reproducibility on Cairn, then separately compare competition-eligible bounds.",
       "source": "https://github.com/d3lefts/d3lefts/pull/989",
       "receipt": "",
-      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/projects/erdos/CAIRN_C10_EVIDENCE_RECONCILIATION_20261122.md",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/cairn-c10-evidence.md",
       "status_label": "Evidence merged / external action open"
     }
   ]
