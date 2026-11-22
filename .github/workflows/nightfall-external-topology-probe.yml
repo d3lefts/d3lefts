@@ -9,7 +9,7 @@ permissions:
 jobs:
   topology-compatibility:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -27,7 +27,9 @@ jobs:
           for p in \
             MathlibExt/MeasureTheory/Measure/ImageNull.lean \
             MathlibExt/Geometry/Manifold/Sard.lean \
-            MathlibExt/Geometry/Manifold/ParametricSard.lean; do
+            MathlibExt/Geometry/Manifold/ParametricSard.lean \
+            MathlibExt/Geometry/Manifold/RiemannianMetricExistence.lean \
+            MathlibExt/Geometry/Manifold/OneDimensional.lean; do
             cp "/tmp/atlas-lean/$p" "/tmp/mathlib4/$p"
             sha256sum "/tmp/mathlib4/$p"
           done
@@ -39,9 +41,11 @@ jobs:
           for M in \
             MathlibExt/MeasureTheory/Measure/ImageNull \
             MathlibExt/Geometry/Manifold/Sard \
-            MathlibExt/Geometry/Manifold/ParametricSard; do
+            MathlibExt/Geometry/Manifold/ParametricSard \
+            MathlibExt/Geometry/Manifold/RiemannianMetricExistence \
+            MathlibExt/Geometry/Manifold/OneDimensional; do
             mkdir -p ".lake/build/lib/lean/$(dirname "$M")"
             echo "=== probing $M ==="
             lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "/tmp/$(basename "$M").log"
           done
-          echo "PASS: external source compiles against NIGHTFALL active Lean pin; this is NOT a ProductSphereZero proof"
+          echo "PASS: Sard, parametric Sard and one-dimensional manifold sources compile on pin; NOT the zero theorem"
