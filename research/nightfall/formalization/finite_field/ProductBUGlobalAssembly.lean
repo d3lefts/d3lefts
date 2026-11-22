@@ -25,7 +25,7 @@ The present result is a conditional global geometric composition and NOT
 a certificate for ProductSphereZero by itself.
 -/
 
-open scoped Manifold Topology
+open scoped Manifold Topology ContDiff
 open Manifold
 
 namespace Nightfall.ProductBUGlobalAssembly
