@@ -2,7 +2,7 @@ name: NIGHTFALL unconditional planar continuous causal obstruction (Lean)
 on:
   pull_request:
     paths:
-      - 'research/nightfall/formalization/finite_field/PhaseN2Unconditional.lean'
+      - 'research/nightfall/formalization/finite_field/PlanarTwoRowsDirect.lean'
       - '.github/workflows/nightfall-phase-n2-unconditional.yml'
   workflow_dispatch:
 permissions:
@@ -21,7 +21,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p receipts/phase-n2
-          for M in GenuinePrefixPhase ProductSphereObstruction CausalPhaseConditional PhaseN2Unconditional; do
+          for M in PlanarTwoRowsDirect; do
             src="research/nightfall/formalization/finite_field/$M.lean"
             ! grep -nE '^[[:space:]]*(sorry|admit|axiom)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -34,18 +34,18 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          text=Path("receipts/phase-n2/PhaseN2Unconditional.log").read_text()
-          name="Nightfall.PhaseN2Unconditional.two_readings_not_injective"
+          text=Path("receipts/phase-n2/PlanarTwoRowsDirect.log").read_text()
+          name="Nightfall.PlanarTwoRowsDirect.two_readings_not_injective"
           assert "theorem " + name in text, "DECLARATION_TYPE_UNVERIFIED"
           a=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",text,re.S)
           assert a, "MISSING_AXIOM_RECEIPT"
           found={v.strip() for v in a[1].split(',') if v.strip()}
           assert found <= {'propext','Classical.choice','Quot.sound'},found
           assert 'sorryAx' not in text
-          source=Path('research/nightfall/formalization/finite_field/PhaseN2Unconditional.lean').read_text()
+          source=Path('research/nightfall/formalization/finite_field/PlanarTwoRowsDirect.lean').read_text()
           assert 'ProductSphereZero' not in source.split('theorem two_readings_not_injective',1)[1].split('#check',1)[0]
-          print('PASS unconditional planar theorem; exact Lean theorem and axiom receipt',found)
-          print('SCOPE: n=2 only; all-dimensional ProductSphereZero remains open.')
+          print('PASS self-contained globally-continuous planar two-row theorem; exact Lean theorem and axiom receipt',found)
+          print('SCOPE: n=2 and global second-selector continuity only; reachable-only and all-dimensional ProductSphereZero still open.')
           PY
       - name: Preserve source closure hashes and logs
         if: always()
@@ -54,7 +54,7 @@ jobs:
           git rev-parse HEAD > receipts/phase-n2/head.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/phase-n2/mathlib-head.txt
           cat lean-toolchain > receipts/phase-n2/toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/{GenuinePrefixPhase,ProductSphereObstruction,CausalPhaseConditional,PhaseN2Unconditional}.lean > receipts/phase-n2/SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/{PlanarTwoRowsDirect}.lean > receipts/phase-n2/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
