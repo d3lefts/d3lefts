@@ -111,10 +111,11 @@ theorem zeroFiber_time_zero_iff (k m : ℕ)
     have hs := zeroFiber_mem (k + 1) m F hz
     have hr : z ∈ referenceZero k :=
       ⟨hs.1, (hF0 z hs.1).mp hs.2.2⟩
-    exact (referenceZero_eq_signedAxes k).mp hr
+    simpa only [referenceZero_eq_signedAxes k] using hr
   · intro hz
-    have hr : z ∈ referenceZero k :=
-      (referenceZero_eq_signedAxes k).mpr hz
+    have hr : z ∈ referenceZero k := by
+      rw [referenceZero_eq_signedAxes]
+      exact hz
     refine ⟨⟨hr.1, ?_⟩, ?_⟩
     · norm_num
     · exact (hF0 z hr.1).mpr ⟨hr.2.1, hr.2.2⟩
