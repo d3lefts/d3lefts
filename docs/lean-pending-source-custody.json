@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 41,
+  "revision": 42,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v41: 493 pending immutable Lean blobs; preserves all v40 and original 67 source records. PhaseRoute1Finite exact-source custody only; CI 45058815183 supports the three finite lemmas, but not the general-B Wyner theorem or physical query composition.",
+  "scope": "v42: add one exact original child ProductBUComponentOrbit Lean source from #1057/#1067, retain all prior custody and conservative proof status",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5224,6 +5224,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
+      "source_blob_sha": "07ec9863d19a25196e2a84e187b36a500da6bfba",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source preserved from original PR #1057 via #1067; scoped pinned Lean CI run #45056662932 passed on original source. Clean-main integration still requires its own exact-head kernel pass. Theorem requires a compact interval component and boundary orbit; no maximal ProductSphereZero claimed."
     }
   ]
 }
