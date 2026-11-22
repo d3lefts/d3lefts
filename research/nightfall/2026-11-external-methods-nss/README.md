@@ -27,7 +27,13 @@
 
 **Proof.** The permanent counts bijections sigma:G->G with x^{-1}sigma(x) in S for every x. Let g in G act by (g·sigma)(x)=g sigma(g^{-1}x). This preserves admissibility. Since G is a p-group, every non-singleton orbit has cardinality divisible by p. The action-fixed bijections commute with all left translations, hence have the form sigma(x)=x t, with t=sigma(e). Such a bijection is admissible exactly for t in S, giving |S| fixed objects and the claimed congruence. QED.
 
-This extends the *elementary congruence mechanism* to **noncommutative** p-groups. It does not extend the Fourier/determinantal quadratic permanent-value lower bound: arbitrary nonabelian Cayley matrices need different spectral analysis. The scope matters. Exhaustive exact examples: C4 (16 supports), C8 (256), nonabelian D8 (256), plus original cyclic prime p=2,3,5,7 (172). **700 support checks** total, with selected independent permutation enumerations; a C6 support (mask=7) gives permanent 20 with |S|=3, disproving an unchecked extension of the mod-2 congruence to arbitrary groups. These finite tests do not themselves prove the p-group theorem; the orbit argument does.
+**Weighted strengthening (also elementary and not claimed novel).** Let w:G->Z be any integer-valued function, including negative entries, and set A_{x,y}=w(x^{-1}y). Then
+
+    per(A) = sum_{g in G} w(g)  (mod p).
+
+Indeed, the action above preserves the product weight of each admissible/permutation term, so every non-fixed orbit contributes a multiple of p. Fixed permutations are right translations and contribute w(g)^{|G|}; since |G| is a power of p, Fermat's congruence reduces each to w(g) modulo p. This is a genuine strengthening of the binary-special-case invariant, but **no worldwide novelty or Lean certificate is asserted**.
+
+This extends the *elementary congruence mechanism* to **noncommutative** p-groups. It does not extend the Fourier/determinantal quadratic permanent-value lower bound: arbitrary nonabelian Cayley matrices need different spectral analysis. The scope matters. Exhaustive exact examples: C4 (16 supports), C8 (256), nonabelian D8 (256), plus original cyclic prime p=2,3,5,7 (172). **700 support checks** total, with selected independent permutation enumerations; a C6 support (mask=7) gives permanent 20 with |S|=3, disproving an unchecked extension of the mod-2 congruence to arbitrary groups. These finite tests do not themselves prove the p-group theorem; the orbit argument does. The same checker also tests **798 weighted integer Cayley matrices** (complete weights in {-2,-1,0,1,2} for C3 and C4; deterministic weighted C9 and nonabelian D8 cases), for **1,498 successful matrix cases total**, plus the failing C6 control.
 
 ### A reusable elementary centering lemma (not novel)
 
@@ -43,7 +49,7 @@ Run:
 
     python3 scripts/check_circulant_permanent_invariants.py
 
-The script uses exact row-subset DP for **every** support of prime orders 2,3,5,7 (172 total), plus every subset for C4, C8 and nonabelian D8 (528 additional supports; 700 total); compares with an independently formulated permutation enumeration for orders <=5 and selected D8 supports; checks the mod-p invariants and every affine map of prime cyclic supports; and includes negative controls, including the genuine failing case C6. Local replay on 2026-11-22 passed for all 700 p-group supports and the C6 scope check. This **only** certifies those finite computations and catches implementation mistakes in the reused invariants. It does not check the external O(1/p) analytic estimate or prove V(p)>=cp^2.
+The script uses exact row-subset DP for **every** support of prime orders 2,3,5,7 (172 total), plus every subset for C4, C8 and nonabelian D8 (528 additional supports; 700 total); compares with an independently formulated permutation enumeration for orders <=5 and selected D8 supports; checks the mod-p invariants and every affine map of prime cyclic supports; and includes negative controls, including the genuine failing case C6. Local replay on 2026-11-22 passed for all 700 binary support cases, 798 weighted cases, and the C6 scope check. This **only** certifies those finite computations and catches implementation mistakes in the reused invariants. It does not check the external O(1/p) analytic estimate or prove V(p)>=cp^2.
 
 ## What NIGHTFALL adopts
 
