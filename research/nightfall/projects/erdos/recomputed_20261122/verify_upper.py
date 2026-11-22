@@ -3,6 +3,8 @@
 from pathlib import Path
 from fractions import Fraction
 import hashlib,sys
+if not __debug__: raise SystemExit("Python -O disables certificate assertions")
+
 N=131072
 D=1<<70
 H=N//2
