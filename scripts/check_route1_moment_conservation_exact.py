@@ -6,7 +6,7 @@ claim has a separate elementary proof. Tests are NOT Lean certificates.
 """
 from collections import Counter
 from fractions import Fraction as F
-from itertools import combinations, product
+from itertools import combinations, permutations, product
 from math import prod, comb
 from random import Random
 
@@ -206,6 +206,40 @@ for z in range(max(2*d,d+q)+1):
                            -delta(lambda x:(u(x)-v(x))**2))/2
                 assert recovered==truth,(S,assignment,truth,recovered)
                 stats["iff_reverse_dq_atoms"]+=1
+
+# Simon four-address parallelogram event: degree-4 relative Gram risk
+# can inflate by Theta(N), yet the absolute loss discrepancy is O(1/N).
+# Exhaustive over standard Simon injections and all independent 4-output
+# assignments for N=4 and N=8.
+for N in (4,8):
+    truths=0
+    total=0
+    target=(0,1,2,3)
+    assert target[0]^target[1]==target[2]^target[3]==1
+    for shift in range(1,N):
+        remaining=set(range(N))
+        pairs=[]
+        while remaining:
+            a=min(remaining)
+            b=a^shift
+            remaining.remove(a)
+            remaining.remove(b)
+            pairs.append((a,b))
+        for labels in permutations(range(N),N//2):
+            y=[-1]*N
+            for (a,b),label in zip(pairs,labels):
+                y[a]=y[b]=label
+            truths+=int(y[0]==y[1] and y[2]==y[3])
+            total+=1
+    J=prod(range(N//2+1,N+1))
+    assert total==(N-1)*J
+    nu_risk=F(truths,total)
+    iid_risk=F(sum(a==b and c==d for a,b,c,d
+                    in product(range(N),repeat=4)),N**4)
+    assert nu_risk==F(1,N-1) and iid_risk==F(1,N**2)
+    assert nu_risk/iid_risk==F(N**2,N-1)
+    assert nu_risk-iid_risk==F(1,N-1)-F(1,N**2)
+    stats["simon_relative_gram_obstructions"]+=1
 
 print("PASS sharp marginal-order conservation of degree-d query risk")
 for key in sorted(stats): print(key+":",stats[key])
