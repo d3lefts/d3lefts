@@ -6,6 +6,7 @@ on:
       - "research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean"
       - "research/nightfall/formalization/finite_field/PrimeZetaChartExtension.lean"
       - ".github/workflows/nightfall-prime-zeta-analytic-bridge-lean.yml"
+      - "docs/lean-pending-source-custody.json"
   workflow_dispatch:
 permissions:
   contents: read
@@ -75,7 +76,7 @@ jobs:
           git rev-parse HEAD > receipts/prime-zeta-analytic/source-commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/prime-zeta-analytic/mathlib-commit.txt
           cat lean-toolchain > receipts/prime-zeta-analytic/lean-toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean research/nightfall/formalization/finite_field/PrimeZetaChartExtension.lean > receipts/prime-zeta-analytic/SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/PrimeZetaAnalyticBridge.lean research/nightfall/formalization/finite_field/PrimeZetaChartExtension.lean docs/lean-pending-source-custody.json > receipts/prime-zeta-analytic/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
