@@ -16,12 +16,14 @@ open Finset
 variable {I Q : Type*} [Fintype I] [Fintype Q]
 
 /-- Each paid group q returns fresh reports for the members of G q. -/
-noncomputable def load (G : Q → I → Prop) (x : Q → ℝ) (i : I) : ℝ :=
-  ∑ q, if G q i then x q else 0
+noncomputable def load (G : Q → I → Prop) (x : Q → ℝ) (i : I) : ℝ := by
+  classical
+  exact ∑ q, if G q i then x q else 0
 
 /-- Total dual price assigned to a group. -/
-noncomputable def groupPrice (G : Q → I → Prop) (y : I → ℝ) (q : Q) : ℝ :=
-  ∑ i, if G q i then y i else 0
+noncomputable def groupPrice (G : Q → I → Prop) (y : I → ℝ) (q : Q) : ℝ := by
+  classical
+  exact ∑ i, if G q i then y i else 0
 
 /-- Exact, source-model group fractional-cover weak duality.
 The only hypotheses are nonnegative primal/dual variables and the
@@ -84,7 +86,12 @@ theorem reciprocal_KL_cover_weak_duality
     (∑ i, y i / d i) ≤ ∑ q, c q * x q := by
   have h := group_information_cover_weak_duality
     G (fun i => 1 / d i) c x y hx hy hcover hdual
-  simpa only [one_div, div_eq_mul_inv, mul_comm] using h
+  calc
+    (∑ i, y i / d i) = ∑ i, (1 / d i) * y i := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      simp [div_eq_mul_inv, mul_comm]
+    _ ≤ ∑ q, c q * x q := h
 
 end Nightfall.InformationCover
 
