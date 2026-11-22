@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 33,
+  "revision": 34,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v33: 483 pending exact Lean blobs, 67 frozen historical records unchanged; 550 total main Lean sources. New ProductBUSphereExtension source is unreviewed. Future additions and edits must pass strict source custody workflow on research/nightfall/**/*.lean, not only on manifest changes.",
+  "scope": "v34: 483 pending exact Lean blobs, 67 frozen historical records unchanged; 550 total main Lean sources. New ProductBUSphereExtension source is unreviewed. Future additions and edits must pass strict source custody workflow on research/nightfall/**/*.lean, not only on manifest changes. New t=0 endpoint source explicitly unreviewed in custody despite independent scoped CI.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -376,6 +376,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
+      "source_blob_sha": "8314fd4cfca632a9a2ae7da85e863ea8cb0ed7e4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Pending source-custody record only. Independent exact-head pinned Lean result 45055510914 supports the named t=0 algebraic Jacobian inverse, but is not recognized by this manifest as a full global proof passport; ProductSphereZero, full derivative and manifold parity remain unproved."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
