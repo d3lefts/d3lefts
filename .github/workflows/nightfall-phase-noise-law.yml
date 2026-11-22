@@ -1,0 +1,27 @@
+name: NIGHTFALL phase-retrieval noise-law adversarial regression (not formal certification)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/phase-noise-linear-law-20261122/**'
+      - '.github/workflows/nightfall-phase-noise-law.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: phase-noise-law-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  exact-and-adversarial-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact constants, geometric inflation, noisy compatible fibers, negative controls
+        run: |
+          python3 -m py_compile research/nightfall/phase-noise-linear-law-20261122/check_noise_modulus.py
+          python3 research/nightfall/phase-noise-linear-law-20261122/check_noise_modulus.py
