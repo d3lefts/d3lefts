@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 33,
+  "revision": 34,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v33: 483 pending exact Lean blobs, 67 frozen historical records unchanged; 550 total main Lean sources. New ProductBUSphereExtension source is unreviewed. Future additions and edits must pass strict source custody workflow on research/nightfall/**/*.lean, not only on manifest changes.",
+  "source_commit": "bc64c0073f94830a32e4a64779fa06c1c16afdee",
+  "scope": "v34: 484 pending exact Lean blobs in this #1063 source-checked branch, 67 frozen historical records unchanged; 551 total checkout Lean sources. ProductBUSphereCompact is unreviewed source custody, separate from its pinned scoped Lean receipt 45057244989. No ProductSphereZero theorem or novelty promotion. Source edits must pass strict custody.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -396,6 +396,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUSphereCompact.lean",
+      "source_blob_sha": "325ee8dc11ce0b1a9d2cbd350380f59affda8c80",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Separate pinned Lean build run 45057244989 compiled named ProductBUSphereCompact scope at exact blob 325ee8dc11ce0b1a9d2cbd350380f59affda8c80 with ordinary axioms; this register is conservative source custody only and does NOT certify ProductSphereZero, peer review or novelty."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean",
