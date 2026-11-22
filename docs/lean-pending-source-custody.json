@@ -299,13 +299,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUConcreteHomotopy.lean",
-      "source_blob_sha": "b576c15d203bbfe55b70b152bef0b0fa9c346e1f",
+      "source_blob_sha": "e8b0105b2f7f5b52cde07de58f33434f9eb29277",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Original exact concrete equivariant homotopy H_A,B with two pure characters, endpoint and scalar smoothness candidate. Parent #1050/#1032 original source credit retained. Pinned CI and independent audit pending; no topological zero or global regular 1D manifold claim."
+      "receipt_scope": "Original concrete two-character homotopy exact endpoints, sign laws, quadratic unit constraint and joint parameter/spacetime C-infinity candidate for parametric Sard. Pending pinned Lean/axiom CI. Parent #1032 current source blob 2bf3e3e1cb9ec4568a1afef95c4c5bf375a5ebb6 synchronized. Full fderiv, manifold and ProductSphereZero open."
     },
     {
       "path": "research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean",
