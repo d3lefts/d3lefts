@@ -8,6 +8,7 @@ on:
       - "research/nightfall/structural_information/TENSOR_TWO_QUERY_COMPRESSED_EFFECT_20261122.md"
       - "research/nightfall/structural_information/check_t2_compressed_effect_exact.py"
       - "research/nightfall/structural_information/check_t2_soft_spectrum_exact.py"
+      - "research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py"
       - ".github/workflows/nightfall-t2-low-trace.yml"
   pull_request:
     paths:
@@ -16,6 +17,7 @@ on:
       - "research/nightfall/structural_information/TENSOR_TWO_QUERY_COMPRESSED_EFFECT_20261122.md"
       - "research/nightfall/structural_information/check_t2_compressed_effect_exact.py"
       - "research/nightfall/structural_information/check_t2_soft_spectrum_exact.py"
+      - "research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py"
       - ".github/workflows/nightfall-t2-low-trace.yml"
 
 jobs:
@@ -33,14 +35,18 @@ jobs:
           sha256sum research/nightfall/structural_information/TENSOR_TWO_QUERY_COMPRESSED_EFFECT_20261122.md
           sha256sum research/nightfall/structural_information/check_t2_compressed_effect_exact.py
           sha256sum research/nightfall/structural_information/check_t2_soft_spectrum_exact.py
+          sha256sum research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py
       - name: Compile exact checker
         run: |
           python -m py_compile research/nightfall/structural_information/check_tensor_t2_low_trace.py
           python -m py_compile research/nightfall/structural_information/check_t2_compressed_effect_exact.py
           python -m py_compile research/nightfall/structural_information/check_t2_soft_spectrum_exact.py
+          python -m py_compile research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py
       - name: Replay direct circuit, Fourier, and conditional expectation
         run: python research/nightfall/structural_information/check_tensor_t2_low_trace.py
       - name: Check compressed centered-effect high-rank projector
         run: python research/nightfall/structural_information/check_t2_compressed_effect_exact.py
       - name: Exact full-span soft spectral-tail certificate replay
         run: python research/nightfall/structural_information/check_t2_soft_spectrum_exact.py
+      - name: Exact two-dimensional oracle sectors and indefinite polar effect
+        run: python research/nightfall/structural_information/check_t2_multidim_indefinite_exact.py
