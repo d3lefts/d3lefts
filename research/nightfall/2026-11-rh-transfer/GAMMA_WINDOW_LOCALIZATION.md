@@ -53,11 +53,43 @@ Therefore `(4/5)e^(1/5) <= 171/175` and `(6/5)e^(-1/5) <= 60/61`. Summing the tw
 
 The constants are deliberately conservative. The optimal Chernoff exponents are `I(4/5)=4/5-1-log(4/5)` and `I(6/5)=6/5-1-log(6/5)`; tightening them is **not** a scientific breakthrough and is not currently a priority.
 
+## Corollary: prescribed windows with an integer derivative order
+
+The apparent integer-rounding gap can be resolved without changing the source theorem. Fix any `lambda > 0`, `U > 0` such that `t=lambda*U >= 10`. Choose
+
+\[
+k=\left\lfloor\frac{5t}{4}\right\rfloor,\qquad j=k-1\ge0.
+\]
+
+Then **for this prescribed** `[U,3U/2]`, rather than a window chosen after fixing `j`, the same normalized kernel satisfies
+
+\[
+\frac{\int_0^U u^j e^{-\lambda u}\,du+\int_{3U/2}^\infty u^j e^{-\lambda u}\,du}
+{\int_0^\infty u^j e^{-\lambda u}\,du}
+\le \left(\frac{2919}{2944}\right)^k+\left(\frac{60}{61}\right)^k.
+\]
+
+**Proof.** By the floor inequality and `t>=10`,
+
+\[
+\frac{8t}{7}\le\frac{23t}{20}\le\frac{5t}{4}-1\le k\le\frac{5t}{4}.
+\]
+
+Consequently `t<=7k/8` and `3t/2>=6k/5`. Under the substitution `Z=lambda*u`, the lower tail is at most `P(Z<=7k/8)` and the upper tail at most `P(Z>=6k/5)`. For the lower tail, Markov applied to `exp(-Z/7)` gives
+
+\[
+\Pr(Z\le7k/8)\le \left(\frac78 e^{1/8}\right)^k.
+\]
+
+Taylor's bound at `1/8` is `e^(1/8)<=417/368`, so the base is at most `(7/8)*(417/368)=2919/2944<1`. The upper tail uses the preceding `60/61` bound. **QED.**
+
+This proves the *elementary kernel integer-rounding bridge* for any prescribed window with `lambda U>=10`. It does **not** close the Landau analytic-continuation, zero-exclusion, arithmetic one-sided bound, or source-statement equivalence gates. The checker now additionally probes seven prescribed windows by a separate finite Poisson-tail formula.
+
 ## Source-to-target bridge **NOT established**
 
 The original argument needs more than concentration:
 
-1. For *arbitrarily large prescribed windows* with `U=log Y`, choose an integer `j` close to `(5/4) lambda U - 1`; our proposition sets `U` from `j` and does not by itself prove the integer-rounding bridge in precisely the source's parameter regime.
+1. The elementary prescribed-window integer rounding is now proved above for `lambda U>=10`; matching the exact kernel normalization and `lambda` choices in the pinned source is still open.
 2. Establish the signed-to-positive conversion and tail bounds for the specific `G` and analytic continuation in the actual Landau lemma; positivity of the gamma kernel alone does not exclude poles or zeros.
 3. Supply the one-sided Riesz-weighted Chebyshev bounds from the arithmetic theta-lift construction. **Nothing in this note establishes these bounds.**
 4. Match every introduced quantity to a pinned Lean declaration and challenge statement; independent semantic review remains OPEN.
@@ -98,5 +130,5 @@ This does **not** improve Alpöge's asymptotics: his `m,k,n` are not independent
 - **Best verified construction:** exact rational gamma-tail constants with a short, complete paper proof; no formal kernel certificate and no new analytic number-theory theorem.
 - **Independent audit:** pre-register a separate derivation using an Erlang/Poisson tail or integration-by-parts and check every `j>=0` step symbolically, not merely by sampled numerics.
 - **Novelty gate:** existing gamma Chernoff bounds are standard; new contributions require a genuinely stronger theorem, a nontrivial transfer with proven feasibility, or a new formally verified bridge not already in Lean/Mathlib.
-- **Budget/stop:** stop optimizing these easy constants after 8 sample tests and exact arithmetic checks; invest next in the *prescribed-window-to-integer-index* bridge and its proof dependencies. If that is already in the RH source, extract/cite it rather than redescribe it as original.
+- **Budget/stop:** stop optimizing these easy constants after 8 base and 7 prescribed-window sample tests and exact arithmetic checks; invest next in the semantic Landau/analytic-continuation bridge and its proof dependencies. If that is already in the RH source, extract/cite it rather than redescribe it as original.
 - **Status:** illustrative standalone lemma, verified handwritten reasoning plus machine-checked rational arithmetic, independent human review pending.
