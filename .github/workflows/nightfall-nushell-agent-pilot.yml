@@ -82,6 +82,7 @@ jobs:
           set -euo pipefail
           cp /tmp/nightfall-python-task.json /tmp/agent-valid-receipt.json
           python3 scripts/nightfall_agent_tasks.py verify /tmp/agent-valid-receipt.json
+          python3 scripts/nightfall_agent_tasks.py replay /tmp/agent-valid-receipt.json
           nu -c 'use research/nightfall/agent-operations/task-interface.nu *; task-verify /tmp/agent-valid-receipt.json | to json -r'
           python3 - <<'PY'
           import json
@@ -117,3 +118,34 @@ jobs:
             exit 1
           fi
           echo 'PASS: forged proofs, statuses, invalid Git SHA and duplicate IDs fail closed'
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/agent-valid-receipt.json',encoding='utf8'))
+          for kind in ('head','anchor','output'):
+            mutant=json.loads(json.dumps(d))
+            if kind=='head':
+              old=mutant['source']['git_head']
+              mutant['source']['git_head']=('0' if old[0]!='0' else '1')+old[1:]
+            elif kind=='anchor':
+              key=sorted(mutant['source']['anchor_sha256'])[0]
+              old=mutant['source']['anchor_sha256'][key]
+              mutant['source']['anchor_sha256'][key]=('0' if old[0]!='0' else '1')+old[1:]
+            else:
+              old=mutant['execution']['stdout_sha256']
+              mutant['execution']['stdout_sha256']=('0' if old[0]!='0' else '1')+old[1:]
+            json.dump(mutant,open('/tmp/agent-forged-'+kind+'.json','w'))
+          PY
+          for bad in /tmp/agent-forged-head.json /tmp/agent-forged-anchor.json /tmp/agent-forged-output.json; do
+            # Structural checks deliberately do not authenticate correctly shaped hashes.
+            python3 scripts/nightfall_agent_tasks.py verify "$bad"
+            if python3 scripts/nightfall_agent_tasks.py replay "$bad" >/dev/null 2>&1; then
+              echo "::error::Replay accepted plausible forged checksum $bad"
+              exit 1
+            fi
+            if BAD_RECEIPT="$bad" nu -c 'use research/nightfall/agent-operations/task-interface.nu *; task-verify $env.BAD_RECEIPT' >/dev/null 2>&1; then
+              echo "::error::Nu replay accepted plausible forged checksum $bad"
+              exit 1
+            fi
+          done
+          echo 'PASS: all three plausible-hash mutations rejected under strict replay'
+
