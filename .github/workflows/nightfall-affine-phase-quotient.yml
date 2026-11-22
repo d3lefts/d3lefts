@@ -1,0 +1,25 @@
+name: NIGHTFALL affine phase-oracle quotient exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/AFFINE_CHARACTER_ORACLE_QUOTIENT_20261122.md'
+      - 'scripts/check_affine_quotient_exact.py'
+      - '.github/workflows/nightfall-affine-phase-quotient.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-quotient:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install fixed exact algebra engine
+        run: python3 -m pip install --user sympy==1.14.0
+      - name: Exact source and adversarial negative control
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          python3 -V
+          sha256sum scripts/check_affine_quotient_exact.py research/nightfall/structural_information/AFFINE_CHARACTER_ORACLE_QUOTIENT_20261122.md
+          python3 scripts/check_affine_quotient_exact.py
+          echo 'SCOPED exact rational instance, NOT a Lean proof nor a T2 quantum theorem certificate.'
