@@ -20,7 +20,7 @@ Original ATLAS source: facebookresearch/atlas-lean at
 Original interval theorem: NIGHTFALL merged PR #1061.
 -/
 
-open scoped Manifold Topology
+open scoped Manifold Topology ContDiff
 open Manifold
 
 namespace Nightfall.ProductBUGlobalBoundary
