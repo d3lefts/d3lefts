@@ -3,7 +3,7 @@
   "revision": 44,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v44: 501 pending Lean source blobs, historical 67 source-matched records unchanged. Added actual time-zero reference orbit and final smooth geometry reduction as UNREVIEWED source; global atlas, boundary identification, unconditional ProductSphereZero remain uncertified.",
+  "scope": "v44: 503 pending Lean sources, original verified historical records preserved. Six global geometric assembly modules and pinned workflow merged onto latest main (via PR-only merge commit). All six remain UNREVIEWED in custody pending source-exact named Lean CI; global smooth fiber atlas and time-zero boundary geometry are explicit hypotheses, ProductSphereZero unproved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -508,6 +508,16 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean",
+      "source_blob_sha": "fb885c8fd0664896ed4aaeb890c40cf8620a520e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source copied byte-for-byte from scoped passing pinned Lean run 45060016205; source custody only (not historical global certificate). No full ProductSphereZero or new mathematical priority."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean",
       "source_blob_sha": "85d70972e8e30fdee85b311725b775e115374749",
       "classification": "unreviewed-source",
@@ -526,6 +536,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source custody only. Pinned external ATLAS parametric Sard ordinary-axiom replay in merged #1048; theorem-level regular parameter existence in this branch is not yet source-certified. ProductSphereZero remains open."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUSmoothInverse.lean",
+      "source_blob_sha": "827afac9c159ca5e219c0a7a5d16f33bf0e28fcd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source copied byte-for-byte from scoped passing pinned Lean run 45060020899; source custody only (not historical global certificate). No full ProductSphereZero or new mathematical priority."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUSphereCompact.lean",
