@@ -1,0 +1,65 @@
+name: NIGHTFALL Nushell agent interface pilot (not proof certification)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/agent-operations/passport-preflight.nu'
+      - 'research/nightfall/agent-operations/NUSHELL_AGENT_PILOT_RFC_20261122.md'
+      - '.github/workflows/nightfall-nushell-agent-pilot.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  compare-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: hustcer/setup-nu@1b8faed9a8ff673c8ce0beae243e0b72d0787241 # v3, immutable SHA
+        with:
+          version: '0.117.0'
+          check-latest: false
+      - name: Preserve existing authoritative Python proof passport gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check_proof_passport_v2.py --self-test
+      - name: Compare Nu read-only summary against independent Python projection
+        shell: bash
+        run: |
+          set -euo pipefail
+          nu --version
+          nu research/nightfall/agent-operations/passport-preflight.nu docs/proof-passport-v2.json > /tmp/nightfall-nu-summary.json
+          python3 - <<'PY'
+          import collections,json
+          src=json.load(open('docs/proof-passport-v2.json',encoding='utf8'))
+          got=json.load(open('/tmp/nightfall-nu-summary.json',encoding='utf8'))
+          expected=collections.Counter(x['assertion_status'] for x in src['records'])
+          assert got['kind']=='nightfall.agent-preflight.v1'
+          assert got['schema']==src['schema']
+          assert got['record_count']==len(src['records'])
+          assert got['status_counts']==[
+              {'status':k,'count':v} for k,v in sorted(expected.items())
+          ]
+          assert got['mathematical_certification'] is False
+          assert got['semantic_review'] is False
+          print('PASS: Nushell summary agrees with independent Python read of source JSON')
+          bad=dict(src)
+          bad['schema']='nightfall.INVALID'
+          json.dump(bad,open('/tmp/invalid-nu-schema.json','w'))
+          duplicate=dict(src)
+          duplicate['records']=[dict(x) for x in src['records']]
+          duplicate['records'][-1]['id']=duplicate['records'][0]['id']
+          json.dump(duplicate,open('/tmp/invalid-nu-duplicate.json','w'))
+          PY
+          for mutant in /tmp/invalid-nu-schema.json /tmp/invalid-nu-duplicate.json; do
+            if nu research/nightfall/agent-operations/passport-preflight.nu "$mutant" > /tmp/invalid-nu-output.txt 2>&1; then
+              echo "::error::Nushell accepted deliberately invalid input $mutant"
+              exit 1
+            fi
+          done
+          echo 'PASS: wrong schema and duplicate IDs both rejected'
