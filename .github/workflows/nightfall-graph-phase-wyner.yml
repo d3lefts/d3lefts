@@ -1,0 +1,22 @@
+name: NIGHTFALL graph-phase cut-code exact audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/GRAPH_CUT_PHASE_WYNER_IDENTITY_20261122.md'
+      - 'scripts/check_graph_phase_wyner_exact.py'
+      - '.github/workflows/nightfall-graph-phase-wyner.yml'
+  workflow_dispatch:
+
+jobs:
+  graph-finite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Source-identified exact GF2 code and graph checks
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum scripts/check_graph_phase_wyner_exact.py research/nightfall/structural_information/GRAPH_CUT_PHASE_WYNER_IDENTITY_20261122.md
+          python3 scripts/check_graph_phase_wyner_exact.py
+          echo 'NOTE: exact small graphs do not certify a general Wyner or Route1 theorem.'
