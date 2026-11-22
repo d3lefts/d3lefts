@@ -81,3 +81,22 @@ In particular, the obstruction survives adaptivity of the second query to the fi
 5. **Priority:** compare frame/complement-property literature, Beals et al. query-polynomial theory, and Wyner/Gács–Körner/support-rectangle prior art before any external "novel breakthrough" declaration.
 
 **Stop rule:** promote finite decoder arithmetic only on exact replay; general theorem only with scoped paper proof; end-to-end Lean / novel flags only after named kernel terminal, independent analytic audit, and dated specialist priority review.
+
+## 5. Explicit source-exact Route 1 bound (no invented hidden constants)
+
+The merged `Route1PolylogSimulation.route1_polylog_simulation` source (PR #970) states, for a mixture of M product laws, a depth-n deterministic query tree with error at most
+\[
+\Pr(|f-\widehat f|>\varepsilon)
+\le \frac{K/(2\gamma)+\log M/(\eta^2w_0)}{n}
+  +\frac{\tau}{\varepsilon^2},
+\]
+where \(K=\pi^2d^2/2\), \(\gamma=\sqrt{3\tau^5/[12500(\pi^2(d+1)^2)^6]}\), and the theorem supplies the positive auxiliary constants \(\eta,w_0\). For our **independent decoded blocks**, take M=1, so \(\log M=0\). For \(0<\varepsilon,\delta\le1\), let
+\[
+d=\max(1,2T),\qquad \tau=\frac{\varepsilon^2\delta}{2},\qquad
+n=\left\lceil\frac{K}{\gamma\delta}\right\rceil.
+\]
+Then \(K/(2\gamma n)\le\delta/2\) and \(\tau/\varepsilon^2=\delta/2\), hence the acceptance-estimation failure probability is ≤δ. Three exact intensity queries per decoded query yield **at most 3n original physical readings**, uniformly in B. For T≥1 this is
+\[
+3n=O\!\left(T^8\varepsilon^{-5}\delta^{-7/2}\right).
+\]
+This is a correct **explicit instantiation of the existing source theorem**, not new optimized complexity or a certified quantum-circuit terminal. It does not charge computation or storage of the offline decision tree, which may grow badly with B.
