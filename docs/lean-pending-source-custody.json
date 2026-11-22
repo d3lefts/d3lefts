@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 40,
+  "revision": 41,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v40: preserve historical records and register exact merged-source candidate for three independent antipodal homeomorphisms, without auto-promoting to an unconditional theorem.",
+  "scope": "v41: preserve all previously recorded Lean source blobs and register the two source-exact topology composition modules with no automatic terminal theorem promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -378,6 +378,16 @@
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUActualFiberOrbit.lean",
+      "source_blob_sha": "110202706a3fd206aea36e69f05818c3cfd7bb91",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only: New composition of existing source-certified genuine free sign actions with component fixedpoint contradiction; scoped CI pending. Does not certify global boundary manifold, ProductSphereZero, novelty or publication."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
       "source_blob_sha": "114c4159630eb787e494dc4aa6448dc24884e919",
       "classification": "unreviewed-source",
@@ -386,6 +396,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source-integrated exact Lean module from #1070, blob 114c4159630eb787e494dc4aa6448dc24884e919, successfully compiled on frozen Lean pin with ordinary axioms in run 45058026793. Scope: compact actual product-sphere time-slab zero fiber and exclusion of zero-free t=1 endpoint; NO global 1D manifold, ProductSphereZero or priority."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
+      "source_blob_sha": "07ec9863d19a25196e2a84e187b36a500da6bfba",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only: Source byte preserved from #1057, pinned CI #45056662932 passed; interval component orbit theorem only. Does not certify global boundary manifold, ProductSphereZero, novelty or publication."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
