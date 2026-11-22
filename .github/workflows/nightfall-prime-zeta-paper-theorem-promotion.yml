@@ -1,0 +1,48 @@
+name: NIGHTFALL prime-zeta paper theorem promotion audit
+on:
+  pull_request:
+    paths:
+      - 'docs/recent-research.json'
+      - 'research/nightfall/2026-11-recent-passports/prime-zeta-first-strip.md'
+      - 'research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary.md'
+      - 'research/nightfall/structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md'
+      - 'scripts/check_prime_zeta_paper_theorem_promotions.py'
+      - '.github/workflows/nightfall-prime-zeta-paper-theorem-promotion.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/recent-research.json'
+      - 'research/nightfall/2026-11-recent-passports/prime-zeta-first-strip.md'
+      - 'research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary.md'
+      - 'research/nightfall/structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md'
+      - 'scripts/check_prime_zeta_paper_theorem_promotions.py'
+      - '.github/workflows/nightfall-prime-zeta-paper-theorem-promotion.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scoped-paper-theorem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify paper theorem and fail-closed website claim tier
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/check_prime_zeta_paper_theorem_promotions.py
+          python scripts/check_prime_zeta_paper_theorem_promotions.py --self-test
+      - name: Replay finite arithmetic negatives and modular checks
+        run: |
+          set -euo pipefail
+          python scripts/rigidity_to_certificate_exact_audit.py
+      - name: Source/provenance receipt, NOT analytic theorem certification
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum docs/recent-research.json scripts/check_prime_zeta_paper_theorem_promotions.py scripts/rigidity_to_certificate_exact_audit.py research/nightfall/structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md research/nightfall/2026-11-recent-passports/prime-zeta-first-strip.md research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary.md
+          echo 'Paper proofs, classical dependencies, finite synthetic audit; NO non-author proof review, NO named Lean analytic replay, NO global novelty clearance'
