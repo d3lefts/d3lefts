@@ -93,6 +93,35 @@ Consider a real causal intensity protocol with continuously selected **normalize
 
 **Extension:** Theorem 1 and the latter part of Theorem 2 place **no rank or evenness assumptions on later scalar readings** other than continuity of their composite input map. Consequently the prefix-rank-degeneration necessity is stronger than a quadratic rank-one-specific argument. The orientation-defect condition remains tied to quadratic rank-one physical detector selection and the already established oriented-row lower bound.
 
+
+## Corollary 4: a quantitative, finite-radius collision certificate
+
+In Theorem 2, additionally suppose every one of the first n sensing rows has Euclidean norm at most L>0. Let \(z_\pm=u\pm v\) be the pair selected by Theorem 1, with u=e_n and v∈S^(n−2). Since \(z_+^2=z_-^2\) coordinatewise, their chronological sensing matrices coincide:
+\[
+B=A(z_+)=A(z_-).
+\]
+The **actual indistinguishable inputs** are
+\[
+x_\pm=B^{-1}(u\pm v),
+\]
+and
+\[
+d_{\pm}(x_+,x_-)
+=\min(\|x_+-x_-\|_2,\|x_++x_-\|_2)
+=2\min(\|B^{-1}u\|_2,\|B^{-1}v\|_2).
+\]
+As the operator norm obeys \(\|B\|_{\mathrm{op}}\le\|B\|_F\le\sqrt n\,L\), both unit vectors u,v satisfy \(\|B^{-1}u\|,\|B^{-1}v\|\ge1/(\sqrt nL)\). Hence the indistinguishable pair obeys the **uniform geometric separation**
+\[
+\boxed{d_\pm(x_+,x_-)\ge\frac{2}{\sqrt n\,L}}.
+\]
+Any decoder from these identical transcripts consequently incurs worst-case projective Euclidean error at least \(1/(\sqrt nL)\) on a set containing the pair.
+
+If in addition every prefix matrix has smallest singular value at least \(\sigma>0\), then \(\|x_\pm\|\le\sqrt2/\sigma\). Thus **even on the known ball of radius \(R=\sqrt2/\sigma\)**, no decoder can have worst-case projective error smaller than \(1/(\sqrt nL)\) from n+k≤2n−2 continuous readings with this architecture.
+
+For normalized rank-one prefix rows L=1. In the n=4, m=6 case the construction therefore produces projective separation at least 1, and worst-case decoder error at least 1/2; with a uniform \(\sigma\) these witnesses lie in the ball of radius \(\sqrt2/\sigma\).
+
+**Status/limits:** This bound is an exact paper corollary of the full-rank-prefix homeomorphism and classical BU argument, not an optimized constant, external novelty result, stochastic-noise theorem, or generic stability statement for rank-degenerate protocols. The ball claim requires the **uniform** positive singular-value hypothesis; merely pointwise invertibility yields no global radius bound. The decoder may be arbitrary or discontinuous. The bound is in absolute projective Euclidean distance, not relative reconstruction error.
+
 ## Independent proof attack and edge cases
 
 1. **n=2:** S^(n−2)=S⁰ and k≤0; the theorem says two coordinate squares cannot identify (1,1) and (1,−1), while a third fixed row suffices. All definitions work.
