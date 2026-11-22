@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/finite_field/ProductBUCharacterAverage.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUPerturbation.lean'
       - '.github/workflows/nightfall-product-bu-character-average.yml'
   workflow_dispatch:
 permissions:
@@ -22,6 +23,8 @@ jobs:
           set -euo pipefail
           src=research/nightfall/formalization/finite_field/ProductBUCharacterAverage.lean
           ! grep -nE '\b(sorry|admit|axiom)\b' "$src"
+          cp research/nightfall/formalization/finite_field/ProductSphereObstruction.lean /tmp/mathlib4/ProductSphereObstruction.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ProductSphereObstruction.olean ProductSphereObstruction.lean)
           cp "$src" /tmp/mathlib4/ProductBUCharacterAverage.lean
           (cd /tmp/mathlib4 && lake env lean ProductBUCharacterAverage.lean) 2>&1 | tee /tmp/product-bu-character-average.log
           python3 - <<'PY'
@@ -43,5 +46,25 @@ jobs:
               assert axioms <= {'propext','Classical.choice','Quot.sound'}, (name,axioms)
               print(name,sorted(axioms))
           assert 'sorryAx' not in source
+          other=research/nightfall/formalization/finite_field/ProductBUPerturbation.lean
+          ! grep -nE '\\b(sorry|admit|axiom)\\b' "$other"
+          cp "$other" /tmp/mathlib4/ProductBUPerturbation.lean
+          (cd /tmp/mathlib4 && lake env lean ProductBUPerturbation.lean) 2>&1 | tee /tmp/product-bu-perturbation.log
+          python3 - <<'PYP'
+          import re
+          source=open('/tmp/product-bu-perturbation.log').read()
+          for suffix in ('applyParam_rankOne_unit','weighted_perturbation_surjective',
+                         'product_weighted_perturbation_surjective'):
+              name='Nightfall.ProductBUPerturbation.'+suffix
+              m=re.search(re.escape("'" + name + "' depends on axioms: [")+r'([^\\]]*)\\]',source,re.S)
+              if m is None:
+                  assert f"'{name}' does not depend on any axioms" in source, name
+                  axioms=set()
+              else:
+                  axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
+              assert axioms <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
+              print(name,sorted(axioms))
+          assert 'sorryAx' not in source
+          PYP
           print('PASS: two-character finite-group projector certified, no topology theorem')
           PY
