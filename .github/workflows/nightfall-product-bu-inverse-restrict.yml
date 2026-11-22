@@ -1,0 +1,61 @@
+name: NIGHTFALL C-infinity derivative-restricted inverse (Lean)
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUInverseRestriction.lean'
+      - '.github/workflows/nightfall-product-bu-inverse-restrict.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUInverseRestriction.lean'
+      - '.github/workflows/nightfall-product-bu-inverse-restrict.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-regular-inverse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Check import and new smooth inverse restriction theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-inverse-restriction
+          for M in ProductBUSmoothInverse ProductBUInverseRestriction; do
+            cp research/nightfall/formalization/finite_field/$M.lean /tmp/mathlib4/$M.lean
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-inverse-restriction/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-inverse-restriction/$M.log"
+          done
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/product-bu-inverse-restriction/ProductBUInverseRestriction.log').read_text()
+          n='Nightfall.ProductBUInverseRestriction.exists_local_smooth_inverse_restriction'
+          assert 'theorem '+n in s, ('MISSING_THEOREM',n)
+          m=re.search(r"'"+re.escape(n)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          assert m or "'"+n+"' does not depend on any axioms" in s, ('MISSING_AXIOMS',n)
+          xs={x.strip() for x in m.group(1).split(',') if x.strip()} if m else set()
+          assert xs <= {'propext','Classical.choice','Quot.sound'},xs
+          assert 'sorryAx' not in s
+          print('PASS: valid C∞ inverse on derivative-invertibility restriction')
+          print('NOT PROVED: global manifold with boundary or ProductSphereZero')
+          PY
+      - name: Source and toolchain receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-inverse-restriction
+          git rev-parse HEAD > receipts/product-bu-inverse-restriction/commit.txt
+          cat lean-toolchain > receipts/product-bu-inverse-restriction/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUInverseRestriction.lean > receipts/product-bu-inverse-restriction/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-inverse-restriction-lean
+          path: receipts/product-bu-inverse-restriction
+          if-no-files-found: warn
+          retention-days: 90
