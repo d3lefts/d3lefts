@@ -42,7 +42,9 @@ jobs:
               ('applyParam_rankOne_unit','weighted_perturbation_surjective',
                'product_weighted_perturbation_surjective',
                'radial_direction_right_inverse',
-               'augmented_constraint_parameter_surjective'),
+               'augmented_constraint_parameter_surjective',
+               'weighted_perturbation_surjective_nonzero',
+               'augmented_constraint_parameter_surjective_nonzero'),
             'Nightfall.ProductBUInterval.':
               ('interval_has_fixedPoint','homeomorphic_interval_has_fixedPoint')
           }
