@@ -35,7 +35,7 @@ Also \(|\bigcup_iV_i|\le\sum_i(r_i+k_i-2)\le6\). Thus at most three **free site 
 
 The lower family in the exact checker gives \(\binom L3\) distinct unordered primitive four-row representations for one fixed nonzero frequency, so this **representation multiplicity** has growth order \(\Theta(L^3)\). That conclusion concerns multiplicity, **not** a matching classical query lower bound. This reconstructs one substantial combinatorial ingredient; it **does not** verify the six repeated-label operator-group estimates or the zero-triple coefficient bound for all quantum circuits.
 
-## Preregistered finite tests and results
+## Independently specified finite tests and results
 
 The two audit scripts were written independently of the candidate branch code and first executed locally in exact Python rational/bitwise arithmetic. Inputs, predicted competing outcomes, and results:
 
@@ -53,10 +53,22 @@ Each check is source-exact and reproducible from Python's standard library:
 ```sh
 python3 scripts/check_tensor_t2_rankfree_independent.py
 python3 scripts/check_tensor_t2_rankfree_coherence.py
+python3 scripts/check_tensor_t2_row_target_polynomial.py
 ```
 
 The coherence checker constructs a **10-dimensional** one-dimensional-per-frequency rational phase-oracle representation (the more general rank-two-sector case has a different checker in #1002), rational Householder inter-query unitary, and full-rank positive effect \(P=I/2+|\psi\rangle\langle\psi|/4\). It independently confirms direct acceptance equals the four-path XOR expansion and its exact Walsh transform, with nonzero crossed-stage terms. The complexity theorem remains untested outside these finite model families.
 
+## Cross-instance sharp row-target polynomial
+
+Parallel [PR #1029](https://github.com/d3lefts/d3lefts/pull/1029) states the sharper special-target formula. For target z in R_L let A_k(L,z) count unordered GF2-independent k-sets of nonzero row labels with XOR z. The proposed formulas are:
+
+    A_1=1, A_2=L, A_3=4*C(L,2), A_4=5*C(L,2)+30*C(L,3).
+
+The new *independent* checker scripts/check_tensor_t2_row_target_polynomial.py exhaustively checks all subsets of rows through L=4, with two different target rows at each depth. Exact outputs for L=1..4: [1,1,0,0], [1,2,4,5], [1,3,12,45], [1,4,24,150].
+
+Paper-level all-k mechanism: for k>=2 a primitive C with XOR z cannot contain z; E=C union {z} is a minimally dependent product-tensor circuit. By Lovitz–Petrov Corollary 21, E varies on at most k-1 tensor sites. Delete the fixed factors outside that support: XOR, independence and row distinctness are preserved. Local GL2(F2) acts transitively on nonzero row factors, so each j-site support yields a fixed nonnegative integer number a_{k,j}, independent of L. Thus A_k(L,z)=sum_{j=0}^{k-1} a_{k,j}*C(L,j). The small-k coefficient table requires a separate finite enumeration; it does not follow from Lovitz–Petrov without that check.
+
+**Model boundary:** Sharp special-row-target counts do NOT bound arbitrary non-row Fourier frequencies. The earlier 312/1992 maxima count ordered, zero-permitted four-slot representations across all nonzero frequencies, and are not in conflict with row-target unordered counts. This is a paper-level structural theorem plus finite exact tests, NOT a Lean proof, unconditional quantum query simulator, or priority clearance.
 ## Independent proof-attack obligations
 
 1. **Tensor geometry:** reconstruct the exact inequality from Lovitz–Petrov over \(\mathbb F_2\), then prove that for a minimum-cardinality primitive reference set of size \(\le4\), every alternative representation has at most three *freely variable* local sites after the forced-site patterns and circuit partitions. Audit the \(5^4(1+4\cdot3^6)^4\sum_{j\le3}\binom Lj\) constant, including zero labels and multiplicities of ordered paths.
