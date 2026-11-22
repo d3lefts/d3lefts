@@ -1,4 +1,4 @@
-name: NIGHTFALL BU character averaging kernel
+name: NIGHTFALL BU symmetrization and perturbation kernel
 on:
   pull_request:
     paths:
@@ -9,7 +9,7 @@ on:
 permissions:
   contents: read
 jobs:
-  character-projector:
+  formal-operators:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
@@ -17,54 +17,42 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
-      - name: Compile exact source and reject nonstandard axioms
+      - name: Pinned Lean source and axiom audit
         shell: bash
         run: |
           set -euo pipefail
-          src=research/nightfall/formalization/finite_field/ProductBUCharacterAverage.lean
-          ! grep -nE '\b(sorry|admit|axiom)\b' "$src"
-          cp research/nightfall/formalization/finite_field/ProductSphereObstruction.lean /tmp/mathlib4/ProductSphereObstruction.lean
-          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ProductSphereObstruction.olean ProductSphereObstruction.lean)
-          cp "$src" /tmp/mathlib4/ProductBUCharacterAverage.lean
-          (cd /tmp/mathlib4 && lake env lean ProductBUCharacterAverage.lean) 2>&1 | tee /tmp/product-bu-character-average.log
+          dir=research/nightfall/formalization/finite_field
+          for M in ProductSphereObstruction ProductBUCharacterAverage ProductBUPerturbation; do
+            ! grep -nE '\b(sorry|admit|axiom)\b' "$dir/$M.lean"
+            cp "$dir/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "/tmp/$M.log"
+          done
           python3 - <<'PY'
           import re
-          source=open('/tmp/product-bu-character-average.log').read()
-          names=['charU_flip_left','charU_flip_right','charV_flip_left',
-                 'charV_flip_right','charU_fixed','charV_fixed',
-                 'charU_idempotent','charV_idempotent',
-                 'charU_charV_zero','charV_charU_zero',
-                 'continuous_charU','continuous_charV']
-          for suffix in names:
-              name='Nightfall.ProductBUCharacterAverage.' + suffix
-              m=re.search(re.escape("'" + name + "' depends on axioms: [") + r'([^\]]*)\]',source,re.S)
-              if m is None:
-                  assert f"'{name}' does not depend on any axioms" in source, name
-                  axioms=set()
-              else:
-                  axioms={v.strip() for v in m.group(1).split(',') if v.strip()}
-              assert axioms <= {'propext','Classical.choice','Quot.sound'}, (name,axioms)
-              print(name,sorted(axioms))
-          assert 'sorryAx' not in source
-          other=research/nightfall/formalization/finite_field/ProductBUPerturbation.lean
-          ! grep -nE '\\b(sorry|admit|axiom)\\b' "$other"
-          cp "$other" /tmp/mathlib4/ProductBUPerturbation.lean
-          (cd /tmp/mathlib4 && lake env lean ProductBUPerturbation.lean) 2>&1 | tee /tmp/product-bu-perturbation.log
-          python3 - <<'PYP'
-          import re
-          source=open('/tmp/product-bu-perturbation.log').read()
-          for suffix in ('applyParam_rankOne_unit','weighted_perturbation_surjective',
-                         'product_weighted_perturbation_surjective'):
-              name='Nightfall.ProductBUPerturbation.'+suffix
-              m=re.search(re.escape("'" + name + "' depends on axioms: [")+r'([^\\]]*)\\]',source,re.S)
-              if m is None:
-                  assert f"'{name}' does not depend on any axioms" in source, name
-                  axioms=set()
-              else:
-                  axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
-              assert axioms <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
-              print(name,sorted(axioms))
-          assert 'sorryAx' not in source
-          PYP
-          print('PASS: two-character finite-group projector certified, no topology theorem')
+          sources={
+            'Nightfall.ProductBUCharacterAverage.':
+              ('charU_flip_left','charU_flip_right','charV_flip_left',
+               'charV_flip_right','charU_fixed','charV_fixed',
+               'charU_idempotent','charV_idempotent',
+               'charU_charV_zero','charV_charU_zero',
+               'continuous_charU','continuous_charV'),
+            'Nightfall.ProductBUPerturbation.':
+              ('applyParam_rankOne_unit','weighted_perturbation_surjective',
+               'product_weighted_perturbation_surjective')
+          }
+          for prefix,names in sources.items():
+              mod=prefix.rstrip('.').split('.')[-1]
+              source=open('/tmp/'+mod+'.log',encoding='utf8').read()
+              assert 'sorryAx' not in source
+              for suffix in names:
+                  name=prefix+suffix
+                  m=re.search(re.escape("'" + name + "' depends on axioms: [")+r'([^\]]*)\]',source,re.S)
+                  if m is None:
+                      assert f"'{name}' does not depend on any axioms" in source,name
+                      axioms=set()
+                  else:
+                      axioms={v.strip() for v in m.group(1).split(',') if v.strip()}
+                  assert axioms <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
+                  print(name,sorted(axioms))
+          print('PASS: symmetrization/parameter right-inverse only; NO topological zero theorem')
           PY
