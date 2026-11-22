@@ -21,7 +21,7 @@ family, this theorem gives the contradiction required for the maximal
 ProductSphereZero terminal. They are not declared unconditionally here.
 -/
 
-open scoped Manifold Topology
+open scoped Manifold Topology ContDiff
 open Manifold
 
 namespace Nightfall.ProductBUFinalGeometricReduction
