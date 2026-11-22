@@ -1,6 +1,6 @@
 # Product-sphere zero to a scale-free, decoder-independent phase-retrieval risk floor
 
-**Version:** 2026-11-22, candidate quantitative corollary, conditional on the original `ProductSphereZero` theorem for the stated dimensions. **Certification:** exact separation implication encoded in `ProductBUQuantitativeCollision.lean` and sent to a pinned Lean compiler gate; risk and scaling theorems below are paper proofs only, **not Lean-certified**. This does not close the global zero-fiber atlas or upgrade the external novelty status.
+**Version:** 2026-11-22, candidate quantitative corollary, conditional on the original `ProductSphereZero` theorem for the stated dimensions. **Certification:** exact separation and decoder pointwise-risk implications encoded in `ProductBUQuantitativeCollision.lean` and `ProductBUDecoderRiskFloor.lean` and sent to a pinned Lean compiler gate; no passing exact-head Lean receipt yet. Scale-R and random-decoder conclusions below are paper proofs only, **not Lean-certified**. This does not close the global zero-fiber atlas or upgrade the external novelty status.
 
 ## Concrete research objective
 
@@ -28,6 +28,15 @@ If u,v are unit vectors, let x=u+v and y=u-v. Then
 Thus d_pm(x,y)=2 EXACTLY, independent of n and of <u,v>. The original genuine-prefix causal collision theorem supplies `T_a(x)=T_a(y)` whenever its `ProductSphereZero` hypothesis is available. New scoped Lean source `ProductBUQuantitativeCollision.lean` composes these statements and records the two exact squares, with `ProductSphereZero` still an explicit theorem parameter.
 
 **Independent proof attack:** The ambient function-space norm is typically a sup norm in Lean, so the statement uses the original `sqNorm` (finite coordinate-sum-of-squares) rather than an incorrect inferred norm type. The construction has distinct sign classes even when either x or y is zero: with unit u,v, both quotient separation squares remain four.
+
+## Formal decoder-independent extension (new Lean target)
+
+The source `ProductBUDecoderRiskFloor.lean` extends the exact pair separation certificate to a **pointwise, decoder-independent lower bound**. Define the squared quotient error `E_z(x)=min(sqNorm(z-x),sqNorm(z+x))`. For any x,y with squared separation `sqNorm(x-y)=sqNorm(x+y)=4` and any estimate z, four applications of the Euclidean two-point inequality yield
+
+    E_z(x)+E_z(y) >= 2,
+    max(E_z(x), E_z(y)) >= 1.
+
+Composing this with the **explicitly assumed** `ProductSphereZero` produces an indistinguishable pair whose worst squared error is at least one for *every* decoder output, without requiring continuity of the decoder. This is presently a **source-proposed Lean theorem with its kernel build awaiting CI**, not a verified Lean theorem. The scale-R result below is independently proved on paper and is not part of the current Lean certificate. Neither stage closes the global topological proof.
 
 ## Lemma 2: exact scaling of a genuinely causal protocol
 
