@@ -3,7 +3,7 @@
 **NIGHTFALL · 2026-11-22 · v1.0.**  
 **Status:** direct elementary algebra and physical-oracle *paper-level model equivalence* on a restricted ±1 signal ensemble; finite exact matrix check included; no Lean terminal, external novelty approval, or unconditional generic two-query simulation claimed. Uses the bounded-degree graph-character theorem in this branch and the original restricted squared-linear sensing oracle of phase retrieval.
 
-## 1. Same physical oracle, same charged query
+## 1. Same indexed intensity values, distinct classical and coherent access conventions
 
 Let G=(V,E) be a **known** finite simple graph, |V|=n≥2. The secret real signal is on the **unit sphere**:
 
@@ -19,7 +19,7 @@ Thus one legal classical intensity query reveals the **edge character**
 
 No sign-sensitive amplitude, full-code block read, relative sign between independent blocks, or new arbitrary sensing row is being silently granted. Each edge intensity costs one actual query. The restricted source distribution has uniform σ∈{±1}^V, modulo the physically invisible global sign; equivalently secret bits s∈F₂^V with σ_v=(-1)^{s_v} and a global 1-bit gauge.
 
-### Coherent query interface (one physical response query, not uncomputed samples)
+### Coherent query interface (one *assumed unitary response-oracle call*, not an ordinary laboratory measurement)
 
 The standard **reversible response-bit oracle** for the same measured intensity symbols, with the fixed known encoding y↔d, acts on a query-address register e∈E∪{0} and response bit b by
 
@@ -31,7 +31,7 @@ Prepare the response qubit |−⟩=(|0⟩−|1⟩)/√2. Then a **single** coher
        = (−1)^{d_e(x)} |e⟩⊗|−⟩⊗|w⟩
        = χ_e(x) |e⟩⊗|−⟩⊗|w⟩.                                      (P2)
 
-This is *exact* phase kickback for every coherent superposition of addresses, and returns the fixed |−⟩ unchanged. Its effective phase oracle is
+**Model qualification:** a reversible coherent response-bit oracle is an explicit idealized quantum-query primitive. The algebra does **not** construct such an oracle from a destructive laboratory intensity sensor at equal hardware cost or under finite precision/noise. The classical oracle only returns one exact indexed intensity symbol. Subject to the declared unitary response-oracle access convention, this is *exact* phase kickback for every coherent superposition of addresses, and returns the fixed |−⟩ unchanged. Its effective phase oracle is
 
     O_phase(x) = Π_0 + Σ_{e∈E} χ_e(x) Π_e,
 
