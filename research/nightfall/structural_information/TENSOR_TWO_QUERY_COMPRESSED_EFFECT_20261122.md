@@ -394,3 +394,40 @@ Thus \(\Theta_{1/10}=1/4\) exactly.
 The checker separately minimizes the convex piecewise-linear
 objectives over all exact rational breakpoints, not just the
 chosen center.
+
+
+## Adversarial exact check with multidimensional oracle sectors
+
+A separate independent rational checker,
+check_t2_multidim_indefinite_exact.py, uses the L=2 tensor source
+but assigns a **two-dimensional Hilbert projector to each of the
+ten frequency labels**. The 20-dimensional circuit has a dense
+rational initial state, two genuine oracle applications separated
+by a nontrivial rational Householder unitary, and a full-rank
+positive effect
+\[
+P=\frac12 I+\frac14 uu^*-\frac1{16}vv^*,\quad
+\langle u,v\rangle=0,\ \|u\|=\|v\|=1.
+\]
+Its centered signed effect is indefinite, with
+\(\operatorname{Tr}|P-\tfrac12I|=5/16\).
+The test independently constructs every path amplitude and
+compares against all 16 direct circuit states, reconstructs its
+Walsh spectrum, explicitly averages over groups with identical
+queried original parities, and verifies all three operator-energy
+inequalities with **three nonzero original queried rows**.
+
+The exact nonzero discarded amplitude energy and strict bound are
+\[
+\mathbb E\|F-F_W\|^2
+=\frac{6035410741}{585003171025000}>0,\qquad
+M(t\eta_a+\eta_b)=\frac{1887}{20000}<1.
+\]
+It also verifies the signed quadratic acceptance-prediction
+Lipschitz bound on every secret, not merely a phase-vector norm.
+This targets a genuine risk in one-dimensional-only test cases:
+there is no assumption that two-query path states
+from different first-query labels are orthogonal.
+
+The check is exact finite arithmetic, **not** a proof of the
+all-circuit claim or a Lean kernel theorem.
