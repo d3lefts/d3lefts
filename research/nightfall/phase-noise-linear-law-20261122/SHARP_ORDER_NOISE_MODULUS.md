@@ -36,6 +36,18 @@ E_2(2,0,R;\sigma)\le R/2+18\sigma/R.
 
 Thus the minimax excess error is Theta(sigma/R), with a sharp *exponent* 1 and unoptimized constants. The lower is conditional on the source-level nontrivial topological collision statement in #997, not on a new Lean proof in this PR. The inequality also implies E_2(2,0,R;0)=R/2 by taking sigma down to zero and using the same collision lower bound. No strict advantage for adaptive rows at the level of the noise **exponent** follows, since Theorem B already uses fixed rows.
 
+## Dimension-independent robust floor (source-dependent corollary)
+
+Theorem A is not restricted to two dimensions. Combining it with the **paper-level** positive-width ball collision of merged PR #997 (for any continuous causal protocol with at most 2n−2 readings) yields, for every n≥2 and 0<sigma≤R²/64,
+
+\[
+E_{2n-2}(n,0,R;\sigma)
+\ \ge\ \frac R2\sqrt{1+\frac{\sigma}{2R^2}}
+\ \ge\ \frac R2+\frac{\sigma}{12R}.
+\]
+
+This is an **all-dimensional lower bound**, not a sharp all-dimensional minimax law: a matching O(sigma/R) upper bound is known here only for n=2. Its proof relies on the separated topological collision from #997; the analytic collision-inflation step is dimension-free. The first inequality uses a common observed transcript forced by adversarial errors; the second follows from \(\sqrt{1+u}\ge1+u/3\) for \(0\le u\le3\). The noise-model scope is normalized rows, additive bounded scalar intensity noise, and selectors defined on every noisy prefix; lower bounds on this class also apply to more restricted regularity classes.
+
 ## Consequence: selection regularity is not the exponent bottleneck in 2D
 
 For every prescribed nonnegative Lipschitz bound L on the noisy-prefix **row-selection maps**, the same Theta(sigma/R) excess holds at n=2,m=2: fixed rows have history-Lipschitz constant **zero**, and the lower bound applies to the larger unrestricted class. This finding therefore excludes a separation in the *noise exponent* based only on selector-history Lipschitz regularity in this particular minimax model. It does **not** establish equality of sharp constants, efficient decoding, or stability of the row parameters as sigma changes.
