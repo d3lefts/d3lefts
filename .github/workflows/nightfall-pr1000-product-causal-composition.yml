@@ -1,0 +1,76 @@
+name: PR1000 product-sphere / genuine-prefix conditional Lean terminal
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean'
+      - 'research/nightfall/formalization/finite_field/GenuinePrefixPhase.lean'
+      - '.github/workflows/nightfall-pr1000-product-causal-composition.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  conditional-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact source dependencies and conditional terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/pr1000-product-causal
+          for M in ProductSphereObstruction GenuinePrefixPhase ProductSphereCausalComposition; do
+            cp "research/nightfall/formalization/finite_field/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/pr1000-product-causal/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/pr1000-product-causal/$M.log"
+          done
+      - name: Strict exact theorem audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('receipts/pr1000-product-causal')
+          s=''.join(f.read_text() for f in sorted(p.glob('*.log')))
+          names=[
+            'Nightfall.ProductSphereObstruction.monomial_nonzero',
+            'Nightfall.ProductSphereObstruction.mixedProduct_nonzero',
+            'Nightfall.GenuinePrefixPhase.causal_collision_of_genuine_prefix_zeros',
+            'Nightfall.ProductSphereCausal.collision_of_product_sphere_zero',
+            'Nightfall.ProductSphereCausal.testU_flip_left',
+            'Nightfall.ProductSphereCausal.testV_flip_right'
+          ]
+          for name in names:
+            hit=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+            assert hit,('MISSING_AXIOMS',name)
+            a={x.strip() for x in hit.group(1).split(',') if x.strip()}
+            assert a <= {'propext','Classical.choice','Quot.sound'},(name,a)
+          assert 'sorryAx' not in s
+          assert 'theorem Nightfall.ProductSphereCausal.collision_of_product_sphere_zero' in s
+          assert 'hBU : ProductSphereZero' in s
+          assert 'hcontU :' in s and 'hcontV :' in s
+          print('PASS: genuine causal physical collision conditional on ProductSphereZero and the two test continuity properties.')
+          print('NOT PROVED: ProductSphereZero, admissible selector -> test continuity (reachable-only).')
+          PY
+      - name: Preserve exact-head receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/pr1000-product-causal
+          git rev-parse HEAD > receipts/pr1000-product-causal/commit.txt
+          cat lean-toolchain > receipts/pr1000-product-causal/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/{ProductSphereObstruction,GenuinePrefixPhase,ProductSphereCausalComposition}.lean > receipts/pr1000-product-causal/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr1000-product-causal-terminal-receipt
+          path: receipts/pr1000-product-causal
+          if-no-files-found: warn
+          retention-days: 90
