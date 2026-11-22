@@ -1,0 +1,75 @@
+name: NIGHTFALL product BU sphere-only smooth equivariant approximation
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUSphereSmoothApprox.lean'
+      - '.github/workflows/nightfall-product-bu-sphere-smoothing.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUSphereSmoothApprox.lean'
+      - '.github/workflows/nightfall-product-bu-sphere-smoothing.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sphere-smoothing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact-source pinned dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-sphere-smoothing
+          for M in ProductSphereObstruction ProductBUCharacterAverage ProductBUSmoothCharacterApprox ProductBUSphereSmoothApprox; do
+            cp "research/nightfall/formalization/finite_field/$M.lean" "/tmp/mathlib4/$M.lean"
+          done
+          curl --fail --location --silent --show-error \
+            "https://raw.githubusercontent.com/d3lefts/d3lefts/6b29f98d2645c51fcb7119166a390b86e881d191/research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean" \
+            --output /tmp/mathlib4/ProductBUSphereExtension.lean
+          sha256sum /tmp/mathlib4/ProductBUSphereExtension.lean | tee receipts/product-bu-sphere-smoothing/SHA256-MERGED-DEPENDENCY
+          for M in ProductSphereObstruction ProductBUCharacterAverage ProductBUSmoothCharacterApprox ProductBUSphereExtension ProductBUSphereSmoothApprox; do
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-sphere-smoothing/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-sphere-smoothing/$M.log"
+          done
+      - name: Strict named theorem source and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/product-bu-sphere-smoothing/ProductBUSphereSmoothApprox.log").read_text()
+          names=["unitVec_neg","charU_extension_agrees","charV_extension_agrees",
+                 "exists_smooth_sphere_charU_approx","exists_smooth_sphere_charV_approx"]
+          for name in names:
+              n="Nightfall.ProductBUSphereSmooth."+name
+              m=re.search(r"'"+re.escape(n)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m,("MISSING",n)
+              a={z.strip() for z in m.group(1).split(',') if z.strip()}
+              assert a <= {"propext","Classical.choice","Quot.sound"},(n,a)
+          assert "sorryAx" not in s
+          assert "theorem Nightfall.ProductBUSphereSmooth.exists_smooth_sphere_charU_approx" in s
+          assert "theorem Nightfall.ProductBUSphereSmooth.exists_smooth_sphere_charV_approx" in s
+          print("PASS sphere-only continuous inputs -> arbitrarily close C-infinity antipodal-character approximants.")
+          print("OPEN relative parametric transversality, compact boundary orbit parity, maximal ProductSphereZero.")
+          PY
+      - name: Record exact frozen pin and SHA
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-sphere-smoothing
+          git rev-parse HEAD > receipts/product-bu-sphere-smoothing/commit.txt
+          cat lean-toolchain > receipts/product-bu-sphere-smoothing/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUSphereSmoothApprox.lean > receipts/product-bu-sphere-smoothing/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-sphere-smoothing-lean-receipt
+          path: receipts/product-bu-sphere-smoothing
+          if-no-files-found: warn
+          retention-days: 90
