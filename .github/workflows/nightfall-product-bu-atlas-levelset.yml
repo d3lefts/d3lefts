@@ -38,6 +38,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          mkdir -p /tmp/mathlib4/.lake/build/lib/lean/MathlibExt/Geometry/Manifold
           for M in LocalGraph LocalParametrization; do
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/MathlibExt/Geometry/Manifold/$M.olean" "MathlibExt/Geometry/Manifold/$M.lean") 2>&1 | tee "receipts/product-bu-atlas-levelset/$M.log"
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-atlas-levelset/$M.log"
