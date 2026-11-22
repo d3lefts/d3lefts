@@ -1,5 +1,5 @@
 # Simon matching–Finner domination law: candidate sharp structural cost
-Version v1.0 | 2026-11-21/22 | Provisional paper proof + exact arithmetic checker | NOT Lean-certified | NOT priority cleared.
+Version v1.1 (critical audit addendum) | 2026-11-21/22 | Provisional paper proof + exact arithmetic checker | NOT Lean-certified | NOT priority cleared.
 
 ## Objective, feasible set and attribution
 
@@ -24,6 +24,35 @@ with w_θ≥0, sum w_θ=1 and q_{θB} any probability masses on the full output-
   C_N := inf_{P, decoders, Q, R} κ R (1+ln M).
 
 Do not confuse C_N with Wyner common information or with the exact degree/error-calibrated simulator budget; it is a proxy measuring **actual block-query cost × density amplification × mixture entropy upper bound**.
+
+## v1.1 adversarial audit: robust trade-off, stronger decoder bound, and limitation
+
+**Priority correction (2026-11-21 CST):** The exact asymptotic value 1/2 belongs only to the **author-chosen** score κ·R·(1+ln M). Route 1 has a polynomial rather than fixed linear dependence on the density factor R. Do not present the 1/2 as a universal quantum-advantage law. The stronger theorem is the score-independent trade-off.
+
+**Robust finite-N statement.** Under the same precise assumptions as Lemmas 1–4 (fixed partition P, arbitrary M-component block-product mixture Q, pointwise ν≤RQ, and exact deterministic whole-block reconstruction with at most κ original-coordinate queries, including outside-block/adaptive queries), for every N=2^m≥2,
+
+    ln M + ln R + [N(2κ−1)/(2(N−1))] ln N
+       ≥ ln[(N!/(N/2)!)/(N−1)].
+
+Consequently for every fixed ε with 0<ε<1/2, κ≤(1/2−ε)N implies
+
+    ln(MR) ≥ [ε N²/(N−1)] ln N − (N/2)ln 2 − ln(N−1).
+
+The second inequality uses only N!/(N/2)!≥(N/2)^(N/2), so MR≥exp(Ω_ε(N ln N)) for all sufficiently large N. This is independent of any selected way to score κ, R and M. The earlier exact C_N/N→1/2 is a valid **secondary corollary for its explicitly chosen score**, not the principal result.
+
+**Adaptive decoder audit — original lemma valid.** Fix s≠0 and a supported injectively labeled Simon table x. Trace the decoder's complete deterministic *adaptive* query path. If a shift-s coset C intersecting B was never queried (including queries outside B), change its label to an output symbol unused by the other N/2−1 cosets. A fresh label exists because the alphabet has N symbols and there are N/2 occupied cosets. The modified table remains on the same Simon promise slice S_s, gives identical responses on all queried addresses, and forces exactly the same adaptive decisions, but has a different value on at least one coordinate in B. Thus a universally correct decoder must query at least one address from every coset intersecting B, even if it learns the hidden shift from earlier answers. This fails if the output alphabet is restricted to only N/2 symbols, or reconstruction need only succeed with some probability; neither modification is allowed in the theorem.
+
+**Strictly stronger block bound.** For a fixed block B of size b, let h_s(B) count shift-s matching pairs whose two endpoints are in B. The number of s-cosets meeting B is b−h_s(B), and summing over the N−1 possible shifts yields sum_s h_s(B)=binom(b,2). Some shift has h_s(B)≤floor[binom(b,2)/(N−1)]. Therefore
+
+    κ_B ≥ b−floor[binom(b,2)/(N−1)] ≥ ceil(b/2).
+
+In particular, if binom(b,2)<N−1, then κ_B≥b: small blocks cannot save any original-coordinate queries. The original ceil(b/2) bound is **valid but not tight** (a two-coordinate block costs two queries when N≥4). All cases of the original proof remain valid, including adaptive outside-block queries.
+
+**Decisive limitation: cost characterization fails on Simon.** The standard Simon shift-finding promise has Θ(sqrt N) classical randomized/deterministic query complexity (birthday collision / XOR difference-cover). The author-chosen static full-block-reconstruction score has Θ(N), since the matching lower bound and one-whole-table block upper construction squeeze it. Thus their ratio is Θ(sqrt N), and the numerical query costs have a quadratic separation. This is a counterexample to claiming this score characterizes classical query cost, even though it remains sufficient as a general Route 1 simulation upper bound.
+
+**Next mechanism:** allow transcript-conditioned, *task-relative* structural certificates with adaptive stopping when the relevant hidden cause (here s) is known. A dynamically selected partition alone may still force unnecessary table reconstruction; the objective/polynomial and success certificate must enter the resource. Formalize the score-free MR-kappa frontier before refining constants.
+
+**Evidence and limits:** The strengthened finite checker exhausts decoder-transcript ambiguity through this larger bound for N=2,4 and checks shift-coset averaging on all 15 partitions for N=4 and selected N=8 partitions. This is an author-side adversarial audit, not independent non-author certification. The general matching/Finner proof remains paper-level pending Lean or independent expert review; credit classical Finner and Simon query prior art.
 
 ## Lemma 1: hidden-shift matching contraction (Finner certificate)
 
