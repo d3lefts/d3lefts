@@ -32,20 +32,23 @@ def tripleRead (s : Fin 8) : Fin 3 → Fin 26 :=
 theorem tripleRead_injective : Function.Injective tripleRead := by
   decide
 
-/-- Total (nonuniform) exact decoder. Its behavior off the eight valid
-three-reading strings is irrelevant to the original-signal promise. -/
-noncomputable def decodeTriple (v : Fin 3 → Fin 26) : Fin 8 :=
-  if h : ∃ s : Fin 8, tripleRead s = v then Classical.choose h else 0
+/-- A fully computable, constant-size eight-word codebook decoder.
+The branch off the codebook defaults to 0. This eliminates any need for
+nonconstructive choice when translating a classical block read. -/
+def decodeTriple (v : Fin 3 → Fin 26) : Fin 8 :=
+  if v = tripleRead 0 then 0
+  else if v = tripleRead 1 then 1
+  else if v = tripleRead 2 then 2
+  else if v = tripleRead 3 then 3
+  else if v = tripleRead 4 then 4
+  else if v = tripleRead 5 then 5
+  else if v = tripleRead 6 then 6
+  else if v = tripleRead 7 then 7
+  else 0
 
 theorem decodeTriple_correct (s : Fin 8) :
     decodeTriple (tripleRead s) = s := by
-  classical
-  unfold decodeTriple
-  split
-  · next h =>
-      exact tripleRead_injective (Classical.choose_spec h)
-  · next h =>
-      exact False.elim (h ⟨s,rfl⟩)
+  decide
 
 /-- Real physical four-sensor table induced by independent hidden blocks. -/
 def rawTable {B : Type*} (x : B → Fin 8) : B × Fin 4 → Fin 26 :=
@@ -54,7 +57,7 @@ def rawTable {B : Type*} (x : B → Fin 8) : B × Fin 4 → Fin 26 :=
 /-- The actual existing decision-tree type is preserved, with a new query
 alphabet and raw-address space. Each hidden block read is replaced by
 exactly three physical sensor queries, and decoder lookup is free. -/
-noncomputable def compileTree {B : Type*} :
+def compileTree {B : Type*} :
     DTree B (Fin 8) → DTree (B × Fin 4) (Fin 26)
   | .leaf v bad => .leaf v bad
   | .node b cont =>
