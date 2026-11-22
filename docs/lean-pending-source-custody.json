@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 43,
+  "revision": 44,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "Source-custody revision 43: 497 pending exact Lean sources, 67 historical source-matched records untouched. Added reference t0 face and C-infinity open-inverse proof sources, both with separately successful scoped Lean receipts. Global ProductSphereZero and all-n terminal unproved.",
+  "scope": "v44: 499 immutable pending source entries alongside 67 frozen historical source-matched Lean records. Includes PhaseBlockRoute1 and PhaseBlockQuantumDegree, each with separate pinned named Lean compiler receipts; new full phase-block quantum Route1 terminal remains draft #1084, not certified or priority-cleared.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3646,6 +3646,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean",
+      "source_blob_sha": "939b5855e510f76ca7ec89d1666e27b45cf7d065",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 immutable source custody for two *separately named* kernel-checked phase-block/complex-degree modules, from PR #1084. CI runs 45058739792 and 45059108351 establish only their named declarations. No full raw-circuit-to-Route1 terminal certificate, quantum state simulator, independent priority or referee."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockRoute1.lean",
+      "source_blob_sha": "5f08403421e30dc8bfd0f0727c0f8a246f81f9b6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 immutable source custody for two *separately named* kernel-checked phase-block/complex-degree modules, from PR #1084. CI runs 45058739792 and 45059108351 establish only their named declarations. No full raw-circuit-to-Route1 terminal certificate, quantum state simulator, independent priority or referee."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean",
