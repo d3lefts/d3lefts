@@ -2,7 +2,7 @@
   "schema": "nightfall-lean-pending-source-custody-v1",
   "revision": 35,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "2b7c22162d97ef80c7899a19ae1622fe27d2c12c",
+  "source_commit": "69034e989ae68557f3f53b5fd3aa14e12d934bc3",
   "scope": "v35: 485 pending exact Lean blobs, 67 frozen historical records unchanged; 552 total checkout Lean sources. New ProductBUCompactFiber is source-custody only; separate pinned Lean theorem/axiom test required. ProductSphereZero and final all-n theorem remain open.",
   "sources": [
     {
@@ -379,7 +379,7 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
-      "source_blob_sha": "65635fca2be99b3f4f59e94335e6a91297cabee1",
+      "source_blob_sha": "114c4159630eb787e494dc4aa6448dc24884e919",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
