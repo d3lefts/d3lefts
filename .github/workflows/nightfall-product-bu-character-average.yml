@@ -35,6 +35,7 @@ jobs:
                'charV_flip_right','charU_fixed','charV_fixed',
                'charU_idempotent','charV_idempotent',
                'charU_charV_zero','charV_charU_zero',
+               'charU_error_le','charV_eq_charU_swap','charV_error_le',
                'continuous_charU','continuous_charV'),
             'Nightfall.ProductBUPerturbation.':
               ('applyParam_rankOne_unit','weighted_perturbation_surjective',
