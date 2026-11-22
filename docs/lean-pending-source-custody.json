@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 45,
+  "revision": 46,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v45: 504 pending Lean source blobs, original historical 67 source-matched records unchanged. Exact global geometry assembly including canonical signed-axis boundary source remains unreviewed in custody; full maximal ProductSphereZero and theorem priority unverified.",
+  "scope": "v46: exact pending source custody after adding smooth ContDiff notation to six global geometry modules. Original 67 certified rows untouched; current six need new kernel replay, unconditional ProductSphereZero remains open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -389,13 +389,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUAxisBoundaryTerminal.lean",
-      "source_blob_sha": "55ad244f26534b678d68c62df281b04ba66f5da0",
+      "source_blob_sha": "ecdaed123a3998fbc3f581f0db5ac54a7423abe9",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 source custody only: canonical reference axis zero supplies real boundary point, reducing global smooth fiber terminal to manifold-with-boundary structure, t=0 boundary identity, and concrete homotopy sign/endpoint equations. Requires independent exact-head Lean source/axiom CI, not ProductSphereZero itself."
+      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
@@ -409,23 +409,23 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentClassification.lean",
-      "source_blob_sha": "0b552294d1f853215356c4a2fee73e5bddbe0878",
+      "source_blob_sha": "679db75bdaa6faef0b1c634c5f9fa5e4045a8712",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 scoped component classification using compactness, local connectedness, open-submanifold inheritance and ATLAS. Compile/axiom check is separate; the particular zero-fiber manifold-with-boundary and ProductSphereZero remain open."
+      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
-      "source_blob_sha": "86013f1a76f34ca049098d92561b6318ef056f8f",
+      "source_blob_sha": "c7bad81a3523d7e9bd164e2d9d76f452d180d150",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 exact Git source custody for second boundary endpoint derived from compact smooth component and ATLAS interval diffeo. Not yet independently Lean compiled/axiom audited; does not establish smooth manifold structure on real zero fiber or the ProductSphereZero theorem."
+      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
@@ -459,33 +459,33 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUFinalGeometricReduction.lean",
-      "source_blob_sha": "6daf1423d3a06435819513e3c7c274eec4b118be",
+      "source_blob_sha": "759720210e68f470394c19ac8175389a0d05fbf1",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 source custody only: exact reference t=0 orbit transfer and final source-explicit product-BU geometry reduction. Named Lean compiler/axiom CI required separately. The existence of the global smooth zero-fiber manifold and correct time-zero boundary remains an explicit input, not a certified ProductSphereZero."
+      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUGlobalAssembly.lean",
-      "source_blob_sha": "d02a9e947c6e1dd5bb638035e206a04e6dc3654c",
+      "source_blob_sha": "02cb32f25275c40f18c10866d6036a661971fb4b",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 source-custody only for global geometric composition theorem: actual compact zero-fiber, smooth 1D manifold-with-boundary *premise*, reference four-point boundary *premise*, genuine free signs, interval classification and second endpoint. Not a kernel certificate or unconditional ProductSphereZero, nor priority determination."
+      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean",
-      "source_blob_sha": "49d0ddb3cf2ce56886ddadf76dcc63d93b196fda",
+      "source_blob_sha": "4ff8ec14307e07ec895ee573131de248c62415dc",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 exact-source custody; source upgraded to retain smooth interval diffeomorphism. All named Lean proof and ATLAS classification dependencies require separate pinned CI. Actual zero-fiber global manifold is not certified."
+      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
