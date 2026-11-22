@@ -1,0 +1,39 @@
+name: NIGHTFALL six-site all-frequency tensor bound independent audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/check_tensor_allfreq_sixsite.py'
+      - '.github/workflows/nightfall-tensor-sixsite-check.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  six-site-adversarial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Source-exact independent tensor-circuit enumeration
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p sixsite-receipt
+          python3 -B research/nightfall/structural_information/check_tensor_allfreq_sixsite.py 2>&1 | tee sixsite-receipt/exact.log
+          grep -q 'HARD SIX-SITE: eight-row binary product circuit, exactly 6 active sites, PASS' sixsite-receipt/exact.log
+          grep -q 'PASS: independent six-site circuit decomposition finite tests only.' sixsite-receipt/exact.log
+      - name: Record exact input and script hashes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p sixsite-receipt
+          git rev-parse HEAD > sixsite-receipt/head.txt
+          python3 --version > sixsite-receipt/python.txt
+          sha256sum research/nightfall/structural_information/check_tensor_allfreq_sixsite.py research/nightfall/structural_information/TENSOR_T2_ALL_FREQUENCY_SIX_SITE_20261122.md > sixsite-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: tensor-sixsite-independent-receipt
+          path: sixsite-receipt/
+          retention-days: 90
