@@ -3,8 +3,8 @@ on:
   pull_request:
     paths:
       - 'docs/recent-research.json'
-      - 'research/nightfall/2026-11-recent-passports/prime-zeta-first-strip.md'
-      - 'research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary.md'
+      - 'research/nightfall/2026-11-recent-passports/prime-zeta-first-strip-paper-theorem.md'
+      - 'research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary-paper-theorem.md'
       - 'research/nightfall/structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md'
       - 'scripts/check_prime_zeta_paper_theorem_promotions.py'
       - '.github/workflows/nightfall-prime-zeta-paper-theorem-promotion.yml'
@@ -12,8 +12,8 @@ on:
     branches: [main]
     paths:
       - 'docs/recent-research.json'
-      - 'research/nightfall/2026-11-recent-passports/prime-zeta-first-strip.md'
-      - 'research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary.md'
+      - 'research/nightfall/2026-11-recent-passports/prime-zeta-first-strip-paper-theorem.md'
+      - 'research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary-paper-theorem.md'
       - 'research/nightfall/structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md'
       - 'scripts/check_prime_zeta_paper_theorem_promotions.py'
       - '.github/workflows/nightfall-prime-zeta-paper-theorem-promotion.yml'
@@ -44,5 +44,5 @@ jobs:
         run: |
           set -euo pipefail
           git rev-parse HEAD
-          sha256sum docs/recent-research.json scripts/check_prime_zeta_paper_theorem_promotions.py scripts/rigidity_to_certificate_exact_audit.py research/nightfall/structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md research/nightfall/2026-11-recent-passports/prime-zeta-first-strip.md research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary.md
+          sha256sum docs/recent-research.json scripts/check_prime_zeta_paper_theorem_promotions.py scripts/rigidity_to_certificate_exact_audit.py research/nightfall/structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md research/nightfall/2026-11-recent-passports/prime-zeta-first-strip-paper-theorem.md research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary-paper-theorem.md
           echo 'Paper proofs, classical dependencies, finite synthetic audit; NO non-author proof review, NO named Lean analytic replay, NO global novelty clearance'
