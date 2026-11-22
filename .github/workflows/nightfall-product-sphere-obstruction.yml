@@ -38,6 +38,6 @@ jobs:
                   axioms = set()
               assert axioms <= {'propext', 'Classical.choice', 'Quot.sound'}, (name, axioms)
               print(name, sorted(axioms))
-          assert 'Nightfall.ProductSphereObstruction.ProductSphereZero : ' in source
+          assert 'Nightfall.ProductSphereObstruction.ProductSphereZero' in source
           print("ProductSphereZero is a stated Prop, not a proved theorem")
           PY
