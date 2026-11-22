@@ -27,6 +27,7 @@ jobs:
           git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
           git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
           test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = "7857a2e8c32088b5002f7cafe29a21d936baf704"
+          mkdir -p /tmp/mathlib4/MathlibExt/Geometry/Manifold /tmp/mathlib4/.lake/build/lib/lean/MathlibExt/Geometry/Manifold
           cp /tmp/atlas-lean/MathlibExt/Geometry/Manifold/LocalGraph.lean /tmp/mathlib4/MathlibExt/Geometry/Manifold/LocalGraph.lean
           (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/MathlibExt/Geometry/Manifold/LocalGraph.olean" MathlibExt/Geometry/Manifold/LocalGraph.lean) 2>&1 | tee receipts/bu-regular-graph/ATLAS.log
           cp research/nightfall/formalization/finite_field/ProductBURegularGraph.lean /tmp/mathlib4/ProductBURegularGraph.lean
