@@ -61,8 +61,10 @@ theorem zeroFiber_no_one_face (n m : ℕ)
     p.2 ≠ 1 := by
   intro h
   have hz := zeroFiber_mem n m F hp
-  apply hface p.1 hz.1
-  simpa only [h] using hz.2.2
+  rcases p with ⟨z, t⟩
+  change t = 1 at h
+  subst t
+  exact (hface z hz.1) hz.2.2
 
 #print zeroFiber_isCompact
 #print axioms zeroFiber_isCompact
