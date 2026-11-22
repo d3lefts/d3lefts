@@ -28,7 +28,10 @@ jobs:
           import re
           source = open('/tmp/product-sphere-obstruction.log', encoding='utf-8').read()
           for suffix in ('monomial_nonzero', 'mixed_top_coefficient', 'mixedProduct_nonzero',
-                         'mixedDot_flip_left', 'mixedDot_flip_right', 'continuous_mixedDot'):
+                         'mixedDot_flip_left', 'mixedDot_flip_right', 'continuous_mixedDot',
+                         'sqNorm_plus_minus_difference', 'sqNorm_eq_of_mixedDot_zero',
+                         'unitVec_ne_zero', 'plus_minus_sign_distinct',
+                         'known_sphere_geometry'):
               name = 'Nightfall.ProductSphereObstruction.' + suffix
               pat = re.escape("'" + name + "' depends on axioms: [") + r'([^\]]*)\]'
               match = re.search(pat, source, re.S)
@@ -40,5 +43,6 @@ jobs:
               assert axioms <= {'propext', 'Classical.choice', 'Quot.sound'}, (name, axioms)
               print(name, sorted(axioms))
           assert 'Nightfall.ProductSphereObstruction.ProductSphereZero' in source
+          assert 'Nightfall.ProductSphereObstruction.ProductSphereMixedZero' in source
           print("ProductSphereZero is a stated Prop, not a proved theorem")
           PY

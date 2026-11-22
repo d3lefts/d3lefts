@@ -115,6 +115,116 @@ def ProductSphereZero (n r s : ℕ) : Prop :=
     ∃ u v, UnitVec n u ∧ UnitVec n v ∧
       (∀ i, fU u v i = 0) ∧ (∀ i, fV u v i = 0)
 
+
+/-- Squared Euclidean norm in coordinates, without choosing a square root. -/
+def sqNorm (n : ℕ) (u : Fin n → ℝ) : ℝ :=
+  ∑ i, (u i) ^ 2
+
+/-- Exact polarization identity for the two candidate phase-retrieval signals. -/
+theorem sqNorm_plus_minus_difference (n : ℕ) (u v : Fin n → ℝ) :
+    sqNorm n (u + v) - sqNorm n (u - v) = 4 * mixedDot n u v := by
+  unfold sqNorm mixedDot
+  simp only [Pi.add_apply, Pi.sub_apply]
+  rw [← Finset.sum_sub_distrib]
+  calc
+    (∑ i, ((u i + v i) ^ 2 - (u i - v i) ^ 2)) =
+      ∑ i, 4 * (u i * v i) := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        ring
+    _ = 4 * ∑ i, u i * v i := by rw [Finset.mul_sum]
+
+/-- A zero of the mixed character forces equal squared norms. -/
+theorem sqNorm_eq_of_mixedDot_zero (n : ℕ) (u v : Fin n → ℝ)
+    (hz : mixedDot n u v = 0) :
+    sqNorm n (u + v) = sqNorm n (u - v) := by
+  have h := sqNorm_plus_minus_difference n u v
+  rw [hz] at h
+  linarith
+
+/-- Unit vectors cannot be the zero vector. -/
+theorem unitVec_ne_zero (n : ℕ) (u : Fin n → ℝ)
+    (hu : UnitVec n u) : u ≠ 0 := by
+  intro hz
+  unfold UnitVec at hu
+  simp [hz] at hu
+
+/-- The candidate pair is distinct modulo the global sign action. -/
+theorem plus_minus_sign_distinct (n : ℕ) (u v : Fin n → ℝ)
+    (hu : UnitVec n u) (hv : UnitVec n v) :
+    (u + v ≠ u - v) ∧ (u + v ≠ -(u - v)) := by
+  have hu0 := unitVec_ne_zero n u hu
+  have hv0 := unitVec_ne_zero n v hv
+  constructor
+  · intro h
+    have hzero : v = 0 := by
+      ext i
+      have hi := congrArg (fun w : Fin n → ℝ => w i) h
+      simp only [Pi.add_apply, Pi.sub_apply] at hi
+      change v i = (0 : ℝ)
+      linarith
+    exact hv0 hzero
+  · intro h
+    have hzero : u = 0 := by
+      ext i
+      have hi := congrArg (fun w : Fin n → ℝ => w i) h
+      simp only [Pi.add_apply, Pi.sub_apply, Pi.neg_apply] at hi
+      change u i = (0 : ℝ)
+      linarith
+    exact hu0 hzero
+
+/-- Geometric conclusion used by the known-norm phase-retrieval argument.
+This is conditional only on orthogonality, not on any topological theorem. -/
+theorem known_sphere_geometry (n : ℕ) (u v : Fin n → ℝ)
+    (hu : UnitVec n u) (hv : UnitVec n v)
+    (hzero : mixedDot n u v = 0) :
+    sqNorm n (u + v) = sqNorm n (u - v) ∧
+    (u + v ≠ u - v) ∧ (u + v ≠ -(u - v)) := by
+  exact ⟨sqNorm_eq_of_mixedDot_zero n u v hzero,
+    plus_minus_sign_distinct n u v hu hv⟩
+
+/--
+Separate topology obligation for a mixed-character extra coordinate.
+The third coordinate changes sign under both independent antipodes.
+This is NOT a theorem and is NOT implied by the pure-character predicate
+without an additional topological argument.
+-/
+def ProductSphereMixedZero (n r s : ℕ) : Prop :=
+  ∀ (fU : (Fin n → ℝ) → (Fin n → ℝ) → Fin r → ℝ)
+    (fV : (Fin n → ℝ) → (Fin n → ℝ) → Fin s → ℝ)
+    (fM : (Fin n → ℝ) → (Fin n → ℝ) → ℝ),
+    (∀ i, ContinuousOn
+      (fun p : (Fin n → ℝ) × (Fin n → ℝ) => fU p.1 p.2 i)
+      (SpherePair n)) →
+    (∀ i, ContinuousOn
+      (fun p : (Fin n → ℝ) × (Fin n → ℝ) => fV p.1 p.2 i)
+      (SpherePair n)) →
+    ContinuousOn (fun p : (Fin n → ℝ) × (Fin n → ℝ) => fM p.1 p.2)
+      (SpherePair n) →
+    (∀ u v i, UnitVec n u → UnitVec n v →
+      fU (-u) v i = -fU u v i) →
+    (∀ u v i, UnitVec n u → UnitVec n v →
+      fU u (-v) i = fU u v i) →
+    (∀ u v i, UnitVec n u → UnitVec n v →
+      fV (-u) v i = fV u v i) →
+    (∀ u v i, UnitVec n u → UnitVec n v →
+      fV u (-v) i = -fV u v i) →
+    (∀ u v, UnitVec n u → UnitVec n v →
+      fM (-u) v = -fM u v) →
+    (∀ u v, UnitVec n u → UnitVec n v →
+      fM u (-v) = -fM u v) →
+    ∃ u v, UnitVec n u ∧ UnitVec n v ∧
+      (∀ i, fU u v i = 0) ∧ (∀ i, fV u v i = 0) ∧
+      fM u v = 0
+
+
+#print axioms sqNorm_plus_minus_difference
+#print axioms sqNorm_eq_of_mixedDot_zero
+#print axioms unitVec_ne_zero
+#print axioms plus_minus_sign_distinct
+#print axioms known_sphere_geometry
+#check ProductSphereMixedZero
+
 #print axioms monomial_nonzero
 #print axioms mixed_top_coefficient
 #print axioms mixedProduct_nonzero
