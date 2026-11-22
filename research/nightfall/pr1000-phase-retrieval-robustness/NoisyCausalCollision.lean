@@ -61,7 +61,7 @@ theorem transcript_cancelled (p : Policy E) (y : E) (m : ℕ) :
   induction m with
   | zero => rfl
   | succ k ih =>
-      simp [transcript, cancellingNoise, ih]
+      simpa [transcript, cancellingNoise, ih, List.replicate_succ]
 
 /-- If the squared signal norm fits in the noise budget, every cancelling
 noise fits in that budget. -/
