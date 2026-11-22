@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 43,
+  "revision": 44,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v43: 495 pending Lean sources; 67 historical source-matched records remain unchanged. Global boundary and component classification are source-custody only, pinned source/axiom CI independently required. No all-n ProductSphereZero certification.",
+  "scope": "v44: 496 pending source blobs, 67 historical verified source records unchanged. Global smooth component interval and second endpoint source pending exact pinned Lean CI; no unconditional ProductSphereZero.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -396,6 +396,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 scoped component classification using compactness, local connectedness, open-submanifold inheritance and ATLAS. Compile/axiom check is separate; the particular zero-fiber manifold-with-boundary and ProductSphereZero remain open."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
+      "source_blob_sha": "86013f1a76f34ca049098d92561b6318ef056f8f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact Git source custody for second boundary endpoint derived from compact smooth component and ATLAS interval diffeo. Not yet independently Lean compiled/axiom audited; does not establish smooth manifold structure on real zero fiber or the ProductSphereZero theorem."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
