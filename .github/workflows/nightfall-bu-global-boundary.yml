@@ -6,6 +6,8 @@ on:
       - "research/nightfall/formalization/finite_field/ProductBUComponentClassification.lean"
       - "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean"
       - "research/nightfall/formalization/finite_field/ProductBUGlobalAssembly.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUTimeZeroOrbit.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUFinalGeometricReduction.lean"
       - "docs/lean-pending-source-custody.json"
       - ".github/workflows/nightfall-bu-global-boundary.yml"
   workflow_dispatch:
@@ -44,7 +46,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBUFiberFreeAction ProductBUIntervalStabilizer ProductBUComponentOrbit ProductBUActualFiberOrbit ProductBUGlobalBoundary ProductBUComponentClassification ProductBUComponentEndpoints ProductBUGlobalAssembly; do
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBUFiberFreeAction ProductBUIntervalStabilizer ProductBUComponentOrbit ProductBUActualFiberOrbit ProductBUGlobalBoundary ProductBUComponentClassification ProductBUComponentEndpoints ProductBUGlobalAssembly ProductBUTimeZeroOrbit ProductBUFinalGeometricReduction; do
             src="research/nightfall/formalization/finite_field/$M.lean"
             ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -100,6 +102,20 @@ jobs:
               a=set()
           assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
           print("PASS actual global zero-fiber composition",sorted(a))
+          for log,suffix in [
+              ("ProductBUTimeZeroOrbit.log","Nightfall.ProductBUTimeZeroOrbit.time_zero_real_fiber_one_orbit"),
+              ("ProductBUFinalGeometricReduction.log","Nightfall.ProductBUFinalGeometricReduction.actual_smooth_time_boundary_zero_fiber_impossible"),
+          ]:
+              data=Path("receipts/bu-global-boundary/"+log).read_text()
+              assert suffix in data,("MISSING_FINAL_COMPONENT",suffix)
+              hit=re.search(r"'"+re.escape(suffix)+r"' depends on axioms:\s*\[([^\]]*)\]",data,re.S)
+              if hit: axioms={v.strip() for v in hit.group(1).split(",") if v.strip()}
+              else:
+                  assert f"'{suffix}' does not depend on any axioms" in data,("NO_AX_RECEIPT",suffix)
+                  axioms=set()
+              assert axioms <= {"propext","Classical.choice","Quot.sound"},(suffix,axioms)
+              assert "sorryAx" not in data
+              print("PASS source-explicit final geometry declaration",suffix,sorted(axioms))
           assert all("sorryAx" not in x for x in (s,s2,s3,s4))
           print("NOT PROVED: global regular zero-fiber smooth manifold-with-boundary or ProductSphereZero")
           PY
@@ -109,7 +125,7 @@ jobs:
           mkdir -p receipts/bu-global-boundary
           git rev-parse HEAD > receipts/bu-global-boundary/nightfall-commit.txt
           cat lean-toolchain > receipts/bu-global-boundary/lean-toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/{ProductBUGlobalBoundary,ProductBUComponentClassification,ProductBUComponentEndpoints,ProductBUGlobalAssembly}.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUGlobalBoundary,ProductBUComponentClassification,ProductBUComponentEndpoints,ProductBUGlobalAssembly,ProductBUTimeZeroOrbit,ProductBUFinalGeometricReduction}.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
