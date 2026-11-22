@@ -1,0 +1,47 @@
+name: NIGHTFALL product BU sphere compactness
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUSphereCompact.lean'
+      - '.github/workflows/nightfall-product-bu-sphere-compactness.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-sphere:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Frozen-pin source compilation and theorem axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir=research/nightfall/formalization/finite_field
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact; do
+            cp "$dir/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "/tmp/$M.log"
+          done
+          python3 - <<'PY'
+          import re
+          source=open('/tmp/ProductBUSphereCompact.log').read()
+          names=['unitVec_coordinate_abs_le_one','unitVec_coordinate_mem_Icc',
+                 'unitSphere_isCompact','spherePair_isCompact','spherePair_nonempty',
+                 'positive_uniform_gap','pureEnergy_nonneg','pureEnergy_eq_zero_iff',
+                 'continuousOn_pureEnergy','exists_positive_energy_gap']
+          for suffix in names:
+              name='Nightfall.ProductBUSphereCompact.'+suffix
+              m=re.search(re.escape("'"+name+"' depends on axioms: [")+r'([^\]]*)\]',source,re.S)
+              if m is None:
+                  assert f"'{name}' does not depend on any axioms" in source,name
+                  a=set()
+              else:
+                  a={x.strip() for x in m.group(1).split(',') if x.strip()}
+              assert a <= {'propext','Classical.choice','Quot.sound'},(name,a)
+              print(name,sorted(a))
+          assert 'sorryAx' not in source
+          print('PASS exact sphere compactness; NO product BU zero existence theorem')
+          PY
