@@ -39,7 +39,7 @@ open Nightfall.ProductSpace.Mixture
 open Nightfall.Route1Polylog
 open Nightfall.ProductSpace.QuantumCircuitSimulation
 
-variable {B κ : Type*}
+variable {B κ : Type}
   [Fintype B] [DecidableEq B]
   [Fintype κ]
 
