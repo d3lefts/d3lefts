@@ -1,0 +1,38 @@
+name: NIGHTFALL tensor two-query dephasing exact replay (NOT full T2)
+
+on:
+  push:
+    paths:
+      - "research/nightfall/structural_information/TENSOR_TWO_QUERY_SAME_STAGE_20261122.md"
+      - "research/nightfall/structural_information/check_two_query_dephasing_exact.py"
+      - "research/nightfall/structural_information/check_tensor_four_distinct.py"
+      - ".github/workflows/nightfall-tensor-t2-dephasing.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/structural_information/TENSOR_TWO_QUERY_SAME_STAGE_20261122.md"
+      - "research/nightfall/structural_information/check_two_query_dephasing_exact.py"
+      - "research/nightfall/structural_information/check_tensor_four_distinct.py"
+      - ".github/workflows/nightfall-tensor-t2-dephasing.yml"
+
+jobs:
+  exact-replay:
+    name: exact rational path and tensor finite arithmetic (not theorem)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile checker sources
+        run: |
+          python -m py_compile research/nightfall/structural_information/check_two_query_dephasing_exact.py
+          python -m py_compile research/nightfall/structural_information/check_tensor_four_distinct.py
+      - name: Record source SHA-256
+        run: |
+          sha256sum research/nightfall/structural_information/TENSOR_TWO_QUERY_SAME_STAGE_20261122.md \
+            research/nightfall/structural_information/check_two_query_dephasing_exact.py \
+            research/nightfall/structural_information/check_tensor_four_distinct.py
+      - name: Exact rational path decomposition
+        run: python research/nightfall/structural_information/check_two_query_dephasing_exact.py
+      - name: Tensor subcube cancellation fibers through L=4
+        run: python research/nightfall/structural_information/check_tensor_four_distinct.py
