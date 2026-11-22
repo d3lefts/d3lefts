@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/Route1ReciprocalAtom.lean'
       - '.github/workflows/nightfall-route1-reciprocal-atom.yml'
+      - 'research/nightfall/structural_information/check_route1_injective_simon.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -15,6 +16,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+      - name: Replay finite exact atom and cover cases
+        run: python3 research/nightfall/structural_information/check_route1_injective_simon.py
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Compile and audit three exact polynomial declarations
         shell: bash
