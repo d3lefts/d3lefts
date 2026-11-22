@@ -1,5 +1,5 @@
 # Local moment conservation for bounded-degree decision-tree simulation
-**NIGHTFALL research checkpoint v1.1 — 2026-11-21/22.** Status: complete short mathematical proof, exact rational regression below, NOT Lean-certified or priority-cleared.
+**NIGHTFALL research checkpoint v1.2 — 2026-11-21/22.** Status: complete short mathematical proof, exact rational regression below, NOT Lean-certified or priority-cleared.
 
 ## Objective and source-reconciliation
 
@@ -41,6 +41,36 @@ Moment/marginal agreement transfers the expectation of every listed term exactly
 **Bayes-optimal fixed-coordinate corollary:** For every fixed S⊆I with |S|≤q, the exact conditional means E_ν[f|X_S] and E_Q[f|X_S] agree on every S-assignment of positive probability, because numerator E[f 1_{X_S=a}] uses at most d+q positions and denominator Pr(X_S=a) uses |S|. Their average conditional variances agree exactly, since f², the cross term, and conditional-mean square agree. This does not assert identical conditional means after arbitrary >q-coordinate observations.
 
 **Classical randomized trees:** for a randomized mixture of depth-q trees with input-independent random coins, apply the equality separately for each coin outcome, then average. The random bits must be independent of the sampled input law; input-correlated algorithm advice is outside scope.
+
+## Theorem 1b: a precise if-and-only-if (the upstream structural characterization)
+
+Fix finite n, nonnegative integers d and q, and set
+
+    K = min(n, max(2d,d+q)).
+
+For any two probability measures ν,Q on the same finite Cartesian alphabet, the following are **equivalent**:
+
+(A) ν and Q have identical marginals on **every** coordinate subset of size ≤K.
+
+(B) For **every** [0,1]-valued interaction-degree≤d function f and **every** deterministic depth≤q decision-tree function t with [0,1]-valued leaves, the mean squared errors are equal:
+
+    E_ν[(f−t)²] = E_Q[(f−t)²].
+
+The implication (A)⇒(B) is Theorem 1, with the bound saturated at the whole input if K≥n.
+
+**Independent converse proof, with no pseudo-randomness or quantum assumptions:** Under (B), taking t≡0 yields equality of E f² for all [0,1]-valued degree≤d f. For any local atom indicators u and v on coordinate sets A,B with |A|,|B|≤d, u,v,(u+v)/2 all have degree≤d and lie in [0,1]. Since u²=u, v²=v, the identities
+
+    E[(u+v)²/4]=(E[u]+E[v]+2 E[uv])/4
+
+force equality of E_ν[uv] and E_Q[uv]. Every local atom event involving ≤2d coordinates splits as uv with |A|,|B|≤d, so all ≤2d marginals agree. Independently, taking f≡0 shows Eν t²=EQ t² for every depth≤q tree t. In particular taking t=v, the indicator of ANY local atom on |B|≤q coordinates (computed by nonadaptive queries), proves agreement of all ≤q marginals. Finally, for any local atoms u on ≤d and v on ≤q coordinates, use f=u, t=v in (B) together with their separately established squared expectations to derive equality of E uv from
+
+    E[(u−v)²] = E[u]+E[v]−2 E[uv].
+
+Every local atom involving ≤d+q coordinates factorizes as such uv. Hence ν,Q match all marginals through max(2d,d+q), capped by n. This establishes (B)⇒(A). QED.
+
+**Quantitative converse (pointwise atom, not full marginal-TV):** If every such squared-loss expectation differs by at most η, the same polarization gives an absolute error at most 3η for each atom probability on up to 2d coordinates, and at most 3η/2 for each atom involving up to d+q coordinates. These are crude exact constants, not optimized; the first follows from E[(u+v)²/4] and both individual E[u], E[v] differences, the second from E[(u−v)²] and two individual terms. The constants are law-independent, but summing atom errors to total variation can incur alphabet-size dependence. This is a direct **certificate/checker implication**, not a dimension-free approximate transfer.
+
+**Interpretation:** Theorem 1b characterizes universal degree-d, depth-q mean-squared-risk invariance by **finite marginal data**, without introducing any arbitrary complexity score. This is mathematically stronger than merely constructing a simulator. The underlying k-wise moment-matching mechanism is well known; novelty of this exact biconditional is unestablished and requires independent prior-art search.
 
 ## Theorem 2: both threshold terms are individually necessary (worst case)
 
