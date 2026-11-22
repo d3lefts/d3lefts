@@ -46,5 +46,5 @@ int main(int argc,char**argv){
  std::vector<long>check={-((long)N-1),-17280,-17281,-17279,0,36482,(long)N-1,237,-237};
  for(long k:check){long pos=k+(long)N-1;auto p=to_mpz(read_digit(coeff,(size_t)pos));auto d=direct_shift(a,D,k);if(p!=d)throw std::runtime_error("direct-sum mismatch at " +std::to_string(k));}
  std::cout<<"PASS\ncount="<<N<<"\nunit_mass="<<mass.get_str()<<"\nall_signed_lags="<<(2*N-1)
- <<"\\nmax_numerator="<<pk.get_str()<<"\\ndenominator="<<denom.get_str()<<"\\nunique_lag="<<lag<<"\\nrunner_numerator="<<run.get_str()<<"\\nrunner_lag="<<runner_lag<<"\\n";
+ <<"\nmax_numerator="<<pk.get_str()<<"\ndenominator="<<denom.get_str()<<"\nunique_lag="<<lag<<"\nrunner_numerator="<<run.get_str()<<"\nrunner_lag="<<runner_lag<<"\n";
 }
