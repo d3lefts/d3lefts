@@ -261,3 +261,114 @@ signed-amplitude extension is not limited to PSD shifts.
 **Status:** paper proof candidate plus independent exact finite tests;
 not a certified unrestricted two-query theorem, and not historically
 novel until specialist priority review.
+
+
+## v0.3 extension — soft spectral-tail certificate (quantitative operator transfer)
+
+**Additional author-side corollary, not independently reviewed or Lean certified.**
+
+The compressed-effect trace can still be large when many individually
+tiny eigenvalue deviations accumulate. A controlled spectral
+approximation gives a stricter *error-budget-aware* condition.
+
+Let \(\mu_i\) be the eigenvalues of \(QPQ\) restricted to the
+attainable final-state span \(\mathcal S\). For
+\(0\le\kappa<\varepsilon\), define the soft spectral-tail charge
+
+\[
+\Theta_\kappa=
+ \min_{\lambda\in[0,1]}\sum_i
+     (|\mu_i-\lambda|-\kappa)_+ ,
+\qquad (x)_+=\max(x,0).
+\tag{ST}
+\]
+
+**Provisional corollary:** Under the same T=2 hypotheses, there is a
+deterministic nonuniform original-row simulator satisfying
+\[
+\boxed{
+Q_{\rm class}\le \min\{|R|,
+ \lceil 16 M\Theta_\kappa/
+       ((\varepsilon-\kappa)^2\delta)\rceil\},\quad
+\Pr(|f-g|>\varepsilon)\le\delta .
+}
+\tag{ST-T2}
+\]
+It may optimize over \(\kappa\in[0,\varepsilon)\). The v0.2
+certificate is the special case \(\kappa=0\).
+
+**Proof.** Choose \(\lambda\) attaining (ST) and write
+\(A=Q(P-\lambda I)Q\). Spectrally soft-threshold it:
+\[
+B=\operatorname{sgn}(A)(|A|-\kappa Q)_+ .
+\]
+Then \(B=B^*\), \(\|B\|_{\rm op}\le1\),
+\(\operatorname{Tr}|B|=\Theta_\kappa\), and
+\(\|A-B\|_{\rm op}\le\kappa\).
+Therefore
+\[
+|f(s)-\{\lambda+\langle\psi_s,B\psi_s\rangle\}|
+ \le\kappa\quad\text{for every }s.
+\]
+Apply the entire v0.2 conditional-amplitude/trace argument to
+the selfadjoint \(B\), whose polar sign remains a contraction, with
+target accuracy \(\varepsilon-\kappa\) and failure probability \(\delta\).
+The simulated signed quadratic predictor need not itself be in
+\([0,1]\) before clamping. Clamp its output; because the true
+\(f(s)\in[0,1]\), clamping cannot increase error.
+The resulting total error is at most \(\kappa+\varepsilon-\kappa
+=\varepsilon\) outside the bad event. Query count follows.
+If \(\Theta_\kappa=0\), the constant output \(\lambda\)
+approximates f uniformly within \(\kappa\), using zero queries.
+
+This is NOT a free truncation: the deterministic uniform error
+\(\kappa\) is paid from \(\varepsilon\), and the remaining classical
+simulation is charged at accuracy \(\varepsilon-\kappa\).
+
+### Exact finite full-span example
+
+In the L=2 tensor oracle there are 10 frequency sectors and 16
+possible hidden secrets. Take an initial dense rational normalized
+state from a Householder transform with all-ones vector, and an
+inter-query rational Householder unitary using vector
+\((1,2,\ldots,10)\). The resulting 16 final states span all
+10 dimensions (independently checked by exact-rational elimination).
+Let the terminal effect be diagonal with eigenvalues
+\[
+\underbrace{9/20,\ldots,9/20}_{5},\quad
+\underbrace{11/20,\ldots,11/20}_{4},\quad
+9/10 .
+\]
+The exact centered trace is \(\Theta_0=17/20\).
+Choose \(\kappa=1/10\) and \(\lambda=11/20\).
+All nine bulk directions shrink to zero, leaving
+\(B=\tfrac14|e_9\rangle\langle e_9|\),
+with \(\Theta_\kappa=1/4\), while
+\(\|Q(P-\lambda I)Q-B\|_{\rm op}=1/10\).
+At accuracy \(\varepsilon=1/2\), the *uncapped*
+new query coefficient is better by exactly
+\[
+\frac{\Theta_0/\varepsilon^2}
+     {\Theta_\kappa/(\varepsilon-\kappa)^2}
+=\frac{272}{125}=2.176.
+\]
+The worst-case bound in this small ten-row example is still capped
+by querying all original rows, so the improvement is a **certificate
+coefficient**, not an observed reduction of the realized finite
+tree depth. The distributional acceptance is nonconstant on the
+16 secrets. The exact Walsh/Parseval checker finds a positive
+soft-amplitude conditional MSE of \(48/5929\).
+
+Replay: check_t2_soft_spectrum_exact.py. It independently verifies
+full span, the rational oracle/inter-query circuit, spectra,
+uniform residual error \(\kappa\), soft effect rank, exact
+Fourier coefficients and conditional-amplitude MSE.
+This finite test is *not* independent proof of the all-circuit
+spectral-tail theorem, not a Lean certificate, and not a
+historical novelty determination.
+
+**Research transfer:** the next high-rank test should examine
+whether the spectrum of the reachable-state compressed effect has
+a polynomially bounded soft tail at meaningful \(\kappa\), rather
+than asking only for a small accepting-projector rank.
+No such universal upper bound is established here.
