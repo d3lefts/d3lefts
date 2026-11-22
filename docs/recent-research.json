@@ -3,7 +3,7 @@
   "version": 1,
   "as_of": "2026-11-22",
   "frozen_legacy_registry_unchanged": true,
-  "scope": "Nov 22 evidence-custody revision: 25 source-scoped claims; new finite-replay runs are metadata distinct from named Lean kernel run fields. Merged source is not a peer-review or priority certificate; see each exact-scope proof passport.",
+  "scope": "Nov 22 evidence-custody revision: 27 source-scoped claims; two paper-level prime-zeta theorems added with classical dependencies and independent-review/Lean/priority gates OPEN. Finite replay runs are not named analytic theorem certificates. Historical frozen registries unchanged.",
   "status_definitions": {
     "merged-lean": "Merged / named Lean",
     "branch-lean": "PR-head / named Lean",
@@ -513,6 +513,46 @@
       "receipt": "",
       "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/cairn-c10-evidence.md",
       "status_label": "Evidence merged / external action open"
+    },
+    {
+      "tier": "analytic",
+      "pr": 1043,
+      "run": null,
+      "head": "",
+      "receipt": "",
+      "credit": "Classical P'(w) meromorphic-continuation, residue-addition and cancellation mechanism stated explicitly in MathWorld Prime Zeta Function (eqs. 10–11; Landau–Walfisz/Fröberg precedents); NIGHTFALL applies it to A⁺ via the September shifted-layer identity.",
+      "source": "https://github.com/d3lefts/d3lefts/pull/1043",
+      "id": "prime-zeta-first-strip-paper-theorem",
+      "title": "Prime-zeta first-strip: exact Möbius residue criterion for local holomorphic removability",
+      "declaration": "Paper theorem: A⁺ locally removable at λ−1 iff M(λ)=0 (NOT Lean)",
+      "claim": "For every λ=ρ/n from a nontrivial ζ zero, A⁺ has local germ s M(λ) log(s−(λ−1))+holomorphic; complete local removability is equivalent to the finite Möbius residue M(λ)=0.",
+      "scope": "First strip −1<Re(s)<0, nonreal λ; local analytic branch of A⁺ from the original domain; no RH assumption; arithmetic requires complete certified active dilation fiber.",
+      "mechanism": "Normal convergence of the prime-zeta logarithmic derivative, exact residue identification, and the September first-layer identity A⁺=sP(s+1)+H.",
+      "certificate": "Self-contained written theorem in PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md; prior author-side PR #1035; independent reviewer/Lean proof absent; exact arithmetic CI 45053539129 is SYNTHETIC only. Direct classical proof source: https://mathworld.wolfram.com/PrimeZetaFunction.html (P' residues, coincident residue addition and removability).",
+      "limit": "Not an independently certified or first-priority result. Does not prove an actual multi-member zero fiber, global all-layer continuation, or RH. Dated specialist prior-art audit open. The P' residue-cancellation mechanism is already public classical prior art, not original NIGHTFALL mathematics.",
+      "next": "Issue #1040: independently reconstruct branch, residue and continuation proof; inspect Fröberg 1968 full text and obtain non-author review.",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/prime-zeta-first-strip-paper-theorem.md",
+      "status_label": "Paper theorem / classical residue corollary"
+    },
+    {
+      "tier": "analytic",
+      "pr": 1043,
+      "run": null,
+      "head": "",
+      "receipt": "",
+      "credit": "Landau–Walfisz (1920) and Fröberg (1968) prime-zeta natural boundary, Hadamard/de la Vallée Poussin zero-free line; NIGHTFALL's September shifted remainder yields a direct corollary.",
+      "source": "https://github.com/d3lefts/d3lefts/pull/1043",
+      "id": "prime-zeta-natural-boundary-paper-theorem",
+      "title": "Shifted prime-zeta deformation: natural boundary at Re(s)=−1",
+      "declaration": "Paper theorem: Re(s)=−1 is a natural boundary for A⁺ (NOT Lean)",
+      "claim": "The original shifted prime-difference series A⁺(s)=Σ_p[(p−1)^(−s)−p^(−s)] has no ordinary analytic continuation across any point of Re(s)=−1.",
+      "scope": "Ordinary holomorphic analytic continuation from Re(s)>0, including all locally continued branches; imports classical natural boundary Re(w)=0 for P(w).",
+      "mechanism": "A⁺=sP(s+1)+H; H crosses each nonreal boundary point because ζ(1+it)≠0 and the j≥3 remainder is holomorphic Re(s)>−2; any A⁺ extension would extend P.",
+      "certificate": "Source theorem in PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md; classical P natural boundary by Landau–Walfisz / Fröberg; PR #1035 paper proof; no named Lean analytic replay or independent referee.",
+      "limit": "The classical natural boundary is established prior art, not original. No global novelty clearance for this shifted corollary; formal k≥2 source coordinates behind the boundary are not ordinary reachable germs. The prime-zeta natural-boundary mechanism is directly classical; this is its shifted corollary, not a new boundary theorem mechanism.",
+      "next": "Issue #1040: check all-branch boundary scope, H cross-boundary holomorphy, first-priority of the shifted corollary, and obtain a non-author analytic review.",
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/prime-zeta-natural-boundary-paper-theorem.md",
+      "status_label": "Paper theorem / shifted classical corollary"
     }
   ]
 }
