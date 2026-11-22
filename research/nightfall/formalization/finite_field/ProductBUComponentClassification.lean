@@ -14,7 +14,7 @@ zero fiber carries the required smooth manifold structure. The latter is the
 remaining global chart/gluing and derivative-equivalence obligation.
 -/
 
-open scoped Topology Manifold
+open scoped Topology Manifold ContDiff
 open Manifold
 
 namespace Nightfall.ProductBUComponentClassification
