@@ -103,6 +103,11 @@ of product coordinate granularity.
 C_{\rm W}(Y_{1,0},\ldots,Y_{B,3})=3B\ \text{bits}.
 \]
 
+This equation uses logarithms base two. The certified Route 1 Lean
+implementation uses natural logarithms, so the raw common information
+in that convention is exactly **3B · ln(2) nats**. Zero after regrouping
+is independent of log units.
+
 The raw alphabet support consists of 8^B valid codewords and the
 map Z↦Y is injective, so H(Y)=3B. F1 implies every two distinct
 valid single-block words differ in at least two of the four columns.
@@ -253,8 +258,7 @@ addresses and account for its four-query per-block cost.
 - Separate Lean module \`PhaseRoute1Finite.lean\` states the actual
   integer squared-linear oracle and three finite theorems: any-three
   injectivity; per-first-reading adversarial two-query witness; and
-  no valid one-coordinate flip. **Only an exact-head pinned CI
-  success and #print axioms may promote these finite lemmas.**
+  no valid one-coordinate flip. **Pinned exact-head CI [45058815183](https://github.com/d3lefts/d3lefts/actions/runs/45058815183) PASS:** the three named finite Lean declarations compile on Lean 4.36.0-rc2 with only `propext` and `Quot.sound`; the exact checker enumerates all 544 depth-two policies. No all-B Wyner or Route 1 terminal composition is Lean certified.
 - Independently attack the raw Wyner proof's product-support
   rectangle step, arbitrary-latent conditional laws, and the
   distinction between 4B original coordinates versus B grouped
