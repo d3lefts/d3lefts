@@ -38,8 +38,11 @@ jobs:
           name="Nightfall.PlanarTwoRowsDirect.two_readings_not_injective"
           assert "theorem " + name in text, "DECLARATION_TYPE_UNVERIFIED"
           a=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",text,re.S)
-          assert a, "MISSING_AXIOM_RECEIPT"
-          found={v.strip() for v in a[1].split(',') if v.strip()}
+          if a is None:
+              assert f"'{name}' does not depend on any axioms" in text, "MISSING_AXIOM_RECEIPT"
+              found=set()
+          else:
+              found={v.strip() for v in a[1].split(',') if v.strip()}
           assert found <= {'propext','Classical.choice','Quot.sound'},found
           assert 'sorryAx' not in text
           source=Path('research/nightfall/formalization/finite_field/PlanarTwoRowsDirect.lean').read_text()
