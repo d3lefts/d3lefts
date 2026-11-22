@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/structural_information/TensorT2Cancellation.lean'
+      - 'research/nightfall/formalization/structural_information/TensorPureFibersL3.lean'
       - '.github/workflows/nightfall-tensor-t2-cancellation-lean.yml'
       - 'research/nightfall/structural_information/check_tensor_t2_primitive_independent.py'
       - 'research/nightfall/structural_information/check_tensor_pure_fibers.cpp'
@@ -42,6 +43,31 @@ jobs:
           assert all(set(v.strip() for v in m.split(',') if v.strip())<=allowed for m in matches)
           print('TENSOR_T2_CANCELLATION_KERNEL_PASS_SCOPED')
           PY
+      - name: Kernel-check exact local primitive coefficients at L<=3
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir=research/nightfall/formalization/structural_information
+          for f in SubcubeL3 TensorPureFibersL3; do
+            cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "tensor-t2-cancellation-receipt/$f.log"
+          done
+          (cd /tmp/mathlib4 && lake env leanchecker TensorPureFibersL3) 2>&1 | tee tensor-t2-cancellation-receipt/kernel-pure-fibers.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/TensorPureFibersL3.lean').read_text()
+          log=Path('tensor-t2-cancellation-receipt/TensorPureFibersL3.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          names=['primitive_two_L1','primitive_three_L2','primitive_four_L2','primitive_three_L3','primitive_four_L3']
+          assert all(name in log for name in names)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert len(reports)>=5
+          assert all(set(v.strip() for v in m.split(',') if v.strip())<=allowed for m in reports)
+          print('TENSOR_PURE_FIBER_LOCAL_COEFFICIENTS_KERNEL_PASS')
+          PY
       - name: Exhaustive independent primitive-fiber checks at L<=4
         shell: bash
         run: |
@@ -59,7 +85,7 @@ jobs:
         run: |
           mkdir -p tensor-t2-cancellation-receipt
           git rev-parse HEAD > tensor-t2-cancellation-receipt/commit.txt
-          sha256sum research/nightfall/formalization/structural_information/TensorT2Cancellation.lean research/nightfall/structural_information/check_tensor_t2_primitive_independent.py research/nightfall/structural_information/check_tensor_pure_fibers.cpp > tensor-t2-cancellation-receipt/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/TensorT2Cancellation.lean research/nightfall/formalization/structural_information/TensorPureFibersL3.lean research/nightfall/structural_information/check_tensor_t2_primitive_independent.py research/nightfall/structural_information/check_tensor_pure_fibers.cpp > tensor-t2-cancellation-receipt/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
