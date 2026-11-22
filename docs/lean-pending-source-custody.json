@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 45,
+  "revision": 46,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v45 clean-main quantitative phase-class certification: 511 pending exact-source entries; 67 historical source-matched records preserved. Two new conditional Lean sources registered; source-exact full-closure CI pending. Global ProductSphereZero and all-radius Lean proof not established.",
+  "scope": "v46 clean-main: 512 pending exact source entries, 67 historical source-matched records unmodified. The pure quantitative and decoder-risk named Lean terminal passed at head 2dd69478539c02f19932c68e3abb4e92140757c6 (run 45065543797); new mixed-character conditional Lean source added and pending exact integrated CI. Global ProductSphereZero and ProductSphereMixedZero are hypotheses, not theorems.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -446,6 +446,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact unreviewed source custody, new I01 subtype membership tactic repair. Pinned theorem CI must be replayed at this blob; no ProductSphereZero claim."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUMixedRadius.lean",
+      "source_blob_sha": "1202ba29f0db6e5f86f3a9c457e7a6ae61ea53c7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 true genuine-prefix mixed-character known-radius pair with decoder squared-risk, conditional on separately unproved ProductSphereMixedZero. New integrated Lean and named-axiom CI pending. NOT a certificate for topological existence, scaled-R result or originality."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
