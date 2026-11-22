@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 49,
+  "revision": 50,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v49: exact source-only registration of time-oriented implicit-function zero graph; historical 67 unchanged, ProductSphereZero topology still unproved.",
+  "scope": "v50: original 67 historical records retained; added 3 exact BU concrete family algebraic source blobs from passed sibling source CI, unreviewed-source custody only.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -388,6 +388,16 @@
       "receipt_scope": "Exact source-identity custody of scoped pure-character topology composition. Full ProductSphereZero and global boundary manifold still unproved. Pinned Lean pre-integration run #45059393121 succeeded on byte-identical source."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUAugmentedRank.lean",
+      "source_blob_sha": "e3e99f0e67b6a7f6a99a7dd0a0666f9fb695ecde",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
       "source_blob_sha": "114c4159630eb787e494dc4aa6448dc24884e919",
       "classification": "unreviewed-source",
@@ -416,6 +426,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact source-identity custody of scoped pure-character topology composition. Full ProductSphereZero and global boundary manifold still unproved. Pinned Lean pre-integration run #45059393121 succeeded on byte-identical source."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUConcreteHomotopy.lean",
+      "source_blob_sha": "e8b0105b2f7f5b52cde07de58f33434f9eb29277",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
@@ -466,6 +486,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUPerturbation.lean",
+      "source_blob_sha": "923eafa2ebe8be3a5c856cf7024a97620decc52a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean",
