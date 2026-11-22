@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 48,
+  "revision": 49,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v48: 515 unreviewed pending source blobs, historical 67 unchanged. Clean-main merge of source-exact compatible smooth atlas constructor; concrete zero-fiber charts and ProductSphereZero remain open.",
+  "scope": "v49: exact source-only registration of time-oriented implicit-function zero graph; historical 67 unchanged, ProductSphereZero topology still unproved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -526,6 +526,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Late parallel source merge, exact blob custody only. Does not certify ProductSphereZero, topological extension proof, named Lean kernel, or originality."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUTimeOrientedIFT.lean",
+      "source_blob_sha": "f817e05a01284f6703e75d311d05fbe79bac642c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Pinned Lean IFT time-oriented zero graph from #1131, exact-head 45067372003 PASS, strict 45067372058 PASS; no actual global t=0 halfspace chart nor unconditional ProductSphereZero."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean",
