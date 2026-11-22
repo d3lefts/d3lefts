@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 37,
+  "revision": 38,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v37: 489 pending exact Lean blobs in merged PR checkout, preserving all prior entries and 67 historical frozen records; independent parallel ProductBURegularFiberLocal file from main is registered as unreviewed and Route1 risk/marginal modules retain independent named CI only.",
+  "scope": "v38: 490 pending exact Lean blobs on this integration branch; original 67 historical source-matched records unchanged. ProductBUSphereCompact source is source-custody only; separate pinned CI verifies scoped named Lean declarations; no full ProductSphereZero or novelty promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -436,6 +436,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source custody only. Pinned external ATLAS parametric Sard ordinary-axiom replay in merged #1048; theorem-level regular parameter existence in this branch is not yet source-certified. ProductSphereZero remains open."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUSphereCompact.lean",
+      "source_blob_sha": "325ee8dc11ce0b1a9d2cbd350380f59affda8c80",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-integrated from parallel PR #1055 with exact Lean source blob 325ee8dc11ce0b1a9d2cbd350380f59affda8c80, repaired and kernel-checked in #1063 run 45057651776, original proof from #1055. Custody only; ProductSphereZero and global phase-retrieval topology remain unproved."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean",
