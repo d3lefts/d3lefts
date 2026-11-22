@@ -115,6 +115,22 @@ The orthant is contractible, so any continuous nonzero rank-one projection selec
 
 **Concrete consequence for the \(\mathbb R^4\), six-reading problem:** If the first four rows are chronologically independent at every reachable history, \(H_4=[0,\infty)^4\). The fifth **projectively continuous** detector necessarily has a continuous row lift on \(H_4\). Any genuine projective-vs-oriented obstruction in such a six-reading architecture must therefore involve the attainable five-reading history \(H_5\) and the *sixth* detector, rather than the first five row choices. This is a necessary geometric localization, not an existence claim for a six-reading exact protocol.
 
+
+## 4b. Exact additional theorem: global normalized detector continuity *does* suffice
+
+**Corollary (paper-level, matching sharp threshold).** Suppose each stage-j measurement is \(x^\top Q_j(h)x\), where the controller selects a **nonzero rank-one orthogonal projection**
+\[
+Q_j:[0,\infty)^{j-1}\longrightarrow
+\{ww^\top:\ w\in S^{n-1}\}
+\]
+continuously on the **entire** ambient space of potential nonnegative earlier readings, not merely on the attained history set. Then for all \(n\ge2\) the exact universally phase-retrieving number of such causal readings is \(2n-1\).
+
+**Proof:** The projection-valued target is homeomorphic to \(\mathbb RP^{n-1}\), and the double cover \(S^{n-1}\to\mathbb RP^{n-1}\), \(w\mapsto ww^\top\), has the continuous lifting property on the contractible, locally path-connected orthant \([0,\infty)^{j-1}\). Fixing one row sign at the zero transcript determines a continuous lift \(a_j(h)\in S^{n-1}\) of each \(Q_j(h)\) over the entire orthant. Its induced intensity equals \((a_j(h)\cdot x)^2\) at every actual history. Apply the already paper-proved continuous oriented-row lower bound of Section 2. Conversely a fixed normalized full-spark frame needs \(2n-1\) readings and uses constant projector-valued selectors. QED, **conditional only on the externally published CCFH theorem as detailed in §1, not on a new topology conjecture**.
+
+**Necessary qualifications:** The entire-*history* domain condition is stronger than the actually-attained-history condition in §3. The nonzero constant-rank (normalized rank-one projector) condition is essential for this covering-lift proof; if \(Q_j\) can vanish or vary rank, lifting to a row can fail even on a contractible ambient domain. The §3 counterexample is a continuous map on \(H_3\) **that cannot extend to a continuous normalized rank-one projector on the whole nonnegative orthant**; otherwise its non-liftability would contradict this corollary. This is not a contradiction between the two statements but an explicit boundary of the regularity assumptions.
+
+**Research implication:** The physically intrinsic feedback model is already settled when every normalized detector choice is defined continuously on all nonnegative histories. The only projective-orientation loophole left by the current argument concerns selectors continuous solely on the attained (possibly multiply glued) history subsets, or detectors allowed to pass through zero/rank changes. Treat this as an exact model-scope theorem with standard covering-space prior art, NOT a new worldwide novelty claim or a Lean kernel result.
+
 ## 5. Formalization / priority / independent audit plan
 
 - The published CCFH Remark 2.7 is the correct **external mathematical theorem**, not a Lean axiom masquerading as proof. #1010/#1024 supply only algebra, a Prop-valued topology interface and zero-padding; #1015/#1017 supply conditional causal Lean proofs. #1032/#1034/#1037/#1041 address distinct fragments of a proposed independent Lean proof of the classical zero theorem (character averaging, reference orbit, smooth approximation, sphere-only extension); full relative transversality and compact one-manifold boundary parity remain missing. **Do not duplicate source modules, falsely merge stacked branches or announce an unconditional kernel certificate.**
