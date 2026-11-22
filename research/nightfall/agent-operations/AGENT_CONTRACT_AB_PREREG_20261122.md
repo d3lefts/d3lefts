@@ -41,3 +41,7 @@ Stop after eight rounds/role/task unless an integrity failure occurs; on integri
 
 ## What remains open
 Blinded, cross-instance study of actual theorem review cycles using matched source problems, randomized routing and independent non-author graders. A PR history comparison without randomization is observational and confounded. No multi-agent effectiveness claim until that separate gate passes.
+
+## Amendment A1: harness invocation correction, before data collection
+
+Initial CI run [45057145126](https://github.com/d3lefts/d3lefts/actions/runs/45057145126) terminated in all three jobs with JSONDecodeError before producing any role measurement artifacts, because the benchmark used `just --quiet <task>` and then required task stdout. The documented baseline command catalogue uses `@` recipes already (preventing echo); the benchmark now calls `just <task>` so the task receipt is visible, with diagnostics identifying which mode returns invalid JSON. All 3 roles, 3 tasks, 4 modes, 8 repetitions, randomization seeds, timing statistics and mutations remain unchanged. This is an interface-harness repair, **not** exclusion of an inconvenient outcome. The original failed CI remains accessible.
