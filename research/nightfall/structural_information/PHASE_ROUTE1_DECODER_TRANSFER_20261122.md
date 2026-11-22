@@ -215,6 +215,35 @@ reconstructed by independent block-intensity decoders. Relative
 signs or new cross-block correlations have to be modeled and
 charged separately.
 
+## Baseline comparison: what is and is not improved
+
+An essential adversarial control is **trivial block grouping**. Since the
+four raw readings of one signal are jointly independent of all other
+blocks, the four-tuple itself can serve as one virtual product coordinate
+without performing phase retrieval. A simulator can fetch the complete
+four-tuple in **four** raw queries and already obtains a depth bound
+independent of B. Thus the B-independent asymptotics of this *particular*
+finite example are **not caused by the phase decoder**. The direct
+contribution of phase retrieval here is the **sharp reduction from four
+to three raw queries per simulated block request**, together with a
+worked example exposing how the numerical value of Wyner CI depends on
+which addressable variables are treated as separate product coordinates.
+
+To seek a substantial rather than constant-factor gain, test growing
+measurement families where the cost of reading an entire block is m
+but a valid phase-retrieval decoder costs c≪m, under the **same permitted
+query family**. Beware: adding an arbitrary generic fixed row to a
+finite codebook can make a *one*-query decoder possible, invalidating
+the two-query lower bound of the original four-row model. Continuous
+signals allow a different measurement-complexity question but then the
+finite-alphabet Route 1 theorem cannot be applied without a separately
+justified measurable-alphabet or discretization bridge.
+
+In particular, a statement like "C_W falls from 3B to 0, therefore
+simulation becomes B-independent" is insufficient by itself: a fair
+comparison must permit the baseline to group the same physical
+addresses and account for its four-query per-block cost.
+
 ## Cheapest decisive tests and independent critique
 
 - Source-level exact Python checker uses direct squared dot products,
