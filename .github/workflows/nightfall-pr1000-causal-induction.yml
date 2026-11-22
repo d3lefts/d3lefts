@@ -1,0 +1,60 @@
+name: NIGHTFALL PR1000 causal-transcript induction Lean (conditional algebra)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/pr1000-phase-retrieval-robustness/CausalCollisionAlgebra.lean'
+      - '.github/workflows/nightfall-pr1000-causal-induction.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  causal-induction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Pinned Lean complete source compile
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/pr1000-causal-induction
+          cp research/nightfall/pr1000-phase-retrieval-robustness/CausalCollisionAlgebra.lean /tmp/mathlib4/CausalCollisionAlgebra.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/CausalCollisionAlgebra.olean CausalCollisionAlgebra.lean) 2>&1 | tee receipts/pr1000-causal-induction/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/pr1000-causal-induction/lean.log
+      - name: Independent strict theorem type and axioms receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/pr1000-causal-induction/lean.log").read_text()
+          names=["Nightfall.CausalNoiseless.actual_pair_eq_virtual",
+                 "Nightfall.CausalNoiseless.actual_collision_of_stage_zeros"]
+          for n in names:
+              m=re.search(r"'" + re.escape(n) + r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m,("missing named theorem axiom receipt",n)
+              a={v.strip() for v in m.group(1).split(",") if v.strip()}
+              assert a <= {"propext","Classical.choice","Quot.sound"},(n,a)
+          assert "sorryAx" not in s
+          assert "theorem Nightfall.CausalNoiseless.actual_collision_of_stage_zeros" in s
+          print("PASS: conditional real causal collision algebra is source-compiled with standard axioms.")
+          print("NOT certified: existence of the product-sphere stagewise zero, geometric non-equivalence, topological count.")
+          PY
+      - name: Preserve commit/toolchain/source hashes on all outcomes
+        if: always()
+        run: |
+          mkdir -p receipts/pr1000-causal-induction
+          git rev-parse HEAD > receipts/pr1000-causal-induction/commit.txt
+          cat lean-toolchain > receipts/pr1000-causal-induction/toolchain.txt
+          sha256sum research/nightfall/pr1000-phase-retrieval-robustness/CausalCollisionAlgebra.lean > receipts/pr1000-causal-induction/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr1000-causal-induction-source-receipt
+          path: receipts/pr1000-causal-induction
+          if-no-files-found: warn
+          retention-days: 90
