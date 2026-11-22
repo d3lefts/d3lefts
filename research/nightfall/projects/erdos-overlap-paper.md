@@ -1,5 +1,22 @@
 # NIGHTFALL: Exact Minimum-Overlap Witnesses and Their Discovery
 
+> **22 November 2026 source reconciliation:** The historical October 20–29
+> upper endpoint described below was **not** the strongest preserved in the
+> NIGHTFALL archives. The recovered October 22 PhaseShift V3 exact 131,072-cell
+> witness, independently replayed over all signed shifts, proves the stronger
+> mathematical upper
+> \(\mu\le0.38085637011758942610704804175087023177\ldots\),
+> SHA-256 **46ba45724bb7ff98f6b28b4b7ef3bcf2390f747db8ca290ae0f2f0eaba63c59c**.
+> The source-pinned [reproduction and scope passport](erdos/recomputed_20261122/README.md)
+> and reconstruction patch supersede older *best-known-internal* labels; all
+> original C-10 public witness bytes and external objections remain separate.
+> The October 27 Wetch-derived lower rational target was independently tightened
+> to **0.3806274746266857709** on the *unchanged eight-row family*, **conditional**
+> on the inherited Wetch analysis and original Arb enclosure reports. Neither
+> statement claims independent external review, current worldwide mathematical
+> priority, or the exact value of the overlap constant.
+
+
 Working paper outline and provenance freeze — 20 October 2026
 
 ## Abstract (working draft)
