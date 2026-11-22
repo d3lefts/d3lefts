@@ -1,0 +1,59 @@
+name: NIGHTFALL affine-code Wyner algebraic support Lean
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/AffineWynerSupport.lean'
+      - '.github/workflows/nightfall-affine-wyner-support-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  algebraic-support:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile actual finite-field affine support lemmas
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/nightfall/formalization/structural_information/AffineWynerSupport.lean
+          mkdir -p receipts/affine-wyner
+          ! grep -nE '(^|[[:space:]])(sorry|admit|axiom)[[:space:]]' "$src"
+          git rev-parse HEAD | tee receipts/affine-wyner/head.txt
+          sha256sum "$src" | tee receipts/affine-wyner/source.sha256
+          cp "$src" /tmp/mathlib4/AffineWynerSupport.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/AffineWynerSupport.olean AffineWynerSupport.lean) 2>&1 | tee receipts/affine-wyner/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/affine-wyner/lean.log
+      - name: Mandatory independent kernel replay and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker AffineWynerSupport) 2>&1 | tee receipts/affine-wyner/leanchecker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/affine-wyner/lean.log').read_text()
+          for name in ('axis_mem_of_codewords_differ','nonfree_coordinate_fixed','rectangular_support_nonfree_singleton'):
+              full='Nightfall.AffineWyner.'+name
+              match=re.search(r"'"+re.escape(full)+r"' depends on axioms:\s*\[([^\]]*)\]",s)
+              if match:
+                  a={x.strip() for x in match.group(1).split(',') if x.strip()}
+                  assert a <= {'Classical.choice','propext','Quot.sound'},(name,a)
+              else:
+                  assert f"'{full}' does not depend on any axioms" in s,full
+          assert 'sorryAx' not in s
+          print("PASS: exact affine support rigidity under only ordinary Lean axioms")
+          PY
+      - name: Store exact-source receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: affine-wyner-algebraic-kernel
+          path: receipts/affine-wyner
+          if-no-files-found: warn
+          retention-days: 90
