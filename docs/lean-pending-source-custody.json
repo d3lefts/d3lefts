@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 34,
+  "revision": 36,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v34: 483 pending exact Lean blobs, 67 frozen historical records unchanged; 550 total main Lean sources. New ProductBUSphereExtension source is unreviewed. Future additions and edits must pass strict source custody workflow on research/nightfall/**/*.lean, not only on manifest changes. New t=0 endpoint source explicitly unreviewed in custody despite independent scoped CI.",
+  "scope": "v36: 486 pending exact Lean blobs on this PR head; 67 frozen historical matched-source records unchanged. LocalMomentRisk and LocalMomentAtoms are source-registered as unreviewed despite separate pinned named proofs; no full original decision-tree source theorem, independent semantic referee or novelty certification.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3526,6 +3526,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/LocalMomentAtoms.lean",
+      "source_blob_sha": "50291b712f1c843e89bd0d89fa7418b3541f7592",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact Git source custody only; separate pinned CI run covers scoped risk and atom-marginal lemmas, NOT full recursive tree translation, converse/sharpness, specialist non-author review, or worldwide novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/LocalMomentRisk.lean",
+      "source_blob_sha": "be9073504ae43fd8dd719b7bb7db799b47a5ded7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact Git source custody only; separate pinned CI run covers scoped risk and atom-marginal lemmas, NOT full recursive tree translation, converse/sharpness, specialist non-author review, or worldwide novelty."
     },
     {
       "path": "research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean",
