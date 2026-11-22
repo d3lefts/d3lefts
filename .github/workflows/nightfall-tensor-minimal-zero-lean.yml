@@ -32,11 +32,11 @@ jobs:
           log=Path('minimal-zero-receipt/compile.log').read_text()
           assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
           assert 'error:' not in log
-          for name in ['exists_minimal_zero_circuit','no_singleton_zero_circuit']:
+          for name in ['exists_minimal_zero_circuit','no_singleton_zero_circuit','remove_minimal_circuit_preserves_zero']:
             assert name in log
           reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
           none=re.findall(r'does not depend on any axioms',log)
-          assert len(reports)+len(none)>=2
+          assert len(reports)+len(none)>=3
           allowed={'propext','Classical.choice','Quot.sound'}
           assert all(set(x.strip() for x in m.split(',') if x.strip())<=allowed for m in reports)
           print('TENSOR_MINIMAL_ZERO_CIRCUIT_KERNEL_PASS')
