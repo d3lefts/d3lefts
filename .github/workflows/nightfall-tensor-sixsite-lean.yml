@@ -1,0 +1,58 @@
+name: NIGHTFALL six-active-site tensor circuit Lean kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/TensorSixSiteCircuit.lean'
+      - '.github/workflows/nightfall-tensor-sixsite-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sixsite-lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Source-identified six-site circuit Lean compilation and replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p sixsite-lean-receipt
+          dir=research/nightfall/formalization/structural_information
+          for f in SubcubeL3 TensorSixSiteCircuit; do
+            cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "sixsite-lean-receipt/$f.log"
+          done
+          (cd /tmp/mathlib4 && lake env leanchecker TensorSixSiteCircuit) 2>&1 | tee sixsite-lean-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/TensorSixSiteCircuit.lean').read_text()
+          log=Path('sixsite-lean-receipt/TensorSixSiteCircuit.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          names=['source_mask_identification','source_rows_distinct','every_factor_active',
+                 'circuit_only_empty_or_full','first_four_representation','second_four_representation']
+          assert all(n in log for n in names)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          assert len(reports)>=6, reports
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert all(set(x.strip() for x in m.split(',') if x.strip()) <= allowed for m in reports)
+          print('TENSOR_SIX_SITE_SOURCE_IDENTIFIED_KERNEL_PASS')
+          PY
+      - name: Exact source hashes
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p sixsite-lean-receipt
+          git rev-parse HEAD > sixsite-lean-receipt/HEAD
+          sha256sum research/nightfall/formalization/structural_information/SubcubeL3.lean research/nightfall/formalization/structural_information/TensorSixSiteCircuit.lean > sixsite-lean-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: tensor-sixsite-lean-receipt
+          path: sixsite-lean-receipt/
+          retention-days: 90
