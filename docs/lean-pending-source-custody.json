@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 46,
+  "revision": 47,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v46: 512 pending exact Lean source blobs; 67 frozen historical receipts unchanged. Two independent phase-block named Lean modules have passing pinned source receipts but full raw-oracle Route1 terminal remains provisional.",
+  "scope": "v47: 514 pending exact sources, 67 frozen historical named certificates. Physical DTree and grouping source blobs are individually kernel checked, but full quantum circuit → original sensor Route1 terminal still open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3658,6 +3658,16 @@
       "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
     },
     {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockGrouping.lean",
+      "source_blob_sha": "8bd6d322c58235567d4ed9cfb7605409df8509c6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Exact named Lean compiler run 45065168946 has passed for this byte-identical file; full raw-circuit Route1 theorem and originality not certified."
+    },
+    {
       "path": "research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean",
       "source_blob_sha": "939b5855e510f76ca7ec89d1666e27b45cf7d065",
       "classification": "unreviewed-source",
@@ -3676,6 +3686,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Registered Git blob with separately passed named kernel proof, workflow run 45058739792; this pending ledger is not an analytic, novelty, or full raw-circuit terminal certification."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockTreeCompiler.lean",
+      "source_blob_sha": "47e988c9d70d49027e4d9cfb88ef87cd467b9346",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Exact named Lean compiler run 45065169016 has passed for this byte-identical file; full raw-circuit Route1 theorem and originality not certified."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean",
