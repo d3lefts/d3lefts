@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 38,
+  "revision": 39,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v38: 490 pending exact Lean blobs on this integration branch; original 67 historical source-matched records unchanged. ProductBUSphereCompact source is source-custody only; separate pinned CI verifies scoped named Lean declarations; no full ProductSphereZero or novelty promotion.",
+  "scope": "v39: 491 pending Lean blobs on this integration branch; original 67 historical source-matched records unchanged. ProductBURegularGraph local coordinates are source-custody only; separate pinned Lean CI required. Full ProductSphereZero unproved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -426,6 +426,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 parallel-branch source observed on current main PR-merge checkout; exact Git blob recorded for protected-main custody only, no theorem, compilation, peer review or novelty certified in this ledger."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBURegularGraph.lean",
+      "source_blob_sha": "435126f9504b12629229f19a0731b3a02d76ef77",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 exact source custody only. PR #1081 attempts a pinned ATLAS local injective regular-fiber graph proof. Named Lean axiom/compiler CI is a separate receipt, not conferred by this ledger; no global smooth manifold, ProductSphereZero, peer review or novelty is certified."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBURegularParameter.lean",
