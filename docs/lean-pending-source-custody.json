@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 36,
+  "revision": 37,
   "as_of": "2026-11-22 UTC",
   "source_commit": "69034e989ae68557f3f53b5fd3aa14e12d934bc3",
-  "scope": "v36: preserve parent source custody and add the separately scoped zero-fiber free antipodal homeomorphism source without theorem promotion.",
+  "scope": "v37: reconcile edited free-action source blob in strict custody, no theorem promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -389,7 +389,7 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUFiberFreeAction.lean",
-      "source_blob_sha": "b18838563de53ead013d17e9dd420af96db6439f",
+      "source_blob_sha": "15799a751bd25dcfb9b9a7bc9619806b7c53d513",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
