@@ -13,7 +13,7 @@ from random import Random
 SEED = 20261121
 rng = Random(SEED)
 stats = dict(simon_support=0, simon_marginal=0, product_candidates=0,
-             mixture_candidates=0, parity=0, duplication=0,
+             mixture_candidates=0, mixture_family=0, parity=0, duplication=0,
              collision_subsets=0, formula=0)
 
 def simon_tables(m):
@@ -80,6 +80,32 @@ for m in range(1, 4):
                 for tab in S)
             assert 0 <= qmin <= 1
             stats["mixture_candidates"] += 1
+    # Explicit M>1 output-subset envelope: sum product q_A over every
+    # t-subset A of output symbols. All Simon tables use exactly N/2 labels.
+    for t in range(N // 2, N + 1):
+        M = comb(N, t)
+        containing = comb(N // 2, t - N // 2)
+        qt = F(containing, M * t ** N)
+        Rt = F(M * t ** N, L * containing)
+        assert Rt * qt == F(1, L)
+        if t == N:
+            assert M == 1 and Rt == exact_R
+        if t == N // 2:
+            assert M == comb(N, N // 2)
+            assert Rt < exact_R
+        for table in S[:40]:
+            used = set(table)
+            assert len(used) == N // 2
+            direct_count = sum(used.issubset(A)
+                               for A in combinations(range(N), t))
+            assert direct_count == containing
+            q_from_mixture = F(direct_count, M * t ** N)
+            assert q_from_mixture == qt
+        if N == 4 and t == 3:
+            assert M == 4 and Rt == F(9, 2)
+        if N == 4 and t == 2:
+            assert M == 6 and Rt == F(8, 3)
+        stats["mixture_family"] += 1
     stats["formula"] += 1
     print("Simon m=", m, "N=", N, "L=", L, "R_min_product=", exact_R,
           "D∞ nats=", round(log(N) * N - log(L), 8))
