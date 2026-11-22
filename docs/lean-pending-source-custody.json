@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 47,
+  "revision": 49,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v47: 516 pending source blobs and 67 frozen historical records. Four additional phase-block regrouping and actual-circuit DTree terminal candidates registered as unreviewed; not kernel-certified until exact-head CI, not novelty-cleared.",
+  "scope": "v49: exact source-only registration of time-oriented implicit-function zero graph; historical 67 unchanged, ProductSphereZero topology still unproved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -398,6 +398,16 @@
       "receipt_scope": "Source-integrated exact Lean module from #1070, blob 114c4159630eb787e494dc4aa6448dc24884e919, successfully compiled on frozen Lean pin with ordinary axioms in run 45058026793. Scope: compact actual product-sphere time-slab zero fiber and exclusion of zero-free t=1 endpoint; NO global 1D manifold, ProductSphereZero or priority."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUCompatibleAtlas.lean",
+      "source_blob_sha": "cc7fabe4f731d4ac28d5b279fce871cdebf880a8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Byte-identical source to original #1108 / passed repair #1126; pinned Mathlib kernel+ordinary axiom CI 45066160663 and new clean source #1132 run 45066754031 pass separately. Source custody only, no physical covering charts or unconditional ProductSphereZero."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
       "source_blob_sha": "07ec9863d19a25196e2a84e187b36a500da6bfba",
       "classification": "unreviewed-source",
@@ -516,6 +526,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Late parallel source merge, exact blob custody only. Does not certify ProductSphereZero, topological extension proof, named Lean kernel, or originality."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUTimeOrientedIFT.lean",
+      "source_blob_sha": "f817e05a01284f6703e75d311d05fbe79bac642c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Pinned Lean IFT time-oriented zero graph from #1131, exact-head 45067372003 PASS, strict 45067372058 PASS; no actual global t=0 halfspace chart nor unconditional ProductSphereZero."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean",
@@ -3659,13 +3679,13 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseBlockActualCircuit.lean",
-      "source_blob_sha": "e96fbabadc92958e0b11641a28877b1f46c82701",
+      "source_blob_sha": "1d5bfcf6f78f2eef4b689aca1a1d4b69039bb9e6",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Exact source custody only. Source-specific theorem is provisional until current-head full pinned Lean named build and axiom audit passes. Full quantum simulator is restricted to raw intensity symbol model and scalar acceptance."
+      "receipt_scope": "Exact source custody only. Named Lean receipt and supported oracle scope are tracked separately in PR #1128."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseBlockGrouping.lean",
@@ -3675,7 +3695,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Exact source custody only. Source-specific theorem is provisional until current-head full pinned Lean named build and axiom audit passes. Full quantum simulator is restricted to raw intensity symbol model and scalar acceptance."
+      "receipt_scope": "Source custody only. Exact named Lean compiler run 45065168946 has passed for this byte-identical file; full raw-circuit Route1 theorem and originality not certified."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean",
@@ -3705,7 +3725,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Exact source custody only. Source-specific theorem is provisional until current-head full pinned Lean named build and axiom audit passes. Full quantum simulator is restricted to raw intensity symbol model and scalar acceptance."
+      "receipt_scope": "Exact source custody only. Named Lean receipt and supported oracle scope are tracked separately in PR #1128."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseBlockTreeCompiler.lean",
@@ -3715,7 +3735,17 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Exact source custody only. Source-specific theorem is provisional until current-head full pinned Lean named build and axiom audit passes. Full quantum simulator is restricted to raw intensity symbol model and scalar acceptance."
+      "receipt_scope": "Source custody only. Exact named Lean compiler run 45065169016 has passed for this byte-identical file; full raw-circuit Route1 theorem and originality not certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockWellFormed.lean",
+      "source_blob_sha": "3b51811f993848b1da2dcd4ed384bf6947c4f6fa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only. Named Lean receipt and supported oracle scope are tracked separately in PR #1128."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean",

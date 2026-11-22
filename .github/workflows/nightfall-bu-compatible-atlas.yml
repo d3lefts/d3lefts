@@ -1,0 +1,64 @@
+name: NIGHTFALL smooth half-space atlas gluing kernel check
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUCompatibleAtlas.lean'
+      - 'docs/lean-pending-source-custody.json'
+      - '.github/workflows/nightfall-bu-compatible-atlas.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smooth-atlas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact pinned Lean source and axiom replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-compatible-atlas
+          f=research/nightfall/formalization/finite_field/ProductBUCompatibleAtlas.lean
+          ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$f"
+          cp "$f" /tmp/mathlib4/ProductBUCompatibleAtlas.lean
+          (cd /tmp/mathlib4 && lake env lean ProductBUCompatibleAtlas.lean) 2>&1 | tee receipts/bu-compatible-atlas/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/bu-compatible-atlas/lean.log
+      - name: Verify scoped theorem signature and ordinary axioms
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/bu-compatible-atlas/lean.log").read_text()
+          names=["Nightfall.ProductBUCompatibleAtlas.chartedSpaceOfCoveringCharts",
+                 "Nightfall.ProductBUCompatibleAtlas.smooth_manifold_of_compatible_covering_charts"]
+          for name in names:
+              assert name in s, ("MISSING_DECLARATION",name)
+              hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              if hit: axioms={a.strip() for a in hit.group(1).split(",") if a.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in s
+                  axioms=set()
+              assert axioms <= {"propext","Classical.choice","Quot.sound"},(name,axioms)
+              print("PASS",name,sorted(axioms))
+          assert "sorryAx" not in s
+          print("SCOPE: conditional on actual covering charts and verified C∞ transition maps; not ProductSphereZero.")
+          PY
+      - name: Preserve hashes and source pin
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/bu-compatible-atlas
+          git rev-parse HEAD > receipts/bu-compatible-atlas/repo-commit.txt
+          cat lean-toolchain > receipts/bu-compatible-atlas/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUCompatibleAtlas.lean > receipts/bu-compatible-atlas/source.sha256
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-compatible-atlas-source-receipt
+          path: receipts/bu-compatible-atlas
+          retention-days: 90
