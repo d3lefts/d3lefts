@@ -135,4 +135,64 @@ theorem normalized_wyner_phase_block_route1_simulation
 #print axioms Nightfall.PhaseBlockWellFormed.normalized_wyner_phase_block_route1_simulation
 #print Nightfall.PhaseBlockWellFormed.normalized_wyner_phase_block_route1_simulation
 
+/-- Source-exact two-component latent theorem, with NO separate Wyner
+hypothesis: all B hidden blocks are independent *conditionally* on a
+uniform Fin 2 latent, so the original Route1 polynomial-mixture theorem
+charges only log 2, regardless of B.
+
+The physical compiled tree still queries at most 3*n ORIGINAL sensors.
+This is a genuine correlated-input quantum acceptance theorem for the
+specified normalized, block-local matrix-oracle circuit class; no
+polynomial classical runtime or arbitrary-oracle claim is made. -/
+theorem normalized_binary_mixture_phase_block_simulation
+    (T : ℕ) (hT : 0 < T)
+    (c : Nightfall.QuantumCircuitPaths.Circuit (B × Fin 4) (Fin 26) κ T)
+    (hc : Nightfall.QuantumCircuitNormalization.WellFormed c)
+    (accept : κ → Bool)
+    (P : Fin 2 → B → Fin 8 → ℝ)
+    (hP0 : ∀ θ b a, 0 ≤ P θ b a)
+    (hP1 : ∀ θ b, ∑ a, P θ b a = 1)
+    (τ : ℝ) (hτ : 0 < τ) (hτ1 : τ ≤ 1)
+    (ε : ℝ) (hε : 0 < ε)
+    (n : ℕ) (hn : 0 < n) :
+    ∃ rawtree : DTree (B × Fin 4) (Fin 26),
+      (∀ x : B → Fin 8, rawtree.queries (rawTable x) ≤ 3 * n) ∧
+      Ex P (fun _ : Fin 2 => (1/2 : ℝ))
+        (fun x => if ε <
+           |acceptanceProbability c accept (rawTable x) -
+             rawtree.eval (rawTable x)| then (1 : ℝ) else 0) ≤
+      ((Real.pi ^ 2 * ((2 * T : ℕ) : ℝ) ^ 2 / 2) /
+        (2 * gam (2 * T) τ) +
+        Real.log (Fintype.card (Fin 2)) /
+          (etaC (2 * T) τ ^ 2 *
+           w0C (Real.pi ^ 2 * ((2 * T : ℕ) : ℝ) ^ 2 / 2)
+             (2 * T) τ)) / n + τ / ε ^ 2 := by
+  classical
+  let f : (B → Fin 8) → ℝ :=
+    fun x => acceptanceProbability c accept (rawTable x)
+  have hd : 1 ≤ 2 * T := by omega
+  have hdeg : HasProdDegreeLE f (2 * T) :=
+    actual_circuit_block_degree T c accept
+  have hBorn : ∀ x, 0 ≤ f x ∧ f x ≤ 1 :=
+    wellFormed_born_on_phase_code c hc accept
+  have hw0 : ∀ θ : Fin 2, 0 ≤ (1/2 : ℝ) := by
+    intro θ
+    norm_num
+  have hw1 : (∑ _ : Fin 2, (1/2 : ℝ)) = 1 := by
+    rw [Fin.sum_univ_two]
+    norm_num
+  obtain ⟨t, hqueries, herror⟩ :=
+    route1_polylog_simulation P hP0 hP1
+      (fun _ : Fin 2 => (1/2 : ℝ)) hw0 hw1
+      f hBorn (2 * T) hd hdeg
+      τ hτ hτ1 ε hε n hn
+  refine ⟨compileTree t, ?_, ?_⟩
+  · intro x
+    rw [compileTree_queries]
+    exact Nat.mul_le_mul_left 3 (hqueries x)
+  · simpa only [f, compileTree_eval] using herror
+
+#print axioms Nightfall.PhaseBlockWellFormed.normalized_binary_mixture_phase_block_simulation
+#print Nightfall.PhaseBlockWellFormed.normalized_binary_mixture_phase_block_simulation
+
 end Nightfall.PhaseBlockWellFormed
