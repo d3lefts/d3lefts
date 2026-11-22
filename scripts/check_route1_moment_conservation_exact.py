@@ -7,7 +7,7 @@ claim has a separate elementary proof. Tests are NOT Lean certificates.
 from collections import Counter
 from fractions import Fraction as F
 from itertools import combinations, product
-from math import prod
+from math import prod, comb
 from random import Random
 
 rng = Random(20261121)
@@ -137,6 +137,35 @@ for _ in range(30):
     assert weighted(Q,lambda x:(f(x)-t(x))**2)==weighted(
         V,lambda x:(f(x)-t(x))**2)
     stats["biased_product_transfers"]+=1
+
+# Higher raw loss moments and exact Bernstein-polynomial expectations.
+# m=2 or 3, k=max(2md,(2m-1)d+q), parity constraint length L>k.
+def bernstein(z,m,a,gamma):
+    def ramp(u):
+        return max(F(0),min(F(1),(u-a)/gamma))
+    return sum((ramp(F(j,m))*comb(m,j)*z**j*(1-z)**(m-j)
+                for j in range(m+1)),F(0))
+
+for L,m in ((6,2),(8,3)):
+    n=L;d=1;q=1
+    assert L-1 >= max(2*m*d, (2*m-1)*d+q)
+    U=uniform(n)
+    V=parity_blocks(L,1)
+    f=lambda x:F(2+x[0]+x[1],4)
+    t=lambda x:F(1+x[2],2)
+    loss=lambda x:(f(x)-t(x))**2
+    for j in range(m+1):
+        assert weighted(U,lambda x:loss(x)**j)==weighted(
+            V,lambda x:loss(x)**j)
+        stats["higher_loss_moments"]+=1
+    a=F(1,9)
+    gamma=F(1,3)
+    assert weighted(U,lambda x:bernstein(loss(x),m,a,gamma))==weighted(
+        V,lambda x:bernstein(loss(x),m,a,gamma))
+    # Verify the polynomial ramp is not claiming equality of raw tails:
+    # it certifies matching polynomial expectations, and the tail
+    # comparison follows from the separately proved Bernstein error bound.
+    stats["higher_bernstein_equalities"]+=1
 
 print("PASS sharp marginal-order conservation of degree-d query risk")
 for key in sorted(stats): print(key+":",stats[key])
