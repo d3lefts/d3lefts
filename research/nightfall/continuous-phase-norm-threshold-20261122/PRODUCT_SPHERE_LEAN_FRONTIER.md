@@ -56,6 +56,8 @@ known-sphere cases, rather than treating the Stiefel assertion as an unrelated
 primitive. The product-to-Stiefel approach is already in Chan et al.; it is a
 **proof-engineering transfer, not an original topological theorem**.
 
+**Important separation:** the already stated pure-character `ProductSphereZero n r s` does *not* imply this mixed-character zero. The known-sphere version requires its own topological existence theorem for the representation `(r copies of α) ⊕ (s copies of β) ⊕ (one copy of α+β)`. The calculation above verifies the required class nonvanishing, not the topological implication. This mixed theorem must remain a distinct named proof obligation.
+
 The Lean file **only certifies the truncated mod-two coefficient arithmetic**
 for these expressions. It does not identify the coefficient grid with
 topological cohomology, construct bundle classes, establish the
