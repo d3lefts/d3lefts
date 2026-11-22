@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 46,
+  "revision": 47,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v46: 512 pending exact Lean source blobs; 67 frozen historical receipts unchanged. Two independent phase-block named Lean modules have passing pinned source receipts but full raw-oracle Route1 terminal remains provisional.",
+  "scope": "v47: 513 pending exact Lean blobs; original 67 verified entries unchanged. Compatible atlas operator source imported byte-identically from pinned compiler PASS, original actual homotopy geometry unproved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -396,6 +396,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source-integrated exact Lean module from #1070, blob 114c4159630eb787e494dc4aa6448dc24884e919, successfully compiled on frozen Lean pin with ordinary axioms in run 45058026793. Scope: compact actual product-sphere time-slab zero fiber and exclusion of zero-free t=1 endpoint; NO global 1D manifold, ProductSphereZero or priority."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUCompatibleAtlas.lean",
+      "source_blob_sha": "cc7fabe4f731d4ac28d5b279fce871cdebf880a8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Byte-identical source-preserving clean-main copy from original #1108 and fixed #1126. Exact pinned Lean kernel + standard axiom CI passed in run 45066160663, but this register remains unreviewed-source. Actual physical zero fiber chart cover/overlaps not yet constructed; ProductSphereZero unproved."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
