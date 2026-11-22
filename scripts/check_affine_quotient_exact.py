@@ -86,6 +86,30 @@ def test_duplicate_wyner_floor():
     print('NOTE Wyner equality r*ln(2) depends on the separate analytic proof, not this count')
 
 
+
+
+def test_maximal_support_quotient():
+    # Nonempty supports, including nonuniform/nonaffine cases.
+    supports = [
+        {4}, {4, 5, 6, 7}, {0, 1, 2}, set(range(16)), {0, 5, 10},
+    ]
+    D = list(range(16))
+    for support in supports:
+        s0 = min(support)
+        for a in D:
+            for b in D:
+                is_constant_ratio = len({sign(a, s) * sign(b, s) for s in support}) == 1
+                annihilates_differences = all(sign(a ^ b, s ^ s0) == 1 for s in support)
+                assert is_constant_ratio == annihilates_differences
+                if is_constant_ratio:
+                    assert all(sign(a, s) == sign(a ^ b, s0) * sign(b, s) for s in support)
+    # Negative control: uniform distribution on a NONaffine support does
+    # not admit the uniform-group Walsh orthogonality step in T2.
+    assert sum(sign(1, s) for s in (0, 1, 2)) == 1
+    print('PASS maximal support quotient: all 16^2 label pairs across five support types')
+    print('PASS negative control: nonaffine uniform source has nonorthogonal Walsh characters')
+
 if __name__ == '__main__':
     test_affine_quotient()
     test_duplicate_wyner_floor()
+    test_maximal_support_quotient()
