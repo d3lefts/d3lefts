@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 44,
+  "revision": 45,
   "as_of": "2026-11-22 UTC",
-  "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "Scoped tensor-T2 integration from current main: 497 earlier pending source custody entries preserved; 12 new exact-blob Lean modules added; 67 frozen historical source-certified records unmodified. Quantum simulation and published source splitting NOT Lean-certified.",
+  "source_commit": "618cd40f3bac7942ac6d1602624595204dab3598",
+  "scope": "v45: 511 pending exact-blob Lean sources on main-derived quantitative branch. Newly registered two #1111 conditional-risk modules without certification promotion. Frozen historical 67 records unchanged.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -408,6 +408,16 @@
       "receipt_scope": "Exact source-identity custody of scoped pure-character topology composition. Full ProductSphereZero and global boundary manifold still unproved. Pinned Lean pre-integration run #45059393121 succeeded on byte-identical source."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUDecoderRiskFloor.lean",
+      "source_blob_sha": "2eddc81492ee2b8536a000e2fac5526b82c82e48",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Scoped quantitative causal collision/risk proof from draft #1111; exact source custody only pending the named pinned Lean compiler and standard-axiom audit. ProductSphereZero is a hypothesis."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
       "source_blob_sha": "8314fd4cfca632a9a2ae7da85e863ea8cb0ed7e4",
       "classification": "unreviewed-source",
@@ -456,6 +466,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUQuantitativeCollision.lean",
+      "source_blob_sha": "bd55c5e5fc315ec75bb9accacf17492ce5b34361",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Scoped quantitative causal collision/risk proof from draft #1111; exact source custody only pending the named pinned Lean compiler and standard-axiom audit. ProductSphereZero is a hypothesis."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean",
