@@ -34,3 +34,11 @@ No RH assumption. The claim applies to ordinary holomorphic analytic continuatio
 ## 22 November 2026 direct prior-art correction
 
 The natural boundary of P at Re(w)=0 is explicitly attributed to Landau–Walfisz (1920) and Fröberg (1968) in MathWorld: https://mathworld.wolfram.com/PrimeZetaFunction.html . The derived Re(s)=−1 theorem is **a shifted-boundary corollary**, not a new natural-boundary mechanism. This strengthens source attribution but does not constitute independent review of the A⁺ proof.
+
+## Exact public-ledger identity (v1, 2026-11-22)
+
+**Claim:** The original shifted prime-difference series A⁺(s)=Σ_p[(p−1)^(−s)−p^(−s)] has no ordinary analytic continuation across any point of Re(s)=−1.
+
+**Limit:** The classical natural boundary is established prior art, not original. No global novelty clearance for this shifted corollary; formal k≥2 source coordinates behind the boundary are not ordinary reachable germs. The prime-zeta natural-boundary mechanism is directly classical; this is its shifted corollary, not a new boundary theorem mechanism.
+
+**Source:** https://github.com/d3lefts/d3lefts/pull/1043
