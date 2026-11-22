@@ -29,6 +29,15 @@ noncomputable section
 
 abbrev I01 := Nightfall.ProductBUInterval.I01
 
+/-- The original interval fixedpoint module uses a plain `def` alias for
+the closed interval. Mathlib's canonical halfspace chart instance is
+registered on the underlying `Set.Icc 0 1`; expose it on the exact
+alias used by our boundary classification. -/
+noncomputable instance : ChartedSpace (EuclideanHalfSpace 1) I01 := by
+  change ChartedSpace (EuclideanHalfSpace 1) (Set.Icc (0 : ℝ) 1)
+  infer_instance
+
+
 /-- Nonempty boundary excludes the circle branch of ATLAS classification. -/
 theorem boundary_component_diffeomorphic_closed_interval
     (M : Type*) [TopologicalSpace M]
