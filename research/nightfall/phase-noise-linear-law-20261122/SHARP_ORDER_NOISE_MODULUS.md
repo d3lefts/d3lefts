@@ -16,7 +16,7 @@ A deterministic decoder returns a sign class [x] with distance d_pm([x],[y]) = m
 **Theorem A (collision inflation, unconditional relative to its hypothesis).** Suppose a normalized causal intensity protocol has two signals x,y in D_R giving the same **noiseless** transcript, with d_pm(x,y) >= R. For 0 < sigma <= R^2/64, there are signals x',y' in D_R with a common transcript achievable under adversarial errors of absolute size at most sigma and
 
 \[
-d_{\pm}(x',y')\ge R\sqrt{1+\sigma/(16R^2)}.
+d_{\pm}(x',y')\ge R\sqrt{1+\sigma/(2R^2)}.
 \]
 
 This assertion needs no continuity of the selectors, only their common-prefix interpretation and unit row norms. It applies in every n >= 2 and every number of readings.
@@ -30,7 +30,7 @@ E_2(2,0,R;\sigma)\le R/2+18\sigma/R.
 **Sharp-order corollary (assuming the exact separated-collision theorem from merged #997).** For n=2, m=2, the annular topological collision gives d_pm(x,y)=R in the ball for every continuous causal policy. Therefore, for 0 < sigma <= R^2/1024,
 
 \[
-\boxed{\frac{\sigma}{96R}\le E_2(2,0,R;\sigma)-\frac R2
+\boxed{\frac{\sigma}{12R}\le E_2(2,0,R;\sigma)-\frac R2
 \le\frac{18\sigma}{R}}.
 \]
 
@@ -68,26 +68,26 @@ because (b'-b)(b'+b)=s. For every unit-bounded row q,
 \]
 If b=0, then a=1. Instead choose y' perpendicular to x with norm sqrt(s); the quotient squared separation increases by s and every squared reading changes by at most s.
 
-**Case II: b^2>1-s.** If the original d_pm(x,y)^2 >=1+s/16 there is nothing to do. Otherwise
+**Case II: b^2>1-s.** If the original d_pm(x,y)^2 >=1+s/2 there is nothing to do. Otherwise
 \[
-c=(a^2+b^2-d^2)/2>1/2-33s/32>0.48.
+c=(a^2+b^2-d^2)/2>1/2-5s/4>=123/256>0.48.
 \]
 Since a>=b, the angle theta between x and y satisfies
 \[
 0<\cos\theta=c/(ab)\le b/(2a)\le1/2,
 \quad \sin\theta\ge\sqrt3/2.
 \]
-In the two-dimensional span of x,y rotate y away from x by phi=s/8, leaving its norm unchanged. As cos(theta)>=c>0.48 and phi<=1/512, cos(theta+phi)>0: the relevant quotient distance remains ||x-y'||. Also ab>1-s and sin(phi)>=phi/2. Hence
+In the two-dimensional span of x,y rotate y away from x by phi=s/2, leaving its norm unchanged. As cos(theta)>=c>123/256 and phi<=1/128, cos(theta+phi)>0: indeed cos(theta+phi)>= (123/256)(1-1/32768)-1/128>0. The quotient distance therefore remains ||x-y'||. Also ab>1-s, sin(phi)>=3phi/4 (Taylor's inequality), and sqrt(3)>=5/3. Hence
 \[
 d_{\pm}(x,y')^2-d_{\pm}(x,y)^2
 =2ab(\cos\theta-\cos(\theta+\phi))
-\ge 2(1-s)(\sqrt3/2)(\phi/2)
-\ge \phi/2=s/16.
+\ge 2(1-s)(\sqrt3/2)(3\phi/4)
+\ge (315/512)s > s/2.
 \]
 The perturbation satisfies ||y'-y|| <=phi. Therefore, for every unit-bounded row q,
 \[
 |\langle q,y'\rangle^2-\langle q,y\rangle^2|
-\le(\|y'\|+\|y\|)\|y'-y\|\le2\phi=s/4\le s.
+\le(\|y'\|+\|y\|)\|y'-y\|\le2\phi=s.
 \]
 
 **Causal replay.** Let h be the common noiseless transcript of x and y. Feed the unchanged x with zero noise. Feed y' the stagewise adversarial errors
@@ -136,6 +136,11 @@ Consequently
 =\frac{51}{128}<\frac12.
 \]
 Output any feasible representative. Its worst-case quotient error is less than 1/2, and the near-axis branch gives the stated upper bound after scaling.
+
+
+### Quantitative upgrade and audit record (22 November 2026)
+
+The earlier estimate used phi=s/8 and squared-distance increase s/16. The revised Case II uses the full admissible angle phi=s/2 and the radial Case I already provides at least s/2. This improves the provable uniform collision inflation **eightfold** while preserving the same normalized causal noise model. The Taylor and trigonometric inequalities were reduced to exact rational guards in the checker. The claims remain at **paper-proof candidate** status until independent mathematical review; updated exact-head CI must be checked separately.
 
 ## Audit and novelty gates
 
