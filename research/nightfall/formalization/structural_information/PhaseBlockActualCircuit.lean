@@ -1,6 +1,7 @@
 import QuantumCircuitSimulation
 import Route1PolylogSimulation
 import PhaseBlockGrouping
+import Route1DegreeSourceBridge
 import PhaseBlockRoute1
 import PhaseBlockTreeCompiler
 import PhaseBlockRoute1Terminal
@@ -45,7 +46,7 @@ variable {B κ : Type}
 
 /-- Generic raw symbol law used only as an exact degree reconstruction
 reference; it is NOT the physical correlated raw intensity distribution. -/
-def auxRaw (i : B × Fin 4) (a : Fin 26) : ℝ := 1 / 26
+noncomputable def auxRaw (i : B × Fin 4) (a : Fin 26) : ℝ := 1 / 26
 
 theorem auxRaw_sum :
     ∀ i : B × Fin 4, ∑ a : Fin 26, auxRaw i a = 1 := by
@@ -71,7 +72,7 @@ theorem actual_circuit_block_degree (T : ℕ)
       (d := 2 * T) hr
       (parent := fun i : B × Fin 4 => i.1)
       (φ := fun i s => rawReading s i.2)
-  simpa only [groupedInput, rawTable] using hgroup
+  exact Nightfall.Route1SourceBridge.local_to_source _ _ hgroup
 
 /-- **Entire source-connected conditional matrix-circuit terminal.**
 The circuit is an actual recursive finite matrix-oracle program with
