@@ -1,6 +1,6 @@
 # Independent source-level audit of the proposed rank-free two-query tensor simulator
 
-**Date:** 2026-11-22. **Target:** closed unmerged [PR #1016](https://github.com/d3lefts/d3lefts/pull/1016), source head \`537411f2b1bab7e073f430f06d475325576dd99c\`. **Status:** independently reproducible finite checks; proposed all-\(L\), all-quantum-circuit theorem remains **unreviewed and unproved by Lean**. This note is an additional audit source, not an authorized journal or record submission.
+**Date:** 2026-11-22. **Target:** closed unmerged [PR #1016](https://github.com/d3lefts/d3lefts/pull/1016), source head `537411f2b1bab7e073f430f06d475325576dd99c`. **Status:** independently reproducible finite checks; proposed all-\(L\), all-quantum-circuit theorem remains **unreviewed and unproved by Lean**. This note is an additional audit source, not an authorized journal or record submission.
 
 ## Objective / model
 
@@ -30,10 +30,10 @@ The two audit scripts were written independently of the candidate branch code an
 
 Each check is source-exact and reproducible from Python's standard library:
 
-\`\`\`sh
+```sh
 python3 scripts/check_tensor_t2_rankfree_independent.py
 python3 scripts/check_tensor_t2_rankfree_coherence.py
-\`\`\`
+```
 
 The coherence checker constructs a **10-dimensional** one-dimensional-per-frequency rational phase-oracle representation (the more general rank-two-sector case has a different checker in #1002), rational Householder inter-query unitary, and full-rank positive effect \(P=I/2+|\psi\rangle\langle\psi|/4\). It independently confirms direct acceptance equals the four-path XOR expansion and its exact Walsh transform, with nonzero crossed-stage terms. The complexity theorem remains untested outside these finite model families.
 
