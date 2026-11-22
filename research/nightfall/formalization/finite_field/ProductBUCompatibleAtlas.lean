@@ -13,7 +13,7 @@ overlaps. It does NOT install a fabricated manifold instance on the
 zero fiber nor prove ProductSphereZero.
 -/
 
-open scoped Topology Manifold
+open scoped Topology Manifold ContDiff
 open Manifold
 
 namespace Nightfall.ProductBUCompatibleAtlas
@@ -21,6 +21,7 @@ noncomputable section
 
 /-- Construct a charted space with the original topology from a complete
 family of actual open partial homeomorphisms. -/
+@[instance_reducible]
 def chartedSpaceOfCoveringCharts
     {X : Type*} [TopologicalSpace X]
     {ι : Type*}
