@@ -52,12 +52,15 @@ theorem weighted_moment_346 (p t : σ → ℝ)
     have hB0 : B = 0 := by
       change (∑ i, p i * t i ^ 4) = 0
       simp [hz4]
-    rw [hzero, hB0]
-    ring
+    simp [hzero, hB0]
   · have hApos : 0 < A := lt_of_le_of_ne hA (Ne.symm hzero)
     have hfactor (i : σ) :
         0 ≤ p i * t i ^ 3 * (A * t i - B) ^ 2 * (A * t i + 2 * B) := by
-      positivity
+      have hlast : 0 ≤ A * t i + 2 * B :=
+        add_nonneg (mul_nonneg hA (ht i)) (mul_nonneg (by norm_num) hB)
+      exact mul_nonneg
+        (mul_nonneg (mul_nonneg (hp i) (pow_nonneg (ht i) 3))
+          (sq_nonneg _)) hlast
     have hsum : 0 ≤
         ∑ i, p i * t i ^ 3 * (A * t i - B) ^ 2 * (A * t i + 2 * B) :=
       Finset.sum_nonneg (fun i _ => hfactor i)
@@ -74,9 +77,6 @@ theorem weighted_moment_346 (p t : σ → ℝ)
         _ = A ^ 3 * C - 3 * A * B ^ 2 * B + 2 * B ^ 3 * A := by
               rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
               rw [← Finset.mul_sum, ← Finset.mul_sum, ← Finset.mul_sum]
-              change A ^ 3 * C - 3 * A * B ^ 2 * B + 2 * B ^ 3 * A =
-                A ^ 3 * C - 3 * A * B ^ 2 * B + 2 * B ^ 3 * A
-              rfl
         _ = _ := by ring
     have hprod : 0 ≤ A * (A ^ 2 * C - B ^ 3) := by
       nlinarith [hsum, hexpand]
