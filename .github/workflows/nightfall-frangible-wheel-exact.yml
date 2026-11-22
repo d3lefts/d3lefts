@@ -1,0 +1,37 @@
+name: NIGHTFALL frangible wheel exact-count audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/frangible-gaps-20261122/**'
+      - '.github/workflows/nightfall-frangible-wheel-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-count-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Compile and replay two counters with arithmetic certificate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/frangible-20261122
+          cd research/nightfall/frangible-gaps-20261122
+          bash replay.sh | tee "$GITHUB_WORKSPACE/receipts/frangible-20261122/replay.log"
+          cp verifier_surjection.log verifier_ie.log "$GITHUB_WORKSPACE/receipts/frangible-20261122/"
+          git rev-parse HEAD > "$GITHUB_WORKSPACE/receipts/frangible-20261122/head"
+          sha256sum README.md results.json *.cpp *.py replay.sh \
+            > "$GITHUB_WORKSPACE/receipts/frangible-20261122/SHA256SUMS"
+          echo 'Finite exact counting and arithmetic; no novel-priority or unconditional prime-gap frequency theorem.' \
+            > "$GITHUB_WORKSPACE/receipts/frangible-20261122/scope.txt"
+      - name: Publish source and independent counting receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nightfall-frangible-exact
+          path: receipts/frangible-20261122
+          if-no-files-found: warn
