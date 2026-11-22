@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 44,
+  "revision": 45,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v44: 503 pending Lean sources, original verified historical records preserved. Six global geometric assembly modules and pinned workflow merged onto latest main (via PR-only merge commit). All six remain UNREVIEWED in custody pending source-exact named Lean CI; global smooth fiber atlas and time-zero boundary geometry are explicit hypotheses, ProductSphereZero unproved.",
+  "scope": "v45: 504 pending Lean source blobs, original historical 67 source-matched records unchanged. Exact global geometry assembly including canonical signed-axis boundary source remains unreviewed in custody; full maximal ProductSphereZero and theorem priority unverified.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -386,6 +386,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact source-identity custody of scoped pure-character topology composition. Full ProductSphereZero and global boundary manifold still unproved. Pinned Lean pre-integration run #45059393121 succeeded on byte-identical source."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUAxisBoundaryTerminal.lean",
+      "source_blob_sha": "55ad244f26534b678d68c62df281b04ba66f5da0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 source custody only: canonical reference axis zero supplies real boundary point, reducing global smooth fiber terminal to manifold-with-boundary structure, t=0 boundary identity, and concrete homotopy sign/endpoint equations. Requires independent exact-head Lean source/axiom CI, not ProductSphereZero itself."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
