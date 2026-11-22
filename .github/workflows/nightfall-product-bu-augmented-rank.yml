@@ -1,0 +1,66 @@
+name: NIGHTFALL augmented Euclidean parametric Sard full-rank algebra
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUAugmentedRank.lean'
+      - '.github/workflows/nightfall-product-bu-augmented-rank.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUAugmentedRank.lean'
+      - '.github/workflows/nightfall-product-bu-augmented-rank.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  augmented-rank:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact source and dependency on frozen pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-augmented-rank
+          for M in ProductSphereObstruction ProductBUPerturbation ProductBUAugmentedRank; do
+            cp "research/nightfall/formalization/finite_field/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-augmented-rank/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-augmented-rank/$M.log"
+          done
+      - name: Verify named full-rank theorem ordinary axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/product-bu-augmented-rank/ProductBUAugmentedRank.log").read_text()
+          names=["weighted_param_surjective_of_ne_zero","radial_derivative_target","augmented_full_rank_witness"]
+          for n in names:
+              q="Nightfall.ProductBUAugmentedRank."+n
+              m=re.search(r"'"+re.escape(q)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m,("MISSING_AX_REPORT",q)
+              a={p.strip() for p in m.group(1).split(',') if p.strip()}
+              assert a <= {"propext","Classical.choice","Quot.sound"},(q,a)
+          assert "theorem Nightfall.ProductBUAugmentedRank.augmented_full_rank_witness" in s
+          assert "sorryAx" not in s
+          print("PASS: all-real-t except endpoints full augmented rank witness is kernel-checked")
+          print("OPEN: actual fderiv identification, t=0 endpoint, regular-preimage manifold, parity, ProductSphereZero.")
+          PY
+      - name: Preserve exact-source receipts
+        if: always()
+        run: |
+          mkdir -p receipts/product-bu-augmented-rank
+          git rev-parse HEAD > receipts/product-bu-augmented-rank/commit.txt
+          cat lean-toolchain > receipts/product-bu-augmented-rank/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/{ProductSphereObstruction,ProductBUPerturbation,ProductBUAugmentedRank}.lean > receipts/product-bu-augmented-rank/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-augmented-rank-lean-receipt
+          path: receipts/product-bu-augmented-rank
+          if-no-files-found: warn
+          retention-days: 90
