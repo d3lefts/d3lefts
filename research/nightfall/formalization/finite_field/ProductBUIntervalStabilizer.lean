@@ -38,20 +38,20 @@ theorem interval_endomap_has_fixed_point (f : I01 → I01)
     (isClosed_Icc : IsClosed (Set.Icc (0 : ℝ) 1)) g
   have h0 : (0 : ℝ) ≤ G 0 := by
     have h := congrArg
-      (fun H : C(I01, ℝ) => H ⟨0, by norm_num⟩) hG
-    have hval : (G 0 : ℝ) = (f ⟨0, by norm_num⟩).1 := by
-      change G 0 = (f ⟨0, by norm_num⟩).1 at h
+      (fun H : C(I01, ℝ) => H ⟨0, by simp [I01]⟩) hG
+    have hval : (G 0 : ℝ) = (f ⟨0, by simp [I01]⟩).1 := by
+      change G 0 = (f ⟨0, by simp [I01]⟩).1 at h
       exact h
     rw [hval]
-    exact (f ⟨0, by norm_num⟩).2.1
+    exact (f ⟨0, by simp [I01]⟩).2.1
   have h1 : (G 1 : ℝ) ≤ 1 := by
     have h := congrArg
-      (fun H : C(I01, ℝ) => H ⟨1, by norm_num⟩) hG
-    have hval : (G 1 : ℝ) = (f ⟨1, by norm_num⟩).1 := by
-      change G 1 = (f ⟨1, by norm_num⟩).1 at h
+      (fun H : C(I01, ℝ) => H ⟨1, by simp [I01]⟩) hG
+    have hval : (G 1 : ℝ) = (f ⟨1, by simp [I01]⟩).1 := by
+      change G 1 = (f ⟨1, by simp [I01]⟩).1 at h
       exact h
     rw [hval]
-    exact (f ⟨1, by norm_num⟩).2.2
+    exact (f ⟨1, by simp [I01]⟩).2.2
   obtain ⟨t, ht, hfixed⟩ :=
     exists_mem_Icc_isFixedPt
       (a := (0 : ℝ)) (b := (1 : ℝ))
