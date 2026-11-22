@@ -109,7 +109,7 @@ theorem target_miss_bound (f : Input ι α → ℝ) (a : Input ι α → ι → 
     |f x - f y| ≤ ∑ i, a y i * miss y x i := by
   rw [abs_sub_comm]
   have h := ha.2 y x
-  unfold disagree at h
+  unfold Nightfall.ProductSpace.Transfer.disagree at h
   rw [Finset.sum_filter] at h
   refine h.trans_eq ?_
   apply Finset.sum_congr rfl
@@ -140,12 +140,12 @@ theorem anchor_failure_le (f : Input ι α → ℝ) (t : DTree ι α)
       intro x _
       apply mul_le_mul_of_nonneg_left _ (hc x)
       exact (failure_at_pair f t e u hu x y).trans
-        (add_le_add_left (div_le_div_of_nonneg_right (target_miss_bound f a ha y x) hu.le) _)
+        (add_le_add_right (div_le_div_of_nonneg_right (target_miss_bound f a ha y x) hu.le) _)
     _ = fail f t e y + (∑ x, C x * ∑ i ∈ touched t y, miss y x i) +
           (∑ x, C x * ∑ i, a y i * miss y x i) / u := by
-      simp only [mul_add, Finset.sum_add_distrib, mul_div_assoc]
+      simp only [mul_add, Finset.sum_add_distrib, ← mul_div_assoc]
       rw [← Finset.sum_mul, hc1, one_mul, ← Finset.sum_div]
-    _ ≤ _ := add_le_add (add_le_add_left hp _) (div_le_div_of_nonneg_right hv hu.le)
+    _ ≤ _ := add_le_add (add_le_add_right hp _) (div_le_div_of_nonneg_right hv hu.le)
 
 theorem transfer_access_risk (Q ν : Input ι α → ℝ)
     (hQ : ∀ y, 0 ≤ Q y)
@@ -208,7 +208,7 @@ theorem route1_wyner_access_coupled (Q ν : Input ι α → ℝ)
         ∑ y, Q y * (fail f t e y + (n : ℝ) * η + budgetK d * η / u) := by
       apply Finset.sum_le_sum
       intro y _
-      exact mul_le_mul_of_nonneg_left (add_le_add (add_le_add_left (hnode y) _) (hrow y)) (hQ y)
+      exact mul_le_mul_of_nonneg_left (add_le_add (add_le_add_right (hnode y) _) (hrow y)) (hQ y)
     _ = (∑ y, Q y * fail f t e y) + n * η + budgetK d * η / u := by
       simp only [mul_add, Finset.sum_add_distrib]
       rw [← Finset.sum_mul, ← Finset.sum_mul, hQ1, one_mul, one_mul]
