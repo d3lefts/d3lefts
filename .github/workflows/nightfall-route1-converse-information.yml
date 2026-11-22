@@ -1,0 +1,46 @@
+name: NIGHTFALL Route1 converse finite information audit (not Lean proof)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/ROUTE1_CONVERSE_EXACT_FORRELATION_20261121.md'
+      - 'scripts/check_route1_converse_information_exact.py'
+      - '.github/workflows/nightfall-route1-converse-information.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-checker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact integer and rational regression tests plus numerical information check
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile scripts/check_route1_converse_information_exact.py
+          python3 scripts/check_route1_converse_information_exact.py | tee route1-converse-check.log
+      - name: Record exact source/head/runner receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/route1-converse
+          git rev-parse HEAD > receipts/route1-converse/head
+          python3 --version > receipts/route1-converse/python
+          sha256sum scripts/check_route1_converse_information_exact.py \
+                    research/nightfall/structural_information/ROUTE1_CONVERSE_EXACT_FORRELATION_20261121.md \
+                    .github/workflows/nightfall-route1-converse-information.yml \
+                    > receipts/route1-converse/SHA256SUMS
+          if test -f route1-converse-check.log; then
+            cp route1-converse-check.log receipts/route1-converse/check.log
+          fi
+          echo 'FINITE CHECKS ONLY -- not an independent Lean, Gaussian, entropy, or novelty certificate' > receipts/route1-converse/scope.txt
+      - name: Upload finite audit receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: route1-converse-check-${{ github.run_id }}
+          path: receipts/route1-converse
+          if-no-files-found: error
