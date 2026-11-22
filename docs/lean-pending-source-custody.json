@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 36,
+  "revision": 37,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v36: register exactly two newly integrated or proposed product-sphere Lean source blobs, preserving all prior custody entries and their theorem statuses; scoped CI remains separate from global certification.",
+  "scope": "v37: 489 unreviewed exact-source pending Lean blobs; 67 historical records unchanged. Boundary assembly requires pinned Lean receipt; global product-sphere theorem is not yet asserted.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -376,6 +376,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUBoundaryAssembly.lean",
+      "source_blob_sha": "8439d4f7e6c67d34972c8278079ca3b1d5370350",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Boundary orbit opposite-endpoint extraction, stacked over #1067 and #1057. Source custody only. Dedicated pinned Lean compiler and axiom receipt required, no actual global smooth fiber instance, no unconditional ProductSphereZero, peer review or global priority claim."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
