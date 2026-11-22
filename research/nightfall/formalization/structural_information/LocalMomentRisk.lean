@@ -38,12 +38,14 @@ theorem dependsOn_mul {S T : Finset ι}
     hg x y (fun i hi => hxy i (Finset.mem_union.mpr (Or.inl hi)))
   have h2 : h x = h y :=
     hh x y (fun i hi => hxy i (Finset.mem_union.mpr (Or.inr hi)))
+  change g x * h x = g y * h y
   rw [h1, h2]
 
 theorem dependsOn_const_mul {S : Finset ι}
     {g : Input ι α → ℝ} (hg : DependsOn S g) (c : ℝ) :
     DependsOn S (fun x => c * g x) := by
   intro x y hxy
+  change c * g x = c * g y
   rw [hg x y hxy]
 
 def expectation (μ : Input ι α → ℝ) (g : Input ι α → ℝ) : ℝ :=
@@ -79,7 +81,6 @@ theorem expectation_sub_sq (μ : Input ι α → ℝ)
     _ = _ := by
       rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
       rw [← Finset.mul_sum]
-      ring
 
 theorem square_sum_of_disjoint {β : Type*} [DecidableEq β]
     (T : Finset β) (u : β → ℝ)
@@ -112,7 +113,7 @@ structure LeafSystem (q : ℕ) (β : Type*) [DecidableEq β] [Fintype β] where
   support : β → Finset ι
   indicator : β → Input ι α → ℝ
   card_le : ∀ j, (support j).card ≤ q
-  local : ∀ j, DependsOn (support j) (indicator j)
+  depends : ∀ j, DependsOn (support j) (indicator j)
   idempotent : ∀ j x, (indicator j x)^2 = indicator j x
   exclusive : ∀ i j, i ≠ j → ∀ x, indicator i x * indicator j x = 0
 
@@ -147,7 +148,7 @@ structure DegreeDecomposition (d : ℕ) (β : Type*) [DecidableEq β] [Fintype �
   support : β → Finset ι
   component : β → Input ι α → ℝ
   card_le : ∀ j, (support j).card ≤ d
-  local : ∀ j, DependsOn (support j) (component j)
+  depends : ∀ j, DependsOn (support j) (component j)
 
 def targetValue {β : Type*} [DecidableEq β] [Fintype β]
     (sys : DegreeDecomposition (ι := ι) (α := α) d β) (x : Input ι α) : ℝ :=
@@ -177,12 +178,14 @@ theorem exact_squared_risk_transfer
       (fv x)^2 = ∑ i : β, ∑ j : β, f.component i x * f.component j x := by
     dsimp [fv, targetValue]
     simp only [pow_two, Finset.sum_mul, Finset.mul_sum]
+    rw [Finset.sum_comm]
   have ft_expand (x : Input ι α) :
       fv x * tv x =
         ∑ i : β, ∑ j : γ,
           f.component i x * (c j * t.indicator j x) := by
     dsimp [fv, tv, targetValue, leafValue]
     simp only [Finset.sum_mul, Finset.mul_sum]
+    rw [Finset.sum_comm]
   have hff : expectation μ (fun x => (fv x)^2) =
       expectation ν (fun x => (fv x)^2) := by
     have convert (w : Input ι α → ℝ) :
@@ -209,7 +212,7 @@ theorem exact_squared_risk_transfer
           (f.support i).card + (f.support j).card := Finset.card_union_le _ _
         _ ≤ d + d := Nat.add_le_add (f.card_le i) (f.card_le j)
         _ ≤ k := by omega
-    · exact dependsOn_mul (f.local i) (f.local j)
+    · exact dependsOn_mul (f.depends i) (f.depends j)
   have hft : expectation μ (fun x => fv x * tv x) =
       expectation ν (fun x => fv x * tv x) := by
     have convert (w : Input ι α → ℝ) :
@@ -236,7 +239,7 @@ theorem exact_squared_risk_transfer
           (f.support i).card + (t.support j).card := Finset.card_union_le _ _
         _ ≤ d + q := Nat.add_le_add (f.card_le i) (t.card_le j)
         _ ≤ k := hmix
-    · exact dependsOn_mul (f.local i) (dependsOn_const_mul (t.local j) (c j))
+    · exact dependsOn_mul (f.depends i) (dependsOn_const_mul (t.depends j) (c j))
   have htt : expectation μ (fun x => (tv x)^2) =
       expectation ν (fun x => (tv x)^2) := by
     have convert (w : Input ι α → ℝ) :
@@ -253,7 +256,7 @@ theorem exact_squared_risk_transfer
     intro j _
     apply hmatch (t.support j)
     · exact (t.card_le j).trans hq
-    · exact dependsOn_const_mul (t.local j) (c j ^ 2)
+    · exact dependsOn_const_mul (t.depends j) (c j ^ 2)
   rw [expectation_sub_sq μ fv tv, expectation_sub_sq ν fv tv, hff, hft, htt]
 
 end Nightfall.LocalMomentRisk
