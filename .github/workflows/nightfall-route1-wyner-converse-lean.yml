@@ -3,11 +3,45 @@ on:
   pull_request:
     paths:
       - 'research/formalization_candidates/route1/Route1WynerConverse.lean'
+      - 'research/nightfall/formalization/product_space/Route1DensityDomination.lean'
       - '.github/workflows/nightfall-route1-wyner-converse-lean.yml'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  density-domination:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Prove exact change of measure without Route1 dependency rebuild
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/route1-density
+          P=research/nightfall/formalization/product_space/Route1DensityDomination.lean
+          cp "$P" /tmp/mathlib4/Route1DensityDomination.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1DensityDomination.olean Route1DensityDomination.lean)
+          python3 scripts/lean_bridge.py "$P" \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Route1DensityDomination.weighted_expectation_dominated \
+            --decl Nightfall.Route1DensityDomination.event_probability_dominated \
+            --decl Nightfall.Route1DensityDomination.transfer_error_bound \
+            --json-out receipts/route1-density/density.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/route1-density/density.json
+          (cd /tmp/mathlib4 && lake env leanchecker -v Route1DensityDomination)
+          git rev-parse HEAD > receipts/route1-density/head
+          sha256sum "$P" > receipts/route1-density/source-sha256.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: route1-density-lean-receipt
+          path: receipts/route1-density
+          if-no-files-found: warn
   route1-converse:
     runs-on: ubuntu-latest
     timeout-minutes: 180
@@ -40,6 +74,8 @@ jobs:
             cp "$P/$M.lean" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean")
           done
+          cp "$P/Route1DensityDomination.lean" /tmp/mathlib4/Route1DensityDomination.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1DensityDomination.olean Route1DensityDomination.lean)
       - name: Strict exact converse statement and independent Lean kernel replay
         shell: bash
         run: |
@@ -51,6 +87,7 @@ jobs:
             --workspace /tmp/mathlib4 --strict --timeout 2400 \
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.Route1Polylog.wyner_converse_from_approximation_hardness \
+            --decl Nightfall.Route1Polylog.route1_wyner_dominated \
             --json-out receipts/route1-converse-lean/converse.json
           python3 research/nightfall/formalization/product_space/check_receipts.py \
             receipts/route1-converse-lean/converse.json
@@ -64,8 +101,9 @@ jobs:
           git rev-parse HEAD > receipts/route1-converse-lean/head
           sha256sum research/formalization_candidates/route1/Route1WynerConverse.lean \
                     research/nightfall/formalization/product_space/Route1WynerGeneral.lean \
+                    research/nightfall/formalization/product_space/Route1DensityDomination.lean \
                     > receipts/route1-converse-lean/SHA256SUMS
-          echo 'This proves only the explicit contrapositive assuming distributional approximation hardness, not Forrelation or Simon lower bounds' > receipts/route1-converse-lean/scope.txt
+          echo 'This proves the numerical contrapositive under explicit approximation-hardness and the no-grouping domination transfer. It does not certify the quantum task/promise lower bound or block decoding.' > receipts/route1-converse-lean/scope.txt
       - name: Upload source/kernel receipts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
