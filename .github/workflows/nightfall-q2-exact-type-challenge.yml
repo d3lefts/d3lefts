@@ -1,0 +1,84 @@
+name: NIGHTFALL finite-Q2 exact-type challenge bridge (independent review pending)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/2026-11-rh-transfer/native_q2_challenge_contract.json'
+      - 'research/nightfall/formalization/universal/**'
+      - 'scripts/lean_bridge.py'
+      - '.github/workflows/nightfall-q2-exact-type-challenge.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: q2-exact-type-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  challenge-under-source-pin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # pinned v7
+        with:
+          persist-credentials: false
+      - name: Verify locked Lean compiler and exact Mathlib source
+        uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile precise transitive finite-Q2 dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts/q2-challenge
+          python3 - <<'PY'
+          from pathlib import Path
+          from scripts.nightfall_q2_certify import local_sources, closure, sha256, ROOT
+          import json, shutil, subprocess
+          files=local_sources()
+          ordered=closure("InfinitePiQ2NativeHeterogeneousTerminal", files)
+          workspace=Path("/tmp/mathlib4")
+          out=workspace/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          records=[]
+          for name in ordered:
+              source=files[name]
+              target=workspace/(name+".lean")
+              shutil.copyfile(source,target)
+              assert sha256(source)==sha256(target)
+              subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],
+                             cwd=workspace,check=True,timeout=1200)
+              records.append({"source":str(source.relative_to(ROOT)),
+                              "source_sha256":sha256(source)})
+          Path("lean-receipts/q2-challenge/source-closure.json").write_text(
+              json.dumps({"root":"InfinitePiQ2NativeHeterogeneousTerminal",
+                          "closure":records},indent=2)+"\n")
+          print("SOURCE CLOSURE MODULES:",len(records))
+          PY
+      - name: Compile independently stated exact-type obligation under Lean and audit axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean \
+            --workspace /tmp/mathlib4 --timeout 1200 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InfinitePiQ2NativeHeterogeneousTerminal.native_heterogeneous_q2_105416_unconditional \
+            --contract research/nightfall/2026-11-rh-transfer/native_q2_challenge_contract.json \
+            --json-out lean-receipts/q2-challenge/exact-type-bridge.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            lean-receipts/q2-challenge/exact-type-bridge.json
+      - name: Export exact repository/toolchain provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p lean-receipts/q2-challenge
+          git rev-parse HEAD > lean-receipts/q2-challenge/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > lean-receipts/q2-challenge/mathlib-commit.txt
+          sha256sum research/nightfall/2026-11-rh-transfer/native_q2_challenge_contract.json \
+            research/nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean \
+            > lean-receipts/q2-challenge/SHA256SUMS.txt
+          cat lean-toolchain > lean-receipts/q2-challenge/toolchain.txt
+      - name: Preserve receipts even if Lean fails
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: q2-challenge-receipts-${{ github.run_id }}
+          path: lean-receipts/q2-challenge/
+          retention-days: 60
