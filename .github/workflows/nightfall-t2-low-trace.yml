@@ -1,15 +1,19 @@
-name: NIGHTFALL T2 low-trace amplitude finite replay (NOT universal theorem)
+name: NIGHTFALL T2 centered-effect exact replay (NOT universal theorem)
 
 on:
   push:
     paths:
       - "research/nightfall/structural_information/TENSOR_TWO_QUERY_LOW_TRACE_20261122.md"
       - "research/nightfall/structural_information/check_tensor_t2_low_trace.py"
+      - "research/nightfall/structural_information/TENSOR_TWO_QUERY_COMPRESSED_EFFECT_20261122.md"
+      - "research/nightfall/structural_information/check_t2_compressed_effect_exact.py"
       - ".github/workflows/nightfall-t2-low-trace.yml"
   pull_request:
     paths:
       - "research/nightfall/structural_information/TENSOR_TWO_QUERY_LOW_TRACE_20261122.md"
       - "research/nightfall/structural_information/check_tensor_t2_low_trace.py"
+      - "research/nightfall/structural_information/TENSOR_TWO_QUERY_COMPRESSED_EFFECT_20261122.md"
+      - "research/nightfall/structural_information/check_t2_compressed_effect_exact.py"
       - ".github/workflows/nightfall-t2-low-trace.yml"
 
 jobs:
@@ -24,7 +28,13 @@ jobs:
         run: |
           sha256sum research/nightfall/structural_information/TENSOR_TWO_QUERY_LOW_TRACE_20261122.md
           sha256sum research/nightfall/structural_information/check_tensor_t2_low_trace.py
+          sha256sum research/nightfall/structural_information/TENSOR_TWO_QUERY_COMPRESSED_EFFECT_20261122.md
+          sha256sum research/nightfall/structural_information/check_t2_compressed_effect_exact.py
       - name: Compile exact checker
-        run: python -m py_compile research/nightfall/structural_information/check_tensor_t2_low_trace.py
+        run: |
+          python -m py_compile research/nightfall/structural_information/check_tensor_t2_low_trace.py
+          python -m py_compile research/nightfall/structural_information/check_t2_compressed_effect_exact.py
       - name: Replay direct circuit, Fourier, and conditional expectation
         run: python research/nightfall/structural_information/check_tensor_t2_low_trace.py
+      - name: Check compressed centered-effect high-rank projector
+        run: python research/nightfall/structural_information/check_t2_compressed_effect_exact.py
