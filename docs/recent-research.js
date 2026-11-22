@@ -12,7 +12,7 @@
    const article=el("article","nr-card");article.id=c.id;
    const top=el("div","nr-card-top");top.append(el("span","nr-state nr-"+c.tier,c.status_label),el("span","nr-id",c.id));article.append(top,el("h2","",c.title),el("p","nr-claim",c.claim));
    const facts=el("dl","nr-facts");for(const [key,value] of [["Scope",c.scope],["Mechanism",c.mechanism],["Evidence",c.certificate],["Limit",c.limit],["Next decisive audit",c.next]]){const item=el("div");item.append(el("dt","",key),el("dd","",value));facts.append(item);}article.append(facts);
-   const links=el("div","nr-links");links.append(link("Proof Passport",c.passport),link("Source PR #"+c.pr,c.source));if(c.receipt)links.append(link("Pinned Lean run",c.receipt));article.append(links);grid.append(article);
+   const links=el("div","nr-links");links.append(link("Proof Passport",c.passport),link("Source PR #"+c.pr,c.source));if(c.receipt)links.append(link((c.tier==="merged-lean"||c.tier==="branch-lean")?"Pinned named Lean run":"Exact finite CI / evidence",c.receipt));article.append(links);grid.append(article);
   }
   summary.textContent=n+" of "+cards.length+" source-scoped claims displayed";if(!n)grid.append(el("p","nr-empty","No claims match these filters."));
  }

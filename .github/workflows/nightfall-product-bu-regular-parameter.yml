@@ -1,0 +1,72 @@
+name: NIGHTFALL exact regular parameter from pinned ATLAS Sard
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBURegularParameter.lean'
+      - '.github/workflows/nightfall-product-bu-regular-parameter.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBURegularParameter.lean'
+      - '.github/workflows/nightfall-product-bu-regular-parameter.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regular-parameter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Fetch exact trusted external source and compile regular-parameter terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-regular-parameter
+          git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
+          git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
+          test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = 7857a2e8c32088b5002f7cafe29a21d936baf704
+          for M in MathlibExt/MeasureTheory/Measure/ImageNull MathlibExt/Geometry/Manifold/Sard MathlibExt/Geometry/Manifold/ParametricSard; do
+            mkdir -p "/tmp/mathlib4/$(dirname "$M")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$M")"
+            cp "/tmp/atlas-lean/$M.lean" "/tmp/mathlib4/$M.lean"
+            sha256sum "/tmp/mathlib4/$M.lean" >> receipts/product-bu-regular-parameter/ATLAS-SHA256SUMS
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-regular-parameter/$(basename "$M").log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-regular-parameter/$(basename "$M").log"
+          done
+          cp research/nightfall/formalization/finite_field/ProductBURegularParameter.lean /tmp/mathlib4/ProductBURegularParameter.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/ProductBURegularParameter.olean ProductBURegularParameter.lean) 2>&1 | tee receipts/product-bu-regular-parameter/terminal.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/product-bu-regular-parameter/terminal.log
+      - name: Verify exact theorem and permitted axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/product-bu-regular-parameter/terminal.log").read_text()
+          name="Nightfall.ProductBURegularParameter.exists_regular_slice_of_global_surjectivity"
+          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          assert m,("missing axiom receipt",name)
+          a={z.strip() for z in m.group(1).split(',') if z.strip()}
+          assert a <= {'propext','Classical.choice','Quot.sound'},(name,a)
+          assert 'theorem '+name in s and 'sorryAx' not in s
+          print("PASS: exact global Euclidean parameter selection from parametricSard")
+          print("OPEN: source-specific derivative, regular 1-manifold with boundary, equivariant group parity.")
+          PY
+      - name: Preserve exact source custody
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-regular-parameter
+          git rev-parse HEAD > receipts/product-bu-regular-parameter/commit.txt
+          cat lean-toolchain > receipts/product-bu-regular-parameter/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBURegularParameter.lean > receipts/product-bu-regular-parameter/SourceSHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-regular-parameter-sard-receipt
+          path: receipts/product-bu-regular-parameter
+          retention-days: 90
+          if-no-files-found: warn

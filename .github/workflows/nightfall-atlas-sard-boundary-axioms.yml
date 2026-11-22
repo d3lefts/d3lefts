@@ -1,0 +1,108 @@
+name: NIGHTFALL external Sard and 1D topology kernel axiom replay
+on:
+  push:
+    paths:
+      - '.github/workflows/nightfall-atlas-sard-boundary-axioms.yml'
+      - 'research/nightfall/continuous-causal-phase-20261122/ATLAS_TOPOLOGY_AXION_AUDIT_20261122.md'
+  pull_request:
+    paths:
+      - '.github/workflows/nightfall-atlas-sard-boundary-axioms.yml'
+      - 'research/nightfall/continuous-causal-phase-20261122/ATLAS_TOPOLOGY_AXION_AUDIT_20261122.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  external-axiom-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Retrieve and verify immutable Atlas topology source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/atlas-topology
+          git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
+          git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
+          test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = 7857a2e8c32088b5002f7cafe29a21d936baf704
+          mkdir -p /tmp/mathlib4/MathlibExt/Geometry/Manifold /tmp/mathlib4/MathlibExt/MeasureTheory/Measure
+          for M in \
+            MathlibExt/MeasureTheory/Measure/ImageNull \
+            MathlibExt/Geometry/Manifold/Sard \
+            MathlibExt/Geometry/Manifold/ParametricSard \
+            MathlibExt/Geometry/Manifold/RiemannianMetricExistence \
+            MathlibExt/Geometry/Manifold/OneDimensional; do
+            cp "/tmp/atlas-lean/$M.lean" "/tmp/mathlib4/$M.lean"
+            sha256sum "/tmp/mathlib4/$M.lean" >> receipts/atlas-topology/ATLAS-SHA256SUMS
+            if grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "/tmp/mathlib4/$M.lean"; then
+              echo "FAIL: source contains a direct admission or new axiom in $M"
+              exit 1
+            fi
+          done
+          git -C /tmp/atlas-lean rev-parse HEAD > receipts/atlas-topology/external-commit.txt
+      - name: Kernel build exact external theorem sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/mathlib4
+          for M in \
+            MathlibExt/MeasureTheory/Measure/ImageNull \
+            MathlibExt/Geometry/Manifold/Sard \
+            MathlibExt/Geometry/Manifold/ParametricSard \
+            MathlibExt/Geometry/Manifold/RiemannianMetricExistence \
+            MathlibExt/Geometry/Manifold/OneDimensional; do
+            mkdir -p ".lake/build/lib/lean/$(dirname "$M")"
+            lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean" 2>&1 | tee "$GITHUB_WORKSPACE/receipts/atlas-topology/$(basename "$M").log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "$GITHUB_WORKSPACE/receipts/atlas-topology/$(basename "$M").log"
+          done
+      - name: Source exact kernel axiom audit of three topology theorems
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/mathlib4/AtlasTopologyAxiomGate.lean <<'LEAN'
+          import MathlibExt.Geometry.Manifold.ParametricSard
+          import MathlibExt.Geometry.Manifold.OneDimensional
+          #check MathlibExt.Geometry.Manifold.SardWanted.sard_theorem
+          #check MathlibExt.Geometry.Manifold.ParametricSardWanted.parametricSard
+          #check MathlibExt.Geometry.Manifold.OneDimensionalWanted.compact_connected_one_manifold_with_boundary_classification
+          #print axioms MathlibExt.Geometry.Manifold.SardWanted.sard_theorem
+          #print axioms MathlibExt.Geometry.Manifold.ParametricSardWanted.parametricSard
+          #print axioms MathlibExt.Geometry.Manifold.OneDimensionalWanted.compact_connected_one_manifold_with_boundary_classification
+          LEAN
+          (cd /tmp/mathlib4 && lake env lean AtlasTopologyAxiomGate.lean) 2>&1 | tee receipts/atlas-topology/axioms.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/atlas-topology/axioms.log").read_text()
+          names=[
+            "MathlibExt.Geometry.Manifold.SardWanted.sard_theorem",
+            "MathlibExt.Geometry.Manifold.ParametricSardWanted.parametricSard",
+            "MathlibExt.Geometry.Manifold.OneDimensionalWanted.compact_connected_one_manifold_with_boundary_classification"
+          ]
+          for name in names:
+              hit=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert hit,("MISSING_AX_REPORT",name)
+              a={t.strip() for t in hit.group(1).split(",") if t.strip()}
+              assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          assert "sorryAx" not in s
+          assert "error:" not in s
+          print("PASS: three external Sard / parametric Sard / 1D classification results compile with standard axioms.")
+          print("NOT PROVED: relative product-sphere preimage topology, equivariant orbit parity, or ProductSphereZero.")
+          PY
+      - name: Preserve exact-head audit receipt
+        if: always()
+        run: |
+          mkdir -p receipts/atlas-topology
+          git rev-parse HEAD > receipts/atlas-topology/nightfall-commit.txt
+          cat lean-toolchain > receipts/atlas-topology/toolchain.txt
+          sha256sum .github/workflows/nightfall-atlas-sard-boundary-axioms.yml > receipts/atlas-topology/WORKFLOW-SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlas-sard-boundary-source-axiom-receipt
+          path: receipts/atlas-topology
+          retention-days: 90
+          if-no-files-found: warn

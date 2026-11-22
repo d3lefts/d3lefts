@@ -1,0 +1,78 @@
+name: NIGHTFALL product BU reference single-orbit Lean certificate
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean'
+      - '.github/workflows/nightfall-product-bu-orbit.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean'
+      - '.github/workflows/nightfall-product-bu-orbit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean-orbit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact pinned sources (topology interface + reference + orbit)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-orbit
+          for M in ProductSphereObstruction ProductBUParityReference ProductBUOrbitCertificate; do
+            cp "research/nightfall/formalization/finite_field/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-orbit/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-orbit/$M.log"
+          done
+      - name: Check exact theorem type and standard-only axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          src=Path("research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean").read_text()
+          assert "sorry" not in re.sub(r"/-!.*?-/", "", src,flags=re.S).replace("sorries","")
+          assert "\naxiom " not in src and "\nconstant " not in src
+          log=Path("receipts/product-bu-orbit/ProductBUOrbitCertificate.log").read_text()
+          names=[
+            "axis_unit","unit_tail_zero_eq_axis_or_neg",
+            "reference_zero_axis_classification",
+            "reference_axis_is_zero","axis_orbit_unique",
+            "reference_zeros_one_orbit"
+          ]
+          for n in names:
+            q="Nightfall.ProductBUOrbit."+n
+            m=re.search(r"'"+re.escape(q)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+            assert m,("MISSING",q)
+            axioms={s.strip() for s in m.group(1).split(",") if s.strip()}
+            assert axioms <= {"propext","Classical.choice","Quot.sound"},(q,axioms)
+          assert "theorem Nightfall.ProductBUOrbit.reference_zeros_one_orbit" in log
+          assert "sorryAx" not in log
+          print("PASS: reference single-sign-orbit theorem is pinned-kernel-checked")
+          print("UNPROVED: relative transversality, mod2 boundary parity, and ProductSphereZero")
+          PY
+      - name: Preserve provenance
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-orbit
+          git rev-parse HEAD > receipts/product-bu-orbit/commit.txt
+          cat lean-toolchain > receipts/product-bu-orbit/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean > receipts/product-bu-orbit/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-reference-orbit-lean-receipt
+          path: receipts/product-bu-orbit
+          retention-days: 90
+          if-no-files-found: warn

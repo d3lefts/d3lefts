@@ -1,0 +1,45 @@
+name: NIGHTFALL product BU mod-two reference zero orbit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUParityReference.lean'
+      - '.github/workflows/nightfall-product-bu-parity-reference.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reference-orbit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact reference geometry and audit standard axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -nE '\b(sorry|admit)\b' research/nightfall/formalization/finite_field/ProductBUParityReference.lean
+          for M in ProductSphereObstruction ProductBUParityReference; do
+            cp "research/nightfall/formalization/finite_field/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "/tmp/$M.log"
+          done
+          python3 - <<'PY'
+          import re
+          s = open('/tmp/ProductBUParityReference.log', encoding='utf8').read()
+          for suffix in ('refU_flip_left','refU_flip_right','refV_flip_left',
+                         'refV_flip_right','unit_tail_zero_first_sign','reference_zero_signs',
+                         'square_implies_productSphereZero'):
+              name = 'Nightfall.ProductBUParity.' + suffix
+              m = re.search(re.escape("'" + name + "' depends on axioms: [") + r'([^\]]*)\]', s, re.S)
+              if m is None:
+                  assert f"'{name}' does not depend on any axioms" in s, name
+                  axioms=set()
+              else:
+                  axioms={v.strip() for v in m.group(1).split(',') if v.strip()}
+              assert axioms <= {'propext','Classical.choice','Quot.sound'}, (name,axioms)
+              print(name,sorted(axioms))
+          assert 'sorryAx' not in s
+          print('PASS: algebraic reference zero signs only. Topological parity NOT Lean certified.')
+          PY

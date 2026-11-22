@@ -198,6 +198,7 @@ try{
    if(!(await investigationLink.isVisible())) await page.locator("#menu-button").click();
    await investigationLink.click();
    assert.match(new URL(page.url()).search,/claim=erdos36/);
+   await page.locator("#cj-workspace").waitFor({state:"visible",timeout:10000});
    assert.equal(await page.locator("#cj-workspace").isVisible(),true,"Claim-specific workspace active");
    assert.match(await page.locator("#cj-duty").innerText(),/131,072-cell witness/);
    assert.equal(await page.locator("#cj-claim").inputValue(),"erdos36");

@@ -1,0 +1,66 @@
+name: NIGHTFALL product sphere Tietze extension pinned Lean
+on:
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean'
+      - '.github/workflows/nightfall-product-bu-sphere-extension.yml'
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean'
+      - '.github/workflows/nightfall-product-bu-sphere-extension.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sphere-extension:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned topology contract then actual Tietze extension
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/product-bu-sphere-extension
+          for M in ProductSphereObstruction ProductBUSphereExtension; do
+            cp "research/nightfall/formalization/finite_field/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/product-bu-sphere-extension/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/product-bu-sphere-extension/$M.log"
+          done
+      - name: Verify both real theorem types, allowed axioms and no sorry
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/product-bu-sphere-extension/ProductBUSphereExtension.log").read_text()
+          for n in ("spherePair_isClosed","exists_continuous_extension"):
+              q="Nightfall.ProductBUSphereExtension."+n
+              m=re.search(r"'"+re.escape(q)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              assert m,("NO_AXIOM_RECEIPT",q)
+              a={z.strip() for z in m.group(1).split(',') if z.strip()}
+              assert a <= {"propext","Classical.choice","Quot.sound"},(q,a)
+          assert "theorem Nightfall.ProductBUSphereExtension.exists_continuous_extension" in s
+          assert "sorryAx" not in s
+          print("PASS: every continuous-on-sphere scalar map admits exact continuous ambient extension; no custom axioms.")
+          print("NOT PROVED: antipodal topology zero, equivariant transversality, 1-manifold boundary parity.")
+          PY
+      - name: Exact source provenance
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/product-bu-sphere-extension
+          git rev-parse HEAD > receipts/product-bu-sphere-extension/commit.txt
+          cat lean-toolchain > receipts/product-bu-sphere-extension/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean > receipts/product-bu-sphere-extension/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: product-bu-sphere-extension-lean-receipt
+          path: receipts/product-bu-sphere-extension
+          if-no-files-found: warn
+          retention-days: 90

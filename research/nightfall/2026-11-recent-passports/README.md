@@ -37,3 +37,13 @@ Authoritative machine ledger: [docs/recent-research.json](../../../docs/recent-r
 3. Independently reproduce calculations, attack edge cases and preserve counterexamples.
 4. Compare dated literature and separate originality from correctness.
 5. Do not release new public-preprint claims or merge unreviewed mathematical branches solely because of passport generation.
+
+## November 22 append-only prime-zeta paper theorem passports
+
+The two statements below are **promoted to sourced paper-level theorems**, not to named Lean declarations or independently certified original discoveries. They build on merged paper evidence in [PR #1035](https://github.com/d3lefts/d3lefts/pull/1035) and full statement/dependency clarification in [PR #1043](https://github.com/d3lefts/d3lefts/pull/1043). Their named analytic referee task remains [issue #1040](https://github.com/d3lefts/d3lefts/issues/1040).
+
+- [First-strip exact Möbius residue criterion](prime-zeta-first-strip-paper-theorem.md) — paper theorem, finite source-fiber integer test, analytically derived; no Lean or non-author proof review.
+- [Shifted prime-zeta natural boundary at Re(s)=−1](prime-zeta-natural-boundary-paper-theorem.md) — paper theorem, uses the classical Landau–Walfisz/Fröberg prime-zeta natural boundary; the classical dependency is not new.
+- [Shared explicit proof and scope document](../structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md) — all hypotheses, local continuation proof, nonreal boundary transfer, ownership and adverse review gates.
+
+These entries are additive; this README's 19 November historical records and the v2 Lean-receipt overlay remain unchanged. The public dynamic ledger is `docs/recent-research.json`, whose exact `analytic` tier does not imply independent analytic theorem certification.
