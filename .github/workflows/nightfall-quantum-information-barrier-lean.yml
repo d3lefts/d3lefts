@@ -1,0 +1,102 @@
+name: NIGHTFALL global observability quantum-Wyner semantic terminal
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumInformationBarrier.lean'
+      - 'research/formalization_candidates/route1/Route1WynerConverse.lean'
+      - 'research/nightfall/formalization/product_space/Route1WynerGeneral.lean'
+      - '.github/workflows/nightfall-quantum-information-barrier-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-head-quantum-information-barrier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact AA product influence closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/quantum-information-barrier
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") 2>&1 | tee -a receipts/quantum-information-barrier/aa.log
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile source-connected Route 1, arbitrary-latent Wyner and exact converse
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift \
+                   Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral \
+                   Route1DensityDomination; do
+            cp "$P/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/quantum-information-barrier/$M.log"
+          done
+          cp research/formalization_candidates/route1/Route1WynerConverse.lean /tmp/mathlib4/Route1WynerConverse.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1WynerConverse.olean Route1WynerConverse.lean) 2>&1 | tee receipts/quantum-information-barrier/Route1WynerConverse.log
+      - name: Compile actual quantum matrix-oracle semantics and normality
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space
+          for M in QuantumCircuitPaths QuantumPathDegree QuantumCircuitNormalization QuantumCircuitSimulation; do
+            cp "$P/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/quantum-information-barrier/$M.log"
+          done
+      - name: Fail-closed full semantic terminal and independent kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space/QuantumInformationBarrier.lean
+          cp "$P" /tmp/mathlib4/QuantumInformationBarrier.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QuantumInformationBarrier.olean QuantumInformationBarrier.lean) 2>&1 | tee receipts/quantum-information-barrier/QuantumInformationBarrier.log
+          test -s /tmp/mathlib4/.lake/build/lib/lean/QuantumInformationBarrier.olean
+          python3 scripts/lean_bridge.py "$P" \
+            --workspace /tmp/mathlib4 --strict --timeout 2400 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.QuantumInformationBarrier.normalized_circuit_wyner_simulation \
+            --decl Nightfall.QuantumInformationBarrier.normalized_circuit_wyner_necessity \
+            --json-out receipts/quantum-information-barrier/terminal.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py \
+            receipts/quantum-information-barrier/terminal.json
+          (cd /tmp/mathlib4 && lake env leanchecker -v QuantumInformationBarrier) 2>&1 | tee receipts/quantum-information-barrier/leanchecker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log = Path('receipts/quantum-information-barrier/QuantumInformationBarrier.log').read_text()
+          reports = dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]", log, re.S))
+          for name in ('normalized_circuit_wyner_simulation', 'normalized_circuit_wyner_necessity'):
+              fullname = 'Nightfall.QuantumInformationBarrier.' + name
+              assert fullname in reports, fullname
+              assert set(v.strip() for v in reports[fullname].split(',') if v.strip()) <= {'Classical.choice', 'propext', 'Quot.sound'}
+          assert 'sorryAx' not in log
+          print('PASS: both actual-source circuit-Wyner terminals have standard axioms only')
+          PY
+      - name: Archive exact-head identity, source SHA and limited scope
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/quantum-information-barrier
+          git rev-parse HEAD > receipts/quantum-information-barrier/head
+          sha256sum research/nightfall/formalization/product_space/QuantumInformationBarrier.lean \
+             research/formalization_candidates/route1/Route1WynerConverse.lean \
+             research/nightfall/formalization/product_space/{QuantumCircuitSimulation,QuantumCircuitNormalization,Route1WynerGeneral}.lean \
+             > receipts/quantum-information-barrier/SHA256SUMS
+          echo 'Only finite-symbol normalized quantum scalar acceptance and Wyner bound/converse. No runtime, general coherent oracle, automatic promise hardness, publication priority, or external review.' > receipts/quantum-information-barrier/scope.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: quantum-information-barrier-${{ github.run_id }}
+          path: receipts/quantum-information-barrier
+          if-no-files-found: error
