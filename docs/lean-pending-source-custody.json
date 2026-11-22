@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 36,
+  "revision": 37,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v36: 488 pending Lean sources in this reconciled checkout and 67 immutable historical source-matched records. Includes two new Route1 risk/marginal Lean sources as unreviewed pending custody (separately pinned named theorem CI, no automatic full theorem or novelty promotion).",
+  "scope": "v37: 489 pending exact Lean blobs in merged PR checkout, preserving all prior entries and 67 historical frozen records; independent parallel ProductBURegularFiberLocal file from main is registered as unreviewed and Route1 risk/marginal modules retain independent named CI only.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -416,6 +416,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean",
+      "source_blob_sha": "85d70972e8e30fdee85b311725b775e115374749",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 parallel-branch source observed on current main PR-merge checkout; exact Git blob recorded for protected-main custody only, no theorem, compilation, peer review or novelty certified in this ledger."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBURegularParameter.lean",
