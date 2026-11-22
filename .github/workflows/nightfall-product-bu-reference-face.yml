@@ -4,6 +4,10 @@ on:
     paths:
       - 'research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean'
       - '.github/workflows/nightfall-product-bu-reference-face.yml'
+  push:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean'
+      - '.github/workflows/nightfall-product-bu-reference-face.yml'
   workflow_dispatch:
 permissions:
   contents: read
