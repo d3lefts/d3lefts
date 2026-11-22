@@ -101,4 +101,45 @@ theorem improved_T2_pair_constant :
 #print axioms Nightfall.StructuralInformation.TensorT2RepeatMobius.mobius_repeated_nonzero_xor
 #print axioms Nightfall.StructuralInformation.TensorT2RepeatMobius.improved_T2_pair_constant
 
+/-- A four-slot XOR equation forces its last label uniquely. This is
+valid in any additive commutative group, without using characteristic two. -/
+theorem fourth_label_unique {G : Type*} [AddCommGroup G]
+    (a b c d e z : G)
+    (hd : a + b + c + d = z)
+    (he : a + b + c + e = z) : d = e := by
+  exact add_left_cancel (hd.trans he.symm)
+
+/-- In an exponent-two label group, the XOR of two distinct labels
+cannot vanish; this is the step allowing M2 (nonzero frequencies only)
+to cap the final two slots of the Group-A four-path count. -/
+theorem distinct_pair_xor_nonzero
+    {G : Type*} [AddCommGroup G]
+    (h₂ : ∀ x : G, x + x = 0)
+    (c d : G) (hcd : c ≠ d) : c + d ≠ 0 := by
+  intro hz
+  apply hcd
+  calc
+    c = c + (d + d) := by rw [h₂ d, add_zero]
+    _ = (c + d) + d := by abel
+    _ = d := by rw [hz, zero_add]
+
+/-- Pair-XOR fibers can only shrink when allowed final labels are
+restricted. This is the finite-set injection behind the M2 cap. -/
+theorem restricted_pair_fiber_le
+    {G : Type*} [AddCommGroup G] [DecidableEq G]
+    (D A : Finset G) (hAD : A ⊆ D) (z : G) :
+    ((A.product A).filter (fun p => p.1 + p.2 = z)).card ≤
+      ((D.product D).filter (fun p => p.1 + p.2 = z)).card := by
+  apply Finset.card_le_card
+  intro p hp
+  obtain ⟨hprod, heq⟩ := Finset.mem_filter.mp hp
+  obtain ⟨ha, hb⟩ := Finset.mem_product.mp hprod
+  exact Finset.mem_filter.mpr
+    ⟨Finset.mem_product.mpr ⟨hAD ha, hAD hb⟩, heq⟩
+
+#print axioms Nightfall.StructuralInformation.TensorT2RepeatMobius.fourth_label_unique
+#print axioms Nightfall.StructuralInformation.TensorT2RepeatMobius.distinct_pair_xor_nonzero
+#print axioms Nightfall.StructuralInformation.TensorT2RepeatMobius.restricted_pair_fiber_le
+
+
 end Nightfall.StructuralInformation.TensorT2RepeatMobius
