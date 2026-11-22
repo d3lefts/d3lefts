@@ -23,5 +23,8 @@ jobs:
         run: |
           python -m py_compile research/nightfall/continuous-causal-phase-20261122/verify_parity_exact.py
           python -m py_compile research/nightfall/continuous-causal-phase-20261122/phase_collision_probe.py
+          python -m py_compile research/nightfall/continuous-causal-phase-20261122/check_semialgebraic_detector_exact.py
       - name: Exact parity replay
         run: python research/nightfall/continuous-causal-phase-20261122/verify_parity_exact.py
+      - name: Semialgebraic holonomy rational algebra (not a topology proof)
+        run: python research/nightfall/continuous-causal-phase-20261122/check_semialgebraic_detector_exact.py
