@@ -92,11 +92,11 @@ noncomputable def eU (n m : ℕ) (F : SpaceTime n → Values m)
   left_inv p := Subtype.ext (flipU_involutive n p.1)
   right_inv p := Subtype.ext (flipU_involutive n p.1)
   continuous_toFun := by
-    apply continuous_subtype_mk
-    exact (flipU_continuous n).comp continuous_subtype_val
+    exact Continuous.subtype_mk
+      ((flipU_continuous n).comp continuous_subtype_val) _
   continuous_invFun := by
-    apply continuous_subtype_mk
-    exact (flipU_continuous n).comp continuous_subtype_val
+    exact Continuous.subtype_mk
+      ((flipU_continuous n).comp continuous_subtype_val) _
 
 noncomputable def eV (n m : ℕ) (F : SpaceTime n → Values m)
     (hF : ∀ p, F p = 0 → F (flipV p) = 0) : Z n m F ≃ₜ Z n m F where
@@ -105,11 +105,11 @@ noncomputable def eV (n m : ℕ) (F : SpaceTime n → Values m)
   left_inv p := Subtype.ext (flipV_involutive n p.1)
   right_inv p := Subtype.ext (flipV_involutive n p.1)
   continuous_toFun := by
-    apply continuous_subtype_mk
-    exact (flipV_continuous n).comp continuous_subtype_val
+    exact Continuous.subtype_mk
+      ((flipV_continuous n).comp continuous_subtype_val) _
   continuous_invFun := by
-    apply continuous_subtype_mk
-    exact (flipV_continuous n).comp continuous_subtype_val
+    exact Continuous.subtype_mk
+      ((flipV_continuous n).comp continuous_subtype_val) _
 
 noncomputable def eUV (n m : ℕ) (F : SpaceTime n → Values m)
     (hF : ∀ p, F p = 0 → F (flipUV p) = 0) : Z n m F ≃ₜ Z n m F where
@@ -118,11 +118,11 @@ noncomputable def eUV (n m : ℕ) (F : SpaceTime n → Values m)
   left_inv p := Subtype.ext (flipUV_involutive n p.1)
   right_inv p := Subtype.ext (flipUV_involutive n p.1)
   continuous_toFun := by
-    apply continuous_subtype_mk
-    exact (flipUV_continuous n).comp continuous_subtype_val
+    exact Continuous.subtype_mk
+      ((flipUV_continuous n).comp continuous_subtype_val) _
   continuous_invFun := by
-    apply continuous_subtype_mk
-    exact (flipUV_continuous n).comp continuous_subtype_val
+    exact Continuous.subtype_mk
+      ((flipUV_continuous n).comp continuous_subtype_val) _
 
 theorem eU_no_fixed (n m : ℕ) (F : SpaceTime n → Values m)
     (hF : ∀ p, F p = 0 → F (flipU p) = 0)
@@ -135,6 +135,7 @@ theorem eU_no_fixed (n m : ℕ) (F : SpaceTime n → Values m)
     funext i
     have hi := congrFun he i
     change -(p.1.1.1 i) = p.1.1.1 i at hi
+    change p.1.1.1 i = (0 : ℝ)
     linarith
   have hunit := (zeroFiber_mem n m F p.2).1.1
   exact (unitVec_ne_zero n p.1.1.1 hunit) hzero
@@ -150,6 +151,7 @@ theorem eV_no_fixed (n m : ℕ) (F : SpaceTime n → Values m)
     funext i
     have hi := congrFun he i
     change -(p.1.1.2 i) = p.1.1.2 i at hi
+    change p.1.1.2 i = (0 : ℝ)
     linarith
   have hunit := (zeroFiber_mem n m F p.2).1.2
   exact (unitVec_ne_zero n p.1.1.2 hunit) hzero
@@ -165,6 +167,7 @@ theorem eUV_no_fixed (n m : ℕ) (F : SpaceTime n → Values m)
     funext i
     have hi := congrFun he i
     change -(p.1.1.1 i) = p.1.1.1 i at hi
+    change p.1.1.1 i = (0 : ℝ)
     linarith
   have hunit := (zeroFiber_mem n m F p.2).1.1
   exact (unitVec_ne_zero n p.1.1.1 hunit) hzero
