@@ -2,6 +2,10 @@
 
 **Operating model:** Independent *agents* are the verification workforce. Each claim is checked by an adversarial agent, an independent reconstruction agent, and, where feasible, a proof-formalization agent. These are distinct tasks with distinct outputs. No claim is accepted solely because several language models agree.
 
+## Shared agent command contract (2026-11-22)
+
+The implementation is [COMMAND_CONTRACT_V1.md](agent-operations/COMMAND_CONTRACT_V1.md): static `just` recipes call an allowlisted Python dispatcher; Nushell is preferred for structured orchestration where installed. Standardize **task names and evidence receipts**, not the language used by scientific constructors or independent checkers. The dispatcher is never a Lean theorem prover, an independent-audit authority, or a priority certifier. A reported task PASS is valid only for its explicitly labeled metadata/control scope. Audit agents must independently reconstruct proof and computed claims using original specifications, not a copied producer program.
+
 ## Core rule
 
 The machine-checkable artifact is the result. An agent's verdict is a routing suggestion unless its decisive claim is supported by executable deterministic verification, an explicit formal proof checked by a kernel, or a complete falsifying counterexample.

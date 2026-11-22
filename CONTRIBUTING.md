@@ -10,6 +10,12 @@ New formalization and current-source CI changes must use the [canonical compiler
 
 For a named theorem, retain exact source SHA, original definition/hypotheses, `#print axioms`, `lean_bridge.py --strict` receipt, and a scoped independent `lake check` when in a common project. `lake check --paranoid` is a separate, resource-intensive certification that must actually pass before being claimed. Do **not** promote a conditional theorem just because its source graph compiled. Before broadening the compiler pin or using a historical 4.33/4.35 result under 4.36, independently recompile affected sources and issue a new certificate rather than overwriting prior evidence.
 
+## Agent command and evidence interface (2026-11-22)
+
+New NIGHTFALL agent workflows should use the versioned [command contract](research/nightfall/agent-operations/COMMAND_CONTRACT_V1.md): `just --list`, `just preflight`, and the underlying allowlisted `python3 scripts/nightfall_agent_tasks.py run <task>`. Nushell 0.117.0 is the **preferred structured-data interface**, not a required runtime for every agent. No existing verified Python/Node/Rust/Lean checker is being rewritten or replaced.
+
+Every task reports a scoped JSON receipt with source HEAD, SHA-256 anchors, exit status and **explicit non-certification flags**. The shell-level PASS means only that the named checker ran successfully within its declared scope. Kernel proof, independent reproduction, specialist review and novelty gates remain separate. Existing `lean_bridge.py --strict`, frozen Lean source checks, Proof Passport v2 and independent exact checkers stay authoritative. Use `just` or the Python CLI as the stable entrypoint; use Nushell for typed filtering and inspection, and keep separate construction and auditing artifacts.
+
 ## Scholarly source-of-truth protocol
 
 Use the [paper shelf](papers/README.md) and [canonical claim catalogue](research/catalogue/CLAIMS.json) before introducing a new named mathematical result. A paper entry is an editorial **pointer to the original theorem**; do not copy formal declarations or replace historical source files in order to improve navigation.
