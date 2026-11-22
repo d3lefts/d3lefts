@@ -3,10 +3,14 @@ on:
   push:
     paths:
       - 'research/nightfall/formalization/finite_field/ProductBUConcreteHomotopy.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUPerturbation.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUAugmentedRank.lean'
       - '.github/workflows/nightfall-product-bu-concrete-homotopy.yml'
   pull_request:
     paths:
       - 'research/nightfall/formalization/finite_field/ProductBUConcreteHomotopy.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUPerturbation.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUAugmentedRank.lean'
       - '.github/workflows/nightfall-product-bu-concrete-homotopy.yml'
   workflow_dispatch:
 permissions:

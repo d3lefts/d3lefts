@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 31,
+  "revision": 33,
   "as_of": "2026-11-18 UTC",
   "source_commit": "2d805e8eabf8733cf01463af9bef9fd37e2407a8",
-  "scope": "Source custody v31: pending actual concrete parametric homotopy source b576c15d203bbfe55b70b152bef0b0fa9c346e1f, historical 67 unchanged. Not a certificate of global ProductSphereZero or causal threshold.",
+  "scope": "v33: pending-source exact ProductBUInterval minor repairs to unblock original symmetrization CI; historical 67 unchanged. Actual augmented fderiv/zero-fiber geometry not certified.",
   "sources": [
     {
       "path": "research/nightfall/formalization/agent_safety/ArbitraryAgentSafety.lean",
@@ -306,6 +306,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Original concrete two-character homotopy exact endpoints, sign laws, quadratic unit constraint and joint parameter/spacetime C-infinity candidate for parametric Sard. Pending pinned Lean/axiom CI. Parent #1032 current source blob 2bf3e3e1cb9ec4568a1afef95c4c5bf375a5ebb6 synchronized. Full fderiv, manifold and ProductSphereZero open."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUInterval.lean",
+      "source_blob_sha": "4580ab7ac5dace26b32d173573d0cb2d86d792f2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Original legacy interval fixedpoint formalization syntax repairs; later equivalent theorem already passed pinned in ProductBUIntervalStabilizer. This source not yet independently compiled."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUPerturbation.lean",
+      "source_blob_sha": "923eafa2ebe8be3a5c856cf7024a97620decc52a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Byte-preserving except corrected quotient association for all nonendpoint-time rank-one parameter response; source only, exact-head pinned compiler and standard axiom audit required. Concrete full fderiv and ProductSphereZero not yet certified."
     },
     {
       "path": "research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean",
