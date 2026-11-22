@@ -66,30 +66,30 @@ theorem charV_uniform_error {X : Type*} [AddCommGroup X]
 /-- Smoothness of either projected character. This uses only
 smoothness of the approximant on the ambient normed vector space. -/
 theorem contDiff_charU (n : ℕ) (p : (V n × V n) → ℝ)
-    (hp : ContDiff ℝ ⊤ p) :
-    ContDiff ℝ ⊤ (fun z : V n × V n =>
+    (hp : ContDiff ℝ (↑(⊤ : ℕ∞)) p) :
+    ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n =>
       charU (fun u v => p (u,v)) z.1 z.2) := by
-  have hleft : ContDiff ℝ ⊤ (fun z : V n × V n => (-z.1,z.2)) :=
+  have hleft : ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n => (-z.1,z.2)) :=
     (contDiff_neg.comp contDiff_fst).prodMk contDiff_snd
-  have hright : ContDiff ℝ ⊤ (fun z : V n × V n => (z.1,-z.2)) :=
+  have hright : ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n => (z.1,-z.2)) :=
     contDiff_fst.prodMk (contDiff_neg.comp contDiff_snd)
-  have hboth : ContDiff ℝ ⊤ (fun z : V n × V n => (-z.1,-z.2)) :=
+  have hboth : ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n => (-z.1,-z.2)) :=
     (contDiff_neg.comp contDiff_fst).prodMk (contDiff_neg.comp contDiff_snd)
   have h := ((hp.sub (hp.comp hleft)).add (hp.comp hright)).sub (hp.comp hboth)
-  simpa only [charU] using h.div_const 4
+  simpa only [charU, Function.comp_apply, Prod.mk.eta] using h.div_const 4
 
 theorem contDiff_charV (n : ℕ) (p : (V n × V n) → ℝ)
-    (hp : ContDiff ℝ ⊤ p) :
-    ContDiff ℝ ⊤ (fun z : V n × V n =>
+    (hp : ContDiff ℝ (↑(⊤ : ℕ∞)) p) :
+    ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n =>
       charV (fun u v => p (u,v)) z.1 z.2) := by
-  have hleft : ContDiff ℝ ⊤ (fun z : V n × V n => (-z.1,z.2)) :=
+  have hleft : ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n => (-z.1,z.2)) :=
     (contDiff_neg.comp contDiff_fst).prodMk contDiff_snd
-  have hright : ContDiff ℝ ⊤ (fun z : V n × V n => (z.1,-z.2)) :=
+  have hright : ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n => (z.1,-z.2)) :=
     contDiff_fst.prodMk (contDiff_neg.comp contDiff_snd)
-  have hboth : ContDiff ℝ ⊤ (fun z : V n × V n => (-z.1,-z.2)) :=
+  have hboth : ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n => (-z.1,-z.2)) :=
     (contDiff_neg.comp contDiff_fst).prodMk (contDiff_neg.comp contDiff_snd)
   have h := ((hp.add (hp.comp hleft)).sub (hp.comp hright)).sub (hp.comp hboth)
-  simpa only [charV] using h.div_const 4
+  simpa only [charV, Function.comp_apply, Prod.mk.eta] using h.div_const 4
 
 /-- Global smooth approximation retaining U-odd/V-even symmetry.
 This uses the already-pinned Mathlib smoothing theorem. -/
@@ -100,7 +100,7 @@ theorem exists_smooth_charU_approx (n : ℕ)
     (hright : ∀ u v, f u (-v) = f u v)
     (ε : ℝ) (hε : 0 < ε) :
     ∃ g : V n → V n → ℝ,
-      ContDiff ℝ ⊤ (fun z : V n × V n => g z.1 z.2) ∧
+      ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n => g z.1 z.2) ∧
       (∀ u v, |g u v - f u v| < ε) ∧
       (∀ u v, g (-u) v = -g u v) ∧
       (∀ u v, g u (-v) = g u v) := by
@@ -129,7 +129,7 @@ theorem exists_smooth_charV_approx (n : ℕ)
     (hright : ∀ u v, f u (-v) = -f u v)
     (ε : ℝ) (hε : 0 < ε) :
     ∃ g : V n → V n → ℝ,
-      ContDiff ℝ ⊤ (fun z : V n × V n => g z.1 z.2) ∧
+      ContDiff ℝ (↑(⊤ : ℕ∞)) (fun z : V n × V n => g z.1 z.2) ∧
       (∀ u v, |g u v - f u v| < ε) ∧
       (∀ u v, g (-u) v = g u v) ∧
       (∀ u v, g u (-v) = -g u v) := by
