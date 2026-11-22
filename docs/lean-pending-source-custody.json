@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 45,
+  "revision": 46,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v45: 499 unreviewed Lean sources and original 67 historical source-matched records preserved. Added exact quantitative collision theorem as conditional implication; C∞ submersion local normal form remains a bridge only. Global ProductSphereZero unproved.",
+  "scope": "v46: 499 pending Lean sources and 67 historical source-matched records preserved. Corrected explicit Mathlib EuclideanSpace import in ATLAS submersion specialization following failed first wrapper run 45061965936. Quantitative collision remains a conditional theorem target; global ProductSphereZero unproved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -529,7 +529,7 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUSubmersionNormalForm.lean",
-      "source_blob_sha": "92da475dfdecb1bf60ab14043ddf5a2435992a4c",
+      "source_blob_sha": "02bef2b3a1246b2a8ad0c715ac9841e78818fa6f",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
