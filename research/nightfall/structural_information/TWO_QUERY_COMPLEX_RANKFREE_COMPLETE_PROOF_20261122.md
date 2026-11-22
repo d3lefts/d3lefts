@@ -28,7 +28,7 @@ K=\max\Bigl(1,\max_{z\in V\setminus\{0\}}
 
 **Strongest relevant earlier source examined:** original NIGHTFALL #1016 two-query tensor argument and independently written author-controlled #1059 Hilbert audit; the published Lovitz–Petrov (2023) circuit statement concerns the *tensor specialization* and is not an input to the abstract operator proof. A 2026 exact-two-query variable theorem (Li / related scope) is about exact Boolean algorithms, not automatically the same distributional correlated-label acceptance model. Prior-art novelty remains unresolved.
 
-## Theorem (complete paper-level proof; all finite complex Hilbert spaces)
+## Theorem (complete paper-level proof; arbitrary complex Hilbert spaces with finite label alphabet)
 
 For every \(0<\varepsilon,\delta<1\) there exists a set of original labels \(H\subseteq R\), fixed **before** receiving any oracle answers, and a deterministic estimator \(g:\{\pm1\}^{H}\to[0,1]\) such that
 \[
