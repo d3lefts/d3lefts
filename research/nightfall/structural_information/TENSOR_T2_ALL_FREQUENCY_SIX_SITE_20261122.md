@@ -94,3 +94,32 @@ The earlier claimed exact M_L=2L+2 is a much sharper optional improvement, separ
 The value of the general k theorem is a reusable *finite-frequency algebraic mechanism*. At higher quantum query orders T, k=2T yields a primitive Fourier-frequency count O_T(L^(4T-2)), but **does not** by itself control repeated-label interference or give a T-query simulator. Do not claim such an extension before a separate quantum contraction theorem.
 
 Prior-art boundaries: Lovitz–Petrov's 2023 circuit support bound and Wang–Yuan's 2026 effective-active-mode exchange result are inherited. Our possible contribution is the explicit all-nonzero-frequency binary-label count and correlated-oracle simulation application, subject to dated specialist search and human review. Full Lean theorem remains open.
+
+
+## v3: rank-sensitive primitive fiber tiers (strictly stronger than the uniform degree)
+
+For any nonzero z expressible as XOR of rows of R_L, define ρ_R(z) to be the **minimum number of distinct nonzero original tensor rows** with XOR z. A shortest representation is primitive: if a nonempty subset XORed to zero, removing it would give a shorter representation.
+
+If 1≤r=ρ_R(z)≤k, fix a primitive reference set C of size exactly r. For any primitive alternative set C' of size≤k, the same disjoint-circuit support argument gives
+
+    |U| ≤ |C|+|C'|−2 ≤ r+k−2,
+
+and every new row matches one of the r reference rows outside U. Therefore the **frequency-by-frequency** ordered k-slot primitive bound improves to
+
+    B_{k,L}(z)
+      ≤ (1+r*3^(r+k−2))^k *
+        Σ_{j=0}^{min(L,r+k−2)} C(L,j)
+      = O_{k,r}(L^(r+k−2)).
+
+For k=4, the certificate has separate structural tiers:
+
+| minimal original-row XOR length ρ(z) | proved upper exponent in L |
+| ---: | ---: |
+| 1 (pure tensor row) | 3 |
+| 2 (secant frequency) | 4 |
+| 3 | 5 |
+| 4 | 6 |
+
+This is a **sufficient bound, not the exact asymptotic fiber growth**. Prior #1029 exact formulas show sharper exponents on some pure and rank-two fixed-core frequencies. The uniform O(L^6) theorem uses the worst tier r=4 and remains unchanged. An energy-weighted simulator that benefits from the lower-rank tiers would require a new certified link between quantum amplitude-sector mass and frequency rank; no such claim has been established.
+
+**Numerical significance gate:** At ε=δ=1/4, the explicit *coarse* O(L^6) bound from v2 first beats the full 3^L row-query fallback at L=50 (formal bound ~6.77×10^23 vs 3^50~7.18×10^23), with the gap expanding thereafter. Thus it is a genuine asymptotic polynomial query result but its raw constants are not a practical finite-size efficiency gain. Stronger constants, a cubic exponent, or improved dependence on ε,δ matter for practical use. The calculation is a numeric comparison of the displayed proven-formula *candidate*, not an independent empirical quantum simulation benchmark.
