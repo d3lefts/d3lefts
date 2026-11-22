@@ -1,0 +1,32 @@
+name: NIGHTFALL Paley 5591 exact geometry audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/projects/sensitivity-block-separation-2026-11-20/**'
+      - '.github/workflows/nightfall-paley5591-geometry.yml'
+  push:
+    branches:
+      - nightfall-paley5591-geometry-audit-20261120
+    paths:
+      - 'research/nightfall/projects/sensitivity-block-separation-2026-11-20/**'
+      - '.github/workflows/nightfall-paley5591-geometry.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify immutable source checksum
+        shell: bash
+        run: |
+          echo 'd0eaf53fcf7644c4aac7f189b24f984fb4358d0d2fb6bcad6a83f7185668bd5e  research/nightfall/projects/sensitivity-block-separation-2026-11-20/nightfall_paley5591_triple_audit.py' | sha256sum --check
+      - name: Exhaustive independent check of every reduced triple
+        run: python3 research/nightfall/projects/sensitivity-block-separation-2026-11-20/nightfall_paley5591_triple_audit.py
+      - name: Check cyclic and transitive triple bounds separately
+        run: python3 research/nightfall/projects/sensitivity-block-separation-2026-11-20/nightfall_paley5591_orientation_check.py
