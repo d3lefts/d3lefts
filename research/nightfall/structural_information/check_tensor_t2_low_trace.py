@@ -147,7 +147,24 @@ def audit(L, rank):
                    "bound": str(M*(theta_a*rank+theta_b))})
 
 
+def audit_zero_fiber():
+    # Rank-one measurement / U=I / psi uniform over 64 of the 81
+    # tensor rows. The 64 diagonal paths all contribute character zero.
+    # Naively using M=10 on the zero fiber is invalid.
+    D = rows(4)
+    assert len(D) == 82
+    S = D[1:65]
+    assert len(S) == len(set(S)) == 64
+    amplitude = sum((F(1,64)*chi(a,s)*chi(a,s) for a in S), F(0))
+    for s in (0,1,3,255,65535):
+        assert sum((F(1,64)*chi(a,s)*chi(a,s) for a in S),F(0)) == 1
+    assert amplitude == 1
+    assert len(S) > 2*4+2
+    print("PASS zero-fiber safeguard: 64 diagonal paths, M=10, f=1")
+
+
 if __name__ == "__main__":
     for L in (1,2):
         for k in (1,2):
             audit(L,k)
+    audit_zero_fiber()
