@@ -160,3 +160,25 @@ of M on zero frequencies, or a documented earlier identical theorem
 requires an immediate correction. Promotion needs non-author
 review and ideally Lean kernel checking. No external publication
 without human authorization.
+
+
+## Exact counterexample to a zero-fiber shortcut
+
+The condition \(z\notin W\) in the Parseval step is essential.
+Take a Hilbert basis indexed by all \(a\in D\), let the oracle act
+diagonally, let \(U=I\), let
+\(\psi=|D|^{-1/2}\sum_{a\in D}|a\rangle\),
+and set \(P=|\psi\rangle\langle\psi|\) (rank one).
+Then \(O_s U O_s\psi=\psi\), so \(f(s)=1\) identically. Its
+acceptance amplitude is
+\[
+\langle\psi,O_s^2\psi\rangle
+=\frac1{|D|}\sum_{a\in D}\chi_{a+a}(s)=1.
+\]
+All \(|D|\) contributions lie in the **zero** XOR fiber. For the
+tensor family \(|D|=3^L+1\) whereas the nonzero fiber bound is only
+\(M=2L+2\). Naively bounding all frequency fibers by \(M\), or
+discarding the light diagonal paths, would be incorrect. The actual
+simulator retains this entire constant amplitude automatically because
+\(0\in W\), and correctly predicts \(f\equiv1\) with zero queries.
+This is a symbolic negative control, not an extra theorem about T=2.
