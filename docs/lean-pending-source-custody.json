@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 31,
+  "revision": 32,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v31 source-only repair: 548 Lean blobs in untruncated Git subtree 081f532dae1def74e3a5570f95fba868e80c9992; frozen 67 historical successful-head entries unchanged; prior 299 source-custody entries unchanged; 182 new exact Git blobs added as unreviewed. The custody ledger does not certify theorem types, kernel proofs, axioms or novelty; separate exact-head receipts retain their own scope.",
+  "scope": "v32: previous exact main source custody preserved; one additional independently identified ProductBUOrbitCertificate.lean Git blob bb9b3ed27b4f6011e90b6859948688a790af2785 enrolled strictly as unreviewed source. No theorem or kernel certification implied.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -376,6 +376,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
+      "source_blob_sha": "bb9b3ed27b4f6011e90b6859948688a790af2785",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Late parallel merge source-only custody 2026-11-22. This record does NOT certify a Lean theorem, the ProductSphereZero topology premise, or historical novelty. Separate named/axiom CI and non-author review required."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUParityReference.lean",
