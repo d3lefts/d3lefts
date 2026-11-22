@@ -60,3 +60,14 @@ Search cannot access paywalled full texts, non-indexed manuscripts, restricted p
 **Mathematical gate:** non-author independent proof review of the rank-triangular interpolation and the k=6 noninjective-map boundary; a Lean exact representation/interpolation theorem with kernel replay, plus a separate bridge from its statement to Simon_N. No programmatically generated or GitHub-passing test can substitute for these.
 
 **Action:** keep proposed Theorem A/S at PAPER-PROOF-UNDER-AUDIT in the source record; do not promote the claim to Theorem, Novel Contribution or competitive record at this checkpoint. Preserve all finite exact witnesses and continue independent review in #1014.
+
+
+## 6. Direct primary-theorem inspection (2026-11-22 addendum)
+
+The available arXiv v2 full text of Candela–González-Sánchez–Szegedy (https://arxiv.org/pdf/2203.08915, 62 pages, April 2022 version of the 2024 publication) was opened and its main formal statements inspected, not merely its abstract:
+
+- **Theorem 1.5 (p. 7 of the preprint):** affine-exchangeable measures are mixtures of structured measures represented using a compact filtered 2-adic nilspace.
+- **Theorem 1.6 (p. 7):** the compact-B affine-exchangeable-measure space is a Bauer simplex.
+- **Theorems 1.7–1.8 (p. 8):** equivalence of representing affine exchangeability and the existence of a finite-field function limit domain, and the construction of such a limit domain.
+
+These named statements are **qualitative structure/limit theorems**, not explicit `Gamma_k<=B_k delta_k` estimates. Thus they do not provide a *verbatim* published certificate for our inequality at the checked theorem-statement level. Nevertheless their proofs and machinery may imply it, and their priority over the affine-template framework is clear. **This closes an abstract-only reading gap, not the global novelty gate.**
