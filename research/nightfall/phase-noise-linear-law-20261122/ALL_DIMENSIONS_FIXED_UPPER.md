@@ -148,6 +148,57 @@ on each fixed positive-width annulus. The constants and sufficient
 noise threshold need not be uniform as \(r/R\) approaches zero or one.
 This proof uses the product-sphere zero theorem on paper.
 
+## Known sphere, one reading below its threshold
+
+At \(2n-3\) readings on \(\|x\|=R\), the small-noise excess is also
+\(\Theta_n(\sigma/R)\), over \(R/\sqrt2\) for unrestricted outputs
+and over \(R\sqrt{2-\sqrt2}\) for outputs constrained to the radius
+\(R\) sphere.
+
+**Lower bound.** Start from the orthogonal collision of #997.
+Every sphere point within ambient distance \(\sigma/(2R)\) of
+either collision point is feasible for their original common
+transcript: normalized rows change a squared reading by at most
+\(2R\) times the displacement, and prefix replay is causal.
+For any nonzero decoder output \(z\), let \(v=z/\|z\|\).
+One of the orthogonal signals has absolute cosine with \(v\) at
+most \(1/\sqrt2\). With sign chosen for nonnegative cosine, rotate
+it away from \(v\) by up to \(\phi=\sigma/(2R^2)\) within its cap,
+or stop at the equator. Its new absolute cosine is at most
+\(c_\phi=(\cos\phi-\sin\phi)/\sqrt2\) for small \(\phi\).
+Minimizing \(R^2+\|z\|^2-2R\|z\|c_\phi\) over \(\|z\|\)
+gives \(R^2(1-c_\phi^2)\); for \(\|z\|=R\) it gives
+\(2R^2(1-c_\phi)\). The \(z=0\) output has error \(R\).
+Both lower excesses are linear in \(\sigma/R\) as \(\sigma\to0\).
+
+**Upper bound.** Use a fixed full-spark normalized frame with
+\(2n-3\) rows on \(W=e^\perp\). For feasible \(x,y\), write
+\(u=P_Wx,\ v=P_Wy\). Their projected intensities differ by at
+most \(2\sigma\) in each row. On the compact unit-Frobenius
+subset of symmetric matrices on \(W\) with at most one positive
+and one negative eigenvalue, the full frame's lifted linear map
+has strictly positive minimum norm, by sign injectivity. This
+gives \(\|uu^\top-vv^\top\|_F=O_n(\sigma)\), hence
+\(\left|\|u\|^2-\|v\|^2\right|=O_n(\sigma)\).
+If \(\|v\|\ge R/\sqrt2\), the standard rank-one difference
+identity (or the midpoint/difference Frobenius estimate) gives
+\(d_\pm(u,v)=O_n(\sigma/R)\).
+If \(|\langle y,e\rangle|\ge R/\sqrt2\), the known radius and
+squared-norm bound give
+\(\big||\langle x,e\rangle|-|\langle y,e\rangle|\big|=O_n(\sigma/R)\).
+
+Choose any reference \(y\) in the nonempty feasible sphere fiber.
+Output whichever of \(v\) and \(|\langle y,e\rangle|e\) has larger
+norm. The discarded component of every feasible \(x\) has squared
+norm at most \(R^2/2+O_n(\sigma)\); the retained component agrees
+up to sign to \(O_n(\sigma/R)\). The squared error is thus at most
+\(R^2/2+O_n(\sigma)\). For sphere-valued output, normalize the chosen
+component to radius \(R\). Its absolute cosine with every feasible
+input is at least \(1/\sqrt2-O_n(\sigma/R^2)\): in the horizontal
+case this follows from the quotient estimate against \(v\), and in
+the vertical case from the scalar magnitude estimate. This gives
+squared error at most \((2-\sqrt2)R^2+O_n(\sigma)\).
+
 ## Formalization handoff
 
 The upper proof needs only square-difference algebra, finite row
