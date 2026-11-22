@@ -1,0 +1,32 @@
+name: NIGHTFALL phase-block to Route1 exact finite certificate
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/structural_information/PHASE_BLOCK_ROUTE1_COMPILER_20261122.md"
+      - "scripts/check_phase_block_route1_exact.py"
+      - ".github/workflows/nightfall-phase-block-route1-exact.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-exact-finite-decoder:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Exact finite independent proof checks
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/check_phase_block_route1_exact.py
+          python scripts/check_phase_block_route1_exact.py | tee phase-route1-exact.log
+      - name: Source hash and explicitly limited proof-scope receipt
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum scripts/check_phase_block_route1_exact.py research/nightfall/structural_information/PHASE_BLOCK_ROUTE1_COMPILER_20261122.md
+          echo "FINITE INTEGER CODE + ZERO-ERROR ADAPTIVE QUERY LOWER BOUND. Not Lean or quantum operator CI."
