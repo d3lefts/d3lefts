@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 34,
+  "revision": 35,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
   "scope": "v33: 483 pending exact Lean blobs, 67 frozen historical records unchanged; 550 total main Lean sources. New ProductBUSphereExtension source is unreviewed. Future additions and edits must pass strict source custody workflow on research/nightfall/**/*.lean, not only on manifest changes.\nAdd exact-scoped unreviewed interval-component Lean source for strict custody.",
@@ -379,13 +379,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
-      "source_blob_sha": "c7c155871de38a45bdd7b99e8d3b39e8174877eb",
+      "source_blob_sha": "2c1e0e4a732081131225d85e36d8fa3ca9ea0dd9",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Source custody only; independent interval fixedpoint and no-free-action theorem CI is pending exact source. Does NOT build the physical zero-fiber manifold or certify ProductSphereZero."
+      "receipt_scope": "Exact unreviewed source custody, new I01 subtype membership tactic repair. Pinned theorem CI must be replayed at this blob; no ProductSphereZero claim."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
