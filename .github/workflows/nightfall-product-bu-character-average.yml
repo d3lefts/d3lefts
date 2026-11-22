@@ -1,0 +1,47 @@
+name: NIGHTFALL BU character averaging kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUCharacterAverage.lean'
+      - '.github/workflows/nightfall-product-bu-character-average.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  character-projector:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact source and reject nonstandard axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/nightfall/formalization/finite_field/ProductBUCharacterAverage.lean
+          ! grep -nE '\b(sorry|admit|axiom)\b' "$src"
+          cp "$src" /tmp/mathlib4/ProductBUCharacterAverage.lean
+          (cd /tmp/mathlib4 && lake env lean ProductBUCharacterAverage.lean) 2>&1 | tee /tmp/product-bu-character-average.log
+          python3 - <<'PY'
+          import re
+          source=open('/tmp/product-bu-character-average.log').read()
+          names=['charU_flip_left','charU_flip_right','charV_flip_left',
+                 'charV_flip_right','charU_fixed','charV_fixed',
+                 'charU_idempotent','charV_idempotent',
+                 'charU_charV_zero','charV_charU_zero',
+                 'continuous_charU','continuous_charV']
+          for suffix in names:
+              name='Nightfall.ProductBUCharacterAverage.' + suffix
+              m=re.search(re.escape("'" + name + "' depends on axioms: [") + r'([^\]]*)\]',source,re.S)
+              if m is None:
+                  assert f"'{name}' does not depend on any axioms" in source, name
+                  axioms=set()
+              else:
+                  axioms={v.strip() for v in m.group(1).split(',') if v.strip()}
+              assert axioms <= {'propext','Classical.choice','Quot.sound'}, (name,axioms)
+              print(name,sorted(axioms))
+          assert 'sorryAx' not in source
+          print('PASS: two-character finite-group projector certified, no topology theorem')
+          PY
