@@ -29,14 +29,14 @@ noncomputable section
 abbrev I01 := Nightfall.ProductBUInterval.I01
 
 /-- Nonempty boundary excludes the circle branch of ATLAS classification. -/
-theorem boundary_component_homeomorphic_closed_interval
+theorem boundary_component_diffeomorphic_closed_interval
     (M : Type*) [TopologicalSpace M]
     [ChartedSpace (EuclideanHalfSpace 1) M]
     [IsManifold (𝓡∂ 1) ∞ M]
     [T2Space M] [CompactSpace M] [ConnectedSpace M]
     [SecondCountableTopology M]
     (hboundary : (ModelWithCorners.boundary (I := 𝓡∂ 1) M).Nonempty) :
-    Nonempty (M ≃ₜ I01) := by
+    Nonempty (M ≃ₘ⟮𝓡∂ 1, 𝓡∂ 1⟯ I01) := by
   obtain ⟨x, hx⟩ := hboundary
   rcases
       MathlibExt.Geometry.Manifold.OneDimensionalWanted.compact_connected_one_manifold_with_boundary_classification M
@@ -53,7 +53,21 @@ theorem boundary_component_homeomorphic_closed_interval
       ModelWithCorners.Boundaryless.boundary_eq_empty
     rw [hC] at hx'
     exact False.elim (Set.not_mem_empty _ hx')
-  · exact ⟨e.toHomeomorph⟩
+  · exact ⟨e⟩
+
+
+/-- Forget the smooth equivalence to obtain the same genuine topological
+classification for an arbitrary compact connected smooth component. -/
+theorem boundary_component_homeomorphic_closed_interval
+    (M : Type*) [TopologicalSpace M]
+    [ChartedSpace (EuclideanHalfSpace 1) M]
+    [IsManifold (𝓡∂ 1) ∞ M]
+    [T2Space M] [CompactSpace M] [ConnectedSpace M]
+    [SecondCountableTopology M]
+    (hboundary : (ModelWithCorners.boundary (I := 𝓡∂ 1) M).Nonempty) :
+    Nonempty (M ≃ₜ I01) := by
+  obtain ⟨e⟩ := boundary_component_diffeomorphic_closed_interval M hboundary
+  exact ⟨e.toHomeomorph⟩
 
 /-- A fixed-point-free homeomorphism of a compact connected smooth
 1-manifold with nonempty boundary is impossible by the real IVT. -/
@@ -76,6 +90,8 @@ theorem no_free_homeomorphism_of_compact_boundary_component
     simpa [f] using ht
   exact hfree (hI.symm t) hfixed
 
+#check boundary_component_diffeomorphic_closed_interval
+#print axioms boundary_component_diffeomorphic_closed_interval
 #check boundary_component_homeomorphic_closed_interval
 #print axioms boundary_component_homeomorphic_closed_interval
 #check no_free_homeomorphism_of_compact_boundary_component
