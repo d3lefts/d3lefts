@@ -257,3 +257,12 @@ theorem exact_squared_risk_transfer
   rw [expectation_sub_sq μ fv tv, expectation_sub_sq ν fv tv, hff, hft, htt]
 
 end Nightfall.LocalMomentRisk
+
+
+#print axioms Nightfall.LocalMomentRisk.dependsOn_mul
+#print axioms Nightfall.LocalMomentRisk.expectation_sum
+#print axioms Nightfall.LocalMomentRisk.expectation_sub_sq
+#print axioms Nightfall.LocalMomentRisk.square_sum_of_disjoint
+#print axioms Nightfall.LocalMomentRisk.leafValue_sq
+#print axioms Nightfall.LocalMomentRisk.exact_squared_risk_transfer
+#print Nightfall.LocalMomentRisk.exact_squared_risk_transfer
