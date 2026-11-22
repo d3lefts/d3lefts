@@ -4,6 +4,7 @@ on:
     paths:
       - "research/nightfall/formalization/finite_field/ProductBUQuantitativeCollision.lean"
       - "research/nightfall/formalization/finite_field/ProductBUDecoderRiskFloor.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUMixedRadius.lean"
       - "scripts/check_phase_causal_scaling_exact.py"
       - "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean"
       - "research/nightfall/formalization/finite_field/ProductSphereObstruction.lean"
@@ -28,7 +29,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p receipts/bu-quantitative-collision
-          for module in ProductSphereObstruction GenuinePrefixPhase ProductSphereCausalComposition ProductBUQuantitativeCollision ProductBUDecoderRiskFloor; do
+          for module in ProductSphereObstruction GenuinePrefixPhase ProductSphereCausalComposition ProductBUQuantitativeCollision ProductBUDecoderRiskFloor ProductBUMixedRadius; do
             f="research/nightfall/formalization/finite_field/${module}.lean"
             ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$f"
             cp "$f" "/tmp/mathlib4/${module}.lean"
@@ -42,7 +43,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          log="\n".join(Path("receipts/bu-quantitative-collision",mod+".log").read_text() for mod in ("ProductBUQuantitativeCollision","ProductBUDecoderRiskFloor"))
+          log="\n".join(Path("receipts/bu-quantitative-collision",mod+".log").read_text() for mod in ("ProductBUQuantitativeCollision","ProductBUDecoderRiskFloor","ProductBUMixedRadius"))
           for name in (
               "Nightfall.ProductBUQuantitativeCollision.sqNorm_add_self_of_unit",
               "Nightfall.ProductBUQuantitativeCollision.exact_plus_minus_separation",
@@ -51,6 +52,9 @@ jobs:
               "Nightfall.ProductBUDecoderRiskFloor.sign_orbit_pair_risk_floor",
               "Nightfall.ProductBUDecoderRiskFloor.sign_orbit_pair_worst_risk_floor",
               "Nightfall.ProductBUDecoderRiskFloor.causal_decoder_risk_floor_of_product_sphere_zero",
+              "Nightfall.ProductBUMixedRadius.sqNorm_plus_eq_two_of_orthogonal_unit",
+              "Nightfall.ProductBUMixedRadius.exact_known_radius_pair",
+              "Nightfall.ProductBUMixedRadius.known_radius_risk_of_mixed_product_sphere_zero",
           ):
               assert name in log, ("MISSING_NAMED_THEOREM", name)
               hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
