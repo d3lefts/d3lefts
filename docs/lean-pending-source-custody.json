@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 35,
+  "revision": 36,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v35: preserve all current main custody sources, plus exact interval fixedpoint Lean source verified separately by CI 45056525240, still unreviewed in global ledger.",
+  "scope": "v36: 488 pending Lean sources in this reconciled checkout and 67 immutable historical source-matched records. Includes two new Route1 risk/marginal Lean sources as unreviewed pending custody (separately pinned named theorem CI, no automatic full theorem or novelty promotion).",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3546,6 +3546,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/LocalMomentAtoms.lean",
+      "source_blob_sha": "50291b712f1c843e89bd0d89fa7418b3541f7592",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/LocalMomentRisk.lean",
+      "source_blob_sha": "be9073504ae43fd8dd719b7bb7db799b47a5ded7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
     },
     {
       "path": "research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean",
