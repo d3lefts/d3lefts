@@ -40,6 +40,26 @@ If the \(\tau_j\) and \(\tau\) are themselves nonzero pure tensors over multiple
 
 This is elementary linear algebra, not a newly invented full-rank decomposition theorem. The new contribution candidate is its use to close the previously open q≥4 counting case.
 
+## Stronger dual-functional proof certificate (replaces rowspace manipulation)
+
+A shorter *mechanism-preserving* derivation works over **any field**, with the usual scalar ambiguity. If \(M\in U\otimes V\) has matrix rank \(r\), and
+\(M\otimes\tau=\sum_{j=1}^r a_j\otimes b_j\otimes\tau_j\)
+with nonzero \(a_j,b_j,\tau_j\), then the \(a_j\) must be linearly independent: otherwise their span has dimension below \(r\), contradicting the rank-\(r\) flattening of \(M\otimes\tau\) at U.
+
+Choose dual linear functionals \(\phi_j\in U^*\) with \(\phi_j(a_i)=\delta_{ij}\). Contract the first tensor slot to obtain
+\[
+ b_j\otimes\tau_j
+ =\bigl((\phi_j\otimes\mathrm{id}_V)M\bigr)\otimes\tau.
+\]
+Because \(b_j\ne0\), choose \(\lambda_j\in V^*\) with \(\lambda_j(b_j)=1\); contracting once more yields
+\[
+ \tau_j
+ =\lambda_j\bigl((\phi_j\otimes\mathrm{id}_V)M\bigr)\,\tau.
+\]
+Both tail factors are nonzero, so the displayed scalar is nonzero. Over F₂ it is **exactly 1**, giving the conclusion \(\tau_j=\tau\) with no numerical approximation and no matrix-rank basis enumeration. Over an arbitrary field this gives projective equality; the F₂ tensor-source model needs literal equality, and obtains it.
+
+**Checker/certificate recipe:** finite matrices need only verify rank \(r\) and the individual contraction identities using exact field arithmetic. A future Lean proof can use a linearly independent family and its dual-coordinate functionals rather than brute-force all alternate tensor decompositions. This refinement does not change the exponent, the hypotheses, or the unverified quantum-energy dependency.
+
 ## Repair of the minimum-reference site lemma
 
 Choose a minimum-cardinality primitive reference C⊂R(q,L) for z with r=|C|≤4. Compare to any primitive C' of at most four original rows with XOR z, and partition C△C' into disjoint minimal zero-XOR circuits E_i, with s_i≥1 C-only rows and t_i≥1 C'-only rows. As before, every circuit is a genuine minimal tensor dependence in characteristic two and the **published Lovitz–Petrov support inequality** says the number of varying tensor sites |S_i|≤s_i+t_i−2.
