@@ -155,7 +155,7 @@ def audit_zero_fiber():
     assert len(D) == 82
     S = D[1:65]
     assert len(S) == len(set(S)) == 64
-    amplitude = sum((F(1,64)*chi(a,s)*chi(a,s) for a in S), F(0))
+    amplitude = sum((F(1,64)*chi(a,0)*chi(a,0) for a in S), F(0))
     for s in (0,1,3,255,65535):
         assert sum((F(1,64)*chi(a,s)*chi(a,s) for a in S),F(0)) == 1
     assert amplitude == 1
