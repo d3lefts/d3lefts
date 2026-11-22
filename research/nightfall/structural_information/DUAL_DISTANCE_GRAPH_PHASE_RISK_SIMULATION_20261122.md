@@ -55,6 +55,16 @@ Quantum polynomial expansion gives interaction degree f <= d=2T on **the origina
 
 For an arbitrary finite field F_q, the same projection proof and all-finite-alphabet product simulator #858 yield the corresponding q-ary theorem, provided quantum queries are original q-ary symbols and the full-alphabet circuit is well-formed. This is a general structural transfer, not dependent on graph geometry.
 
+## Corollary A' — arbitrary exogenous correlated bit noise
+
+Theorem A's proof requires **only** that the observed source law agrees with the independent uniform law on all coordinate marginals of size less than g; exact affine-code support is merely one sufficient construction. A useful strictly broader physical-source class follows.
+
+Let X be uniform on affine C with dual distance g, and let N be **any** random binary m-vector **independent of X**, with no restrictions on correlations, support, entropy, noise rate, or dependencies *among the coordinates of N*. Set the **observed** source Y = X XOR N. Then for every coordinate set S of size <g, the marginal X_S is independent uniform; conditional on N_S=n, Y_S=X_S XOR n is still independent uniform. Thus Y matches uniform independent bits through order g-1, and precisely the same Theorem A Q-query risk-transfer proof applies to a well-formed T-query coherent oracle with inputs **Y**, approximated by classical queries to **Y's actual observed coordinates**.
+
+This does **not** recover the clean X from noisy Y, does **not** permit simulating a quantum circuit that has coherent access to X while the classical algorithm only observes Y, and does **not** assert that arbitrary intensity measurement noise necessarily has the binary XOR independent-mask form. The independence condition is essential: if N=X, then Y=0 deterministically and even the one-coordinate uniformity conclusion fails.
+
+The scope gain is structural: some substantial spatial correlations of the raw observable law need no Wyner-latent decoding, no graph-level code-support argument after noise, and no special handling of the correlated noise distribution; local moment indistinguishability alone suffices. This does not solve bounded-girth sources or grant a same-model novelty certificate.
+
 ## Theorem B — actual squared-linear graph sensors
 
 For a known finite simple graph G=(V,E), n=|V|>=2, draw uniform independent vertex signs sigma_v. Set the unit signal x_v=sigma_v/sqrt(n) and legal unit sensor a_uv=(e_u+e_v)/sqrt(2). The physical squared intensity satisfies
