@@ -50,8 +50,7 @@ def auxRaw (i : B × Fin 4) (a : Fin 26) : ℝ := 1 / 26
 theorem auxRaw_sum :
     ∀ i : B × Fin 4, ∑ a : Fin 26, auxRaw i a = 1 := by
   intro i
-  simp [auxRaw]
-  norm_num
+  simp [auxRaw] <;> norm_num
 
 /-- Formal degree of a full raw-symbol quantum circuit's accepted Born
 probability pulled back along the REAL squared-linear intensity table.
