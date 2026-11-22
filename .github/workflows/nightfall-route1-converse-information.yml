@@ -4,6 +4,8 @@ on:
     paths:
       - 'research/nightfall/structural_information/ROUTE1_CONVERSE_EXACT_FORRELATION_20261121.md'
       - 'scripts/check_route1_converse_information_exact.py'
+      - 'scripts/check_route1_density_simon.py'
+      - 'research/nightfall/structural_information/QUERY_AWARE_DOMINATED_ROUTE1_SIMON_20261121.md'
       - '.github/workflows/nightfall-route1-converse-information.yml'
   workflow_dispatch:
 permissions:
@@ -20,8 +22,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 -m py_compile scripts/check_route1_converse_information_exact.py
+          python3 -m py_compile scripts/check_route1_converse_information_exact.py scripts/check_route1_density_simon.py
           python3 scripts/check_route1_converse_information_exact.py | tee route1-converse-check.log
+          python3 scripts/check_route1_density_simon.py | tee -a route1-converse-check.log
       - name: Record exact source/head/runner receipt
         if: always()
         shell: bash
@@ -30,6 +33,8 @@ jobs:
           git rev-parse HEAD > receipts/route1-converse/head
           python3 --version > receipts/route1-converse/python
           sha256sum scripts/check_route1_converse_information_exact.py \
+                    scripts/check_route1_density_simon.py \
+                    research/nightfall/structural_information/QUERY_AWARE_DOMINATED_ROUTE1_SIMON_20261121.md \
                     research/nightfall/structural_information/ROUTE1_CONVERSE_EXACT_FORRELATION_20261121.md \
                     .github/workflows/nightfall-route1-converse-information.yml \
                     > receipts/route1-converse/SHA256SUMS
