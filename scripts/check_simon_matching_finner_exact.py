@@ -98,6 +98,29 @@ def exact_mixture_check(N, partition, components, support):
     stats["exact_mixtures"] += 1
     return R
 
+def assert_adaptive_path_relabel_witness(N, s, x, B, asked):
+    # The decisive adversarial argument: a deterministic adaptive path
+    # is determined by its already-queried positions and the answers there.
+    # Find a second S_s table with identical answers at ALL these positions
+    # but a different requested block. The transcript remains unchanged.
+    edges = matching(N, s)
+    target = [edge for edge in edges
+              if any(j in B for j in edge)
+              and all(j not in asked for j in edge)]
+    assert target, (N, s, B, asked)
+    unused = set(range(N)) - set(x)
+    assert len(unused) >= N // 2
+    replacement = min(unused)
+    y = list(x)
+    for j in target[0]:
+        y[j] = replacement
+    assert all(y[j] == x[j] for j in asked)
+    assert any(y[j] != x[j] for j in B)
+    assert all(y[i] == y[j] for i, j in edges)
+    assert len(set(y)) == N // 2
+    assert set(y) != set(x)
+    stats["direct_relabel_witness"] += 1
+
 def decoder_fiber_check(N, support):
     # Independent stronger point-3 audit: for a block of b addresses,
     # sum_s internal_pairs_s(B)=choose(b,2). Thus there exists a shift
@@ -150,6 +173,28 @@ for N in (2, 4, 8):
     assert len(set(support)) == len(support)
     if N <= 4:
         decoder_fiber_check(N, support)
+    # Separate direct adaptive-branch witness audit. Every possible
+    # realized deterministic query path is a set of locations with
+    # answers, and indistinguishability of that path defeats recovery.
+    test_blocks = (
+        [B for b in range(1, N + 1)
+         for B in combinations(range(N), b)]
+        if N <= 4
+        else [tuple(range(b)) for b in range(1, N+1)])
+    for s in range(1, N):
+        tables = list(fixed_shift_tables(N, s))
+        samples = tables if N <= 4 else tables[:10]
+        edges = matching(N, s)
+        for B in test_blocks:
+            coset_count = sum(any(j in B for j in edge)
+                              for edge in edges)
+            for q in range(coset_count):
+                for asked in combinations(range(N), q):
+                    # One witness for every supported table in the small
+                    # exhaustive case; ten fixed examples at N=8.
+                    for x0 in samples:
+                        assert_adaptive_path_relabel_witness(
+                            N, s, x0, B, asked)
     for partition in plist:
         assert sorted(i for B in partition for i in B) == list(range(N))
         hs = [internal_pairs(N, s, partition) for s in range(1, N)]
