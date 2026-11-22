@@ -50,6 +50,33 @@ theorem no_singleton_zero_circuit
   have hz : f i = 0 := by simpa [IsMinimalZeroCircuit] using hE.2.1
   exact hnonzero i hz
 
+/-- Every nonempty zero-sum finite set admits removal of a minimal
+zero-sum circuit, leaving another (possibly empty) zero-sum set.
+The remainder is a *proper subset*, certifying structural descent. -/
+theorem remove_minimal_circuit_preserves_zero
+    (f : I → G) (S : Finset I) (hne : S.Nonempty)
+    (hzero : (∑ i ∈ S, f i) = 0) :
+    ∃ E : Finset I,
+      E ⊆ S ∧ IsMinimalZeroCircuit f E ∧
+      (∑ i ∈ S \ E, f i) = 0 ∧ S \ E ⊂ S := by
+  classical
+  obtain ⟨E, hES, hEcirc⟩ := exists_minimal_zero_circuit f S hne hzero
+  have hsum : (∑ i ∈ S \ E, f i) + (∑ i ∈ E, f i) =
+      ∑ i ∈ S, f i :=
+    Finset.sum_sdiff (s₁ := E) (s₂ := S) (f := f) hES
+  have hrest : (∑ i ∈ S \ E, f i) = 0 := by
+    rw [hEcirc.2.1, add_zero, hzero] at hsum
+    exact hsum
+  have hproper : S \ E ⊂ S := by
+    refine Finset.ssubset_iff_subset_ne.mpr ⟨Finset.sdiff_subset, ?_⟩
+    intro heq
+    obtain ⟨i, hi⟩ := hEcirc.1
+    have hiS : i ∈ S := hES hi
+    have hiD : i ∈ S \ E := heq.symm ▸ hiS
+    exact (Finset.mem_sdiff.mp hiD).2 hi
+  exact ⟨E, hES, hEcirc, hrest, hproper⟩
+
+#print axioms Nightfall.StructuralInformation.TensorMinimalZeroCircuit.remove_minimal_circuit_preserves_zero
 #print axioms Nightfall.StructuralInformation.TensorMinimalZeroCircuit.exists_minimal_zero_circuit
 #print axioms Nightfall.StructuralInformation.TensorMinimalZeroCircuit.no_singleton_zero_circuit
 
