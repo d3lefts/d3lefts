@@ -4,6 +4,8 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/QueryLocalWynerCompiler.lean'
       - 'research/nightfall/formalization/product_space/QueryLocalWynerTerminal.lean'
+      - 'research/nightfall/formalization/product_space/QueryLocalWynerDegree.lean'
+      - 'research/nightfall/formalization/product_space/QueryLocalWynerComplete.lean'
       - '.github/workflows/nightfall-query-local-wyner-terminal-lean.yml'
   workflow_dispatch:
 permissions:
@@ -37,7 +39,7 @@ jobs:
           for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
                    Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
                    Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
-                   Route1WynerSimulation Route1WynerGeneral QueryLocalWynerCompiler QueryLocalWynerTerminal; do
+                   Route1WynerSimulation Route1WynerGeneral QueryLocalWynerCompiler QueryLocalWynerTerminal QueryLocalWynerDegree QueryLocalWynerComplete; do
             src="research/nightfall/formalization/product_space/$M.lean"
             ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -61,7 +63,16 @@ jobs:
           else:
               assert f"'{name}' does not depend on any axioms" in p
           assert 'sorryAx' not in p
-          print('PASS source-exact Route1 Wyner general-latent terminal with explicit pulled-back degree and TV hypotheses')
+          final=Path('receipts/query-local-terminal/QueryLocalWynerComplete.log').read_text()
+          name='Nightfall.QueryLocalWyner.query_local_wyner_blocal'
+          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\\s*\\[([^\\]]*)\\]",final,re.S)
+          if m:
+              ax={x.strip() for x in m[1].split(',') if x.strip()}
+              assert ax <= {'propext','Classical.choice','Quot.sound'},ax
+          else:
+              assert f"'{name}' does not depend on any axioms" in final
+          assert 'sorryAx' not in final
+          print('PASS source-exact query-local b-local Wyner theorem, arbitrary finite source, actual DTree compiler and general-latent C_W')
           PY
           git rev-parse HEAD > receipts/query-local-terminal/head.txt
           sha256sum research/nightfall/formalization/product_space/QueryLocalWyner*.lean > receipts/query-local-terminal/SHA256SUMS
