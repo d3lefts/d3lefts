@@ -206,8 +206,10 @@ required before 'certified full atlas' status.
 2. For interior points, connect the source-pinned C-infinity submersion
    projection normal form from #1111 to an actual partial homeomorphism
    of the fiber subtype via the kernel-splitting coordinate.
-   Test a regular vertical-tangent example, e.g. F(x,t)=t-x^2 in
-   X=R², which is regular at (0,0) but D_xF=0, to reject
+   Test an INTERIOR turning-point negative control:
+   F(x,t)=t-1/2-x^2 on R², at (x,t)=(0,1/2).
+   There DF=(0,1) is surjective but D_xF=0; thus a time-only
+   coordinate fails despite genuine interior regularity. Reject
    time-only charts in the interior.
 3. Prove the endpoint chart target is boundary precisely when t=0.
    Reuse Mathlib `IccLeftChart_extend_bot_mem_frontier`.
