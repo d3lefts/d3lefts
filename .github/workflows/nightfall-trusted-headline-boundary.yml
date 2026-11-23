@@ -41,6 +41,7 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.sha }}
           path: candidate
+          fetch-depth: 0
           persist-credentials: false
       - name: Fetch original owner-controlled main as frozen comparison anchor
         env:
