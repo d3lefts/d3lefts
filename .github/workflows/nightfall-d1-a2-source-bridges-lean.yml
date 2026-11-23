@@ -30,7 +30,17 @@ jobs:
           spec=importlib.util.spec_from_file_location("q2dag",root/"scripts/nightfall_q2_certify.py")
           mod=importlib.util.module_from_spec(spec)
           spec.loader.exec_module(mod)
-          files=mod.local_sources()
+          # Do not index vendored package paths under bare module basenames:
+          # multiple vendor packages have a file named Basic.lean.
+          # Only original NIGHTFALL source modules use the flat imports here.
+          source_root=root/"research/nightfall/formalization"
+          files={}
+          for source in sorted(source_root.rglob("*.lean")):
+              if "vendor" in source.relative_to(source_root).parts:
+                  continue
+              if source.stem in files:
+                  raise ValueError(f"Ambiguous original module {source.stem}: {files[source.stem]} vs {source}")
+              files[source.stem]=source
           ws=pathlib.Path("/tmp/mathlib4")
           out=ws/".lake/build/lib/lean"
           out.mkdir(parents=True,exist_ok=True)
