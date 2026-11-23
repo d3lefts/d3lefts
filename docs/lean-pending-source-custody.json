@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 57,
+  "revision": 58,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
   "scope": "Source-hash custody for explicit generic query-local physical-oracle compiler; pending named Lean receipt and subsequent Wyner transfer corollary.",
@@ -3056,6 +3056,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Generic adaptive query-local compiler source; strict pinned CI and leanchecker required. This is not the full #1150 Wyner transfer nor entropy gap certificate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerTerminal.lean",
+      "source_blob_sha": "184888aecb19d4a070a13ee3a837da11119ac629",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper #1150 partially formalized: general-latent Wyner Route1 theorem, exact arbitrary adaptive observed query compiler, and event-TV transfer with degree of f∘Phi as explicit hypothesis. Pending green Lean kernel CI and b-local degree bridge/ambient Wyner gap formalization."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1AbstractLatentPushforward.lean",
