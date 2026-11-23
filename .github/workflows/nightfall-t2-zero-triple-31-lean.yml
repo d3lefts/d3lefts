@@ -64,6 +64,11 @@ jobs:
             'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.zero_triple_event_multiplicity',
             'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.survivorCount_eq_correctedCount',
             'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.complex_weighted_survivor_identity',
+            'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.complementary_triple_zero_iff_total',
+            'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.e0_iff_survivor_total',
+            'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.e1_iff_survivor_total',
+            'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.e2_iff_survivor_total',
+            'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.e3_iff_survivor_total',
           ]
           allowed={'propext','Classical.choice','Quot.sound'}
           reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
