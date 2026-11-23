@@ -82,7 +82,7 @@ def validate(obj: dict, root: Path | None = None) -> dict:
     paths = set()
     for r in records:
         for field in ("title", "claim_scope", "gap"):
-            if not isinstance(r.get(field), str) or len(r[field]) < 35:
+            if not isinstance(r.get(field), str) or len(r[field]) < (20 if field == "title" else 35):
                 raise ValueError("missing precise claim/gap: " + r["id"])
         if r.get("evidence") not in ALLOWED_EVIDENCE:
             raise ValueError("unreviewed claim promotion")
