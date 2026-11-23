@@ -123,6 +123,63 @@ theorem actual_group_transcript_bayes_risk
     (beta i)
     (actual_coordinate_posterior_unit_mass G beta i h hden)
 
+/-- Positive mass of an actual *legal* grouped-oracle history forces every
+coordinate likelihood normalizer to be nonzero: the global normalizer is
+their product by the existing original-source transcript theorem. -/
+theorem legal_transcript_coordinate_evidence_nonzero
+    {I Q : Type*} [Fintype I] [Fintype Q]
+    [DecidableEq I] [DecidableEq Q]
+    (G : Q → I → Prop) (beta : I → ℝ)
+    (policy : History I Q → Q) (h : History I Q)
+    (hlegal : Legal policy h)
+    (hglobal : (∑ nu : I → Bool,
+      transcriptMass G beta policy nu h) ≠ 0)
+    (i : I) :
+    coordinateLikelihood G beta i true h +
+      coordinateLikelihood G beta i false h ≠ 0 := by
+  classical
+  have hproduct : (∏ j : I,
+      ∑ bit : Bool, coordinateLikelihood G beta j bit h) ≠ 0 := by
+    rw [← hidden_normalizer_factorization G beta policy h hlegal]
+    exact hglobal
+  have hi : (∑ bit : Bool,
+      coordinateLikelihood G beta i bit h) ≠ 0 := by
+    intro hz
+    apply hproduct
+    apply Finset.prod_eq_zero (Finset.mem_univ i)
+    exact hz
+  simpa [Fintype.sum_bool, add_comm] using hi
+
+/-- Original grouped-oracle *legal* history plus genuinely positive
+global evidence suffices for the fresh-target Bayes-risk identity.
+The coordinate nonzero premise is now proved, not separately assumed. -/
+theorem legal_group_transcript_bayes_risk
+    {I Q : Type*} [Fintype I] [Fintype Q]
+    [DecidableEq I] [DecidableEq Q]
+    (G : Q → I → Prop) (beta : I → ℝ)
+    (policy : History I Q → Q) (h : History I Q)
+    (hlegal : Legal policy h)
+    (hglobal : (∑ nu : I → Bool,
+      transcriptMass G beta policy nu h) ≠ 0)
+    (i : I) :
+    let plus := coordinateLikelihood G beta i true h /
+        (coordinateLikelihood G beta i true h +
+         coordinateLikelihood G beta i false h)
+    let minus := coordinateLikelihood G beta i false h /
+        (coordinateLikelihood G beta i true h +
+         coordinateLikelihood G beta i false h)
+    let m := plus - minus
+    plus * (
+      ((1 + beta i) / 2) * (1 - beta i * m) ^ 2 +
+      ((1 - beta i) / 2) * (-1 - beta i * m) ^ 2) +
+    minus * (
+      ((1 - beta i) / 2) * (1 - beta i * m) ^ 2 +
+      ((1 + beta i) / 2) * (-1 - beta i * m) ^ 2) =
+      (1 - (beta i) ^ 2) + (beta i) ^ 2 * (1 - m ^ 2) := by
+  exact actual_group_transcript_bayes_risk G beta i h
+    (legal_transcript_coordinate_evidence_nonzero
+      G beta policy h hlegal hglobal i)
+
 end Nightfall.GroupAdaptiveBayesRisk
 
 #print axioms Nightfall.GroupAdaptiveBayesRisk.binary_sign_bayes_risk
@@ -130,3 +187,6 @@ end Nightfall.GroupAdaptiveBayesRisk
 #print axioms Nightfall.GroupAdaptiveBayesRisk.noisy_sign_posterior_risk
 #print axioms Nightfall.GroupAdaptiveBayesRisk.actual_coordinate_posterior_unit_mass
 #print axioms Nightfall.GroupAdaptiveBayesRisk.actual_group_transcript_bayes_risk
+
+#print axioms Nightfall.GroupAdaptiveBayesRisk.legal_transcript_coordinate_evidence_nonzero
+#print axioms Nightfall.GroupAdaptiveBayesRisk.legal_group_transcript_bayes_risk
