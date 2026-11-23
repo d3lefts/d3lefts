@@ -58,7 +58,7 @@ theorem graft_queries (t : RecoveryTree I A) (k : A → DTree I A)
       t.queries x + (k (t.eval x)).queries x := by
   induction t with
   | leaf a =>
-      rfl
+      simp [graft, RecoveryTree.queries, RecoveryTree.eval]
   | node i next ih =>
       change (graft (next (x i)) k).queries x + 1 =
         ((next (x i)).queries x + 1) +
