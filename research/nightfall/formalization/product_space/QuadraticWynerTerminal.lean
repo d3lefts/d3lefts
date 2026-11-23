@@ -134,6 +134,48 @@ theorem quadratic_wyner_general
   exact quadratic_wyner_CI ν (wynerSet_nonempty ν hν0 hν1)
     f hf01 hdeg τ hτ hτmax ε hε n hn s hs
 
+
+/-- Exact algebraic normalization of the explicit QW+ query budget.
+This proves the published constant 2^26, not a tolerance-dependent fit. -/
+theorem quadratic_cost_rewrite (τ s : ℝ) (hτ : 0 < τ) :
+    quadraticSeedK / quadGa τ + s / quadGb quadraticSeedK τ =
+      4 * Real.pi ^ 2 * quadraticC / τ ^ 2 +
+        (2 ^ 26 : ℝ) * Real.pi ^ 2 * s / τ ^ 3 := by
+  have hτnz : τ ≠ 0 := ne_of_gt hτ
+  have hπnz : Real.pi ≠ 0 := Real.pi_ne_zero
+  have hCn : quadraticC ≠ 0 := ne_of_gt quadraticC_pos
+  unfold quadraticSeedK quadGa quadGb quadEta quadW0
+  field_simp [hτnz, hπnz, hCn]
+  <;> ring
+
+/-- Concrete displayed QW+ bound, quantified over all finite input laws
+and general-latent Wyner information. NO supplied good-query hypothesis.
+This is an uncompiled terminal attempt until exact-head kernel replay. -/
+theorem quadratic_wyner_general_explicit
+    (ν : (ι → α) → ℝ)
+    (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
+    (f : (ι → α) → ℝ) (hf01 : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
+    (hdeg : HasProdDegreeLE f 2)
+    (τ : ℝ) (hτ : 0 < τ) (hτmax : τ ≤ 1 / 4)
+    (ε : ℝ) (hε : 0 < ε)
+    (n : ℕ) (hn : 0 < n)
+    (s : ℝ) (hs : wynerGen ν < s) :
+    ∃ t : DTree ι α, (∀ x, t.queries x ≤ n) ∧
+      ∑ x, ν x *
+        (if ε < |f x - t.eval x| then (1 : ℝ) else 0) ≤
+      (4 * Real.pi ^ 2 * quadraticC / τ ^ 2 +
+          (2 ^ 26 : ℝ) * Real.pi ^ 2 * s / τ ^ 3) / n +
+        τ / ε ^ 2 := by
+  obtain ⟨t, hdepth, herror⟩ :=
+    quadratic_wyner_general ν hν0 hν1
+      f hf01 hdeg τ hτ hτmax ε hε n hn s hs
+  refine ⟨t, hdepth, ?_⟩
+  rw [quadratic_cost_rewrite τ s hτ] at herror
+  exact herror
+
+#print axioms Nightfall.Route1Polylog.quadratic_cost_rewrite
+#print axioms Nightfall.Route1Polylog.quadratic_wyner_general_explicit
+
 #print axioms Nightfall.Route1Polylog.quadratic_wyner_simulation
 #print axioms Nightfall.Route1Polylog.quadratic_wyner_CI
 #print axioms Nightfall.Route1Polylog.quadratic_wyner_general
