@@ -1,0 +1,83 @@
+name: NIGHTFALL QW parametric Wyner source Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuadraticWynerParametric.lean'
+      - '.github/workflows/nightfall-qw-parametric-tree-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-tree:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original AA/product source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/qw-parametric
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile original Route 1/Wyner and parameterized simulator
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
+                   Route1WynerSimulation QuadraticWynerParametric; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/qw-parametric/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/qw-parametric/$M.log"
+          done
+      - name: Mandatory independent kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerParametric) 2>&1 | tee receipts/qw-parametric/kernel.log
+      - name: Source-level named theorem and axiom check
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log = Path('receipts/qw-parametric/QuadraticWynerParametric.log').read_text()
+          name='Nightfall.Route1Polylog.route1_wyner_from_verified_good'
+          m = re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]", log, re.S)
+          if m: axes={a.strip() for a in m.group(1).split(',') if a.strip()}
+          else:
+              assert "'"+name+"' does not depend on any axioms" in log, name
+              axes=set()
+          assert axes <= {'propext','Classical.choice','Quot.sound'},(name,axes)
+          assert 'sorryAx' not in log
+          print('PASS parametric Wyner tree, still conditional on source-level good query')
+          PY
+      - name: Immutable evidence
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/qw-parametric
+          git rev-parse HEAD > receipts/qw-parametric/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/qw-parametric/mathlib.txt || true
+          cat lean-toolchain > receipts/qw-parametric/compiler.txt
+          sha256sum research/nightfall/formalization/product_space/QuadraticWynerParametric.lean > receipts/qw-parametric/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: qw-parametric-exact-${{ github.run_id }}
+          path: receipts/qw-parametric
+          retention-days: 90
