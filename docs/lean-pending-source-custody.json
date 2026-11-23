@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 37,
+  "revision": 38,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v37: preserve exact pending custody while updating the T2ZeroTripleMultiplicity source to the coefficient-level complex-weighted identity; no T2 terminal or originality promotion.",
+  "scope": "v38: exact pending custody for two T2 modules and independently merged ProductBURegularFiberLocal source; preserve historical ledger and no theorem promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -416,6 +416,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean",
+      "source_blob_sha": "85d70972e8e30fdee85b311725b775e115374749",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 protected-checkout repair for independently originated ProductBURegularFiberLocal source. Exact blob registered as pending custody only; external ATLAS bridge may have separate scoped checks. Does not prove ProductSphereZero, T2, novelty or a new terminal. Authorship unchanged."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBURegularParameter.lean",
