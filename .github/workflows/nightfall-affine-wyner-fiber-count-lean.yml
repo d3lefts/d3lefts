@@ -61,13 +61,14 @@ jobs:
                   assert f"'{full}' does not depend on any axioms" in log,full
           assert 'sorryAx' not in log
           log2=Path('receipts/affine-wyner-card/AffineWynerEntropyBound.log').read_text()
-          name='Nightfall.AffineWyner.entropy_supported_le_log_card'
-          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log2,re.S)
-          if m:
-              ax={x.strip() for x in m[1].split(',') if x.strip()}
-              assert ax <= {'propext','Classical.choice','Quot.sound'},(name,ax)
-          else:
-              assert f"'{name}' does not depend on any axioms" in log2
+          for suffix in ('entropy_le_log_card', 'affine_free_fiber_entropy_bound'):
+              name='Nightfall.AffineWyner.'+suffix
+              m=re.search(r"'" +re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log2,re.S)
+              if m:
+                  ax={x.strip() for x in m[1].split(',') if x.strip()}
+                  assert ax <= {'propext','Classical.choice','Quot.sound'},(name,ax)
+              else:
+                  assert f"'{name}' does not depend on any axioms" in log2,name
           assert 'sorryAx' not in log2
           print('PASS all-field q^r fiber equivalence plus entropy≤log cardinality of finite support')
           PY
