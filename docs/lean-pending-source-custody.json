@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 59,
+  "revision": 60,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
-  "scope": "Proposed degree-(b*d) locality bridge for #1150 plus imported query compiler / general Wyner terminal, all Lean sources unpromoted pending exact-head CI.",
+  "scope": "Add b-local degree bridge and source-composed full finite query-local general-latent Wyner theorem to exact-source CI. Full ambient common-information separation still open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3056,6 +3056,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Generic adaptive query-local compiler source; strict pinned CI and leanchecker required. This is not the full #1150 Wyner transfer nor entropy gap certificate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerComplete.lean",
+      "source_blob_sha": "ba433cd9064e9cb296367ff265d62b4c803121dc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-composed full finite b-local query-local general Wyner simulation theorem; pending exact-head kernel compile and leanchecker. Does not establish diagonal uniform-code ambient C_W gap, graph bridge, or arbitrary measurable alphabet version."
     },
     {
       "path": "research/nightfall/formalization/product_space/QueryLocalWynerDegree.lean",
