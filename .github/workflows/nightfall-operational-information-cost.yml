@@ -17,4 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Exhaustively verify XOR graph/star oracle basis equivalence
-        run: |\n          python3 research/nightfall/operational_information_cost/check_graph_coherent_oracle.py\n          python3 research/nightfall/operational_information_cost/check_expected_cost_loop.py
+        run: |
+          python3 research/nightfall/operational_information_cost/check_graph_coherent_oracle.py
+          python3 research/nightfall/operational_information_cost/check_expected_cost_loop.py
