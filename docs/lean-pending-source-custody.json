@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 50,
+  "revision": 51,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v50: exact source custody of genuine open partial homeomorphism on local zero fiber; original 67 certificates unaffected, pending Lean full theorem unresolved.",
+  "scope": "v51 repair of ProductBULocalGraphChart source after exact Lean error; all historical certified records preserved; new local chart compilation pending. Unrestricted ProductSphereZero remains open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -449,13 +449,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean",
-      "source_blob_sha": "ecd3a89fe1d4bbfd41495f81536002637b125937",
+      "source_blob_sha": "d52bc65dd740d764d4dac0f86b566e1e5807704a",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Constructs an actual open partial homeomorphism of local zero-fiber subtype from continuous exact graph on open ambient neighborhood, no ChartedSpace assumption. Source exact Lean compiler/axiom receipt pending; C∞ overlap, physical halfspace and full ProductSphereZero not proved."
+      "receipt_scope": "Compiler repair of exact genuine-graph open partial homeomorphism; original CI failed at #45068864330. New source includes classical inverse fallback and exact graph-preserving equality proof. New exact-source compiler/axiom verification PENDING, not a certified full zero fiber/manifold theorem."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
