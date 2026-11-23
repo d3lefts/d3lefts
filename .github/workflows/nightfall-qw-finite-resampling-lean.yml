@@ -1,0 +1,67 @@
+name: NIGHTFALL QW finite resampling bridge Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/QuadraticWynerTransferCore.lean'
+      - '.github/workflows/nightfall-qw-finite-resampling-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  weighted-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact QW bridge (source, not imported precompiled object)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/qw-bridge
+          SRC=research/nightfall/formalization/structural_information/QuadraticWynerTransferCore.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$SRC"
+          cp "$SRC" /tmp/mathlib4/QuadraticWynerTransferCore.lean
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o .lake/build/lib/lean/QuadraticWynerTransferCore.olean QuadraticWynerTransferCore.lean) 2>&1 | tee receipts/qw-bridge/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/qw-bridge/lean.log
+      - name: Mandatory independent Lean kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerTransferCore) 2>&1 | tee receipts/qw-bridge/leanchecker.log
+      - name: Verify named theorem and only standard axioms
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log = Path('receipts/qw-bridge/lean.log').read_text()
+          for name in ('three_term_squared','four_point','weighted_four_point','quarter_original_influence','variance_survival','quadratic_progress'):
+              path = 'Nightfall.QuadraticWynerTransferCore.'+name
+              m = re.search(r"'"+re.escape(path)+r"' depends on axioms:\s*\[([^\]]*)\]", log, re.S)
+              if m:
+                  axes = {a.strip() for a in m.group(1).split(',') if a.strip()}
+              else:
+                  assert "'"+path+"' does not depend on any axioms" in log, path
+                  axes = set()
+              assert axes <= {'propext','Classical.choice','Quot.sound'}, (path,axes)
+          assert 'sorryAx' not in log
+          print('PASS named six source-independent coupling algebra theorems; NOT full QW terminal')
+          PY
+      - name: Immutable commit and source receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/qw-bridge
+          git rev-parse HEAD > receipts/qw-bridge/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/qw-bridge/mathlib.txt || true
+          cat lean-toolchain > receipts/qw-bridge/compiler.txt
+          sha256sum research/nightfall/formalization/structural_information/QuadraticWynerTransferCore.lean > receipts/qw-bridge/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: qw-bridge-exact-${{ github.run_id }}
+          path: receipts/qw-bridge
+          retention-days: 90
