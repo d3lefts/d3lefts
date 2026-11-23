@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 51,
+  "revision": 52,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v51: Add source-identical verified local graph chart to main-target pending source custody. Preserve 67 historical verified records; source match and independent main integration still pending. No ProductSphereZero theorem promotion.",
+  "scope": "v52: time-zero halfspace graph operator source registered pending Lean CI; historical 67 unchanged. ProductSphereZero not compiled or claimed. Exact whole-fiber atlas and boundary identification still open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -566,6 +566,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Late parallel source merge, exact blob custody only. Does not certify ProductSphereZero, topological extension proof, named Lean kernel, or originality."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUTimeHalfspaceChart.lean",
+      "source_blob_sha": "455434468a00b8b83e698a44beb2e122bd02c2aa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Proposed actual OpenPartialHomeomorph to EuclideanHalfSpace 1 from exact graph in canonical time slab Set.Icc (0:ℝ) 1, constructed via certified #1139 local graph and Mathlib IccLeftChart. Pin Lean/ordinary axiom closure pending. This ONLY covers locally time-oriented graph patches, not entire physical zero-fiber or full Sard/atlas compatibility."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUTimeOrientedIFT.lean",
