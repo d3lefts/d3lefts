@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 59,
+  "revision": 63,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
   "scope": "Integrate corrected affine-code support and free-fiber Lean sources from #1099/#1104 into current-main custody without certification promotion; leanchecker CI gate required.",
@@ -5624,6 +5624,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Entropy proof source exact variant of Route1Entropy Jensen finite-card lemma, two named affine entropy terminals; fixed misleading workflow expected name, pending full pinned Lean/leanchecker."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean",
+      "source_blob_sha": "01a3923d5add628ce047fc2e60422a3186c1f85a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Generic exact finite mixture Shannon entropy-chain algebra candidate: posterior entropy form equals H(output)-expected component H. Exact mathlib pinned Lean/leanchecker pending. Not affine C_W identity or novelty."
     }
   ]
 }
