@@ -77,8 +77,8 @@ theorem exact_reference_seed_coupling_exists
       have heq : ∑ a, ∑ bs : Θ → α, (if bs θ ≠ a then
           Nightfall.Route1StarCoupling.starMass (q j) (K j) a bs else 0) =
         ∑ a : α, ∑ bs : Θ → α, (if bs θ = a then 0 else
-          Nightfall.Route1StarCoupling.starMass (q j) (K j) a bs) :=
-        Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun bs _ => by
+          Nightfall.Route1StarCoupling.starMass (q j) (K j) a bs) := by
+        exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun bs _ => by
           by_cases h : bs θ = a <;> simp [h]
       change (∑ a, ∑ bs : Θ → α, if bs θ ≠ a then
         Nightfall.Route1StarCoupling.starMass (q j) (K j) a bs else 0) ≤
