@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 65,
+  "revision": 66,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
   "scope": "Source-custody-only #1095 affine fiber count/entropy scope, not general C_W identity",
@@ -3749,7 +3749,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerEntropyBound.lean",
-      "source_blob_sha": "48030a70d8e0bf9412d61ebc9ac6b9e81c915da4",
+      "source_blob_sha": "76f521c3a3081d7840361411097263ace6482ec7",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
