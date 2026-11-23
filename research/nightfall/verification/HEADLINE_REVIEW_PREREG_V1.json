@@ -1,0 +1,98 @@
+{
+  "schema": "nightfall.headline-review-prereg/v1",
+  "dated": "2026-11-23",
+  "scope": "Future revision audits only. Known historical results reviewed while drafting; not blind retroactive preregistration.",
+  "status": "not_executed",
+  "independence_not_established": true,
+  "resource_budget": "Pilot: one exact finite discriminator per track; no large optimizer until a discrepancy is found. No claim of an actual agent run.",
+  "role_assignment": {
+    "construction": "Axiom (proposed, conflict screen required)",
+    "independent_reproduction": "Ryev (proposed, different source and implementation)",
+    "adversarial_review": "Lemnis (proposed, no candidate checker internals)",
+    "synthesis": "Vesper (proposed, reviews artifacts and literature)",
+    "owner": "repository owner approves consequential promotion"
+  },
+  "blinding": "For new candidate revisions only: freeze statement, source SHA, mathematical model and scoring before giving reproducibility task to checker author. Labels do not prove independence.",
+  "trials": [
+    {
+      "id": "headline-01-quadratic",
+      "prediction": "A finite heterogeneous Q2 source bound is accurately represented; infinite-index extension is a separate dependency",
+      "alternative": "Infinite-index transition requires an unproved limiting/uniform-integrability step",
+      "cheapest_decisive_test": "Replay zero-atom and mixed-alphabet instances in two exact representations; inspect actual theorem type and dependency chain",
+      "discriminator": "At least one source-to-measurable-infinite-index gap or independently justified bridge",
+      "status": "not_run",
+      "receipt": null,
+      "independent_audit_completed": false
+    },
+    {
+      "id": "headline-02-all-degree",
+      "prediction": "The named infinitePi terminal has the stated degree and probability-measure hypotheses",
+      "alternative": "An imported finite theorem or altered degree definition weakens the apparent arbitrary-product scope",
+      "cheapest_decisive_test": "Rebuild type and transitive imports against a frozen mathematical AA statement; zero atom and independent nonidentical factors",
+      "discriminator": "Exact quantified scope matches or source-to-claim mismatch found",
+      "status": "not_run",
+      "receipt": null,
+      "independent_audit_completed": false
+    },
+    {
+      "id": "headline-03-route1-wyner",
+      "prediction": "Polylog-mixture query cost follows for the specified mixture oracle; physical quantum transfer needs separate query charges",
+      "alternative": "Correlated oracle or hidden sign linkage violates mixture oracle assumptions",
+      "cheapest_decisive_test": "Exact two-block, 2D sign-invariant phase-reading example; independently count queries and compare original oracle semantics",
+      "discriminator": "A model-matched expected-cost receipt or explicit separation counterexample",
+      "status": "not_run",
+      "receipt": null,
+      "independent_audit_completed": false
+    },
+    {
+      "id": "headline-04-hilbert",
+      "prediction": "Finite rank-linear budget algebra checks; genuine product-source posterior budget is still required",
+      "alternative": "Rank/palette dependence enters in converting Hilbert ANOVA sections to adaptive budget",
+      "cheapest_decisive_test": "Construct independent finite Hilbert-valued rank-two model; test actual conditional source budgets with exact arithmetic",
+      "discriminator": "A certified source-to-budget lemma or a smallest violating support",
+      "status": "not_run",
+      "receipt": null,
+      "independent_audit_completed": false
+    },
+    {
+      "id": "headline-05-information-cover",
+      "prediction": "Group LP weak duality holds under its rate coefficients; adaptive information-cover law needs a KL chain",
+      "alternative": "Task revelation feedback introduces cost/likelihood terms absent from LP",
+      "cheapest_decisive_test": "Two-task discrete posterior oracle: derive KL, Bayes risk and sequential cost from specification, not source checker",
+      "discriminator": "Complete independent KL-to-cost certificate or edge-case counterexample",
+      "status": "not_run",
+      "receipt": null,
+      "independent_audit_completed": false
+    },
+    {
+      "id": "headline-06-causal-phase",
+      "prediction": "Coordinate-first continuous last-row obstruction is local; unrestricted product-sphere causal theorem is distinct",
+      "alternative": "A topological zero or reachable-history extension is used without proof",
+      "cheapest_decisive_test": "For n=4 search six-reading policy; independently audit sign-equivariant product-sphere zero and all boundary histories",
+      "discriminator": "Complete source-matched topological bridge or explicit six-reading counterexample",
+      "status": "not_run",
+      "receipt": null,
+      "independent_audit_completed": false
+    },
+    {
+      "id": "headline-07-subcube",
+      "prediction": "Sharp all-level linear-subspace intersection follows if both upper bound and 3^L extremizer are exact",
+      "alternative": "Affine/complex-rank-free quantum claims do not follow from linear-subspace intersection",
+      "cheapest_decisive_test": "Independent L<=3 exhaustive subspace row count using separate enumeration and manual all-level induction audit",
+      "discriminator": "Exact equality for finite levels plus noncircular all-level proof or counterexample",
+      "status": "not_run",
+      "receipt": null,
+      "independent_audit_completed": false
+    },
+    {
+      "id": "headline-08-povm",
+      "prediction": "Complex PSD effect and completeness model has scoped Bayes optimum; physical implementation remains model-specific",
+      "alternative": "Unnormalized or nonphysical effects can produce false apparent gain",
+      "cheapest_decisive_test": "Independent 2x2 PSD and sum-to-identity rational tests, edge rank and GHZ phase cases",
+      "discriminator": "Reproduced exact PSD optimum under matching physical assumptions or violating effect",
+      "status": "not_run",
+      "receipt": null,
+      "independent_audit_completed": false
+    }
+  ]
+}
