@@ -5,6 +5,8 @@ on:
     paths:
       - "research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md"
       - "research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py"
+      - "research/nightfall/structural_information/check_qw_seed_average_exact.py"
+      - "research/nightfall/structural_information/QW_LATENT_AVERAGE_STRONGER_THEOREM_20261122.md"
       - "research/nightfall/structural_information/check_qw_fourcorner_exhaustive.py"
       - "research/nightfall/structural_information/check_qw_vs_939_same_model.py"
       - "research/nightfall/structural_information/check_qw_939_rational_dominance.py"
@@ -13,6 +15,8 @@ on:
     paths:
       - "research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md"
       - "research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py"
+      - "research/nightfall/structural_information/check_qw_seed_average_exact.py"
+      - "research/nightfall/structural_information/QW_LATENT_AVERAGE_STRONGER_THEOREM_20261122.md"
       - "research/nightfall/structural_information/check_qw_fourcorner_exhaustive.py"
       - ".github/workflows/nightfall-quadratic-wyner-exact.yml"
 concurrency:
@@ -34,6 +38,7 @@ jobs:
           python3 -m py_compile research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py
           python3 research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py
           python3 research/nightfall/structural_information/check_qw_fourcorner_exhaustive.py
+          python3 research/nightfall/structural_information/check_qw_seed_average_exact.py
           python3 research/nightfall/structural_information/check_qw_vs_939_same_model.py
           python3 research/nightfall/structural_information/check_qw_939_rational_dominance.py
       - name: Scope gate (not an all-dimensional Lean certificate)
