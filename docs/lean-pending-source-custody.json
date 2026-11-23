@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 57,
+  "revision": 58,
   "as_of": "2026-11-23 UTC",
   "source_commit": "37bdd087868a67acc13021594d51fd24f85dd2a9",
   "scope": "v57: PR #1154 QW experimental original-source files registered by exact Git blob as unreviewed; no new certificate or promotion claimed.",
@@ -136,6 +136,36 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean",
+      "source_blob_sha": "0d24d26aefdc35675a43f01f2c8ff1d990d6c2c8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual finite adaptive grouped noisy-sign oracle response and history likelihood factorization; source posterior normalization. No Bayesian risk theorem, sequential KL lower, optional stopping or matching SPRT upper. Exact-head green CI required."
+    },
+    {
+      "path": "research/nightfall/formalization/costs/GroupInformationCoverDual.lean",
+      "source_blob_sha": "27ac8bdb150c9af61ba6e90146fe048139a9d02a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Draft PR #1138 A2: exact general group fractional-cover weak-duality core, not full adaptive KL/Bayes risk/sequential stopping/matching asymptotics. Exact-head Lean and independent leanchecker receipts are separate; no peer review or novelty claim."
+    },
+    {
+      "path": "research/nightfall/formalization/costs/GroupInformationCoverRate.lean",
+      "source_blob_sha": "8088f895f379ac43100dc4a86dc91994d5dbddfc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact assumed per-coordinate KL expected-query exposure yields group-cost dual lower bound and 3-cycle fractional example. Bayes/stopping/attaining group oracle A2 theorem remains unformalized."
     },
     {
       "path": "research/nightfall/formalization/dq2/DQ2BinarySection.lean",
@@ -1822,6 +1852,16 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/observability/HilbertAdaptiveDrift.lean",
+      "source_blob_sha": "5fb47463d0e7d726731573fa6d7b5931ef08b124",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact assumed posterior quadratic drift yields 20172*r*B²/η hard budget. Source-to-posterior identification and universal Hilbert D1 absent; do not certify full theorem D."
+    },
+    {
       "path": "research/nightfall/formalization/observability/HilbertFromScalarKhintchine.lean",
       "source_blob_sha": "0ef895e357fdb269178e2b5702a2b444a191acae",
       "classification": "unreviewed-source",
@@ -1830,6 +1870,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/HilbertRankBudgetCore.lean",
+      "source_blob_sha": "5566cb729c0a084ae6dbe91f4ee0b61dba1555fd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Draft PR #1138 D1: exact budget aggregation and numerical 5043 rank-linear scalar implication from stipulated source budgets and spherical coefficient. No universal product Hilbert budgets, spherical measure theorem or adaptive D2 certified; exact-head CI and independent review separate."
     },
     {
       "path": "research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean",
@@ -2898,6 +2948,106 @@
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
     },
     {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerGoodQuery.lean",
+      "source_blob_sha": "b05803e7e738ae457bbfa7c3a2466ce85ca491ab",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerJensenTransport.lean",
+      "source_blob_sha": "7d812bf7d98fe3f999cd26960bf46a1828a4d70d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Finite Jensen/Fubini transport lemma independent of true seed component pushforward. Source previously kernel-compiles with standard axioms on #1161 head 000975bc, PR #1162 exact replay pending. No full QW simulation theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean",
+      "source_blob_sha": "64ae1263468d1b2c533440a17deb4fb8bbe745cc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerParametric.lean",
+      "source_blob_sha": "0844b2db38c88e5363eca0f287cdfb0168bb317d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerQ2SourceBridge.lean",
+      "source_blob_sha": "917b25a3d8189e93bad5d2ef0a9f766b0a7d7dcc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerQuadraticProgress.lean",
+      "source_blob_sha": "ad10fb14d60672c336600d8c06526d3ae3bf1edb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerReferenceCoupling.lean",
+      "source_blob_sha": "8ccb672de8577fadb2edaadcc69c6160a0131164",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedAverage.lean",
+      "source_blob_sha": "5167e8c4b682918ca49583e3c3de2edd1cdd177e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedResampling.lean",
+      "source_blob_sha": "f66024c46600201fed297f88b7eb9a4068920d66",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerTerminal.lean",
+      "source_blob_sha": "5cb0b083909491dec3cc5d8f34d26a3a66d5fbbd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
       "path": "research/nightfall/formalization/product_space/QuantumCircuitMixtureSimulation.lean",
       "source_blob_sha": "21aad22f9b847b5e466eb02ab9c397db23097c94",
       "classification": "unreviewed-source",
@@ -3796,6 +3946,36 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Integrated from #1083 identical Git blob 6495ed33759de30945b455c25f3037fb894d17a2; exact finite Lean CI 45058815183 passed three named statements and standard axiom check. Custody ledger does not establish full Route 1 composition, all-B Wyner information, independent referee review, or novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/QuadraticWynerDirectCrux.lean",
+      "source_blob_sha": "53202cd897b08de1b7c1c161473eaa955bb81910",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/QuadraticWynerInvariantResampling.lean",
+      "source_blob_sha": "c6fc24db429e3317da9508153456ef82070a6cfc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/QuadraticWynerTransferCore.lean",
+      "source_blob_sha": "dffb96b900550513d459f59b54b06684f4873ed0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
     },
     {
       "path": "research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean",
@@ -5524,176 +5704,6 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
-    },
-    {
-      "path": "research/nightfall/formalization/costs/GroupInformationCoverDual.lean",
-      "source_blob_sha": "27ac8bdb150c9af61ba6e90146fe048139a9d02a",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Draft PR #1138 A2: exact general group fractional-cover weak-duality core, not full adaptive KL/Bayes risk/sequential stopping/matching asymptotics. Exact-head Lean and independent leanchecker receipts are separate; no peer review or novelty claim."
-    },
-    {
-      "path": "research/nightfall/formalization/observability/HilbertRankBudgetCore.lean",
-      "source_blob_sha": "5566cb729c0a084ae6dbe91f4ee0b61dba1555fd",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Draft PR #1138 D1: exact budget aggregation and numerical 5043 rank-linear scalar implication from stipulated source budgets and spherical coefficient. No universal product Hilbert budgets, spherical measure theorem or adaptive D2 certified; exact-head CI and independent review separate."
-    },
-    {
-      "path": "research/nightfall/formalization/observability/HilbertAdaptiveDrift.lean",
-      "source_blob_sha": "5fb47463d0e7d726731573fa6d7b5931ef08b124",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Exact assumed posterior quadratic drift yields 20172*r*B²/η hard budget. Source-to-posterior identification and universal Hilbert D1 absent; do not certify full theorem D."
-    },
-    {
-      "path": "research/nightfall/formalization/costs/GroupInformationCoverRate.lean",
-      "source_blob_sha": "8088f895f379ac43100dc4a86dc91994d5dbddfc",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Exact assumed per-coordinate KL expected-query exposure yields group-cost dual lower bound and 3-cycle fractional example. Bayes/stopping/attaining group oracle A2 theorem remains unformalized."
-    },
-    {
-      "path": "research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean",
-      "source_blob_sha": "0d24d26aefdc35675a43f01f2c8ff1d990d6c2c8",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Actual finite adaptive grouped noisy-sign oracle response and history likelihood factorization; source posterior normalization. No Bayesian risk theorem, sequential KL lower, optional stopping or matching SPRT upper. Exact-head green CI required."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerGoodQuery.lean",
-      "source_blob_sha": "b05803e7e738ae457bbfa7c3a2466ce85ca491ab",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean",
-      "source_blob_sha": "64ae1263468d1b2c533440a17deb4fb8bbe745cc",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerParametric.lean",
-      "source_blob_sha": "0844b2db38c88e5363eca0f287cdfb0168bb317d",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerQ2SourceBridge.lean",
-      "source_blob_sha": "917b25a3d8189e93bad5d2ef0a9f766b0a7d7dcc",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerQuadraticProgress.lean",
-      "source_blob_sha": "ad10fb14d60672c336600d8c06526d3ae3bf1edb",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerReferenceCoupling.lean",
-      "source_blob_sha": "8ccb672de8577fadb2edaadcc69c6160a0131164",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedAverage.lean",
-      "source_blob_sha": "5167e8c4b682918ca49583e3c3de2edd1cdd177e",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedResampling.lean",
-      "source_blob_sha": "f66024c46600201fed297f88b7eb9a4068920d66",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerTerminal.lean",
-      "source_blob_sha": "5cb0b083909491dec3cc5d8f34d26a3a66d5fbbd",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/QuadraticWynerDirectCrux.lean",
-      "source_blob_sha": "53202cd897b08de1b7c1c161473eaa955bb81910",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/QuadraticWynerInvariantResampling.lean",
-      "source_blob_sha": "c6fc24db429e3317da9508153456ef82070a6cfc",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/QuadraticWynerTransferCore.lean",
-      "source_blob_sha": "dffb96b900550513d459f59b54b06684f4873ed0",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
     }
   ]
 }
