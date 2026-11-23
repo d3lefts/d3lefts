@@ -51,7 +51,7 @@ theorem finite_weighted_jensen_transport
     _ = ∑ θ, π θ * (∑ ω, μ ω * (D θ ω) ^ 2) := by
           apply Finset.sum_congr rfl
           intro θ _
-          exact (Finset.mul_sum).symm
+          rw [Finset.mul_sum]
 
 end Nightfall.QuadraticWynerJensenTransport
 
