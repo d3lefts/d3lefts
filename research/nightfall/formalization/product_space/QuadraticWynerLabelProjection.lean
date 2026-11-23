@@ -115,6 +115,44 @@ theorem weighted_abs_jensen
           intro θ _
           rw [abs_mul, abs_of_nonneg (hπ0 θ)]
 
+
+/-- Jensen for finite label averaging inside any nonnegative seed-weighted
+quadratic functional. This supplies the source product-resampling influence
+step once the exact source pushforward is established. -/
+theorem weighted_expected_square_jensen
+    (π : Θ → ℝ) (hπ0 : ∀ θ, 0 ≤ π θ)
+    (hπ1 : ∑ θ, π θ = 1)
+    (μ : U → ℝ) (hμ0 : ∀ u, 0 ≤ μ u)
+    (F : Θ → U → ℝ) :
+    (∑ u, μ u * (labelAverage π F u) ^ 2) ≤
+      ∑ θ, π θ * (∑ u, μ u * (F θ u) ^ 2) := by
+  calc
+    (∑ u, μ u * (labelAverage π F u) ^ 2) ≤
+      ∑ u, μ u * (labelAverage π (fun θ u => (F θ u) ^ 2) u) := by
+        apply Finset.sum_le_sum
+        intro u _
+        exact mul_le_mul_of_nonneg_left
+          (weighted_square_jensen π hπ0 hπ1 (fun θ => F θ u)) (hμ0 u)
+    _ = ∑ θ, π θ * (∑ u, μ u * (F θ u) ^ 2) :=
+      weighted_sum_comm π μ (fun θ u => (F θ u) ^ 2)
+
+/-- Jensen for nonnegative-weighted absolute seed increments. -/
+theorem weighted_expected_abs_jensen
+    (π : Θ → ℝ) (hπ0 : ∀ θ, 0 ≤ π θ)
+    (μ : U → ℝ) (hμ0 : ∀ u, 0 ≤ μ u)
+    (F : Θ → U → ℝ) :
+    (∑ u, μ u * |labelAverage π F u|) ≤
+      ∑ θ, π θ * (∑ u, μ u * |F θ u|) := by
+  calc
+    (∑ u, μ u * |labelAverage π F u|) ≤
+      ∑ u, μ u * labelAverage π (fun θ u => |F θ u|) u := by
+        apply Finset.sum_le_sum
+        intro u _
+        exact mul_le_mul_of_nonneg_left
+          (weighted_abs_jensen π hπ0 (fun θ => F θ u)) (hμ0 u)
+    _ = ∑ θ, π θ * (∑ u, μ u * |F θ u|) :=
+      weighted_sum_comm π μ (fun θ u => |F θ u|)
+
 /-- Exact source-independent conditional variance decomposition.
 No normalization or positivity of the seed masses is needed for the
 identity; those are required later to interpret it as a probability law. -/
