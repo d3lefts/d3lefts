@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 50,
+  "revision": 51,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v50: original 67 historical records retained; added 3 exact BU concrete family algebraic source blobs from passed sibling source CI, unreviewed-source custody only.",
+  "scope": "v51: Add source-identical verified local graph chart to main-target pending source custody. Preserve 67 historical verified records; source match and independent main integration still pending. No ProductSphereZero theorem promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -466,6 +466,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact unreviewed source custody, new I01 subtype membership tactic repair. Pinned theorem CI must be replayed at this blob; no ProductSphereZero claim."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean",
+      "source_blob_sha": "d52bc65dd740d764d4dac0f86b566e1e5807704a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Compiler and ordinary Lean-axiom check passed at exact source blob d52bc65dd7... in PR #1139 run 45106104307. Constructs genuine local fiber graph chart only; still pending full smooth half-space fiber atlas, boundary and ProductSphereZero. Exact-head clean-main integration CI pending."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
