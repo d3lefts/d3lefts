@@ -5,9 +5,11 @@ on:
       - 'research/nightfall/verification/**'
       - 'scripts/check_headline_trust.py'
       - 'scripts/check_headline_review_plan.py'
+      - 'scripts/check_headline_import_closure.py'
       - 'scripts/check_finite_query_cost.py'
       - 'tests/test_headline_trust_and_cost.py'
       - 'tests/test_headline_review_plan.py'
+      - 'tests/test_headline_import_closure.py'
       - 'research/nightfall/formalization/**'
       - '.github/workflows/nightfall-eight-headline-trust.yml'
   push:
@@ -16,9 +18,11 @@ on:
       - 'research/nightfall/verification/**'
       - 'scripts/check_headline_trust.py'
       - 'scripts/check_headline_review_plan.py'
+      - 'scripts/check_headline_import_closure.py'
       - 'scripts/check_finite_query_cost.py'
       - 'tests/test_headline_trust_and_cost.py'
       - 'tests/test_headline_review_plan.py'
+      - 'tests/test_headline_import_closure.py'
       - 'research/nightfall/formalization/**'
       - '.github/workflows/nightfall-eight-headline-trust.yml'
   workflow_dispatch:
@@ -43,12 +47,15 @@ jobs:
           set -euo pipefail
           python3 tests/test_headline_trust_and_cost.py
           python3 tests/test_headline_review_plan.py
+          python3 tests/test_headline_import_closure.py
       - name: Produce machine-readable finite receipts
         run: |
           set -euo pipefail
           mkdir -p lean-receipts
           python3 scripts/check_headline_trust.py --trusted-ref origin/main \
             --json-out lean-receipts/eight-headline-scope.json
+          python3 scripts/check_headline_import_closure.py --trusted-ref origin/main \
+            --json-out lean-receipts/eight-headline-import-closure.json
           python3 scripts/check_headline_review_plan.py \
             --json-out lean-receipts/eight-headline-review-plan.json
           python3 scripts/check_finite_query_cost.py \
