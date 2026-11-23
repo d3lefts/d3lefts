@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean'
+      - 'research/nightfall/formalization/finite_field/ProductBUHalfspaceGraphChart.lean'
       - '.github/workflows/nightfall-bu-local-graph-chart.yml'
   workflow_dispatch:
 permissions:
@@ -24,30 +25,35 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p receipts/bu-local-graph-chart
-          src=research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean
-          ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
-          cp "$src" /tmp/mathlib4/ProductBULocalGraphChart.lean
-          (cd /tmp/mathlib4 && lake env lean ProductBULocalGraphChart.lean) 2>&1 | tee receipts/bu-local-graph-chart/lean.log
-          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/bu-local-graph-chart/lean.log
+          for M in ProductBULocalGraphChart ProductBUHalfspaceGraphChart; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-local-graph-chart/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-local-graph-chart/$M.log"
+          done
       - name: Named constructed chart and ordinary axiom check
         shell: bash
         run: |
           python3 - <<'PY'
           import re
           from pathlib import Path
-          s=Path("receipts/bu-local-graph-chart/lean.log").read_text()
-          name="Nightfall.ProductBULocalGraphChart.actual_local_graph_chart"
-          assert name in s,("MISSING_REAL_CHART",name)
-          a=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
-          if a:
-              ax={x.strip() for x in a[1].split(",") if x.strip()}
-          else:
-              assert f"'{name}' does not depend on any axioms" in s
-              ax=set()
-          assert ax <= {"propext","Classical.choice","Quot.sound"},ax
-          assert "sorryAx" not in s
-          print("PASS: actual fiber subtype has open graph chart; no imported manifold instance.",ax)
-          print("SCOPE: genuine local graph in A×B; physical time-halfspace and C∞ overlap still open.")
+          for mod,name in (
+              ("ProductBULocalGraphChart","Nightfall.ProductBULocalGraphChart.actual_local_graph_chart"),
+              ("ProductBUHalfspaceGraphChart","Nightfall.ProductBUHalfspaceGraphChart.actual_left_halfspace_chart"),
+          ):
+              s=Path("receipts/bu-local-graph-chart",mod+".log").read_text()
+              assert name in s,("MISSING_NAMED_CHART",name)
+              a=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              if a:
+                  ax={x.strip() for x in a[1].split(",") if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in s
+                  ax=set()
+              assert ax <= {"propext","Classical.choice","Quot.sound"},(name,ax)
+              assert "sorryAx" not in s
+              print("PASS",name,sorted(ax))
+          print("SCOPE: actual graph halfspace chart, physical fiber gluing, overlaps and ProductSphereZero open.")
           PY
       - name: Retain source hash and pin
         if: always()
@@ -55,7 +61,7 @@ jobs:
           mkdir -p receipts/bu-local-graph-chart
           git rev-parse HEAD > receipts/bu-local-graph-chart/HEAD.txt
           cat lean-toolchain > receipts/bu-local-graph-chart/toolchain.txt
-          sha256sum research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean > receipts/bu-local-graph-chart/SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/{ProductBULocalGraphChart,ProductBUHalfspaceGraphChart}.lean > receipts/bu-local-graph-chart/SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
