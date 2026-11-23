@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 63,
-  "as_of": "2026-11-22 UTC",
+  "revision": 64,
+  "as_of": "2026-11-23 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
-  "scope": "Integrate corrected affine-code support and free-fiber Lean sources from #1099/#1104 into current-main custody without certification promotion; leanchecker CI gate required.",
+  "scope": "Append exact unreviewed source custody for native coherent response oracle draft #1176. Historical 67 verified records unchanged. Kernel and independent review remain separate gates.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5634,6 +5634,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Generic exact finite mixture Shannon entropy-chain algebra candidate: posterior entropy form equals H(output)-expected component H. Exact mathlib pinned Lean/leanchecker pending. Not affine C_W identity or novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumResponseOracleBridge.lean",
+      "source_blob_sha": "dfbde37d312880da8fad087c804f994df3b60997",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 draft #1176: coherent finite additive-group response oracle to source matrix oracle identity, permutation unitarity, one-query execute semantics, and WellFormed step preservation. Pending exact-head pinned Lean/leanchecker and independent review; no coherent hardware implementation, POVM dilation, Route1 Wyner E2E terminal, runtime or novelty certification."
     }
   ]
 }
