@@ -32,9 +32,10 @@ theorem update_free_in_affine_code
     InAffineCode L a (Function.update x i v) := by
   have hdelta :
       Function.update x i v - x = (v - x i) • axis i := by
-    apply sub_eq_smul_axis i (Function.update x i v) x
-    intro j hj
-    simp [Function.update, hj]
+    have h := sub_eq_smul_axis i (Function.update x i v) x (by
+      intro j hj
+      simp [Function.update, hj])
+    simpa using h
   have hrewrite :
       Function.update x i v - a =
         (Function.update x i v - x) + (x - a) := by
@@ -55,7 +56,10 @@ theorem mix_free_in_affine_code
     InAffineCode L a (mix x z s) := by
   induction s using Finset.induction_on with
   | empty =>
-      simpa [mix] using hx
+      have heq : mix x z ∅ = x := by
+        funext j
+        simp [mix]
+      simpa [heq] using hx
   | @insert i s his ih =>
       have hs : ∀ j ∈ s, axis j ∈ L := by
         intro j hj
