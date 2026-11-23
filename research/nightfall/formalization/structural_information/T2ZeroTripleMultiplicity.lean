@@ -150,6 +150,49 @@ theorem zero_triple_event_multiplicity
     (e0 a b c d) (e1 a b c d) (e2 a b c d) (e3 a b c d)
     h012 h013 h023 h123
 
+/-- All four extended zero-triple events are regrouped at the
+actual complex path-coefficient level, for *arbitrary* complex weights.
+No real-coefficient, commutative-effect or rank assumption is hidden.
+This theorem certifies the algebraic reweighting only; independent
+operator/Fourier bounds remain to be established. -/
+noncomputable def survivorCount (t : G × G × G × G) : ℤ :=
+  bit (e0 t.1 t.2.1 t.2.2.1 t.2.2.2) +
+  bit (e1 t.1 t.2.1 t.2.2.1 t.2.2.2) +
+  bit (e2 t.1 t.2.1 t.2.2.1 t.2.2.2) +
+  bit (e3 t.1 t.2.1 t.2.2.1 t.2.2.2)
+
+/-- Exactly-one survivor and twice exactly-two survivor coefficients. -/
+noncomputable def correctedCount (t : G × G × G × G) : ℤ :=
+  bit (exactlyOne
+    (e0 t.1 t.2.1 t.2.2.1 t.2.2.2)
+    (e1 t.1 t.2.1 t.2.2.1 t.2.2.2)
+    (e2 t.1 t.2.1 t.2.2.1 t.2.2.2)
+    (e3 t.1 t.2.1 t.2.2.1 t.2.2.2)) +
+  2 * bit (exactlyTwo
+    (e0 t.1 t.2.1 t.2.2.1 t.2.2.2)
+    (e1 t.1 t.2.1 t.2.2.1 t.2.2.2)
+    (e2 t.1 t.2.1 t.2.2.1 t.2.2.2)
+    (e3 t.1 t.2.1 t.2.2.1 t.2.2.2))
+
+theorem survivorCount_eq_correctedCount
+    (h₂ : ∀ x : G, x + x = 0) (t : G × G × G × G) :
+    survivorCount t = correctedCount t := by
+  exact zero_triple_event_multiplicity h₂ t.1 t.2.1 t.2.2.1 t.2.2.2
+
+theorem complex_weighted_survivor_identity
+    (h₂ : ∀ x : G, x + x = 0)
+    (s : Finset (G × G × G × G))
+    (c : (G × G × G × G) → ℂ) :
+    (∑ t ∈ s, (survivorCount t : ℂ) * c t) =
+    (∑ t ∈ s, (correctedCount t : ℂ) * c t) := by
+  classical
+  apply Finset.sum_congr rfl
+  intro t ht
+  rw [survivorCount_eq_correctedCount h₂ t]
+
+#print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.survivorCount_eq_correctedCount
+#print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.complex_weighted_survivor_identity
+
 #print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.four_event_incidence
 #print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.four_zero_triple_exclusions
 #print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.zero_triple_event_multiplicity
