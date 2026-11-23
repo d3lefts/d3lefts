@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 46,
+  "revision": 47,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v46: preserve historical and pending source custody; pin repaired T2 finite Markov and light-frame sources plus new positive-effect order-to-norm operator bridge; no quantum theorem promotion",
+  "scope": "v47: fix typed complex conjugate norm and real-cast positive-effect proof; preserve all pending source SHA provenance, no unverified T2 promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3695,7 +3695,7 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-23 T2 operator or finite query bridge, pending named Lean and kernel check. No full T2-31 certification, independent audit, or novelty promotion.",
-      "source_blob_sha": "5a599d792ba954d7a221b7f2c40d3aa54b0e8f60"
+      "source_blob_sha": "4acc2a316388067de0c0c4b7bc23076f087d1554"
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2HeavyQuery.lean",
@@ -3729,7 +3729,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2LightFrame.lean",
-      "source_blob_sha": "f65cf516ddb007ac9610791b52f932fc722f474a",
+      "source_blob_sha": "d5fe800136f111da3f09d04fccc351b290995dc7",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
