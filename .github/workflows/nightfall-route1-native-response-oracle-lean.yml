@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/product_space/QuantumResponseOracleBridge.lean'
+      - 'research/nightfall/formalization/product_space/QuantumResponseRoute1Terminal.lean'
       - '.github/workflows/nightfall-route1-native-response-oracle-lean.yml'
   workflow_dispatch:
 permissions:
@@ -10,7 +11,7 @@ permissions:
 jobs:
   source-exact-response:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -28,11 +29,46 @@ jobs:
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/native-response/$M.log"
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/native-response/$M.log"
           done
+      - name: Rebuild pinned product-space and general Wyner closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
+                   Route1WynerSimulation Route1WynerGeneral; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/native-response/$M.log" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/native-response/$M.log"
+          done
+      - name: Compile source quantum degree and full native Route 1 terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in QuantumPathDegree QuantumCircuitSimulation QuantumResponseRoute1Terminal; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/native-response/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/native-response/$M.log"
+          done
       - name: Source exact kernel replay
         shell: bash
         run: |
           set -euo pipefail
-          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuantumResponseOracleBridge) 2>&1 | tee receipts/native-response/leanchecker.log
+          for M in QuantumResponseOracleBridge QuantumResponseRoute1Terminal; do
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v "$M") 2>&1 | tee "receipts/native-response/leanchecker-$M.log"
+          done
       - name: Named theorem and trusted axiom audit
         shell: bash
         run: |
@@ -52,10 +88,22 @@ jobs:
                   axs=set()
               assert axs <= {'propext','Classical.choice','Quot.sound'},(name,axs)
               print(name,sorted(axs))
-          assert 'sorryAx' not in log
-          assert 'declaration uses .sorry' not in log
-          assert 'error:' not in log
-          print('PASS: finite-group native response query = one source matrix query; unitarity; WellFormed step.')
+          for suffix in ('compileNative_wellFormed', 'deltaReference_sum',
+                         'native_acceptance_degree', 'native_response_route1_wyner'):
+              name='Nightfall.QuantumResponseRoute1Terminal.'+suffix
+              tail=Path('receipts/native-response/QuantumResponseRoute1Terminal.log').read_text()
+              m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\\s*\\[([^\\]]*)\\]",tail,re.S)
+              if m:
+                  axs={x.strip() for x in m.group(1).split(',') if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in tail,name
+                  axs=set()
+              assert axs <= {'propext','Classical.choice','Quot.sound'},(name,axs)
+              print(name,sorted(axs))
+          assert 'sorryAx' not in (log+tail)
+          assert 'declaration uses .sorry' not in (log+tail)
+          assert 'error:' not in (log+tail)
+          print('PASS: native coherent response oracle and end-to-end source Route1 general Wyner terminal.')
           PY
       - name: Immutable source/toolchain receipt
         if: always()
@@ -65,7 +113,7 @@ jobs:
           git rev-parse HEAD > receipts/native-response/source-head.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/native-response/mathlib-head.txt
           cat lean-toolchain > receipts/native-response/lean-toolchain.txt
-          sha256sum research/nightfall/formalization/product_space/Quantum{CircuitPaths,CircuitNormalization,ResponseOracleBridge}.lean > receipts/native-response/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/Quantum{CircuitPaths,CircuitNormalization,ResponseOracleBridge,ResponseRoute1Terminal}.lean > receipts/native-response/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
