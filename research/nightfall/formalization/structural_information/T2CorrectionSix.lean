@@ -69,9 +69,10 @@ theorem correction_fiber_subset_six_images
   intro t ht
   rcases t with ⟨a, b, c, d⟩
   obtain ⟨hsource, hstar⟩ := Finset.mem_filter.mp ht
-  have hmem : a ∈ D ∧ b ∈ D ∧ c ∈ D ∧ d ∈ D := by
-    simpa only [Finset.mem_product] using hsource
-  rcases hmem with ⟨ha, hb, hc, hd⟩
+  obtain ⟨ha, hrest⟩ := Finset.mem_product.mp hsource
+  obtain ⟨hb, hrest2⟩ := Finset.mem_product.mp hrest
+  obtain ⟨hc, hd⟩ := Finset.mem_product.mp hrest2
+  change correctionCover z a b c d at hstar
   have hpair (y w : G) (hy : y ∈ D) (hw : w ∈ D)
       (hsum : y + w = z) : (y, w) ∈ pairFiber D z := by
     exact Finset.mem_filter.mpr
