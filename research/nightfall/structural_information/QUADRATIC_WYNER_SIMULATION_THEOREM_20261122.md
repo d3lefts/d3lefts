@@ -253,3 +253,16 @@ For \(\tau\ge\tau_{\mathrm{info}}\), QW is termwise no worse for **every** nonne
 The correct **paper-level joint envelope** is to choose the smaller of \(S_{QW}\) and \(S_{939}\). Comparing upper-bound coefficients does not produce a lower bound on optimal quantum/classical query complexity. The reproducible decimal comparator is check_qw_vs_939_same_model.py.
 
 **Open formal gates:** QuadraticWynerTransferCore.lean attempts to prove the finite weighted-resampling factor-four transfer; QuadraticWynerParametric.lean extracts the general remaining-information tree conditional on an explicit original-source good-query certificate. They must be replayed on their exact source heads. Even if both pass, they do **not** discharge the source-specific Q2/coupling-information crux. Still required: source-level Q2 degree/normalization identification, actual posterior-coupling resampling equality and variance-stability inequality, and the genuine good-query disjunction on every positive-mass posterior. Do not hide the crux inside hypotheses of a supposedly unconditional theorem.
+
+
+## 11. Rational interval certificate for a uniform source-matched regime
+
+Beyond decimal checks, the file check_qw_939_rational_dominance.py proves a strictly **arithmetic** coefficient comparison using Python exact Fraction, given the elementary analytic bound \(49/5<\pi^2<10\) and rational square-root bounds that imply \(105<C_2<106\).
+
+For **every** \(1/100\le\tau\le1/4\) and **every** \(s\ge0\),
+\[
+ S_{QW}(\tau,s)<S_{939}(\tau,s).
+\]
+Proof: \(A_Q<16(10)(106)\), \(A_{939}>48(49/5)^2(2^2)(3^4)\), and exact rational arithmetic proves \(10[16(10)(106)]<48(49/5)^2(2^2)(3^4)\). Since \(\tau^{-1/2}\le10\), the QW seed term is strictly smaller. Likewise \(B_Q<2^{38}(10)(106)^3\), \(B_{939}>(525.6(49/5)^2)^3(2^6)(3^{12})\), and the checker verifies \(1000[2^{38}(10)(106)^3]<(525.6(49/5)^2)^3(2^6)(3^{12})\); since \(\tau^{-3/2}\le1000\), QW's information term is smaller for \(s>0\) and tied at \(s=0\). The total still wins strictly by its seed term.
+
+**Scope:** This is an exact rational implication after accepted elementary \(\pi\)-bounds. It does not independently prove (QW), the Wyner-normalized #939 paper corollary, an optimal query-complexity separation, or any Lean theorem. It strengthens evidence for the **comparison only**. At smaller \(\tau\), neither candidate dominates uniformly (§10).
