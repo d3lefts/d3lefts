@@ -95,5 +95,58 @@ theorem exact_reference_seed_coupling_exists
       Nightfall.Route1StarCoupling.starMass (q j) (K j) a bs = q j a
     exact href j a
 
+
+
+/-- Reference atoms as an actual marginal of the independent seed table. -/
+theorem reference_filtered_mass
+    (q : ι → α → ℝ) (κ : ι → Seed α Θ → ℝ)
+    (href : HasReferenceMarginal q κ) (j : ι) (a : α) :
+    ∑ v ∈ univ.filter (fun v : Seed α Θ => v.1 = a), κ j v = q j a := by
+  classical
+  rw [Finset.sum_filter, Fintype.sum_prod_type]
+  simp only [← Finset.sum_ite]
+  calc
+    (∑ b : α, ∑ bs : Θ → α, if b = a then κ j (b, bs) else 0)
+      = ∑ b : α, if b = a then ∑ bs : Θ → α, κ j (b, bs) else 0 := by
+          apply Finset.sum_congr rfl
+          intro b _
+          split_ifs <;> simp
+    _ = ∑ bs : Θ → α, κ j (a, bs) := by simp
+    _ = q j a := href j a
+
+/-- Applying ANY observable to the reference letters has exactly the
+product-of-marginals expectation. No coupling-model approximation. -/
+theorem reference_pushforward
+    (q : ι → α → ℝ) (κ : ι → Seed α Θ → ℝ)
+    (href : HasReferenceMarginal q κ)
+    (F : (ι → α) → ℝ) :
+    ∑ u : ι → Seed α Θ, seedMass κ u * F (refOf u) =
+      pexp q F := by
+  have hpush := sum_push κ (fun (_ : ι) (v : Seed α Θ) => v.1) F
+  change (∑ u, seedMass κ u * F (refOf u)) =
+    ∑ x, (∏ i, ∑ v ∈ univ.filter
+      (fun v : Seed α Θ => v.1 = x i), κ i v) * F x at hpush
+  rw [hpush]
+  unfold pexp prodMass
+  congr 1
+  apply Finset.sum_congr rfl
+  intro x _
+  congr 1
+  exact Finset.prod_congr rfl fun i _ => reference_filtered_mass q κ href i (x i)
+
+/-- Original source Q-variance is exactly the reference-seed variance. -/
+theorem reference_variance
+    (q : ι → α → ℝ) (κ : ι → Seed α Θ → ℝ)
+    (href : HasReferenceMarginal q κ)
+    (f : (ι → α) → ℝ) :
+    ∑ u : ι → Seed α Θ,
+      seedMass κ u * (f (refOf u) - pexp q f) ^ 2 =
+      pvar q f := by
+  simpa only [pvar] using
+    reference_pushforward q κ href (fun x => (f x - pexp q f) ^ 2)
+
 #print axioms Nightfall.QuadraticWynerReferenceCoupling.exact_reference_seed_coupling_exists
+#print axioms Nightfall.QuadraticWynerReferenceCoupling.reference_filtered_mass
+#print axioms Nightfall.QuadraticWynerReferenceCoupling.reference_pushforward
+#print axioms Nightfall.QuadraticWynerReferenceCoupling.reference_variance
 end Nightfall.QuadraticWynerReferenceCoupling
