@@ -23,7 +23,7 @@ jobs:
           mkdir -p receipts/native-response
           for M in QuantumCircuitPaths QuantumCircuitNormalization QuantumResponseOracleBridge; do
             src="research/nightfall/formalization/product_space/$M.lean"
-            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$src"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/native-response/$M.log"
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/native-response/$M.log"
@@ -44,7 +44,7 @@ jobs:
           for suffix in ('oracleMat_response_eq_translation', 'responseOracle_isUnitary',
                          'execute_response_step', 'response_step_wellFormed'):
               name='Nightfall.QuantumResponseOracleBridge.'+suffix
-              m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\\s*\\[([^\\]]*)\\]",log,re.S)
+              m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
               if m:
                   axs={x.strip() for x in m.group(1).split(',') if x.strip()}
               else:
