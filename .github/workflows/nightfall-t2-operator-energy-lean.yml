@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/structural_information/T2OperatorEnergy.lean'
       - 'research/nightfall/formalization/structural_information/T2HilbertCrossed.lean'
       - 'research/nightfall/formalization/structural_information/T2HilbertEffect.lean'
+      - 'research/nightfall/formalization/structural_information/T2HeavyQuery.lean'
       - '.github/workflows/nightfall-t2-operator-energy-lean.yml'
       - 'research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md'
   workflow_dispatch:
@@ -34,17 +35,20 @@ jobs:
           src=research/nightfall/formalization/structural_information/T2OperatorEnergy.lean
           more=research/nightfall/formalization/structural_information/T2HilbertCrossed.lean
           effect=research/nightfall/formalization/structural_information/T2HilbertEffect.lean
+          heavy=research/nightfall/formalization/structural_information/T2HeavyQuery.lean
           paper=research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md
           test "$(git hash-object "$paper")" = "42e5b34955304fe6b454160a6abbd2df73777438"
           git rev-parse HEAD | tee t2-operator-receipt/commit.txt
-          sha256sum "$src" "$more" "$effect" "$paper" | tee t2-operator-receipt/SHA256SUMS
+          sha256sum "$src" "$more" "$effect" "$heavy" "$paper" | tee t2-operator-receipt/SHA256SUMS
           cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
           cp "$more" /tmp/mathlib4/T2HilbertCrossed.lean
           cp "$effect" /tmp/mathlib4/T2HilbertEffect.lean
+          cp "$heavy" /tmp/mathlib4/T2HeavyQuery.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2OperatorEnergy.olean T2OperatorEnergy.lean) 2>&1 | tee t2-operator-receipt/compile.log
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2HilbertCrossed.olean T2HilbertCrossed.lean) 2>&1 | tee -a t2-operator-receipt/compile.log
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2HilbertEffect.olean T2HilbertEffect.lean) 2>&1 | tee -a t2-operator-receipt/compile.log
-          (cd /tmp/mathlib4 && lake env leanchecker T2OperatorEnergy && lake env leanchecker T2HilbertCrossed && lake env leanchecker T2HilbertEffect) 2>&1 | tee t2-operator-receipt/kernel.log
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2HeavyQuery.olean T2HeavyQuery.lean) 2>&1 | tee -a t2-operator-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker T2OperatorEnergy && lake env leanchecker T2HilbertCrossed && lake env leanchecker T2HilbertEffect && lake env leanchecker T2HeavyQuery) 2>&1 | tee t2-operator-receipt/kernel.log
           python3 - <<'PY'
           from pathlib import Path
           import re
@@ -52,6 +56,7 @@ jobs:
               Path('research/nightfall/formalization/structural_information/T2OperatorEnergy.lean'),
               Path('research/nightfall/formalization/structural_information/T2HilbertCrossed.lean'),
               Path('research/nightfall/formalization/structural_information/T2HilbertEffect.lean'),
+              Path('research/nightfall/formalization/structural_information/T2HeavyQuery.lean'),
           ]
           log=Path('t2-operator-receipt/compile.log').read_text()
           for p in sources:
@@ -71,6 +76,9 @@ jobs:
           effect=['norm_sq_eq_energy','contractive_operator_energy',
                   'selected_sector_energy','crossed_operator_energy']
           expected += [prefix+'T2HilbertEffect.'+x for x in effect]
+          heavy=['heavy_query_mass_budget','heavy_query_card_real',
+                 'finite_markov_actual_legal_queries']
+          expected += [prefix+'T2HeavyQuery.'+x for x in heavy]
           reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
           axiom_free=set(re.findall(r"'([^']+)' does not depend on any axioms",log))
           allowed={'propext','Classical.choice','Quot.sound'}
