@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Cancel ONLY stale queued PR runs; never treat cancellation as certification.
+"""Reconcile stale queued Actions without deleting receipts or bypassing checks.
 
-GitHub Actions must grant actions:write. Exactly-matching current PR heads,
-running jobs, non-PR events, and unidentifiable PR sources are not touched.
+Only superseded PR heads and >7-day-old superseded main pushes qualify.
+All candidates must remain queued and be revalidated before mutation.
+A force-cancel is allowed ONLY after a normal cancellation returns HTTP 409.
 """
 import datetime as dt
 import json
@@ -35,6 +36,21 @@ def eligible(run, live, now):
         return False
     return age >= dt.timedelta(days=1)
 
+def is_older(run, now, days):
+    try:
+        when = dt.datetime.fromisoformat(run["created_at"].replace("Z", "+00:00"))
+        return now - when >= dt.timedelta(days=days)
+    except (KeyError, AttributeError, ValueError, TypeError):
+        return False
+
+def eligible_stale_main(run, main_sha, repo, now):
+    """Do not touch main's live SHA, any non-push event, or a recent run."""
+    return (run.get("status") == "queued" and run.get("event") == "push"
+            and run.get("head_branch") == "main"
+            and (run.get("head_repository") or {}).get("full_name") == repo
+            and bool(run.get("head_sha")) and run["head_sha"] != main_sha
+            and is_older(run, now, 7))
+
 def self_test():
     now = dt.datetime(2026, 11, 23, tzinfo=dt.timezone.utc)
     base = {
@@ -48,7 +64,17 @@ def self_test():
         assert not eligible({**base, **change}, live, now), change
     assert not eligible({**base, "created_at":"2026-11-23T00:00:00Z"}, {}, now)
     assert eligible(base, {}, now)
-    print("PASS: 7 fail-closed classification controls")
+    main_base = {**base, "event":"push", "head_branch":"main",
+                 "head_repository":{"full_name":"owner/repo"},
+                 "created_at":"2026-11-11T00:00:00Z"}
+    assert eligible_stale_main(main_base, "new", "owner/repo", now)
+    for change in ({"head_sha":"new"}, {"event":"pull_request"},
+                   {"status":"in_progress"},
+                   {"head_repository":{"full_name":"someone/else"}},
+                   {"created_at":"2026-11-22T00:00:00Z"}):
+        assert not eligible_stale_main({**main_base, **change}, "new", "owner/repo", now), change
+    assert not eligible_stale_main({**main_base, "created_at":None}, "new", "owner/repo", now)
+    print("PASS: stale-PR and stale-main fail-closed classification controls")
 
 def api(path, method="GET"):
     url = API + path
@@ -84,27 +110,35 @@ def main():
             for p in prs if p.get("head",{}).get("repo")}
     queue = paged(f"repos/{REPO}/actions/runs?status=queued", "workflow_runs")
     now = dt.datetime.now(dt.timezone.utc)
-    candidates = [r for r in queue if eligible(r,live,now)]
-    print(f"Observed {len(queue)} queued runs, {len(candidates)} stale PR candidates")
+    current_main = api(f"repos/{REPO}/branches/main")["commit"]["sha"]
+    candidates = [r for r in queue if eligible(r,live,now)
+                  or eligible_stale_main(r,current_main,REPO,now)]
+    print(f"Observed {len(queue)} queued runs, {len(candidates)} superseded candidates")
     cancelled = 0
     for r in candidates[:MAX_CANCEL]:
         # Fresh run state and fresh PR SHA eliminate stale-snapshot races.
         fresh = api(f"repos/{REPO}/actions/runs/{r['id']}")
-        if not eligible(fresh, live, now):
+        is_pr = eligible(fresh,live,now)
+        is_main = eligible_stale_main(fresh,current_main,REPO,now)
+        if not (is_pr or is_main):
             continue
-        source = fresh["head_repository"]["full_name"]
-        key = (source, fresh["head_branch"])
-        if key in live:
-            number = live[key][1]
-            pr = api(f"repos/{REPO}/pulls/{number}")
-            if pr.get("state") != "open" or pr["head"]["sha"] == fresh["head_sha"]:
-                continue
-        else:
-            # If PR was freshly opened, do not cancel an orphan by mistake.
-            prs_new = paged(f"repos/{REPO}/pulls?state=open")
-            if any(p.get("head",{}).get("repo") and
-                   (p["head"]["repo"]["full_name"],p["head"]["ref"]) == key
-                   for p in prs_new):
+        if is_pr:
+            source = fresh["head_repository"]["full_name"]
+            key = (source, fresh["head_branch"])
+            if key in live:
+                number = live[key][1]
+                pr = api(f"repos/{REPO}/pulls/{number}")
+                if pr.get("state") != "open" or pr["head"]["sha"] == fresh["head_sha"]:
+                    continue
+            else:
+                prs_new = paged(f"repos/{REPO}/pulls?state=open")
+                if any(p.get("head",{}).get("repo") and
+                       (p["head"]["repo"]["full_name"],p["head"]["ref"]) == key
+                       for p in prs_new):
+                    continue
+        if is_main:
+            newest_main = api(f"repos/{REPO}/branches/main")["commit"]["sha"]
+            if not eligible_stale_main(fresh,newest_main,REPO,now):
                 continue
         print(f"STALE queued {r['id']} {fresh['head_branch']} {fresh['head_sha'][:12]}")
         if "--execute" not in sys.argv:
@@ -113,11 +147,43 @@ def main():
             api(f"repos/{REPO}/actions/runs/{r['id']}/cancel",method="POST")
             cancelled += 1
         except urllib.error.HTTPError as ex:
-            if ex.code in (409, 422):  # It already transitioned; not a proof result.
+            if ex.code == 409 and is_older(fresh,now,7):
+                # GitHub explicitly provides force-cancel for nonresponsive runs.
+                # Reconfirm queue state and live branch head after ordinary 409.
+                again = api(f"repos/{REPO}/actions/runs/{r['id']}")
+                if is_pr:
+                    if not eligible(again,live,now):
+                        continue
+                    source = again["head_repository"]["full_name"]
+                    key = (source,again["head_branch"])
+                    if key in live:
+                        pr = api(f"repos/{REPO}/pulls/{live[key][1]}")
+                        if pr.get("state") != "open" or pr["head"]["sha"] == again["head_sha"]:
+                            continue
+                    else:
+                        prs_new = paged(f"repos/{REPO}/pulls?state=open")
+                        if any(p.get("head",{}).get("repo") and
+                               (p["head"]["repo"]["full_name"],p["head"]["ref"]) == key
+                               for p in prs_new):
+                            continue
+                else:
+                    newest_main = api(f"repos/{REPO}/branches/main")["commit"]["sha"]
+                    if not eligible_stale_main(again,newest_main,REPO,now):
+                        continue
+                try:
+                    api(f"repos/{REPO}/actions/runs/{r['id']}/force-cancel",method="POST")
+                    cancelled += 1
+                    print(f"Force-cancelled nonresponsive 7d+ run {r['id']}")
+                except urllib.error.HTTPError as force_ex:
+                    if force_ex.code in (409,422):
+                        print(f"GitHub still rejects stale run {r['id']}: HTTP {force_ex.code}")
+                    else:
+                        raise
+            elif ex.code in (409,422):
                 print(f"Skipped racing job {r['id']}: HTTP {ex.code}")
             else:
                 raise
-    print(f"Cancelled {cancelled} stale queued PR runs (limit {MAX_CANCEL}); current heads untouched")
+    print(f"Accepted {cancelled} cancellation requests (limit {MAX_CANCEL}); current heads untouched")
 
 if __name__ == "__main__":
     main()
