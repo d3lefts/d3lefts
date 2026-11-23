@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 42,
+  "revision": 43,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v42: rebase source-identical interval/fiber orbit composition onto current main, retaining all prior records and withholding global theorem promotion.",
+  "scope": "Register repaired affine-code support and fiber files for strict pending-source custody; Lean compilation/axiom audit required independently; general Wyner theorem not promoted.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3606,6 +3606,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerSupport.lean",
+      "source_blob_sha": "5519634afa3ac1b7659e08d6070549a9c9aac148",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody for repaired affine-code support and fiber Lean branch; compile/leanchecker evidence to be assessed independently. This is not the full Wyner entropy/infimum theorem."
     },
     {
       "path": "research/nightfall/formalization/structural_information/LocalMomentAtoms.lean",
