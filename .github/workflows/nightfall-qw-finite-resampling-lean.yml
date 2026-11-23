@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/structural_information/QuadraticWynerTransferCore.lean'
       - 'research/nightfall/formalization/structural_information/QuadraticWynerDirectCrux.lean'
+      - 'research/nightfall/formalization/structural_information/QuadraticWynerInvariantResampling.lean'
       - '.github/workflows/nightfall-qw-finite-resampling-lean.yml'
   workflow_dispatch:
 concurrency:
@@ -37,12 +38,18 @@ jobs:
           cp "$SRC2" /tmp/mathlib4/QuadraticWynerDirectCrux.lean
           (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o .lake/build/lib/lean/QuadraticWynerDirectCrux.olean QuadraticWynerDirectCrux.lean) 2>&1 | tee receipts/qw-bridge/direct.log
           ! grep -E '(^|:)error:|declaration uses .sorry' receipts/qw-bridge/direct.log
+          SRC3=research/nightfall/formalization/structural_information/QuadraticWynerInvariantResampling.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$SRC3"
+          cp "$SRC3" /tmp/mathlib4/QuadraticWynerInvariantResampling.lean
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o .lake/build/lib/lean/QuadraticWynerInvariantResampling.olean QuadraticWynerInvariantResampling.lean) 2>&1 | tee receipts/qw-bridge/invariant.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/qw-bridge/invariant.log
       - name: Mandatory independent Lean kernel replay
         shell: bash
         run: |
           set -euo pipefail
           (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerTransferCore) 2>&1 | tee receipts/qw-bridge/leanchecker.log
           (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerDirectCrux) 2>&1 | tee receipts/qw-bridge/direct-kernel.log
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerInvariantResampling) 2>&1 | tee receipts/qw-bridge/invariant-kernel.log
       - name: Verify named theorem and only standard axioms
         shell: bash
         run: |
@@ -68,7 +75,16 @@ jobs:
                   assert "'"+path+"' does not depend on any axioms" in direct,path
                   axes=set()
               assert axes <= {'propext','Classical.choice','Quot.sound'},(path,axes)
-          assert 'sorryAx' not in log+direct
+          invariant=Path('receipts/qw-bridge/invariant.log').read_text()
+          for suffix in ('invariant_squared_transfer','invariant_half_influence_transfer'):
+              path='Nightfall.QuadraticWynerInvariantResampling.'+suffix
+              m=re.search(r"'"+re.escape(path)+r"' depends on axioms:\s*\[([^\]]*)\]",invariant,re.S)
+              if m: axes={x.strip() for x in m.group(1).split(',') if x.strip()}
+              else:
+                  assert "'"+path+"' does not depend on any axioms" in invariant,path
+                  axes=set()
+              assert axes <= {'propext','Classical.choice','Quot.sound'},(path,axes)
+          assert 'sorryAx' not in log+direct+invariant
           print('PASS nine source-independent resampling and generic QW crux lemmas; NOT full QW terminal')
           PY
       - name: Immutable commit and source receipt
@@ -79,7 +95,7 @@ jobs:
           git rev-parse HEAD > receipts/qw-bridge/commit.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/qw-bridge/mathlib.txt || true
           cat lean-toolchain > receipts/qw-bridge/compiler.txt
-          sha256sum research/nightfall/formalization/structural_information/QuadraticWyner{TransferCore,DirectCrux}.lean > receipts/qw-bridge/SHA256SUMS
+          sha256sum research/nightfall/formalization/structural_information/QuadraticWyner{TransferCore,DirectCrux,InvariantResampling}.lean > receipts/qw-bridge/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
