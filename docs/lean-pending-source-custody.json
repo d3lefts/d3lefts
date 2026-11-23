@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 43,
+  "revision": 44,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
   "scope": "Register repaired affine-code support and fiber files for strict pending-source custody; Lean compilation/axiom audit required independently; general Wyner theorem not promoted.",
@@ -3609,7 +3609,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerFibers.lean",
-      "source_blob_sha": "2099bcf7cd65d6f1c7aa0c50d488ca10c5209b31",
+      "source_blob_sha": "0414c52b5ac939a5adef64b4e55085d7f0789425",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
