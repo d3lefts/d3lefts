@@ -6,6 +6,11 @@ on:
       - 'research/nightfall/formalization/structural_information/QuadraticWynerDirectCrux.lean'
       - '.github/workflows/nightfall-qw-finite-resampling-lean.yml'
   workflow_dispatch:
+concurrency:
+  # Keep the newest proof job per PR; never replace different workflow checks.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 jobs:

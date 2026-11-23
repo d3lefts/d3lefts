@@ -1,6 +1,7 @@
 name: NIGHTFALL quadratic Wyner independent exact finite audit
 on:
   push:
+    branches: [main] # Do not double-run feature-branch pushes and PR checks.
     paths:
       - "research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md"
       - "research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py"
@@ -12,6 +13,11 @@ on:
       - "research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md"
       - "research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py"
       - ".github/workflows/nightfall-quadratic-wyner-exact.yml"
+concurrency:
+  # Keep the newest proof job per PR; never replace different workflow checks.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 jobs:
