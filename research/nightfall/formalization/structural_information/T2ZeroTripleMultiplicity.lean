@@ -193,6 +193,81 @@ theorem complex_weighted_survivor_identity
 #print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.survivorCount_eq_correctedCount
 #print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.complex_weighted_survivor_identity
 
+/-- Representation change valid in every additive commutative group:
+a zero-sum complementary triple is exactly a survivor equal to the
+four-slot total. This is the source mechanism behind the overlap count. -/
+theorem complementary_triple_zero_iff_total
+    (a b c d : G) :
+    b + c + d = 0 ↔ a + b + c + d = a := by
+  constructor
+  · exact survivor_is_total a b c d
+  · intro h
+    have hs : a + (b + c + d) = a + 0 := by
+      calc
+        a + (b + c + d) = a + b + c + d := by abel
+        _ = a := h
+        _ = a + 0 := by simp
+    exact add_left_cancel hs
+
+theorem e0_iff_survivor_total (a b c d : G) :
+    e0 a b c d ↔ allNonzero a b c d ∧ a + b + c + d = a := by
+  constructor
+  · rintro ⟨hn, hz⟩
+    exact ⟨hn, (complementary_triple_zero_iff_total a b c d).mp hz⟩
+  · rintro ⟨hn, hs⟩
+    exact ⟨hn, (complementary_triple_zero_iff_total a b c d).mpr hs⟩
+
+theorem e1_iff_survivor_total (a b c d : G) :
+    e1 a b c d ↔ allNonzero a b c d ∧ a + b + c + d = b := by
+  constructor
+  · rintro ⟨hn, hz⟩
+    refine ⟨hn, ?_⟩
+    calc
+      a + b + c + d = b + a + c + d := by abel
+      _ = b := (complementary_triple_zero_iff_total b a c d).mp hz
+  · rintro ⟨hn, hs⟩
+    refine ⟨hn, ?_⟩
+    apply (complementary_triple_zero_iff_total b a c d).mpr
+    calc
+      b + a + c + d = a + b + c + d := by abel
+      _ = b := hs
+
+theorem e2_iff_survivor_total (a b c d : G) :
+    e2 a b c d ↔ allNonzero a b c d ∧ a + b + c + d = c := by
+  constructor
+  · rintro ⟨hn, hz⟩
+    refine ⟨hn, ?_⟩
+    calc
+      a + b + c + d = c + a + b + d := by abel
+      _ = c := (complementary_triple_zero_iff_total c a b d).mp hz
+  · rintro ⟨hn, hs⟩
+    refine ⟨hn, ?_⟩
+    apply (complementary_triple_zero_iff_total c a b d).mpr
+    calc
+      c + a + b + d = a + b + c + d := by abel
+      _ = c := hs
+
+theorem e3_iff_survivor_total (a b c d : G) :
+    e3 a b c d ↔ allNonzero a b c d ∧ a + b + c + d = d := by
+  constructor
+  · rintro ⟨hn, hz⟩
+    refine ⟨hn, ?_⟩
+    calc
+      a + b + c + d = d + a + b + c := by abel
+      _ = d := (complementary_triple_zero_iff_total d a b c).mp hz
+  · rintro ⟨hn, hs⟩
+    refine ⟨hn, ?_⟩
+    apply (complementary_triple_zero_iff_total d a b c).mpr
+    calc
+      d + a + b + c = a + b + c + d := by abel
+      _ = d := hs
+
+#print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.complementary_triple_zero_iff_total
+#print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.e0_iff_survivor_total
+#print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.e1_iff_survivor_total
+#print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.e2_iff_survivor_total
+#print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.e3_iff_survivor_total
+
 #print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.four_event_incidence
 #print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.four_zero_triple_exclusions
 #print axioms Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.zero_triple_event_multiplicity
