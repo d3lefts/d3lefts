@@ -34,7 +34,7 @@ theorem update_free_in_affine_code
       Function.update x i v - x = (v - x i) • axis i := by
     apply sub_eq_smul_axis i (Function.update x i v) x
     intro j hj
-    simp [Function.update_noteq hj]
+    simp [Function.update, hj]
   have hrewrite :
       Function.update x i v - a =
         (Function.update x i v - x) + (x - a) := by
@@ -67,7 +67,7 @@ theorem mix_free_in_affine_code
         by_cases hj : j = i
         · subst j
           simp [mix]
-        · simp [mix, hj, Function.update_noteq hj]
+        · simp [mix, hj, Function.update, hj]
       rw [hstep]
       exact update_free_in_affine_code L a (mix x z s) i (z i)
         (ih hs) (hfree i (Finset.mem_insert_self i s))
