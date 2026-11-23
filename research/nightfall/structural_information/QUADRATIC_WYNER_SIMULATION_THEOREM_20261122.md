@@ -213,3 +213,43 @@ at \(d=2\). For the finite-component version it has better *small-\(\tau\)* powe
 4. Reuse the existing Route 1 Info/Phi stopping potential by a genuinely checked alternative crux to derive (QW), then add strict pinned source/axiom/leanchecker/CI receipts.
 
 **Authorship/credit:** NIGHTFALL research collaboration under Devin J. Wright; original Q2 contributor chain #587–#776, original Route 1 Claude-led chain #928/#970/#976, and physical oracle contributors #1084/#1118/#1128. Public pioneers identified above must be credited. No publication, public claim-status promotion, or scientific priority representation is authorized by this manuscript.
+
+## 10. Exact same-model comparison with PR #939 (revision 0.2)
+
+**Parameter equalization.** Both candidates concern a known *finite-alphabet* law \(\nu\), bounded scalar degree \(d=2\), original-coordinate queries, variance stopping threshold \(0<\tau\le 1/4\), and error term \(\tau/\varepsilon^2\). The information budget is **\(s>C_W(\nu)\) in nats**. In #939 as originally written the charge is \(\ln M\) for a supplied \(M\)-component product mixture. To compare on the same law/parameter, retain #939's mean-increment/key-lemma paper crux but replace its entropy potential with the already certified **remaining-information potential** of #970, so the tree pays \(I(\Theta;X)<s\) rather than \(H(\Theta)\le\ln M\). This is an **author-side corollary only**: #939's optimized mean-increment crux is not an end-to-end Lean terminal, and this Wyner-normalized #939 corollary must still be reviewed. The finite star-coupling source in merged #970 makes its seed coordinates finite in the finite-mixture setting, removing the infinite-seed discretization caveat from #939; its optimized constants still require independent review.
+
+**Comparable information-and-seed budget forms** (each is divided by query cutoff \(q\), then \(\tau/\varepsilon^2\) is added):
+\[
+ \begin{aligned}
+ S_{QW}(\tau,s)&=
+     A_Q\tau^{-2}+B_Qs\tau^{-6},&
+ A_Q&=16\pi^2C_2,&B_Q&=2^{38}\pi^2C_2^3,\\
+ S_{939}(\tau,s)&=
+     A_{939}\tau^{-3/2}+B_{939}s\tau^{-9/2},&
+ A_{939}&=48\pi^4(2^2)(3^4),&
+ B_{939}&=(525.6\pi^4)^3(2^6)(3^{12}).
+ \end{aligned}
+\]
+Decimal evaluation (70-digit Python Decimal, **not a verified real interval proof**):
+\[
+ \begin{array}{c|c|c}
+ \tau & A_Q\tau^{-2}/(A_{939}\tau^{-3/2})
+       & B_Q\tau^{-6}/(B_{939}\tau^{-9/2})\\
+ 0.25&0.02197716&0.00556997\\
+ 0.1&0.03474894&0.02201722\\
+ 0.01&0.10988578&0.69624577\\
+ 0.005&0.15540197&1.96928043\\
+ 0.001&0.34748936&22.01722450\\
+ 0.0001&1.09885784&696.24577190
+ \end{array}
+\]
+Exact symbolic coefficient crossovers:
+\[
+ \tau_{\mathrm{seed}}=(A_Q/A_{939})^2\approx0.000120748855,\qquad
+ \tau_{\mathrm{info}}=(B_Q/B_{939})^{2/3}\approx0.007855521964.
+\]
+For \(\tau\ge\tau_{\mathrm{info}}\), QW is termwise no worse for **every** nonnegative \(s\). Between the crossovers, QW's seed term is smaller but #939's information term is smaller; winner depends on \(s\). At \(\tau=0.001\), for example, QW wins only for \(0\le s\lesssim 1.03\times10^{-26}\) nats under these unoptimized constants. Below \(\tau_{\mathrm{seed}}\), #939 dominates both terms. **Neither theorem dominates globally.**
+
+The correct **paper-level joint envelope** is to choose the smaller of \(S_{QW}\) and \(S_{939}\). Comparing upper-bound coefficients does not produce a lower bound on optimal quantum/classical query complexity. The reproducible decimal comparator is check_qw_vs_939_same_model.py.
+
+**Open formal gates:** QuadraticWynerTransferCore.lean attempts to prove the finite weighted-resampling factor-four transfer; QuadraticWynerParametric.lean extracts the general remaining-information tree conditional on an explicit original-source good-query certificate. They must be replayed on their exact source heads. Even if both pass, they do **not** discharge the source-specific Q2/coupling-information crux. Still required: source-level Q2 degree/normalization identification, actual posterior-coupling resampling equality and variance-stability inequality, and the genuine good-query disjunction on every positive-mass posterior. Do not hide the crux inside hypotheses of a supposedly unconditional theorem.
