@@ -1,0 +1,74 @@
+name: NIGHTFALL query-local Wyner general latent terminal Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QueryLocalWynerCompiler.lean'
+      - 'research/nightfall/formalization/product_space/QueryLocalWynerTerminal.lean'
+      - '.github/workflows/nightfall-query-local-wyner-terminal-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned AA / product source chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile pinned general latent Wyner Route1 chain and new terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/query-local-terminal
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
+                   Route1WynerSimulation Route1WynerGeneral QueryLocalWynerCompiler QueryLocalWynerTerminal; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/query-local-terminal/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/query-local-terminal/$M.log"
+          done
+      - name: Independent kernel replay, named axiom gate and exact sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker QueryLocalWynerTerminal) 2>&1 | tee receipts/query-local-terminal/checker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('receipts/query-local-terminal/QueryLocalWynerTerminal.log').read_text()
+          name='Nightfall.QueryLocalWyner.query_local_wyner_terminal'
+          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",p,re.S)
+          if m:
+              ax={x.strip() for x in m[1].split(',') if x.strip()}
+              assert ax <= {'propext','Classical.choice','Quot.sound'},ax
+          else:
+              assert f"'{name}' does not depend on any axioms" in p
+          assert 'sorryAx' not in p
+          print('PASS source-exact Route1 Wyner general-latent terminal with explicit pulled-back degree and TV hypotheses')
+          PY
+          git rev-parse HEAD > receipts/query-local-terminal/head.txt
+          sha256sum research/nightfall/formalization/product_space/QueryLocalWyner*.lean > receipts/query-local-terminal/SHA256SUMS
+      - name: Keep receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: query-local-wyner-terminal-${{ github.run_id }}
+          path: receipts/query-local-terminal
+          retention-days: 90
