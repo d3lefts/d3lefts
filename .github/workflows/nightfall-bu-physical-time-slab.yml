@@ -26,7 +26,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p receipts/bu-physical-time-slab
-          for M in ProductSphereObstruction ProductBUSphereCompact ProductBUCompactFiber ProductBULocalGraphChart ProductBUTimeHalfspaceChart ProductBUPhysicalTimeSlab; do
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBULocalGraphChart ProductBUTimeHalfspaceChart ProductBUPhysicalTimeSlab; do
             src="research/nightfall/formalization/finite_field/$M.lean"
             ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
