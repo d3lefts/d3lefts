@@ -45,7 +45,7 @@ theorem single_sector_energy_le (x : SectorH D E) (a : D) :
     ‖x a‖ ^ 2 ≤ energy x := by
   unfold energy
   exact Finset.single_le_sum
-    (fun b _ => sq_nonneg _) (Finset.mem_univ a)
+    (fun b _ => sq_nonneg (‖x b‖)) (Finset.mem_univ a)
 
 /-- The elementary Hilbert-energy pinching across different input rows.
 P can mix all sectors in a noncommuting manner. -/
