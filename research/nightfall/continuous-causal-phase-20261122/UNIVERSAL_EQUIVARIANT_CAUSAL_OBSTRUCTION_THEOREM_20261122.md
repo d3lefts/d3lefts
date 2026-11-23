@@ -1,12 +1,12 @@
-# Universal equivariant causal-obstruction theory: arbitrary group certificates, odd nonlinear sensors, and architecture-free even observations
+# Universal equivariant causal-obstruction theory: arbitrary-group certificates, odd nonlinear sensors, and architecture-free even observations
 
 **NIGHTFALL author-side research manuscript v1.0 — 2026-11-22, America/Chicago.**
 
-**Status:** Complete paper proofs of the precisely quantified theorems below, using standard vector-bundle obstruction theory, characteristic classes, Tietze extension, and elementary causality. **Not independently refereed, not Lean-certified, and not globally novelty-certified.** The underlying equivariant zero theorem is classical. The previously written continuous even-*linear block* sensing theorem and causal virtual-history mechanism occur in NIGHTFALL PR #1148 and earlier PR #995/#1000; this paper adds (i) genuinely nonlinear **odd** sensing operators while preserving the sharp two-bin sensor-dimension obstruction, (ii) an **architecture-free** theorem for arbitrary continuous even measurements with an exact binary-cohomology cutoff, and (iii) a general compact-group causal-certificate transfer theorem accommodating arbitrary continuous output spaces. Do not represent the abstract transfer theorem as a claim that every measurement architecture has the necessary certificate.
+**Status:** Complete paper proofs of the precisely quantified theorems below, using standard vector-bundle obstruction theory, characteristic classes, Tietze extension, and elementary causality. **Not independently refereed, not Lean-certified, and not globally novelty-certified.** The underlying equivariant zero theorem is classical. The previously written continuous even-*linear block* sensing theorem and causal virtual-history mechanism occur in NIGHTFALL PR #1148 and earlier PR #995/#1000; this paper adds (i) genuinely nonlinear **odd** sensing operators while preserving the sharp two-bin sensor-dimension obstruction, (ii) an **architecture-free** theorem for arbitrary continuous even measurements with an exact binary-cohomology cutoff, and (iii) a general principal-bundle causal-certificate transfer theorem for arbitrary topological groups and arbitrary continuous output spaces. Do not represent the abstract transfer theorem as a claim that every measurement architecture has the necessary certificate.
 
 ## 1. Universal framework: equivariant causal certificates
 
-**Definition 1 (causal consensus certificate).** Let \(G\) be a compact Lie group, \(Z\ne\varnothing\) a compact metrizable space with a continuous free \(G\)-action, and \(X\) a topological signal space. Let \(p_+,p_-:Z\to X\) be continuous and suppose \(p_+(z)\not\sim p_-(z)\) for an intended signal-equivalence relation \(\sim\), for every \(z\).
+**Definition 1 (causal consensus certificate).** Let \(G\) be an arbitrary topological group and \(Z\ne\varnothing\) a continuous right or left principal \(G\)-space with quotient \(B=Z/G\) paracompact and nonempty. Assume the orbit projection \(Z\to B\) is a numerable principal bundle (as it is for free actions of finite groups on compact metrizable spaces, and standard principal compact-Lie-group actions). Let \(X\) be a topological signal space. Let \(p_+,p_-:Z\to X\) be continuous and suppose \(p_+(z)\not\sim p_-(z)\) for an intended signal-equivalence relation \(\sim\), for every \(z\).
 
 A length-\(m\) causal protocol has arbitrary topological observation spaces \(Y_j\), history spaces \(H_0=\{()\}\), \(H_j=Y_1\times\cdots\times Y_j\), and continuous stage rules
 \[
@@ -71,7 +71,7 @@ We prove \(T_j(p_+(z))=T_j(p_-(z))=q_j(z)\) by induction. At stage zero this is 
 \]
 then any decoder from the common transcript to \(X/\tau\) has worst-case quotient-metric error at least \(\delta/2\) on the candidate inputs. This follows immediately from (1.6) and the triangle inequality; the decoder need not be continuous.
 
-**Mathematical boundary.** The theorem allows arbitrary compact Lie symmetry groups and arbitrary observation spaces \(Y_j\), **provided the specific stagewise certificate exists**. It does not assert existence of \(\kappa_j,\eta_j\) for an arbitrary measurement rule. The results below show two substantial, non-tautological families in which those certificates can be built explicitly.
+**Mathematical boundary.** The theorem allows arbitrary topological symmetry groups with a numerable principal quotient and arbitrary observation spaces \(Y_j\), **provided the specific stagewise certificate exists**. It does not assert existence of \(\kappa_j,\eta_j\) for an arbitrary measurement rule. The results below show two substantial, non-tautological families in which those certificates can be built explicitly.
 
 ## 2. Genuinely nonlinear odd sensing operators — the sharp pure-character obstruction
 
@@ -265,7 +265,7 @@ Partition the \(2n-1\) indices according to which factor vanishes (assign ties a
 
 The previous theorem requires the nonlinear sensor to be odd *before* its even detector. We now remove the sensing-operator structure entirely, keeping only global sign symmetry of the **resulting observations**.
 
-Let \(X\) be a topological space with continuous involution \(\tau:X\to X\), and let \(G\) be a compact Lie group acting freely on a nonempty compact metrizable \(Z\). Suppose continuous pair maps \(p_\pm:Z\to X\) satisfy
+Let \(X\) be a topological space with continuous involution \(\tau:X\to X\), and let \(G\) be an arbitrary topological group with a numerable principal action on nonempty \(Z\) and paracompact quotient \(Z/G\). Suppose continuous pair maps \(p_\pm:Z\to X\) satisfy
 \[
  p_\epsilon(gz)
    =\tau^{a(g)}p_{\sigma_g(\epsilon)}(z),
@@ -381,7 +381,7 @@ This statement is deliberately a **topological reduction**, not a claimed comput
 
 ## 4. Group-general mathematical transfer and explicit limitations
 
-**Corollary 7 (general representation-valued causal testing).** Under Theorem 2, \(G\) may be any compact Lie group and the \(W_j\) may be arbitrary finite-dimensional real representations. Their direct sum yields a genuine associated vector bundle, and a nonzero top Stiefel–Whitney class is sufficient to force a causal collision. For a product-of-spheres action of \(G=(\mathbb Z/2)^q\) with character blocks \(W_j=\mathbb R^{d_j}_{c_j}\), the class has the exact polynomial certificate
+**Corollary 7 (general representation-valued causal testing).** Under Theorem 2, \(G\) may be any topological group with a numerable principal quotient and the \(W_j\) may be arbitrary finite-dimensional continuous real representations. Their direct sum yields a genuine associated vector bundle, and a nonzero top Stiefel–Whitney class is sufficient to force a causal collision. For a product-of-spheres action of \(G=(\mathbb Z/2)^q\) with character blocks \(W_j=\mathbb R^{d_j}_{c_j}\), the class has the exact polynomial certificate
 \[
  P=\prod_j\left(\sum_{a=1}^q(c_j)_a\alpha_a\right)^{d_j}
  \quad\text{in}\quad
