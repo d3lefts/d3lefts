@@ -69,7 +69,7 @@ theorem oracleMat_response_eq_translation (x : I → G) :
       responseCoefficient (I := I) (G := G) (W := W) s b v) =
       standardResponseMatrix (I := I) (G := G) (W := W) x b v
   rw [symbol_sum_select]
-  simp [responseCoefficient, standardResponseMatrix, responseShift]
+  simp [responseCoefficient, standardResponseMatrix, responseShift] <;> rfl
 
 /-- A finite basis permutation matrix preserves the exact complex energy. -/
 private theorem permutation_isUnitary {S : Type}
