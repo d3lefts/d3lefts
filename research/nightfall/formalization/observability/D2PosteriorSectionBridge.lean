@@ -64,7 +64,106 @@ theorem posterior_degree_two_section_budget_eight
       p hp1 s f hdegree)
     x
 
+/-- A finite observation is a cylinder event: each revealed coordinate
+equals its reported value; unobserved coordinates impose no constraint. -/
+noncomputable def observationIndicator
+    (s : ι → Option α) (x : ι → α) (i : ι) : ℝ :=
+  match s i with
+  | none => 1
+  | some a => if x i = a then 1 else 0
+
+noncomputable def cylinderIndicator
+    (s : ι → Option α) (x : ι → α) : ℝ :=
+  ∏ i : ι, observationIndicator s x i
+
+/-- Original-product probability of the observation cylinder.
+May be zero when an observed symbol has zero source probability. -/
+noncomputable def evidenceFactor
+    (p : ι → α → ℝ) (s : ι → Option α) (i : ι) : ℝ :=
+  match s i with
+  | none => 1
+  | some a => p i a
+
+noncomputable def cylinderEvidence
+    (p : ι → α → ℝ) (s : ι → Option α) : ℝ :=
+  ∏ i : ι, evidenceFactor p s i
+
+/-- Exact single-coordinate original source density times cylinder
+indicator = its evidence times its actual posterior Dirac/marginal law. -/
+theorem coordinate_cylinder_posterior_mass
+    (p : ι → α → ℝ) (s : ι → Option α)
+    (x : ι → α) (i : ι) :
+    p i (x i) * observationIndicator s x i =
+      evidenceFactor p s i * posteriorLaw p s i (x i) := by
+  classical
+  cases h : s i with
+  | none =>
+      simp [observationIndicator, evidenceFactor, posteriorLaw, h]
+  | some a =>
+      by_cases hx : x i = a
+      · simp [observationIndicator, evidenceFactor, posteriorLaw, h, hx]
+      · simp [observationIndicator, evidenceFactor, posteriorLaw, h, hx]
+
+/-- The actual source measure restricted to a deterministic observation
+cylinder is exactly evidence × the Dirac/product posterior. This equality
+holds even on zero-evidence cylinders, where conditioning is undefined. -/
+theorem source_cylinder_density_factorization
+    (p : ι → α → ℝ) (s : ι → Option α) (x : ι → α) :
+    (∏ i : ι, p i (x i)) * cylinderIndicator s x =
+      cylinderEvidence p s * posteriorMass p s x := by
+  classical
+  unfold cylinderIndicator cylinderEvidence posteriorMass
+  rw [← Finset.prod_mul_distrib]
+  rw [← Finset.prod_mul_distrib]
+  apply Finset.prod_congr rfl
+  intro i _
+  exact coordinate_cylinder_posterior_mass p s x i
+
+/-- Source-derived evidence equals the *actual* mass of the cylinder,
+using the independent product normalizers, not a supplied Bayes premise. -/
+theorem source_cylinder_evidence_normalizer
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (s : ι → Option α) :
+    (∑ x : ι → α, (∏ i : ι, p i (x i)) *
+        cylinderIndicator s x) = cylinderEvidence p s := by
+  classical
+  calc
+    _ = ∑ x : ι → α, cylinderEvidence p s *
+        posteriorMass p s x := by
+      apply Finset.sum_congr rfl
+      intro x _
+      exact source_cylinder_density_factorization p s x
+    _ = cylinderEvidence p s *
+        (∑ x : ι → α, posteriorMass p s x) := by
+      rw [Finset.mul_sum]
+    _ = cylinderEvidence p s := by
+      rw [posteriorMass_sum p hp1 s]
+      ring
+
+/-- The genuine finite conditional source law given a positive-evidence
+coordinate-revelation event is precisely the actual posterior product law.
+This closes the cylinder Bayes-identification bridge, not yet the separate
+causal-policy-to-cylinder history theorem. -/
+theorem source_cylinder_conditional_posterior
+    (p : ι → α → ℝ)
+    (hp1 : ∀ i, (∑ a : α, p i a) = 1)
+    (s : ι → Option α) (x : ι → α)
+    (hevidence : cylinderEvidence p s ≠ 0) :
+    ((∏ i : ι, p i (x i)) * cylinderIndicator s x) /
+      (∑ y : ι → α, (∏ i : ι, p i (y i)) *
+        cylinderIndicator s y) =
+      posteriorMass p s x := by
+  rw [source_cylinder_density_factorization p s x,
+    source_cylinder_evidence_normalizer p hp1 s]
+  field_simp [hevidence]
+
 end Nightfall.Observability.D2PosteriorSection
 
 #print axioms Nightfall.Observability.D2PosteriorSection.degree_two_after_arbitrary_partial_observation
 #print axioms Nightfall.Observability.D2PosteriorSection.posterior_degree_two_section_budget_eight
+
+#print axioms Nightfall.Observability.D2PosteriorSection.coordinate_cylinder_posterior_mass
+#print axioms Nightfall.Observability.D2PosteriorSection.source_cylinder_density_factorization
+#print axioms Nightfall.Observability.D2PosteriorSection.source_cylinder_evidence_normalizer
+#print axioms Nightfall.Observability.D2PosteriorSection.source_cylinder_conditional_posterior
