@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 49,
+  "revision": 50,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v49: explicit interval-alias chart typeclass exposure in global ATLAS boundary classification; original 67 immutable records preserved, pinned Lean run required.",
+  "scope": "v50 standalone compiler repair for ComponentClassification after prior exact-head failure. Preserve all 67 historical source-matched records. No new topology assertion; recheck pending.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -409,13 +409,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentClassification.lean",
-      "source_blob_sha": "679db75bdaa6faef0b1c634c5f9fa5e4045a8712",
+      "source_blob_sha": "4d5e6bfcc72e7e6882bc775bd1b46975a30a2421",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
+      "receipt_scope": "2026-11-22 repair of previously failing local connectedness theorem argument in ComponentClassification (run 45068286033). Exact compiler rerun pending; abstract smooth compact component theorem only; actual zero-fiber manifold and ProductSphereZero remain open."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
