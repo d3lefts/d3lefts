@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 45,
+  "revision": 46,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v45: repair exact SHA custody for typed real squared-norm positivity in generic complex Hilbert operator sources; no theorem status changes",
+  "scope": "v46: preserve historical and pending source custody; pin repaired T2 finite Markov and light-frame sources plus new positive-effect order-to-norm operator bridge; no quantum theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3688,8 +3688,18 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/structural_information/T2EffectOrder.lean",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 T2 operator or finite query bridge, pending named Lean and kernel check. No full T2-31 certification, independent audit, or novelty promotion.",
+      "source_blob_sha": "5a599d792ba954d7a221b7f2c40d3aa54b0e8f60"
+    },
+    {
       "path": "research/nightfall/formalization/structural_information/T2HeavyQuery.lean",
-      "source_blob_sha": "ff71f7169e33767a729d46394e2788bbd65fa34e",
+      "source_blob_sha": "4fe07c8c0b27075153c2eeeb70b1dad7816b9bea",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -3719,7 +3729,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2LightFrame.lean",
-      "source_blob_sha": "4f7f2482c3566f352114c77d6bab628356f5cc85",
+      "source_blob_sha": "f65cf516ddb007ac9610791b52f932fc722f474a",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
