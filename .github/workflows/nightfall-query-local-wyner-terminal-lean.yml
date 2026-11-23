@@ -65,7 +65,7 @@ jobs:
           assert 'sorryAx' not in p
           final=Path('receipts/query-local-terminal/QueryLocalWynerComplete.log').read_text()
           name='Nightfall.QueryLocalWyner.query_local_wyner_blocal'
-          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\\s*\\[([^\\]]*)\\]",final,re.S)
+          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",final,re.S)
           if m:
               ax={x.strip() for x in m[1].split(',') if x.strip()}
               assert ax <= {'propext','Classical.choice','Quot.sound'},ax
