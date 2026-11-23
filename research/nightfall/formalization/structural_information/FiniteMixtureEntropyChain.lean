@@ -71,7 +71,7 @@ theorem finite_mixture_entropy_chain
         negMulLog (∑ θ : Θ, w θ * Q θ x)) =
       (∑ x : X, ∑ θ : Θ, negMulLog (w θ * Q θ x)) -
         (∑ x : X, negMulLog (∑ θ : Θ, w θ * Q θ x)) := by
-          exact Finset.sum_sub_distrib
+          exact Finset.sum_sub_distrib (s := (Finset.univ : Finset X))
             (fun x : X => ∑ θ : Θ, negMulLog (w θ * Q θ x))
             (fun x : X => negMulLog (∑ θ : Θ, w θ * Q θ x))
   rw [hsplit, hswap]
