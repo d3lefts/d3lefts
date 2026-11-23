@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 60,
-  "as_of": "2026-11-23 UTC",
-  "source_commit": "a2db1a3a5c0c6e10bc3644a76d29c7723aad3167",
-  "scope": "v59: reconcile exact QW reference-marginal source after independent Lean syntax correction; preserve unreviewed status.",
+  "revision": 65,
+  "as_of": "2026-11-22 UTC",
+  "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
+  "scope": "Integrate corrected affine-code support and free-fiber Lean sources from #1099/#1104 into current-main custody without certification promotion; leanchecker CI gate required.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3846,6 +3846,66 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerEntropyBound.lean",
+      "source_blob_sha": "76f521c3a3081d7840361411097263ace6482ec7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Entropy proof source exact variant of Route1Entropy Jensen finite-card lemma, two named affine entropy terminals; fixed misleading workflow expected name, pending full pinned Lean/leanchecker."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerFiberCount.lean",
+      "source_blob_sha": "816194e12bbf67288591a4117d2483c18379365c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-#1151 source-exact proof candidate: free affine-code fiber equivalence, q^r cardinality, and support Shannon entropy bound. Mandatory pinned Lean/leanchecker and proof review; not full Wyner infimum."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerFibers.lean",
+      "source_blob_sha": "0414c52b5ac939a5adef64b4e55085d7f0789425",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Carried corrected source from #1099/#1104 for clean-main pinned Lean CI; pending source custody, not certification. No full affine Wyner C_W/entropy kernel proof yet."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
+      "source_blob_sha": "a8a56af2c1c57476c1df4fb2ccb98b11896f3d16",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-level finite product-mixture nonfree Dirac theorem candidate (support-to-positive-component rigidity) for exact affine-code Wyner. Pinned Lean+leanchecker and independent review pending; NOT complete common-information infimum."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerSupport.lean",
+      "source_blob_sha": "5519634afa3ac1b7659e08d6070549a9c9aac148",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Carried corrected source from #1099/#1104 for clean-main pinned Lean CI; pending source custody, not certification. No full affine Wyner C_W/entropy kernel proof yet."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean",
+      "source_blob_sha": "01a3923d5add628ce047fc2e60422a3186c1f85a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Generic exact finite mixture Shannon entropy-chain algebra candidate: posterior entropy form equals H(output)-expected component H. Exact mathlib pinned Lean/leanchecker pending. Not affine C_W identity or novelty."
     },
     {
       "path": "research/nightfall/formalization/structural_information/LocalMomentAtoms.lean",
