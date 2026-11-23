@@ -8,7 +8,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: qw-complete-PR
+  group: qw-complete-PR-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
   complete-source-terminal:
@@ -77,7 +77,8 @@ jobs:
             'QuadraticWynerQuadraticProgress':('Nightfall.QuadraticWynerQuadraticProgress',['quadratic_original_increment_from_seed_variance']),
             'QuadraticWynerGoodQuery':('Nightfall.QuadraticWynerGoodQuery',['quadratic_crux','good_exists_wyner_quadratic']),
             'QuadraticWynerParametric':('Nightfall.Route1Polylog',['route1_wyner_from_verified_good']),
-            'QuadraticWynerTerminal':('Nightfall.Route1Polylog',['quadratic_wyner_simulation','quadratic_wyner_CI','quadratic_wyner_general'])}
+            'QuadraticWynerTerminal':('Nightfall.Route1Polylog',['quadratic_wyner_simulation','quadratic_wyner_CI','quadratic_wyner_general',
+                  'quadratic_cost_rewrite','quadratic_wyner_general_explicit'])}
           for module,(namespace,names) in required.items():
               log=(d/(module+'.log')).read_text()
               assert 'sorryAx' not in log,module
