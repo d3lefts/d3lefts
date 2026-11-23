@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 38,
+  "revision": 39,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v38: exact pending custody for two T2 modules and independently merged ProductBURegularFiberLocal source; preserve historical ledger and no theorem promotion.",
+  "scope": "v39: exact pending custody for proof decomposition plus complex Fourier coefficient lifting and all four total-survivor equivalences; full quantum theorem remains uncertified.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3689,7 +3689,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean",
-      "source_blob_sha": "31816f997d68d7662181325c990114ddf1f932e4",
+      "source_blob_sha": "ab62d4b41cce2e22058268b2790b4f8452155de3",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
