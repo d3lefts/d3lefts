@@ -38,6 +38,18 @@ def influence(prob, p, f, j):
     return out
 
 
+def mean_increment(prob, p, f, j):
+    """Original coordinate one-site resampling absolute increment, exact."""
+    n = len(p)
+    total = F(0)
+    for x, mass in prob.items():
+        for b in (0, 1):
+            replacement = list(x)
+            replacement[j] = b
+            total += mass * (p[j] if b else 1-p[j]) * abs(f[x]-f[tuple(replacement)])
+    return total
+
+
 def monotone_pair(p, q):
     # U uniform on [0,1]: X=1{U<p}, Y=1{U<q}.
     cuts = sorted({F(0), F(1), p, q})
@@ -77,6 +89,8 @@ def run_case(n, weights, p_list, f):
     iq = [influence(qr, q, f, j) for j in range(n)]
     ip = [sum((weights[t]*influence(probs[t], p_list[t], f, j)
                for t in range(len(weights))), F(0)) for j in range(n)]
+    inc = [sum((weights[t]*mean_increment(probs[t], p_list[t], f, j)
+                for t in range(len(weights))), F(0)) for j in range(n)]
 
     # Squared form of |sqrt(vn)-sqrt(vq)|<=sqrt(delta).
     if vn > vq+delta:
@@ -90,6 +104,11 @@ def run_case(n, weights, p_list, f):
             assert (x-y-2*delta)**2 <= 8*y*delta, (x, y, delta)
         if delta <= x/8:
             assert y >= x/4, (x, y, delta)
+    for j in range(n):
+        assert 2*ip[j] <= inc[j], ("bounded-range mean increment", j)
+        # Direct 4-corner inequality; no square roots and no small-delta prerequisite.
+        assert iq[j] <= 2*ip[j] + 4*delta, ("direct component influence", j)
+        assert iq[j] <= inc[j] + 4*delta, ("direct QW increment", j)
     return vn, vq, delta, iq, ip
 
 
