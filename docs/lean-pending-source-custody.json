@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 36,
+  "revision": 37,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v36: register exact T2ZeroTripleOverlap31 and T2ZeroTripleMultiplicity blobs as PENDING source custody only on draft #1068 / stacked #1175; preserve all historical certificates and previous pending sources.",
+  "scope": "v37: preserve exact pending custody while updating the T2ZeroTripleMultiplicity source to the coefficient-level complex-weighted identity; no T2 terminal or originality promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3679,7 +3679,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean",
-      "source_blob_sha": "5b48b359f6607a7a5687b2255c710576c8744fec",
+      "source_blob_sha": "31816f997d68d7662181325c990114ddf1f932e4",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
