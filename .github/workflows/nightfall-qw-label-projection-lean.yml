@@ -1,0 +1,71 @@
+name: NIGHTFALL QW label projection independent Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean'
+      - '.github/workflows/nightfall-qw-label-projection-lean.yml'
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+permissions:
+  contents: read
+jobs:
+  label-projection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Rebuild all five label-projection theorems from the exact source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/qw-label
+          SRC=research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$SRC"
+          cp "$SRC" /tmp/mathlib4/QuadraticWynerLabelProjection.lean
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o .lake/build/lib/lean/QuadraticWynerLabelProjection.olean QuadraticWynerLabelProjection.lean) 2>&1 | tee receipts/qw-label/proof.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/qw-label/proof.log
+      - name: Mandatory independent kernel replay and source-exact declaration audits
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerLabelProjection) 2>&1 | tee receipts/qw-label/kernel.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          log=Path('receipts/qw-label/proof.log').read_text()
+          for suffix in ('weighted_centered_square_identity',
+                         'weighted_square_jensen',
+                         'weighted_total_variance',
+                         'weighted_fiber_variance_le_reference',
+                         'variance_survives_latent_averaging'):
+              name='Nightfall.QuadraticWynerLabelProjection.'+suffix
+              m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m:
+                  axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in log,name
+                  axioms=set()
+              assert axioms <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
+          assert 'sorryAx' not in log
+          print('PASS five exact source-free label projection lemmas; NOT full quadratic Wyner terminal')
+          PY
+      - name: Save immutable exact-source receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/qw-label
+          git rev-parse HEAD > receipts/qw-label/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/qw-label/mathlib.txt || true
+          cat lean-toolchain > receipts/qw-label/compiler.txt
+          sha256sum research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean > receipts/qw-label/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: qw-label-projection-${{ github.run_id }}
+          path: receipts/qw-label
+          retention-days: 90
