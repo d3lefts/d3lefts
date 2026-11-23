@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 53,
+  "revision": 54,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v53: source-custody of local connectedness, interval endpoints, and the exact second-endpoint equality repair. Original 67 verified records unchanged; global geometric compiler and unrestricted BU proof unverified.",
+  "scope": "v54: source-pinned third-round repair of interval endpoint second-point classification, full source closure and ordinary axiom check required; historical 67 intact. Unrestricted BU remains open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -419,13 +419,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
-      "source_blob_sha": "33049cd154f1bfadb7cc7da95c035dd7bf3f7056",
+      "source_blob_sha": "5ee0328e94607bd17dc7eba4e9eb1061ec6f2ee4",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact Lean repair of Icc endpoint proof: explicit e.apply_symm_apply, non-destructive if_pos/if_neg rewrites and actual subtype equality. Prior CI 45107031376 failed four elaboration steps; new full closure and axiom audit pending. Does not establish ProductSphereZero or concrete global atlas."
+      "receipt_scope": "2026-11-23 revised direct second endpoint proof: by_cases on e pU=⊥, explicit source inequalities, explicit e.apply_symm_apply and subtype equality. Earlier CI 45107465629 failed at let-if simplification and inverse equality. New kernel run PENDING; no ProductSphereZero claim."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
