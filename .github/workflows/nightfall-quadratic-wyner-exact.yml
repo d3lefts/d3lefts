@@ -5,6 +5,7 @@ on:
     paths:
       - "research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md"
       - "research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py"
+      - "research/nightfall/structural_information/check_qw_fourcorner_exhaustive.py"
       - "research/nightfall/structural_information/check_qw_vs_939_same_model.py"
       - "research/nightfall/structural_information/check_qw_939_rational_dominance.py"
       - ".github/workflows/nightfall-quadratic-wyner-exact.yml"
@@ -12,6 +13,7 @@ on:
     paths:
       - "research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md"
       - "research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py"
+      - "research/nightfall/structural_information/check_qw_fourcorner_exhaustive.py"
       - ".github/workflows/nightfall-quadratic-wyner-exact.yml"
 concurrency:
   # Keep the newest proof job per PR; never replace different workflow checks.
@@ -31,6 +33,7 @@ jobs:
         run: |
           python3 -m py_compile research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py
           python3 research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py
+          python3 research/nightfall/structural_information/check_qw_fourcorner_exhaustive.py
           python3 research/nightfall/structural_information/check_qw_vs_939_same_model.py
           python3 research/nightfall/structural_information/check_qw_939_rational_dominance.py
       - name: Scope gate (not an all-dimensional Lean certificate)
