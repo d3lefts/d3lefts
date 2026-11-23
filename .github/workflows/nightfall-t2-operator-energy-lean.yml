@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/structural_information/T2OperatorEnergy.lean'
+      - 'research/nightfall/formalization/structural_information/T2HilbertCrossed.lean'
       - '.github/workflows/nightfall-t2-operator-energy-lean.yml'
       - 'research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md'
   workflow_dispatch:
@@ -26,33 +27,46 @@ jobs:
           set -euo pipefail
           mkdir -p t2-operator-receipt
           src=research/nightfall/formalization/structural_information/T2OperatorEnergy.lean
+          more=research/nightfall/formalization/structural_information/T2HilbertCrossed.lean
           paper=research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md
           test "$(git hash-object "$paper")" = "42e5b34955304fe6b454160a6abbd2df73777438"
           git rev-parse HEAD | tee t2-operator-receipt/commit.txt
-          sha256sum "$src" "$paper" | tee t2-operator-receipt/SHA256SUMS
+          sha256sum "$src" "$more" "$paper" | tee t2-operator-receipt/SHA256SUMS
           cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
+          cp "$more" /tmp/mathlib4/T2HilbertCrossed.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2OperatorEnergy.olean T2OperatorEnergy.lean) 2>&1 | tee t2-operator-receipt/compile.log
-          (cd /tmp/mathlib4 && lake env leanchecker T2OperatorEnergy) 2>&1 | tee t2-operator-receipt/kernel.log
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2HilbertCrossed.olean T2HilbertCrossed.lean) 2>&1 | tee -a t2-operator-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker T2OperatorEnergy && lake env leanchecker T2HilbertCrossed) 2>&1 | tee t2-operator-receipt/kernel.log
           python3 - <<'PY'
           from pathlib import Path
           import re
-          src=Path('research/nightfall/formalization/structural_information/T2OperatorEnergy.lean').read_text()
+          sources=[
+              Path('research/nightfall/formalization/structural_information/T2OperatorEnergy.lean'),
+              Path('research/nightfall/formalization/structural_information/T2HilbertCrossed.lean'),
+          ]
           log=Path('t2-operator-receipt/compile.log').read_text()
-          assert not re.search(r'(?m)^\s*(sorry|admit|axiom|opaque)\b',src)
+          for p in sources:
+              src=p.read_text()
+              assert not re.search(r'(?m)^\s*(sorry|admit|axiom|opaque)\b',src),p
           assert 'error:' not in log and 'sorryAx' not in log
-          prefix='Nightfall.StructuralInformation.T2OperatorEnergy.'
-          expected=['selected_output_energy_le','crossed_energy_le',
-                    'weighted_path_sum','crossed_synthesis',
-                    'noncommuting_crossed_slot_bound']
+          prefix='Nightfall.StructuralInformation.'
+          scalar=['selected_output_energy_le','crossed_energy_le',
+                  'weighted_path_sum','crossed_synthesis',
+                  'noncommuting_crossed_slot_bound']
+          hilbert=['energy_nonneg','single_sector_energy_le',
+                   'selected_sector_contraction','crossed_energy_le',
+                   'weighted_path_sum','crossed_synthesis',
+                   'noncommuting_crossed_slot_bound']
+          expected=[prefix+'T2OperatorEnergy.'+x for x in scalar]
+          expected += [prefix+'T2HilbertCrossed.'+x for x in hilbert]
           reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
           axiom_free=set(re.findall(r"'([^']+)' does not depend on any axioms",log))
           allowed={'propext','Classical.choice','Quot.sound'}
-          for name in expected:
-              full=prefix+name
-              assert full in reports or full in axiom_free,(name,log[-7000:])
+          for full in expected:
+              assert full in reports or full in axiom_free,(full,log[-7000:])
               if full in reports:
                   deps={x.strip() for x in reports[full].split(',') if x.strip()}
-                  assert deps<=allowed,(name,deps)
+                  assert deps<=allowed,(full,deps)
           print('T2_OPERATOR_ENERGY_SOURCE_EXACT_KERNEL_PASS')
           PY
       - name: Artifact of exact compiler/kernel/axiom source receipt
