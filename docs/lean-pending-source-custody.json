@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 60,
+  "revision": 59,
   "as_of": "2026-11-23 UTC",
   "source_commit": "a2db1a3a5c0c6e10bc3644a76d29c7723aad3167",
   "scope": "v59: reconcile exact QW reference-marginal source after independent Lean syntax correction; preserve unreviewed status.",
