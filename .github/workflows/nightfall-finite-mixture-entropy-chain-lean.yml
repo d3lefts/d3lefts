@@ -6,6 +6,10 @@ on:
       - '.github/workflows/nightfall-finite-mixture-entropy-chain-lean.yml'
       - 'docs/lean-pending-source-custody.json'
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:
