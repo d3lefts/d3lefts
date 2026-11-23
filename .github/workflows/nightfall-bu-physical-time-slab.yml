@@ -1,0 +1,71 @@
+name: NIGHTFALL physical product-sphere zero fiber exact halfspace chart Lean
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/finite_field/ProductBUPhysicalTimeSlab.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUTimeHalfspaceChart.lean"
+      - "research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean"
+      - ".github/workflows/nightfall-bu-physical-time-slab.yml"
+      - "docs/lean-pending-source-custody.json"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bu-physical-time-slab-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  physical-slab-chart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel compile actual physical zero-fiber chart source closure
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-physical-time-slab
+          for M in ProductSphereObstruction ProductBUSphereCompact ProductBUCompactFiber ProductBULocalGraphChart ProductBUTimeHalfspaceChart ProductBUPhysicalTimeSlab; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-physical-time-slab/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-physical-time-slab/$M.log"
+          done
+      - name: Audit physical homeomorphism and chart named ordinary axioms
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          file="ProductBUPhysicalTimeSlab"
+          s=Path(f"receipts/bu-physical-time-slab/{file}.log").read_text()
+          for name in [
+            "Nightfall.ProductBUPhysicalTimeSlab.physicalTimeSlabHomeomorph",
+            "Nightfall.ProductBUPhysicalTimeSlab.physical_time_zero_halfspace_chart",
+          ]:
+            assert name in s,("MISSING_NAMED_DECLARATION",name)
+            m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+            if m: axioms={x.strip() for x in m.group(1).split(",") if x.strip()}
+            else:
+              assert f"'{name}' does not depend on any axioms" in s
+              axioms=set()
+            assert axioms <= {"propext","Classical.choice","Quot.sound"},(name,axioms)
+            assert "sorryAx" not in s
+            print("PASS",name,"ordinary axioms",sorted(axioms))
+          print("SCOPE: exact physical zero fiber and local time-zero halfspace chart under graph premises.")
+          print("OPEN: interior regular charts, every-point physical covering, C-infinity compatibility, concrete Sard.")
+          PY
+      - name: Preserve exact head hashes
+        if: always()
+        run: |
+          mkdir -p receipts/bu-physical-time-slab
+          git rev-parse HEAD > receipts/bu-physical-time-slab/NIGHTFALL-HEAD.txt
+          cat lean-toolchain > receipts/bu-physical-time-slab/LEAN-TOOLCHAIN.txt
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUPhysicalTimeSlab,ProductBUTimeHalfspaceChart,ProductBULocalGraphChart}.lean > receipts/bu-physical-time-slab/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-physical-time-slab-lean-receipt
+          path: receipts/bu-physical-time-slab
+          retention-days: 90
