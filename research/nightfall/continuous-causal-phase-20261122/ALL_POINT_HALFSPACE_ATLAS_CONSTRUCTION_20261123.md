@@ -2,9 +2,13 @@
 
 **Date:** 2026-11-23 UTC. **Status:** complete *paper-level conditional geometric lemma*;
 the exact all-point manifold construction is **not yet Lean-certified**.  Its
-time-zero partial-homeomorphism operator is submitted for a separate
-named Lean check in PR #1143; the genuine open graph chart on the actual
-subtype is already Lean-certified in #1139, run 45106104307.
+canonical time-zero partial-homeomorphism operator passed a separate
+named Lean check in PR #1143, run 45107254474; the genuine open graph
+chart on the actual subtype passed in #1139, run 45106104307.
+The time-last physical zero-fiber to time-first slab homeomorphism
+and transported local halfspace chart have also passed pinned Lean in
+#1144, run 45107688778. All three remain conditional on local graph
+premises; this does not certify the global atlas itself.
 
 ## Objective, input, certificate boundary
 
@@ -112,9 +116,10 @@ The concrete conversion from a local graph over the canonical slab
 Set.Icc (0:Real) 1 to EuclideanHalfSpace 1 uses Mathlib's true
 `IccLeftChart 0 1`, as instantiated by
 `ProductBUTimeHalfspaceChart.actual_time_graph_halfspace_chart` (#1143).
-The unresolved Lean bridge to the physical subtype is the exact
-product reassociation / time-slab representation together with a
-**common-neighborhood** smooth graph, not an assumed manifold instance.
+The physical subtype reassociation / time-slab representation is NOW
+kernel-checked in #1144. The remaining endpoint analytic bridge is
+instantiating the exact graph and its **common-neighborhood C-infinity**
+regularity from the concrete augmented map, not assuming a manifold.
 
 **Smoothness caution:** the merged #1131
 `exists_time_oriented_zero_graph` proves a C-infinity graph **at the
@@ -184,8 +189,8 @@ independently signed axis pairs, one G=(Z/2)^2 orbit.
 | Edge | Mechanism | Formal status |
 |---|---|---|
 | True local graph on original subtype | explicit forward, inverse and open source | **Lean PASS #1139**, 45106104307 |
-| Time-slab graph -> EuclideanHalfSpace 1 | composed `IccLeftChart 0 1` | **PR #1143**, exact-head CI pending |
-| Full C-infinity local entrance graph | persistent spatial invertibility and local uniqueness | **paper only**, #1131 pointwise Lean C-infinity |
+| Time-slab graph -> EuclideanHalfSpace 1 | composed `IccLeftChart 0 1` | **Lean PASS #1143**, run 45107254474, ordinary axioms only |
+| Physical zero-fiber to time-slab chart transport | genuine subtype `Homeomorph` and `OpenPartialHomeomorph` | **Lean PASS #1144**, run 45107688778, ordinary axioms only; graph still input |\n| Full C-infinity local entrance graph | persistent spatial invertibility and local uniqueness | **paper only**, #1131 pointwise Lean C-infinity |
 | Arbitrary interior kernel-split graph | full regular derivative, linear right inverse, smooth IFT | **paper only**, ATLAS source-pinned local C1 chart available |
 | Every actual physical fiber point covered | t=0 or 0<t<1 and no t=1 | **paper only**, depends on instantiating preceding two charts |
 | Smooth transition maps | explicit exp/log, IFT graph extensions | **paper only** |
