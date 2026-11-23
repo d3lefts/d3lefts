@@ -1,0 +1,156 @@
+{
+  "schema": "nightfall.headline-trust-boundaries/v1",
+  "as_of_utc": "2026-11-23",
+  "scope": "Eight November 22 paper tracks. Source-byte custody and declared theorem-name evidence only; no source-to-headline semantic equivalence, new Lean replay, independent adjudication or novelty claim.",
+  "policy": {
+    "promotion": "Metadata validation never promotes a mathematical theorem. A theorem requires a same-pin kernel replay of its entire relevant closure, frozen exact-type and transitive definitions, independent model audit, dated prior art and owner authorization.",
+    "trust_boundary": "Ledger and workflow changes require owner-controlled branch protection; candidate-side JSON/CI cannot attest its own authority.",
+    "review": "Constructor, independent reproducer and adversarial auditor must use separate implementations and predeclared scopes; labels alone confer no independence.",
+    "resource": "Cost contracts and oracle semantics must match exactly; a finite tree expectation does not certify full quantum query complexity."
+  },
+  "records": [
+    {
+      "id": "headline-01-quadratic",
+      "title": "Quadratic variance–influence on arbitrary product spaces",
+      "claim_scope": "Degree-two variance/influence inequality across arbitrary independent product sources; distinguish finite heterogeneous alphabets and actual infinite-index measurable models.",
+      "source": {
+        "path": "research/nightfall/formalization/universal/InfinitePiQ2NativeHeterogeneousTerminal.lean",
+        "git_blob_sha1": "b1e9f129b5636cbe5132f0c77baa65ef39149eca",
+        "declaration": "Nightfall.InfinitePiQ2NativeHeterogeneousTerminal.native_heterogeneous_q2_105416_unconditional"
+      },
+      "citation_pr": 776,
+      "evidence": "finite-heterogeneous-product-support",
+      "gap": "The cited native heterogeneous Q2 terminal is finite-index; no implied all-measurable-product or unrestricted L² theorem.",
+      "independent_statement_review": false,
+      "independent_kernel_replay_this_change": false,
+      "dated_prior_art_cleared": false,
+      "owner_publication_authorized": false
+    },
+    {
+      "id": "headline-02-all-degree",
+      "title": "All-degree product-space influence",
+      "claim_scope": "Aaronson–Ambainis degree-d influence on independent product laws, with arbitrary-index/coordinate assumptions distinguished from finite reductions and external imported results.",
+      "source": {
+        "path": "research/nightfall/formalization/universal/InfinitePiAAProductTerminal.lean",
+        "git_blob_sha1": "b94a266dc09da7812715e89af3d35f9cc767c7f4",
+        "declaration": "Nightfall.InfinitePiAAProductTerminal.infinitePi_aa_product"
+      },
+      "citation_pr": 858,
+      "evidence": "scoped-lean-source",
+      "gap": "Check exact Lp/measurability premises, transitive imports and AA/Turturean prior art; source anchoring is not semantic closure.",
+      "independent_statement_review": false,
+      "independent_kernel_replay_this_change": false,
+      "dated_prior_art_cleared": false,
+      "owner_publication_authorized": false
+    },
+    {
+      "id": "headline-03-route1-wyner",
+      "title": "Route 1 / Wyner-information quantum-query simulation",
+      "claim_scope": "Bounded-degree simulation on latent mixtures of independent product laws; separate product-mixture theorem from unrestricted correlated-oracle, physical quantum, and quadratic Wyner extensions.",
+      "source": {
+        "path": "research/nightfall/formalization/product_space/Route1PolylogSimulation.lean",
+        "git_blob_sha1": "5e2e8cd91f9a5acfac5ebcfde41f5833f6f03989",
+        "declaration": "Nightfall.Route1Polylog.route1_polylog_simulation"
+      },
+      "citation_pr": 970,
+      "evidence": "scoped-lean-source",
+      "gap": "Physical oracle semantics, query locality, source/degree transfer and general quadratic-Wyner claims remain separate gates.",
+      "independent_statement_review": false,
+      "independent_kernel_replay_this_change": false,
+      "dated_prior_art_cleared": false,
+      "owner_publication_authorized": false
+    },
+    {
+      "id": "headline-04-hilbert",
+      "title": "Rank-sensitive Hilbert observability",
+      "claim_scope": "Rank-sensitive Hilbert-valued adaptive observability and source-to-query budget theorem for arbitrary independent products.",
+      "source": {
+        "path": "research/nightfall/formalization/observability/HilbertRankBudgetCore.lean",
+        "git_blob_sha1": "5566cb729c0a084ae6dbe91f4ee0b61dba1555fd",
+        "declaration": "Nightfall.HilbertRankCore.rank_linear_5043_from_spherical"
+      },
+      "citation_pr": 368,
+      "evidence": "conditional-algebraic-component",
+      "gap": "Finite-index algebra assumes source budgets; actual posterior ANOVA section-to-budget and adaptive query deduction are not supplied by this declaration.",
+      "independent_statement_review": false,
+      "independent_kernel_replay_this_change": false,
+      "dated_prior_art_cleared": false,
+      "owner_publication_authorized": false
+    },
+    {
+      "id": "headline-05-information-cover",
+      "title": "Task-revelation information-cover law",
+      "claim_scope": "Task-dependent information-cover with adaptive posterior, KL/Bayes-risk and sequential query cost, for the specified observation oracle.",
+      "source": {
+        "path": "research/nightfall/formalization/costs/GroupInformationCoverDual.lean",
+        "git_blob_sha1": "27ac8bdb150c9af61ba6e90146fe048139a9d02a",
+        "declaration": "Nightfall.InformationCover.reciprocal_KL_cover_weak_duality"
+      },
+      "citation_pr": 450,
+      "evidence": "finite-lp-duality-component",
+      "gap": "LP weak duality alone does not certify stochastic KL chain rule, Bayes risk, adaptive sequential cost or unrestricted task-revelation theorem.",
+      "independent_statement_review": false,
+      "independent_kernel_replay_this_change": false,
+      "dated_prior_art_cleared": false,
+      "owner_publication_authorized": false
+    },
+    {
+      "id": "headline-06-causal-phase",
+      "title": "Sharp continuous-causal real phase retrieval",
+      "claim_scope": "Continuous causal squared-linear observations on reachable histories, all real signals up to global sign; distinguish fixed-prefix obstruction and unrestricted causal lower bound.",
+      "source": {
+        "path": "research/nightfall/formalization/finite_field/ContinuousPhaseAllDimensions.lean",
+        "git_blob_sha1": "60d694176a099fbd24269122e659e9949387d2df",
+        "declaration": "Nightfall.ContinuousPhaseObstruction.no_continuous_final_row_all_dimensions"
+      },
+      "citation_pr": 695,
+      "evidence": "fixed-prefix-obstruction-component",
+      "gap": "The source excludes coordinate-first plus one continuous final row; unconditional product-sphere zero theorem and general causal transcript threshold are not established by it.",
+      "independent_statement_review": false,
+      "independent_kernel_replay_this_change": false,
+      "dated_prior_art_cleared": false,
+      "owner_publication_authorized": false
+    },
+    {
+      "id": "headline-07-subcube",
+      "title": "Sharp tensor-subcube intersection exponent log₂(3)",
+      "claim_scope": "All tensor levels and linear subspaces with row intersection upper bound and full-space 3^L sharpness extremizer; separate affine/quantum simulation extensions.",
+      "source": {
+        "path": "research/nightfall/formalization/structural_information/SubcubeSharpAllLevels.lean",
+        "git_blob_sha1": "96632e378f8ec071f707a3d820a6857238885741",
+        "declaration": "Nightfall.StructuralInformation.SubcubeSharpAllLevels.all_levels_sharp"
+      },
+      "supporting": [
+        {
+          "path": "research/nightfall/formalization/structural_information/SubcubeSharpness.lean",
+          "git_blob_sha1": "c83d903d08558e911c7ddaa601c1101638fbf730",
+          "declaration": "Nightfall.StructuralInformation.SubcubeSharpness.full_space_extremizer"
+        }
+      ],
+      "citation_pr": 977,
+      "evidence": "scoped-lean-source",
+      "gap": "Sharp linear-subspace row count does not itself prove a rank-free two-query quantum simulation theorem.",
+      "independent_statement_review": false,
+      "independent_kernel_replay_this_change": false,
+      "dated_prior_art_cleared": false,
+      "owner_publication_authorized": false
+    },
+    {
+      "id": "headline-08-povm",
+      "title": "Optimal physical quantum POVM",
+      "claim_scope": "POVM discrimination/Bayes-gain optimum under explicit complex positive-semidefinite effects, measurement normalization and specified tensor model.",
+      "source": {
+        "path": "research/nightfall/formalization/quantum/ComplexPOVMOptimal.lean",
+        "git_blob_sha1": "1672d8afba3de980dfaade548b7c51e4a6a50364",
+        "declaration": "Nightfall.Quantum.ComplexPOVM.complex_povm_energy_optimal"
+      },
+      "citation_pr": 658,
+      "evidence": "scoped-lean-source",
+      "gap": "Check positivity/normalization hypotheses, physical implementability, tensor product scaling and distinct imported measurement lemmas.",
+      "independent_statement_review": false,
+      "independent_kernel_replay_this_change": false,
+      "dated_prior_art_cleared": false,
+      "owner_publication_authorized": false
+    }
+  ]
+}
