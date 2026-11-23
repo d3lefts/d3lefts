@@ -46,7 +46,6 @@ theorem finite_mixture_entropy_chain
               apply Finset.sum_congr rfl
               intro x _
               rw [Real.negMulLog_mul]
-              ring
       _ = (∑ x : X, Q θ x) * negMulLog (w θ) +
           w θ * (∑ x : X, negMulLog (Q θ x)) := by
             rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.mul_sum]
@@ -67,7 +66,13 @@ theorem finite_mixture_entropy_chain
       _ = (∑ θ : Θ, negMulLog (w θ)) +
           (∑ θ : Θ, w θ * (∑ x : X, negMulLog (Q θ x))) := by
             rw [Finset.sum_add_distrib]
-  rw [Finset.sum_sub_distrib, hswap]
+  have hsplit :
+      (∑ x : X, (∑ θ : Θ, negMulLog (w θ * Q θ x)) -
+        negMulLog (∑ θ : Θ, w θ * Q θ x)) =
+      (∑ x : X, ∑ θ : Θ, negMulLog (w θ * Q θ x)) -
+        (∑ x : X, negMulLog (∑ θ : Θ, w θ * Q θ x)) := by
+          exact Finset.sum_sub_distrib
+  rw [hsplit, hswap]
   ring
 
 end Nightfall.FiniteMixtureEntropyChain
