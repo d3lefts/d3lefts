@@ -141,8 +141,102 @@ theorem finite_state_rank_budget_from_local_kernel_drift
     (expectedPotential mass potential) r B eta hr hB heta
     hp hstep n hbudget
 
+/-- A genuine finite stochastic transition kernel preserves total state
+probability. This derives the normalization required by weighted Jensen
+from an initial mass law and per-state probability-one transitions. -/
+theorem state_mass_normalization_from_stochastic_kernel
+    (mass : ℕ → State → ℝ)
+    (kernel : ℕ → State → State → ℝ)
+    (hinit : (∑ a : State, mass 0 a) = 1)
+    (hrow : ∀ t a, (∑ b : State, kernel t a b) = 1)
+    (hflow : ∀ t b, mass (t + 1) b =
+      ∑ a : State, mass t a * kernel t a b) :
+    ∀ t, (∑ a : State, mass t a) = 1 := by
+  intro t
+  induction t with
+  | zero => exact hinit
+  | succ t ih =>
+      calc
+        (∑ b : State, mass (t + 1) b) =
+            ∑ b : State, ∑ a : State,
+              mass t a * kernel t a b := by
+          apply Finset.sum_congr rfl
+          intro b _
+          rw [hflow t b]
+        _ = ∑ a : State, mass t a *
+              (∑ b : State, kernel t a b) := by
+          rw [Finset.sum_comm]
+          apply Finset.sum_congr rfl
+          intro a _
+          rw [Finset.mul_sum]
+        _ = ∑ a : State, mass t a := by
+          apply Finset.sum_congr rfl
+          intro a _
+          rw [hrow t a]
+          ring
+        _ = 1 := ih
+
+/-- Nonnegative initial masses and nonnegative Markov transition entries
+propagate genuine posterior-state nonnegativity through all time steps. -/
+theorem state_mass_nonnegative_from_stochastic_kernel
+    (mass : ℕ → State → ℝ)
+    (kernel : ℕ → State → State → ℝ)
+    (hinit : ∀ a, 0 ≤ mass 0 a)
+    (hkernel : ∀ t a b, 0 ≤ kernel t a b)
+    (hflow : ∀ t b, mass (t + 1) b =
+      ∑ a : State, mass t a * kernel t a b) :
+    ∀ t a, 0 ≤ mass t a := by
+  intro t
+  induction t with
+  | zero =>
+      intro a
+      exact hinit a
+  | succ t ih =>
+      intro b
+      rw [hflow t b]
+      apply Finset.sum_nonneg
+      intro a _
+      exact mul_nonneg (ih a) (hkernel t a b)
+
+/-- Complete finite-state stochastic-kernel algebraic terminal:
+initial probability, stochastic rows, true mass flow, nonnegative
+posterior potentials and the *source-local* quadratic drift give the
+hard 20172*r*B²/eta bound without assuming normalized intermediate
+masses or averaged drift. Physical greedy state construction and
+Hilbert D1 source-local quadratic decrease remain outside this theorem. -/
+theorem finite_stochastic_kernel_rank_budget
+    (mass : ℕ → State → ℝ)
+    (kernel : ℕ → State → State → ℝ)
+    (potential : ℕ → State → ℝ)
+    (r : ℕ) (B eta : ℝ) (n : ℕ)
+    (hr : 0 < r) (hB : 0 < B) (heta : 0 < eta)
+    (hinit0 : ∀ a, 0 ≤ mass 0 a)
+    (hinit1 : (∑ a : State, mass 0 a) = 1)
+    (hkernel0 : ∀ t a b, 0 ≤ kernel t a b)
+    (hrow : ∀ t a, (∑ b : State, kernel t a b) = 1)
+    (hflow : ∀ t b, mass (t + 1) b =
+      ∑ a : State, mass t a * kernel t a b)
+    (hpotential : ∀ t a, 0 ≤ potential t a)
+    (hloc : ∀ t a,
+      (∑ b : State, kernel t a b * potential (t + 1) b) +
+        (potential t a) ^ 2 / (20172 * (r : ℝ) * B ^ 2) ≤
+          potential t a)
+    (hbudget : 20172 * (r : ℝ) * B ^ 2 ≤ (n : ℝ) * eta) :
+    expectedPotential mass potential n ≤ eta := by
+  exact finite_state_rank_budget_from_local_kernel_drift
+    mass kernel potential r B eta n hr hB heta
+    (state_mass_nonnegative_from_stochastic_kernel
+      mass kernel hinit0 hkernel0 hflow)
+    (state_mass_normalization_from_stochastic_kernel
+      mass kernel hinit1 hrow hflow)
+    hpotential hflow hloc hbudget
+
 end Nightfall.Observability.D2PosteriorKernelDrift
 
 #print axioms Nightfall.Observability.D2PosteriorKernelDrift.weighted_square_ge_square_mean
 #print axioms Nightfall.Observability.D2PosteriorKernelDrift.expected_quadratic_drift_from_kernel
 #print axioms Nightfall.Observability.D2PosteriorKernelDrift.finite_state_rank_budget_from_local_kernel_drift
+
+#print axioms Nightfall.Observability.D2PosteriorKernelDrift.state_mass_normalization_from_stochastic_kernel
+#print axioms Nightfall.Observability.D2PosteriorKernelDrift.state_mass_nonnegative_from_stochastic_kernel
+#print axioms Nightfall.Observability.D2PosteriorKernelDrift.finite_stochastic_kernel_rank_budget
