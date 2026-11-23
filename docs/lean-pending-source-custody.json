@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 52,
+  "revision": 53,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v52: time-zero halfspace graph operator source registered pending Lean CI; historical 67 unchanged. ProductSphereZero not compiled or claimed. Exact whole-fiber atlas and boundary identification still open.",
+  "scope": "v53: physical zero fiber exact time-slab coordinate transport source pending compiler verification; original 67 historical records unchanged. Whole zero-fiber manifold and abstract product BU terminal remain open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -506,6 +506,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUPhysicalTimeSlab.lean",
+      "source_blob_sha": "e1d955ac872b991f01955353d537718f8880fcb4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Proposed physical fiber to time-first slab Homeomorph and genuine local halfspace chart transport. No manifold assumptions. Source-exact six-file Lean compilation and ordinary named axioms pending; does NOT establish all-point atlas, concrete derivative regularity, time-0 boundary equality, or ProductSphereZero."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean",
