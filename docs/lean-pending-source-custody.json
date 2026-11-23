@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 40,
+  "revision": 41,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v40: retain all previous exact pending sources, add T2OperatorEnergy as an unreviewed complex crossed-slot Hilbert-sector bridge; no theorem promotion",
+  "scope": "v41: exact pending custody for full complex sector crossed-slot source plus scalar source; no unrestricted theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3686,6 +3686,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2HilbertCrossed.lean",
+      "source_blob_sha": "c242c13f6ac3cfcae91ef5967a38704f3400ceac",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 scoped noncommuting crossed-slot equation (8) in arbitrary complex-normed sector fibers, including infinite dimension; explicit direct-sum energy contraction from physical positive effect and Hilbert-sector decomposition not yet formalized. Pending exact-head Lean, not full T2 theorem."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2OperatorEnergy.lean",
