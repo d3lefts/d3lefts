@@ -1,0 +1,17 @@
+{
+  "schema": "nightfall-theorem-contract/v1",
+  "source": "research/nightfall/verification/FiniteQueryCost.lean",
+  "workspace_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+  "targets": [
+    {
+      "declaration": "Nightfall.FiniteQueryCost.two_stage_expected",
+      "expected_type": "Nightfall.FiniteQueryCost.expected (Nightfall.FiniteQueryCost.Tree.query 1 (1/2) .leaf (Nightfall.FiniteQueryCost.Tree.query 1 (1/2) .leaf .leaf)) = (3/2 : Rat)"
+    },
+    {
+      "declaration": "Nightfall.FiniteQueryCost.two_stage_worst",
+      "expected_type": "Nightfall.FiniteQueryCost.worstSyntactic (Nightfall.FiniteQueryCost.Tree.query 1 (1/2) .leaf (Nightfall.FiniteQueryCost.Tree.query 1 (1/2) .leaf .leaf)) = 2"
+    }
+  ],
+  "claim_scope": "Finite conditional tree resource-definition checks only, no probability model, algorithm correctness or physical quantum oracle theorem",
+  "promoted_full": false
+}
