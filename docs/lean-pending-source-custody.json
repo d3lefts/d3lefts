@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 41,
+  "revision": 42,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v41: exact pending custody for full complex sector crossed-slot source plus scalar source; no unrestricted theorem promotion",
+  "scope": "v42: exact pending custody of arbitrary-dimensional Hilbert operator norm bridge alongside source-level T2 crossed coefficient proofs; no full theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3696,6 +3696,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-23 scoped noncommuting crossed-slot equation (8) in arbitrary complex-normed sector fibers, including infinite dimension; explicit direct-sum energy contraction from physical positive effect and Hilbert-sector decomposition not yet formalized. Pending exact-head Lean, not full T2 theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2HilbertEffect.lean",
+      "source_blob_sha": "9fbd7b24004237989c1f99efe3607e98283617c1",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 source-quantified arbitrary-dimensional Hilbert PiLp direct-sum operator norm contraction, selected-sector energy and crossed operator inequality from ‖P‖≤1. Physical positive operator conversion and full T2-31 terminal remain open; pending exact-head Lean receipt, not historical certification."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2OperatorEnergy.lean",
