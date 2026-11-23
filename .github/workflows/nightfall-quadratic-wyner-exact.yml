@@ -1,0 +1,29 @@
+name: NIGHTFALL quadratic Wyner independent exact finite audit
+on:
+  push:
+    paths:
+      - "research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md"
+      - "research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py"
+      - ".github/workflows/nightfall-quadratic-wyner-exact.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md"
+      - "research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py"
+      - ".github/workflows/nightfall-quadratic-wyner-exact.yml"
+permissions:
+  contents: read
+jobs:
+  exact-rational-falsifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show exact source and paper SHA256
+        run: sha256sum research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py
+      - name: Syntax and exact-rational coupling, influence and threshold checks
+        run: |
+          python3 -m py_compile research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py
+          python3 research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py
+      - name: Scope gate (not an all-dimensional Lean certificate)
+        run: |
+          grep -F "NOT yet Lean-certified" research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md
+          grep -F "not a general T-query quantum-simulation" research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md
