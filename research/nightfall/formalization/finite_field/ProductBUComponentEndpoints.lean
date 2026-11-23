@@ -80,33 +80,28 @@ theorem exists_second_endpoint_of_smooth_boundary_component
     · exact Icc_isBoundaryPoint_top
     · exact Icc_isBoundaryPoint_bot
   have hneq : target ≠ e pU := by
+    change (if e pU = (⊥ : I01) then (⊤ : I01) else (⊥ : I01)) ≠ e pU
     by_cases hb : e pU = (⊥ : I01)
-    · intro h
-      have he : (⊤ : I01) = ⊥ := by
-        simpa only [target, if_pos hb] using h.trans hb
-      have he' := congrArg (fun z : I01 => (z : ℝ)) he
-      norm_num at he'
-    · intro h
-      have he : (⊥ : I01) = e pU := by
-        simpa only [target, if_neg hb] using h
-      exact hb he.symm
+    · rw [if_pos hb, hb]
+      intro h
+      have he : (1 : ℝ) = 0 := congrArg Subtype.val h
+      norm_num at he
+    · rw [if_neg hb]
+      exact Ne.symm hb
   let qU : U := e.symm target
+  have heqTarget : e qU = target := by
+    change e (e.symm target) = target
+    exact e.apply_symm_apply target
   have hqU : qU ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) U := by
     rw [← hpre]
     change e qU ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) I01
-    change e (e.symm target) ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) I01
-    rw [e.apply_symm_apply]
+    rw [heqTarget]
     exact htargetB
   have hqn : (qU : Z) ≠ p := by
     intro h
     have heq : qU = pU := Subtype.ext h
-    have he : target = e pU := by
-      have h' : e qU = e pU := congrArg e heq
-      calc
-        target = e (e.symm target) := (e.apply_symm_apply target).symm
-        _ = e qU := rfl
-        _ = e pU := h'
-    exact hneq he
+    have h' : e qU = e pU := congrArg e heq
+    exact hneq (heqTarget.symm.trans h')
   exact ⟨qU.1, qU.2,
     (ModelWithCorners.isBoundaryPoint_iff_isBoundaryPoint_val).1 hqU,
     hqn⟩
