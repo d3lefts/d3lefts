@@ -21,7 +21,7 @@ open Manifold
 namespace Nightfall.ProductBUComponentEndpoints
 noncomputable section
 
-abbrev I01 := Nightfall.ProductBUInterval.I01
+abbrev I01 := Set.Icc (0 : ℝ) 1
 
 /-- A selected boundary point in any compact smooth one-dimensional
 manifold has a *distinct* boundary point within its actual connected
@@ -36,7 +36,7 @@ theorem exists_second_endpoint_of_smooth_boundary_component
     ∃ q : Z, q ∈ connectedComponent p ∧
       (𝓡∂ 1).IsBoundaryPoint q ∧ q ≠ p := by
   letI : LocallyConnectedSpace Z :=
-    ChartedSpace.locallyConnectedSpace (H := EuclideanHalfSpace 1)
+    ChartedSpace.locallyConnectedSpace (H := EuclideanHalfSpace 1) Z
   have hOpen : IsOpen (connectedComponent p) :=
     isOpen_connectedComponent
   let U : TopologicalSpace.Opens Z := ⟨connectedComponent p, hOpen⟩
