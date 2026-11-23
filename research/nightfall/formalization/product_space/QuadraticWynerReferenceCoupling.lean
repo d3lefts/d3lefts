@@ -21,6 +21,7 @@ namespace Nightfall.QuadraticWynerReferenceCoupling
 open Finset
 open Nightfall.Route1Polylog
 open Nightfall.ProductSpace.Influence
+open Nightfall.ProductSpace.Transfer
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α] [Nonempty α]
@@ -104,7 +105,6 @@ theorem reference_filtered_mass
     ∑ v ∈ univ.filter (fun v : Seed α Θ => v.1 = a), κ j v = q j a := by
   classical
   rw [Finset.sum_filter, Fintype.sum_prod_type]
-  simp only [← Finset.sum_ite]
   calc
     (∑ b : α, ∑ bs : Θ → α, if b = a then κ j (b, bs) else 0)
       = ∑ b : α, if b = a then ∑ bs : Θ → α, κ j (b, bs) else 0 := by
@@ -128,7 +128,6 @@ theorem reference_pushforward
       (fun v : Seed α Θ => v.1 = x i), κ i v) * F x at hpush
   rw [hpush]
   unfold pexp prodMass
-  congr 1
   apply Finset.sum_congr rfl
   intro x _
   congr 1
