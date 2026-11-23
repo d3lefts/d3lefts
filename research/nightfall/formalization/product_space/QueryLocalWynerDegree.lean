@@ -44,7 +44,7 @@ theorem pulled_indicator_supported
     SupportedOn (T.biUnion S)
       (fun z : J → A => c * Nightfall.Route1LatentDegree.indMono T τ (Φ z)) := by
   intro z w hzw
-  congr 1
+  apply congrArg (fun y : ℝ => c * y)
   unfold Nightfall.Route1LatentDegree.indMono
   apply Finset.prod_congr rfl
   intro i hi
