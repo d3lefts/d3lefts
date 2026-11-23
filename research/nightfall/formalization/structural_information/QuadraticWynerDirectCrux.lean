@@ -89,7 +89,7 @@ theorem quadratic_original_increment_of_source_facts
   have hsmall' : Vq ^ 2 ≤ τ ^ 2 / 4 := by
     calc
       Vq ^ 2 ≤ C * (τ ^ 2 / (4 * C)) := hsmall
-      _ = τ ^ 2 / 4 := by field_simp; ring
+      _ = τ ^ 2 / 4 := by field_simp
   nlinarith [sq_nonneg (Vq - τ / 2)]
 
 #print axioms Nightfall.QuadraticWynerDirectCrux.direct_resampling_influence

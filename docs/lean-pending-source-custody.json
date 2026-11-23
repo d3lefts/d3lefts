@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 57,
+  "revision": 58,
   "as_of": "2026-11-23 UTC",
-  "source_commit": "37bdd087868a67acc13021594d51fd24f85dd2a9",
-  "scope": "v57: PR #1154 QW experimental original-source files registered by exact Git blob as unreviewed; no new certificate or promotion claimed.",
+  "source_commit": "62eeb47f7aaded248467b6300c15b4c5f5843eec",
+  "scope": "v58: exact unreviewed QW DirectCrux source after deterministic tactic repair; no certificate promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5667,13 +5667,13 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/QuadraticWynerDirectCrux.lean",
-      "source_blob_sha": "53202cd897b08de1b7c1c161473eaa955bb81910",
+      "source_blob_sha": "8defa393786b4f49e4975e841dd8badcdcac2a74",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+      "receipt_scope": "2026-11-23 exact source identity after deleting redundant Lean tactic on experimental QW crux. No all-source Lean terminal or novel theorem verified."
     },
     {
       "path": "research/nightfall/formalization/structural_information/QuadraticWynerInvariantResampling.lean",
