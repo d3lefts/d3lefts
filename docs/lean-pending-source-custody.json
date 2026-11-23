@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 60,
+  "revision": 61,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
   "scope": "Source-custody-only #1095 affine fiber count/entropy scope, not general C_W identity",
@@ -3749,13 +3749,13 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerEntropyBound.lean",
-      "source_blob_sha": "f7e64f17b5bb49243611322859a1d1987d778445",
+      "source_blob_sha": "586e4eb28e15c74ffbfe6877fc970f816bfeec76",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Post-#1151 source-exact proof candidate: free affine-code fiber equivalence, q^r cardinality, and support Shannon entropy bound. Mandatory pinned Lean/leanchecker and proof review; not full Wyner infimum."
+      "receipt_scope": "Unverified new Lean source: direct reuse of previously certified Route1Entropy.ent_le_log_card and application to #1151 affine fiber q^r equivalence. Pinned Lean/leanchecker required; not general C_W identity"
     },
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerFiberCount.lean",
