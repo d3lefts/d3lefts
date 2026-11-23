@@ -1,0 +1,129 @@
+name: NIGHTFALL D2 original posterior and A2 Bayes-risk source bridges
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/D2PosteriorSectionBridge.lean'
+      - 'research/nightfall/formalization/costs/GroupAdaptiveBayesRisk.lean'
+      - 'research/nightfall/2026-11-d1-a2-bridges/**'
+      - '.github/workflows/nightfall-d1-a2-source-bridges-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-source-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact source and transitive imports
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/d1-a2
+          python3 - <<'PY'
+          import importlib.util, pathlib, shutil, subprocess
+          root=pathlib.Path.cwd()
+          spec=importlib.util.spec_from_file_location("q2dag",root/"scripts/nightfall_q2_certify.py")
+          mod=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+          files=mod.local_sources()
+          ws=pathlib.Path("/tmp/mathlib4")
+          out=ws/".lake/build/lib/lean"
+          out.mkdir(parents=True,exist_ok=True)
+          compiled=set()
+          for target in ["D2PosteriorSectionBridge", "GroupAdaptiveBayesRisk"]:
+              for name in mod.closure(target,files):
+                  if name in compiled:
+                      continue
+                  source=files[name]
+                  shutil.copyfile(source, ws/(name+".lean"))
+                  print("BUILD",name,"SOURCE",source.relative_to(root),flush=True)
+                  subprocess.run(["lake","env","lean","-o",str(out/(name+".olean")),name+".lean"],
+                                 cwd=ws,check=True,timeout=1200)
+                  compiled.add(name)
+          print("ALL_IMPORTS_COMPILED",len(compiled),flush=True)
+          PY
+      - name: Strict exact-head named theorem and standard-axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/D2PosteriorSectionBridge.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1200 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Observability.D2PosteriorSection.degree_two_after_arbitrary_partial_observation \
+            --decl Nightfall.Observability.D2PosteriorSection.posterior_degree_two_section_budget_eight \
+            --json-out receipts/d1-a2/d2.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/d1-a2/d2.json
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/costs/GroupAdaptiveBayesRisk.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1200 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.GroupAdaptiveBayesRisk.binary_sign_bayes_risk \
+            --decl Nightfall.GroupAdaptiveBayesRisk.noisy_sign_conditional_loss \
+            --decl Nightfall.GroupAdaptiveBayesRisk.noisy_sign_posterior_risk \
+            --decl Nightfall.GroupAdaptiveBayesRisk.actual_coordinate_posterior_unit_mass \
+            --decl Nightfall.GroupAdaptiveBayesRisk.actual_group_transcript_bayes_risk \
+            --json-out receipts/d1-a2/a2.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/d1-a2/a2.json
+          (cd /tmp/mathlib4 && lake env leanchecker -v D2PosteriorSectionBridge) \
+            | tee receipts/d1-a2/d2-leanchecker.log
+          (cd /tmp/mathlib4 && lake env leanchecker -v GroupAdaptiveBayesRisk) \
+            | tee receipts/d1-a2/a2-leanchecker.log
+      - name: Fail-closed exact source, theorem and axiom identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          modules=[
+            ("D2PosteriorSectionBridge","observability","d2",[
+              "Nightfall.Observability.D2PosteriorSection.degree_two_after_arbitrary_partial_observation",
+              "Nightfall.Observability.D2PosteriorSection.posterior_degree_two_section_budget_eight"]),
+            ("GroupAdaptiveBayesRisk","costs","a2",[
+              "Nightfall.GroupAdaptiveBayesRisk.binary_sign_bayes_risk",
+              "Nightfall.GroupAdaptiveBayesRisk.noisy_sign_conditional_loss",
+              "Nightfall.GroupAdaptiveBayesRisk.noisy_sign_posterior_risk",
+              "Nightfall.GroupAdaptiveBayesRisk.actual_coordinate_posterior_unit_mass",
+              "Nightfall.GroupAdaptiveBayesRisk.actual_group_transcript_bayes_risk"])]
+          allowed={"Classical.choice","propext","Quot.sound"}
+          count=0
+          for name,folder,receipt,decls in modules:
+            source=Path(f"research/nightfall/formalization/{folder}/{name}.lean")
+            data=json.loads(Path(f"receipts/d1-a2/{receipt}.json").read_text())
+            assert data.get("status")=="COMPILED",(name,"not compiled")
+            assert data.get("source_sha256")==hashlib.sha256(source.read_bytes()).hexdigest(),(name,"source mismatch")
+            audit=data.get("axiom_audit",{})
+            deps=data.get("axiom_dependencies",{})
+            assert set(audit)==set(decls),(name,"missing named theorem",set(decls)-set(audit))
+            assert set(deps)==set(decls),(name,"missing axiom dependency report")
+            for d in decls:
+              assert audit[d] in {"no_axioms","allowlisted_dependencies"},(d,audit[d])
+              assert set(deps[d]) <= allowed,(d,deps[d])
+            count+=len(decls)
+          assert count==7,count
+          print("PASS: seven source-exact Lean declarations and independent kernel replays")
+          PY
+      - name: Preserve immutable evidence and precise remaining limits
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/d1-a2
+          git rev-parse HEAD > receipts/d1-a2/HEAD
+          sha256sum research/nightfall/formalization/observability/D2PosteriorSectionBridge.lean \
+            research/nightfall/formalization/costs/GroupAdaptiveBayesRisk.lean \
+            > receipts/d1-a2/SHA256SUMS
+          cat > receipts/d1-a2/LIMITS.txt <<'TXT'
+          D2: finite original-product scalar degree-two -> exact partial-observation posterior degree-two and 8B section budget; NOT full Hilbert-rank matching, causal transcript posterior identification, infinite law, or quadratic influence drift.
+          A2: finite actual grouped likelihood -> normalized binary posterior squared-risk identity; NOT universal adaptive KL/stopping converse, matching sequential construction, or global novelty.
+          TXT
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: d1-a2-source-bridges-${{ github.run_id }}
+          path: receipts/d1-a2
+          if-no-files-found: error
