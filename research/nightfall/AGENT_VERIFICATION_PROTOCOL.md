@@ -164,3 +164,13 @@ Only public research artifacts may be processed by external services. Logs, prom
 ## Public claim language
 
 Use `source-reported`, `independent-algorithm internal replay`, `CI replay after public release`, `machine formal proof` and `conditional source premise` as distinct descriptions. A published issue is an invitation, never a verified result by itself.
+
+## November 23: externally frozen cost contracts and eight-paper trust scope (new process)
+
+The source-scoped implementation is [the verification register](verification/README.md), [eight-claim source ledger](verification/HEADLINE_TRUST_BOUNDARIES_V1.json), [independent review preregistrations](verification/HEADLINE_REVIEW_PREREG_V1.json), and [dedicated CI](../../.github/workflows/nightfall-eight-headline-trust.yml). These **do not** revise previously issued mathematical passports or authorize theorem promotion. This process borrows high-level verification separation from Google DeepMind/Google Quantum AI, *Discovering formally verified quantum programs with AI*, arXiv:2611.09822v3, but does not import their Lean Comparator.
+
+For all eight intended papers, freeze the actual Lean entrypoint, known direct import closure, source blob, intended theorem scope and unresolved source-to-headline dependencies. Unreviewed changes to local imports, compiler lock, bridge or comparator must not inherit earlier receipts. Candidate-authored verification scripts are not an external trust anchor: require owner-controlled `main`, protected required checks, pinned toolchain and separately inspected kernel receipts. The initial registry and new cost contract are only bootstrapped under the first owner-reviewed merge.
+
+Every oracle-cost claim must separately report the mathematical tree/circuit model, random branch semantics conditioned on history, exact expected and conservative worst cost, query units and physical-oracle correspondence. The new rational finite-tree checker and Lean cost theorem prove only arithmetic of the supplied finite model, **not** stochastic-model validity, quantum correctness or an infinite stopping-time bound.
+
+Future reviewer handoffs must carry the predeclared alternative hypothesis, cheapest falsifier and source hash; reproducer and adversarial source isolation are required. The eight prespecified tests remain **unexecuted** until distinct artifacts and a conflict-of-interest audit are present. The synthetic mutation/time preflight is only a gate test; never report it as an A/B improvement in genuine multi-agent scientific work.
