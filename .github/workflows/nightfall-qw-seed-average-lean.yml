@@ -1,0 +1,94 @@
+name: NIGHTFALL QW latent seed-average finite Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean'
+      - 'research/nightfall/formalization/product_space/QuadraticWynerSeedAverage.lean'
+      - '.github/workflows/nightfall-qw-seed-average-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  seed-average:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Rebuild original AA product closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/qw-seed-average
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile finite Route 1 source and both new degree-preserving terminals
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift \
+                   QuadraticWynerLabelProjection QuadraticWynerSeedAverage; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/qw-seed-average/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/qw-seed-average/$M.log"
+          done
+      - name: Mandatory kernel replay and source axiom verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in QuadraticWynerLabelProjection QuadraticWynerSeedAverage; do
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v "$M") 2>&1 | tee "receipts/qw-seed-average/kernel-$M.log"
+          done
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          required={
+            'QuadraticWynerLabelProjection': ['weighted_centered_square_identity',
+                'weighted_square_jensen','weighted_sum_comm','weighted_abs_jensen',
+                'weighted_total_variance','weighted_fiber_variance_le_reference',
+                'variance_survives_latent_averaging'],
+            'QuadraticWynerSeedAverage': ['seed_average_degree','seed_average_bounded',
+                'seed_average_mean','seed_average_mixed_second_moment',
+                'seed_average_variance_survival']}
+          for m,names in required.items():
+              log=Path('receipts/qw-seed-average/'+m+'.log').read_text()
+              for suffix in names:
+                  namespace = ('Nightfall.QuadraticWynerLabelProjection.' if m=='QuadraticWynerLabelProjection'
+                               else 'Nightfall.QuadraticWynerSeedAverage.')
+                  name=namespace+suffix
+                  hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+                  if hit: ax={a.strip() for a in hit.group(1).split(',') if a.strip()}
+                  else:
+                      assert "'"+name+"' does not depend on any axioms" in log, name
+                      ax=set()
+                  assert ax <= {'propext','Classical.choice','Quot.sound'},(name,ax)
+              assert 'sorryAx' not in log
+          print('PASS seed-average degree-preserving ANOVA; NOT full QW tree or source good query')
+          PY
+      - name: Immutable receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/qw-seed-average
+          git rev-parse HEAD > receipts/qw-seed-average/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/qw-seed-average/mathlib.txt || true
+          cat lean-toolchain > receipts/qw-seed-average/compiler.txt
+          sha256sum research/nightfall/formalization/product_space/QuadraticWyner{LabelProjection,SeedAverage}.lean > receipts/qw-seed-average/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: qw-seed-average-${{ github.run_id }}
+          path: receipts/qw-seed-average
+          retention-days: 90
