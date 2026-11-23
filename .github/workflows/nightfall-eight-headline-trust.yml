@@ -1,0 +1,107 @@
+name: NIGHTFALL eight-headline scoped trust and resource checks
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/verification/**'
+      - 'scripts/check_headline_trust.py'
+      - 'scripts/check_headline_review_plan.py'
+      - 'scripts/check_finite_query_cost.py'
+      - 'tests/test_headline_trust_and_cost.py'
+      - 'tests/test_headline_review_plan.py'
+      - 'research/nightfall/formalization/**'
+      - '.github/workflows/nightfall-eight-headline-trust.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/verification/**'
+      - 'scripts/check_headline_trust.py'
+      - 'scripts/check_headline_review_plan.py'
+      - 'scripts/check_finite_query_cost.py'
+      - 'tests/test_headline_trust_and_cost.py'
+      - 'tests/test_headline_review_plan.py'
+      - 'research/nightfall/formalization/**'
+      - '.github/workflows/nightfall-eight-headline-trust.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scope-and-negative-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Resolve owner-controlled main baseline
+        run: git fetch origin main:refs/remotes/origin/main
+      - name: Scoped source custody, anti-promotion, cost mutation tests
+        run: |
+          set -euo pipefail
+          python3 tests/test_headline_trust_and_cost.py
+          python3 tests/test_headline_review_plan.py
+      - name: Produce machine-readable finite receipts
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/check_headline_trust.py --trusted-ref origin/main \
+            --json-out lean-receipts/eight-headline-scope.json
+          python3 scripts/check_headline_review_plan.py \
+            --json-out lean-receipts/eight-headline-review-plan.json
+          python3 scripts/check_finite_query_cost.py \
+            research/nightfall/verification/route1_finite_cost_smoke.json \
+            --json-out lean-receipts/route1-finite-resource-cost.json
+          python3 tests/test_external_lean_comparator.py
+      - name: Preserve traceable scope and process evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eight-headline-trust-metadata
+          path: lean-receipts/
+          retention-days: 45
+          if-no-files-found: warn
+
+  pinned-lean-resource-cost:
+    needs: scope-and-negative-controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact-type kernel check of conditional finite resource semantics
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py research/nightfall/verification/FiniteQueryCost.lean \
+            --workspace /tmp/mathlib4 --timeout 600 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.FiniteQueryCost.two_stage_expected \
+            --decl Nightfall.FiniteQueryCost.two_stage_worst \
+            --contract research/nightfall/verification/finite-query-cost-lean-contract.json \
+            --json-out lean-receipts/finite-query-cost-lean.json
+      - name: Frozen comparator on all subsequent revisions of this contract
+        run: |
+          set -euo pipefail
+          git fetch origin main:refs/remotes/origin/main
+          if git cat-file -e origin/main:research/nightfall/verification/finite-query-cost-lean-contract.json 2>/dev/null; then
+            python3 scripts/external_lean_comparator.py \
+              --trusted-base origin/main \
+              --contract research/nightfall/verification/finite-query-cost-lean-contract.json \
+              --receipt lean-receipts/finite-query-cost-lean.json \
+              --json-out lean-receipts/finite-resource-frozen-comparator.json
+          else
+            echo "::warning::Initial spec bootstrap: frozen against main only after owner-reviewed merge"
+          fi
+      - name: Upload pinned kernel and comparator receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eight-headline-lean-resource
+          path: lean-receipts/
+          retention-days: 45
+          if-no-files-found: warn
