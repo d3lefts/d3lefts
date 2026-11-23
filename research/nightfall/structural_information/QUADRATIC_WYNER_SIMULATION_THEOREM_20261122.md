@@ -58,7 +58,7 @@ This theorem is already end-to-end Lean compiled under the supported-degree hypo
 
 Before treating the composition as established, the independent checker should try (a) failure of the quadratic bound under zero-atom posterior products; (b) the erroneous replacement of original-source influence by an auxiliary/latent influence; (c) coupling resampling that accidentally changes the latent label; (d) a hidden \(d+1=3\) lift; (e) wrong normalization between square increments and \(\operatorname{Inf}\); (f) information charge at previously queried coordinates; (g) a theorem that is just an off-model decoder or a lower bound masquerading as a simulator.
 
-A separate exact-rational checker, not the Lean theorem, enumerates 720 heterogeneous Bernoulli-mixture instances of degree-two polynomial targets and tests the resampling/variance transfer including triggered small-coupling regimes. It cannot prove the universal statement. The proof below is authored from the original source definitions; it is NOT independent non-author review.
+A separate exact-rational checker, not the Lean theorem, enumerates 720 heterogeneous Bernoulli-mixture instances of degree-two polynomial targets, including deterministic coordinate laws with probabilities zero and one and tests the resampling/variance transfer including triggered small-coupling regimes. It cannot prove the universal statement. The proof below is authored from the original source definitions; it is NOT independent non-author review.
 
 ## 4. Proof: the degree-preserving quadratic-information crux
 
