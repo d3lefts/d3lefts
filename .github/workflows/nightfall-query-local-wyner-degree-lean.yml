@@ -1,0 +1,72 @@
+name: NIGHTFALL query-local b-local degree pullback Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QueryLocalWynerDegree.lean'
+      - '.github/workflows/nightfall-query-local-wyner-degree-lean.yml'
+      - 'docs/lean-pending-source-custody.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  degree-pullback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Rebuild pinned actual product-degree source dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Exact finite local-degree source proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/query-local-degree
+          for M in Route1LatentDegree QueryLocalWynerDegree; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/query-local-degree/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/query-local-degree/$M.log"
+          done
+      - name: Independent kernel replay and fail-closed standard-axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker QueryLocalWynerDegree) 2>&1 | tee receipts/query-local-degree/checker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('receipts/query-local-degree/QueryLocalWynerDegree.log').read_text()
+          for suffix in ('locality_card_le','pulled_indicator_supported','degree_local_pullback'):
+              full='Nightfall.QueryLocalWyner.'+suffix
+              m=re.search(r"'"+re.escape(full)+r"' depends on axioms:\s*\[([^\]]*)\]",p,re.S)
+              if m:
+                  ax={x.strip() for x in m[1].split(',') if x.strip()}
+                  assert ax <= {'propext','Classical.choice','Quot.sound'},(full,ax)
+              else:
+                  assert f"'{full}' does not depend on any axioms" in p,full
+          assert 'sorryAx' not in p
+          print('PASS all b-local finite-alphabet degree pullback for actual Route1 predicate')
+          PY
+          git rev-parse HEAD > receipts/query-local-degree/head.txt
+          sha256sum research/nightfall/formalization/product_space/QueryLocalWynerDegree.lean > receipts/query-local-degree/SHA256SUMS
+      - name: Keep original source-matched logs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: query-local-wyner-degree-${{ github.run_id }}
+          path: receipts/query-local-degree
+          retention-days: 90
