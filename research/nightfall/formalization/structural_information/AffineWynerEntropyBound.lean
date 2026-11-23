@@ -58,7 +58,7 @@ theorem affine_free_fiber_entropy_bound
     ⟨⟨x, hx, by intro i _; rfl⟩⟩
   have h := entropy_le_log_card p hp0 hp1
   rw [fixedProjectionFiber_card L a x hx] at h
-  exact h
+  simpa only [Nat.cast_pow] using h
 
 end Nightfall.AffineWyner
 
