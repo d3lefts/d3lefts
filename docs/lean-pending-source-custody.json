@@ -5627,7 +5627,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean",
-      "source_blob_sha": "7f153b1e3e1e2709225828cc5033eb94c0b4e0af",
+      "source_blob_sha": "81c808030cc3933d3e6d067aa1c1a38510f156b6",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
