@@ -67,6 +67,10 @@ jobs:
             --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
             --decl Nightfall.Observability.D2PosteriorSection.degree_two_after_arbitrary_partial_observation \
             --decl Nightfall.Observability.D2PosteriorSection.posterior_degree_two_section_budget_eight \
+            --decl Nightfall.Observability.D2PosteriorSection.coordinate_cylinder_posterior_mass \
+            --decl Nightfall.Observability.D2PosteriorSection.source_cylinder_density_factorization \
+            --decl Nightfall.Observability.D2PosteriorSection.source_cylinder_evidence_normalizer \
+            --decl Nightfall.Observability.D2PosteriorSection.source_cylinder_conditional_posterior \
             --json-out receipts/d1-a2/d2.json
           python3 research/nightfall/formalization/product_space/check_receipts.py receipts/d1-a2/d2.json
           python3 scripts/lean_bridge.py \
@@ -105,7 +109,11 @@ jobs:
           modules=[
             ("D2PosteriorSectionBridge","observability","d2",[
               "Nightfall.Observability.D2PosteriorSection.degree_two_after_arbitrary_partial_observation",
-              "Nightfall.Observability.D2PosteriorSection.posterior_degree_two_section_budget_eight"]),
+              "Nightfall.Observability.D2PosteriorSection.posterior_degree_two_section_budget_eight",
+              "Nightfall.Observability.D2PosteriorSection.coordinate_cylinder_posterior_mass",
+              "Nightfall.Observability.D2PosteriorSection.source_cylinder_density_factorization",
+              "Nightfall.Observability.D2PosteriorSection.source_cylinder_evidence_normalizer",
+              "Nightfall.Observability.D2PosteriorSection.source_cylinder_conditional_posterior"]),
             ("D2PosteriorKernelDrift","observability","kernel",[
               "Nightfall.Observability.D2PosteriorKernelDrift.weighted_square_ge_square_mean",
               "Nightfall.Observability.D2PosteriorKernelDrift.expected_quadratic_drift_from_kernel",
@@ -131,8 +139,8 @@ jobs:
               assert audit[d] in {"no_axioms","allowlisted_dependencies"},(d,audit[d])
               assert set(deps[d]) <= allowed,(d,deps[d])
             count+=len(decls)
-          assert count==10,count
-          print("PASS: ten source-exact Lean declarations and independent kernel replays")
+          assert count==14,count
+          print("PASS: fourteen source-exact Lean declarations and independent kernel replays")
           PY
       - name: Preserve immutable evidence and precise remaining limits
         if: always()
@@ -145,7 +153,7 @@ jobs:
             research/nightfall/formalization/costs/GroupAdaptiveBayesRisk.lean \
             > receipts/d1-a2/SHA256SUMS
           cat > receipts/d1-a2/LIMITS.txt <<'TXT'
-          D2: finite original-product scalar degree-two -> exact partial-observation posterior degree-two and 8B section budget; conditional finite-state Markov kernel local quadratic drift -> averaged drift and hard 20172*r*B^2/eta budget. NOT full Hilbert matching, physical greedy policy proof, or infinite-product limit.
+          D2: exact original cylinder/evidence -> conditional product posterior plus original-product scalar degree-two -> posterior degree-two and 8B section budget; conditional finite-state Markov kernel local quadratic drift -> averaged drift and hard 20172*r*B^2/eta budget. NOT full Hilbert matching, physical greedy policy proof, or infinite-product limit.
           A2: finite actual grouped likelihood -> normalized binary posterior squared-risk identity; NOT universal adaptive KL/stopping converse, matching sequential construction, or global novelty.
           TXT
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
