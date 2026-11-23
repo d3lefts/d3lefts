@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 51,
+  "revision": 52,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v51: Add source-identical verified local graph chart to main-target pending source custody. Preserve 67 historical verified records; source match and independent main integration still pending. No ProductSphereZero theorem promotion.",
+  "scope": "v52: register proposed genuine local graph-to-EuclideanHalfSpace chart; previous chart source exact and green at run 45106104307, this composition pending; original 67 verified records preserved; unrestricted topology not proved.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -456,6 +456,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source blob custody only; independent scoped pinned Lean run #45058710989 on source-identical stacked #1082 passed the named genuine zero-fiber free-action source. Global proof, ProductSphereZero and specialist novelty review remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUHalfspaceGraphChart.lean",
+      "source_blob_sha": "1fe9bb1817aa7655c1484ade75efde4ebefbc739",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Proposed theorem actual_left_halfspace_chart = genuine local open graph chart composed with Mathlib IccLeftChart on closed time slab. Exact two-module Lean and axiom CI PENDING; global covering charts, C∞ overlaps, physical boundary and ProductSphereZero not claimed."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
