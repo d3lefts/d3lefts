@@ -116,7 +116,7 @@ theorem weighted_fiber_variance_le_reference
       (∑ θ, π θ * (F θ u - labelAverage π F u) ^ 2) ≤
         (∑ θ, π θ * (F θ u - R u) ^ 2) := by
     dsimp [labelAverage]
-    nlinarith [sq_nonneg ((∑ θ, π θ * F θ u) - R u)]
+    nlinarith [h, sq_nonneg ((∑ θ, π θ * F θ u) - R u)]
   exact mul_le_mul_of_nonneg_left hbound (hμ0 u)
 
 /-- Improved QW variance survival: a reference-source Key Lemma bound
