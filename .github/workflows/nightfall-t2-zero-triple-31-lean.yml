@@ -22,6 +22,12 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
+      - name: Freeze exact author-side paper source (no semantic promotion)
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git hash-object research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md)" = "42e5b34955304fe6b454160a6abbd2df73777438"
+          test "$(git hash-object research/nightfall/structural_information/T2_ZERO_TRIPLE_OVERLAP_31_20261122.md)" = "4aeb33e6031e7221a1b5f489528debfcab1dbca0"
       - name: Pin source and run Lean/leanchecker with axioms
         shell: bash
         run: |
@@ -32,7 +38,7 @@ jobs:
           cp "$src" /tmp/mathlib4/T2ZeroTripleOverlap31.lean
           cp "$aux" /tmp/mathlib4/T2ZeroTripleMultiplicity.lean
           git rev-parse HEAD | tee t2-overlap-31-receipt/commit.txt
-          sha256sum "$src" "$aux" research/nightfall/structural_information/T2_ZERO_TRIPLE_OVERLAP_31_20261122.md scripts/check_t2_zero_triple_overlap_31_exact.py | tee t2-overlap-31-receipt/SHA256SUMS
+          sha256sum "$src" "$aux" research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md research/nightfall/structural_information/T2_ZERO_TRIPLE_OVERLAP_31_20261122.md scripts/check_t2_zero_triple_overlap_31_exact.py | tee t2-overlap-31-receipt/SHA256SUMS
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2ZeroTripleOverlap31.olean T2ZeroTripleOverlap31.lean) 2>&1 | tee t2-overlap-31-receipt/lean.log
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2ZeroTripleMultiplicity.olean T2ZeroTripleMultiplicity.lean) 2>&1 | tee -a t2-overlap-31-receipt/lean.log
           (cd /tmp/mathlib4 && lake env leanchecker T2ZeroTripleOverlap31 && lake env leanchecker T2ZeroTripleMultiplicity) 2>&1 | tee t2-overlap-31-receipt/kernel.log
@@ -56,6 +62,8 @@ jobs:
             'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.four_event_incidence',
             'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.four_zero_triple_exclusions',
             'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.zero_triple_event_multiplicity',
+            'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.survivorCount_eq_correctedCount',
+            'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.complex_weighted_survivor_identity',
           ]
           allowed={'propext','Classical.choice','Quot.sound'}
           for name in expected:
