@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 55
     env:
-      RH_COMMIT: a93fc5f56d3c1781d7e114068deddfd83557ef71
+      RH_COMMIT: 2ffcaefc3c1a4968d3e1fa053771c6123e9b0975
       RH_BASE: c592e91eb8f41bfd149227c09460fae0c17bf3c5
       RH_MATHLIB: fc4f59e577feb1a4956671bc04ac18aaaf8cd842
       RH_TOOLCHAIN: leanprover/lean4:v4.36.0
@@ -50,7 +50,7 @@ jobs:
           curl -fsSL --retry 3 "$url/$RH_COMMIT/src/$MODULE_PATH/ClaimStrip.lean" -o "$src/ClaimStrip.lean"
           test "$(git hash-object "$src/HalfPlaneBaseline.lean")" = ba38ed1e1be2287027a8a0baab005e274473d764
           test "$(git hash-object "$src/HalfPlaneCandidate.lean")" = 717bc2b363301add014db1224a3ac606ee87966f
-          test "$(git hash-object "$src/ClaimStrip.lean")" = 5527ddf26c002dce6ad79e44bdc0a498488da2ab
+          test "$(git hash-object "$src/ClaimStrip.lean")" = 1027c81dccbaeaf01e077556d60a43cfa57023a0
           python3 - <<'PY'
           from pathlib import Path
           p=Path('research/nightfall/formalization/rh_probe')
