@@ -1,0 +1,62 @@
+name: NIGHTFALL exact affine-code free-fiber cardinality Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/AffineWyner*.lean'
+      - '.github/workflows/nightfall-affine-wyner-fiber-count-lean.yml'
+      - 'docs/lean-pending-source-custody.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fiber-count:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact-parent source plus cardinality bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/affine-wyner-card
+          git rev-parse HEAD | tee receipts/affine-wyner-card/head.txt
+          for M in AffineWynerSupport AffineWynerFibers AffineWynerFiberCount; do
+            src="research/nightfall/formalization/structural_information/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            sha256sum "$src" | tee -a receipts/affine-wyner-card/SHA256SUMS
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/affine-wyner-card/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/affine-wyner-card/$M.log"
+          done
+      - name: Independent kernel recheck and named axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker AffineWynerSupport) 2>&1 | tee receipts/affine-wyner-card/support-checker.log
+          (cd /tmp/mathlib4 && lake env leanchecker AffineWynerFibers) 2>&1 | tee receipts/affine-wyner-card/fibers-checker.log
+          (cd /tmp/mathlib4 && lake env leanchecker AffineWynerFiberCount) 2>&1 | tee receipts/affine-wyner-card/card-checker.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          log=Path('receipts/affine-wyner-card/AffineWynerFiberCount.log').read_text()
+          for suffix in ('fixedProjectionFiberEquiv','fixedProjectionFiber_card'):
+              full='Nightfall.AffineWyner.'+suffix
+              m=re.search(r"'"+re.escape(full)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m:
+                  ax={x.strip() for x in m[1].split(',') if x.strip()}
+                  assert ax <= {'propext','Classical.choice','Quot.sound'},(full,ax)
+              else:
+                  assert f"'{full}' does not depend on any axioms" in log,full
+          assert 'sorryAx' not in log
+          print('PASS exact affine fiber equivalence and q^r count for every finite field')
+          PY
+      - name: Retain source-exact receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: affine-wyner-fiber-card-${{ github.run_id }}
+          path: receipts/affine-wyner-card
+          retention-days: 90
