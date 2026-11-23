@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 61,
+  "revision": 62,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
   "scope": "Add b-local degree bridge and source-composed full finite query-local general-latent Wyner theorem to exact-source CI. Full ambient common-information separation still open.",
@@ -3069,7 +3069,7 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/QueryLocalWynerDegree.lean",
-      "source_blob_sha": "03a8b726a61bfdc615cec1295d35c0c8ffe4a0eb",
+      "source_blob_sha": "0df8a7f7abaf45d98f78169046374f8d96ccdc73",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
