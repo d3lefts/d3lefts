@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 56,
-  "as_of": "2026-11-22 UTC",
-  "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
-  "scope": "v56: actual grouped A2 source likelihood and Bayes posterior algebra candidate registered at exact git blob; no full adaptive KL/stopping/SPRΤ terminal or universal Hilbert theorem claimed.",
+  "revision": 57,
+  "as_of": "2026-11-23 UTC",
+  "source_commit": "37bdd087868a67acc13021594d51fd24f85dd2a9",
+  "scope": "v57: PR #1154 QW experimental original-source files registered by exact Git blob as unreviewed; no new certificate or promotion claimed.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5574,6 +5574,126 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Actual finite adaptive grouped noisy-sign oracle response and history likelihood factorization; source posterior normalization. No Bayesian risk theorem, sequential KL lower, optional stopping or matching SPRT upper. Exact-head green CI required."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerGoodQuery.lean",
+      "source_blob_sha": "b05803e7e738ae457bbfa7c3a2466ce85ca491ab",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean",
+      "source_blob_sha": "64ae1263468d1b2c533440a17deb4fb8bbe745cc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerParametric.lean",
+      "source_blob_sha": "0844b2db38c88e5363eca0f287cdfb0168bb317d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerQ2SourceBridge.lean",
+      "source_blob_sha": "917b25a3d8189e93bad5d2ef0a9f766b0a7d7dcc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerQuadraticProgress.lean",
+      "source_blob_sha": "ad10fb14d60672c336600d8c06526d3ae3bf1edb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerReferenceCoupling.lean",
+      "source_blob_sha": "8ccb672de8577fadb2edaadcc69c6160a0131164",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedAverage.lean",
+      "source_blob_sha": "5167e8c4b682918ca49583e3c3de2edd1cdd177e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedResampling.lean",
+      "source_blob_sha": "f66024c46600201fed297f88b7eb9a4068920d66",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerTerminal.lean",
+      "source_blob_sha": "5cb0b083909491dec3cc5d8f34d26a3a66d5fbbd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/QuadraticWynerDirectCrux.lean",
+      "source_blob_sha": "53202cd897b08de1b7c1c161473eaa955bb81910",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/QuadraticWynerInvariantResampling.lean",
+      "source_blob_sha": "c6fc24db429e3317da9508153456ef82070a6cfc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/QuadraticWynerTransferCore.lean",
+      "source_blob_sha": "dffb96b900550513d459f59b54b06684f4873ed0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
     }
   ]
 }
