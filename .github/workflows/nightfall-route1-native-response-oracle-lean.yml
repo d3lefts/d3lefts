@@ -46,7 +46,7 @@ jobs:
                    Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
                    Route1WynerSimulation Route1WynerGeneral; do
             src="research/nightfall/formalization/product_space/$M.lean"
-            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$src"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/native-response/$M.log" 2>&1
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/native-response/$M.log"
@@ -57,7 +57,7 @@ jobs:
           set -euo pipefail
           for M in QuantumPathDegree QuantumCircuitSimulation QuantumResponseRoute1Terminal; do
             src="research/nightfall/formalization/product_space/$M.lean"
-            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$src"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
             (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/native-response/$M.log"
             ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/native-response/$M.log"
@@ -92,7 +92,7 @@ jobs:
                          'native_acceptance_degree', 'native_response_route1_wyner'):
               name='Nightfall.QuantumResponseRoute1Terminal.'+suffix
               tail=Path('receipts/native-response/QuantumResponseRoute1Terminal.log').read_text()
-              m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\\s*\\[([^\\]]*)\\]",tail,re.S)
+              m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",tail,re.S)
               if m:
                   axs={x.strip() for x in m.group(1).split(',') if x.strip()}
               else:
