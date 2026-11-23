@@ -1,0 +1,144 @@
+name: NIGHTFALL full phase-block Route1 terminal named Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/PhaseBlockRoute1Terminal.lean'
+      - 'research/nightfall/formalization/structural_information/PhaseBlockGrouping.lean'
+      - 'research/nightfall/formalization/structural_information/PhaseBlockActualCircuit.lean'
+      - 'research/nightfall/formalization/structural_information/PhaseBlockWellFormed.lean'
+      - 'research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean'
+      - 'research/nightfall/formalization/structural_information/PhaseBlockTreeCompiler.lean'
+      - 'research/nightfall/formalization/structural_information/PhaseBlockRoute1.lean'
+      - '.github/workflows/nightfall-phase-block-route1-terminal-lean.yml'
+      - 'docs/lean-pending-source-custody.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-source-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned AA and product-space source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile actual Route1 polylog source chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/phase-block-terminal
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
+                   Route1WynerSimulation Route1WynerGeneral; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/phase-block-terminal/$M.log" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/phase-block-terminal/$M.log"
+          done
+      - name: Compile existing physical matrix-oracle circuit normal form
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in QuantumCircuitPaths QuantumPathDegree QuantumCircuitNormalization QuantumCircuitSimulation; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/phase-block-terminal/$M.log" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/phase-block-terminal/$M.log"
+          done
+      - name: Compile physical phase source and exact end-to-end terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in PhaseBlockRoute1 PhaseBlockGrouping PhaseBlockQuantumDegree PhaseBlockTreeCompiler PhaseBlockRoute1Terminal PhaseBlockActualCircuit PhaseBlockWellFormed; do
+            src="research/nightfall/formalization/structural_information/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/phase-block-terminal/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/phase-block-terminal/$M.log"
+          done
+      - name: Independently replay both final phase-block modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in PhaseBlockWellFormed PhaseBlockActualCircuit; do
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v "$M") 2>&1 | tee "receipts/phase-block-terminal/kernel-replay-$M.log"
+          done
+      - name: Named theorem and trusted-axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path('receipts/phase-block-terminal/PhaseBlockRoute1Terminal.log').read_text()
+          name='Nightfall.PhaseBlockRoute1Terminal.phase_block_route1_simulation'
+          m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+          if m: axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in log,name
+              axioms=set()
+          assert axioms <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
+          assert 'sorryAx' not in log
+          assert f'theorem {name}' in log
+          actual=Path('receipts/phase-block-terminal/PhaseBlockActualCircuit.log').read_text()
+          for suffix in ('auxRaw_sum','actual_circuit_block_degree','actual_circuit_route1_simulation'):
+              name2='Nightfall.PhaseBlockActualCircuit.'+suffix
+              m2=re.search(r"'" + re.escape(name2) + r"' depends on axioms:\s*\[([^\]]*)\]",actual,re.S)
+              if m2: axs={x.strip() for x in m2.group(1).split(',') if x.strip()}
+              else:
+                  assert f"'{name2}' does not depend on any axioms" in actual,name2
+                  axs=set()
+              assert axs <= {'propext','Classical.choice','Quot.sound'},(name2,axs)
+          assert 'sorryAx' not in actual
+          assert 'theorem Nightfall.PhaseBlockActualCircuit.actual_circuit_route1_simulation' in actual
+          wf=Path('receipts/phase-block-terminal/PhaseBlockWellFormed.log').read_text()
+          for suffix in ('wellFormed_born_on_phase_code',
+                         'normalized_phase_block_route1_simulation',
+                         'normalized_wyner_phase_block_route1_simulation',
+                         'normalized_binary_mixture_phase_block_simulation'):
+              named='Nightfall.PhaseBlockWellFormed.'+suffix
+              mx=re.search(r"'" + re.escape(named) + r"' depends on axioms:\s*\[([^\]]*)\]",wf,re.S)
+              if mx:
+                  axs={x.strip() for x in mx.group(1).split(',') if x.strip()}
+              else:
+                  assert f"'{named}' does not depend on any axioms" in wf,named
+                  axs=set()
+              assert axs <= {'propext','Classical.choice','Quot.sound'},(named,axs)
+              print(named,sorted(axs))
+          assert 'sorryAx' not in wf
+          assert 'theorem Nightfall.PhaseBlockWellFormed.normalized_phase_block_route1_simulation' in wf
+          print('PASS: normalized physical source theorem, arbitrary decoded Wyner and explicit 2-component correlated source, 3*n raw cost.')
+          print('PASS: genuine Route1 scalar simulation terminal with 3 raw sensor reads per queried block.')
+          print('SCOPE: well-formed finite coordinate-oracle circuits, scalar acceptance and valid physical phase tables; no priority claim.')
+          PY
+      - name: Source, compiler and Mathlib receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/phase-block-terminal
+          git rev-parse HEAD > receipts/phase-block-terminal/source-head.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/phase-block-terminal/mathlib-head.txt
+          cat lean-toolchain > receipts/phase-block-terminal/compiler-pin.txt
+          sha256sum research/nightfall/formalization/structural_information/PhaseBlock{Route1,Grouping,QuantumDegree,TreeCompiler,Route1Terminal,ActualCircuit,WellFormed}.lean > receipts/phase-block-terminal/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: phase-block-route1-terminal-${{ github.run_id }}
+          path: receipts/phase-block-terminal
+          retention-days: 90
+
