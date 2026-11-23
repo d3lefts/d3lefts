@@ -1,4 +1,5 @@
 import Route1Lift
+import MixedDifferenceDegree
 
 /-!
 # NIGHTFALL QW: reference-marginal-preserving finite star coupling
@@ -144,8 +145,94 @@ theorem reference_variance
   simpa only [pvar] using
     reference_pushforward q κ href (fun x => (f x - pexp q f) ^ 2)
 
+
+
+/-- Updating one independent seed also updates exactly its reference letter. -/
+theorem reference_update (u : ι → Seed α Θ) (j : ι)
+    (v : Seed α Θ) :
+    refOf (Function.update u j v) = Function.update (refOf u) j v.1 := by
+  funext i
+  by_cases h : i = j
+  · subst i
+    simp [refOf]
+  · simp [refOf, Function.update_of_ne h]
+
+/-- Averaging a source-coordinate seed commutes with the exact reference
+marginal. This is the missing heat-bath operator interface for QW. -/
+theorem reference_pavg
+    (q : ι → α → ℝ) (κ : ι → Seed α Θ → ℝ)
+    (href : HasReferenceMarginal q κ)
+    (f : (ι → α) → ℝ) (j : ι) (u : ι → Seed α Θ) :
+    pavg κ j (fun v => f (refOf v)) u =
+      pavg q j f (refOf u) := by
+  unfold pavg
+  simp_rw [reference_update]
+  have hfactor :
+    (∑ v : Seed α Θ, κ j v *
+      f (Function.update (refOf u) j v.1)) =
+    ∑ a : α,
+      (∑ v ∈ univ.filter (fun v : Seed α Θ => v.1 = a), κ j v) *
+        f (Function.update (refOf u) j a) := by
+    calc
+      (∑ v : Seed α Θ, κ j v * f (Function.update (refOf u) j v.1)) =
+        ∑ a : α, ∑ v ∈ univ.filter (fun v : Seed α Θ => v.1 = a),
+          κ j v * f (Function.update (refOf u) j a) := by
+        rw [← Finset.sum_fiberwise univ (fun v : Seed α Θ => v.1)]
+        apply Finset.sum_congr rfl
+        intro a _
+        apply Finset.sum_congr rfl
+        intro v hv
+        rw [(Finset.mem_filter.mp hv).2]
+      _ = ∑ a : α,
+        (∑ v ∈ univ.filter (fun v : Seed α Θ => v.1 = a), κ j v) *
+          f (Function.update (refOf u) j a) := by
+        apply Finset.sum_congr rfl
+        intro a _
+        rw [Finset.sum_mul]
+  rw [hfactor]
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [reference_filtered_mass q κ href j a]
+
+/-- Exact reference heat-bath energy is the original product Q influence,
+not merely an unrelated seed-coordinate influence. -/
+theorem reference_source_influence
+    (q : ι → α → ℝ) (κ : ι → Seed α Θ → ℝ)
+    (hq1 : ∀ j, ∑ a, q j a = 1)
+    (hκ1 : ∀ j, ∑ v, κ j v = 1)
+    (href : HasReferenceMarginal q κ)
+    (f : (ι → α) → ℝ) (j : ι) :
+    pinfl κ (fun u => f (refOf u)) j = pinfl q f j := by
+  have hseed :
+      pinfl κ (fun u => f (refOf u)) j =
+        ∑ u : ι → Seed α Θ, prodMass κ u *
+          (f (refOf u) -
+            pavg κ j (fun v => f (refOf v)) u) ^ 2 := by
+    have h := Nightfall.ProductSpace.MixedDifference.dinfl_eq_heatBath
+      (q := κ) hκ1 (fun u => f (refOf u)) j
+    change pinfl κ (fun u => f (refOf u)) j =
+      ∑ u : ι → Seed α Θ, prodMass κ u *
+        (f (refOf u) -
+          pavg κ j (fun v => f (refOf v)) u) ^ 2 at h
+    exact h
+  have hreference :
+      pinfl q f j = ∑ x : ι → α, prodMass q x *
+        (f x - pavg q j f x) ^ 2 := by
+    have h := Nightfall.ProductSpace.MixedDifference.dinfl_eq_heatBath
+      (q := q) hq1 f j
+    change pinfl q f j = ∑ x : ι → α, prodMass q x *
+      (f x - pavg q j f x) ^ 2 at h
+    exact h
+  rw [hseed]
+  simp_rw [reference_pavg q κ href f j]
+  exact (reference_pushforward q κ href
+    (fun x => (f x - pavg q j f x) ^ 2)).trans hreference.symm
+
 #print axioms Nightfall.QuadraticWynerReferenceCoupling.exact_reference_seed_coupling_exists
 #print axioms Nightfall.QuadraticWynerReferenceCoupling.reference_filtered_mass
 #print axioms Nightfall.QuadraticWynerReferenceCoupling.reference_pushforward
 #print axioms Nightfall.QuadraticWynerReferenceCoupling.reference_variance
+#print axioms Nightfall.QuadraticWynerReferenceCoupling.reference_update
+#print axioms Nightfall.QuadraticWynerReferenceCoupling.reference_pavg
+#print axioms Nightfall.QuadraticWynerReferenceCoupling.reference_source_influence
 end Nightfall.QuadraticWynerReferenceCoupling
