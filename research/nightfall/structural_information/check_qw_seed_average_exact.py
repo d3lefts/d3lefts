@@ -103,7 +103,7 @@ def run():
             total += 1
             coordinate_checks += n*2
         print('PASS n =',n,'cases =',count)
-    assert total == 490 and coordinate_checks == 1310
+    assert total == 490 and coordinate_checks == 2620
     print('PASS',total,'independent exact mixture tests,',mismatch,
           'nonzero Delta,',coordinate_checks,'quadratic/Jensen coordinate checks')
     print('SHA256 audit outcomes',digest.hexdigest())

@@ -136,7 +136,8 @@ theorem seed_average_pinfl_le_original
     dsimp [μ]
     have hu : 0 ≤ prodMass κ z.1 :=
       Finset.prod_nonneg (fun i _ => hκ.nonneg i (z.1 i))
-    positivity
+    have hv : 0 ≤ κ j z.2 := hκ.nonneg j z.2
+    exact div_nonneg (mul_nonneg hu hv) (by norm_num)
   have hleft :
       pinfl κ (seedAverage π g) j =
       ∑ z : Ω, μ z * (labelAverage π D z) ^ 2 := by

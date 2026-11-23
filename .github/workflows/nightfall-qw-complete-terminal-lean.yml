@@ -1,0 +1,109 @@
+name: NIGHTFALL QW+ complete source kernel terminal
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuadraticWyner*.lean'
+      - '.github/workflows/nightfall-qw-complete-terminal-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: qw-complete-PR-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  complete-source-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Recompile original AA and Q2 source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/qw-complete
+          git rev-parse HEAD | tee receipts/qw-complete/commit.txt
+          cat lean-toolchain | tee receipts/qw-complete/compiler.txt
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1 || { cat "/tmp/log-$M.txt"; exit 1; }
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Recompile original Route1/Wyner and all QW+ source in dependency order
+        shell: bash
+        run: |
+          set -euo pipefail
+          base=research/nightfall/formalization/product_space
+          for M in Route1LatentDegree Route1DegreeSourceBridge \
+                   Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift \
+                   Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral \
+                   QuadraticWynerLabelProjection QuadraticWynerSeedAverage \
+                   QuadraticWynerSeedResampling QuadraticWynerQ2SourceBridge \
+                   QuadraticWynerQuadraticProgress QuadraticWynerGoodQuery \
+                   QuadraticWynerParametric QuadraticWynerTerminal; do
+            src="$base/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/qw-complete/$M.log" 2>&1 ||
+                { cat "receipts/qw-complete/$M.log"; exit 1; }
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/qw-complete/$M.log"
+          done
+      - name: Mandatory final terminal kernel replay, no fallback
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerTerminal) \
+              2>&1 | tee receipts/qw-complete/kernel.log
+      - name: Named full-terminal and standard-axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          d=Path('receipts/qw-complete')
+          required={
+            'QuadraticWynerLabelProjection':('Nightfall.QuadraticWynerLabelProjection',['weighted_total_variance','variance_survives_latent_averaging']),
+            'QuadraticWynerSeedAverage':('Nightfall.QuadraticWynerSeedAverage',['seed_average_degree','seed_average_variance_survival']),
+            'QuadraticWynerSeedResampling':('Nightfall.QuadraticWynerSeedResampling',['pinfl_compOf_exact','seed_average_pinfl_le_original']),
+            'QuadraticWynerQ2SourceBridge':('Nightfall.QuadraticWynerQ2SourceBridge',['quadratic_product_influence_on_route1_source']),
+            'QuadraticWynerQuadraticProgress':('Nightfall.QuadraticWynerQuadraticProgress',['quadratic_original_increment_from_seed_variance']),
+            'QuadraticWynerGoodQuery':('Nightfall.QuadraticWynerGoodQuery',['quadratic_crux','good_exists_wyner_quadratic']),
+            'QuadraticWynerParametric':('Nightfall.Route1Polylog',['route1_wyner_from_verified_good']),
+            'QuadraticWynerTerminal':('Nightfall.Route1Polylog',['quadratic_wyner_simulation','quadratic_wyner_CI','quadratic_wyner_general',
+                  'quadratic_cost_rewrite','quadratic_wyner_general_explicit'])}
+          for module,(namespace,names) in required.items():
+              log=(d/(module+'.log')).read_text()
+              assert 'sorryAx' not in log,module
+              for suffix in names:
+                  declaration=namespace+'.'+suffix
+                  m=re.search(r"'"+re.escape(declaration)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+                  if m:
+                      ax={s.strip() for s in m.group(1).split(',') if s.strip()}
+                  else:
+                      assert "'"+declaration+"' does not depend on any axioms" in log,declaration
+                      ax=set()
+                  assert ax <= {'propext','Classical.choice','Quot.sound'},(declaration,ax)
+                  print(declaration,sorted(ax))
+          print('FULL QW+ source terminal: accepted kernel, no nonstandard axioms')
+          PY
+      - name: Preserve exact source and compiler receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/qw-complete
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/qw-complete/mathlib-head.txt || true
+          sha256sum research/nightfall/formalization/product_space/QuadraticWyner*.lean > receipts/qw-complete/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: nightfall-qw-full-terminal
+          path: receipts/qw-complete
+          retention-days: 90

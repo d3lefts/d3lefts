@@ -23,6 +23,7 @@ open Finset
 open Nightfall.Route1Polylog
 open Nightfall.ProductSpace.Influence
 open Nightfall.ProductSpace.Transfer
+open Nightfall.ProductSpace.Mixture
 
 variable {ι α : Type} [Fintype ι] [DecidableEq ι]
   [Fintype α] [DecidableEq α] [Nonempty α]
@@ -142,7 +143,7 @@ theorem reference_variance
     ∑ u : ι → Seed α Θ,
       seedMass κ u * (f (refOf u) - pexp q f) ^ 2 =
       pvar q f := by
-  simpa only [pvar] using
+  simpa only [pvar, pexp] using
     reference_pushforward q κ href (fun x => (f x - pexp q f) ^ 2)
 
 
