@@ -20,6 +20,12 @@ on:
       - ".github/workflows/nightfall-strict-lean-custody.yml"
   workflow_dispatch:
 
+concurrency:
+  # Superseded PR revisions must not monopolize hosted runners.
+  # Workflow-scoped groups retain independent proof checks.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 
