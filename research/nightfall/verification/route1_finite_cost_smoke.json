@@ -1,0 +1,37 @@
+{
+  "schema": "nightfall.finite-conditional-query-cost/v1",
+  "scope": "finite-conditional-query-tree",
+  "assumptions": [
+    "Every query node incurs its stated oracle_calls charge",
+    "Each p_yes is the conditional probability given the entire reached history",
+    "The finite tree halts on every branch and no physical-oracle equivalence is claimed"
+  ],
+  "physical_oracle_equivalence_proven": false,
+  "branch_probability_model_proven": false,
+  "algorithm_correctness_proven": false,
+  "general_query_simulation_proven": false,
+  "tree": {
+    "kind": "query",
+    "oracle_calls": 1,
+    "p_yes": "1/2",
+    "yes": {
+      "kind": "leaf",
+      "outcome": "yes"
+    },
+    "no": {
+      "kind": "query",
+      "oracle_calls": 1,
+      "p_yes": "1/2",
+      "yes": {
+        "kind": "leaf",
+        "outcome": "no-yes"
+      },
+      "no": {
+        "kind": "leaf",
+        "outcome": "no-no"
+      }
+    }
+  },
+  "expected_upper_bound": "3/2",
+  "worst_upper_bound": 2
+}
