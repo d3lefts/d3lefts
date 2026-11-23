@@ -42,6 +42,7 @@ noncomputable def actual_local_graph_chart
     (hshape : ∀ z ∈ V,
       (z ∈ s ↔ z.1 ∈ U ∧ z.2 = g z.1))
     (x₀ : s) : OpenPartialHomeomorph s A := by
+  classical
   let S : Set s := graphSource s V
   let T : Set A := graphTarget U V g
   have hSopen : IsOpen S := hV.preimage continuous_subtype_val
@@ -60,10 +61,11 @@ noncomputable def actual_local_graph_chart
   let inv : A → s := fun a =>
     if ha : a ∈ T then fromTarget ⟨a, ha⟩ else x₀
   have hInvContinuous : ContinuousOn inv T := by
-    apply (continuousOn_iff_continuous_restrict).mpr
+    apply (continuousOn_iff_continuous_domRestrict).mpr
     have heq : (fun a : T => inv a.val) = fromTarget := by
       funext a
       simp [inv, a.2]
+    change Continuous (fun a : T => inv a.val)
     rw [heq]
     exact hfromTarget
   have hToContinuous : Continuous (fun z : s => z.val.1) :=
@@ -77,20 +79,32 @@ noncomputable def actual_local_graph_chart
         target := T
         map_source' := by
           intro x hx
+          change x.val ∈ V at hx
           have hsx := (hshape x.val hx).mp x.property
           refine ⟨hsx.1, ?_⟩
-          simpa [hsx.2] using hx
+          change (x.val.1, g x.val.1) ∈ V
+          have hpair : (x.val.1, g x.val.1) = x.val :=
+            Prod.ext rfl hsx.2.symm
+          rw [hpair]
+          exact hx
         map_target' := by
           intro a ha
-          change inv a ∈ S
-          simp [inv, ha, S, graphSource, fromTarget]
+          change (inv a).val ∈ V
+          have hinv : inv a = fromTarget ⟨a, ha⟩ := by
+            simp [inv, ha]
+          rw [hinv]
           exact ha.2
         left_inv' := by
           intro x hx
+          change x.val ∈ V at hx
           have hsx := (hshape x.val hx).mp x.property
           have ht : x.val.1 ∈ T := by
             refine ⟨hsx.1, ?_⟩
-            simpa [hsx.2] using hx
+            change (x.val.1, g x.val.1) ∈ V
+            have hpair : (x.val.1, g x.val.1) = x.val :=
+              Prod.ext rfl hsx.2.symm
+            rw [hpair]
+            exact hx
           change inv x.val.1 = x
           rw [show inv x.val.1 = fromTarget ⟨x.val.1, ht⟩ by simp [inv, ht]]
           apply Subtype.ext
