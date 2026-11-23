@@ -4,6 +4,7 @@ on:
     paths:
       - "research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md"
       - "research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py"
+      - "research/nightfall/structural_information/check_qw_vs_939_same_model.py"
       - ".github/workflows/nightfall-quadratic-wyner-exact.yml"
   pull_request:
     paths:
@@ -23,6 +24,7 @@ jobs:
         run: |
           python3 -m py_compile research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py
           python3 research/nightfall/structural_information/check_quadratic_wyner_bridge_exact.py
+          python3 research/nightfall/structural_information/check_qw_vs_939_same_model.py
       - name: Scope gate (not an all-dimensional Lean certificate)
         run: |
           grep -F "NOT yet Lean-certified" research/nightfall/structural_information/QUADRATIC_WYNER_SIMULATION_THEOREM_20261122.md
