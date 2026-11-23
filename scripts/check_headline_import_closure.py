@@ -15,7 +15,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = "research/nightfall/verification/HEADLINE_TRUST_BOUNDARIES_V1.json"
-PIN_FILES = {"lean-toolchain", "lakefile.toml", "lakefile.lean", "docs/lean-compiler-lock.json"}
+PIN_FILES = {"lean-toolchain", "lakefile.toml", "lakefile.lean", "docs/lean-compiler-lock.json",
+             "scripts/lean_bridge.py", "scripts/external_lean_comparator.py",
+             ".github/actions/setup-nightfall-lean/action.yml"}
 
 
 def header_imports(source: str) -> list[str]:
