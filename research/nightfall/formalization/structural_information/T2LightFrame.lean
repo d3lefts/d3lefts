@@ -41,7 +41,7 @@ theorem orthonormal_light_frame_energy
     intro i hi
     have hi' := hr i hi
     rw [inner_smul_left]
-    simp only [norm_mul, norm_conj, mul_pow]
+    simp only [norm_mul, norm_star, mul_pow]
     exact mul_le_mul_of_nonneg_right hi' (sq_nonneg _)
   calc
     (∑ i ∈ s, ‖inner ℂ (r i • v i) x‖ ^ 2) ≤
