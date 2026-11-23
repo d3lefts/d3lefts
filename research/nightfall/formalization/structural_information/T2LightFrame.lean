@@ -34,22 +34,22 @@ theorem orthonormal_light_frame_energy
     (heta : 0 ≤ eta)
     (hr : ∀ i ∈ s, ‖r i‖ ^ 2 ≤ eta)
     (x : E) :
-    (∑ i ∈ s, ‖⟪r i • v i, x⟫_ℂ‖ ^ 2) ≤ eta * ‖x‖ ^ 2 := by
+    (∑ i ∈ s, ‖inner ℂ (r i • v i) x‖ ^ 2) ≤ eta * ‖x‖ ^ 2 := by
   have hterm : ∀ i ∈ s,
-      ‖⟪r i • v i, x⟫_ℂ‖ ^ 2 ≤
-          eta * ‖⟪v i, x⟫_ℂ‖ ^ 2 := by
+      ‖inner ℂ (r i • v i) x‖ ^ 2 ≤
+          eta * ‖inner ℂ (v i) x‖ ^ 2 := by
     intro i hi
     have hi' := hr i hi
     rw [inner_smul_left]
     simp only [norm_mul, norm_conj, mul_pow]
     exact mul_le_mul_of_nonneg_right hi' (sq_nonneg _)
   calc
-    (∑ i ∈ s, ‖⟪r i • v i, x⟫_ℂ‖ ^ 2) ≤
-        ∑ i ∈ s, eta * ‖⟪v i, x⟫_ℂ‖ ^ 2 := by
+    (∑ i ∈ s, ‖inner ℂ (r i • v i) x‖ ^ 2) ≤
+        ∑ i ∈ s, eta * ‖inner ℂ (v i) x‖ ^ 2 := by
       apply Finset.sum_le_sum
       intro i hi
       exact hterm i hi
-    _ = eta * (∑ i ∈ s, ‖⟪v i, x⟫_ℂ‖ ^ 2) := by
+    _ = eta * (∑ i ∈ s, ‖inner ℂ (v i) x‖ ^ 2) := by
       rw [Finset.mul_sum]
     _ ≤ eta * ‖x‖ ^ 2 := by
       exact mul_le_mul_of_nonneg_left (hv.sum_inner_products_le x) heta
