@@ -41,8 +41,10 @@ theorem orthonormal_light_frame_energy
     intro i hi
     have hi' := hr i hi
     rw [inner_smul_left]
-    simp only [norm_mul, norm_star, mul_pow]
-    exact mul_le_mul_of_nonneg_right hi' (sq_nonneg _)
+    simp only [norm_mul, mul_pow]
+    simpa only [starRingEnd_apply, norm_star] using
+      (mul_le_mul_of_nonneg_right hi'
+        (sq_nonneg (‖inner ℂ (v i) x‖)))
   calc
     (∑ i ∈ s, ‖inner ℂ (r i • v i) x‖ ^ 2) ≤
         ∑ i ∈ s, eta * ‖inner ℂ (v i) x‖ ^ 2 := by
