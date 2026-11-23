@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'research/nightfall/formalization/structural_information/AffineWyner*.lean'
+      - 'scripts/check_affine_wyner_free_fibers.py'
       - '.github/workflows/nightfall-affine-wyner-fiber-count-lean.yml'
       - 'docs/lean-pending-source-custody.json'
   workflow_dispatch:
