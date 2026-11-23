@@ -1,0 +1,69 @@
+name: NIGHTFALL QW original-product Q2 source bridge Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuadraticWynerQ2SourceBridge.lean'
+      - '.github/workflows/nightfall-qw-q2-source-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  q2-original-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Rebuild exact original-source dependency closure (never trust archived oleans)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/qw-q2
+          python3 scripts/generate_nightfall_lake.py --check
+          LEAN_NUM_THREADS=1 lake build Nightfall 2>&1 | tee receipts/qw-q2/full-closure.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/qw-q2/full-closure.log
+      - name: Compile Route 1 original-source Q2 interface
+        shell: bash
+        run: |
+          set -euo pipefail
+          M=QuadraticWynerQ2SourceBridge
+          SRC=research/nightfall/formalization/product_space/$M.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$SRC"
+          LEAN_NUM_THREADS=1 lake env lean -o .lake/build/lib/lean/$M.olean "$SRC" 2>&1 | tee receipts/qw-q2/q2-source.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/qw-q2/q2-source.log
+      - name: Independent kernel and trusted axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerQ2SourceBridge 2>&1 | tee receipts/qw-q2/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path('receipts/qw-q2/q2-source.log').read_text()
+          for suffix in ('route1_influence_eq_q2_source','route1_variance_eq_q2_source','quadratic_product_influence_on_route1_source'):
+              name='Nightfall.QuadraticWynerQ2SourceBridge.'+suffix
+              m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m: ax={x.strip() for x in m.group(1).split(',') if x.strip()}
+              else:
+                  assert "'"+name+"' does not depend on any axioms" in log,name
+                  ax=set()
+              assert ax <= {'propext','Classical.choice','Quot.sound'},(name,ax)
+          assert 'sorryAx' not in log
+          print('PASS source-concrete original-product Q2 interface; NOT QW correlated-source theorem')
+          PY
+      - name: Immutable receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/qw-q2
+          git rev-parse HEAD > receipts/qw-q2/commit.txt
+          cat lean-toolchain > receipts/qw-q2/compiler.txt
+          sha256sum research/nightfall/formalization/product_space/QuadraticWynerQ2SourceBridge.lean > receipts/qw-q2/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: qw-q2-source-${{ github.run_id }}
+          path: receipts/qw-q2
+          retention-days: 90
