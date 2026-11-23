@@ -20,6 +20,25 @@ open Finset
 
 variable {X : Type*} [Fintype X] [DecidableEq X]
 
+/-- Reindex a finite sum onto a subtype, provided its summand vanishes
+outside the subtype. This avoids any assumption of positive atom masses. -/
+private theorem sum_on_support (S : Set X) [Fintype S]
+    (g : X → ℝ) (hg : ∀ x, x ∉ S → g x = 0) :
+    (∑ z : S, g z.1) = ∑ x : X, g x := by
+  classical
+  calc
+    (∑ z : S, g z.1) =
+        ∑ x ∈ (Finset.univ : Finset X).filter (fun x => x ∈ S), g x := by
+          simpa using (Finset.sum_subtype_eq_sum_filter
+            (s := (Finset.univ : Finset X))
+            (p := fun x => x ∈ S) g)
+    _ = ∑ x : X, g x := by
+          exact Finset.sum_filter_of_ne (s := (Finset.univ : Finset X))
+            (f := g) (p := fun x => x ∈ S) (by
+              intro x _ hx
+              by_contra hnot
+              exact hx (hg x hnot))
+
 theorem entropy_supported_le_log_card
     (S : Set X) [Fintype S] [Nonempty S]
     (p : X → ℝ)
@@ -32,13 +51,8 @@ theorem entropy_supported_le_log_card
   have hw0 : ∀ z : S, 0 ≤ w z := fun z => hp0 z.1
   have hw1 : ∑ z : S, w z = 1 := by
     calc
-      (∑ z : S, w z) = ∑ x : X, p x := by
-        symm
-        apply Finset.sum_congr_set S (fun x => p x) w
-        · intro x hx
-          rfl
-        · intro x hx
-          exact hsupport x hx
+      (∑ z : S, w z) = ∑ x : X, p x :=
+        sum_on_support S p hsupport
       _ = 1 := hp1
   have hM : (0 : ℝ) < Fintype.card S := Nat.cast_pos.mpr Fintype.card_pos
   have hcon := Real.concaveOn_negMulLog.le_map_sum (t := univ)
@@ -58,13 +72,10 @@ theorem entropy_supported_le_log_card
   calc
     (∑ x : X, negMulLog (p x)) =
         ∑ z : S, negMulLog (w z) := by
-      apply Finset.sum_congr_set S
-          (fun x => negMulLog (p x))
-          (fun z : S => negMulLog (w z))
-      · intro x hx
-        rfl
-      · intro x hx
-        simp [hsupport x hx]
+      symm
+      exact sum_on_support S (fun x => negMulLog (p x)) (by
+        intro x hx
+        simp [hsupport x hx])
     _ ≤ Real.log (Fintype.card S) := hbound
 
 end Nightfall.AffineWyner
