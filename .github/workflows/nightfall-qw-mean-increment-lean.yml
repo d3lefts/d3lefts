@@ -1,0 +1,85 @@
+name: NIGHTFALL QW all-degree original-coordinate increment Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean'
+      - '.github/workflows/nightfall-qw-mean-increment-lean.yml'
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+permissions:
+  contents: read
+jobs:
+  actual-original-increment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned product source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/qw-mi
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile real Route1 and seed-degree and original increment bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
+                   QuadraticWynerLabelProjection QuadraticWynerSeedAverage QuadraticWynerSeedResampling \
+                   QuadraticWynerMeanIncrementProgress; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/qw-mi/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/qw-mi/$M.log"
+          done
+      - name: Strict kernel replay and named theorem/axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerMeanIncrementProgress) 2>&1 | tee receipts/qw-mi/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/qw-mi/QuadraticWynerMeanIncrementProgress.log').read_text()
+          for suffix in ('pincr_compOf_exact','seed_average_pincr_le_original','original_pincr_inv',
+                         'mean_increment_original_source_energy'):
+              name='Nightfall.QuadraticWynerMeanIncrementProgress.'+suffix
+              m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              if m: ax={x.strip() for x in m.group(1).split(',') if x.strip()}
+              else:
+                  assert "'"+name+"' does not depend on any axioms" in s,name
+                  ax=set()
+              assert ax <= {'propext','Classical.choice','Quot.sound'},(name,ax)
+          assert 'sorryAx' not in s
+          print('PASS full original-physical-coordinate powered mean increment; not yet QW DTree')
+          PY
+      - name: Save exact head and dependency receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/qw-mi
+          git rev-parse HEAD > receipts/qw-mi/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/qw-mi/mathlib.txt || true
+          cat lean-toolchain > receipts/qw-mi/compiler.txt
+          sha256sum research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean > receipts/qw-mi/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: qw-mi-${{ github.run_id }}
+          path: receipts/qw-mi
+          retention-days: 90
