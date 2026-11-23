@@ -25,7 +25,7 @@ measure. Exact, even when some latent or sample atoms have zero mass.
 This is the source-independent influence comparison before pushing a
 component seed resampling back to its original product law. -/
 theorem finite_weighted_jensen_transport
-    {Θ Ω : Type*} [Fintype Θ] [Fintype Ω]
+    {Θ Ω : Type} [Fintype Θ] [Fintype Ω]
     (π : Θ → ℝ) (hπ0 : ∀ θ, 0 ≤ π θ)
     (hπ1 : ∑ θ, π θ = 1)
     (μ : Ω → ℝ) (hμ0 : ∀ ω, 0 ≤ μ ω)
