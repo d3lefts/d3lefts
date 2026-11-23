@@ -1,0 +1,73 @@
+name: NIGHTFALL genuine product BU time-boundary halfspace graph chart Lean
+on:
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUTimeHalfspaceChart.lean"
+      - ".github/workflows/nightfall-bu-time-halfspace-chart.yml"
+      - "docs/lean-pending-source-custody.json"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bu-time-halfspace-chart-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  actual-halfspace-chart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile actual graph chart then exact boundary halfspace chart
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-time-halfspace
+          for M in ProductBULocalGraphChart ProductBUTimeHalfspaceChart; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-time-halfspace/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-time-halfspace/$M.log"
+          done
+      - name: Exact named theorem and ordinary axiom audit
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          items=[
+            ("ProductBULocalGraphChart","Nightfall.ProductBULocalGraphChart.actual_local_graph_chart"),
+            ("ProductBUTimeHalfspaceChart","Nightfall.ProductBUTimeHalfspaceChart.actual_time_graph_halfspace_chart"),
+          ]
+          for file,name in items:
+              s=Path(f"receipts/bu-time-halfspace/{file}.log").read_text()
+              assert name in s,("MISSING_DECLARATION",name)
+              m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              if m:
+                  a={x.strip() for x in m[1].split(",") if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in s, ("MISSING_AXIOM_RECEIPT",name)
+                  a=set()
+              assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+              assert "sorryAx" not in s
+              print("PASS",name,"axioms",sorted(a))
+          print("SCOPE: concrete partial-homeomorphism to EuclideanHalfSpace 1 on a TRUE time-slab local graph.")
+          print("OPEN: actual global product-sphere zero-fiber graph coverage, C-infinity overlap and generic Sard.")
+          PY
+      - name: Preserve source custody and source pin
+        if: always()
+        run: |
+          mkdir -p receipts/bu-time-halfspace
+          git rev-parse HEAD > receipts/bu-time-halfspace/NIGHTFALL-HEAD.txt
+          cat lean-toolchain > receipts/bu-time-halfspace/LEAN-TOOLCHAIN.txt
+          sha256sum research/nightfall/formalization/finite_field/{ProductBULocalGraphChart,ProductBUTimeHalfspaceChart}.lean > receipts/bu-time-halfspace/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-time-halfspace-lean-receipt
+          path: receipts/bu-time-halfspace
+          retention-days: 90
