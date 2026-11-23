@@ -139,12 +139,22 @@ theorem finite_markov_actual_legal_queries
   have hthird : (∑ s : S, z s ^ 2) ≤
       (Fintype.card S : ℝ) * eps ^ 2 * delta := by
     simpa only [z] using henergy
-  apply (mul_le_mul_right (pow_pos heps 2)).mp
-  calc
-    (B.card : ℝ) * eps ^ 2 ≤ ∑ s ∈ B, z s ^ 2 := hfirst
-    _ ≤ ∑ s : S, z s ^ 2 := hsecond
-    _ ≤ (Fintype.card S : ℝ) * eps ^ 2 * delta := hthird
-    _ = ((Fintype.card S : ℝ) * delta) * eps ^ 2 := by ring
+  have hmul :
+      (B.card : ℝ) * eps ^ 2 ≤
+        ((Fintype.card S : ℝ) * delta) * eps ^ 2 := by
+    calc
+      (B.card : ℝ) * eps ^ 2 ≤ ∑ s ∈ B, z s ^ 2 := hfirst
+      _ ≤ ∑ s : S, z s ^ 2 := hsecond
+      _ ≤ (Fintype.card S : ℝ) * eps ^ 2 * delta := hthird
+      _ = ((Fintype.card S : ℝ) * delta) * eps ^ 2 := by ring
+  by_contra hn
+  have hstrict : (Fintype.card S : ℝ) * delta < (B.card : ℝ) :=
+    lt_of_not_ge hn
+  have hpositive :
+      0 < ((B.card : ℝ) - (Fintype.card S : ℝ) * delta) *
+          eps ^ 2 :=
+    mul_pos (sub_pos.mpr hstrict) (pow_pos heps 2)
+  nlinarith
 
 #print axioms Nightfall.StructuralInformation.T2HeavyQuery.heavy_query_mass_budget
 #print axioms Nightfall.StructuralInformation.T2HeavyQuery.heavy_query_card_real
