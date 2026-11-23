@@ -6,6 +6,10 @@ on:
       - 'scripts/reconcile_stale_queued_ci.py'
       - '.github/workflows/nightfall-reconcile-stale-queued.yml'
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/reconcile_stale_queued_ci.py'
+      - '.github/workflows/nightfall-reconcile-stale-queued.yml'
 permissions:
   contents: read
   pull-requests: read
@@ -14,8 +18,24 @@ concurrency:
   group: nightfall-safe-queue-reconciliation
   cancel-in-progress: false
 jobs:
+  validate-guard:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Compile and test all safe queue classifications
+        run: |
+          python3 -m py_compile scripts/reconcile_stale_queued_ci.py
+          python3 - <<'PY'
+          import importlib.util
+          spec=importlib.util.spec_from_file_location("reconcile","scripts/reconcile_stale_queued_ci.py")
+          module=importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          module.self_test()
+          PY
   cancel-stale-only:
-    if: github.repository == 'd3lefts/d3lefts'
+    if: github.repository == 'd3lefts/d3lefts' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
