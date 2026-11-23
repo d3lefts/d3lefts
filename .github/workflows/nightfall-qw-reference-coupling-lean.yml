@@ -1,0 +1,77 @@
+name: NIGHTFALL QW exact reference-marginal coupling Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuadraticWynerReferenceCoupling.lean'
+      - '.github/workflows/nightfall-qw-reference-coupling-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  full-star:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Rebuild original product-space closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/qw-reference
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile finite original-source Route 1 and exact reference star
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift \
+                   QuadraticWynerReferenceCoupling; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/qw-reference/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/qw-reference/$M.log"
+          done
+      - name: Mandatory kernel replay and trusted axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuadraticWynerReferenceCoupling) 2>&1 | tee receipts/qw-reference/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/qw-reference/QuadraticWynerReferenceCoupling.log').read_text()
+          name='Nightfall.QuadraticWynerReferenceCoupling.exact_reference_seed_coupling_exists'
+          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          if m: ax={x.strip() for x in m.group(1).split(',') if x.strip()}
+          else:
+              assert "'"+name+"' does not depend on any axioms" in s,name
+              ax=set()
+          assert ax <= {'propext','Classical.choice','Quot.sound'},(name,ax)
+          assert 'sorryAx' not in s
+          print('PASS strengthened reference marginal; NOT complete QW')
+          PY
+      - name: Exact source receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/qw-reference
+          git rev-parse HEAD > receipts/qw-reference/commit.txt
+          sha256sum research/nightfall/formalization/product_space/QuadraticWynerReferenceCoupling.lean > receipts/qw-reference/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: qw-reference-${{ github.run_id }}
+          path: receipts/qw-reference
+          retention-days: 90
