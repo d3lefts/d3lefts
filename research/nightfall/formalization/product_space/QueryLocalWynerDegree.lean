@@ -71,12 +71,12 @@ theorem degree_local_pullback
         a T τ * Nightfall.Route1LatentDegree.indMono T τ (Φ z)) (b*d) := by
     intro T τ
     by_cases hT : T.card ≤ d
-    · apply degree_of_supported (T.biUnion S) _ _
+    · exact degree_of_supported (T.biUnion S) _
+        (pulled_indicator_supported Φ S hlocal T τ (a T τ))
         (b*d) (by
           calc
             (T.biUnion S).card ≤ b*T.card := locality_card_le S b hb T
             _ ≤ b*d := Nat.mul_le_mul_left b hT)
-      exact pulled_indicator_supported Φ S hlocal T τ (a T τ)
     · have hzero : a T τ = 0 := ha0 T (by omega) τ
       simpa [hzero] using
         (degree_zero (ι := J) (α := A) (b*d))
