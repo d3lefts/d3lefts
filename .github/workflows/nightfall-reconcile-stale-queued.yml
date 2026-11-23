@@ -1,0 +1,37 @@
+name: NIGHTFALL reconcile superseded queued PR runs
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/reconcile_stale_queued_ci.py'
+      - '.github/workflows/nightfall-reconcile-stale-queued.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: read
+  actions: write
+concurrency:
+  group: nightfall-safe-queue-reconciliation
+  cancel-in-progress: false
+jobs:
+  cancel-stale-only:
+    if: github.repository == 'd3lefts/d3lefts'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Syntax and fail-closed classification tests
+        run: |
+          python3 -m py_compile scripts/reconcile_stale_queued_ci.py
+          python3 - <<'PY'
+          import importlib.util
+          s=importlib.util.spec_from_file_location("s","scripts/reconcile_stale_queued_ci.py")
+          m=importlib.util.module_from_spec(s); s.loader.exec_module(m)
+          m.self_test()
+          PY
+      - name: Cancel stale queued PR checks without touching the current head
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/reconcile_stale_queued_ci.py --execute
