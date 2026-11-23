@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - "research/nightfall/formalization/finite_field/ProductBUPhysicalTimeSlab.lean"
+      - "research/nightfall/formalization/finite_field/ProductBUTimeZeroFromIFT.lean"
       - "research/nightfall/formalization/finite_field/ProductBUTimeHalfspaceChart.lean"
       - "research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean"
       - ".github/workflows/nightfall-bu-physical-time-slab.yml"
@@ -26,7 +27,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p receipts/bu-physical-time-slab
-          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBULocalGraphChart ProductBUTimeHalfspaceChart ProductBUPhysicalTimeSlab; do
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBULocalGraphChart ProductBUTimeHalfspaceChart ProductBUPhysicalTimeSlab ProductBUTimeOrientedIFT ProductBUTimeZeroFromIFT; do
             src="research/nightfall/formalization/finite_field/$M.lean"
             ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
             cp "$src" "/tmp/mathlib4/$M.lean"
@@ -38,11 +39,11 @@ jobs:
           python3 - <<'PY'
           import re
           from pathlib import Path
-          file="ProductBUPhysicalTimeSlab"
-          s=Path(f"receipts/bu-physical-time-slab/{file}.log").read_text()
+          s="\n".join(p.read_text() for p in Path("receipts/bu-physical-time-slab").glob("ProductBU*.log"))
           for name in [
             "Nightfall.ProductBUPhysicalTimeSlab.physicalTimeSlabHomeomorph",
             "Nightfall.ProductBUPhysicalTimeSlab.physical_time_zero_halfspace_chart",
+            "Nightfall.ProductBUTimeZeroFromIFT.exists_actual_time_zero_halfspace_chart",
           ]:
             assert name in s,("MISSING_NAMED_DECLARATION",name)
             m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
@@ -54,7 +55,7 @@ jobs:
             assert "sorryAx" not in s
             print("PASS",name,"ordinary axioms",sorted(axioms))
           print("SCOPE: exact physical zero fiber and local time-zero halfspace chart under graph premises.")
-          print("OPEN: interior regular charts, every-point physical covering, C-infinity compatibility, concrete Sard.")
+          print("OPEN: interior turning-point charts, global covering, C-infinity compatibility, concrete Sard.")
           PY
       - name: Preserve exact head hashes
         if: always()
@@ -62,7 +63,7 @@ jobs:
           mkdir -p receipts/bu-physical-time-slab
           git rev-parse HEAD > receipts/bu-physical-time-slab/NIGHTFALL-HEAD.txt
           cat lean-toolchain > receipts/bu-physical-time-slab/LEAN-TOOLCHAIN.txt
-          sha256sum research/nightfall/formalization/finite_field/{ProductBUPhysicalTimeSlab,ProductBUTimeHalfspaceChart,ProductBULocalGraphChart}.lean > receipts/bu-physical-time-slab/SHA256SUMS
+          sha256sum research/nightfall/formalization/finite_field/{ProductBUPhysicalTimeSlab,ProductBUTimeHalfspaceChart,ProductBULocalGraphChart,ProductBUTimeZeroFromIFT,ProductBUTimeOrientedIFT}.lean > receipts/bu-physical-time-slab/SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
