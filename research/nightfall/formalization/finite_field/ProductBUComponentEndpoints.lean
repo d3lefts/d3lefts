@@ -35,6 +35,15 @@ theorem exists_second_endpoint_of_smooth_boundary_component
     (p : Z) (hp : (𝓡∂ 1).IsBoundaryPoint p) :
     ∃ q : Z, q ∈ connectedComponent p ∧
       (𝓡∂ 1).IsBoundaryPoint q ∧ q ≠ p := by
+  -- The historical interval module uses a named def alias, so its endpoint
+  -- typeclass instances are not found by synthesis. Supply the canonical
+  -- endpoints on that exact codomain; do not change the imported theorem.
+  letI : Bot Nightfall.ProductBUGlobalBoundary.I01 :=
+    ⟨⟨(0 : ℝ), by norm_num [Nightfall.ProductBUGlobalBoundary.I01,
+      Nightfall.ProductBUInterval.I01]⟩⟩
+  letI : Top Nightfall.ProductBUGlobalBoundary.I01 :=
+    ⟨⟨(1 : ℝ), by norm_num [Nightfall.ProductBUGlobalBoundary.I01,
+      Nightfall.ProductBUInterval.I01]⟩⟩
   letI : LocallyConnectedSpace Z :=
     ChartedSpace.locallyConnectedSpace (H := EuclideanHalfSpace 1) Z
   have hOpen : IsOpen (connectedComponent p) :=
