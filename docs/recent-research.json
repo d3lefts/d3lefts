@@ -26,7 +26,7 @@
       "credit": "NIGHTFALL paper extension of earlier Route 1 #970 and classical Wyner information.",
       "next": "Reopen source-exact b-local DTree, degree-pullback, and final terminal under a green Lean+leanchecker receipt; independently audit the physical query interface.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1150",
-      "passport": "research-dispatch-20261123.html#route1-query-local-wyner"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/route1-query-local-wyner.md"
     },
     {
       "id": "affine-code-wyner",
@@ -42,7 +42,7 @@
       "credit": "NIGHTFALL collaboration; classical finite-field affine-code and Wyner antecedents acknowledged.",
       "next": "Kernel-compose source support, cardinality, entropy, and attaining latent; independently check infimum normalization.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1095",
-      "passport": "research-dispatch-20261123.html#affine-code-wyner"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/affine-code-wyner.md"
     },
     {
       "id": "physical-phase-route1",
@@ -62,7 +62,7 @@
       "next": "Independent external theorem-scope audit, complexity accounting and test for larger block families.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1128",
       "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/45068560816",
-      "passport": "research-dispatch-20261123.html#physical-phase-route1"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/physical-phase-route1.md"
     },
     {
       "id": "quadratic-wyner-terminal",
@@ -78,7 +78,7 @@
       "credit": "NIGHTFALL source-exact quadratic/Wyner research lane, building on merged AA, Q2, and Route 1 core.",
       "next": "Run exact-head AA/Q2/Route1/QW closure, named leanchecker and standard-axiom audit; independently probe edge cases and parameter dependence.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1154",
-      "passport": "research-dispatch-20261123.html#quadratic-wyner-terminal"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/quadratic-wyner-terminal.md"
     },
     {
       "id": "product-sphere-zero",
@@ -94,7 +94,7 @@
       "credit": "NIGHTFALL proof development; Chan–Chen–Frick–Hull and classical equivariant topology retained as antecedents.",
       "next": "Adversarially check endpoint regularity, connected-component classification and global group action; compile the exact final statement.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1147",
-      "passport": "research-dispatch-20261123.html#product-sphere-zero"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/product-sphere-zero.md"
     },
     {
       "id": "equivariant-causal",
@@ -110,7 +110,7 @@
       "credit": "NIGHTFALL extension of prior causal phase retrieval and classical equivariant-index techniques.",
       "next": "Check nonlinear polarization, compact extension hypotheses, and each symmetry-character threshold against published topology.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1149",
-      "passport": "research-dispatch-20261123.html#equivariant-causal"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/equivariant-causal.md"
     },
     {
       "id": "tensor-t2-structural",
@@ -126,7 +126,7 @@
       "credit": "NIGHTFALL authors and independent internal auditors; Lovitz–Petrov antecedents identified in the corresponding source audit.",
       "next": "Attach a complete source-semantic two-query terminal or isolate the minimal failing tensor fiber.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1112",
-      "passport": "research-dispatch-20261123.html#tensor-t2-structural"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/tensor-t2-structural.md"
     },
     {
       "id": "finite-mixture-entropy",
@@ -146,7 +146,7 @@
       "next": "Compose with original Route 1 mutual-information convention, support cardinality and attaining-latent witness.",
       "source": "https://github.com/d3lefts/d3lefts/pull/1168",
       "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/45254493929",
-      "passport": "research-dispatch-20261123.html#finite-mixture-entropy"
+      "passport": "https://github.com/d3lefts/d3lefts/blob/main/research/nightfall/2026-11-recent-passports/finite-mixture-entropy.md"
     },
     {
       "id": "q2-c105",
