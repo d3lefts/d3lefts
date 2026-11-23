@@ -8,6 +8,9 @@ on:
       - 'research/nightfall/2026-11-d1-a2-bridges/**'
       - '.github/workflows/nightfall-d1-a2-source-bridges-lean.yml'
   workflow_dispatch:
+concurrency:
+  group: nightfall-d1-a2-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -17,6 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Compile exact source and transitive imports
