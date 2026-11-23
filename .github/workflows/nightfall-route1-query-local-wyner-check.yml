@@ -1,0 +1,21 @@
+name: NIGHTFALL Route1 query-local Wyner exact finite checker
+on:
+  push:
+    paths:
+      - "research/nightfall/formalization/product_space/ROUTE1_QUERY_LOCAL_WYNER_TRANSFER_20261122.md"
+      - "research/nightfall/formalization/product_space/check_route1_query_local_wyner_exact.py"
+      - ".github/workflows/nightfall-route1-query-local-wyner-check.yml"
+  pull_request:
+    paths:
+      - "research/nightfall/formalization/product_space/ROUTE1_QUERY_LOCAL_WYNER_TRANSFER_20261122.md"
+      - "research/nightfall/formalization/product_space/check_route1_query_local_wyner_exact.py"
+      - ".github/workflows/nightfall-route1-query-local-wyner-check.yml"
+permissions:
+  contents: read
+jobs:
+  exact-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reproduce integer cylinder pullbacks and rational TV
+        run: python3 research/nightfall/formalization/product_space/check_route1_query_local_wyner_exact.py
