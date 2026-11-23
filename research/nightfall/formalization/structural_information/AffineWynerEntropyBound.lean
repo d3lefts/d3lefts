@@ -1,10 +1,10 @@
-import Route1Entropy
 import AffineWynerFiberCount
 
 /-!
 # NIGHTFALL — exact affine-fiber finite entropy upper bound
 
-Reuse the already source-verified Route1Entropy.ent_le_log_card proof.
+Reuse the exact Jensen/concavity proof shape from the existing source-verified
+Route1Entropy.ent_le_log_card, with no extra import chain.
 The fiber of an affine code at a fixed nonfree projection is a Cartesian
 cube of free coordinates, independently proved in AffineWynerFiberCount.
 
@@ -26,9 +26,21 @@ This is a direct source-exact specialization of Route1's verified theorem. -/
 theorem entropy_le_log_card (p : X → ℝ)
     (hp0 : ∀ x, 0 ≤ p x) (hp1 : ∑ x, p x = 1) :
     (∑ x, negMulLog (p x)) ≤ Real.log (Fintype.card X) := by
-  have h := Nightfall.Route1Polylog.ent_le_log_card p hp0 hp1
-  unfold Nightfall.Route1Polylog.Ent Nightfall.ProductSpace.Mixture.Vs at h
-  simpa only [hp1, negMulLog_one, sub_zero] using h
+  have hM : (0 : ℝ) < Fintype.card X := Nat.cast_pos.mpr Fintype.card_pos
+  have hcon := Real.concaveOn_negMulLog.le_map_sum (t := univ)
+    (w := fun _ => 1 / (Fintype.card X : ℝ)) (p := p)
+    (fun _ _ => by positivity)
+    (by rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]; field_simp)
+    (fun x _ => hp0 x)
+  simp only [smul_eq_mul] at hcon
+  rw [← Finset.mul_sum, ← Finset.mul_sum, hp1, mul_one] at hcon
+  have hval : negMulLog (1 / (Fintype.card X : ℝ)) =
+      Real.log (Fintype.card X) / Fintype.card X := by
+    unfold negMulLog
+    rw [one_div, Real.log_inv]
+    field_simp
+  rw [hval, one_div_mul_eq_div] at hcon
+  exact (div_le_div_iff_of_pos_right hM).mp hcon
 
 /-- A conditional law supported on an affine free-coordinate fiber has
 entropy at most r*log q, expressed first exactly as log(q^r). -/
