@@ -117,32 +117,25 @@ By the **degree-two** Q2 inequality (Q2), some coordinate \(j\) satisfies
 \]
 Since \(g\) is invariant on previously queried coordinates, \(j\notin A_0\).
 
-**Lemma 4.3, original-coordinate influence transfer.** For every \(j\), define \(\bar I_j=\sum_\theta\pi_\theta\operatorname{Inf}_{P_\theta,j}(g)\). Under the coupling in (1),
+**Lemma 4.3, direct original-coordinate influence domination.** For each coordinate \(j\) write \(\bar I_j=\sum_\theta\pi_\theta\operatorname{Inf}_{P_\theta,j}(g)\) and \(\bar L_j=\sum_\theta\pi_\theta L_j^{P_\theta}(g)\), with \(L_j^P=\mathbb E_{X\sim P,B\sim P_j}|g(X)-g(X_{j\leftarrow B})|\). The same source star coupling gives the **linear, degree-preserving** bound
 \[
- \sqrt{\operatorname{Inf}_{Q,j}(g)}
- \le\sqrt{\bar I_j}+\sqrt{2\Delta}.
- \tag{8}
+ \boxed{\operatorname{Inf}_{Q,j}(g)\le2\bar I_j+4\Delta\le\bar L_j+4\Delta.}\tag{8}
 \]
-*Proof.* Fix \(\Theta\), hold every seed except \(U_j\) fixed, and replace \(U_j\) by an independent fresh seed \(U'_j\) with the **same latent label**. Denote the paired original/reference words before and after resampling by \((X,Y)\), \((X',Y')\). The triangle inequality in \(L^2\) gives
+*Independent elementary proof.* Fix the latent label \(\Theta\), hold all seeds except \(U_j\) fixed, and replace \(U_j\) by an independent seed \(U'_j\), keeping **the same label** in both original words. Denote the original/reference pairs by \((X,Y)\) and \((X',Y')\), where primes indicate only coordinate \(j\) is resampled. For any \(a,b,c,d\in\mathbb R\), the weighted Cauchy inequality
 \[
- \lVert g(Y)-g(Y')\rVert_2\le
- \lVert g(Y)-g(X)\rVert_2+
- \lVert g(X)-g(X')\rVert_2+
- \lVert g(X')-g(Y')\rVert_2.
+ (a-d)^2\le4(a-b)^2+2(b-c)^2+4(c-d)^2
 \]
-The outer norms are \(\sqrt\Delta\) each; the middle squared norm is \(2\bar I_j\), the left squared norm is \(2\operatorname{Inf}_{Q,j}(g)\). Divide by \(\sqrt2\). This proves (8), including zero probabilities and all end cases. \(\square\)
+is exact (expand \(\tfrac12(2(a-b)-(b-c))^2+\tfrac12(2(c-d)-(b-c))^2+((a-b)-(c-d))^2\)). Apply it to \(a=g(Y)\), \(b=g(X)\), \(c=g(X')\), \(d=g(Y')\) and average over the genuine joint law of \((\Theta,U,U_j')\). The two outer expectation terms each equal \(\Delta\) because replacing one independent seed does not change its joint distribution with \(\Theta\). The middle squared difference is \(2\bar I_j\), while the left one is \(2\operatorname{Inf}_{Q,j}(g)\). This yields \(2I_{Q,j}\le8\Delta+4\bar I_j\), i.e. the first half of (8). Because \(0\le g\le1\), \((g(X)-g(X'))^2\le|g(X)-g(X')|\), hence \(2\bar I_j\le\bar L_j\). The latter inequality is also already certified in source as the Route 1 \(\mathrm{pinfl\_le\_half\_pincr}\). The proof requires no positive atom floor and **does not change \(\Theta\) when resampling**. \(\square\)
 
-From (7) and \(\Delta\le a\le\operatorname{Inf}_{Q,j}(g)/8\), obtain
+From (7), \(\Delta\le a=\tau^2/(32C_2)\) and the direct domination (8), the same unqueried coordinate satisfies
 \[
- \bar I_j\ge\tfrac14\operatorname{Inf}_{Q,j}(g)>
- {\tau^2\over16C_2}.
- \tag{9}
+ \bar L_j\ \ge\operatorname{Inf}_{Q,j}(g)-4\Delta
+ >{\tau^2\over4C_2}-{\tau^2\over8C_2}
+ ={\tau^2\over8C_2}=g_a.
+ \tag{9--10}
 \]
-The existing bounded-function inequality \(\mathrm{pincr}\ge2\,\mathrm{pinfl}\) (same original source law and coordinate) shows the posterior-weighted mean absolute increment of \(j\) is at least
-\[
- g_a={\tau^2\over8C_2}.
- \tag{10}
-\]
+**Advantages over the earlier square-root proof:** it avoids a separate small-\(\Delta\)/\(\operatorname{Inf}_Q\) threshold, eliminates square roots in the kernel bridge, and cleanly separates exact source-resampling identities from one weighted polynomial inequality. The earlier root-based lemma is a mathematically valid alternative, not required for the final constant. The new source attempts are QuadraticWynerTransferCore.lean and QuadraticWynerDirectCrux.lean; neither source upload alone is a kernel certificate.
+
 Thus each high-variance node offers **either** an unqueried \(j\) with real-component increment at least \(g_a\), **or** an unqueried \(j\) with conditional component information at least
 \[
  g_b=h={\tau^6\over 2^{37}C_2^3 K}.
