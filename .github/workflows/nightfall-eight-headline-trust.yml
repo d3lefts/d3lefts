@@ -12,6 +12,11 @@ on:
       - 'tests/test_headline_review_plan.py'
       - 'tests/test_headline_import_closure.py'
       - 'research/nightfall/formalization/**'
+      - 'scripts/lean_bridge.py'
+      - 'scripts/external_lean_comparator.py'
+      - '.github/actions/setup-nightfall-lean/action.yml'
+      - 'docs/lean-compiler-lock.json'
+      - 'lean-toolchain'
       - '.github/workflows/nightfall-eight-headline-trust.yml'
   push:
     branches: [main]
@@ -26,6 +31,11 @@ on:
       - 'tests/test_headline_review_plan.py'
       - 'tests/test_headline_import_closure.py'
       - 'research/nightfall/formalization/**'
+      - 'scripts/lean_bridge.py'
+      - 'scripts/external_lean_comparator.py'
+      - '.github/actions/setup-nightfall-lean/action.yml'
+      - 'docs/lean-compiler-lock.json'
+      - 'lean-toolchain'
       - '.github/workflows/nightfall-eight-headline-trust.yml'
   workflow_dispatch:
 permissions:
