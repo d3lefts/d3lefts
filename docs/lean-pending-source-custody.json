@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 58,
+  "revision": 59,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
   "scope": "Source-hash custody for explicit generic query-local physical-oracle compiler; pending named Lean receipt and subsequent Wyner transfer corollary.",
@@ -3049,7 +3049,7 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/QueryLocalWynerCompiler.lean",
-      "source_blob_sha": "66f237ad3b14c80d28cf32df6b239a892319104e",
+      "source_blob_sha": "a8359e7e1e27835afcd8c19f127ba5bd1d59aab5",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
