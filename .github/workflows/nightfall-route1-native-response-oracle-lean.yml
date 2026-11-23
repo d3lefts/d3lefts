@@ -1,0 +1,75 @@
+name: NIGHTFALL native response oracle physical embedding Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuantumResponseOracleBridge.lean'
+      - '.github/workflows/nightfall-route1-native-response-oracle-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-exact-response:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile existing source circuit semantics then physical embedding
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/native-response
+          for M in QuantumCircuitPaths QuantumCircuitNormalization QuantumResponseOracleBridge; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/native-response/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/native-response/$M.log"
+          done
+      - name: Source exact kernel replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v QuantumResponseOracleBridge) 2>&1 | tee receipts/native-response/leanchecker.log
+      - name: Named theorem and trusted axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path('receipts/native-response/QuantumResponseOracleBridge.log').read_text()
+          for suffix in ('oracleMat_response_eq_translation', 'responseOracle_isUnitary',
+                         'execute_response_step', 'response_step_wellFormed'):
+              name='Nightfall.QuantumResponseOracleBridge.'+suffix
+              m=re.search(r"'" + re.escape(name) + r"' depends on axioms:\\s*\\[([^\\]]*)\\]",log,re.S)
+              if m:
+                  axs={x.strip() for x in m.group(1).split(',') if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in log,name
+                  axs=set()
+              assert axs <= {'propext','Classical.choice','Quot.sound'},(name,axs)
+              print(name,sorted(axs))
+          assert 'sorryAx' not in log
+          assert 'declaration uses .sorry' not in log
+          assert 'error:' not in log
+          print('PASS: finite-group native response query = one source matrix query; unitarity; WellFormed step.')
+          PY
+      - name: Immutable source/toolchain receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/native-response
+          git rev-parse HEAD > receipts/native-response/source-head.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/native-response/mathlib-head.txt
+          cat lean-toolchain > receipts/native-response/lean-toolchain.txt
+          sha256sum research/nightfall/formalization/product_space/Quantum{CircuitPaths,CircuitNormalization,ResponseOracleBridge}.lean > receipts/native-response/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: route1-native-response-lean-${{ github.run_id }}
+          path: receipts/native-response
+          if-no-files-found: warn
+          retention-days: 90
