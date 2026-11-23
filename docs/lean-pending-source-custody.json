@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 64,
+  "revision": 65,
   "as_of": "2026-11-23 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
   "scope": "Append exact unreviewed source custody for native coherent response oracle draft #1176. Historical 67 verified records unchanged. Kernel and independent review remain separate gates.",
@@ -5637,7 +5637,7 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/QuantumResponseOracleBridge.lean",
-      "source_blob_sha": "dfbde37d312880da8fad087c804f994df3b60997",
+      "source_blob_sha": "7a59d81038704ef6ca6277b1161991a0cb0cd17b",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
