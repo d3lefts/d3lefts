@@ -83,24 +83,29 @@ theorem exists_second_endpoint_of_smooth_boundary_component
     by_cases hb : e pU = (⊥ : I01)
     · intro h
       have he : (⊤ : I01) = ⊥ := by
-        simpa [target, hb] using h.trans hb
+        simpa only [target, if_pos hb] using h.trans hb
       have he' := congrArg (fun z : I01 => (z : ℝ)) he
       norm_num at he'
     · intro h
       have he : (⊥ : I01) = e pU := by
-        simpa [target, hb] using h
+        simpa only [target, if_neg hb] using h
       exact hb he.symm
   let qU : U := e.symm target
   have hqU : qU ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) U := by
     rw [← hpre]
     change e qU ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) I01
-    simpa [qU] using htargetB
+    change e (e.symm target) ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) I01
+    rw [e.apply_symm_apply]
+    exact htargetB
   have hqn : (qU : Z) ≠ p := by
     intro h
     have heq : qU = pU := Subtype.ext h
     have he : target = e pU := by
-      have h' := congrArg e heq
-      simpa [qU] using h'
+      have h' : e qU = e pU := congrArg e heq
+      calc
+        target = e (e.symm target) := (e.apply_symm_apply target).symm
+        _ = e qU := rfl
+        _ = e pU := h'
     exact hneq he
   exact ⟨qU.1, qU.2,
     (ModelWithCorners.isBoundaryPoint_iff_isBoundaryPoint_val).1 hqU,
