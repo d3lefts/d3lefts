@@ -40,7 +40,6 @@ theorem weighted_four_point {Ω : Type} [Fintype Ω]
         2 * (∑ ω, μ ω * (b ω - c ω) ^ 2) +
         4 * (∑ ω, μ ω * (c ω - d ω) ^ 2) := by
       simp only [Finset.sum_add_distrib, mul_assoc, ← Finset.mul_sum]
-      ring
 
 /-- Factor-four original-source influence transfer, conditional on the
 actual coupled source resampling equalities. -/

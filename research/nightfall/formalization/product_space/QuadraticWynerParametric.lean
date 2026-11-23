@@ -25,6 +25,9 @@ variable {ι α : Type} [Fintype ι] [DecidableEq ι] [Fintype α] [DecidableEq 
 variable {Θ : Type} [Fintype Θ] [DecidableEq Θ] [Nonempty Θ]
 variable (P : Θ → ι → α → ℝ) (hP0 : ∀ θ i a, 0 ≤ P θ i a) (hP1 : ∀ θ i, ∑ a, P θ i a = 1)
 
+-- These source-law hypotheses occur in the proof, not the goal's syntax.
+include hP0 hP1
+
 /-- Source-parameterized Wyner tree. The improved QW bound is NOT proved
 until hgood is instantiated by a genuine original-source quadratic crux. -/
 theorem route1_wyner_from_verified_good

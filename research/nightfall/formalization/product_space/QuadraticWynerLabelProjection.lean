@@ -215,6 +215,8 @@ theorem variance_survives_latent_averaging
 
 #print axioms Nightfall.QuadraticWynerLabelProjection.weighted_centered_square_identity
 #print axioms Nightfall.QuadraticWynerLabelProjection.weighted_square_jensen
+#print axioms Nightfall.QuadraticWynerLabelProjection.weighted_sum_comm
+#print axioms Nightfall.QuadraticWynerLabelProjection.weighted_abs_jensen
 #print axioms Nightfall.QuadraticWynerLabelProjection.weighted_total_variance
 #print axioms Nightfall.QuadraticWynerLabelProjection.weighted_fiber_variance_le_reference
 #print axioms Nightfall.QuadraticWynerLabelProjection.variance_survives_latent_averaging

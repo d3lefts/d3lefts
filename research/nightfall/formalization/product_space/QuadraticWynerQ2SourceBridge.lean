@@ -67,7 +67,7 @@ theorem quadratic_product_influence_on_route1_source
   have hQ := Nightfall.Observability.ActualSourceQ223802Terminal.actual_source_q2_23802_unconditional
     p hp0 hp1 f hES (1 : ℝ) (by norm_num) hfB M hM hcap
   rw [← route1_variance_eq_q2_source p f] at hQ
-  simpa only [one_pow, one_mul] using hQ
+  simpa only [one_pow, one_mul, mul_one] using hQ
 
 #print axioms Nightfall.QuadraticWynerQ2SourceBridge.route1_influence_eq_q2_source
 #print axioms Nightfall.QuadraticWynerQ2SourceBridge.route1_variance_eq_q2_source
