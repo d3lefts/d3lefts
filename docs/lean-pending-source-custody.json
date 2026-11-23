@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 50,
+  "revision": 51,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v50: correct nested pair membership and pointwise correction-cover hypotheses in six-lift counted Lean source; no theorem status promotion",
+  "scope": "v51: add exact source event-to-sixfold correction proof to pending registry, preserve historical 67 and all pending, no full theorem claim",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3686,6 +3686,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2CorrectionEventBridge.lean",
+      "source_blob_sha": "aad9019fde7c562f1031f9d5127c43cc72e6b149",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 characteristic-two exact four-slot source extended zero-triple survivor-event to six repeated-position fiber implication; establishes ≤6M2 for genuine exactly-two event, conditional on source M2 pair bound. Full Hilbert Fourier/quantum theorem separate, pending exact-head kernel."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2CorrectionSix.lean",
