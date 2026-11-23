@@ -84,6 +84,9 @@ jobs:
             --decl Nightfall.Observability.D2PosteriorKernelDrift.weighted_square_ge_square_mean \
             --decl Nightfall.Observability.D2PosteriorKernelDrift.expected_quadratic_drift_from_kernel \
             --decl Nightfall.Observability.D2PosteriorKernelDrift.finite_state_rank_budget_from_local_kernel_drift \
+            --decl Nightfall.Observability.D2PosteriorKernelDrift.state_mass_normalization_from_stochastic_kernel \
+            --decl Nightfall.Observability.D2PosteriorKernelDrift.state_mass_nonnegative_from_stochastic_kernel \
+            --decl Nightfall.Observability.D2PosteriorKernelDrift.finite_stochastic_kernel_rank_budget \
             --json-out receipts/d1-a2/kernel.json
           python3 research/nightfall/formalization/product_space/check_receipts.py receipts/d1-a2/kernel.json
           (cd /tmp/mathlib4 && lake env leanchecker -v D2PosteriorKernelDrift) \
@@ -97,6 +100,8 @@ jobs:
             --decl Nightfall.GroupAdaptiveBayesRisk.noisy_sign_posterior_risk \
             --decl Nightfall.GroupAdaptiveBayesRisk.actual_coordinate_posterior_unit_mass \
             --decl Nightfall.GroupAdaptiveBayesRisk.actual_group_transcript_bayes_risk \
+            --decl Nightfall.GroupAdaptiveBayesRisk.legal_transcript_coordinate_evidence_nonzero \
+            --decl Nightfall.GroupAdaptiveBayesRisk.legal_group_transcript_bayes_risk \
             --json-out receipts/d1-a2/a2.json
           python3 research/nightfall/formalization/product_space/check_receipts.py receipts/d1-a2/a2.json
           (cd /tmp/mathlib4 && lake env leanchecker -v D2PosteriorSectionBridge) \
@@ -121,13 +126,18 @@ jobs:
             ("D2PosteriorKernelDrift","observability","kernel",[
               "Nightfall.Observability.D2PosteriorKernelDrift.weighted_square_ge_square_mean",
               "Nightfall.Observability.D2PosteriorKernelDrift.expected_quadratic_drift_from_kernel",
-              "Nightfall.Observability.D2PosteriorKernelDrift.finite_state_rank_budget_from_local_kernel_drift"]),
+              "Nightfall.Observability.D2PosteriorKernelDrift.finite_state_rank_budget_from_local_kernel_drift",
+              "Nightfall.Observability.D2PosteriorKernelDrift.state_mass_normalization_from_stochastic_kernel",
+              "Nightfall.Observability.D2PosteriorKernelDrift.state_mass_nonnegative_from_stochastic_kernel",
+              "Nightfall.Observability.D2PosteriorKernelDrift.finite_stochastic_kernel_rank_budget"]),
             ("GroupAdaptiveBayesRisk","costs","a2",[
               "Nightfall.GroupAdaptiveBayesRisk.binary_sign_bayes_risk",
               "Nightfall.GroupAdaptiveBayesRisk.noisy_sign_conditional_loss",
               "Nightfall.GroupAdaptiveBayesRisk.noisy_sign_posterior_risk",
               "Nightfall.GroupAdaptiveBayesRisk.actual_coordinate_posterior_unit_mass",
-              "Nightfall.GroupAdaptiveBayesRisk.actual_group_transcript_bayes_risk"])]
+              "Nightfall.GroupAdaptiveBayesRisk.actual_group_transcript_bayes_risk",
+              "Nightfall.GroupAdaptiveBayesRisk.legal_transcript_coordinate_evidence_nonzero",
+              "Nightfall.GroupAdaptiveBayesRisk.legal_group_transcript_bayes_risk"])]
           allowed={"Classical.choice","propext","Quot.sound"}
           count=0
           for name,folder,receipt,decls in modules:
@@ -143,8 +153,8 @@ jobs:
               assert audit[d] in {"no_axioms","allowlisted_dependencies"},(d,audit[d])
               assert set(deps[d]) <= allowed,(d,deps[d])
             count+=len(decls)
-          assert count==14,count
-          print("PASS: fourteen source-exact Lean declarations and independent kernel replays")
+          assert count==19,count
+          print("PASS: nineteen source-exact Lean declarations and independent kernel replays")
           PY
       - name: Preserve immutable evidence and precise remaining limits
         if: always()
@@ -157,8 +167,8 @@ jobs:
             research/nightfall/formalization/costs/GroupAdaptiveBayesRisk.lean \
             > receipts/d1-a2/SHA256SUMS
           cat > receipts/d1-a2/LIMITS.txt <<'TXT'
-          D2: exact original cylinder/evidence -> conditional product posterior plus original-product scalar degree-two -> posterior degree-two and 8B section budget; conditional finite-state Markov kernel local quadratic drift -> averaged drift and hard 20172*r*B^2/eta budget. NOT full Hilbert matching, physical greedy policy proof, or infinite-product limit.
-          A2: finite actual grouped likelihood -> normalized binary posterior squared-risk identity; NOT universal adaptive KL/stopping converse, matching sequential construction, or global novelty.
+          D2: exact original cylinder/evidence -> conditional product posterior plus original-product scalar degree-two -> posterior degree-two and 8B section budget; true nonnegative row-stochastic finite-state kernel plus local quadratic drift -> averaged drift and hard 20172*r*B^2/eta budget. NOT full Hilbert matching, physical greedy policy proof, or infinite-product limit.
+          A2: finite *legal positive-evidence* adaptive grouped likelihood -> normalized binary posterior squared-risk identity; NOT universal adaptive KL/stopping converse, matching sequential construction, or global novelty.
           TXT
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
