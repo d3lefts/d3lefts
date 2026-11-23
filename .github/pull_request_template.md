@@ -64,3 +64,24 @@ or theorem proofs that import computational claims; otherwise mark N/A. -->
 **Open limitations, counterexamples or review requests:**
 
 > Passing CI verifies only the specified checks. It does not establish global mathematical validity, historic novelty, publication suitability, or competition eligibility.
+
+## Eight-headline frozen-claim gate (when applicable)
+
+<!-- Complete for any NIGHTFALL eight-paper theorem, Lean proof, imported lemma,
+toolchain or oracle-cost change; otherwise N/A with reason. -->
+
+- [ ] Claim ID and **actual** Lean declaration identified in `research/nightfall/verification/HEADLINE_TRUST_BOUNDARIES_V1.json`; source-to-broad-headline difference explained.
+- [ ] Specification is frozen against **owner-controlled main**; primary source SHA and transitive **local import** closure have not drifted, or a separate owner-authorized rebaseline and new pinned kernel receipt are linked.
+- [ ] Exact theorem type, all imported assumptions, permitted axioms and source/Mathlib toolchain pins were checked independently of the candidate author; passing a metadata gate is not a kernel proof.
+- [ ] Claimed query cost uses a specified oracle/physical model with branch probabilities, termination and expected/worst resource semantics; the finite-tree smoke is not a general quantum-query theorem.
+- [ ] Independent source-based reproducer and adversarial proof attacker have separate recorded checker lineage; a proposed role in a review preregistration is not a completed review.
+- [ ] New claims about fewer errors, faster research or better agents are backed by actual matched-budget measured trials rather than synthetic mutation tests.
+- [ ] Prior-art/date/significance and consequential owner-release gates remain separate; nothing is auto-promoted by CI.
+
+**Relevant headline ID / exact frozen theorem type:**
+
+**Trusted base / source and import-closure receipt:**
+
+**Resource/physical oracle model and remaining bridge:**
+
+**Independent review and adjudication receipt (or explicitly unexecuted):**
