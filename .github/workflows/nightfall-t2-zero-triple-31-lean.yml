@@ -66,17 +66,13 @@ jobs:
             'Nightfall.StructuralInformation.T2ZeroTripleMultiplicity.complex_weighted_survivor_identity',
           ]
           allowed={'propext','Classical.choice','Quot.sound'}
+          reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
+          axiom_free=set(re.findall(r"'([^']+)' does not depend on any axioms",log))
           for name in expected:
-              lines=[x for x in log.splitlines() if name in x and
-                ('depends on axioms:' in x or 'does not depend on any axioms' in x)]
-              assert len(lines)>=1,(name,log[-3000:])
-              for line in lines:
-                  if 'does not depend on any axioms' in line:
-                      continue
-                  match=re.search(r'depends on axioms:\s*\[([^\]]*)\]',line)
-                  assert match,(name,line)
-                  names={x.strip() for x in match.group(1).split(',') if x.strip()}
-                  assert names<=allowed,(name,names)
+              assert name in reports or name in axiom_free,(name,log[-3000:])
+              if name in reports:
+                  deps={x.strip() for x in reports[name].split(',') if x.strip()}
+                  assert deps<=allowed,(name,deps)
           print('T2_ZERO_TRIPLE_MULTIPLICITY_SCOPED_KERNEL_PASS')
           PY
       - name: Exact tuple multiplicity regression
