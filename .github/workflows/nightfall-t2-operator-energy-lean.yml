@@ -1,0 +1,64 @@
+name: NIGHTFALL T2 complex noncommuting operator energy (kernel)
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/T2OperatorEnergy.lean'
+      - '.github/workflows/nightfall-t2-operator-energy-lean.yml'
+      - 'research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-exact-operator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Pin paper source, compile operator, replay kernel, verify axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p t2-operator-receipt
+          src=research/nightfall/formalization/structural_information/T2OperatorEnergy.lean
+          paper=research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md
+          test "$(git hash-object "$paper")" = "42e5b34955304fe6b454160a6abbd2df73777438"
+          git rev-parse HEAD | tee t2-operator-receipt/commit.txt
+          sha256sum "$src" "$paper" | tee t2-operator-receipt/SHA256SUMS
+          cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2OperatorEnergy.olean T2OperatorEnergy.lean) 2>&1 | tee t2-operator-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker T2OperatorEnergy) 2>&1 | tee t2-operator-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          src=Path('research/nightfall/formalization/structural_information/T2OperatorEnergy.lean').read_text()
+          log=Path('t2-operator-receipt/compile.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom|opaque)\b',src)
+          assert 'error:' not in log and 'sorryAx' not in log
+          prefix='Nightfall.StructuralInformation.T2OperatorEnergy.'
+          expected=['selected_output_energy_le','crossed_energy_le',
+                    'weighted_path_sum','crossed_synthesis',
+                    'noncommuting_crossed_slot_bound']
+          reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
+          axiom_free=set(re.findall(r"'([^']+)' does not depend on any axioms",log))
+          allowed={'propext','Classical.choice','Quot.sound'}
+          for name in expected:
+              full=prefix+name
+              assert full in reports or full in axiom_free,(name,log[-7000:])
+              if full in reports:
+                  deps={x.strip() for x in reports[full].split(',') if x.strip()}
+                  assert deps<=allowed,(name,deps)
+          print('T2_OPERATOR_ENERGY_SOURCE_EXACT_KERNEL_PASS')
+          PY
+      - name: Artifact of exact compiler/kernel/axiom source receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: t2-complex-operator-receipt
+          path: t2-operator-receipt
+          retention-days: 90
