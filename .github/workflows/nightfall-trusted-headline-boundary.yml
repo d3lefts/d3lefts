@@ -1,0 +1,78 @@
+# Trust-separation rule: this workflow is sourced from protected base branch.
+# PR files are DATA only. No PR-authored scripts, actions, Lean tactics, shell
+# commands, custom git hooks or workflow config execute in this job.
+name: NIGHTFALL protected-base eight-headline comparator
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'research/nightfall/verification/**'
+      - 'research/nightfall/formalization/**'
+      - 'scripts/check_headline_trust.py'
+      - 'scripts/check_headline_import_closure.py'
+      - 'scripts/check_headline_review_plan.py'
+      - 'scripts/check_finite_query_cost.py'
+      - 'scripts/lean_bridge.py'
+      - 'scripts/external_lean_comparator.py'
+      - '.github/actions/setup-nightfall-lean/action.yml'
+      - '.github/workflows/nightfall-eight-headline-trust.yml'
+      - '.github/workflows/nightfall-trusted-headline-boundary.yml'
+      - 'docs/lean-compiler-lock.json'
+      - 'lean-toolchain'
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  trusted-source-and-scope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout TRUSTED policy from protected default branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: trusted
+          persist-credentials: false
+      - name: Checkout exact UNTRUSTED candidate revision as data
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+          persist-credentials: false
+      - name: Fetch original owner-controlled main as frozen comparison anchor
+        env:
+          BASE_REPO: ${{ github.repository }}
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+          git -C candidate remote add nightfall-upstream "https://github.com/${BASE_REPO}.git"
+          git -C candidate fetch --no-tags nightfall-upstream \
+            "+refs/heads/${BASE_BRANCH}:refs/remotes/nightfall-upstream/${BASE_BRANCH}"
+      - name: Execute ONLY trusted source/scope verifiers on candidate data
+        env:
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+          mkdir -p trusted-receipts
+          python3 trusted/scripts/check_headline_trust.py --root candidate \
+            --trusted-ref "nightfall-upstream/${BASE_BRANCH}" \
+            --json-out trusted-receipts/eight-headline-scope.json
+          python3 trusted/scripts/check_headline_import_closure.py --root candidate \
+            --trusted-ref "nightfall-upstream/${BASE_BRANCH}" \
+            --json-out trusted-receipts/eight-headline-import-closure.json
+          python3 trusted/scripts/check_headline_review_plan.py --root candidate \
+            --json-out trusted-receipts/eight-headline-review-prereg.json
+          python3 trusted/scripts/check_finite_query_cost.py \
+            candidate/research/nightfall/verification/route1_finite_cost_smoke.json \
+            --json-out trusted-receipts/finite-cost.json
+      - name: Upload owner-controlled decision receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: owner-controlled-eight-headline-gate
+          path: trusted-receipts/
+          retention-days: 45
+          if-no-files-found: warn
