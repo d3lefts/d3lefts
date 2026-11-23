@@ -20,3 +20,19 @@ jobs:
         run: |
           python3 research/nightfall/operational_information_cost/check_graph_coherent_oracle.py
           python3 research/nightfall/operational_information_cost/check_expected_cost_loop.py
+
+  pinned-lean-coherent-oracle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel-check all-size coherent graph oracle identity
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py research/nightfall/operational_information_cost/CoherentGraphOracle.lean \
+            --workspace /tmp/mathlib4 --timeout 600 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.OperationalInformationCost.edge_eq_two_stars \
+            --decl Nightfall.OperationalInformationCost.edge_root_eq_star \
+            --decl Nightfall.OperationalInformationCost.edge_parity_eq_stars
