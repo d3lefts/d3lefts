@@ -1,0 +1,64 @@
+name: NIGHTFALL exact local zero-graph to open partial homeomorphism Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean'
+      - '.github/workflows/nightfall-bu-local-graph-chart.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bu-local-graph-chart-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  genuine-graph-chart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact open partial homeomorphism constructed from graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-local-graph-chart
+          src=research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean
+          ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+          cp "$src" /tmp/mathlib4/ProductBULocalGraphChart.lean
+          (cd /tmp/mathlib4 && lake env lean ProductBULocalGraphChart.lean) 2>&1 | tee receipts/bu-local-graph-chart/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/bu-local-graph-chart/lean.log
+      - name: Named constructed chart and ordinary axiom check
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          s=Path("receipts/bu-local-graph-chart/lean.log").read_text()
+          name="Nightfall.ProductBULocalGraphChart.actual_local_graph_chart"
+          assert name in s,("MISSING_REAL_CHART",name)
+          a=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          if a:
+              ax={x.strip() for x in a[1].split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s
+              ax=set()
+          assert ax <= {"propext","Classical.choice","Quot.sound"},ax
+          assert "sorryAx" not in s
+          print("PASS: actual fiber subtype has open graph chart; no imported manifold instance.",ax)
+          print("SCOPE: genuine local graph in A×B; physical time-halfspace and C∞ overlap still open.")
+          PY
+      - name: Retain source hash and pin
+        if: always()
+        run: |
+          mkdir -p receipts/bu-local-graph-chart
+          git rev-parse HEAD > receipts/bu-local-graph-chart/HEAD.txt
+          cat lean-toolchain > receipts/bu-local-graph-chart/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBULocalGraphChart.lean > receipts/bu-local-graph-chart/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-local-graph-chart-lean-receipt
+          path: receipts/bu-local-graph-chart
+          retention-days: 90
