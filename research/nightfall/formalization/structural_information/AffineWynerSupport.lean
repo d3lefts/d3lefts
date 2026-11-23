@@ -87,16 +87,16 @@ theorem rectangular_support_nonfree_singleton
     by_cases hj : j = i
     · subst j
       simpa [x] using hu
-    · simpa [x, Function.update_noteq hj] using hbase j
+    · simpa [x, Function.update, hj] using hbase j
   have hyP : ∀ j, y j ∈ P j := by
     intro j
     by_cases hj : j = i
     · subst j
       simpa [y] using hv
-    · simpa [y, Function.update_noteq hj] using hbase j
+    · simpa [y, Function.update, hj] using hbase j
   have hxy : ∀ j, j ≠ i → x j = y j := by
     intro j hj
-    simp [x, y, Function.update_noteq hj]
+    simp [x, y, Function.update, hj]
   have hfix := nonfree_coordinate_fixed L a x y i hi (hrectangle x hxP)
     (hrectangle y hyP) hxy
   simpa [x, y] using hfix
