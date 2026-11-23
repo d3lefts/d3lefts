@@ -179,6 +179,72 @@ theorem quadratic_crux
     change quadGa τ ≤ _ at hjinc
     exact mul_le_mul_of_nonneg_left hjinc hV.le
 
+
+/-- Genuine Wyner good-query theorem for every supported quadratic posterior.
+The two potential reductions occur on actual original-coordinate sections. -/
+theorem good_exists_wyner_quadratic
+    (P : Θ → ι → α → ℝ)
+    (hP0 : ∀ θ i a, 0 ≤ P θ i a)
+    (hP1 : ∀ θ i, ∑ a, P θ i a = 1)
+    (f : (ι → α) → ℝ)
+    (K : ℝ) (hK : 0 < K)
+    (τ : ℝ) (hτ : 0 < τ) (hτmax : τ ≤ 1 / 4)
+    (A : Finset ι) (v : Θ → ℝ) (g : (ι → α) → ℝ)
+    (hS : StD f K 2 A v g)
+    (hvar : τ * Vs v < mvar P v g) :
+    ∃ j, j ∉ A ∧
+      GoodW P (quadGa τ) (quadGb K τ) A v g j := by
+  obtain ⟨⟨hv, hinv, hrows, _, hg01⟩, hdeg⟩ := hS
+  have hV := Vs_pos_of_var P v hv g τ hvar
+  set ga := quadGa τ with hgadef
+  set gb := quadGb K τ with hgbdef
+  have hga : 0 < ga := quadGa_pos τ hτ
+  have hgb : 0 < gb := quadGb_pos K τ hK hτ
+  obtain ⟨j, hjA, hj⟩ :=
+    quadratic_crux P hP0 hP1 v hv hV g hg01 hdeg K hK hrows
+      A hinv τ hτ hτmax hvar
+  refine ⟨j, hjA, ?_⟩
+  unfold GoodW PotW
+  rw [Finset.sum_add_distrib, ← Finset.sum_div, ← Finset.sum_div,
+    Phi_sum P hP1 v g j,
+    info_chain P hP0 hP1 A j hjA v hv hV]
+  have hkl := kl_sum_ge P hP0 hP1 v hv hV j
+  have hinc0 : 0 ≤ ∑ θ, v θ * pincr (P θ) g j :=
+    Finset.sum_nonneg fun θ _ =>
+      mul_nonneg (hv θ) (pincr_nonneg (P θ) (hP0 θ) g j)
+  have htv0 : 0 ≤ ∑ θ, v θ * tvd (P θ j) (qmix P v j) ^ 2 :=
+    Finset.sum_nonneg fun θ _ => mul_nonneg (hv θ) (sq_nonneg _)
+  rcases hj with hinc | hinfo
+  · have h1 :
+        (Phi P v g - ∑ θ, v θ * pincr (P θ) g j) / ga ≤
+          Phi P v g / ga - Vs v := by
+      rw [sub_div]
+      have : Vs v ≤ (∑ θ, v θ * pincr (P θ) g j) / ga := by
+        rw [le_div_iff₀ hga]
+        linarith
+      linarith
+    have h2 :
+        (Info P A v - ∑ θ, v θ * kl (P θ j) (qmix P v j)) / gb ≤
+          Info P A v / gb :=
+      div_le_div_of_nonneg_right (by linarith) hgb.le
+    linarith
+  · have h1 :
+        (Phi P v g - ∑ θ, v θ * pincr (P θ) g j) / ga ≤
+          Phi P v g / ga :=
+      div_le_div_of_nonneg_right (by linarith) hga.le
+    have h2 :
+        (Info P A v - ∑ θ, v θ * kl (P θ j) (qmix P v j)) / gb ≤
+          Info P A v / gb - Vs v := by
+      have : Info P A v - ∑ θ, v θ * kl (P θ j) (qmix P v j) ≤
+          Info P A v - gb * Vs v := by
+        linarith
+      rw [le_sub_iff_add_le, div_add' _ _ _ hgb.ne',
+        div_le_div_iff_of_pos_right hgb]
+      linarith
+    linarith
+
+#print axioms Nightfall.QuadraticWynerGoodQuery.good_exists_wyner_quadratic
+
 #print axioms Nightfall.QuadraticWynerGoodQuery.quadDelta_budget
 #print axioms Nightfall.QuadraticWynerGoodQuery.quadratic_crux
 end Nightfall.QuadraticWynerGoodQuery
