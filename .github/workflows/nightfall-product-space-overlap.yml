@@ -4,6 +4,12 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/**'
       - '.github/workflows/nightfall-product-space-overlap.yml'
+concurrency:
+  # Superseded PR revisions must not monopolize hosted runners.
+  # Workflow-scoped groups retain independent proof checks.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 permissions:
   contents: read
 jobs:

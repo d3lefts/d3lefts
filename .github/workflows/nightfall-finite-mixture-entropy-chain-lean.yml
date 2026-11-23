@@ -1,0 +1,68 @@
+name: NIGHTFALL finite mixture Shannon entropy chain Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean'
+      - '.github/workflows/nightfall-finite-mixture-entropy-chain-lean.yml'
+      - 'docs/lean-pending-source-custody.json'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+permissions:
+  contents: read
+jobs:
+  entropy-chain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile original exact finite chain identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/finite-mixture-chain
+          src=research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+          cp "$src" /tmp/mathlib4/FiniteMixtureEntropyChain.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/FiniteMixtureEntropyChain.olean FiniteMixtureEntropyChain.lean) 2>&1 | tee receipts/finite-mixture-chain/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/finite-mixture-chain/lean.log
+      - name: Independent kernel replay and exact theorem axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker -v FiniteMixtureEntropyChain) 2>&1 | tee receipts/finite-mixture-chain/leanchecker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/finite-mixture-chain/lean.log').read_text()
+          name='Nightfall.FiniteMixtureEntropyChain.finite_mixture_entropy_chain'
+          m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          if m:
+              axioms={x.strip() for x in m.group(1).split(',') if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s,name
+              axioms=set()
+          assert axioms <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
+          assert 'sorryAx' not in s
+          print("PASS exact finite mixture Shannon entropy identity; not the affine Wyner infimum theorem")
+          PY
+      - name: Immutable source-locked receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/finite-mixture-chain
+          git rev-parse HEAD > receipts/finite-mixture-chain/head.txt
+          cat lean-toolchain > receipts/finite-mixture-chain/compiler.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/finite-mixture-chain/mathlib.txt || true
+          sha256sum research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean > receipts/finite-mixture-chain/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: finite-mixture-entropy-chain
+          path: receipts/finite-mixture-chain
+          retention-days: 90
