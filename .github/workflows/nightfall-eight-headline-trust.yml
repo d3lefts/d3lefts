@@ -6,6 +6,7 @@ on:
       - 'scripts/check_headline_trust.py'
       - 'scripts/check_headline_review_plan.py'
       - 'scripts/check_headline_import_closure.py'
+      - 'scripts/measure_headline_gate_preflight.py'
       - 'scripts/check_finite_query_cost.py'
       - 'tests/test_headline_trust_and_cost.py'
       - 'tests/test_headline_review_plan.py'
@@ -19,6 +20,7 @@ on:
       - 'scripts/check_headline_trust.py'
       - 'scripts/check_headline_review_plan.py'
       - 'scripts/check_headline_import_closure.py'
+      - 'scripts/measure_headline_gate_preflight.py'
       - 'scripts/check_finite_query_cost.py'
       - 'tests/test_headline_trust_and_cost.py'
       - 'tests/test_headline_review_plan.py'
@@ -62,6 +64,8 @@ jobs:
             research/nightfall/verification/route1_finite_cost_smoke.json \
             --json-out lean-receipts/route1-finite-resource-cost.json
           python3 tests/test_external_lean_comparator.py
+          python3 scripts/measure_headline_gate_preflight.py \
+            --json-out lean-receipts/headline-synthetic-preflight.json
       - name: Preserve traceable scope and process evidence
         if: always()
         uses: actions/upload-artifact@v4
