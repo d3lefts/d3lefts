@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 48,
+  "revision": 49,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v48: pin explicit starRingEnd complex norm simplification in full rank-free light-frame Bessel source; all previous custody claims unchanged",
+  "scope": "v49: source-exact pending custody for sixfold zero-triple correction fiber combinatorial bound, no quantum theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3686,6 +3686,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2CorrectionSix.lean",
+      "source_blob_sha": "6e98a2b03d0022a33065bbeb216f5840e1b774e0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 universal six-lift upper cover for repeated-label zero-triple correction; bound <=6 times actual ordered pair fiber. Equivalence with zero-triple event indicator, physical Hilbert frame tail and complete T2-31 terminal remain OPEN. Named Lean kernel receipt pending."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2EffectOrder.lean",
