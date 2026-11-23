@@ -48,7 +48,7 @@ theorem effect_norm_le_one
     have heq : ((1 : E →L[ℂ] E) - P).reApplyInnerSelf x =
         ‖x‖ ^ 2 - P.reApplyInnerSelf x := by
       simp [ContinuousLinearMap.reApplyInnerSelf_apply, inner_sub_left,
-        norm_sq_eq_re_inner]
+        norm_sq_eq_re_inner] <;> norm_cast
     rw [heq] at hnonneg
     linarith
   have hq0 : 0 ≤ P.rayleighQuotient x :=
