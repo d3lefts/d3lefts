@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 58,
+  "revision": 59,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
-  "scope": "Integrate corrected affine-code support and free-fiber Lean sources from #1099/#1104 into current-main custody without certification promotion; leanchecker CI gate required.",
+  "scope": "Scoped clean-main b-local query-local Wyner theorem proof sources pending independent Lean and kernel replay",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3046,6 +3046,46 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerCompiler.lean",
+      "source_blob_sha": "a8359e7e1e27835afcd8c19f127ba5bd1d59aab5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact candidate for b-local finite-alphabet costed Wyner Route1 simulation. Must compile full AA/Route1 imported closure, kernel replay and named axiom gate; raw/decoded C_W gap not proven."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerComplete.lean",
+      "source_blob_sha": "ba433cd9064e9cb296367ff265d62b4c803121dc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact candidate for b-local finite-alphabet costed Wyner Route1 simulation. Must compile full AA/Route1 imported closure, kernel replay and named axiom gate; raw/decoded C_W gap not proven."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerDegree.lean",
+      "source_blob_sha": "0df8a7f7abaf45d98f78169046374f8d96ccdc73",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact candidate for b-local finite-alphabet costed Wyner Route1 simulation. Must compile full AA/Route1 imported closure, kernel replay and named axiom gate; raw/decoded C_W gap not proven."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerTerminal.lean",
+      "source_blob_sha": "184888aecb19d4a070a13ee3a837da11119ac629",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact candidate for b-local finite-alphabet costed Wyner Route1 simulation. Must compile full AA/Route1 imported closure, kernel replay and named axiom gate; raw/decoded C_W gap not proven."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1AbstractLatentPushforward.lean",
