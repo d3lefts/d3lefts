@@ -10,6 +10,9 @@ on:
       - 'research/nightfall/formalization/structural_information/T2LightFrame.lean'
       - 'research/nightfall/formalization/structural_information/T2EffectOrder.lean'
       - 'research/nightfall/formalization/structural_information/T2CorrectionSix.lean'
+      - 'research/nightfall/formalization/structural_information/T2CorrectionEventBridge.lean'
+      - 'research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean'
+      - 'research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean'
       - '.github/workflows/nightfall-t2-operator-energy-lean.yml'
       - 'research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md'
   workflow_dispatch:
@@ -42,10 +45,13 @@ jobs:
           light=research/nightfall/formalization/structural_information/T2LightFrame.lean
           order=research/nightfall/formalization/structural_information/T2EffectOrder.lean
           six=research/nightfall/formalization/structural_information/T2CorrectionSix.lean
+          bridge=research/nightfall/formalization/structural_information/T2CorrectionEventBridge.lean
+          overlap=research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean
+          multi=research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean
           paper=research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md
           test "$(git hash-object "$paper")" = "42e5b34955304fe6b454160a6abbd2df73777438"
           git rev-parse HEAD | tee t2-operator-receipt/commit.txt
-          sha256sum "$src" "$more" "$effect" "$heavy" "$light" "$order" "$six" "$paper" | tee t2-operator-receipt/SHA256SUMS
+          sha256sum "$src" "$more" "$effect" "$heavy" "$light" "$order" "$six" "$bridge" "$overlap" "$multi" "$paper" | tee t2-operator-receipt/SHA256SUMS
           cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
           cp "$more" /tmp/mathlib4/T2HilbertCrossed.lean
           cp "$effect" /tmp/mathlib4/T2HilbertEffect.lean
@@ -53,8 +59,11 @@ jobs:
           cp "$light" /tmp/mathlib4/T2LightFrame.lean
           cp "$order" /tmp/mathlib4/T2EffectOrder.lean
           cp "$six" /tmp/mathlib4/T2CorrectionSix.lean
+          cp "$bridge" /tmp/mathlib4/T2CorrectionEventBridge.lean
+          cp "$overlap" /tmp/mathlib4/T2ZeroTripleOverlap31.lean
+          cp "$multi" /tmp/mathlib4/T2ZeroTripleMultiplicity.lean
           status=0
-          for mod in T2OperatorEnergy T2HilbertCrossed T2HilbertEffect T2HeavyQuery T2LightFrame T2EffectOrder T2CorrectionSix; do
+          for mod in T2ZeroTripleOverlap31 T2ZeroTripleMultiplicity T2OperatorEnergy T2HilbertCrossed T2HilbertEffect T2HeavyQuery T2LightFrame T2EffectOrder T2CorrectionSix T2CorrectionEventBridge; do
             echo "=== COMPILE $mod ===" | tee -a t2-operator-receipt/compile.log
             if (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$mod.olean" "$mod.lean") 2>&1 | tee -a t2-operator-receipt/compile.log; then
               if ! (cd /tmp/mathlib4 && lake env leanchecker "$mod") 2>&1 | tee -a t2-operator-receipt/kernel.log; then
@@ -78,6 +87,9 @@ jobs:
               Path('research/nightfall/formalization/structural_information/T2LightFrame.lean'),
               Path('research/nightfall/formalization/structural_information/T2EffectOrder.lean'),
               Path('research/nightfall/formalization/structural_information/T2CorrectionSix.lean'),
+              Path('research/nightfall/formalization/structural_information/T2CorrectionEventBridge.lean'),
+              Path('research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean'),
+              Path('research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean'),
           ]
           log=Path('t2-operator-receipt/compile.log').read_text()
           for p in sources:
@@ -105,6 +117,20 @@ jobs:
           expected += [prefix+'T2CorrectionSix.'+x for x in
             ['correction_fiber_subset_six_images','correction_fiber_card_le_six_pair_fiber',
              'correction_fiber_card_le_six_M']]
+          expected += [prefix+'T2CorrectionEventBridge.'+x for x in
+            ['drop_two_equal_labels','two_zero_triple_events_in_six_cover',
+             'event_correction_subset_six_cover','event_correction_card_le_six_pair_fiber',
+             'event_correction_card_le_six_M']]
+          expected += [prefix+'T2ZeroTripleOverlap.'+x for x in
+            ['survivor_is_total','two_zero_triple_survivors_equal',
+             'three_survivors_force_fourth_zero','pair_energy_coefficient_le_31']]
+          expected += [prefix+'T2ZeroTripleMultiplicity.'+x for x in
+            ['survivorCount_eq_correctedCount','complex_weighted_survivor_identity',
+             'complementary_triple_zero_iff_total',
+             'e0_iff_survivor_total','e1_iff_survivor_total',
+             'e2_iff_survivor_total','e3_iff_survivor_total',
+             'four_event_incidence','four_zero_triple_exclusions',
+             'zero_triple_event_multiplicity']]
           reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
           axiom_free=set(re.findall(r"'([^']+)' does not depend on any axioms",log))
           allowed={'propext','Classical.choice','Quot.sound'}
