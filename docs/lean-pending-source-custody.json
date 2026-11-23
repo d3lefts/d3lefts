@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 58,
+  "revision": 59,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
-  "scope": "Source-hash custody for explicit generic query-local physical-oracle compiler; pending named Lean receipt and subsequent Wyner transfer corollary.",
+  "scope": "Proposed degree-(b*d) locality bridge for #1150 plus imported query compiler / general Wyner terminal, all Lean sources unpromoted pending exact-head CI.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3056,6 +3056,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Generic adaptive query-local compiler source; strict pinned CI and leanchecker required. This is not the full #1150 Wyner transfer nor entropy gap certificate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerDegree.lean",
+      "source_blob_sha": "03a8b726a61bfdc615cec1295d35c0c8ffe4a0eb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper #1150 b-local degree-preservation lemma; pending direct pinned Lean and leanchecker CI, no full theorem certification or global priority inferred."
     },
     {
       "path": "research/nightfall/formalization/product_space/QueryLocalWynerTerminal.lean",
