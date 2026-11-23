@@ -17,7 +17,7 @@ Exact source status: pending pinned Lean/leanchecker replay.
 
 namespace Nightfall.AffineWyner
 
-open Finset
+open Finset Real
 
 variable {X : Type*} [Fintype X] [DecidableEq X] [Nonempty X]
 
