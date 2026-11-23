@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 44,
+  "revision": 45,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v44: exact pending custody for complex rank-free light-frame Bessel and original-label/quantum operator bridges; all active theorem certification statuses unchanged",
+  "scope": "v45: repair exact SHA custody for typed real squared-norm positivity in generic complex Hilbert operator sources; no theorem status changes",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3699,7 +3699,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2HilbertCrossed.lean",
-      "source_blob_sha": "c242c13f6ac3cfcae91ef5967a38704f3400ceac",
+      "source_blob_sha": "5a33ae78294b9eb62e763b41992bdf4d4288c4d9",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -3709,7 +3709,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2HilbertEffect.lean",
-      "source_blob_sha": "9fbd7b24004237989c1f99efe3607e98283617c1",
+      "source_blob_sha": "e0e63d9e76e92289f8d3a45ddc6cf285ad85db90",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
