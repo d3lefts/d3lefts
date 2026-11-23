@@ -21,9 +21,9 @@ open Finset
 open Nightfall.QuantumCircuitPaths
 open Nightfall.QuantumCircuitNormalization
 
-abbrev State (I G W : Type*) := I × (G × W)
+abbrev State (I G W : Type) := I × (G × W)
 
-variable {I G W : Type*}
+variable {I G W : Type}
   [Fintype I] [DecidableEq I]
   [Fintype G] [DecidableEq G] [AddCommGroup G]
   [Fintype W] [DecidableEq W]
@@ -72,7 +72,7 @@ theorem oracleMat_response_eq_translation (x : I → G) :
   simp [responseCoefficient, standardResponseMatrix, responseShift]
 
 /-- A finite basis permutation matrix preserves the exact complex energy. -/
-private theorem permutation_isUnitary {S : Type*}
+private theorem permutation_isUnitary {S : Type}
     [Fintype S] [DecidableEq S] (e : S ≃ S) :
     IsUnitary (fun b v : S => if b = e v then (1 : ℂ) else 0) := by
   classical
