@@ -69,7 +69,7 @@ theorem selected_sector_energy
   have hcoord : ‖(P (w a)) a‖ ^ 2 ≤ energy (P (w a)) := by
     unfold energy
     exact Finset.single_le_sum
-      (fun b _ => sq_nonneg _) (Finset.mem_univ a)
+      (fun b _ => sq_nonneg (‖(P (w a)) b‖)) (Finset.mem_univ a)
   exact hcoord.trans (contractive_operator_energy P hP (w a))
 
 /-- The weighted second-query path rows in the genuine direct-sum space.
