@@ -95,6 +95,59 @@ jobs:
             | tee receipts/rh-halfplane/claimstrip-kernel.log
           echo 'PASS: exact RH candidate and ClaimStrip compiled, checked and standard-axiom audited' \
             | tee receipts/rh-halfplane/scope.txt
+      - name: Compare baseline and candidate isolated elaboration cost
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import statistics
+          import subprocess
+          import time
+
+          source = Path('research/nightfall/formalization/rh_probe')
+          baseline = (source / 'HalfPlaneBaseline.lean').resolve()
+          candidate = (source / 'HalfPlaneCandidate.lean').resolve()
+          assert baseline.is_file() and candidate.is_file()
+          # Interleaved order limits, but cannot eliminate, runner load and cache drift.
+          order = ['baseline', 'candidate', 'candidate', 'baseline',
+                   'candidate', 'baseline', 'baseline', 'candidate']
+          targets = {'baseline': baseline, 'candidate': candidate}
+          results = []
+          for label in order:
+              path = targets[label]
+              started = time.perf_counter()
+              proc = subprocess.run(['lake', 'env', 'lean', str(path)],
+                                    cwd='/tmp/rh-mathlib', capture_output=True,
+                                    text=True, timeout=300)
+              wall = time.perf_counter() - started
+              entry = {'variant': label, 'wall_seconds': round(wall, 4),
+                       'source_sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                       'exit_code': proc.returncode}
+              print(json.dumps(entry), flush=True)
+              results.append(entry)
+              if proc.returncode != 0:
+                  print(proc.stdout[-5000:], proc.stderr[-5000:], flush=True)
+                  raise RuntimeError('Baseline/candidate compilation failed')
+          by_variant = {label: [x['wall_seconds'] for x in results if x['variant']==label]
+                        for label in targets}
+          medians = {label: statistics.median(v) for label,v in by_variant.items()}
+          delta = medians['baseline'] - medians['candidate']
+          result = {'toolchain': os.environ['RH_TOOLCHAIN'],
+                    'mathlib': os.environ['RH_MATHLIB'],
+                    'scope': 'isolated HalfPlane Lean process; not Main/Challenge build',
+                    'order': order, 'runs': results, 'medians_seconds': medians,
+                    'candidate_faster_percent': 100 * delta / medians['baseline'],
+                    'measurement_status': 'exploratory; no acceptance threshold applied'}
+          out = Path('receipts/rh-halfplane/isolated-timings.json')
+          out.write_text(json.dumps(result, indent=2) + '\n')
+          print('BENCHMARK_SUMMARY', json.dumps(result['medians_seconds']),
+                'candidate_faster_percent', round(result['candidate_faster_percent'], 2),
+                flush=True)
+          PY
       - name: Upload immutable source and kernel receipts
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
