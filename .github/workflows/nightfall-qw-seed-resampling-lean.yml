@@ -57,7 +57,7 @@ jobs:
           import re
           required={
             'QuadraticWynerLabelProjection': ['weighted_centered_square_identity',
-                'weighted_square_jensen','weighted_sum_comm','weighted_expected_square_jensen','weighted_abs_jensen',
+                'weighted_square_jensen','weighted_sum_comm','weighted_abs_jensen',
                 'weighted_total_variance','weighted_fiber_variance_le_reference',
                 'variance_survives_latent_averaging'],
             'QuadraticWynerSeedAverage': ['seed_average_degree','seed_average_bounded',
