@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 58,
+  "revision": 59,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
-  "scope": "Integrate corrected affine-code support and free-fiber Lean sources from #1099/#1104 into current-main custody without certification promotion; leanchecker CI gate required.",
+  "scope": "Source-custody-only #1095 affine fiber count/entropy scope, not general C_W identity",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3746,6 +3746,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerEntropyBound.lean",
+      "source_blob_sha": "47fa53995cb904ca889265266469ced715dc2a18",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-#1151 source-exact proof candidate: free affine-code fiber equivalence, q^r cardinality, and support Shannon entropy bound. Mandatory pinned Lean/leanchecker and proof review; not full Wyner infimum."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerFiberCount.lean",
+      "source_blob_sha": "ff3af728e9c9c27c674270586a96a173527b7261",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-#1151 source-exact proof candidate: free affine-code fiber equivalence, q^r cardinality, and support Shannon entropy bound. Mandatory pinned Lean/leanchecker and proof review; not full Wyner infimum."
     },
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerFibers.lean",
