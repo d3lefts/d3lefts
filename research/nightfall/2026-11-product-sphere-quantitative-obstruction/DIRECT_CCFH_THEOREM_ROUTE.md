@@ -2,6 +2,14 @@
 
 **Date:** 2026-11-22. **Status:** paper-level theorem reduction using a published topological input. It is **not** an independent original topological theorem, not a Lean `ProductSphereZero` certificate, and not a worldwide priority ruling on the causal phase-retrieval application.
 
+## Recovered parallel unrestricted paper proof and independent AI audit
+
+The complete **unrestricted-in-dimension, unrestricted-in-attainable-prefix** oriented-row causal phase-retrieval proof already exists in merged [PR #995](https://github.com/d3lefts/d3lefts/pull/995), in [PROOF_PASSPORT.md](../../continuous-causal-phase-20261122/PROOF_PASSPORT.md). Merged [PR #1000](https://github.com/d3lefts/d3lefts/pull/1000), in [INDEPENDENT_AUDIT_CLAUDE_20261122.md](../../continuous-causal-phase-20261122/INDEPENDENT_AUDIT_CLAUDE_20261122.md), checked the $(\\mathbb Z/2)^2 equivariant bundle argument, reachable-history extension, causal collision, and n=2 / zero-row cases, finding no gap. The proof should be credited to that parallel construction and audit; this document only records its exact source transfer.
+
+**Key model distinction:** 'unrestricted' means all n>=2, all continuously chosen **oriented measurement rows** on their genuinely attained prefix histories, and every m<=2n-2. It does **not** mean all physically continuous rank-one *projector*-valued selectors on attained histories: [independent detector-holonomy audit](../../continuous-causal-phase-20261122/TOPOLOGY_SOURCE_AND_DETECTOR_HOLONOMY_20261122.md) constructs a physically continuous detector that has no continuous signed-row lift on its actual history space. The oriented-row proof is mathematically complete at paper level and cannot be silently extended to that larger class.
+
+This already settles the mathematical source dependency via Chan–Chen–Frick–Hull; no extra geometric ATLAS Sard proof is required to validate the cited paper theorem. The ATLAS path is an independent **kernel formalization / geometric library** project, not a missing condition of the existing paper proof. New conditional quantitative Lean receipts [45065543797](https://github.com/d3lefts/d3lefts/actions/runs/45065543797) and [45065903920](https://github.com/d3lefts/d3lefts/actions/runs/45065903920) certify the exact causal/risk implications, NOT the separately published product-sphere zero theorem in Lean. Historical originality and a non-AI specialist audit are distinct gates.
+
 ## The highest-leverage external reference, checked at its source
 
 Yu Hin Chan, Shujian Chen, Florian Frick and J. Tristan Hull, *Borsuk–Ulam theorems for products of spheres and Stiefel manifolds revisited*, [arXiv:1902.00935](https://arxiv.org/abs/1902.00935), published in *Topological Methods in Nonlinear Analysis* 55 (2020), 553–564.
