@@ -32,14 +32,21 @@ def FixedProjectionFiber
 noncomputable instance freeAxisFintype
     (L : Submodule 𝔽 (ι → 𝔽)) : Fintype (FreeAxis L) := by
   classical
-  exact Fintype.ofFinite _
+  unfold FreeAxis
+  exact Fintype.subtype (Finset.univ.filter (fun i : ι => axis i ∈ L))
+    (by intro i; simp)
 
 /-- Canonical classical finite enumeration of each constrained code fiber. -/
 noncomputable instance fixedProjectionFiberFintype [Fintype 𝔽]
     (L : Submodule 𝔽 (ι → 𝔽)) (a x : ι → 𝔽) :
     Fintype (FixedProjectionFiber L a x) := by
   classical
-  exact Fintype.ofFinite _
+  unfold FixedProjectionFiber
+  exact Fintype.subtype
+    (Finset.univ.filter
+      (fun z : ι → 𝔽 =>
+        InAffineCode L a z ∧ ∀ i, axis i ∉ L → z i = x i))
+    (by intro z; simp)
 
 /-- A source-exact algebraic bijection between the affine fiber and all
 free-coordinate assignments, for any field and finite index type. -/
