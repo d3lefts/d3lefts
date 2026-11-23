@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 50,
+  "revision": 51,
   "as_of": "2026-11-22 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v50 standalone compiler repair for ComponentClassification after prior exact-head failure. Preserve all 67 historical source-matched records. No new topology assertion; recheck pending.",
+  "scope": "v51: exact-source repairs to ComponentClassification and ComponentEndpoints, preserved 67 historical verified entries, new full Lean and axiom closure pending. Does NOT prove physical global fiber manifold or ProductSphereZero.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -419,13 +419,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
-      "source_blob_sha": "c7bad81a3523d7e9bd164e2d9d76f452d180d150",
+      "source_blob_sha": "47d05570dc3b58ba8a2318669e3d0b9eb2c242a4",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
+      "receipt_scope": "2026-11-23 exact compiler repair of actual second endpoint theorem: canonical Set.Icc subtype and explicit Z for locallyConnectedSpace; prior CI failed run 45106169674 at Bot/Top and heartbeat, new run pending. Real manifold-with-boundary and ProductSphereZero still not proved."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
