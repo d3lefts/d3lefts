@@ -1,0 +1,20 @@
+name: NIGHTFALL operational information-cost finite oracle audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/operational_information_cost/**'
+      - '.github/workflows/nightfall-operational-information-cost.yml'
+  push:
+    paths:
+      - 'research/nightfall/operational_information_cost/**'
+      - '.github/workflows/nightfall-operational-information-cost.yml'
+permissions:
+  contents: read
+jobs:
+  coherent-oracle-finite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exhaustively verify XOR graph/star oracle basis equivalence
+        run: python3 research/nightfall/operational_information_cost/check_graph_coherent_oracle.py
