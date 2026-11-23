@@ -31,8 +31,8 @@ theorem finite_mixture_entropy_chain
     (w : Θ → ℝ) (Q : Θ → X → ℝ)
     (hQ1 : ∀ θ, ∑ x, Q θ x = 1) :
     (∑ θ, negMulLog (w θ)) -
-      (∑ x, (∑ θ, negMulLog (w θ * Q θ x)) -
-        negMulLog (∑ θ, w θ * Q θ x)) =
+      (∑ x, ((∑ θ, negMulLog (w θ * Q θ x)) -
+        negMulLog (∑ θ, w θ * Q θ x))) =
     (∑ x, negMulLog (∑ θ, w θ * Q θ x)) -
       (∑ θ, w θ * (∑ x, negMulLog (Q θ x))) := by
   classical
@@ -67,8 +67,8 @@ theorem finite_mixture_entropy_chain
           (∑ θ : Θ, w θ * (∑ x : X, negMulLog (Q θ x))) := by
             rw [Finset.sum_add_distrib]
   have hsplit :
-      (∑ x : X, (∑ θ : Θ, negMulLog (w θ * Q θ x)) -
-        negMulLog (∑ θ : Θ, w θ * Q θ x)) =
+      (∑ x : X, ((∑ θ : Θ, negMulLog (w θ * Q θ x)) -
+        negMulLog (∑ θ : Θ, w θ * Q θ x))) =
       (∑ x : X, ∑ θ : Θ, negMulLog (w θ * Q θ x)) -
         (∑ x : X, negMulLog (∑ θ : Θ, w θ * Q θ x)) := by
           let F : X → ℝ := fun x => ∑ θ : Θ, negMulLog (w θ * Q θ x)
