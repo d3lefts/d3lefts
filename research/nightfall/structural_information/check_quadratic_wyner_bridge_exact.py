@@ -94,7 +94,7 @@ def run_case(n, weights, p_list, f):
 
 
 def run():
-    levels = [F(1, 8), F(1, 4), F(1, 2), F(3, 4), F(7, 8)]
+    levels = [F(0), F(1, 8), F(1, 4), F(1, 2), F(3, 4), F(7, 8), F(1)]
     tests = 0
     nonzero = 0
     triggered = 0
