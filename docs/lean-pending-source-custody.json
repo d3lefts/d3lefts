@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 61,
+  "revision": 62,
   "as_of": "2026-11-22 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
   "scope": "Integrate corrected affine-code support and free-fiber Lean sources from #1099/#1104 into current-main custody without certification promotion; leanchecker CI gate required.",
@@ -5627,7 +5627,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean",
-      "source_blob_sha": "4ee89d6ead9ccf83c67c9d2edf761db4fc86ac68",
+      "source_blob_sha": "09f4d2f3b3dae956d64c17c9cd6241a7b4ea210c",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
