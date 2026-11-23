@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 47,
+  "revision": 48,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v47: fix typed complex conjugate norm and real-cast positive-effect proof; preserve all pending source SHA provenance, no unverified T2 promotion",
+  "scope": "v48: pin explicit starRingEnd complex norm simplification in full rank-free light-frame Bessel source; all previous custody claims unchanged",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3729,7 +3729,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2LightFrame.lean",
-      "source_blob_sha": "d5fe800136f111da3f09d04fccc351b290995dc7",
+      "source_blob_sha": "c32e486d91963a066744251fbac378fd60418ee6",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
