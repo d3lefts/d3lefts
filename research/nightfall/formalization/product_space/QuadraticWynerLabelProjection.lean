@@ -76,6 +76,45 @@ theorem weighted_square_jensen
   simp only [sub_zero] at hh
   linarith
 
+
+/-- Exact interchange of a finite latent average and an arbitrary finite
+seed expectation. No conditional-independence approximation is introduced. -/
+theorem weighted_sum_comm
+    (π : Θ → ℝ) (μ : U → ℝ) (F : Θ → U → ℝ) :
+    (∑ u, μ u * labelAverage π F u) =
+      ∑ θ, π θ * (∑ u, μ u * F θ u) := by
+  classical
+  unfold labelAverage
+  calc
+    (∑ u, μ u * (∑ θ, π θ * F θ u)) =
+        ∑ u, ∑ θ, μ u * (π θ * F θ u) := by
+          apply Finset.sum_congr rfl
+          intro u _
+          rw [Finset.mul_sum]
+    _ = ∑ θ, ∑ u, μ u * (π θ * F θ u) := Finset.sum_comm
+    _ = ∑ θ, π θ * (∑ u, μ u * F θ u) := by
+          apply Finset.sum_congr rfl
+          intro θ _
+          rw [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro u _
+          ring
+
+/-- Convex absolute-value bound for the mean increment of a label-averaged
+target. This is valid for all nonnegative finite latent masses, including
+zeros. -/
+theorem weighted_abs_jensen
+    (π : Θ → ℝ) (hπ0 : ∀ θ, 0 ≤ π θ)
+    (x : Θ → ℝ) :
+    |∑ θ, π θ * x θ| ≤ ∑ θ, π θ * |x θ| := by
+  calc
+    |∑ θ, π θ * x θ| ≤ ∑ θ, |π θ * x θ| :=
+      Finset.abs_sum_le_sum_abs _ _
+    _ = ∑ θ, π θ * |x θ| := by
+          apply Finset.sum_congr rfl
+          intro θ _
+          rw [abs_mul, abs_of_nonneg (hπ0 θ)]
+
 /-- Exact source-independent conditional variance decomposition.
 No normalization or positivity of the seed masses is needed for the
 identity; those are required later to interpret it as a probability law. -/
