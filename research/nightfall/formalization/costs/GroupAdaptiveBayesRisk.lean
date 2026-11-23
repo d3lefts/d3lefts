@@ -44,9 +44,10 @@ theorem noisy_sign_conditional_loss
   calc
     _ = 1 - 2 * beta ^ 2 * nu * predictor +
         beta ^ 2 * predictor ^ 2 := by ring
-    _ = (1 - beta ^ 2) +
-        beta ^ 2 * (nu - predictor) ^ 2 := by
-      rw [← hnu]
+    _ = (1 - beta ^ 2) + beta ^ 2 * (nu - predictor) ^ 2 +
+        beta ^ 2 * (1 - nu ^ 2) := by ring
+    _ = (1 - beta ^ 2) + beta ^ 2 * (nu - predictor) ^ 2 := by
+      rw [hnu]
       ring
 
 /-- A posterior over a binary hidden sign, combined with the exact
@@ -64,25 +65,9 @@ theorem noisy_sign_posterior_risk
       ((1 + beta) / 2) * (-1 - beta * m) ^ 2) =
       (1 - beta ^ 2) + beta ^ 2 * (1 - m ^ 2) := by
   dsimp
-  rw [show ((1 + beta) / 2) * (1 - beta * (pPlus - pMinus)) ^ 2 +
-      ((1 - beta) / 2) * (-1 - beta * (pPlus - pMinus)) ^ 2 =
-      (1 - beta ^ 2) +
-        beta ^ 2 * (1 - (pPlus - pMinus)) ^ 2 from
-      noisy_sign_conditional_loss beta 1 (pPlus - pMinus) (by norm_num)]
-  rw [show ((1 - beta) / 2) * (1 - beta * (pPlus - pMinus)) ^ 2 +
-      ((1 + beta) / 2) * (-1 - beta * (pPlus - pMinus)) ^ 2 =
-      (1 - beta ^ 2) +
-        beta ^ 2 * (-1 - (pPlus - pMinus)) ^ 2 from
-      noisy_sign_conditional_loss beta (-1) (pPlus - pMinus) (by norm_num)]
-  have hrisk := binary_sign_bayes_risk pPlus pMinus beta hmass
-  calc
-    _ = (1 - beta ^ 2) * (pPlus + pMinus) +
-        (pPlus * (beta - beta * (pPlus - pMinus)) ^ 2 +
-         pMinus * (-beta - beta * (pPlus - pMinus)) ^ 2) := by ring
-    _ = (1 - beta ^ 2) +
-        beta ^ 2 * (1 - (pPlus - pMinus) ^ 2) := by
-      rw [hmass, hrisk]
-      ring
+  have hminus : pMinus = 1 - pPlus := by linarith
+  rw [hminus]
+  ring
 
 /-- Posterior sign probabilities from any *actual legal adaptive group
 transcript*, not supplied independent posterior marginals. The likelihood
