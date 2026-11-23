@@ -1,0 +1,70 @@
+name: NIGHTFALL query-local Wyner generic decoder compiler Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QueryLocalWynerCompiler.lean'
+      - '.github/workflows/nightfall-query-local-wyner-compiler-lean.yml'
+      - 'docs/lean-pending-source-custody.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-exact-compiler:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Rebuild exact dependency closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Source-exact generic query-local decoder compiler
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/query-local
+          src=research/nightfall/formalization/product_space/QueryLocalWynerCompiler.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+          git rev-parse HEAD | tee receipts/query-local/head.txt
+          sha256sum "$src" | tee receipts/query-local/SHA256SUMS
+          cp "$src" /tmp/mathlib4/QueryLocalWynerCompiler.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/QueryLocalWynerCompiler.olean QueryLocalWynerCompiler.lean) 2>&1 | tee receipts/query-local/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/query-local/lean.log
+      - name: Independent kernel replay and axiom audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker QueryLocalWynerCompiler) 2>&1 | tee receipts/query-local/leanchecker.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          log=Path('receipts/query-local/lean.log').read_text()
+          for s in ('graft_eval','graft_queries','compile_eval','compile_queries_le','compile_correct_on_source','compile_global_depth'):
+              full='Nightfall.QueryLocalWyner.'+s
+              m=re.search(r"'"+re.escape(full)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m:
+                  ax={z.strip() for z in m[1].split(',') if z.strip()}
+                  assert ax <= {'propext','Classical.choice','Quot.sound'},(s,ax)
+              else:
+                  assert f"'{full}' does not depend on any axioms" in log,full
+          assert 'sorryAx' not in log
+          print('PASS arbitrary adaptive observed tree compiler, exact semantics and global cost')
+          PY
+      - name: Preserve receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: query-local-wyner-compiler-${{ github.run_id }}
+          path: receipts/query-local
+          retention-days: 90
