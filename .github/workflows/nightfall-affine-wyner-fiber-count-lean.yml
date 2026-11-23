@@ -17,6 +17,13 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
+      - name: Independently enumerate all small affine-code free-projection fibers
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/affine-wyner-card
+          python3 scripts/check_affine_wyner_free_fibers.py | tee receipts/affine-wyner-card/finite-checker.log
+          sha256sum scripts/check_affine_wyner_free_fibers.py >> receipts/affine-wyner-card/SHA256SUMS
       - name: Compile exact-parent source plus cardinality bridge
         shell: bash
         run: |
