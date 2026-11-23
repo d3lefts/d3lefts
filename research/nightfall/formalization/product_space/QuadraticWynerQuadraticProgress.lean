@@ -74,7 +74,6 @@ theorem quadratic_original_increment_from_seed_variance
     have hCM : quadraticC * M = τ ^ 2 / 4 := by
       dsimp [M]
       field_simp
-      ring
     have hpos : 0 < (pvar κ H - τ / 2) *
         (pvar κ H + τ / 2) :=
       mul_pos (by linarith) (by linarith)

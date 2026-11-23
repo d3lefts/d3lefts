@@ -99,7 +99,7 @@ theorem seed_average_pincr_le_original
     dsimp [μ]
     have hu : 0 ≤ prodMass κ z.1 :=
       Finset.prod_nonneg (fun i _ => hκ.nonneg i (z.1 i))
-    positivity
+    exact mul_nonneg hu (hκ.nonneg j z.2)
   have hleft :
       pincr κ (seedAverage π g) j =
       ∑ z : Ω, μ z * |labelAverage π D z| := by
@@ -112,7 +112,6 @@ theorem seed_average_pincr_le_original
     have hd := seed_average_difference π g u j v
     dsimp [Ω, μ, D, labelAverage]
     rw [hd]
-    ring
   have hright :
       (∑ θ, π θ * (∑ z : Ω, μ z * |D θ z|)) =
       (∑ θ, π θ *
@@ -122,12 +121,6 @@ theorem seed_average_pincr_le_original
     apply congrArg (fun z : ℝ => π θ * z)
     unfold pincr
     rw [Fintype.sum_prod_type]
-    apply Finset.sum_congr rfl
-    intro u _
-    apply Finset.sum_congr rfl
-    intro v _
-    dsimp [Ω, μ, D]
-    ring
   calc
     pincr κ (seedAverage π g) j ≤
         ∑ θ, π θ * pincr κ (fun u => g (compOf θ u)) j := by
@@ -144,7 +137,7 @@ theorem original_pincr_inv
   unfold pincr
   refine Finset.sum_eq_zero fun x _ => Finset.sum_eq_zero fun b _ => ?_
   rw [hj x b]
-  ring
+  simp
 
 /-- Powered exact original-coordinate mean increment: the radical
 bound and final tree are separate gates. -/

@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 59,
+  "revision": 60,
   "as_of": "2026-11-23 UTC",
   "source_commit": "a2db1a3a5c0c6e10bc3644a76d29c7723aad3167",
   "scope": "v59: reconcile exact QW reference-marginal source after independent Lean syntax correction; preserve unreviewed status.",
@@ -2969,13 +2969,13 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean",
-      "source_blob_sha": "69e5b6bb2d2c677d4abc1e46e0ca1839014f1a81",
+      "source_blob_sha": "01203c0002aff894e76b242da9efee9a28955d33",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Stacked QW+ original-coordinate mean-increment draft (#1162). Exact source custody only; Lean kernel replay, full theorem, and novelty remain unverified."
+      "receipt_scope": "2026-11-23 exact source custody for QW original mean-increment draft: repair Lean solver tactics and resynchronize with parent #1154. Pinned Lean + leanchecker still pending; NOT a full QW+ certificate or novelty claim."
     },
     {
       "path": "research/nightfall/formalization/product_space/QuadraticWynerParametric.lean",
@@ -2999,13 +2999,13 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/QuadraticWynerQuadraticProgress.lean",
-      "source_blob_sha": "ad10fb14d60672c336600d8c06526d3ae3bf1edb",
+      "source_blob_sha": "756c700636fdad38d83b7860229b0bf16a47c4dd",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact source custody of experimental Quadratic-Wyner work in PR #1154. This record is NOT a Lean kernel certificate, independent theorem review, full decision-tree terminal, or priority claim."
+      "receipt_scope": "2026-11-23 exact source custody: remove redundant post-field_simp tactic at terminal's previously failing hCM line 77; kernel replay still pending. Not full QW theorem certification or priority."
     },
     {
       "path": "research/nightfall/formalization/product_space/QuadraticWynerReferenceCoupling.lean",
