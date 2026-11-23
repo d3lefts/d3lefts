@@ -31,7 +31,7 @@ jobs:
           (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o .lake/build/lib/lean/QuadraticWynerLabelProjection.olean QuadraticWynerLabelProjection.lean) 2>&1 | tee receipts/qw-label/proof.log
           ! grep -E '(^|:)error:|declaration uses .sorry' receipts/qw-label/proof.log
           SRC2=research/nightfall/formalization/product_space/QuadraticWynerJensenTransport.lean
-          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\\b' "$SRC2"
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$SRC2"
           cp "$SRC2" /tmp/mathlib4/QuadraticWynerJensenTransport.lean
           (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o .lake/build/lib/lean/QuadraticWynerJensenTransport.olean QuadraticWynerJensenTransport.lean) 2>&1 | tee receipts/qw-label/jensen.log
           ! grep -E '(^|:)error:|declaration uses .sorry' receipts/qw-label/jensen.log
