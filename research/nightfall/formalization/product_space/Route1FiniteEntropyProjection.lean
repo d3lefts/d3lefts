@@ -17,9 +17,12 @@ theorem product_entropy (u : X → ℝ) (v : Y → ℝ)
     H (fun z : X × Y => u z.1 * v z.2) = H u + H v := by
   unfold H
   rw [Fintype.sum_prod_type]
-  simp only [Real.negMulLog_mul, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.mul_sum, hv, one_mul]
-  rw [Finset.sum_add_distrib, Finset.sum_comm (f := fun x y => u x * negMulLog (v y))]
-  simp only [← Finset.sum_mul, hu, one_mul, mul_one]
+  calc
+    _ = ∑ x, (negMulLog (u x) + u x * ∑ y, negMulLog (v y)) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      simp only [Real.negMulLog_mul, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.mul_sum, hv, one_mul]
+    _ = _ := by rw [Finset.sum_add_distrib, ← Finset.sum_mul, hu, one_mul]
 
 /-- Homogeneous entropy concavity for an unnormalized mixture of
 normalized probability vectors. Zero total mass is handled separately. -/
@@ -92,6 +95,7 @@ theorem joint_entropy_ge_marginal (w : W → ℝ) (u : W → X → ℝ) (v : W �
     entropy_perspective (fun t => w t * u t x) v
       (fun t => mul_nonneg (hw t) (hu t x)) hv hv1)
   simp only [H, Finset.sum_add_distrib] at h
+  unfold H
   rw [Fintype.sum_prod_type]
   have he : (∑ x : X, ∑ t : W, w t * u t x * H (v t)) =
       ∑ t : W, w t * H (v t) := by
@@ -106,8 +110,27 @@ theorem joint_entropy_ge_marginal (w : W → ℝ) (u : W → X → ℝ) (v : W �
   rw [he] at h
   exact h
 
+
+/-- Data processing for a product-mixture latent, derived using the actual
+joint and marginal entropy formulas, rather than assuming monotonicity. -/
+theorem product_mixture_information_ge_marginal
+    (w : W → ℝ) (u : W → X → ℝ) (v : W → Y → ℝ)
+    (hw : ∀ t, 0 ≤ w t) (hu : ∀ t x, 0 ≤ u t x) (hv : ∀ t y, 0 ≤ v t y)
+    (hu1 : ∀ t, ∑ x, u t x = 1) (hv1 : ∀ t, ∑ y, v t y = 1) :
+    H (fun x => ∑ t, w t * u t x) - (∑ t, w t * H (u t)) ≤
+      H (fun z : X × Y => ∑ t, w t * u t z.1 * v t z.2) -
+        (∑ t, w t * H (fun z : X × Y => u t z.1 * v t z.2)) := by
+  have h := joint_entropy_ge_marginal w u v hw hu hv hu1 hv1
+  have he : (∑ t, w t * H (fun z : X × Y => u t z.1 * v t z.2)) =
+      (∑ t, w t * H (u t)) + ∑ t, w t * H (v t) := by
+    simp only [product_entropy _ _ (hu1 _) (hv1 _), mul_add, Finset.sum_add_distrib]
+  rw [he]
+  linarith
+
 end Nightfall.Route1FiniteEntropyProjection
 
 #print axioms Nightfall.Route1FiniteEntropyProjection.product_entropy
 #print axioms Nightfall.Route1FiniteEntropyProjection.entropy_perspective
 #print axioms Nightfall.Route1FiniteEntropyProjection.joint_entropy_ge_marginal
+
+#print axioms Nightfall.Route1FiniteEntropyProjection.product_mixture_information_ge_marginal
