@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 59,
+  "revision": 60,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v59: exact legal light-slot Fourier span closure proof pending; no full quantum simulation theorem promotion",
+  "scope": "v60: exact source update p-light PiLp block norm/inner proof elaboration; not a full quantum theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3729,7 +3729,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2FirstStageLight.lean",
-      "source_blob_sha": "2664dbb31058e220010f45e4be36e80a73888c4e",
+      "source_blob_sha": "ee8d0581d5ad32cbb283cc624ca6e67cd77ca658",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
