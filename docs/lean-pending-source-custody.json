@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 65,
+  "revision": 66,
   "as_of": "2026-11-24 UTC",
-  "source_commit": "b4b82102dceca92a17cfacdd871ca5e24ba81696",
-  "scope": "Actual #970 Wyner obstruction terminal candidates; no automatic certification promotion.",
+  "source_commit": "f48a47907352915a824e23aed4528da778ee411b",
+  "scope": "Actual #970 Wyner obstruction terminal candidates and finite Shannon projection; no automatic certification promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3098,6 +3098,16 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/product_space/Route1FiniteEntropyProjection.lean",
+      "source_blob_sha": "a781370487dc33502cc52e4c6b3f3b27b306af56",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual #970 Wyner terminal candidate and finite Shannon projection bridges; independent kernel proof and review pending for new source; Gaussian and approximate-static scope not yet closed."
+    },
+    {
       "path": "research/nightfall/formalization/product_space/Route1FiniteJointMass.lean",
       "source_blob_sha": "7f0e8c3efc7b4f4eee204fcb0ddd39f712d11421",
       "classification": "unreviewed-source",
@@ -3159,13 +3169,13 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1ObstructionWyner.lean",
-      "source_blob_sha": "a4cef3d9919001f3b6448ea6c3a6ee31e3d83f8d",
+      "source_blob_sha": "c4932f48dd8738e608fa447db0d4acd1a836b128",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Actual #970 Wyner terminal candidate and recovery bridges; exact-head kernel proof and independent review pending; Gaussian and approximate-static scope not yet closed."
+      "receipt_scope": "Actual #970 Wyner terminal candidate and finite Shannon projection bridges; independent kernel proof and review pending for new source; Gaussian and approximate-static scope not yet closed."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1OrthogonalCorrelation.lean",
@@ -3205,7 +3215,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Actual #970 Wyner terminal candidate and recovery bridges; exact-head kernel proof and independent review pending; Gaussian and approximate-static scope not yet closed."
+      "receipt_scope": "Actual #970 Wyner terminal candidate and finite Shannon projection bridges; independent kernel proof and review pending for new source; Gaussian and approximate-static scope not yet closed."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1StarCoupling.lean",
