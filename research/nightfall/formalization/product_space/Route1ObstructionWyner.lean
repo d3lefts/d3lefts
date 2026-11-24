@@ -115,7 +115,7 @@ theorem product_entropy_le_log_support (p : J → A → ℝ)
     exact le_antisymm (le_of_not_gt hn) (hnonneg z)
   have hm : ∑ z ∈ S, prodMass p z = 1 := by
     rw [← prodMass_total p hp1]
-    exact Finset.sum_subset (subset_univ _) (fun z _ hz => hzero z hz) |>.symm
+    exact Finset.sum_subset (subset_univ _) (fun z _ hz => hzero z hz)
   have hs : S.Nonempty := by
     by_contra hn
     have he : S = ∅ := Finset.not_nonempty_iff_eq_empty.mp hn
@@ -234,12 +234,11 @@ theorem exact_static_wyner
         · have hh : ¬ 1 < (S j).card := by simpa [active] using hj
           omega
       _ = ∏ j ∈ active S, 2 ^ r := by
+        unfold active
         rw [Finset.prod_filter]
-        simp [active]
       _ = 2 ^ (r * (active S).card) := by simp [pow_mul]
       _ ≤ 2 ^ (r * m) := by
-        apply Nat.pow_le_pow_right (by decide)
-        exact Nat.mul_le_mul_left r ham
+        exact Nat.pow_le_pow_right (by decide) (Nat.mul_le_mul_left r ham)
   simpa only [Nat.cast_pow, Nat.cast_ofNat, Real.log_pow] using hterminal
 
 end Nightfall.Route1Polylog
