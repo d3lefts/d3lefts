@@ -36,14 +36,27 @@ noncomputable def block (b : D) (x : H D E) : H D E :=
 theorem block_norm_sq (b : D) (x : H D E) :
     ‖block b x‖ ^ 2 = ‖x b‖ ^ 2 := by
   rw [PiLp.norm_sq_eq_of_L2]
-  simp [block]
+  change (∑ d : D, ‖if d = b then x b else 0‖ ^ 2) = ‖x b‖ ^ 2
+  calc
+    _ = ∑ d : D, (if d = b then ‖x b‖ ^ 2 else 0) := by
+      apply Finset.sum_congr rfl
+      intro d _
+      split_ifs <;> simp
+    _ = ‖x b‖ ^ 2 := by simp
 
 /-- Adjointness of the sector selector expressed directly as a
 finite inner-product sum, without assuming selectors commute with P. -/
 theorem inner_block_right (u x : H D E) (b : D) :
     inner ℂ u (block b x) = inner ℂ (u b) (x b) := by
   rw [PiLp.inner_apply]
-  simp [block]
+  change (∑ d : D, inner ℂ (u d) (if d = b then x b else 0)) =
+    inner ℂ (u b) (x b)
+  calc
+    _ = ∑ d : D, (if d = b then inner ℂ (u d) (x b) else 0) := by
+      apply Finset.sum_congr rfl
+      intro d _
+      split_ifs <;> simp
+    _ = inner ℂ (u b) (x b) := by simp
 
 /-- The p-light first-stage frame on actual two-query Hilbert paths.
 The only hypotheses are orthonormal input family u and the literal
