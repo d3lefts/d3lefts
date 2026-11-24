@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 66,
+  "revision": 67,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v66: pin explicit original ordered-pair Fubini product-sum lemma in Hilbert path energy; all other source status unchanged",
+  "scope": "v67: exact pending physical noncommuting Group C zero-triple survivor contractions, no root theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3866,6 +3866,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-23 actual q_b-light second-stage Hilbert path-frame in arbitrary-dimensional complex direct sum of sectors, derived Cauchy-Schwarz and direct-sum norm without independent path orthogonality; pending kernel; no T2 full Fourier composition."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2SurvivorFrames.lean",
+      "source_blob_sha": "df92eb7cee9a59662b6d499455c5aa05f62e4989",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact rank-free arbitrary complex Hilbert first- and second-light zero-triple survivor contraction operators. First: physical p-light frame plus post-P pinched synthesis. Second: finite indexed inner-product Cauchy plus post-P coordinate pinching and q-light condition. Physical effect 0≤P≤I noncommuting. Still requires actual pair-hat energy ≤M₂, source-to-C survivor regrouping, full Fourier tail and 31 query terminal. Pending named Lean kernel and independent audit."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2WalshTranscript.lean",
