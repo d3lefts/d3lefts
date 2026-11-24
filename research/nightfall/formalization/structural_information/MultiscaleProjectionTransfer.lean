@@ -9,7 +9,8 @@ sampling and variance are defined recursively, not passed as premises.
 No commutativity, coordinate independence, or uniform atom bound is used.
 -/
 
-open Finset RealInnerProductSpace
+open Finset
+open scoped InnerProductSpace
 namespace Nightfall.MultiscaleProjection
 
 variable {J H : Type*} [Fintype J] [NormedAddCommGroup H] [InnerProductSpace ℝ H]
@@ -182,6 +183,7 @@ theorem union_card_budget (q : J → Finset ι) (m : ℕ)
       have h := ih (U ∪ q j)
       have hc := Finset.card_union_le U (q j)
       have hj := hq j
+      rw [Nat.add_mul, one_mul]
       omega
 
 section Information
@@ -209,8 +211,7 @@ theorem kl_predictive_floor (p r : L → ℝ) (a : ℝ) (ha : 0 < a)
   have ht (i : L) : p i * Real.log (p i/r i) ≤
       (p i-r i)^2/a + (p i-r i) := by
     apply (kl_term (p i) (r i) (hp i) (ha.trans_le (hr i))).trans
-    apply add_le_add_right
-    exact div_le_div_of_nonneg_left (sq_nonneg _) ha (hr i)
+    exact add_le_add (div_le_div_of_nonneg_left (sq_nonneg _) ha (hr i)) le_rfl
   calc
     kl p r ≤ ∑ i, ((p i-r i)^2/a + (p i-r i)) := Finset.sum_le_sum (fun i _ => ht i)
     _ = _ := by rw [Finset.sum_add_distrib, ← Finset.sum_div,
