@@ -6,21 +6,19 @@ NIGHTFALL flagship paper · outline v0.1 · 24 November 2026 · Devin J. Wright,
 
 ## Headline
 
-For bounded low-degree functions, the cost of classical simulation is governed by **how the information in the input is shared across coordinates**. It does not depend on the number of coordinates, the alphabet size, or the entropy of the input. The governing quantity is the Wyner common information `C_W(ν)` of the input law. It is optimal in the worst case, and it improves under locally recoverable changes of representation.
-
-Applied to quantum query algorithms, this turns "quantum advantage requires structure" into an exact, computable quantity: on any input law with low common information, a quantum query algorithm's acceptance probability admits efficient classical simulation. Turturean's uniform-cube theorem is the case `C_W = 0`.
+A dimension-free classical query guarantee for bounded low-degree functions under arbitrary correlated finite-alphabet laws is controlled by how information is shared across coordinates. It is worst-case sharp in Wyner common information at fixed degree and error, and query-recoverable representations can reduce the guarantee without bound. This does not characterize every task's optimum, establish uniqueness of Wyner's measure, or imply efficient classical runtime. For normalized quantum algorithms in the matching coordinate-query model, acceptance estimation is a corollary.
 
 ## Main theorem
 
-Let `ν` be any probability law on a finite product alphabet `α^ι`, and let `f : α^ι → [0,1]` have interaction degree at most `d`. For accuracy `ε` and failure probability `δ`:
+Let `ν` be any probability law on a finite product alphabet `α^ι`, and let `f : α^ι → [0,1]` have interaction degree at most `d≥1`. In the matching original-coordinate query model, for `0<ε,δ≤1`:
 
 **Part I — Simulation (PR #970).** There is a deterministic coordinate-query decision tree `t` of depth
 
 ```text
-O( d^24 · ε^-15 · δ^-17/2 · (1 + C_W(ν)) )
+O(d^8 ε^-5 δ^-7/2 + d^24 C_W(ν) ε^-15 δ^-17/2)
 ```
 
-with `Pr_ν[|f − t| > ε] ≤ δ`. The depth does not depend on `|ι|`, `|α|`, or `H(ν)`. The exponents come from the constants of the Lean statement with `τ = δε²/2` and are not optimized.
+with `Pr_ν[|f − t| > ε] ≤ δ`. The depth does not depend on `|ι|`, `|α|`, or `H(ν)`. The exponents follow by substituting τ=δε²/2, taking n>2[K/(2γ)+C_W/(η²w₀)]/δ, and choosing sufficiently small positive slack in s>C_W. They are not optimized.
 
 Exact Lean statement: `Nightfall.Route1Polylog.route1_wyner_general` in [`Route1WynerGeneral.lean`](../../research/nightfall/formalization/product_space/Route1WynerGeneral.lean). For every `s > C_W(ν)` and depth `n` it gives
 
@@ -29,26 +27,32 @@ Pr_ν[|f − t| > ε] ≤ ( K/(2γ) + s/(η² w₀) )/n + τ/ε²,
 K = π²d²/2,  γ = sqrt(3τ⁵ / (12500 (π²(d+1)²)⁶)),  η = γ/(512 d²),  w₀ = γ/(16K).
 ```
 
-**Part II — Representation sensitivity (PR #1150).** Suppose `ν` is within total variation `ζ` of `Φ_*μ`, where each observed coordinate of `Φ(z)` depends on at most `b` latent coordinates and every latent coordinate can be recovered from at most `r` observed queries. Then the same guarantee holds with `C_W(μ)` in place of `C_W(ν)`, degree `bd`, depth multiplied by `r`, and failure increased by `ζ`. The improvement is unbounded: the diagonal source `X = (Z, Z)` has `C_W(X) = N ln 2`, and it simulates at `C_W(Z) = 0` with `b = r = 1` and `ζ = 0`.
+**Part II — Representation sensitivity (PR #1150).** Suppose `ν` is within total variation `ζ` of `Φ_*μ`, where each observed coordinate of `Φ(z)` depends on at most `b` latent coordinates and every latent coordinate can be recovered on the positive-mass latent support by a deterministic decoder costing at most `r` observed queries on every word. Then the same guarantee holds with `C_W(μ)` in place of `C_W(ν)`, degree `max(1,bd)`, depth multiplied by `r`, and failure increased by `ζ`. The improvement is unbounded: the diagonal source `X = (Z, Z)` has `C_W(X) = N ln 2`, for N independent fair bits, while the latent has `C_W(Z) = 0` with `b = r = 1` and `ζ = 0`.
 
-**Part III — Worst-case optimality (PR #1182).** There are finite Boolean laws `ν_m` and one-query quantum acceptance functions `f_m` (degree ≤ 2) such that, at `ε = δ = 1/4`,
+**Part III — Worst-case optimality (PR #1182).** There are finite Boolean laws `ν_m` and fixed-query quantum acceptance functions `f_m` (degree ≤ 2 in the combined one-query convention; ≤4 if counted as two phase queries) such that, at `ε = δ = 1/4`,
 
 ```text
 Q_classical(ν_m, f_m) = Θ(C_W(ν_m)) → ∞,
 H(ν_m)/C_W(ν_m) → ∞,   ln|supp ν_m| / C_W(ν_m) → ∞.
 ```
 
-Linear dependence on common information is therefore the true worst-case cost, and no entropy- or support-size-based bound can match it. Sharpness carries over to the Part II bound: the identity representation (`b = r = 1`, `ζ = 0`) is admissible, and every valid upper bound dominates the actual query complexity.
+Linear dependence on common information is therefore the true worst-case cost, and linear total-entropy or log-support bounds can be arbitrarily looser on this family; other dependence-sensitive measures are not excluded. Sharpness carries over to the Part II bound: the identity representation (`b = r = 1`, `ζ = 0`) is admissible, and every valid upper bound dominates the actual query complexity.
 
-**Quantum corollary.** The acceptance probability of a `T`-query quantum algorithm is a bounded function of degree at most `2T` (Beals–Buhrman–Cleve–Mosca–de Wolf). Part I therefore gives classical query simulation on any input law, at cost `poly(T, 1/ε, 1/δ) · (1 + C_W(ν))`.
+**Quantum corollary.** The acceptance probability of a normalized `T`-query quantum algorithm in the matching standard coordinate-oracle model is a bounded function of degree at most `2T` (Beals–Buhrman–Cleve–Mosca–de Wolf). Part I therefore gives classical query simulation on any input law, by substituting d=max(1,2T) in Part I. This is scalar acceptance estimation, not runtime or state simulation.
 
 ## Evidence
 
 | Part | Result | Evidence | Source |
 | --- | --- | --- | --- |
 | I | Wyner simulation bound, general latents | End-to-end Lean proof, standard axioms | [#970](https://github.com/d3lefts/d3lefts/pull/970), [`Route1WynerGeneral.lean`](../../research/nightfall/formalization/product_space/Route1WynerGeneral.lean) |
-| II | Query-local representation transfer, unbounded gap | Paper proof plus exact finite checker | [#1150](https://github.com/d3lefts/d3lefts/pull/1150), [transfer note](../../research/nightfall/formalization/product_space/ROUTE1_QUERY_LOCAL_WYNER_TRANSFER_20261122.md) |
-| III | Worst-case Θ(C_W) with entropy padding | Paper proof, AI-checked | [#1182](https://github.com/d3lefts/d3lefts/pull/1182), [converse memo](../../research/nightfall/structural_information/ROUTE1_CONVERSE_EXACT_FORRELATION_20261121.md) |
+| II | Query-local representation transfer, unbounded gap | Full finite transfer and diagonal identities kernel-verified on open #1183/#1184; exact finite checker | [#1150](https://github.com/d3lefts/d3lefts/pull/1150), [transfer note](../../research/nightfall/formalization/product_space/ROUTE1_QUERY_LOCAL_WYNER_TRANSFER_20261122.md) |
+| III | Worst-case Θ(C_W) with entropy padding | Reviewed paper proof; finite-test sampling kernel-verified on open #1183 | [#1182](https://github.com/d3lefts/d3lefts/pull/1182), [converse memo](../../research/nightfall/structural_information/ROUTE1_CONVERSE_EXACT_FORRELATION_20261121.md) |
+
+### Exact new receipts (24 November)
+
+- [#1183 run 45330144365](https://github.com/d3lefts/d3lefts/actions/runs/45330144365), head `98f53f6abe2142dc97b74fcd97d683d2c3484096`: `Nightfall.QueryLocalWyner.query_local_wyner_blocal` and `Nightfall.Route1Sampling.finite_test_sample`; compilation, leanchecker and standard-axiom gates passed.
+- [#1184 run 45330640932](https://github.com/d3lefts/d3lefts/actions/runs/45330640932), head `a3a113c4c3d1b42a82d895df8293d8b7a0eeaf35`: `Nightfall.Route1Polylog.fair_bit_diagonal_wyner`, `fair_bit_product_wyner` and support/infimum lemmas passed the same gates.
+- These are branch receipts, not yet merged source. All use only propext, Classical.choice, Quot.sound. Full Part III minimax, tree count, entropy/support and padding composition remain outside the new Lean receipt.
 
 ## Credit
 
@@ -73,5 +77,5 @@ Girish–Mittal–Nehoran–Raz ([arXiv:2609.35327](https://arxiv.org/abs/2609.3
 ## Next steps
 
 1. A specialist reader in query complexity, plus a full prior-art search on simulation under mixtures of product laws.
-2. Lean proofs of Part II (pullback and query substitution) and of the finite sampling lemma in Part III.
-3. Manuscript and submission.
+2. Integrate verified Part II and sampling sources after custody reconciliation; finish the full Part III composition.
+3. Complete manuscript, specialist review and obtain explicit publication authorization.
