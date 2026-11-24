@@ -5654,6 +5654,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "General-latent Wyner entropy transfer, conditional on the separately stated PPZ counting obligation. No unconditional terminal receipt yet."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalityPPZ.lean",
+      "source_blob_sha": "a8af86f627b18150af93417ec2c35e1b3b6ec385",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Disjoint guess cylinders, permutation counting, Jensen and terminal general-latent Wyner lower bound; pending source-pinned compile and non-author review."
     }
   ]
 }
