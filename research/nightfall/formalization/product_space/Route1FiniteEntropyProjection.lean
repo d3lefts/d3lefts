@@ -127,6 +127,75 @@ theorem product_mixture_information_ge_marginal
   rw [he]
   linarith
 
+
+/-- Product-rule expansion for negMulLog, valid even at zero atoms. -/
+theorem negMulLog_prod {I : Type*} [DecidableEq I] (s : Finset I) (f : I → ℝ) :
+    negMulLog (∏ i ∈ s, f i) =
+      ∑ j ∈ s, ∏ i ∈ s, if i = j then negMulLog (f i) else f i := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert a s ha ih =>
+      rw [Finset.prod_insert ha, Real.negMulLog_mul, ih, Finset.sum_insert ha]
+      have h1 : (∏ i ∈ insert a s, if i = a then negMulLog (f i) else f i) =
+          negMulLog (f a) * ∏ i ∈ s, f i := by
+        rw [Finset.prod_insert ha, if_pos rfl]
+        congr 1
+        apply Finset.prod_congr rfl
+        intro i hi
+        have hne : i ≠ a := fun h => ha (h ▸ hi)
+        simp [hne]
+      have h2 : (∑ j ∈ s, ∏ i ∈ insert a s, if i = j then negMulLog (f i) else f i) =
+          f a * ∑ j ∈ s, ∏ i ∈ s, if i = j then negMulLog (f i) else f i := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro j hj
+        have hne : a ≠ j := fun h => ha (h.symm ▸ hj)
+        rw [Finset.prod_insert ha, if_neg hne]
+      rw [h1,h2]
+      ring
+
+/-- Entropy of a finite independent family is the sum of coordinate
+entropies, with no positive atom assumption. -/
+theorem pi_product_entropy {I A : Type*} [Fintype I] [DecidableEq I]
+    [Fintype A] [DecidableEq A] (p : I → A → ℝ)
+    (hp : ∀ i, ∑ a, p i a = 1) :
+    H (fun z : I → A => ∏ i, p i (z i)) = ∑ i, H (p i) := by
+  classical
+  unfold H
+  simp only [negMulLog_prod]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [← Fintype.piFinset_univ, ← Finset.prod_univ_sum]
+  simp only [Finset.sum_ite_irrel]
+  apply Finset.prod_eq_single j
+  · intro i _ hi
+    simp [hi, hp i]
+  · simp
+
+/-- The actual entropy of a normalized binary law equals the fair-bit
+entropy minus psi of its squared signed bias. -/
+theorem binary_entropy_bias (p : Bool → ℝ) (hp : ∑ b, p b = 1) :
+    H p = Real.log 2 -
+      (Real.log 2 - (negMulLog ((1 + Real.sqrt ((p true - p false)^2))/2) +
+        negMulLog ((1 - Real.sqrt ((p true - p false)^2))/2))) := by
+  have hs : p false + p true = 1 := by simpa [Fintype.sum_bool, add_comm] using hp
+  rw [Real.sqrt_sq_eq_abs]
+  unfold H
+  rw [Fintype.sum_bool]
+  rcases le_total (p false) (p true) with h | h
+  · rw [abs_of_nonneg (sub_nonneg.mpr h)]
+    have he1 : (1 + (p true - p false))/2 = p true := by linarith
+    have he2 : (1 - (p true - p false))/2 = p false := by linarith
+    rw [he1,he2]
+    ring
+  · rw [abs_of_nonpos (sub_nonpos.mpr h)]
+    have he1 : (1 + -(p true - p false))/2 = p false := by linarith
+    have he2 : (1 - -(p true - p false))/2 = p true := by linarith
+    rw [he1,he2]
+    ring
+
 end Nightfall.Route1FiniteEntropyProjection
 
 #print axioms Nightfall.Route1FiniteEntropyProjection.product_entropy
@@ -134,3 +203,7 @@ end Nightfall.Route1FiniteEntropyProjection
 #print axioms Nightfall.Route1FiniteEntropyProjection.joint_entropy_ge_marginal
 
 #print axioms Nightfall.Route1FiniteEntropyProjection.product_mixture_information_ge_marginal
+
+#print axioms Nightfall.Route1FiniteEntropyProjection.negMulLog_prod
+#print axioms Nightfall.Route1FiniteEntropyProjection.pi_product_entropy
+#print axioms Nightfall.Route1FiniteEntropyProjection.binary_entropy_bias
