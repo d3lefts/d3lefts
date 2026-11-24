@@ -1,0 +1,7 @@
+# Post-cutoff exposure and derived refinement — 2026-11-23
+
+Frozen eligibility lists NL -> UL as unreviewed. William Hoza, ECCC TR26-323 (2026-11-20), https://eccc.weizmann.ac.il/report/2026/323/, claims NL=UL, using GPT-6.2 Astra (paper AI disclosure). This is external post-cutoff exposure, not an independent NIGHTFALL discovery, and is not an admissible pre-cutoff premise. No benchmark points claimed.
+
+## Derived paper-level refinement of Hoza's Theorem 1.3
+
+Replace the weight 6^(nu_2(i)+ell-j) by 6^nu_2(i) * 4^(ell-j), keeping all other hypotheses and the same code. For the unique maximal valuation layer i*, let B_j=6^nu_2(i*)*4^(ell-j). Hoza's derivative estimate still holds because the sum over other layers is bounded by B_j sum_{d>=1}(2/6)^d=B_j/2. If two seeds agree on code-agreement coordinates but differ elsewhere, their first differing coordinate j changes the difference of the two minimum-path costs by at least B_j/2 in magnitude. All later flips together change it by at most (3/2) B_j sum_{k=1}^{ell-j}4^(-k), strictly less than B_j/2 (including the empty sum). Hence the two seeds cannot both be ties. The same counting, union bound, and recursive uniqueness proof apply. Weight magnitudes fall from at most 6^floor(log2 n)*(6^ell-1)/5 to 6^floor(log2 n)*(4^ell-1)/3. Both retain logarithmic space and polynomial magnitudes. This is a refinement of an exposed proof, not an independent discovery of NL=UL. No Lean replay or independent review yet.
