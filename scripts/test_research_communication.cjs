@@ -34,6 +34,27 @@ for(const page of navPages){
 const home=read("docs/index.html");
 assert.ok(home.includes('href="active-proof-passport.html#q2-influence"'),"First-screen current proof passport missing");
 const current=JSON.parse(read("docs/current-site-evidence.json"));
+// Validate the exact source bytes behind each current editorial claim. A newer
+// stronger theorem may replace the manifest entry, but its certificate identity
+// must travel with it. The site gate does not claim to rerun Lean.
+const {execFileSync}=require("node:child_process");
+const crypto=require("node:crypto");
+const gitBlob=bytes=>crypto.createHash("sha1").update(Buffer.from("blob "+bytes.length+"\0")).update(bytes).digest("hex");
+assert.match(current.as_of,/^\d{4}-\d{2}-\d{2}$/);
+assert.ok(current.claims.length>0&&new Set(current.claims.map(c=>c.id)).size===current.claims.length);
+for(const c of current.claims){
+ assert.match(c.head,/^[a-f0-9]{40}$/);
+ assert.match(c.blob,/^[a-f0-9]{40}$/);
+ assert.match(c.receipt,/^https:\/\/github\.com\/d3lefts\/d3lefts\/actions\/runs\/\d+$/);
+ assert.ok(c.scope&&c.limit&&c.declaration&&c.pr&&c.status==="merged-lean");
+ let bytes;
+ try{bytes=execFileSync("git",["show",c.head+":"+c.path],{stdio:["ignore","pipe","ignore"]});}
+ catch{bytes=fs.readFileSync(c.path);}
+ assert.equal(gitBlob(bytes),c.blob,c.id+": exact certified source bytes differ");
+ assert.ok(bytes.toString("utf8").includes("theorem "+c.declaration),c.id+": named terminal missing");
+}
+const publications=JSON.parse(read("papers/publications.json"));
+for(const c of current.claims.filter(c=>c.doi))assert.ok(publications.records.some(p=>p.doi===c.doi),c.id+": unregistered publication DOI");
 const q=current.claims.find(c=>c.id==="q2-influence");
 assert.ok(home.includes(q.home_coefficient)&&home.includes("FINITE PRODUCTS"),"Current finite-product theorem and scope drift");
 assert.ok(home.includes("LEAN-CERTIFIED DEGREE-TWO THEOREM")&&home.includes("independent external review remain open"),"Scoped Lean certificate or review boundary missing");
