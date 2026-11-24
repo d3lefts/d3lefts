@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 63,
-  "as_of": "2026-11-22 UTC",
+  "revision": 64,
+  "as_of": "2026-11-23 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
-  "scope": "Integrate corrected affine-code support and free-fiber Lean sources from #1099/#1104 into current-main custody without certification promotion; leanchecker CI gate required.",
+  "scope": "Register exact diagonal Wyner source candidate; no promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5634,6 +5634,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Generic exact finite mixture Shannon entropy-chain algebra candidate: posterior entropy form equals H(output)-expected component H. Exact mathlib pinned Lean/leanchecker pending. Not affine C_W identity or novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1DiagonalWyner.lean",
+      "source_blob_sha": "6211a04e85619d7435fbcf62461b15db5856f99f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "#1150 exact diagonal support-to-Dirac, Wyner entropy and fair-bit identities, using #970 source infimum definition. Pending exact-head Lean and kernel replay; not certified."
     }
   ]
 }
