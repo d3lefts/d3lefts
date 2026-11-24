@@ -262,7 +262,7 @@ theorem ppz_log_card (A : Finset (ι → Bool)) (r : ℕ) (hr : 0 < r)
       rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
       change P * (1/P) = 1
       field_simp
-    have hJ := ConvexOn.map_sum_le Real.convexOn_exp
+    have hJ := ConvexOn.map_sum_le _root_.convexOn_exp
       (t := (univ : Finset (Equiv.Perm ι)))
       (w := fun _ => 1/P) (p := fun σ => f σ x * Real.log 2)
       (fun _ _ => by positivity) hw (fun _ _ => Set.mem_univ _)
