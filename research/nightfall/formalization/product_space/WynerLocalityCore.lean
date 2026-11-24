@@ -158,9 +158,90 @@ theorem rectangle_preimage_subset (S : Set (ι → Bool))
   intro y hy
   simpa only [hid y] using hrange (decode D y) hy
 
+section Parity
+variable [Fintype ι]
+
+def bit (b : Bool) : ZMod 2 := if b then 1 else 0
+
+def parity (x : ι → Bool) : ZMod 2 := ∑ i, bit (x i)
+
+def flip (x : ι → Bool) (j : ι) : ι → Bool :=
+  Function.update x j (! x j)
+
+theorem parity_flip (x : ι → Bool) (j : ι) :
+    parity (flip x j) = parity x + 1 := by
+  classical
+  have hsum : (∑ i ∈ (univ : Finset ι).erase j, bit (flip x j i)) =
+      ∑ i ∈ (univ : Finset ι).erase j, bit (x i) := by
+    apply Finset.sum_congr rfl
+    intro i hi
+    have hij := (Finset.mem_erase.mp hi).1
+    simp [flip, Function.update_of_ne hij]
+  have hf : bit (flip x j j) = bit (x j) + 1 := by
+    cases hx : x j <;> simp [flip, bit, hx] <;> decide
+  unfold parity
+  calc
+    _ = (∑ i ∈ (univ : Finset ι).erase j, bit (flip x j i)) + bit (flip x j j) :=
+      (Finset.sum_erase_add _ _ (Finset.mem_univ j)).symm
+    _ = (∑ i ∈ (univ : Finset ι).erase j, bit (x i)) + (bit (x j) + 1) := by rw [hsum, hf]
+    _ = (∑ i, bit (x i)) + 1 := by rw [← add_assoc, Finset.sum_erase_add _ _ (Finset.mem_univ j)]
+
+theorem parity_full_projection [Nonempty ι] :
+    FullProjection ({x | parity x = 0} : Set (ι → Bool)) (Fintype.card ι - 1) := by
+  classical
+  intro A hA y
+  have hpos : 0 < Fintype.card ι := Fintype.card_pos
+  have hj : ∃ j : ι, j ∉ A := by
+    by_contra hn
+    push Not at hn
+    have he : A = univ := Finset.eq_univ_of_forall hn
+    rw [he, Finset.card_univ] at hA
+    omega
+  obtain ⟨j, hj⟩ := hj
+  by_cases h : parity y = 0
+  · exact ⟨y, h, fun _ _ => rfl⟩
+  · have h1 : parity y = 1 := by
+      have hall : ∀ a : ZMod 2, a = 0 ∨ a = 1 := by decide
+      exact (hall (parity y)).resolve_left h
+    refine ⟨flip y j, ?_, ?_⟩
+    · change parity (flip y j) = 0
+      rw [parity_flip, h1]
+      decide
+    · intro i hi
+      have hij : i ≠ j := fun he => hj (he ▸ hi)
+      simp [flip, Function.update_of_ne hij]
+
+theorem parity_product_range_obstruction [Nonempty ι]
+    (b r : ℕ) (E : (κ → α) → (ι → Bool)) (D : κ → Tree ι α) (L : ι → Finset κ)
+    (hE : Local E L) (hL : ∀ j, (L j).card ≤ b) (hD : ∀ l, (D l).depth ≤ r)
+    (hfix : ∀ x, parity x = 0 → E (decode D x) = x)
+    (hrange : ∀ z, parity (E z) = 0) :
+    Fintype.card ι - 1 ≤ b*r := by
+  classical
+  obtain ⟨j⟩ := (inferInstance : Nonempty ι)
+  apply product_range_obstruction {x | parity x = 0} (Fintype.card ι - 1) b r E D L hE hL hD
+    parity_full_projection hfix hrange
+  refine ⟨flip (fun _ => false) j, ?_⟩
+  change parity (flip (fun _ => false) j) ≠ 0
+  rw [parity_flip]
+  have hzero : parity (fun _ : ι => false) = 0 := by simp [parity, bit]
+  rw [hzero, zero_add]
+  decide
+
+theorem parity_isolated (x : ι → Bool) (hx : parity x = 0) (j : ι) :
+    parity (flip x j) ≠ 0 := by
+  rw [parity_flip, hx, zero_add]
+  decide
+
+end Parity
+
 end Nightfall.WynerLocality
 
 #print axioms Nightfall.WynerLocality.shallow_retraction_identity
 #print axioms Nightfall.WynerLocality.product_range_obstruction
 #print axioms Nightfall.WynerLocality.rectangle_preimage_local_exclusion
 #print axioms Nightfall.WynerLocality.rectangle_preimage_subset
+
+#print axioms Nightfall.WynerLocality.parity_full_projection
+#print axioms Nightfall.WynerLocality.parity_product_range_obstruction
+#print axioms Nightfall.WynerLocality.parity_isolated
