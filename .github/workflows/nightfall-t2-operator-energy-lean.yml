@@ -14,6 +14,7 @@ on:
       - 'research/nightfall/formalization/structural_information/T2FrameEnergy.lean'
       - 'research/nightfall/formalization/structural_information/T2SecondStageLight.lean'
       - 'research/nightfall/formalization/structural_information/T2FirstStageLight.lean'
+      - 'research/nightfall/formalization/structural_information/T2PathEnergy.lean'
       - 'research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean'
       - 'research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean'
       - '.github/workflows/nightfall-t2-operator-energy-lean.yml'
@@ -52,12 +53,13 @@ jobs:
           frame=research/nightfall/formalization/structural_information/T2FrameEnergy.lean
           stage2=research/nightfall/formalization/structural_information/T2SecondStageLight.lean
           stage1=research/nightfall/formalization/structural_information/T2FirstStageLight.lean
+          pathenergy=research/nightfall/formalization/structural_information/T2PathEnergy.lean
           overlap=research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean
           multi=research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean
           paper=research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md
           test "$(git hash-object "$paper")" = "42e5b34955304fe6b454160a6abbd2df73777438"
           git rev-parse HEAD | tee t2-operator-receipt/commit.txt
-          sha256sum "$src" "$more" "$effect" "$heavy" "$light" "$order" "$six" "$bridge" "$frame" "$stage2" "$stage1" "$overlap" "$multi" "$paper" | tee t2-operator-receipt/SHA256SUMS
+          sha256sum "$src" "$more" "$effect" "$heavy" "$light" "$order" "$six" "$bridge" "$frame" "$stage2" "$stage1" "$pathenergy" "$overlap" "$multi" "$paper" | tee t2-operator-receipt/SHA256SUMS
           cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
           cp "$more" /tmp/mathlib4/T2HilbertCrossed.lean
           cp "$effect" /tmp/mathlib4/T2HilbertEffect.lean
@@ -69,10 +71,11 @@ jobs:
           cp "$frame" /tmp/mathlib4/T2FrameEnergy.lean
           cp "$stage2" /tmp/mathlib4/T2SecondStageLight.lean
           cp "$stage1" /tmp/mathlib4/T2FirstStageLight.lean
+          cp "$pathenergy" /tmp/mathlib4/T2PathEnergy.lean
           cp "$overlap" /tmp/mathlib4/T2ZeroTripleOverlap31.lean
           cp "$multi" /tmp/mathlib4/T2ZeroTripleMultiplicity.lean
           status=0
-          for mod in T2ZeroTripleOverlap31 T2ZeroTripleMultiplicity T2OperatorEnergy T2HilbertCrossed T2HilbertEffect T2HeavyQuery T2LightFrame T2EffectOrder T2CorrectionSix T2CorrectionEventBridge T2FrameEnergy T2SecondStageLight T2FirstStageLight; do
+          for mod in T2ZeroTripleOverlap31 T2ZeroTripleMultiplicity T2OperatorEnergy T2HilbertCrossed T2HilbertEffect T2HeavyQuery T2LightFrame T2EffectOrder T2CorrectionSix T2CorrectionEventBridge T2FrameEnergy T2SecondStageLight T2FirstStageLight T2PathEnergy; do
             echo "=== COMPILE $mod ===" | tee -a t2-operator-receipt/compile.log
             if (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$mod.olean" "$mod.lean") 2>&1 | tee -a t2-operator-receipt/compile.log; then
               if ! (cd /tmp/mathlib4 && lake env leanchecker "$mod") 2>&1 | tee -a t2-operator-receipt/kernel.log; then
@@ -100,6 +103,7 @@ jobs:
               Path('research/nightfall/formalization/structural_information/T2FrameEnergy.lean'),
               Path('research/nightfall/formalization/structural_information/T2SecondStageLight.lean'),
               Path('research/nightfall/formalization/structural_information/T2FirstStageLight.lean'),
+              Path('research/nightfall/formalization/structural_information/T2PathEnergy.lean'),
               Path('research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean'),
               Path('research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean'),
           ]
@@ -139,6 +143,10 @@ jobs:
             ['path_inner','norm_inner_sq_le','block_frame_energy','second_light_path_frame']]
           expected += [prefix+'T2FirstStageLight.'+x for x in
             ['block_norm_sq','inner_block_right','first_light_path_frame','first_light_after_unitary']]
+          expected += [prefix+'T2PathEnergy.'+x for x in
+            ['fullPath_norm_sq','fullPath_mass_le','first_frame_pair',
+             'second_frame_pair','first_light_four_slot_energy',
+             'second_light_four_slot_energy']]
           expected += [prefix+'T2ZeroTripleOverlap.'+x for x in
             ['survivor_is_total','two_zero_triple_survivors_equal',
              'three_survivors_force_fourth_zero','pair_energy_coefficient_le_31']]
