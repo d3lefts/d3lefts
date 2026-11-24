@@ -1,0 +1,78 @@
+name: NIGHTFALL Route1 obstruction actual Wyner terminals
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1ObstructionWyner.lean'
+      - 'research/nightfall/formalization/product_space/Route1RecoveryEntropy.lean'
+      - 'research/nightfall/formalization/product_space/Route1OrthogonalCorrelation.lean'
+      - '.github/workflows/nightfall-route1-obstruction-wyner-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  route1-polylog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned AA and mixture closure in dependency order
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean" 2>&1 | tee "/tmp/log-$M.txt")
+            ! grep -q 'declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile Route 1 chain (merged star coupling and latent degree, then polylog modules)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/route1-polylog
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral; do
+            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 \
+              | tee "receipts/route1-polylog/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/route1-polylog/$M.log"
+          done
+      - name: Compile exact obstruction sources and replay terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          R="$PWD/receipts/route1-obstruction-wyner"
+          mkdir -p "$R"
+          git rev-parse HEAD > "$R/commit.txt"
+          for M in Route1StaticObstruction Route1RecoveryEntropy Route1OrthogonalCorrelation Route1ObstructionWyner; do
+            P="research/nightfall/formalization/product_space/$M.lean"
+            sha256sum "$P" >> "$R/SHA256SUMS"
+            cp "$P" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "$R/$M.log"
+            (cd /tmp/mathlib4 && lake env leanchecker "$M") 2>&1 | tee "$R/$M.checker.log"
+          done
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/route1-obstruction-wyner/Route1ObstructionWyner.log').read_text()
+          assert 'sorryAx' not in s and 'declaration uses' not in s
+          reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",s))
+          for name in ['wynerGen_lower_of_component_entropy','wynerGen_lower_of_average_entropy','prodMass_pos_iff_box','product_entropy_le_log_support','static_wyner_cardinality_terminal','exact_static_wyner']:
+              full='Nightfall.Route1Polylog.'+name
+              assert full in reports, (full,reports)
+              assert {a.strip() for a in reports[full].split(',') if a.strip()} <= {'propext','Classical.choice','Quot.sound'}
+          print('PASS actual #970 Wyner terminals')
+          PY
+      - name: Preserve exact source receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: route1-obstruction-wyner-receipt
+          path: receipts/route1-obstruction-wyner
+          if-no-files-found: warn
