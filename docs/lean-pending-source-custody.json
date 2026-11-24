@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 51,
+  "revision": 52,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v51: add exact source event-to-sixfold correction proof to pending registry, preserve historical 67 and all pending, no full theorem claim",
+  "scope": "v52: source exact T2FrameEnergy pending registration and semantic scope; no promotion of T2 quantum terminal or independence claims",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3716,6 +3716,16 @@
       "global_priority": "unverified",
       "receipt_scope": "2026-11-23 T2 operator or finite query bridge, pending named Lean and kernel check. No full T2-31 certification, independent audit, or novelty promotion.",
       "source_blob_sha": "4acc2a316388067de0c0c4b7bc23076f087d1554"
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FrameEnergy.lean",
+      "source_blob_sha": "f38cb7e146a5069e52249a8992251d67e45f155f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "T2 source-defined rank-free complex Hilbert double-frame coefficient-energy inequality from visible restricted frame hypothesis and operator contraction; prerequisite to but NOT derivation of full two-stage frame, six group B/C norms or complete T2-31 Fourier/query theorem. Pending separate named kernel gate."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2HeavyQuery.lean",
