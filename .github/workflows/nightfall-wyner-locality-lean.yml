@@ -62,21 +62,49 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Select the actual transitive imports instead of building every unrelated Q2 proof.
+          python3 - <<'PY'
+          import pathlib, re
+          root = pathlib.Path("research/nightfall/formalization")
+          modules = dict(line.split(maxsplit=1) for line in
+                         (root / "aa_product/CLOSURE.txt").read_text().splitlines()
+                         if line.strip())
+          for p in (root / "product_space").glob("Route1*.lean"):
+              modules[p.stem] = str(p)
+          order, visited, active = [], set(), set()
+          def visit(name):
+              if name in visited:
+                  return
+              if name in active:
+                  raise RuntimeError("Import cycle: " + name)
+              if name not in modules:
+                  if name.split(".")[0] not in {"Mathlib", "Lean", "Init", "Std", "Batteries", "Aesop", "Qq", "ProofWidgets", "Plausible", "ImportGraph", "Cli"}:
+                      raise RuntimeError("Unmapped import: " + name)
+                  return
+              active.add(name)
+              source = pathlib.Path(modules[name]).read_text()
+              for line in source.splitlines():
+                  match = re.match(r"^\s*(?:(?:public|private|meta)\s+)*import\s+(?:all\s+)?([^\n]+)", line)
+                  if match:
+                      for dep in match.group(1).split("--", 1)[0].split():
+                          visit(dep)
+              active.remove(name)
+              visited.add(name)
+              order.append(name)
+          visit("Route1WynerGeneral")
+          manifest = pathlib.Path("receipts/wyner-locality/route1-closure.txt")
+          manifest.write_text("".join(f"{m} {modules[m]}\n" for m in order))
+          print(f"Selected {len(order)} of {len(modules)} mapped modules")
+          PY
           while read -r M P; do
             [ -z "$M" ] && continue
             REL="$(printf '%s' "$M" | tr '.' '/')"
             mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
             cp "$P" "/tmp/mathlib4/$REL.lean"
-            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") 2>&1 | tee "/tmp/wyner-locality-$M.log"
-            ! grep -q 'declaration uses .sorry' "/tmp/wyner-locality-$M.log"
-          done < research/nightfall/formalization/aa_product/CLOSURE.txt
-          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
-                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
-                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral; do
-            cp "research/nightfall/formalization/product_space/$M.lean" "/tmp/mathlib4/$M.lean"
-            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/wyner-locality/$M.log"
+            sha256sum "$P" >> receipts/wyner-locality/route1-source-sha256.txt
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") 2>&1 | tee "receipts/wyner-locality/$M.log"
             ! grep -q 'declaration uses .sorry' "receipts/wyner-locality/$M.log"
-          done
+          done < receipts/wyner-locality/route1-closure.txt
       - name: Strict general-latent bridge audit
         shell: bash
         run: |
