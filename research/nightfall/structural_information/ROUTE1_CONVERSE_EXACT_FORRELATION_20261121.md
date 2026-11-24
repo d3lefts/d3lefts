@@ -109,6 +109,18 @@ Now apply the merged general-latent Route 1 theorem #970 with fixed degree d (2 
 
 The padding refinement separates Wyner's linear-in-C_W guarantee from a linear bound using total input entropy or log support size; it does not rule out other dependence-sensitive quantities or entropy bounds that first discard irrelevant coordinates.
 
+**Explicit main-theorem dependence (source algebra).**
+
+For finite coordinate set I, a finite nonempty alphabet A, arbitrary probability law ν on A^I (zero masses allowed), and f:A^I→[0,1] of interaction degree at most d≥1, **in the matching original-coordinate query model**, the Lean-certified theorem `Nightfall.Route1Polylog.route1_wyner_general` (#970, with abstract latent interface #976) provides a deterministic depth-n tree with failure probability at most
+
+    [K/(2γ) + s/(η²w₀)]/n + τ/ε²,
+
+where s>C_W(ν) in nats, K=π²d²/2, γ=√(3τ⁵/(12500π¹²(d+1)¹²)), η=γ/(512d²), w₀=γ/(16K), 0<τ≤1 and ε>0. For 0<ε,δ≤1, set τ=ε²δ/2 and choose n>2[K/(2γ)+C_W(ν)/(η²w₀)]/δ (a sufficiently small positive slack in s then exists). Substitution gives
+
+    Q_class ≤ O(d⁸ ε⁻⁵ δ⁻⁷ᐟ² + d²⁴ C_W(ν) ε⁻¹⁵ δ⁻¹⁷ᐟ²).
+
+In particular, O(d²⁴ ε⁻¹⁵ δ⁻⁹ (1+C_W)) is an ordinary integer-exponent polynomial upper bound. These are the explicit exponents of #970, not the sharper unverified QW+ candidate. The constants are read from `Route1PolylogSimulation.lean`; the exponent expansion is an algebraic corollary, not a separate named Lean certificate. A normalized T-query quantum algorithm with standard single-coordinate oracle access and input-independent gates has acceptance probability of interaction degree at most 2T (polynomial method), so use d=max(1,2T). The conclusion is scalar acceptance estimation, not quantum-state simulation, efficient classical runtime or a theorem for arbitrary oracle encodings.
+
 **Scope controls.** The bound matches the dependence on C_W only at fixed d, epsilon, delta. It does not match the numerical constants, prove the dependence on degree/error optimal, measure information actually acquired in an individual transcript, or imply all high-C_W laws are hard. The duplicate-bit example #1150 (ambient C_W=N ln 2, recoverable independent blocks with C_W=0) and even a constant acceptance target are counterexamples to pointwise necessity. The padding argument is a standard product-invariance construction, not a new quantum separation or evidence of uniqueness of Wyner common information. Position this as a supporting sharpness proposition in Route 1, not a standalone flagship. The original unsparsified Forrelation mixture in Theorem B has C_W=Theta(N), while its cited classical lower bound alone is sublinear in N; do not conflate it with the new sparsified hard law.
 
 **Source and credit audit (2026-11-23).**
