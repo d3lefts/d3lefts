@@ -1,0 +1,110 @@
+{
+  "schema": "nightfall.reproducibility-reference.v1",
+  "paper": {
+    "doi": "10.5281/zenodo.24511398",
+    "version": "0.7",
+    "url": "https://zenodo.org/records/24511398"
+  },
+  "community": "https://zenodo.org/communities/nightfall-research/records",
+  "repo": "https://github.com/d3lefts/d3lefts",
+  "compiler": {
+    "toolchain": "leanprover/lean4:v4.36.0-rc2",
+    "lean_commit": "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+    "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+    "allowed_axioms": [
+      "Classical.choice",
+      "propext",
+      "Quot.sound"
+    ]
+  },
+  "sources": [
+    {
+      "claim": "general Wyner strict-slack theorem",
+      "ref": "aa2325979d681450a46c2063026d9db09d14730c",
+      "path": "research/nightfall/formalization/product_space/Route1WynerGeneral.lean",
+      "blob": "4e896cdcf97c62e2640694e077f8b36f54e2105e",
+      "declarations": [
+        "Nightfall.Route1Polylog.route1_wyner_general"
+      ],
+      "pr": 970,
+      "run": 44732951300,
+      "status": "merged Lean"
+    },
+    {
+      "claim": "historical dependency closure (179 lines)",
+      "ref": "aa2325979d681450a46c2063026d9db09d14730c",
+      "path": "research/nightfall/formalization/aa_product/CLOSURE.txt",
+      "blob": "8f2ff3fa1fd4f53b7450b2aa0e5719ca92735c2e"
+    },
+    {
+      "claim": "historical compiler lock",
+      "ref": "aa2325979d681450a46c2063026d9db09d14730c",
+      "path": "docs/lean-compiler-lock.json",
+      "blob": "3975596f449269102556bd7869e10e27104bc78b"
+    },
+    {
+      "claim": "historical compile workflow",
+      "ref": "aa2325979d681450a46c2063026d9db09d14730c",
+      "path": ".github/workflows/nightfall-route1-polylog-lean.yml",
+      "blob": "ee09225c88a42ef47f548a6add6f5b9392ba6eee"
+    },
+    {
+      "claim": "query-local transfer",
+      "ref": "98f53f6abe2142dc97b74fcd97d683d2c3484096",
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerComplete.lean",
+      "blob": "d5e7b7956ff7bf580f7047e72ac6efb2bda4352d",
+      "declarations": [
+        "Nightfall.QueryLocalWyner.query_local_wyner_blocal"
+      ],
+      "pr": 1183,
+      "run": 45330144365,
+      "status": "passing PR head, not merged at inspection"
+    },
+    {
+      "claim": "query-local and finite sampling build workflow",
+      "ref": "98f53f6abe2142dc97b74fcd97d683d2c3484096",
+      "path": ".github/workflows/nightfall-query-local-wyner-terminal-lean.yml",
+      "blob": "85f61a3c0e9522671f7a0eaf3cb3b095e3896728"
+    },
+    {
+      "claim": "duplicate-bit common information",
+      "ref": "a3a113c4c3d1b42a82d895df8293d8b7a0eeaf35",
+      "path": "research/nightfall/formalization/product_space/Route1DiagonalWyner.lean",
+      "blob": "6211a04e85619d7435fbcf62461b15db5856f99f",
+      "declarations": [
+        "Nightfall.Route1Polylog.fair_bit_diagonal_wyner",
+        "Nightfall.Route1Polylog.fair_bit_product_wyner"
+      ],
+      "pr": 1184,
+      "run": 45330640932,
+      "status": "passing PR head, not merged at inspection"
+    },
+    {
+      "claim": "finite sampling lemma only",
+      "ref": "98f53f6abe2142dc97b74fcd97d683d2c3484096",
+      "path": "research/nightfall/formalization/product_space/Route1FiniteSampling.lean",
+      "blob": "35e311d26154b9e60571a1895231a60b6df2fde8",
+      "declarations": [
+        "Nightfall.Route1Sampling.finite_test_sample"
+      ],
+      "pr": 1183,
+      "run": 45330144365,
+      "status": "passing PR head; not complete converse"
+    }
+  ],
+  "paper_sources": [
+    {
+      "pr": 1150,
+      "ref": "40bd9649725cb0df3a035e2b7161d26c2213f66d"
+    },
+    {
+      "pr": 1182,
+      "ref": "45fb39542fe8b3edb70706cfcab1e5e51e5664e7"
+    }
+  ],
+  "rights": {
+    "mode": "reference-only",
+    "source_redistribution_authorized": false,
+    "notes": "No third-party source or binary receipt copied; links to original sources and historical CI, whose artifacts may expire. No license assigned to repository."
+  }
+}
