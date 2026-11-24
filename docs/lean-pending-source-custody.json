@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 62,
+  "revision": 63,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v62: exact pending heterogeneous physical projector-sector isometric Hilbert bridge, no unrestricted theorem promotion",
+  "scope": "v63: pending exact complex grouped Fourier fiber energy operator, no new root theorem certification",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3726,6 +3726,16 @@
       "global_priority": "unverified",
       "receipt_scope": "2026-11-23 T2 operator or finite query bridge, pending named Lean and kernel check. No full T2-31 certification, independent audit, or novelty promotion.",
       "source_blob_sha": "4acc2a316388067de0c0c4b7bc23076f087d1554"
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FiberEnergy.lean",
+      "source_blob_sha": "24250b55a799fa451f9eb801b9cb79ac3d0203de",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Real Cauchy-Schwarz plus complex norm triangle and exact disjoint original-tuple frequency fibers: universal grouped complex Fourier-energy ≤ M times ungrouped coefficient energy for bounded fiber size M. Source built, no orthogonal paths assumption, no synthetic classical queries. Pending kernel; primitive A/B/C physical Hilbert estimates and full T2-31 terminal still open."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2FirstStageLight.lean",
