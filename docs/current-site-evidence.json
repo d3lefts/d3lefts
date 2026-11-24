@@ -34,7 +34,7 @@
       "id": "wyner-route1",
       "status": "merged-lean",
       "pr": 970,
-      "head": "aa2325979d681450a46c2063026d9db09d14730c",
+      "head": "e41639b2bc569d4da9e3760722f9dfb0fd3c71a5",
       "path": "research/nightfall/formalization/product_space/Route1WynerGeneral.lean",
       "blob": "4e896cdcf97c62e2640694e077f8b36f54e2105e",
       "declaration": "route1_wyner_general",
