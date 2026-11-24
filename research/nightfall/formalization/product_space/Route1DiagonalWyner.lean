@@ -166,9 +166,8 @@ theorem uniformDiagonal_normalized :
   classical
   rw [← Equiv.sum_comp (diagonalPairEquiv (I := I) (A := A)).symm uniformDiagonal]
   rw [Fintype.sum_prod_type]
-  simp [uniformDiagonal, diagonalPairEquiv, Finset.sum_ite_eq]
   have h : (Fintype.card (I → A) : ℝ) ≠ 0 := by positivity
-  field_simp
+  simp [uniformDiagonal, diagonalPairEquiv, Finset.sum_ite_eq, h] <;> field_simp [h]
 
 theorem uniformDiagonal_entropy :
     Hent (uniformDiagonal (I := I) (A := A)) = Real.log (Fintype.card (I → A)) := by
@@ -177,10 +176,9 @@ theorem uniformDiagonal_entropy :
   rw [← Equiv.sum_comp (diagonalPairEquiv (I := I) (A := A)).symm
     (fun x => negMulLog (uniformDiagonal x))]
   rw [Fintype.sum_prod_type]
-  simp [uniformDiagonal, diagonalPairEquiv, apply_ite negMulLog, Finset.sum_ite_eq,
-    negMulLog_zero, negMulLog, Real.log_inv, one_div]
   have h : (Fintype.card (I → A) : ℝ) ≠ 0 := by positivity
-  field_simp
+  simp [uniformDiagonal, diagonalPairEquiv, apply_ite negMulLog, Finset.sum_ite_eq,
+    negMulLog_zero, negMulLog, Real.log_inv, one_div, h] <;> field_simp [h] <;> ring
 
 /-- Actual #970 general-latent C_W, in nats, for N duplicated fair bits. -/
 theorem fair_bit_diagonal_wyner (N : ℕ) :
@@ -203,7 +201,7 @@ theorem fair_bit_product_wyner (N : ℕ) :
     wynerGen (prodMass (fun (_ : Fin N) (_ : Bool) => (1/2 : ℝ))) = 0 := by
   apply product_wyner_zero
   · intro i a; norm_num
-  · intro i; simp [Finset.sum_bool]; norm_num
+  · intro i; norm_num [Fintype.sum_bool]
 
 end Nightfall.Route1Polylog
 
