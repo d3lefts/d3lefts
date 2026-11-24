@@ -159,6 +159,31 @@ function verify(overlay, registry, receipts, frontier, contract) {
   assert.equal(inf.complete_certification, false);
   assert.ok(inf.dependencies.includes('q2-finite-current'));
   assert.ok(inf.remaining_obligations.length >= 3);
+  // Current arbitrary-product terminal is additive: the historical four records remain frozen.
+  const current = overlay.current_q2_terminal;
+  assert.equal(current.catalogue_id, 'NF-PS-Q2-INFINITE-HOEFFDING-C105-20261123');
+  assert.equal(current.passport_id, 'q2-influence');
+  assert.equal(current.source_path, 'research/nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean');
+  assert.equal(current.theorem_declaration, 'Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding');
+  assert.equal(current.git_blob_sha1, '37673af7af8f0f0d7a2c2d3ae272842c87a167cd');
+  assert.equal(gitBlob(current.source_path), current.git_blob_sha1);
+  assert.equal(current.ae_source_path, 'research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean');
+  assert.equal(current.ae_git_blob_sha1, '837b6066d1dfc1c6b7b294434542555e1d87a817');
+  assert.equal(gitBlob(current.ae_source_path), current.ae_git_blob_sha1);
+  assert.match(fs.readFileSync(path.join(root,current.source_path),'utf8'), /theorem infinitePi_q2_105416_hoeffding\b/);
+  assert.deepEqual(current.evidence, {pr:888,head:'d84d6f0bddb0f7e6f1e0ca17a10165afefe73b6e',ci_run:44470008420,build:'passed',kernel_check:'passed',paranoid:'not_run'});
+  assert.equal(current.independent_statement_review, false);
+  assert.equal(current.novelty_reviewed, false);
+  assert.equal(current.complete_certification, false);
+  const liveClaim = load('research/catalogue/CLAIMS.json').claims.find(x => x.id === current.catalogue_id);
+  assert.equal(liveClaim.primary, current.source_path);
+  assert.equal(liveClaim.formal.source_git_blob, current.git_blob_sha1);
+  assert.equal(liveClaim.formal.head, current.evidence.head);
+  assert.equal(liveClaim.formal.declaration, current.theorem_declaration);
+  assert.equal(liveClaim.formal.receipt, 'https://github.com/d3lefts/d3lefts/actions/runs/44470008420');
+  assert.equal(liveClaim.validity, 'kernel-checked-scoped');
+  assert.equal(liveClaim.review, 'none-recorded');
+  assert.equal(liveClaim.priority, 'unresolved');
   const f9 = lookup['f9-adaptive-pr-head'];
   assert.equal(f9.passport_id, null);
   assert.equal(f9.evidence.pr, 690);
@@ -218,7 +243,10 @@ function main() {
   const falseScope = clone(overlay);
   falseScope.records[1].theorem_declaration = 'Nightfall.InfinitePiQ2Limit.unconditional_q2';
   assert.throws(() => verify(falseScope, registry, receipts, frontier, contract));
-  console.log('PASS: Lean five-gate Proof Passport overlay, model-bound proof-object chain, source custody and seven overlay negative tests. No new kernel compilation claimed.');
+  const falseCurrent = clone(overlay);
+  falseCurrent.current_q2_terminal.evidence.paranoid = 'passed';
+  assert.throws(() => verify(falseCurrent, registry, receipts, frontier, contract));
+  console.log('PASS: Lean five-gate Proof Passport overlay, model-bound proof-object chain, source custody and eight overlay negative tests. No new kernel compilation claimed.');
 }
 if (require.main === module) main();
 module.exports = {verify};
