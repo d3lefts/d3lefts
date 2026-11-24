@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 68,
+  "revision": 69,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v68: exact pending Hilbert vector hat-pair energy from original finite frequency fibers, no full theorem promotion",
+  "scope": "v69: exact source repairs for actual-source and heterogeneous physical Hilbert isometry in full 23-module verifier; fail-closed pending named kernel; no T2 root theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3689,7 +3689,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2ActualSource.lean",
-      "source_blob_sha": "dc80eac4f29536e5971d32bed0d57b5aee7c9950",
+      "source_blob_sha": "f9d940259480e915463ea2b1938f74fe388b3c20",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -3849,7 +3849,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2PhysicalSectors.lean",
-      "source_blob_sha": "ea49acd6b3746540c2f30258bdc32b43b699c2ca",
+      "source_blob_sha": "61a9ac0e7f13b3bfd3ea32c1923c296bf99eb0f7",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
