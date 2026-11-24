@@ -1,4 +1,4 @@
-# NF-WYNER-SIMULATION-BOUNDARY-01 — v0.1, 2026-11-24
+# NF-WYNER-SIMULATION-BOUNDARY-01 — v0.2, 2026-11-24
 
 Status: paper-level deductions; new Lean source awaiting exact-head compiler and kernel receipt; independent review and novelty clearance pending. No manuscript publication or merge implied.
 
@@ -102,3 +102,67 @@ Parity -> block parity pushforward -> sharp construction -> robust-TV rank. Pape
 Target law -> dominating reference -> loss transfer -> query upper bound. This is a proposed transfer operator to correlated code and quantum-query input laws; it exposes the invalid converse rather than inventing one.
 
 Next cheapest decisive experiment: formalize the off-mode inequality using the parity expectation product identity and TV events; then compare with the complete 2607.27529 theorem. Search for a family where low-density-ratio reference laws also fail; only then pursue a true query lower bound with an explicit task and model. A high Wyner lower bound alone cannot suffice.
+
+
+## H. v0.2 structural generalization: isolated supports and block-syndrome quotient
+
+Status: paper-level proof, independent algorithmic falsification checks passed; no Lean or non-author proof receipt for this section.
+
+### H1. Mode-anchored rectangles
+
+Let A_i be finite alphabets, V a subset of their product with Hamming minimum distance >=2 (no two distinct points differ in exactly one coordinate), and P any probability law supported on V. Let Q=sum_{j=1}^K w_j Q_j be a mixture of arbitrary coordinate-product laws, TV(P,Q)<=delta. Choose a coordinatewise mode a_j of each product law, and put A={a_1,...,a_K}.
+
+For a single marginal sorted p_1>=...>=p_q>=0, with p_(q+1)=0, define lambda_l=l(p_l-p_(l+1)). The weights are nonnegative, sum to one by telescoping, and the marginal is their mixture of uniform distributions on the first l symbols: the mass of symbol s is sum_{l>=s} lambda_l/l=p_s. Every prefix contains the chosen marginal mode, including in ties.
+
+Taking products yields a mixture of uniform rectangles, every one containing the chosen joint mode a. In any nonsingleton rectangle, fix all coordinates except one with >=2 allowed values. The isolation hypothesis permits at most one V-point in each such fiber; hence uniform-rectangle mass of V is <=1/2. In the singleton rectangle {a}, V outside {a} has zero mass. Averaging these inequalities gives
+
+    Q_j(V minus {a_j}) <= Q_j(V complement).
+
+This immediately implies Q(V minus A)<=Q(V complement)<=delta and P(V minus A)<=2delta, by the TV event inequalities. In particular,
+
+    P(A)>=1-2delta,
+    K >= (1-2delta)/max_x P(x).
+
+Equivalently, the sum of the K largest target atom probabilities must be at least 1-2delta. If P is uniform on V, K>=(1-2delta)|V|. This subsumes C, removes binary/parity/linearity assumptions, and tolerates arbitrary leakage. For the general isolated-support class the factor 2 is asymptotically necessary: an unbiased product law on a binary cube has TV=1/2 from uniform parity and K=1. For any fixed finite V, optimal constants may be stronger.
+
+This stronger representation mechanism is a positive mixture of mode-anchored rectangles, not an approximate PPZ proof. It applies to isolated latent supports, or to an isolated coordinatewise quotient of the latent support; it does not automatically apply to arbitrary encoders in the original theorem.
+
+### H2. Exact block-syndrome formula for binary linear codes
+
+Let X be uniform on C=ker H, with H a binary parity-check matrix (not necessarily full row rank). Partition original coordinates into nonempty blocks B_j, and set Z_j=X restricted to B_j. Let H_j be the block-column restriction, W_j=image H_j, h_j=rank H_j, h=rank H. Let Y_j=H_j Z_j.
+
+The syndrome tuple Y is uniform over
+
+    V={(y_1,...,y_m) in product W_j : sum_j y_j=0}.
+
+Indeed, the map product W_j -> image H given by summing is surjective, with kernel dimension s=sum_j h_j-h. Each y in V has exactly product_j 2^(|B_j|-h_j) preimages in C. Given Y, the blocks Z_j are independent and uniform on their local affine solution fibers. Also V is isolated in the categorical Hamming metric: changing exactly one syndrome while holding the others fixed breaks the sum-zero condition.
+
+Every positive-weight exact product component of Z must have its coordinatewise syndrome pushforward supported in V. An isolated set cannot contain a nonsingleton rectangle, so each component fixes the syndrome tuple. It follows that
+
+    C_W(Z) = s bits,
+    minimum exact product-mixture size = 2^s,
+    K_approx(delta) >= (1-2delta) 2^s   (delta<1/2).
+
+The upper bound for the exact quantities is the explicit uniform mixture conditioned on Y; the lower bound on general-latent Wyner follows from I(Z;J)>=I(Y;J)=H(Y)=s (invalid tuples have zero integrated mass, hence zero component mass almost everywhere). Approximate TV contracts under the blockwise syndrome map and each product component remains product, so H1 gives the robust result.
+
+This is a computable rank formula for every fixed block partition. It does not require the full-projection hypothesis of the general adaptive local-retraction theorem, but applies only to literal block grouping. If each block has size <=r and r<d_min(C), each H_j has full column rank, so s=N-h=k: no Wyner reduction at all despite bundling r bits. If d_min>=2, every nonempty H_j has rank>=1, so s>=m-h, recovering and sometimes improving the general locality bound for this restricted representation. For a single parity-check row, s=m-1 as in B.
+
+Optimization problem: minimize sum_j rank(H_j) over partitions with |B_j|<=r; the global rank h is fixed. This is a concrete matroid partition objective for seeking compressible block representations, and the resulting optimum has both exact and robust mixture interpretations. The original adaptive theorem remains the broader lower bound.
+
+### H3. Exact falsification receipt and prior-art correction
+
+Executed an independently coded finite search before archiving this section:
+    
+    python3 check_wyner_isolated_support.py
+
+PASS: 198233 exact isolated-set/product-law pairs; 720 GF(2) syndrome partitions.
+
+The first test enumerates every isolated set and directly sums integer atom masses for binary dimensions up to 4 and ternary dimensions up to 2, with normalized rational marginals of denominators 3 or 4. It does not use the rectangle decomposition. The second directly enumerates binary kernel words for 720 seeded random matrices with 1..9 columns, compares syndrome-fiber counts with independent XOR elimination, and attacks isolation. Checker SHA-256 df66af2b90f77c7dbbcafbafd9339ee5f047b27f357af868bec1efd9adb338e2. These tests are not proof or independent human review.
+
+Additional indexed source retrieval clarified Ahmed et al. (2026), arXiv:2607.27529, Theorem 2 and Appendix D.5: their stated lower bound is (1-3delta)2^(m-1) for delta<1/3. The mode/parity-bias estimate is shared prior art. Our C and H1 paper-level proof uses the tighter off-mode-inside-versus-outside inequality to avoid losing another delta, obtaining (1-2delta)2^(m-1) for delta<1/2, and H1 extends to arbitrary isolated finite categorical support. Primary HTML/PDF remained inaccessible directly; the precise statement and proof excerpt were retrieved through indexed full-text mirrors (ResearchGate publication 411032646 and bittide article b66ca2da-3476-4a9e-83ef-cf7c24fa537e). This is a specific candidate improvement against that statement, not established priority or novelty; compare other mode/mixture literature and obtain non-author review before promotion. Montufar and Morton arXiv:1206.0387, strong-mode results, are a particularly relevant additional dependency for novelty audit.
+
+Next formalization: prove the nested-prefix uniform mixture identity, the rectangle-fiber bound, and the event transfer in Lean; derive the syndrome formula using finite linear map cardinalities. Preserve the scope of the existing certified theorem while the new formal work is pending.
+
+### H4. Custody separation
+
+The new stacked PR #1195 does not change the predecessor source commit or its successful kernel receipt. On the first stacked run, the repository-wide frozen pending-custody checks rejected the old PPZ/information blob hashes left in the predecessor branch. This is an integrity-ledger mismatch, not a disproof of the successful exact-head named/kernel receipt. Reconcile only the mutable pending-source custody entries on the stacked branch; keep the frozen 67-record registry unchanged and do not promote any off-main source to a main-branch certified record. Prior pending hashes remain archived here: PPZ 40c40ce49306570e615ae1435be382e9f1ff44ec; information ee2a51ca168e731eb364d862e2dfbc097238bc9e. The exact-head proof receipt identifies their replacements.
