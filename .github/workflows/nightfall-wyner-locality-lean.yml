@@ -6,7 +6,7 @@ on:
       - '.github/workflows/nightfall-wyner-locality-lean.yml'
     types: [opened, synchronize, reopened]
   push:
-    branches: ['nightfall/wyner-locality-certificate-20261124']
+    branches: ['nightfall/wyner-locality-certificate-20261124', 'nightfall/wyner-simulation-boundary-20261124']
     paths:
       - 'research/nightfall/formalization/product_space/WynerLocality*.lean'
       - '.github/workflows/nightfall-wyner-locality-lean.yml'
@@ -123,6 +123,27 @@ jobs:
           cp "$P" /tmp/mathlib4/WynerLocalityInformation.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityInformation.olean WynerLocalityInformation.lean)
           (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityInformation) 2>&1 | tee receipts/wyner-locality/information-kernel.log
+      - name: Strict mixture-size and dominated-simulation audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space/WynerLocalitySimulationBoundary.lean
+          python3 scripts/lean_bridge.py "$P" --workspace /tmp/mathlib4 \
+            --decl Nightfall.WynerLocality.mixture_information_le_log_card \
+            --decl Nightfall.WynerLocality.wynerSet_bddBelow_local \
+            --decl Nightfall.WynerLocality.wynerGen_le_log_mixture_card \
+            --decl Nightfall.WynerLocality.mixture_card_lower_of_wyner_bound \
+            --decl Nightfall.WynerLocality.locality_mixture_card_lower \
+            --decl Nightfall.WynerLocality.dominated_loss \
+            --decl Nightfall.WynerLocality.dominated_product_simulation \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --strict --timeout 1200 --json-out receipts/wyner-locality/simulation-boundary.json || {
+              python3 -c 'import json; d=json.load(open("receipts/wyner-locality/simulation-boundary.json")); print(d.get("stdout", "")); print(d.get("stderr", ""))'
+              exit 1
+            }
+          cp "$P" /tmp/mathlib4/WynerLocalitySimulationBoundary.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalitySimulationBoundary.olean WynerLocalitySimulationBoundary.lean)
+          (cd /tmp/mathlib4 && lake env leanchecker WynerLocalitySimulationBoundary) 2>&1 | tee receipts/wyner-locality/simulation-boundary-kernel.log
       - name: Preserve source identity
         if: always()
         run: |
