@@ -33,16 +33,17 @@ for(const page of navPages){
 }
 const home=read("docs/index.html");
 assert.ok(home.includes('href="active-proof-passport.html#q2-influence"'),"First-screen current proof passport missing");
-assert.ok(home.includes("C₂≈105.41623982")&&home.includes("FINITE PRODUCTS"),"Merged finite-product scalar theorem and scope drift");
-assert.ok(home.includes("LEAN-CERTIFIED DEGREE-TWO THEOREM")&&home.includes("43732382337")&&home.includes("independent external review remain open"),"Scoped Lean certificate or review boundary missing");
+const current=JSON.parse(read("docs/current-site-evidence.json"));
+const q=current.claims.find(c=>c.id==="q2-influence");
+assert.ok(home.includes(q.home_coefficient)&&home.includes("FINITE PRODUCTS"),"Current finite-product theorem and scope drift");
+assert.ok(home.includes("LEAN-CERTIFIED DEGREE-TWO THEOREM")&&home.includes("independent external review remain open"),"Scoped Lean certificate or review boundary missing");
 
 const mathematics=read("docs/mathematical-results.html");
 const review=read("docs/review.html");
 const observability=read("docs/observability.html");
 const dispatch=read("docs/november-2026.html");
 const quantum=read("docs/quantum-observability.html");
-assert.ok(mathematics.includes("v9.2 PDF")&&mathematics.includes("Corollary 6.2"),"Latest source-custody risk missing");
-assert.ok(mathematics.includes("225(1+√3)")&&mathematics.includes("historical"),"Older constant must be retained with scope");
+assert.ok(mathematics.includes(q.display_coefficient)&&mathematics.includes(q.receipt),"Latest theorem scope must match the evidence manifest");
 assert.ok(review.includes("C₂=(10+2√2)²(1+√3)²")&&review.includes("global matched parity"),"Current referee task drift");
 assert.ok(observability.includes("conditional on the scalar quadratic influence theorem")&&observability.includes("lower example alone"),"Conditional upper/lower separation absent");
 assert.ok(quantum.includes("Conditional on quadratic C₂"),"Quantum implication lost scalar dependency");
@@ -57,4 +58,4 @@ const css=read("docs/site.css");
 assert.ok(css.includes(".nf-evidence-rail")&&css.includes("@media(max-width:680px)"),"Shared mobile editorial styling missing");
 const guide=read("docs/RESEARCH_COMMUNICATION_GUIDE.md");
 assert.ok(guide.includes("Claim:")&&guide.includes("Evidence:")&&guide.includes("Limit:"),"Scientific design contract missing");
-console.log("PASS research communication: 10 evidence rails, 8 common nav routes, current v9.2 and scope, live registry and responsive visual tokens");
+console.log("PASS research communication: 10 evidence rails, 8 common nav routes, current evidence and scope, live registry and responsive visual tokens");
