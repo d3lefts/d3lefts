@@ -33,13 +33,21 @@ noncomputable def path (t : D → D → E) (b a : D) : H D E :=
 theorem path_inner (t : D → D → E) (b a : D) (x : H D E) :
     inner ℂ (path t b a) x = inner ℂ (t b a) (x b) := by
   rw [PiLp.inner_apply]
-  simp [path]
+  change (∑ i : D, inner ℂ (if i = b then t b a else 0) (x i)) =
+    inner ℂ (t b a) (x b)
+  calc
+    _ = ∑ i : D, (if i = b then inner ℂ (t b a) (x i) else 0) := by
+      apply Finset.sum_congr rfl
+      intro i _
+      split_ifs <;> simp
+    _ = inner ℂ (t b a) (x b) := by simp
 
 /-- Squared Hilbert inner products are dominated by product squared norms,
 with no collinearity or path-orthogonality hypothesis. -/
 theorem norm_inner_sq_le (u v : E) :
     ‖inner ℂ u v‖ ^ 2 ≤ ‖u‖ ^ 2 * ‖v‖ ^ 2 := by
-  have h := norm_inner_le_norm u v
+  have h : ‖inner ℂ u v‖ ≤ ‖u‖ * ‖v‖ :=
+    norm_inner_le_norm (𝕜 := ℂ) u v
   have hs : ‖inner ℂ u v‖ ^ 2 ≤ (‖u‖ * ‖v‖) ^ 2 :=
     (sq_le_sq₀ (norm_nonneg _) (mul_nonneg (norm_nonneg _) (norm_nonneg _))).mpr h
   simpa only [mul_pow] using hs
