@@ -35,7 +35,10 @@ theorem image_card_le [DecidableEq A] (t : BinaryRecovery I A)
         intro y hy
         obtain ⟨x, _, rfl⟩ := Finset.mem_image.mp hy
         simp [eval]
-      exact (Finset.card_le_card hs).trans (by simp)
+      exact (Finset.card_le_card hs).trans (by
+        simp only [Finset.card_singleton]
+        have hp : 0 < (2 : ℕ) ^ r := by positivity
+        omega)
   | node i next ih =>
       cases r with
       | zero =>
