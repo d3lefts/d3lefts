@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "as_of": "2026-11-17",
-  "editorial_scope": "Selected principal claims, archival evidence and source-verified finite results; reconciled 17 November 2026. Exact finite Q2 C105.416 and still-conditional infinite Q2 are explicitly distinct; this is not a mathematical or priority review.",
+  "as_of": "2026-11-23",
+  "editorial_scope": "Selected principal claims and historical evidence; 23 November reconciliation adds exact-source arbitrary-product Q2 terminal and preserves prior analytic lift. Not an independent mathematical or priority review.",
   "status_policy": "For every claim, validity, public-source completeness, external review, priority, and release eligibility are independent fields. Evidence does not upgrade dependencies.",
   "claims": [
     {
@@ -193,7 +193,7 @@
         "research/nightfall/2026-11-priority/Q2_PRIORITY_DOSSIER_20261117.md"
       ],
       "dependencies": [],
-      "claim_scope": "HISTORICAL analytic v8/v9.2 coefficient only, K=(10+2sqrt(2))²(1+sqrt(3))²≈1228.356323837. Retained as an archival proof-development record, NOT the strongest currently certified finite Q2 theorem. The kernel-checked original-source, native-heterogeneous finite C105.416 theorem is separately indexed under NF-PS-Q2-FINITE-C105-20261117. The infinite-product result remains a separate open Lean composition. Binary-product Grothendieck coefficient <51 is classical; no novelty promotion.",
+      "claim_scope": "HISTORICAL analytic v8/v9.2 coefficient only, K=(10+2sqrt(2))²(1+sqrt(3))²≈1228.356323837. Retained as an archival proof-development record, NOT the strongest currently certified finite Q2 theorem. The kernel-checked original-source, native-heterogeneous finite C105.416 theorem is separately indexed under NF-PS-Q2-FINITE-C105-20261117. The later infinite-product theorem is separately indexed under NF-PS-Q2-INFINITE-HOEFFDING-C105-20261123. Binary-product Grothendieck coefficient <51 is classical; no novelty promotion.",
       "open_gates": [
         "Dated audit 2026-11-17: no prior art found for an alphabet- and atom-independent degree-two exponent-two bound on non-binary products in the checked sources; binary case is classical (Grothendieck); Grothendieck root-sum and decoupling routes have documented obstructions. Priority remains unresolved pending specialist review",
         "Independent non-author check of actual matching coupling, oscillation budgets, greedy Hilbert fourth moment and finite-to-infinite lift",
@@ -251,7 +251,7 @@
         }
       ],
       "open_gates": [
-        "Full arbitrary-index/infinite-product theorem NOT certified by this finite declaration. The already-certified InfinitePiQ2Limit.source_q2_quadratic_limit takes as a separate hypothesis uniform bounds on every true-source finite-coordinate projection; discharge via finite-label factorization, bounded native table, supported degree, exact original-source influence comparison, and variance/limit composition in one named Lean theorem.",
+        "This finite declaration alone does not certify arbitrary products; separate exact-source arbitrary-product terminal is indexed under NF-PS-Q2-INFINITE-HOEFFDING-C105-20261123.",
         "Independent non-author proof review and dated scope-matched worldwide originality comparison not completed; coefficient improvement is a verified mathematical finite bound, not established novel.",
         "Separate positive-support finite theorem and newer integration must retain their own exact source and strict named axiom receipts; original PR-head certification does not automatically certify every subsequent branch or infinite-source theorem."
       ],
@@ -264,7 +264,7 @@
       "id": "NF-PS-Q2-INFINITE-LIFT-20261117",
       "title": "Infinite-product degree-two influence bound lifted from the certified finite C105 theorem",
       "area": "product-space",
-      "lifecycle": "active",
+      "lifecycle": "archive",
       "validity": "analytic-manuscript-unrefereed",
       "source_status": "public-analytic-manuscript",
       "review": "none-recorded",
@@ -281,15 +281,58 @@
           "type": "uses-as-premise"
         }
       ],
-      "claim_scope": "Analytic, not end-to-end Lean: for f in L2 of an arbitrary (possibly uncountable) product of arbitrary probability spaces, |f|<=B a.e., R_iR_jR_k f=0 for distinct i,j,k, Var(f)^2 <= C0 B^2 sup_i I_i(f) with C0=(2(1+sqrt2)sqrt3+11901/6250)^2 ~ 105.4, the constant of the kernel-checked finite theorem native_heterogeneous_q2_105416_unconditional. The reduction is a standard finite-cell martingale argument composed with the kernel-checked source_q2_quadratic_limit; all substance is in the finite inequality. The finite native C105 component has its own catalogue entry NF-PS-Q2-FINITE-C105-20261117 and successful exact-source certificate, which is NOT itself the infinite transfer.",
+      "claim_scope": "Historical analytic lift at the 17 November checkpoint, preserved as an analytic manuscript. The later source-matched unconditional a.e. and Hoeffding-degree Lean terminals are indexed separately under NF-PS-Q2-INFINITE-HOEFFDING-C105-20261123. Analytic, not end-to-end Lean: for f in L2 of an arbitrary (possibly uncountable) product of arbitrary probability spaces, |f|<=B a.e., R_iR_jR_k f=0 for distinct i,j,k, Var(f)^2 <= C0 B^2 sup_i I_i(f) with C0=(2(1+sqrt2)sqrt3+11901/6250)^2 ~ 105.4, the constant of the kernel-checked finite theorem native_heterogeneous_q2_105416_unconditional. The reduction is a standard finite-cell martingale argument composed with the kernel-checked source_q2_quadratic_limit; all substance is in the finite inequality. The finite native C105 component has its own catalogue entry NF-PS-Q2-FINITE-C105-20261117 and successful exact-source certificate, which is NOT itself the infinite transfer.",
       "open_gates": [
-        "The source_q2_quadratic_limit Lean theorem is certified only as a conditional implication: its hfinite hypothesis supplies an identical variance² upper bound for every true-source finite-coordinate conditional projection. No unconditional all-F bound is certified in one statement.",
-        "Prove a uniform finite-source-to-native-table bound with actual original-source finite-label factorization, positivity/support handling, boundedness, triple residual degree-two and source influence ≤ M; then substitute its conclusion for hfinite, with no new theorem-shaped assumptions.",
-        "Complete the finite Boolean-cell factorization/density path and preserve the original-product measure in each operator and variance identity; the active parallel PR #746/#755 and #750 are not automatically certificates until their exact-head kernel gates pass.",
-        "A single pinned Lean 4.36.0-rc2 terminal declaration that calls the finite C105 theorem and the genuine source_q2_quadratic_limit, strict standard-axiom receipt and immutable source hash; nonauthor mathematical review and originality assessment are separate."
+        "Historical checkpoint obligation (see successor for disposition): The source_q2_quadratic_limit Lean theorem is certified only as a conditional implication: its hfinite hypothesis supplies an identical variance² upper bound for every true-source finite-coordinate conditional projection. No unconditional all-F bound is certified in one statement.",
+        "Historical checkpoint obligation (see successor for disposition): Prove a uniform finite-source-to-native-table bound with actual original-source finite-label factorization, positivity/support handling, boundedness, triple residual degree-two and source influence ≤ M; then substitute its conclusion for hfinite, with no new theorem-shaped assumptions.",
+        "Historical checkpoint obligation (see successor for disposition): Complete the finite Boolean-cell factorization/density path and preserve the original-product measure in each operator and variance identity; the active parallel PR #746/#755 and #750 are not automatically certificates until their exact-head kernel gates pass.",
+        "Historical checkpoint obligation (see successor for disposition): A single pinned Lean 4.36.0-rc2 terminal declaration that calls the finite C105 theorem and the genuine source_q2_quadratic_limit, strict standard-axiom receipt and immutable source hash; nonauthor mathematical review and originality assessment are separate."
       ],
       "inherited": [
         "Classical Efron-Stein / martingale approximation arguments (no novelty claimed for the lift)"
+      ],
+      "superseded_by": "NF-PS-Q2-INFINITE-HOEFFDING-C105-20261123"
+    },
+    {
+      "id": "NF-PS-Q2-INFINITE-HOEFFDING-C105-20261123",
+      "title": "Unconditional arbitrary-product Hoeffding degree-two influence, C105.416",
+      "area": "product-space",
+      "lifecycle": "active",
+      "validity": "kernel-checked-scoped",
+      "source_status": "public-primary-source",
+      "review": "none-recorded",
+      "priority": "unresolved",
+      "primary": "research/nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean",
+      "evidence": [
+        "research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean",
+        "Nightfall/Main.lean",
+        "research/nightfall/formalization/universal/InfinitePiQ2CellAverage.lean",
+        "research/nightfall/formalization/universal/InfinitePiQ2FiniteCellDensity.lean",
+        "research/nightfall/2026-11-priority/Q2_PRIORITY_DOSSIER_20261117.md"
+      ],
+      "dependencies": [
+        {
+          "id": "NF-PS-Q2-FINITE-C105-20261117",
+          "type": "uses-as-premise"
+        }
+      ],
+      "formal": {
+        "declaration": "Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding",
+        "head": "d84d6f0bddb0f7e6f1e0ca17a10165afefe73b6e",
+        "source_git_blob": "37673af7af8f0f0d7a2c2d3ae272842c87a167cd",
+        "compiler": "Lean 4.36.0-rc2",
+        "upstream": "Mathlib 9d581dfff2e41de989072ea63abf3daf69311520; merged #776 and #888",
+        "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/44470008420"
+      },
+      "claim_scope": "Arbitrary index type and heterogeneous measurable probability factors; real L² class essentially bounded by B and in the L² closure of the span of Hoeffding components on at most two coordinates; each genuine original-source coordinate influence ≤ M. Source L² variance squared ≤ (2(1+sqrt 2)sqrt 3+11901/6250)² B² M. Separate a.e. triple-residual-zero terminal; no finite inequality supplied by caller. No dependent-law or unrestricted cubic claim.",
+      "open_gates": [
+        "Independent specialist statement-equivalence and proof review; textbook decomposition existence/uniqueness not formalized in this module.",
+        "Dated scope-matched originality review including categorical Grothendieck/decoupling; binary special case classical.",
+        "Optimal coefficient and unrestricted cubic exponent two remain open; paranoid cross-kernel replay not recorded."
+      ],
+      "inherited": [
+        "Classical Hoeffding/Efron–Stein decomposition and conditional expectations",
+        "NIGHTFALL finite C105.416 and Claude's source-preserved arbitrary-product terminal #776; Hoeffding integration #888"
       ]
     },
     {
