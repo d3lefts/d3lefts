@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/Route1RecoveryEntropy.lean'
       - 'research/nightfall/formalization/product_space/Route1OrthogonalCorrelation.lean'
+      - 'research/nightfall/formalization/product_space/Route1FiniteEntropyProjection.lean'
       - '.github/workflows/nightfall-route1-obstruction-bridges-lean.yml'
   workflow_dispatch:
 permissions:
@@ -24,7 +25,7 @@ jobs:
           R="$PWD/receipts/route1-obstruction-bridges"
           mkdir -p "$R"
           git rev-parse HEAD > "$R/commit.txt"
-          for M in Route1StaticObstruction Route1RecoveryEntropy Route1OrthogonalCorrelation; do
+          for M in Route1StaticObstruction Route1RecoveryEntropy Route1OrthogonalCorrelation Route1FiniteEntropyProjection; do
             P="research/nightfall/formalization/product_space/$M.lean"
             sha256sum "$P" >> "$R/SHA256SUMS"
             cp "$P" "/tmp/mathlib4/$M.lean"
@@ -38,6 +39,7 @@ jobs:
           targets = {
               'Route1RecoveryEntropy': ['BinaryRecovery.image_card_le', 'support_entropy_le', 'recovery_entropy_le'],
               'Route1OrthogonalCorrelation': ['twice_score_le_energy', 'one_block_energy', 'weighted_bias_jensen', 'tv_one_block_energy'],
+              'Route1FiniteEntropyProjection': ['product_entropy','entropy_perspective','joint_entropy_ge_marginal','product_mixture_information_ge_marginal','negMulLog_prod','pi_product_entropy','binary_entropy_bias'],
           }
           for module, names in targets.items():
               s = (root / (module + '.compile.log')).read_text()
@@ -47,7 +49,7 @@ jobs:
                   full = 'Nightfall.' + module + '.' + name
                   assert full in reports, (full, reports)
                   assert {a.strip() for a in reports[full].split(',') if a.strip()} <= {'propext', 'Classical.choice', 'Quot.sound'}
-          print('PASS: seven named bridge declarations; standard axioms only')
+          print('PASS: fourteen named bridge declarations; standard axioms only')
           PY
       - name: Preserve exact replay receipt
         if: always()
