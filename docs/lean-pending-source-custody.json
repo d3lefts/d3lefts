@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 65,
+  "revision": 66,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v65: exact pending original physical two-query Born four-slot complex interference expansion; no unrestricted theorem promotion",
+  "scope": "v66: pin explicit original ordered-pair Fubini product-sum lemma in Hilbert path energy; all other source status unchanged",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3829,7 +3829,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2PathEnergy.lean",
-      "source_blob_sha": "aa6627f30b4883d67a50028cfa2ca713cda412d1",
+      "source_blob_sha": "0f895d917c0756c8961dfb2b90a3f94c54a757f6",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
