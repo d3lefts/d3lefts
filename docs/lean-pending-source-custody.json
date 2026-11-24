@@ -5634,6 +5634,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Generic exact finite mixture Shannon entropy-chain algebra candidate: posterior entropy form equals H(output)-expected component H. Exact mathlib pinned Lean/leanchecker pending. Not affine C_W identity or novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalityCore.lean",
+      "source_blob_sha": "d8f7e274353606c0c40367e05c4868bdfd203003",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Adaptive tree trace, shallow retraction, parity lower bound and rectangle exclusion; source pending strict compiler and independent review."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalityInformation.lean",
+      "source_blob_sha": "03baa5d050d248b1afcfe3582724f8f94ab1ac1f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "General-latent Wyner entropy transfer, conditional on the separately stated PPZ counting obligation. No unconditional terminal receipt yet."
     }
   ]
 }
