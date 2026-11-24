@@ -4,6 +4,7 @@ on:
     paths:
       - 'research/nightfall/formalization/product_space/WynerLocality*.lean'
       - '.github/workflows/nightfall-wyner-locality-lean.yml'
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 permissions:
   contents: read
@@ -45,7 +46,10 @@ jobs:
             --decl Nightfall.WynerLocality.last_order_count \
             --decl Nightfall.WynerLocality.ppz_log_card \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
-            --strict --timeout 1200 --json-out receipts/wyner-locality/ppz.json
+            --strict --timeout 1200 --json-out receipts/wyner-locality/ppz.json || {
+              python3 -c 'import json; d=json.load(open("receipts/wyner-locality/ppz.json")); print(d.get("stdout", "")); print(d.get("stderr", ""))'
+              exit 1
+            }
           cp "$P" /tmp/mathlib4/WynerLocalityPPZ.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityPPZ.olean WynerLocalityPPZ.lean)
           (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityPPZ) 2>&1 | tee receipts/wyner-locality/ppz-kernel.log
@@ -79,7 +83,10 @@ jobs:
             --decl Nightfall.WynerLocality.wyner_locality_of_ppz \
             --decl Nightfall.WynerLocality.wyner_locality_general \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
-            --strict --timeout 1200 --json-out receipts/wyner-locality/information.json
+            --strict --timeout 1200 --json-out receipts/wyner-locality/information.json || {
+              python3 -c 'import json; d=json.load(open("receipts/wyner-locality/information.json")); print(d.get("stdout", "")); print(d.get("stderr", ""))'
+              exit 1
+            }
           cp "$P" /tmp/mathlib4/WynerLocalityInformation.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityInformation.olean WynerLocalityInformation.lean)
           (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityInformation) 2>&1 | tee receipts/wyner-locality/information-kernel.log
