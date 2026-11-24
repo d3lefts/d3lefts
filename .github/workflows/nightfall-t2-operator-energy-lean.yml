@@ -105,7 +105,8 @@ jobs:
               actual=subprocess.check_output(['git','hash-object',str(p)],text=True).strip()
               assert indexed.get(str(p))==actual,(name,indexed.get(str(p)),actual)
           print('T2_ALL_23_EXACT_SOURCE_CUSTODY_PASS')
-          PY          cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
+          PY
+          cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
           cp "$more" /tmp/mathlib4/T2HilbertCrossed.lean
           cp "$effect" /tmp/mathlib4/T2HilbertEffect.lean
           cp "$heavy" /tmp/mathlib4/T2HeavyQuery.lean
