@@ -63,7 +63,7 @@ jobs:
           s=Path('receipts/route1-obstruction-wyner/Route1ObstructionWyner.log').read_text()
           assert 'sorryAx' not in s and 'declaration uses' not in s
           reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",s))
-          for name in ['wynerGen_lower_of_component_entropy','wynerGen_lower_of_average_entropy','prodMass_pos_iff_box','product_entropy_le_log_support','static_wyner_cardinality_terminal','exact_static_wyner']:
+          for name in ['wynerGen_lower_of_component_entropy','wynerGen_lower_of_average_entropy','prodMass_pos_iff_box','product_entropy_le_log_support','static_wyner_cardinality_terminal','exact_static_wyner','orthogonal_wyner_of_marginal_entropy']:
               full='Nightfall.Route1Polylog.'+name
               assert full in reports, (full,reports)
               assert {a.strip() for a in reports[full].split(',') if a.strip()} <= {'propext','Classical.choice','Quot.sound'}
