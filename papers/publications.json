@@ -1,0 +1,50 @@
+{
+  "schema": "nightfall.publications.v1",
+  "community": {
+    "name": "NIGHTFALL — Independent Mathematical Research",
+    "identifier": "nightfall-research",
+    "url": "https://zenodo.org/communities/nightfall-research/records",
+    "creation": "owner-confirmed",
+    "membership_verification": "not independently verified"
+  },
+  "records": [
+    {
+      "id": "route1-wyner-20261124",
+      "title": "Dimension-Free Classical Simulation Under Correlated Inputs: Wyner Common-Information Bounds and Query-Local Representations",
+      "author": "Devin J. Wright",
+      "date": "2026-11-24",
+      "doi": "10.5281/zenodo.24511398",
+      "url": "https://zenodo.org/records/24511398",
+      "manuscript_version": "0.7",
+      "repository_version": "v1",
+      "pages": 24,
+      "resource_type": "research preprint",
+      "publication_status": "published on Zenodo, confirmed by owner's screenshot",
+      "review_status": "AI-assisted mathematical review; external human peer review not established",
+      "community_membership": "unverified",
+      "source_refs": [
+        {
+          "pr": 970,
+          "commit": "aa2325979d681450a46c2063026d9db09d14730c",
+          "scope": "general Wyner simulation"
+        },
+        {
+          "pr": 1150,
+          "commit": "40bd9649725cb0df3a035e2b7161d26c2213f66d",
+          "scope": "query-local representation paper proof"
+        },
+        {
+          "pr": 1182,
+          "commit": "45fb39542fe8b3edb70706cfcab1e5e51e5664e7",
+          "scope": "worst-case sharpness paper proof"
+        }
+      ]
+    }
+  ],
+  "release_policy": {
+    "automatic_release_authorized": false,
+    "rights_review_required": true,
+    "license": "unselected",
+    "archive_scope": "selected, approved immutable source package only"
+  }
+}
