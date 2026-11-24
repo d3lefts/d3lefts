@@ -304,7 +304,9 @@ theorem cellMass_pos (f : Ω → ι → α) (ν : Ω → ℝ)
   have hn : ∀ t ∈ (Finset.univ : Finset Ω),
       0 ≤ (if agrees f U t x then ν t else 0) := by
     intro t _
-    split <;> positivity
+    split
+    · exact (hν t).le
+    · exact le_rfl
   have hle : (if agrees f U x x then ν x else 0) ≤
       ∑ t, if agrees f U t x then ν t else 0 :=
     Finset.single_le_sum hn (Finset.mem_univ x)
