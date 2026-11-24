@@ -78,7 +78,34 @@ jobs:
           test "$(git hash-object "$paper")" = "42e5b34955304fe6b454160a6abbd2df73777438"
           git rev-parse HEAD | tee t2-operator-receipt/commit.txt
           sha256sum "$src" "$more" "$effect" "$heavy" "$light" "$order" "$six" "$bridge" "$frame" "$stage2" "$stage1" "$pathenergy" "$walsh" "$actual" "$outside" "$phase" "$physical" "$fiber" "$born" "$survivor" "$hat" "$overlap" "$multi" "$paper" | tee t2-operator-receipt/SHA256SUMS
-          cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
+
+          # Lock the actual compiled Lean source blobs to the custody registry
+          # in the SAME job that performs kernel replay (not a separate badge).
+          python3 - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+          root=Path('research/nightfall/formalization/structural_information')
+          names=[
+              'T2OperatorEnergy','T2HilbertCrossed','T2HilbertEffect',
+              'T2HeavyQuery','T2LightFrame','T2EffectOrder',
+              'T2CorrectionSix','T2CorrectionEventBridge',
+              'T2FrameEnergy','T2SecondStageLight','T2FirstStageLight',
+              'T2PathEnergy','T2WalshTranscript','T2ActualSource',
+              'T2OutsideSpanLight','T2QuantumPhaseExpansion',
+              'T2PhysicalSectors','T2FiberEnergy','T2BornExpansion',
+              'T2SurvivorFrames','T2HatEnergy',
+              'T2ZeroTripleOverlap31','T2ZeroTripleMultiplicity',
+          ]
+          manifest=json.loads(Path('docs/lean-pending-source-custody.json').read_text())
+          indexed={item['path']:item['source_blob_sha'] for item in manifest['sources']}
+          for name in names:
+              p=root/(name+'.lean')
+              assert p.is_file(),name
+              actual=subprocess.check_output(['git','hash-object',str(p)],text=True).strip()
+              assert indexed.get(str(p))==actual,(name,indexed.get(str(p)),actual)
+          print('T2_ALL_23_EXACT_SOURCE_CUSTODY_PASS')
+          PY          cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
           cp "$more" /tmp/mathlib4/T2HilbertCrossed.lean
           cp "$effect" /tmp/mathlib4/T2HilbertEffect.lean
           cp "$heavy" /tmp/mathlib4/T2HeavyQuery.lean
