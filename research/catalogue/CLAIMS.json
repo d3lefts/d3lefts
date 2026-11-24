@@ -310,12 +310,7 @@
         "research/nightfall/formalization/universal/InfinitePiQ2FiniteCellDensity.lean",
         "research/nightfall/2026-11-priority/Q2_PRIORITY_DOSSIER_20261117.md"
       ],
-      "dependencies": [
-        {
-          "id": "NF-PS-Q2-FINITE-C105-20261117",
-          "type": "uses-as-premise"
-        }
-      ],
+      "dependencies": [],
       "formal": {
         "declaration": "Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding",
         "head": "d84d6f0bddb0f7e6f1e0ca17a10165afefe73b6e",
