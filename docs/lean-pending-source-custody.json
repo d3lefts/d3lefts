@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 55,
+  "revision": 56,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v55: exact source custody for genuine original pair-indexed quantum four-slot energy and prior Hilbert frame modules; no full theorem promotion",
+  "scope": "v56: exact source custody original-label Walsh transcript and legal all-label strategy; still no T2-31 full kernel terminal",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3806,6 +3806,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-23 actual q_b-light second-stage Hilbert path-frame in arbitrary-dimensional complex direct sum of sectors, derived Cauchy-Schwarz and direct-sum norm without independent path orthogonality; pending kernel; no T2 full Fourier composition."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2WalshTranscript.lean",
+      "source_blob_sha": "2482460ab0aca4ec28b4ff60499ecbe8c88d49b7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact original-label additive-character transcript determines all Fourier frequencies in additive span and all four-slot polynomials supported there; no independence or synthetic oracle-label assumptions. Pending named source-exact Lean/leanchecker; uniform dual Parseval and out-of-span Hilbert Fourier tail not yet formally established."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean",
