@@ -12,6 +12,7 @@ namespace Nightfall.WynerLocality
 open Finset Real
 open Nightfall.Route1Polylog
 open Nightfall.ProductSpace.Mixture
+open Nightfall.ProductSpace.Transfer (prodMass)
 
 section Entropy
 variable {X : Type} [Fintype X] [DecidableEq X]
