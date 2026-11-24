@@ -21,6 +21,15 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+      - name: Exact isolated-support and syndrome falsification replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/wyner-locality
+          for P in research/nightfall/formalization/product_space/check_wyner_simulation_boundary.py research/nightfall/formalization/product_space/check_wyner_isolated_support.py; do
+            sha256sum "$P" | tee -a receipts/wyner-locality/finite-checker-sha256.txt
+            python3 "$P" | tee -a receipts/wyner-locality/finite-checker.log
+          done
       - uses: ./.github/actions/setup-nightfall-lean
       - name: Strict named-declaration audit
         shell: bash
