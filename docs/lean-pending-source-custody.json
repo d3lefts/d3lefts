@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 56,
+  "revision": 57,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v56: exact source custody original-label Walsh transcript and legal all-label strategy; still no T2-31 full kernel terminal",
+  "scope": "v57: repaired PiLp coordinate inner and explicit complex inner-product norm bound after exact-head compiler failure; all theorem statuses scoped and pending",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3799,7 +3799,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
-      "source_blob_sha": "1580429b4777f6948cc08617d206f249b97fe851",
+      "source_blob_sha": "a6cd9575da447ce0e28b7fe61bccef87e20d2ddd",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
