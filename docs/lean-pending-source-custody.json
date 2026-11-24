@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 63,
-  "as_of": "2026-11-22 UTC",
+  "revision": 64,
+  "as_of": "2026-11-23 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
-  "scope": "Integrate corrected affine-code support and free-fiber Lean sources from #1099/#1104 into current-main custody without certification promotion; leanchecker CI gate required.",
+  "scope": "Exact source custody only: recover #1157 and add #1182 finite sampling candidate; no certificate promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5634,6 +5634,56 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Generic exact finite mixture Shannon entropy-chain algebra candidate: posterior entropy form equals H(output)-expected component H. Exact mathlib pinned Lean/leanchecker pending. Not affine C_W identity or novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerCompiler.lean",
+      "source_blob_sha": "a8359e7e1e27835afcd8c19f127ba5bd1d59aab5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered #1157 query-local compiler, degree or terminal source; corrected terminal elaboration and full final-module kernel gate; exact-head proof and independent review pending; excludes diagonal exact C_W identity."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerDegree.lean",
+      "source_blob_sha": "0df8a7f7abaf45d98f78169046374f8d96ccdc73",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered #1157 query-local compiler, degree or terminal source; corrected terminal elaboration and full final-module kernel gate; exact-head proof and independent review pending; excludes diagonal exact C_W identity."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerTerminal.lean",
+      "source_blob_sha": "fc6e2c72cc4c5f5a09ac07dcbae546571c10140a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered #1157 query-local compiler, degree or terminal source; corrected terminal elaboration and full final-module kernel gate; exact-head proof and independent review pending; excludes diagonal exact C_W identity."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QueryLocalWynerComplete.lean",
+      "source_blob_sha": "d5e7b7956ff7bf580f7047e72ac6efb2bda4352d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered #1157 query-local compiler, degree or terminal source; corrected terminal elaboration and full final-module kernel gate; exact-head proof and independent review pending; excludes diagonal exact C_W identity."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1FiniteSampling.lean",
+      "source_blob_sha": "81a8e2c476acd2a8f0c71c2e4ec8b8767361b821",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "#1182 finite-test Hoeffding witness candidate; excludes Yao, tree count and entropy bridge; exact pinned Lean/kernel review pending."
     }
   ]
 }
