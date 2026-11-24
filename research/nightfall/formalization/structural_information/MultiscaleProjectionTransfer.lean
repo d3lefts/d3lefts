@@ -301,9 +301,13 @@ theorem cellMass_pos (f : Ω → ι → α) (ν : Ω → ℝ)
     0 < cellMass f ν U x := by
   classical
   have hx : agrees f U x x := fun _ _ => rfl
+  have hn : ∀ t ∈ (Finset.univ : Finset Ω),
+      0 ≤ (if agrees f U t x then ν t else 0) := by
+    intro t _
+    split <;> positivity
   have hle : (if agrees f U x x then ν x else 0) ≤
       ∑ t, if agrees f U t x then ν t else 0 :=
-    Finset.single_le_sum (fun t _ => by split <;> positivity) (Finset.mem_univ x)
+    Finset.single_le_sum hn (Finset.mem_univ x)
   simp only [if_pos hx] at hle
   exact (hν x).trans_le hle
 
@@ -348,7 +352,7 @@ theorem predictive_eq_cell_average (f : Ω → ι → α) (ν : Ω → ℝ)
     · rw [if_pos htx, Finset.sum_eq_single l]
       · have hm : Real.sqrt (ν t) * predictive f ν p U t l = v (t,l) :=
           predictive_mul_sqrt f ν hν p U t l
-        simp only [PiLp.sub_apply, embed, cellTest, PiLp.toLp_apply, htx, true_and, if_pos rfl]
+        simp only [PiLp.sub_apply, embed, cellTest, PiLp.toLp_apply, htx, true_and, if_pos rfl, if_true]
         rw [← hm, predictive_agrees f ν hν p U t x l htx]
         calc
           _ = (Real.sqrt (ν t))^2 * (p t l - predictive f ν p U x l) := by ring
@@ -400,7 +404,8 @@ theorem source_projection_risk_eq (f : Ω → ι → α) (ν : Ω → ℝ)
   rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro l _
-  simp only [PiLp.sub_apply, embed, PiLp.toLp_apply]
+  rw [PiLp.sub_apply]
+  change (Real.sqrt (ν x) * p x l - ((querySpace (L := L) f ν U).starProjection (embed ν p)) (x,l)) ^ 2 = _
   rw [← predictive_mul_sqrt f ν hν p U x l]
   calc
     _ = (Real.sqrt (ν x))^2 * (p x l - predictive f ν p U x l)^2 := by ring
