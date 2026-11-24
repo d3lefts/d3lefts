@@ -33,6 +33,9 @@ jobs:
             --decl Nightfall.MultiscaleProjection.residual_variance \
             --decl Nightfall.MultiscaleProjection.union_card_budget \
             --decl Nightfall.MultiscaleProjection.kl_predictive_floor \
+            --decl Nightfall.MultiscaleProjection.predictive_eq_cell_average \
+            --decl Nightfall.MultiscaleProjection.source_projection_risk_eq \
+            --decl Nightfall.MultiscaleProjection.finite_latent_transfer \
             --json-out receipts/projection-transfer/strict.json
           (cd /tmp/mathlib4 && lake env leanchecker -v MultiscaleProjectionTransfer) | tee receipts/projection-transfer/leanchecker.log
           git rev-parse HEAD > receipts/projection-transfer/head
