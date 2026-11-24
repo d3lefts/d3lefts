@@ -6,6 +6,15 @@
 
 **Evidence examined this session:** connected repository PRs #695, #699, #970, #980, #982, #990, #987/#988/#991/#992, canonical catalogue; local frangible-gap packet; the full frangible original paper arXiv:2610.34525v1 (including actual tables and constant formula); the 2025 *Phasebook* survey. Topological references in PR #699 and earlier discussion are relevant but a full independently sourced current literature audit of the precise continuous-feedback model remains **open**. Do not claim worldwide novelty or that no existing specialist theorem resolves the target.
 
+## 2026-11-23 Route 1 reviewer-response addendum
+
+This dated update supersedes the implication in the historical opportunity table that no matching dependence is available even existentially. It leaves the historical flagship decision and the current separate public-ranking reconciliation untouched.
+
+- **Sufficiency:** #970 proves a finite general-latent Wyner-dependent upper bound; #1150 proves an unbounded representation-dependent improvement in that upper bound, not a classical query lower bound.
+- **Worst-case sharpness, author-paper only:** the [revised converse memo](structural_information/ROUTE1_CONVERSE_EXACT_FORRELATION_20261121.md#2026-11-23-addendum-worst-case-linear-wyner-dependence-via-hard-law-sparsification) combines Girish–Servedio's exact one-query extremal-Forrelation separation with Yao/minimax and finite-class empirical-law sparsification. For a fixed accuracy and failure of 1/4, it derives a family with classical acceptance-estimation depth Theta(C_W) and unbounded C_W. The lower bound is on actual original-bit queries; the family is existential, not efficiently samplable. No new Lean terminal or non-author review has been completed. A universal task-relative characterization remains open, as do optimal degree/error factors.
+- **Credit and prior art:** David Turturean's uniform Boolean mechanism (arXiv:2611.09773) is the mathematical antecedent of #317's arbitrary finite-product port. Route 1 adds latent switching and the residual-information potential. Girish–Mittal–Nehoran–Raz (arXiv:2609.35327), Ben-David et al. (arXiv:2610.06835), Aaronson–Ambainis, Ambainis–de Wolf and the distinguishability literature are explicitly compared in the revised memo. The imported extremal Forrelation lower bound is Girish–Servedio's, not a new NIGHTFALL query separation. No worldwide novelty claim.
+- **Next gate:** independent source and proof audit of the sparsification theorem, then Lean proof of the empirical-law lemma and source-exact composition. No flagship promotion merely because this author-side proof was written.
+
 ## The single flagship theorem target
 
 For n≥3, let \(m_{\mathrm{cont}}(n)\) denote the smallest m for which there exist continuous *causal* row-selection maps on the reachable previous-observation histories, with \(\|a_j\|_2\le1\), such that
