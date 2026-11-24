@@ -31,7 +31,7 @@ theorem finite_test_sample
         (fun i => (hscore j).sub measurable_const)
     have hg : ∀ i : Fin L, HasSubgaussianMGF (C j i) (1/4 : ℝ≥0) μ := by
       intro i
-      have h := hasSubgaussianMGF_of_mem_Icc
+      have h := hasSubgaussianMGF_of_mem_Icc (μ := μ)
         ((hscore j).comp (hdraw i)).aemeasurable
         (Filter.Eventually.of_forall (fun ω => hb j (draw i ω)))
       norm_num [C] at h ⊢
@@ -40,11 +40,10 @@ theorem finite_test_sample
       (s := Finset.univ) (c := fun _ : Fin L => (1/4 : ℝ≥0))
       hi (fun i _ => hg i) (ε := (L : ℝ)/24) (by positivity)
     have hLp : (0 : ℝ) < L := by exact_mod_cast hL
-    have heq : -((L : ℝ)/24)^2 / (2 * (L * (1/4 : ℝ))) = -(L : ℝ)/288 := by
-      field_simp
-      <;> ring
+    have heq : -((L : ℝ)/24)^2 / (2 * ((L : ℝ) * (4 : ℝ)⁻¹)) = -(L : ℝ)/288 := by
+      field_simp [ne_of_gt hLp] <;> ring
     have ht' : (μ (E j)).toReal ≤ Real.exp (-(L : ℝ)/288) := by
-      simpa [E, Measure.real, heq] using ht
+      simpa [E, Measure.real, one_div, heq] using ht
     calc
       μ (E j) = ENNReal.ofReal ((μ (E j)).toReal) :=
         (ENNReal.ofReal_toReal (measure_ne_top μ _)).symm
@@ -53,7 +52,7 @@ theorem finite_test_sample
     calc
       μ (⋃ j, E j) ≤ ∑' j, μ (E j) := measure_iUnion_le E
       _ ≤ ∑' _j : J, ENNReal.ofReal (Real.exp (-(L : ℝ)/288)) :=
-        ENNReal.tsum_le_tsum hp
+        tsum_le_tsum hp
       _ < 1 := hbudget
   have hex : ∃ ω, ω ∉ ⋃ j, E j := by
     by_contra! hn
