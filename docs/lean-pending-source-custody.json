@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 64,
+  "revision": 65,
   "as_of": "2026-11-23 UTC",
   "source_commit": "a22a86b9248be9f16ef0f22cd85d06013020887b",
   "scope": "Exact source custody only: recover #1157 and add #1182 finite sampling candidate; no certificate promotion.",
@@ -5677,7 +5677,7 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1FiniteSampling.lean",
-      "source_blob_sha": "81a8e2c476acd2a8f0c71c2e4ec8b8767361b821",
+      "source_blob_sha": "35e311d26154b9e60571a1895231a60b6df2fde8",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
