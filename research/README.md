@@ -1,5 +1,7 @@
 # NIGHTFALL Mathematical Research Archive
 
+**24 November external methods transfer:** [solved-conjectures v3 source-pinned integration](nightfall/2026-11-solved-conjectures-transfer/README.md) connects multiscale posterior projections, learning-theoretic scope audits, complexity-preserving reductions, exact certificate operators and proof custody to active work. Includes two credited variance-sensitive deductions and [exact rational replay](nightfall/2026-11-solved-conjectures-transfer/check_projection_transfer.py); author-side only, no canonical claim promotion.
+
 ## Active research index — November 14, 2026
 
 The primary engineering program is **The Right to Act**: conditional, source-matched authorization for autonomous agents, with [exact semantic fencing](nightfall/assurance/semantic-fencing-v0.3/README.md), [assurance hub and remaining gates](nightfall/assurance/README.md), and the [ControlArena IaC Fast harness](nightfall/right-to-act-controlarena/live_iac_fast.py). The Tennessee Eastman benchmark is a historical superseded branch, not the current testbed.
