@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 60,
+  "revision": 61,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v60: exact source update p-light PiLp block norm/inner proof elaboration; not a full quantum theorem promotion",
+  "scope": "v61: physical two-phase-oracle unitary amplitude and original-label Fourier path identity pending source custody, no unrestricted theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3816,6 +3816,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Physical four-slot coefficient squared energy of source-built original pair quantum paths, positive noncommuting effect, arbitrary complex Hilbert sectors, from actual p- or q-light frames and normalized path mass. Proof of p-light restricted frame depends on T2FirstStageLight orthonormal input family, not yet arbitrary projector normalization. Pending named exact-head Lean; no complete grouped Fourier/Q-bound theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2QuantumPhaseExpansion.lean",
+      "source_blob_sha": "f826620e13a06953a726e5842f4618add015cd52",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-built arbitrary-Hilbert homogeneous-sector physical two-oracle phase unitary amplitude expansion, AddChar on actual original labels, explicit zero-sector preservation and four-character frequency algebra. No assumption of convenient path normal form; still not Born four-slot coefficient grouped Fourier tail or complete T2-31 query theorem. Pending exact-head Lean/leanchecker."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
