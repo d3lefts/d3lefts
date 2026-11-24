@@ -1,0 +1,81 @@
+name: NIGHTFALL T2 clipped original-transcript Fourier estimator (Lean kernel)
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/T2ClippedEstimator.lean'
+      - '.github/workflows/nightfall-t2-clipped-estimator-lean.yml'
+      - 'docs/lean-pending-source-custody.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: t2-clipped-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  clipped-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact source, Lean, leanchecker, axiom receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p t2-clipped-receipt
+          src=research/nightfall/formalization/structural_information/T2ClippedEstimator.lean
+          paper=research/nightfall/structural_information/T2_ZERO_TRIPLE_OVERLAP_31_20261122.md
+          test "$(git hash-object "$paper")" = "4aeb33e6031e7221a1b5f489528debfcab1dbca0"
+          git rev-parse HEAD | tee t2-clipped-receipt/commit.txt
+          sha256sum "$src" "$paper" | tee t2-clipped-receipt/SHA256SUMS
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,subprocess
+          p=Path('research/nightfall/formalization/structural_information/T2ClippedEstimator.lean')
+          m=json.loads(Path('docs/lean-pending-source-custody.json').read_text())
+          indexed={x['path']:x['source_blob_sha'] for x in m['sources']}
+          actual=subprocess.check_output(['git','hash-object',str(p)],text=True).strip()
+          assert indexed.get(str(p))==actual, (indexed.get(str(p)),actual)
+          print('T2_CLIPPED_SOURCE_EXACT_PASS')
+          PY
+          cp "$src" /tmp/mathlib4/T2ClippedEstimator.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/T2ClippedEstimator.olean T2ClippedEstimator.lean) 2>&1 | tee t2-clipped-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker T2ClippedEstimator) 2>&1 | tee t2-clipped-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          src=Path('research/nightfall/formalization/structural_information/T2ClippedEstimator.lean').read_text()
+          log=Path('t2-clipped-receipt/compile.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom|opaque)\b',src)
+          assert 'error:' not in log and 'sorryAx' not in log
+          prefix='Nightfall.StructuralInformation.T2ClippedEstimator.'
+          expected=[
+            'clip01_nonneg','clipped_squared_error_le',
+            'transcriptProjection_eval','clippedTranscriptEstimator_eval',
+            'clipped_estimator_pointwise_error','clipped_estimator_L2_le',
+            'clipped_estimator_uniform_success',
+          ]
+          reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
+          axiom_free=set(re.findall(r"'([^']+)' does not depend on any axioms",log))
+          allowed={'propext','Classical.choice','Quot.sound'}
+          for name in expected:
+              full=prefix+name
+              assert full in reports or full in axiom_free, (full,log[-7000:])
+              if full in reports:
+                  deps={x.strip() for x in reports[full].split(',') if x.strip()}
+                  assert deps<=allowed,(name,deps)
+          print('T2_CLIPPED_ESTIMATOR_NAMED_KERNEL_PASS')
+          PY
+      - name: Preserve exact source-to-kernel receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: t2-clipped-estimator-receipt
+          path: t2-clipped-receipt
+          retention-days: 90
