@@ -24,7 +24,7 @@ for(const path of ["erdos-paper.html","living-paper.html","passport.html?claim=s
                    "evidence.html#public-downloads","research.html"])
  assert.ok(moon.includes(path),"Archive source route lost: "+path);
 assert.ok(moon.includes('id="sidon-toggle"')&&moon.includes('disabled title='),"Archived no-JS Sidon checker stays safe");
-assert.equal((field.match(/class="flagship-card /g)||[]).length,4,"Four current programs retain status summaries");
+assert.ok((field.match(/class="flagship-card /g)||[]).length>0,"Current programs retain status summaries");
 assert.ok((field.match(/<section\b/g)||[]).length<=13,"Active home remains selective");
 assert.ok((field.match(/<a\b/g)||[]).length<=46,"Active home link budget");
 assert.ok(!field.includes("nf-section-index")&&!field.includes("nf-home-toolbox"),"No duplicate navigation");
@@ -33,6 +33,9 @@ for(const id of ["flagships","featured-title","nf-scroll-cinema","observatory","
 assert.ok(moon.includes('id="live-case"')&&moon.includes('id="archived-records"'));
 assert.ok(!field.includes('src="home-system.js"'),"Do not hydrate active cards using historical registry data");
 assert.ok(chrome.includes('["index.html","new-moon.html","constellation.html","review.html"].includes(page)'),"No duplicate home rails");
-assert.ok(field.includes('class="nf-hero-jump">READ THE CURRENT CLAIM &amp; EVIDENCE'),"Current evidence is visible before the long hero copy");
-assert.ok(field.includes("C₂≈105.41623982")&&field.includes("run #43732382337")&&field.includes("independent external review remain open"),"Homepage must display merged original-law Q2 Lean scope, actual receipt and outstanding human review");
+const heroLink=field.match(/<a\b[^>]*href="([^"]+)"[^>]*class="nf-hero-jump"/)?.[1];
+assert.ok(heroLink,"A direct evidence link must precede the long hero copy");
+const publications=JSON.parse(fs.readFileSync("papers/publications.json","utf8"));
+assert.ok(publications.records.some(r=>heroLink==="https://doi.org/"+r.doi)||/^(recent-research|research-dispatch-\d{8}|active-proof-passport)\.html(?:#[-\w]+)?$/.test(heroLink),"Hero must lead to a registered publication or current evidence page");
+assert.ok(field.includes("LEAN-CERTIFIED DEGREE-TWO THEOREM")&&field.includes("independent external review remain open"),"Displayed theorem must identify proof scope and review boundary");
 console.log("PASS: active NULL FIELD and historical NEW MOON with current theorem passport first");

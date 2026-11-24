@@ -1,44 +1,44 @@
 # Route 1: query-local Wyner information transfer
 
-**Editorial checkpoint:** 2026-11-23
+**Editorial checkpoint:** 2026-11-24
 **Claim ID:** `route1-query-local-wyner`
-**Evidence tier:** analytic
-**Public status:** Merged paper / terminal Lean open
-**Primary pull request:** https://github.com/d3lefts/d3lefts/pull/1150
+**Evidence tier:** branch-lean
+**Public status:** PR-head / named Lean
 
 ## Exact claim
 
-A b-local encoding with r-query recovery of each latent coordinate transfers the Route 1 simulator to original observed-coordinate queries at depth r·q. A duplicated-source family separates raw ambient Wyner information from latent information by a growing gap.
+A b-local encoding with r-query latent recovery transfers the degree-d target to degree at most bd and compiles the latent q-query tree into an original-coordinate tree of depth rq.
 
 ## Scope and assumptions
 
-Bounded degree-d observed targets, explicitly finite source and access model, component-wise b-local encoding, source TV slack; general-latent Route 1 core already formalized separately in #970.
+Finite source, b-local encoding, exact recovery on support, TV slack and general-latent Wyner bound.
 
-## Mechanism / operator
+## Mechanism
 
-Pull each observed degree-d cylinder through a b-local map (degree at most bd), then substitute a costed deterministic adaptive decoder for each latent query.
+Degree pullback and adaptive recovery-tree substitution.
 
 ## Certificate and provenance
 
-Paper argument in merged #1150 and separate exact finite cylinder check. Earlier Route 1 named Lean theorem #970 is a dependency, not a certificate for this transfer. End-to-end b-local candidate #1157 was closed unverified.
+Merged paper #1150; exact-head terminal and finite sampling lemma passed #1183 run 45330144365.
 
-- No new exact-head named terminal Lean run is claimed for this entry.
+- Named terminal: Nightfall.QueryLocalWyner.query_local_wyner_blocal
+- Exact head: 98f53f6abe2142dc97b74fcd97d683d2c3484096
+- Receipt: https://github.com/d3lefts/d3lefts/actions/runs/45330144365
 
-## Limitation / falsification boundary
+## Limitation
 
-No exact-head kernel certificate for the b-local terminal; the information-gap example is not a lower bound on optimal original-oracle query complexity, and no efficient classical runtime is shown.
+Open PR integration; the sampling lemma is not the full converse, and query depth is not runtime.
 
-## Credit and antecedents
+## Credit
 
-NIGHTFALL paper extension of earlier Route 1 #970 and classical Wyner information.
+NIGHTFALL Route 1 and classical Wyner common information.
 
 ## Next independent check
 
-Reopen source-exact b-local DTree, degree-pullback, and final terminal under a green Lean+leanchecker receipt; independently audit the physical query interface.
+Integrate the exact-head terminal without changing its source type.
 
-## Primary sources
+## Primary source
 
-- https://github.com/d3lefts/d3lefts/pull/1150
-- Research and process synthesis: https://d3lefts.github.io/d3lefts/research-dispatch-20261123.html#route1-query-local-wyner
+https://github.com/d3lefts/d3lefts/pull/1183
 
-This passport is an editorial index into versioned primary sources, not a stand-alone external referee report, universal theorem certificate, or novelty adjudication.
+Earlier versions remain in Git history. This editorial index is not external peer review.

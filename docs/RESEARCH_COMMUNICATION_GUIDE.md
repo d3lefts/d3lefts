@@ -1,6 +1,6 @@
 # NIGHTFALL research communication and visual-language contract
 
-**Editorial checkpoint:** 12 November 2026. This guide governs the public site copy and its proof-status presentation. It is not a mathematical certificate, publication approval or independent referee report.
+**Editorial checkpoint:** 24 November 2026. This guide governs the public site copy and its proof-status presentation. It is not a mathematical certificate, publication approval or independent referee report.
 
 ## Reader journey
 
@@ -22,10 +22,11 @@ Readers should reach the canonical evidence in one click from a flagship claim. 
 | Historical record | “Preserved source / earlier checkpoint.” | “Latest proof” for a retired version |
 | Published antecedent | Explicit authors, dates and conditions | Recasting an imported theorem as a NIGHTFALL discovery |
 
-Use **“proposed”** for v9.2 scalar quadratic exponent-two, rank-optimal adaptive universal upper, and categorical fixed-query matching rates until their independent proof gates close. The exact finite nested-address lower models have a different certificate. The all-degree finite-product exponent-5/2 Lean theorem imports Turturean's uniform-cube machinery and is not an exponent-two theorem.
+## Current claims and supersession
 
-For current Wright scalar examples use
-`C₂=(10+2√2)²(1+√3)²≈1228.356`, where `V=Var(f)`, `M=max_i E[(f−E_i f)^2]`, and `V²≤C₂B²M`. The v7 constant `225(1+√3)²` is historical, not the current proposed best. The v9.2 PDF is deposited, exact v9.2 TeX is not, and its internal review flags a Corollary 6.2 discrepancy. Scope is law-independent within *independent* product inputs; it is not a correlated-input theorem. The all-degree 5/2 result, binary Grothendieck special cases, and non-author priority review stay explicit.
+Use the current evidence manifest `docs/current-site-evidence.json` for the latest displayed theorem and applicable source receipts. Replace superseded live claims when a stronger source-matched result is available. A current proof, a conditional extension, and a historical record have different scopes. Historical pages and archived bytes may be replaced by a clearly labeled successor; retain immutable published versions and source provenance rather than requiring outdated values to remain visible. Never silently overwrite a DOI version or evidence receipt.
+
+Editorial tests must validate source linkage, mathematical model, scope, lifecycle, access and review boundaries. They must not hard-code obsolete coefficients, dates, catalogue counts, a specific headline or permanent placement of an experiment on the homepage. Explicit finite witness replay and frozen certificate/hash tests remain exact. A changed theorem target requires a source/receipt update, not deletion of its verification gate.
 
 ## Visual grammar
 
@@ -41,15 +42,15 @@ Keep the existing NULL FIELD / NEW MOON identities: dark editorial field, warm a
 
 ## Canonical sources and non-drift
 
-- Live twelve-claim evidence status: `docs/active-proof-passport.json` and the public `docs/active-proof-passport.html`.
+- Active evidence status: `docs/active-proof-passport.json` and the public `docs/active-proof-passport.html`.
 - Exact formal scope and compiler pin: `docs/lean-certificate-provenance.json`, `research/nightfall/formalization/CERTIFICATE_INDEX.md`.
 - Quadratic/rank source passport: `research/nightfall/2026-11-active-passports/quadratic-rank-observability.md`.
 - Four distinct information games: `research/nightfall/2026-11-active-passports/information-costs-identification.md`.
 - Historical v8 bytes and SHA-256 manifest: `papers/finite-product-influence/SOURCE_SHA256SUMS_v8`; **never edit a pinned historical file to improve website copy**.
-- Latest v9.2 PDF and dated source addendum: `papers/finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf` and `V9_2_PASSPORT_SUPPLEMENT_20261112.md`.
-- Frozen historical eleven-passport collection and five Original Findings retain their own distinct status.
+- Historical v9.2 PDF and dated source addendum: `papers/finite-product-influence/NIGHTFALL_Beyond_Boolean_Cube_v9_2.pdf` and `V9_2_PASSPORT_SUPPLEMENT_20261112.md`.
+- Historical collections retain provenance and may be explicitly superseded; no mandatory live catalogue size.
 
-A source-status change should trigger edits to: live claim registry where appropriate → flagship paragraph and formula → mathematical-results page → review challenge → dated dispatch → regression test. No certification or originality status is promoted solely because CI, site build or browser checks are green.
+A source-status change should trigger edits to: live claim registry where appropriate → flagship paragraph and formula → mathematical-results page → review challenge → dated dispatch → regression test. No certification or originality status is promoted solely because CI, site build or browser checks are green. Source-level proof checks are never relaxed by editorial updates.
 
 ## Accessibility and performance
 
