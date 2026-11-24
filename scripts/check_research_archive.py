@@ -170,6 +170,20 @@ def validate_catalogue(doc: dict) -> None:
               and historic_q2.get("superseded_by") == finite_q2["id"],
               "Historic 1228 analytic coefficient cannot masquerade as current finite record")
 
+    # The historical analytic lift is distinct from the certified successor.
+    current_q2 = by_id.get("NF-PS-Q2-INFINITE-HOEFFDING-C105-20261123")
+    guard(current_q2 is not None and current_q2["validity"] == "kernel-checked-scoped"
+          and current_q2["primary"].endswith("InfinitePiQ2HoeffdingDegree.lean")
+          and current_q2["formal"]["declaration"] == "Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding"
+          and current_q2["formal"]["head"] == "d84d6f0bddb0f7e6f1e0ca17a10165afefe73b6e"
+          and current_q2["formal"]["source_git_blob"] == "37673af7af8f0f0d7a2c2d3ae272842c87a167cd"
+          and current_q2["formal"]["receipt"] == "https://github.com/d3lefts/d3lefts/actions/runs/44470008420"
+          and current_q2["review"] == "none-recorded"
+          and current_q2["priority"] == "unresolved"
+          and infinite_q2["lifecycle"] == "archive"
+          and infinite_q2.get("superseded_by") == current_q2["id"],
+          "Arbitrary-product Q2 current terminal provenance or historical separation drift")
+
     # Paper C synthesizes source-specific regimes: no promotion to a global
     # Lean theorem, and no illicit transfer between whole-coordinate and
     # powered-linear-form oracles.
