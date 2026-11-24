@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 54,
+  "revision": 55,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v54: stage-one arbitrary unitary p-light source exact custody and stage-two q-light exact custody; all claim statuses unchanged",
+  "scope": "v55: exact source custody for genuine original pair-indexed quantum four-slot energy and prior Hilbert frame modules; no full theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3786,6 +3786,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-23 exact pending source custody for noncommuting scalar-sector complex crossed-slot operator energy under an explicit Hilbert-energy contraction (paper equation 8). NOT unrestricted Hilbert sectors, no full T2-31 query terminal, no priority promotion. Exact-head Lean/leanchecker must be separately verified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2PathEnergy.lean",
+      "source_blob_sha": "1cd8e8faaec7cf98ed3c7f0075b45ad7c88a2b8b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Physical four-slot coefficient squared energy of source-built original pair quantum paths, positive noncommuting effect, arbitrary complex Hilbert sectors, from actual p- or q-light frames and normalized path mass. Proof of p-light restricted frame depends on T2FirstStageLight orthonormal input family, not yet arbitrary projector normalization. Pending named exact-head Lean; no complete grouped Fourier/Q-bound theorem."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
