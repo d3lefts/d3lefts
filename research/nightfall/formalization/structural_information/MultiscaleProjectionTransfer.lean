@@ -218,6 +218,270 @@ theorem kl_predictive_floor (p r : L → ℝ) (a : ℝ) (ha : 0 < a)
       Finset.sum_sub_distrib, hp1, hr1, sub_self, add_zero]
 
 end Information
+
+section FiniteSource
+
+variable {Ω L α : Type*} [Fintype Ω] [Fintype L]
+
+/-- Actual coordinate agreement, not a postulated projection family. -/
+def agrees (f : Ω → ι → α) (U : Finset ι) (x y : Ω) : Prop :=
+  ∀ i ∈ U, f x i = f y i
+
+/-- Weighted L² realization on the finite positive-mass support.
+An input table v is represented by sqrt(ν x) * v(x,l).
+Zero-mass input atoms may be removed before this construction. -/
+noncomputable def embed (ν : Ω → ℝ) (p : Ω → L → ℝ) :
+    EuclideanSpace ℝ (Ω × L) :=
+  WithLp.toLp 2 (fun z : Ω × L => Real.sqrt (ν z.1) * p z.1 z.2)
+
+noncomputable def querySpace (f : Ω → ι → α) (ν : Ω → ℝ) (U : Finset ι) :
+    Submodule ℝ (EuclideanSpace ℝ (Ω × L)) where
+  carrier := {v | ∀ x y l, agrees f U x y →
+    Real.sqrt (ν y) * v (x,l) = Real.sqrt (ν x) * v (y,l)}
+  zero_mem' := by
+    intro x y l h
+    simp
+  add_mem' := by
+    intro v w hv hw x y l h
+    change Real.sqrt (ν y) * (v+w) (x,l) =
+      Real.sqrt (ν x) * (v+w) (y,l)
+    simp only [PiLp.add_apply, mul_add]
+    rw [hv x y l h, hw x y l h]
+  smul_mem' := by
+    intro c v hv x y l h
+    change Real.sqrt (ν y) * (c • v) (x,l) =
+      Real.sqrt (ν x) * (c • v) (y,l)
+    simp only [PiLp.smul_apply, smul_eq_mul]
+    calc
+      _ = c * (Real.sqrt (ν y) * v (x,l)) := by ring
+      _ = c * (Real.sqrt (ν x) * v (y,l)) := by rw [hv x y l h]
+      _ = _ := by ring
+
+theorem querySpace_mono (f : Ω → ι → α) (ν : Ω → ℝ) :
+    Monotone (querySpace (L := L) f ν) := by
+  intro U V hUV v hv x y l hxy
+  exact hv x y l (fun i hi => hxy i (hUV hi))
+
+/-- Conditional predictive table defined by the genuine orthogonal projection. -/
+noncomputable def predictive (f : Ω → ι → α) (ν : Ω → ℝ)
+    (p : Ω → L → ℝ) (U : Finset ι) (x : Ω) (l : L) : ℝ :=
+  ((querySpace (L := L) f ν U).starProjection (embed ν p)) (x,l) /
+    Real.sqrt (ν x)
+
+theorem predictive_mul_sqrt (f : Ω → ι → α) (ν : Ω → ℝ)
+    (hν : ∀ x, 0 < ν x) (p : Ω → L → ℝ) (U : Finset ι) (x : Ω) (l : L) :
+    Real.sqrt (ν x) * predictive f ν p U x l =
+      ((querySpace (L := L) f ν U).starProjection (embed ν p)) (x,l) := by
+  unfold predictive
+  field_simp [ne_of_gt (Real.sqrt_pos.2 (hν x))]
+
+theorem predictive_agrees (f : Ω → ι → α) (ν : Ω → ℝ)
+    (hν : ∀ x, 0 < ν x) (p : Ω → L → ℝ) (U : Finset ι)
+    (x y : Ω) (l : L) (hxy : agrees f U x y) :
+    predictive f ν p U x l = predictive f ν p U y l := by
+  have hv := (querySpace (L := L) f ν U).starProjection_apply_mem (embed ν p)
+  have he := hv x y l hxy
+  unfold predictive
+  apply (div_eq_div_iff (ne_of_gt (Real.sqrt_pos.2 (hν x)))
+    (ne_of_gt (Real.sqrt_pos.2 (hν y)))).2
+  simpa only [mul_comm] using he
+
+noncomputable def cellMass (f : Ω → ι → α) (ν : Ω → ℝ)
+    (U : Finset ι) (x : Ω) : ℝ := by
+  classical
+  exact ∑ t, if agrees f U t x then ν t else 0
+
+noncomputable def cellNumerator (f : Ω → ι → α) (ν : Ω → ℝ)
+    (p : Ω → L → ℝ) (U : Finset ι) (x : Ω) (l : L) : ℝ := by
+  classical
+  exact ∑ t, if agrees f U t x then ν t * p t l else 0
+
+theorem cellMass_pos (f : Ω → ι → α) (ν : Ω → ℝ)
+    (hν : ∀ x, 0 < ν x) (U : Finset ι) (x : Ω) :
+    0 < cellMass f ν U x := by
+  classical
+  have hx : agrees f U x x := fun _ _ => rfl
+  have hle : (if agrees f U x x then ν x else 0) ≤
+      ∑ t, if agrees f U t x then ν t else 0 :=
+    Finset.single_le_sum (fun t _ => by split <;> positivity) (Finset.mem_univ x)
+  simp only [if_pos hx] at hle
+  exact (hν x).trans_le hle
+
+noncomputable def cellTest (f : Ω → ι → α) (ν : Ω → ℝ)
+    (U : Finset ι) (x : Ω) (l : L) : EuclideanSpace ℝ (Ω × L) := by
+  classical
+  exact WithLp.toLp 2 (fun z : Ω × L =>
+    if agrees f U z.1 x ∧ z.2 = l then Real.sqrt (ν z.1) else 0)
+
+theorem cellTest_mem (f : Ω → ι → α) (ν : Ω → ℝ)
+    (U : Finset ι) (x : Ω) (l : L) :
+    cellTest f ν U x l ∈ querySpace (L := L) f ν U := by
+  classical
+  intro t s b hts
+  have h : agrees f U t x ↔ agrees f U s x := by
+    constructor
+    · intro ht i hi
+      exact (hts i hi).symm.trans (ht i hi)
+    · intro hs i hi
+      exact (hts i hi).trans (hs i hi)
+  change Real.sqrt (ν s) * cellTest f ν U x l (t,b) =
+    Real.sqrt (ν t) * cellTest f ν U x l (s,b)
+  simp only [cellTest, PiLp.toLp_apply, h]
+  split <;> ring
+
+/-- No assumed Bayes/orthogonal-projection identification: derive the actual
+finite cell mean from a coordinate-cell indicator and orthogonality. -/
+theorem predictive_eq_cell_average (f : Ω → ι → α) (ν : Ω → ℝ)
+    (hν : ∀ x, 0 < ν x) (p : Ω → L → ℝ) (U : Finset ι) (x : Ω) (l : L) :
+    predictive f ν p U x l = cellNumerator f ν p U x l / cellMass f ν U x := by
+  classical
+  let v := (querySpace (L := L) f ν U).starProjection (embed ν p)
+  have horth := (querySpace (L := L) f ν U).starProjection_inner_eq_zero
+    (embed ν p) (cellTest f ν U x l) (cellTest_mem f ν U x l)
+  change ⟪embed ν p - v, cellTest f ν U x l⟫_ℝ = 0 at horth
+  rw [PiLp.inner_apply, Fintype.sum_prod_type] at horth
+  simp only [Real.inner_apply] at horth
+  have ht (t : Ω) :
+      (∑ b : L, (embed ν p - v) (t,b) * cellTest f ν U x l (t,b)) =
+        if agrees f U t x then ν t * (p t l - predictive f ν p U x l) else 0 := by
+    by_cases htx : agrees f U t x
+    · rw [if_pos htx, Finset.sum_eq_single l]
+      · have hm : Real.sqrt (ν t) * predictive f ν p U t l = v (t,l) :=
+          predictive_mul_sqrt f ν hν p U t l
+        simp only [PiLp.sub_apply, embed, cellTest, PiLp.toLp_apply, htx, true_and, if_pos rfl]
+        rw [← hm, predictive_agrees f ν hν p U t x l htx]
+        calc
+          _ = (Real.sqrt (ν t))^2 * (p t l - predictive f ν p U x l) := by ring
+          _ = _ := by rw [Real.sq_sqrt (hν t).le]
+      · intro b _ hb
+        simp [cellTest, hb]
+      · simp
+    · rw [if_neg htx]
+      apply Finset.sum_eq_zero
+      intro b _
+      simp [cellTest, htx]
+  rw [Finset.sum_congr rfl (fun t _ => ht t)] at horth
+  have hsplit : (∑ t, if agrees f U t x then ν t * (p t l - predictive f ν p U x l) else 0) =
+      cellNumerator f ν p U x l - cellMass f ν U x * predictive f ν p U x l := by
+    unfold cellNumerator cellMass
+    rw [Finset.sum_mul, ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro t _
+    by_cases htx : agrees f U t x <;> simp [htx] <;> ring
+  rw [hsplit] at horth
+  apply (eq_div_iff (ne_of_gt (cellMass_pos f ν hν U x))).2
+  linarith
+
+theorem predictive_sum_one (f : Ω → ι → α) (ν : Ω → ℝ)
+    (hν : ∀ x, 0 < ν x) (p : Ω → L → ℝ) (hp1 : ∀ x, ∑ l, p x l = 1)
+    (U : Finset ι) (x : Ω) :
+    ∑ l, predictive f ν p U x l = 1 := by
+  classical
+  simp_rw [predictive_eq_cell_average f ν hν p U x]
+  rw [← Finset.sum_div]
+  have hsum : (∑ l, cellNumerator f ν p U x l) = cellMass f ν U x := by
+    unfold cellNumerator cellMass
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro t _
+    by_cases htx : agrees f U t x
+    · simp [htx, ← Finset.mul_sum, hp1 t]
+    · simp [htx]
+  rw [hsum]
+  exact div_self (ne_of_gt (cellMass_pos f ν hν U x))
+
+theorem source_projection_risk_eq (f : Ω → ι → α) (ν : Ω → ℝ)
+    (hν : ∀ x, 0 < ν x) (p : Ω → L → ℝ) (U : Finset ι) :
+    ‖embed ν p - (querySpace (L := L) f ν U).starProjection (embed ν p)‖ ^ 2 =
+      ∑ x, ν x * ∑ l, (p x l - predictive f ν p U x l)^2 := by
+  rw [EuclideanSpace.real_norm_sq_eq, Fintype.sum_prod_type]
+  apply Finset.sum_congr rfl
+  intro x _
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro l _
+  simp only [PiLp.sub_apply, embed, PiLp.toLp_apply]
+  rw [← predictive_mul_sqrt f ν hν p U x l]
+  calc
+    _ = (Real.sqrt (ν x))^2 * (p x l - predictive f ν p U x l)^2 := by ring
+    _ = _ := by rw [Real.sq_sqrt (hν x).le]
+
+/-- Exact residual conditional information, in nats, for the joint table
+Pr(X=x,Theta=l)=ν x * p x l, after observing coordinates U. -/
+noncomputable def residualInfo (f : Ω → ι → α) (ν : Ω → ℝ)
+    (p : Ω → L → ℝ) (U : Finset ι) : ℝ :=
+  ∑ x, ν x * kl (p x) (predictive f ν p U x)
+
+theorem source_kl_floor (f : Ω → ι → α) (ν : Ω → ℝ)
+    (hν : ∀ x, 0 < ν x) (p : Ω → L → ℝ)
+    (hp : ∀ x l, 0 ≤ p x l) (hp1 : ∀ x, ∑ l, p x l = 1)
+    (a : ℝ) (ha : 0 < a) (U : Finset ι)
+    (hfloor : ∀ x l, a ≤ predictive f ν p U x l) :
+    residualInfo f ν p U ≤
+      (1/a) * ‖embed ν p - (querySpace (L := L) f ν U).starProjection (embed ν p)‖ ^ 2 := by
+  rw [source_projection_risk_eq f ν hν p U, Finset.mul_sum]
+  unfold residualInfo
+  apply Finset.sum_le_sum
+  intro x _
+  have h := kl_predictive_floor (p x) (predictive f ν p U x) a ha
+    (hp x) (hfloor x) (hp1 x) (predictive_sum_one f ν hν p hp1 U x)
+  calc
+    _ ≤ ν x * ((∑ l, (p x l - predictive f ν p U x l)^2) / a) :=
+      mul_le_mul_of_nonneg_left h (hν x).le
+    _ = _ := by ring
+
+/-- Expected cost on the actual union of independent queries. -/
+noncomputable def costRisk (w : J → ℝ) (q : J → Finset ι)
+    (g : Finset ι → ℝ) : ℕ → Finset ι → ℝ
+  | 0, U => g U
+  | n+1, U => ∑ j, w j * costRisk w q g n (U ∪ q j)
+
+theorem costRisk_le_scaled_union (S : Finset ι → Submodule ℝ H)
+    (w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (q : J → Finset ι)
+    (g : Finset ι → ℝ) (x : H) (c : ℝ) (n : ℕ) (U : Finset ι)
+    (hbound : ∀ js : List J, js.length = n →
+      g (js.foldl (fun V j => V ∪ q j) U) ≤
+        c * ‖x - (S (js.foldl (fun V j => V ∪ q j) U)).starProjection x‖ ^ 2) :
+    costRisk w q g n U ≤ c * unionRisk S w q n U x := by
+  induction n generalizing U with
+  | zero => simpa [costRisk, unionRisk] using hbound [] rfl
+  | succ n ih =>
+      simp only [costRisk, unionRisk, Finset.mul_sum]
+      apply Finset.sum_le_sum
+      intro j _
+      have hb : ∀ js : List J, js.length = n →
+          g (js.foldl (fun V j => V ∪ q j) (U ∪ q j)) ≤
+            c * ‖x - (S (js.foldl (fun V j => V ∪ q j) (U ∪ q j))).starProjection x‖ ^ 2 := by
+        intro js hjs
+        exact hbound (j :: js) (by simp [hjs])
+      calc
+        _ ≤ w j * (c * unionRisk S w q n (U ∪ q j) x) :=
+          mul_le_mul_of_nonneg_left (ih (U ∪ q j) hb) (hw j)
+        _ = _ := by ring
+
+/-- Full finite latent information transfer for actual coordinate reads.
+The predictive floor is required only on reachable final unions. -/
+theorem finite_latent_transfer (f : Ω → ι → α) (ν : Ω → ℝ)
+    (hν : ∀ x, 0 < ν x) (_hν1 : ∑ x, ν x = 1)
+    (p : Ω → L → ℝ) (hp : ∀ x l, 0 ≤ p x l) (hp1 : ∀ x, ∑ l, p x l = 1)
+    (w : J → ℝ) (hw : ∀ j, 0 ≤ w j) (hw1 : ∑ j, w j = 1)
+    (q : J → Finset ι) (k : ℕ) (hk : 0 < k) (a : ℝ) (ha : 0 < a)
+    (hfloor : ∀ js : List J, js.length = k → ∀ x l,
+      a ≤ predictive f ν p (js.foldl (fun V j => V ∪ q j) ∅) x l) :
+    costRisk w q (residualInfo f ν p) k ∅ ≤
+      (1/a) * (‖embed ν p - avgProjection (querySpace (L := L) f ν) w q (embed ν p)‖ ^ 2 +
+        (⟪embed ν p, avgProjection (querySpace (L := L) f ν) w q (embed ν p)⟫_ℝ -
+          ‖avgProjection (querySpace (L := L) f ν) w q (embed ν p)‖ ^ 2) / (k : ℝ)) := by
+  have h := costRisk_le_scaled_union (querySpace (L := L) f ν) w hw q
+    (residualInfo f ν p) (embed ν p) (1/a) k ∅
+    (fun js hjs => source_kl_floor f ν hν p hp hp1 a ha
+      (js.foldl (fun V j => V ∪ q j) ∅) (hfloor js hjs))
+  exact h.trans (mul_le_mul_of_nonneg_left
+    (residual_variance (querySpace (L := L) f ν) (querySpace_mono f ν)
+      w hw hw1 q (embed ν p) k hk) (by positivity))
+
+end FiniteSource
+
 end Nightfall.MultiscaleProjection
 
 #print axioms Nightfall.MultiscaleProjection.sumRisk_exact
@@ -225,3 +489,6 @@ end Nightfall.MultiscaleProjection
 #print axioms Nightfall.MultiscaleProjection.residual_variance
 #print axioms Nightfall.MultiscaleProjection.union_card_budget
 #print axioms Nightfall.MultiscaleProjection.kl_predictive_floor
+
+#print axioms Nightfall.MultiscaleProjection.predictive_eq_cell_average
+#print axioms Nightfall.MultiscaleProjection.finite_latent_transfer
