@@ -1,10 +1,39 @@
 # NIGHTFALL flagship selection and source-scoped frontier audit — 2026-11-22
 
+> **Current flagship (24 November 2026):** Dimension-Free Classical Simulation Under Correlated Inputs, a sharp, representation-sensitive Wyner common-information bound. See the [24 November decision](#2026-11-24-flagship-decision-dimension-free-wyner-simulation). The 22 November phase-retrieval selection below is kept as the dated record.
+
 > **Superseding status as of 2026-11-22 after parallel work:** The question posed below as a conjecture is now solved at **paper level for continuous oriented-row selection** by merged PR #995 and independent AI audit #1000, using the published Chan–Chen–Frick–Hull product-sphere zero theorem (Remark 2.7). Conditional causal Lean formalization is on main; unconditional Lean certification and external human/priority gates remain open. The new [exact-source and detector-holonomy note](continuous-causal-phase-20261122/TOPOLOGY_SOURCE_AND_DETECTOR_HOLONOMY_20261122.md) shows that continuous *physical rank-one quadratic detectors* are a strictly broader regularity model on a genuine attained history domain. The table and experiment below are the **historical preregistration**, not a live unsolved oriented-row conjecture or a claim that the wider detector threshold is known. Route 1/Q2 remain parked.
 
 **Decision:** one active mathematical discovery flagship — **the regularity cost of causal real phase retrieval**. Prime-wheel exact enumeration is a verified auxiliary computational result and should not displace this. Route 1/structural-information, Q2/exponent-two, Paley sensitivity and the other open PRs remain preserved as valuable but **parked for new flagship discovery work**. Parking does not prohibit other collaborators from preserving sources, auditing CI, maintaining existing certifications, or completing explicitly authorized obligations.
 
 **Evidence examined this session:** connected repository PRs #695, #699, #970, #980, #982, #990, #987/#988/#991/#992, canonical catalogue; local frangible-gap packet; the full frangible original paper arXiv:2610.34525v1 (including actual tables and constant formula); the 2025 *Phasebook* survey. Topological references in PR #699 and earlier discussion are relevant but a full independently sourced current literature audit of the precise continuous-feedback model remains **open**. Do not claim worldwide novelty or that no existing specialist theorem resolves the target.
+
+## 2026-11-24 flagship decision: dimension-free Wyner simulation
+
+**Decision (Devin J. Wright, 24 November 2026):** NIGHTFALL's flagship is **Dimension-Free Classical Simulation Under Correlated Inputs: A Sharp, Representation-Sensitive Wyner Common-Information Bound**. It supersedes the 22 November phase-retrieval selection below.
+
+**The flagship is the combination of three results:**
+
+| Part | Result | Evidence |
+|---|---|---|
+| I. Simulation | Depth `poly(d, 1/ε, 1/δ)·(1 + C_W(ν))` for bounded degree-`d` functions under any finite product-alphabet law | #970, end-to-end Lean (`route1_wyner_general`) |
+| II. Representation sensitivity | Cost `C_W(latent)` for `b`-local, `r`-query-recoverable encodings, with an unbounded gain | #1150, paper proof |
+| III. Optimality | Classical query complexity `Θ(C_W)`, with entropy/C_W and log-support/C_W unbounded; carries over to Part II | #1182, paper proof |
+
+**Why this is the flagship:**
+- It is a general principle: the cost of classical simulation is set by the dependence structure of information, not by the size or entropy of the input space.
+- It has an upper bound, a matching worst-case lower bound, and a way to improve the bound by changing representation.
+- Its quantum corollary makes the Aaronson–Ambainis principle quantitative for every input distribution. Turturean's theorem is the case `C_W = 0`.
+
+**Portfolio after this decision:**
+- **Q2** (C105.416, Lean-proved on arbitrary products) is the degree-two engine: a theorem inside the flagship paper and the input to QW+ (#1154).
+- **Continuous causal phase retrieval** (`m_cont(n) = 2n − 1`, #995/#1000) becomes a standalone companion paper.
+- Prime-wheel counting and the Paley sensitivity work stay auxiliary.
+
+**Work plan:**
+1. Specialist reading and a full prior-art search on simulation under mixtures of product laws.
+2. Lean proofs of Part II and of Part III's finite sampling lemma.
+3. Manuscript from the [flagship outline](../../papers/wyner-simulation/README.md), crediting Turturean (via #317) and Girish–Servedio.
 
 ## 2026-11-23 Route 1 reviewer-response addendum
 
