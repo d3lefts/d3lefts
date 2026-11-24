@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 64,
+  "revision": 65,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v64: source exact p/q physical path norm and product-sum Fubini elaboration repair after failed build; no unrestricted theorem promotion",
+  "scope": "v65: exact pending original physical two-query Born four-slot complex interference expansion; no unrestricted theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3696,6 +3696,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Physical first- and second-light Hilbert four-slot coefficient-energy from arbitrary normalized psi, fixed unitary U, genuine input sector projections including zero-mass sectors, and noncommuting positive effect 0≤P≤I; unrestricted arbitrary-dimensional homogeneous complex Hilbert fiber PiLp. Heterogeneous projector-family equivalence and full Fourier grouped B/C and terminal query theorem not established. Pending exact-head Lean/leanchecker."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2BornExpansion.lean",
+      "source_blob_sha": "67406ec40853601e537608b9bd38e58bc94078aa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual physical arbitrary complex two-query Born inner-product expansion into true original four-slot coefficient family, no assumed path normal form and no commutation/finite-rank effect premise. Source pending named exact Lean kernel; char2 real frequency simplification, grouped Hilbert Fourier tail and final 31 original query theorem still open."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2CorrectionEventBridge.lean",
