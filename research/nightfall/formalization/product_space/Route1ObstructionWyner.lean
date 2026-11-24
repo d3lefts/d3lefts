@@ -145,6 +145,103 @@ theorem static_wyner_cardinality_terminal
   intro p hp0 hp1 hs
   exact product_entropy_le_log_support p hp0 hp1 L (hL p hp0 hp1 hs)
 
+
+/-- Exact static representation obstruction for an arbitrary finite
+latent alphabet, genuinely adaptive binary recovery, and the actual
+general-latent Wyner infimum. The integer m bounds the number of active
+axes via m+1 times the code distance exceeding the total incidence budget.
+The source entropy remains explicit (e.g. k log 2 for a uniform 2^k code). -/
+theorem exact_static_wyner
+    {I : Type} [Fintype I] [DecidableEq I]
+    (ν : (J → A) → ℝ) (hν0 : ∀ z, 0 ≤ ν z) (hν1 : ∑ z, ν z = 1)
+    (dep : I → Finset J) (Φ : (J → A) → I → Bool)
+    (recover : J → BinaryRecovery I A) (r b D m : ℕ)
+    (hb : ∀ i, (dep i).card ≤ b)
+    (hbudget : Fintype.card I * b < (m + 1) * D)
+    (hloc : ∀ i x y, (∀ j ∈ dep i, x j = y j) → Φ x i = Φ y i)
+    (hrec : ∀ z, 0 < ν z → ∀ j, (recover j).eval (Φ z) = z j)
+    (hr : ∀ z, 0 < ν z → ∀ j, (recover j).queries (Φ z) ≤ r)
+    (hdist : ∀ x y, 0 < ν x → 0 < ν y → Φ x ≠ Φ y →
+      D ≤ (diff (Φ x) (Φ y)).card) :
+    Hent ν - (r * m : ℕ) * Real.log 2 ≤ wynerGen ν := by
+  classical
+  have hterminal : Hent ν - Real.log (((2 : ℕ) ^ (r * m)) : ℝ) ≤ wynerGen ν := by
+    apply static_wyner_cardinality_terminal ν hν0 hν1
+    intro p hp0 hp1 hs
+    let S : J → Finset A := fun j => univ.filter (fun a => 0 < p j a)
+    let T : Finset (J → A) := Fintype.piFinset S
+    have hT : ∀ z, z ∈ T ↔ z ∈ box S := by
+      intro z
+      simp [T, box, Fintype.mem_piFinset]
+    have hpos : ∀ z ∈ box S, 0 < ν z := fun z hz =>
+      hs z ((prodMass_pos_iff_box p hp0 z).mpr hz)
+    have hS : ∀ j, (S j).Nonempty := by
+      intro j
+      by_contra hn
+      have hz : ∀ a, p j a = 0 := by
+        intro a
+        apply le_antisymm _ (hp0 j a)
+        apply le_of_not_gt
+        intro ha
+        exact hn ⟨a, mem_filter.mpr ⟨mem_univ _, ha⟩⟩
+      have he := hp1 j
+      simp [hz] at he
+    let z : J → A := fun j => (hS j).choose
+    have hz : z ∈ box S := fun j => (hS j).choose_spec
+    have hinj : Set.InjOn Φ (box S) := by
+      intro x hx y hy he
+      funext j
+      rw [← hrec x (hpos x hx) j, ← hrec y (hpos y hy) j, he]
+    have ha := active_count_bound dep Φ S z hz D b hb hloc hinj
+      (fun x y hx hy hne => hdist x y (hpos x hx) (hpos y hy) hne)
+    have ham : (active S).card ≤ m := by
+      by_contra hn
+      have hle : m + 1 ≤ (active S).card := by omega
+      have hh := Nat.mul_le_mul_right D hle
+      omega
+    have hc : ∀ j, (S j).card ≤ 2 ^ r := by
+      intro j
+      let X := T.image Φ
+      have hh : ∀ x ∈ X, (recover j).queries x ≤ r := by
+        intro x hx
+        obtain ⟨y,hy,rfl⟩ := mem_image.mp hx
+        exact hr y (hpos y ((hT y).mp hy)) j
+      apply (Finset.card_le_card (show S j ⊆ X.image (recover j).eval from ?_)).trans
+        (BinaryRecovery.image_card_le (recover j) X r hh)
+      intro a ha
+      let y := Function.update z j a
+      have hy : y ∈ box S := by
+        intro l
+        by_cases he : l = j
+        · subst l
+          simpa [y] using ha
+        · simpa [y, Function.update_of_ne he] using hz l
+      apply mem_image.mpr
+      refine ⟨Φ y, mem_image.mpr ⟨y,(hT y).mpr hy,rfl⟩, ?_⟩
+      rw [hrec y (hpos y hy) j]
+      simp [y]
+    have he : univ.filter (fun z => 0 < prodMass p z) = T := by
+      ext y
+      simpa only [mem_filter, mem_univ, true_and, hT] using
+        (prodMass_pos_iff_box p hp0 y)
+    rw [he, show T = Fintype.piFinset S from rfl, Fintype.card_piFinset]
+    calc
+      (∏ j, (S j).card) ≤ ∏ j : J, if j ∈ active S then 2 ^ r else 1 := by
+        apply Finset.prod_le_prod'
+        intro j _
+        split_ifs with hj
+        · exact hc j
+        · have hh : ¬ 1 < (S j).card := by simpa [active] using hj
+          omega
+      _ = ∏ j ∈ active S, 2 ^ r := by
+        rw [Finset.prod_filter]
+        simp [active]
+      _ = 2 ^ (r * (active S).card) := by simp [pow_mul]
+      _ ≤ 2 ^ (r * m) := by
+        apply Nat.pow_le_pow_right (by decide)
+        exact Nat.mul_le_mul_left r ham
+  simpa only [Nat.cast_pow, Nat.cast_ofNat, Real.log_pow] using hterminal
+
 end Nightfall.Route1Polylog
 
 #print axioms Nightfall.Route1Polylog.wynerGen_lower_of_component_entropy
@@ -152,3 +249,5 @@ end Nightfall.Route1Polylog
 #print axioms Nightfall.Route1Polylog.prodMass_pos_iff_box
 #print axioms Nightfall.Route1Polylog.product_entropy_le_log_support
 #print axioms Nightfall.Route1Polylog.static_wyner_cardinality_terminal
+
+#print axioms Nightfall.Route1Polylog.exact_static_wyner
