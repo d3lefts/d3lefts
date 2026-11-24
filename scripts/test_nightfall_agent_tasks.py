@@ -150,5 +150,49 @@ class AgentTasksTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             tasks.replay_receipt(mutated)
 
+
+    def test_activity_telemetry_deduplicates_shared_work(self):
+        from nightfall_activity_telemetry import aggregate
+        event = {"run_id": "run-1", "activity": "U29.04",
+                 "operator": "dual", "receipt": self.receipt}
+        result = aggregate([event, {**event, "related_activities": ["U29.01"]}])
+        self.assertEqual(result["unique_runs"], 1)
+        self.assertEqual(result["duplicate_observations"], 1)
+        self.assertEqual(result["total_command_runtime_ms"],
+                         self.receipt["execution"]["duration_ms"])
+        self.assertEqual(result["secondary_tag_counts_nonadditive"], {"U29.01": 1})
+        self.assertFalse(result["proof_certification"])
+        self.assertFalse(result["independent_review_certified"])
+        self.assertFalse(result["novelty_certified"])
+
+    def test_activity_telemetry_retains_failures_and_rejects_conflicts(self):
+        from nightfall_activity_telemetry import aggregate
+        event = {"run_id": "run-1", "activity": "U29.04",
+                 "operator": "dual", "receipt": self.receipt}
+        failed = copy.deepcopy(self.receipt)
+        failed["execution"].update(status="FAIL", exit_code=7)
+        result = aggregate([event, {**event, "run_id": "run-2", "receipt": failed}])
+        self.assertEqual(result["activity_operator"][0]["pass_checks"], 1)
+        self.assertEqual(result["activity_operator"][0]["fail_checks"], 1)
+        for changed in (
+            {**event, "activity": "U29.01"},
+            {**event, "run_id": "run-alias"},
+            {**event, "operator": "other"},
+        ):
+            with self.assertRaises(ValueError):
+                aggregate([event, changed])
+        with self.assertRaises(ValueError):
+            aggregate([{**event, "activity": "unknown"}])
+        with self.assertRaises(ValueError):
+            aggregate([{**event, "related_activities": ["U29.04"]}])
+        invalid = copy.deepcopy(self.receipt)
+        invalid["certification"]["mathematical_theorem"] = True
+        with self.assertRaises(ValueError):
+            aggregate([{**event, "receipt": invalid}])
+        invalid = copy.deepcopy(self.receipt)
+        invalid["execution"]["duration_ms"] = True
+        with self.assertRaises(ValueError):
+            aggregate([{**event, "receipt": invalid}])
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
