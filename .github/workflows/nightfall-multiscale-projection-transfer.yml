@@ -1,0 +1,45 @@
+name: NIGHTFALL multiscale projection transfer Lean kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/MultiscaleProjectionTransfer.lean'
+      - '.github/workflows/nightfall-multiscale-projection-transfer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  projection-transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact terminals, audit axioms, replay kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/structural_information/MultiscaleProjectionTransfer.lean
+          mkdir -p receipts/projection-transfer
+          cp "$P" /tmp/mathlib4/MultiscaleProjectionTransfer.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/MultiscaleProjectionTransfer.olean MultiscaleProjectionTransfer.lean)
+          python3 scripts/lean_bridge.py "$P" \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.MultiscaleProjection.sumRisk_exact \
+            --decl Nightfall.MultiscaleProjection.independent_union_risk \
+            --decl Nightfall.MultiscaleProjection.overlap_variance \
+            --decl Nightfall.MultiscaleProjection.residual_variance \
+            --decl Nightfall.MultiscaleProjection.union_card_budget \
+            --decl Nightfall.MultiscaleProjection.kl_predictive_floor \
+            --json-out receipts/projection-transfer/strict.json
+          (cd /tmp/mathlib4 && lake env leanchecker -v MultiscaleProjectionTransfer) | tee receipts/projection-transfer/leanchecker.log
+          git rev-parse HEAD > receipts/projection-transfer/head
+          sha256sum "$P" > receipts/projection-transfer/source-sha256.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: projection-transfer-lean-receipt
+          path: receipts/projection-transfer
+          if-no-files-found: warn
