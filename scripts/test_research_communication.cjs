@@ -32,9 +32,10 @@ for(const page of navPages){
  assert.deepEqual(links,targets,page+": principal research navigation drift");
 }
 const home=read("docs/index.html");
-assert.ok(home.includes('href="active-proof-passport.html#q2-influence"'),"First-screen current proof passport missing");
-assert.ok(home.includes("C₂≈105.41623982")&&home.includes("FINITE PRODUCTS"),"Merged finite-product scalar theorem and scope drift");
-assert.ok(home.includes("LEAN-CERTIFIED DEGREE-TWO THEOREM")&&home.includes("43732382337")&&home.includes("independent external review remain open"),"Scoped Lean certificate or review boundary missing");
+assert.ok(home.includes('href="https://github.com/d3lefts/d3lefts/tree/main/papers/wyner-simulation"'),"First-screen flagship theorem and evidence link missing");
+assert.ok(home.includes('href="active-proof-passport.html#q2-influence"'),"Supporting Q2 proof passport missing");
+assert.ok(home.includes("C₂≈105.41623982")&&home.includes("44470008420"),"Supporting arbitrary-product Q2 theorem and receipt drift");
+assert.ok(home.includes("LEAN-CERTIFIED SIMULATION / FINITE PRODUCT ALPHABETS")&&home.includes("#970 Lean")&&home.includes("#1183/#1184 kernel-verified on open branches")&&home.includes("#1182 full sharpness at paper level")&&home.includes("External specialist review remains open"),"Flagship scoped certificate or review boundary missing");
 
 const mathematics=read("docs/mathematical-results.html");
 const review=read("docs/review.html");
