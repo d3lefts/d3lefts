@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 53,
+  "revision": 54,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v53: stage-two light physical path-frame source custody; preserves prior statuses, no theorem promotion",
+  "scope": "v54: stage-one arbitrary unitary p-light source exact custody and stage-two q-light exact custody; all claim statuses unchanged",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3716,6 +3716,16 @@
       "global_priority": "unverified",
       "receipt_scope": "2026-11-23 T2 operator or finite query bridge, pending named Lean and kernel check. No full T2-31 certification, independent audit, or novelty promotion.",
       "source_blob_sha": "4acc2a316388067de0c0c4b7bc23076f087d1554"
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FirstStageLight.lean",
+      "source_blob_sha": "2664dbb31058e220010f45e4be36e80a73888c4e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual p-light first-stage full Hilbert direct-sum path frame derived from orthonormal weighted input vectors and arbitrary interposed unitary; hypothesis orthonormal family requires separate bridge from arbitrary normalized input and projector sectors. Pending named Lean kernel/axiom audit, not unrestricted T2 Fourier theorem."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2FrameEnergy.lean",
