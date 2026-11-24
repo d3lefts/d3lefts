@@ -39,7 +39,11 @@ theorem active_footprint_ge
   classical
   have hjc : 1 < (S j).card := (mem_filter.mp hj).2
   have hza : z j ∈ S j := hz j
-  obtain ⟨a, ha, hne⟩ := Finset.exists_mem_ne hjc (z j)
+  obtain ⟨u, hu, v, hv, huv⟩ := Finset.one_lt_card.mp hjc
+  obtain ⟨a, ha, hne⟩ : ∃ a ∈ S j, a ≠ z j := by
+    by_cases he : u = z j
+    · exact ⟨v, hv, fun h => huv (he.trans h.symm)⟩
+    · exact ⟨u, hu, he⟩
   let y := Function.update z j a
   have hy : y ∈ box S := by
     intro k
