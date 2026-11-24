@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 60,
+  "revision": 61,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v60: pin explicit original ordered-pair Fubini product-sum lemma in Hilbert path energy; all other source status unchanged",
+  "scope": "v61: independent reusable clipped estimator projection/Markov terminal pending source exact Lean; no quantum root theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3686,6 +3686,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2ClippedEstimator.lean",
+      "source_blob_sha": "8832f2cbd533c46e0d75c5b2afe9684842e007b0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "T2 conditional-expectation elimination: deterministic legal transcript clipped REAL Fourier partial sum to [0,1], pointwise squared-error domination and full finite uniform-secret Markov terminal, no theorem-shaped axioms; requires actual real Fourier projection + group character Parseval bound. Pending independent scoped source-exact Lean/leanchecker, not full T2-31 proof."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2CorrectionEventBridge.lean",
