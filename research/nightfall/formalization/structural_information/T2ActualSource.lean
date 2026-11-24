@@ -52,7 +52,14 @@ noncomputable def sourcePath
 theorem psi_sector_inner (psi x : H D E) (a : D) :
     inner ℂ (psiSector psi a) x = inner ℂ (psi a) (x a) := by
   rw [PiLp.inner_apply]
-  simp [psiSector, T2FirstStageLight.block]
+  change (∑ d : D, inner ℂ (if d = a then psi a else 0) (x d)) =
+    inner ℂ (psi a) (x a)
+  calc
+    _ = ∑ d : D, (if d = a then inner ℂ (psi a) (x d) else 0) := by
+      apply Finset.sum_congr rfl
+      intro d _
+      split_ifs <;> simp
+    _ = inner ℂ (psi a) (x a) := by simp
 
 /-- **Physical p-light frame without normalized sector vectors.**
 No unit vector is chosen in a zero-mass input sector. -/
@@ -92,6 +99,7 @@ theorem source_path_unitary_inner
   calc
     _ = inner ℂ (U (psiSector psi a)) (T2FirstStageLight.block b x) := by
       rw [T2SecondStageLight.path_inner, T2FirstStageLight.inner_block_right]
+      rfl
     _ = inner ℂ (psiSector psi a)
         (U.symm (T2FirstStageLight.block b x)) := by
       have h := U.inner_map_map (psiSector psi a)
