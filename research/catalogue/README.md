@@ -1,13 +1,13 @@
 # Canonical research catalogue
 
-**Originally indexed:** 11 November 2026. **Q2 reconciled:** 17 November 2026. **Audience:** external mathematicians, reviewers, and reproducibility engineers.
+**Originally indexed:** 11 November 2026. **Q2 reconciled:** 23 November 2026. **Audience:** external mathematicians, reviewers, and reproducibility engineers.
 
 This directory is the **canonical scholarly claim index** for selected principal results, supporting constructions and adverse experiments. The actual theorem texts, Lean sources, checkers, and historical evidence remain at their original paths: this migration is a *linking/metadata reorganization*, not a source rewrite. The historical [40-record selection](../nightfall/SITE_CURATED_40_20261030.json) and its 11 historical Proof Passports are preserved and not silently reclassified.
 
 
 **November 11 publication-preflight revision:** [four-paper research and referee queue](../../papers/publication-preflight-20261111/README.md), [source-custody map](../../papers/publication-preflight-20261111/SOURCE_MAP.md), and [independent mathematical review gates](../../papers/publication-preflight-20261111/REFEREE_GATES.md). The selected machine registry now includes individually scoped SLD sharpness, Werner inverse-k continuation and exact 4/5-shuffle entries. These entries do not certify novelty or convert package-only N5 bytes into GitHub reproducibility; they remain active unrefereed research claims.
 
-## Canonical current-status lookup — 17 November 2026
+## Canonical current-status lookup — 23 November 2026
 
 **Do not infer the latest theorem from this file's older historical prose or
 the original 11 November `CLAIMS.json` publication catalogue.** Those entries
@@ -25,14 +25,7 @@ remain dated historical descriptions, not a continuously updated proof status.
   certified under merged PR #740. The historical C105.741 and analytic
   C1228.356 results remain archived for provenance, not presented as the
   strongest current **finite** bound. Unrestricted sub-100 remains unproved.
-- **Infinite-product Q2 is *not* kernel-certified.** The named
-  `Nightfall.InfinitePiQ2Limit.source_q2_quadratic_limit` proves the
-  arbitrary-index variance limit **conditional on uniform bounds for
-  every genuine source finite-information projection**; the finite
-  C105 theorem does not automatically supply those hypotheses.
-  The separate [infinite claim](CLAIMS.json) records the open
-  all-finite-projection source/table construction and its dependent
-  Lean gates. No finite result is relabelled as an infinite theorem.
+- **Unconditional arbitrary-product Q2 is kernel-checked.** The separate a.e. residual terminal in merged [#776](https://github.com/d3lefts/d3lefts/pull/776) and Hoeffding-degree terminal in merged [#888](https://github.com/d3lefts/d3lefts/pull/888) prove the C105.416 inequality under genuine independent product laws, essential boundedness and degree at most two. [Integrated Lake/kernel replay](https://github.com/d3lefts/d3lefts/actions/runs/44470008420); [named Hoeffding theorem](../nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean). The older conditional limit and analytic lift remain historical records, not the current certification frontier. Independent statement review, novelty and optimal coefficient remain open. The lower bound C₂ ≥ 4 has a separate [certificate](https://github.com/d3lefts/d3lefts/pull/819).
 - [`ACTIVE_DEPENDENCY_CLOSURE.json`](ACTIVE_DEPENDENCY_CLOSURE.json)
   and its [maintenance contract](ACTIVE_DEPENDENCY_CLOSURE.md) identify
   two currently **open** end-to-end proof targets: the physical-quantum
