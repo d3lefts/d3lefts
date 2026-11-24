@@ -1,5 +1,8 @@
 # NIGHTFALL paper shelf
 
+**24 November — first Zenodo publication:** [Dimension-Free Classical Simulation Under Correlated Inputs: Wyner Common-Information Bounds and Query-Local Representations](https://doi.org/10.5281/zenodo.24511398), v0.7, 24 pages. [NIGHTFALL community](https://zenodo.org/communities/nightfall-research/records) · [Publication registry](publications.json) · [Reproducibility archival procedure](zenodo/README.md). Published preprint; not externally refereed.
+
+
 **Scholarly entry point · 11 November 2026 · working research manuscripts, not a journal publication record.**
 
 
