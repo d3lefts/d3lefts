@@ -22,6 +22,7 @@ on:
       - 'research/nightfall/formalization/structural_information/T2PhysicalSectors.lean'
       - 'research/nightfall/formalization/structural_information/T2FiberEnergy.lean'
       - 'research/nightfall/formalization/structural_information/T2BornExpansion.lean'
+      - 'research/nightfall/formalization/structural_information/T2SurvivorFrames.lean'
       - 'research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean'
       - 'research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean'
       - '.github/workflows/nightfall-t2-operator-energy-lean.yml'
@@ -68,12 +69,13 @@ jobs:
           physical=research/nightfall/formalization/structural_information/T2PhysicalSectors.lean
           fiber=research/nightfall/formalization/structural_information/T2FiberEnergy.lean
           born=research/nightfall/formalization/structural_information/T2BornExpansion.lean
+          survivor=research/nightfall/formalization/structural_information/T2SurvivorFrames.lean
           overlap=research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean
           multi=research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean
           paper=research/nightfall/structural_information/TWO_QUERY_COMPLEX_RANKFREE_COMPLETE_PROOF_20261122.md
           test "$(git hash-object "$paper")" = "42e5b34955304fe6b454160a6abbd2df73777438"
           git rev-parse HEAD | tee t2-operator-receipt/commit.txt
-          sha256sum "$src" "$more" "$effect" "$heavy" "$light" "$order" "$six" "$bridge" "$frame" "$stage2" "$stage1" "$pathenergy" "$walsh" "$actual" "$outside" "$phase" "$physical" "$fiber" "$born" "$overlap" "$multi" "$paper" | tee t2-operator-receipt/SHA256SUMS
+          sha256sum "$src" "$more" "$effect" "$heavy" "$light" "$order" "$six" "$bridge" "$frame" "$stage2" "$stage1" "$pathenergy" "$walsh" "$actual" "$outside" "$phase" "$physical" "$fiber" "$born" "$survivor" "$overlap" "$multi" "$paper" | tee t2-operator-receipt/SHA256SUMS
           cp "$src" /tmp/mathlib4/T2OperatorEnergy.lean
           cp "$more" /tmp/mathlib4/T2HilbertCrossed.lean
           cp "$effect" /tmp/mathlib4/T2HilbertEffect.lean
@@ -93,10 +95,11 @@ jobs:
           cp "$physical" /tmp/mathlib4/T2PhysicalSectors.lean
           cp "$fiber" /tmp/mathlib4/T2FiberEnergy.lean
           cp "$born" /tmp/mathlib4/T2BornExpansion.lean
+          cp "$survivor" /tmp/mathlib4/T2SurvivorFrames.lean
           cp "$overlap" /tmp/mathlib4/T2ZeroTripleOverlap31.lean
           cp "$multi" /tmp/mathlib4/T2ZeroTripleMultiplicity.lean
           status=0
-          for mod in T2ZeroTripleOverlap31 T2ZeroTripleMultiplicity T2OperatorEnergy T2HilbertCrossed T2HilbertEffect T2HeavyQuery T2LightFrame T2EffectOrder T2CorrectionSix T2CorrectionEventBridge T2FrameEnergy T2SecondStageLight T2FirstStageLight T2PathEnergy T2WalshTranscript T2ActualSource T2OutsideSpanLight T2QuantumPhaseExpansion T2PhysicalSectors T2FiberEnergy T2BornExpansion; do
+          for mod in T2ZeroTripleOverlap31 T2ZeroTripleMultiplicity T2OperatorEnergy T2HilbertCrossed T2HilbertEffect T2HeavyQuery T2LightFrame T2EffectOrder T2CorrectionSix T2CorrectionEventBridge T2FrameEnergy T2SecondStageLight T2FirstStageLight T2PathEnergy T2WalshTranscript T2ActualSource T2OutsideSpanLight T2QuantumPhaseExpansion T2PhysicalSectors T2FiberEnergy T2BornExpansion T2SurvivorFrames; do
             echo "=== COMPILE $mod ===" | tee -a t2-operator-receipt/compile.log
             if (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$mod.olean" "$mod.lean") 2>&1 | tee -a t2-operator-receipt/compile.log; then
               if ! (cd /tmp/mathlib4 && lake env leanchecker "$mod") 2>&1 | tee -a t2-operator-receipt/kernel.log; then
@@ -132,6 +135,7 @@ jobs:
               Path('research/nightfall/formalization/structural_information/T2PhysicalSectors.lean'),
               Path('research/nightfall/formalization/structural_information/T2FiberEnergy.lean'),
               Path('research/nightfall/formalization/structural_information/T2BornExpansion.lean'),
+              Path('research/nightfall/formalization/structural_information/T2SurvivorFrames.lean'),
               Path('research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean'),
               Path('research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean'),
           ]
@@ -201,6 +205,10 @@ jobs:
           expected += [prefix+'T2BornExpansion.'+x for x in
             ['quantum_state_eq_original_pair_sum',
              'bornAmplitude_eq_complex_four_slot_sum']]
+          expected += [prefix+'T2SurvivorFrames.'+x for x in
+            ['finite_complex_inner_cauchy','survivor_output_group_energy',
+             'survivor_output_of_positive_effect','pinched_synthesis_energy_le',
+             'survivor_input_group_energy','survivor_input_of_positive_effect']]
           expected += [prefix+'T2ZeroTripleOverlap.'+x for x in
             ['survivor_is_total','two_zero_triple_survivors_equal',
              'three_survivors_force_fourth_zero','pair_energy_coefficient_le_31']]
