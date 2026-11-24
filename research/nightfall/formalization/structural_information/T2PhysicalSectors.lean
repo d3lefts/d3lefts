@@ -77,7 +77,10 @@ theorem inner_eq_sum_physical_sectors
       inner ℂ (sectorIsometry F hinternal horth x)
         (sectorIsometry F hinternal horth y) := by
           rw [LinearIsometryEquiv.inner_map_map]
-    _ = _ := PiLp.inner_apply
+    _ = _ := by
+      exact PiLp.inner_apply
+        (sectorIsometry F hinternal horth x)
+        (sectorIsometry F hinternal horth y)
 
 /-- Any arbitrary physical unitary becomes a genuine unitary of
 the dependent physical sector direct sum, without forcing equal
