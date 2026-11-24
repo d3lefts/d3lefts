@@ -35,6 +35,20 @@ jobs:
           cp "$P" /tmp/mathlib4/WynerLocalityCore.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityCore.olean WynerLocalityCore.lean)
           (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityCore) 2>&1 | tee receipts/wyner-locality/kernel.log
+      - name: Strict independent PPZ counting audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space/WynerLocalityPPZ.lean
+          python3 scripts/lean_bridge.py "$P" --workspace /tmp/mathlib4 \
+            --decl Nightfall.WynerLocality.guess_packing \
+            --decl Nightfall.WynerLocality.last_order_count \
+            --decl Nightfall.WynerLocality.ppz_log_card \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --strict --timeout 1200 --json-out receipts/wyner-locality/ppz.json
+          cp "$P" /tmp/mathlib4/WynerLocalityPPZ.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityPPZ.olean WynerLocalityPPZ.lean)
+          (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityPPZ) 2>&1 | tee receipts/wyner-locality/ppz-kernel.log
       - name: Compile source-exact Route 1 closure
         shell: bash
         run: |
@@ -63,26 +77,12 @@ jobs:
             --decl Nightfall.WynerLocality.entropy_le_log_support \
             --decl Nightfall.WynerLocality.wyner_general_lower_of_component_entropy \
             --decl Nightfall.WynerLocality.wyner_locality_of_ppz \
+            --decl Nightfall.WynerLocality.wyner_locality_general \
             --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
             --strict --timeout 1200 --json-out receipts/wyner-locality/information.json
           cp "$P" /tmp/mathlib4/WynerLocalityInformation.lean
           (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityInformation.olean WynerLocalityInformation.lean)
           (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityInformation) 2>&1 | tee receipts/wyner-locality/information-kernel.log
-      - name: Strict PPZ and unconditional Wyner terminal audit
-        shell: bash
-        run: |
-          set -euo pipefail
-          P=research/nightfall/formalization/product_space/WynerLocalityPPZ.lean
-          python3 scripts/lean_bridge.py "$P" --workspace /tmp/mathlib4 \
-            --decl Nightfall.WynerLocality.guess_packing \
-            --decl Nightfall.WynerLocality.last_order_count \
-            --decl Nightfall.WynerLocality.ppz_log_card \
-            --decl Nightfall.WynerLocality.wyner_locality_general \
-            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
-            --strict --timeout 1200 --json-out receipts/wyner-locality/terminal.json
-          cp "$P" /tmp/mathlib4/WynerLocalityPPZ.lean
-          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityPPZ.olean WynerLocalityPPZ.lean)
-          (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityPPZ) 2>&1 | tee receipts/wyner-locality/terminal-kernel.log
       - name: Preserve source identity
         if: always()
         run: |

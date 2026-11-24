@@ -1,5 +1,5 @@
 import Route1WynerGeneral
-import WynerLocalityCore
+import WynerLocalityPPZ
 
 /-!
 The general-latent entropy bridge uses the actual Route1WynerGeneral
@@ -123,21 +123,6 @@ section Locality
 variable {ι κ α : Type} [Fintype ι] [DecidableEq ι]
     [Fintype κ] [DecidableEq κ] [Fintype α] [DecidableEq α] [Nonempty α]
 
-def LocalExclusion (A : Set (ι → Bool)) (r : ℕ) : Prop :=
-  ∀ y ∉ A, ∃ J : Finset ι, J.card ≤ r ∧
-    ∀ x : ι → Bool, (∀ i ∈ J, x i = y i) → x ∉ A
-
-def Isolated (A : Set (ι → Bool)) : Prop :=
-  ∀ x ∈ A, ∀ j : ι, flip x j ∉ A
-
-/-- Interface to the PPZ counting lemma. Kept as an explicit separate obligation
-until a source-closed combinatorial proof has been supplied. -/
-def PPZCap (r : ℕ) (K : ℝ) : Prop :=
-  ∀ A : Finset (ι → Bool), A.Nonempty →
-    LocalExclusion (↑A : Set (ι → Bool)) r →
-    Isolated (↑A : Set (ι → Bool)) →
-    Real.log (A.card : ℝ) ≤ K
-
 /-- The actual general-latent bound, conditional only on the explicitly
 stated isolated-assignment counting lemma and the paper's source model. -/
 theorem wyner_locality_of_ppz
@@ -215,8 +200,35 @@ theorem wyner_locality_of_ppz
     (prodMass_total p hp1)).trans hK
 
 end Locality
+
+section Terminal
+variable {ι : Type} [Fintype ι] [DecidableEq ι]
+/-- The general locality theorem with the PPZ premise discharged. Entropies
+are nats, as in #970. No finite enumeration or conditional support cap
+assumption appears in this statement. -/
+theorem wyner_locality_general
+    {κ α : Type} [Fintype κ] [DecidableEq κ]
+    [Fintype α] [DecidableEq α] [Nonempty α]
+    (S : Set (ι → Bool)) (t b r : ℕ) (hr : 0 < r)
+    (E : (κ → α) → (ι → Bool)) (D : κ → Tree ι α) (L : ι → Finset κ)
+    (ν : (κ → α) → ℝ) (hν0 : ∀ z, 0 ≤ ν z) (hν1 : ∑ z, ν z = 1)
+    (hE : Local E L) (hL : ∀ j, (L j).card ≤ b) (hD : ∀ l, (D l).depth ≤ r)
+    (hS : FullProjection S t) (hsmall : b*r+1 ≤ t)
+    (hfix : ∀ x ∈ S, E (decode D x) = x)
+    (hsource : ∀ z, 0 < ν z → E z ∈ S)
+    (hinv : ∀ z, 0 < ν z → decode D (E z) = z)
+    (hisol : Isolated S) :
+    Nightfall.Route1Polylog.Hent ν -
+      (((Fintype.card ι : ℝ) - (Fintype.card ι : ℝ)/r) * Real.log 2) ≤
+      Nightfall.Route1Polylog.wynerGen ν := by
+  exact wyner_locality_of_ppz S t b r E D L ν hν0 hν1 hE hL hD hS hsmall hfix hsource hinv hisol
+    _ (ppz_cap r hr)
+
+end Terminal
 end Nightfall.WynerLocality
 
 #print axioms Nightfall.WynerLocality.entropy_le_log_support
 #print axioms Nightfall.WynerLocality.wyner_general_lower_of_component_entropy
 #print axioms Nightfall.WynerLocality.wyner_locality_of_ppz
+
+#print axioms Nightfall.WynerLocality.wyner_locality_general

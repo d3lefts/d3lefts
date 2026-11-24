@@ -235,6 +235,26 @@ theorem parity_isolated (x : ι → Bool) (hx : parity x = 0) (j : ι) :
 
 end Parity
 
+section CountingInterface
+variable [Fintype ι]
+def LocalExclusion (A : Set (ι → Bool)) (r : ℕ) : Prop :=
+  ∀ y ∉ A, ∃ J : Finset ι, J.card ≤ r ∧
+    ∀ x : ι → Bool, (∀ i ∈ J, x i = y i) → x ∉ A
+
+def Isolated (A : Set (ι → Bool)) : Prop :=
+  ∀ x ∈ A, ∀ j : ι, flip x j ∉ A
+
+/-- Interface to the PPZ counting lemma. Kept as an explicit separate obligation
+until a source-closed combinatorial proof has been supplied. -/
+def PPZCap (r : ℕ) (K : ℝ) : Prop :=
+  ∀ A : Finset (ι → Bool), A.Nonempty →
+    LocalExclusion (↑A : Set (ι → Bool)) r →
+    Isolated (↑A : Set (ι → Bool)) →
+    Real.log (A.card : ℝ) ≤ K
+
+
+end CountingInterface
+
 end Nightfall.WynerLocality
 
 #print axioms Nightfall.WynerLocality.shallow_retraction_identity

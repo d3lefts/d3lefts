@@ -1,4 +1,4 @@
-import WynerLocalityInformation
+import WynerLocalityCore
 
 /-! The isolated-assignment bound by disjoint guess cylinders and permutation
 averaging. This is the PPZ satisfiability coding argument in a source model
@@ -250,6 +250,7 @@ theorem ppz_log_card (A : Finset (ι → Bool)) (r : ℕ) (hr : 0 < r)
   have hmean : ∀ x ∈ A, N / r ≤ (∑ σ : Equiv.Perm ι, f σ x) / P := by
     intro x hx
     have hc : N * P ≤ (r : ℝ) * ∑ σ : Equiv.Perm ι, f σ x := by
+      dsimp [N, P, f]
       exact_mod_cast forced_count_total A r hloc hiso x hx
     apply (div_le_div_iff₀ hrR hP).mpr
     nlinarith
@@ -285,7 +286,10 @@ theorem ppz_log_card (A : Finset (ι → Bool)) (r : ℕ) (hr : 0 < r)
         rw [← Finset.sum_div, Finset.sum_comm]
       _ ≤ (∑ _σ : Equiv.Perm ι, Real.exp (N * Real.log 2)) / P :=
         div_le_div_of_nonneg_right (Finset.sum_le_sum fun σ _ => hpacks σ) hP.le
-      _ = _ := by simp [nsmul_eq_mul, ← P, hP.ne']
+      _ = _ := by
+        rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+        change P * Real.exp (N * Real.log 2) / P = _
+        field_simp
   have hApos : (0 : ℝ) < A.card := Nat.cast_pos.mpr (Finset.card_pos.mpr hA)
   have hlogsum := Real.strictMonoOn_log.monotoneOn
     (show 0 < (A.card : ℝ) * Real.exp ((N/r) * Real.log 2) by positivity)
@@ -300,30 +304,9 @@ theorem ppz_cap (r : ℕ) (hr : 0 < r) :
   intro A hA hloc hiso
   exact ppz_log_card A r hr hA hloc hiso
 
-/-- The general locality theorem with the PPZ premise discharged. Entropies
-are nats, as in #970. No finite enumeration or conditional support cap
-assumption appears in this statement. -/
-theorem wyner_locality_general
-    {κ α : Type} [Fintype κ] [DecidableEq κ]
-    [Fintype α] [DecidableEq α] [Nonempty α]
-    (S : Set (ι → Bool)) (t b r : ℕ) (hr : 0 < r)
-    (E : (κ → α) → (ι → Bool)) (D : κ → Tree ι α) (L : ι → Finset κ)
-    (ν : (κ → α) → ℝ) (hν0 : ∀ z, 0 ≤ ν z) (hν1 : ∑ z, ν z = 1)
-    (hE : Local E L) (hL : ∀ j, (L j).card ≤ b) (hD : ∀ l, (D l).depth ≤ r)
-    (hS : FullProjection S t) (hsmall : b*r+1 ≤ t)
-    (hfix : ∀ x ∈ S, E (decode D x) = x)
-    (hsource : ∀ z, 0 < ν z → E z ∈ S)
-    (hinv : ∀ z, 0 < ν z → decode D (E z) = z)
-    (hisol : Isolated S) :
-    Nightfall.Route1Polylog.Hent ν -
-      (((Fintype.card ι : ℝ) - (Fintype.card ι : ℝ)/r) * Real.log 2) ≤
-      Nightfall.Route1Polylog.wynerGen ν := by
-  exact wyner_locality_of_ppz S t b r E D L ν hν0 hν1 hE hL hD hS hsmall hfix hsource hinv hisol
-    _ (ppz_cap r hr)
 
 end Nightfall.WynerLocality
 
 #print axioms Nightfall.WynerLocality.guess_packing
 #print axioms Nightfall.WynerLocality.last_order_count
 #print axioms Nightfall.WynerLocality.ppz_log_card
-#print axioms Nightfall.WynerLocality.wyner_locality_general
