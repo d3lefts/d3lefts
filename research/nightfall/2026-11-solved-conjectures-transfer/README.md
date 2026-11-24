@@ -21,6 +21,19 @@ Physical-query interpretation: drawing J_s and padding V is independent of the d
 ### First experiment and audit contract
 Objective: improve a physical-query observability or residual information bound relative to merged Route 1 [#970](https://github.com/d3lefts/d3lefts/pull/970), [#976](https://github.com/d3lefts/d3lefts/pull/976), and quadratic influence / Hilbert prediction; check latest source endpoints before stating constants. Feasible set: fixed finite law, actual coordinate reads, known law, no free latent observations. Best verified construction here: above deductions and exact finite checks; gap: establish a posterior-stable selection rule with low-degree/latent structural assumptions, or refute it. Novelty threshold: new same-model dimension-free or quantitatively stronger rate, not a restatement of overlap. Stop after one proof attack and small finite scan unless a decisive candidate survives; reserve 20% exploration for nonuniform subset distributions. Independent reviewer must derive assumptions and falsifiers before reading builder result. Checker: python3 check_projection_transfer.py, 12 laws / 240 rational PSD inequalities; parity N=2,3,4. Local author-run SHA256 ed70f98029253684e5fa456745ef80ece48e2a08abe23f4b89ba6d3e97443bf4. PSD via exact weighted symmetric Schur elimination. No independent execution yet.
 
+### Nonuniform design and latent-information bridge (same-session role pass, not independent review)
+
+The proof does not require uniform J_s or padding. For any data-independent distribution mu on admissible subsets of size at most m (including at a fixed transcript posterior), let A=E_mu P_J and let C=E P_U for the union U of k independent draws. Then |U|<=km and A(I-C)A <= (A-A^2)/k, I-C <= (I-A)^2+(A-A^2)/k by the identical sample-average variance argument. The selector may depend on past transcript, not on unread coordinates. This is a design-sensitive physical-query lemma, not a dimension-free selector existence theorem.
+
+For a finite latent Theta and full input X under a fixed transcript posterior, use the vector y(X)=Pr(Theta=.|X). For any fixed U, P_U y=Pr(Theta=.|X_U). Therefore I(Theta;X | X_U)=E KL(y || P_U y). If all positive-prior latent categories have posterior predictive mass (P_U y)_theta >= a>0 a.s. for every allowed U, then log t <= t-1 implies KL(p||r)<=sum (p_theta-r_theta)^2/r_theta, hence
+
+E_U I(Theta;X | X_U) <= a^(-1) <y,(I-C)y>
+ <= a^(-1) [||(I-A)y||^2 + (<y,Ay>-||Ay||^2)/k].
+
+Nats, finite latent alphabet, vector L2 norm with counting measure over latent categories. This is an explicit residual-mutual-information transfer with a physical query budget and an additional floor assumption; it does not improve the general Route 1 rate without a bound on bias and the floor, and a floor can degrade with latent support or adaptive conditioning. A positive prior alone does not imply the floor. For zero predictive mass the corresponding full posterior mass is zero a.s.; nevertheless no uniform inverse-floor bound follows without additional structure. This deduction uses standard conditional expectation and KL/chi-square inequality, not a novelty claim.
+
+Exact noncommutativity check: in lexicographic 3-bit cube order, weights (1,5,4,5,1,6,6,1), [K_1,K_2]_(0,1)=-13201/1575288, using the archived checker matrices. Thus a simultaneous diagonalization proof would not be sound even for a tiny finite input law. The checker blob 745eb75662f7487fe5a833717dfb5d39a28b33dc matches the locally replayed bytes (git hash-object). Both general deductions and information bridge remain author-side until a separate reviewer verifies them.
+
 ## Discovery graph (proposed edges, not canonical claims)
 | External mechanism / reference | Target NIGHTFALL corpus | Transfer / decisive test | Status |
 |---|---|---|---|
