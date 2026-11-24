@@ -77,8 +77,10 @@ theorem first_frame_pair
         ‖inner ℂ (T2SecondStageLight.path t ba.1 ba.2) x‖ ^ 2) =
       ∑ a ∈ L, ∑ b : D,
         ‖inner ℂ (T2SecondStageLight.path t b a) x‖ ^ 2
-    rw [Finset.sum_product']
-    rw [Finset.sum_comm]
+    exact Finset.sum_product_right
+      (Finset.univ : Finset D) L
+      (fun ba : D × D =>
+        ‖inner ℂ (T2SecondStageLight.path t ba.1 ba.2) x‖ ^ 2)
   rw [heq]
   exact hframe x
 
@@ -100,7 +102,10 @@ theorem second_frame_pair
         ‖inner ℂ (T2SecondStageLight.path t ba.1 ba.2) x‖ ^ 2) =
       ∑ b ∈ L, ∑ a : D,
         ‖inner ℂ (T2SecondStageLight.path t b a) x‖ ^ 2
-    rw [Finset.sum_product']
+    exact Finset.sum_product L
+      (Finset.univ : Finset D)
+      (fun ba : D × D =>
+        ‖inner ℂ (T2SecondStageLight.path t ba.1 ba.2) x‖ ^ 2)
   rw [heq]
   exact hframe x
 
