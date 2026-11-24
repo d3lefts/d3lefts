@@ -40,7 +40,14 @@ theorem fullPath_norm_sq
     (t : D → D → E) (ba : D × D) :
     ‖fullPath t ba‖ ^ 2 = ‖t ba.1 ba.2‖ ^ 2 := by
   rw [PiLp.norm_sq_eq_of_L2]
-  simp [fullPath, T2SecondStageLight.path]
+  change (∑ d : D, ‖if d = ba.1 then t ba.1 ba.2 else 0‖ ^ 2) =
+    ‖t ba.1 ba.2‖ ^ 2
+  calc
+    _ = ∑ d : D, (if d = ba.1 then ‖t ba.1 ba.2‖ ^ 2 else 0) := by
+      apply Finset.sum_congr rfl
+      intro d _
+      split_ifs <;> simp
+    _ = ‖t ba.1 ba.2‖ ^ 2 := by simp
 
 /-- Normalize the full physical path family using actual path masses.
 For a unitary circuit this mass is one, but no path orthogonality
@@ -66,7 +73,11 @@ theorem first_frame_pair
           ‖inner ℂ (fullPath t ba) x‖ ^ 2) =
       (∑ a ∈ L, ∑ b : D,
           ‖inner ℂ (T2SecondStageLight.path t b a) x‖ ^ 2) := by
-    simp only [Finset.sum_product, fullPath]
+    change (∑ ba ∈ (Finset.univ : Finset D).product L,
+        ‖inner ℂ (T2SecondStageLight.path t ba.1 ba.2) x‖ ^ 2) =
+      ∑ a ∈ L, ∑ b : D,
+        ‖inner ℂ (T2SecondStageLight.path t b a) x‖ ^ 2
+    rw [Finset.sum_product']
     rw [Finset.sum_comm]
   rw [heq]
   exact hframe x
@@ -85,7 +96,11 @@ theorem second_frame_pair
           ‖inner ℂ (fullPath t ba) x‖ ^ 2) =
       (∑ b ∈ L, ∑ a : D,
           ‖inner ℂ (T2SecondStageLight.path t b a) x‖ ^ 2) := by
-    simp only [Finset.sum_product, fullPath]
+    change (∑ ba ∈ L.product (Finset.univ : Finset D),
+        ‖inner ℂ (T2SecondStageLight.path t ba.1 ba.2) x‖ ^ 2) =
+      ∑ b ∈ L, ∑ a : D,
+        ‖inner ℂ (T2SecondStageLight.path t b a) x‖ ^ 2
+    rw [Finset.sum_product']
   rw [heq]
   exact hframe x
 
