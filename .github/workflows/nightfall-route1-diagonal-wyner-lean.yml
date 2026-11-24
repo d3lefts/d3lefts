@@ -1,0 +1,72 @@
+name: NIGHTFALL exact diagonal general-latent Wyner identity Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1DiagonalWyner.lean'
+      - '.github/workflows/nightfall-route1-diagonal-wyner-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile pinned AA / product source chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Compile pinned general latent Wyner Route1 chain and new terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/diagonal-wyner
+          for M in Route1LatentDegree Route1DegreeSourceBridge Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift Route1PolylogSimulation \
+                   Route1WynerSimulation Route1WynerGeneral Route1DiagonalWyner; do
+            src="research/nightfall/formalization/product_space/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/diagonal-wyner/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/diagonal-wyner/$M.log"
+          done
+      - name: Replay exact Wyner identities and check axioms
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker Route1DiagonalWyner) 2>&1 | tee receipts/diagonal-wyner/checker.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          p=Path('receipts/diagonal-wyner/Route1DiagonalWyner.log').read_text()
+          for name in ['diagonal_product_dirac','diagonal_wyner_eq_entropy','product_wyner_zero','fair_bit_diagonal_wyner','fair_bit_product_wyner']:
+              name='Nightfall.Route1Polylog.'+name
+              m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",p,re.S)
+              if m:
+                  assert {x.strip() for x in m[1].split(',') if x.strip()} <= {'propext','Classical.choice','Quot.sound'}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in p, name
+          assert 'sorryAx' not in p
+          PY
+          git rev-parse HEAD > receipts/diagonal-wyner/head.txt
+          sha256sum research/nightfall/formalization/product_space/Route1DiagonalWyner.lean > receipts/diagonal-wyner/SHA256SUMS
+      - name: Keep receipt
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: diagonal-wyner-${{ github.run_id }}
+          path: receipts/diagonal-wyner
+          retention-days: 90
