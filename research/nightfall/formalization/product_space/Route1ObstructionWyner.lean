@@ -241,6 +241,104 @@ theorem exact_static_wyner
         exact Nat.pow_le_pow_right (by decide) (Nat.mul_le_mul_left r ham)
   simpa only [Nat.cast_pow, Nat.cast_ofNat, Real.log_pow] using hterminal
 
+
+/-- Source-level conditional analytic terminal for the exact and robust
+orthogonal correlation bound. The two actual mutual-information marginal
+bounds, correlation factorization, and squared-bias convexity remain
+explicit obligations, not hidden axioms. The infimum is genuinely #970. -/
+theorem orthogonal_wyner_of_marginal_entropy
+    {I : Type} [Fintype I] [DecidableEq I] [Nonempty I]
+    (ν : (Sum I I → Bool) → ℝ)
+    (hν0 : ∀ z, 0 ≤ ν z) (hν1 : ∑ z, ν z = 1)
+    (U : (I → ℝ) → (I → ℝ))
+    (hU : ∀ b, Nightfall.Route1OrthogonalCorrelation.energy (U b) =
+      Nightfall.Route1OrthogonalCorrelation.energy b)
+    (c loss : ℝ) (hc : c ∈ Set.Icc (0 : ℝ) 1)
+    (hconv : ConvexOn ℝ (Set.Icc (0 : ℝ) 1)
+      Nightfall.Route1OrthogonalCorrelation.psi)
+    (hmono : MonotoneOn Nightfall.Route1OrthogonalCorrelation.psi (Set.Icc (0 : ℝ) 1))
+    (hdecomp : ∀ (k : ℕ) (w : Fin k → ℝ) (Q : Fin k → Sum I I → Bool → ℝ),
+      (∀ θ, 0 ≤ w θ) → (∑ θ, w θ = 1) →
+      (∀ θ j a, 0 ≤ Q θ j a) → (∀ θ j, ∑ a, Q θ j a = 1) →
+      (∀ z, ν z = ∑ θ, w θ * prodMass (Q θ) z) →
+      let a : Fin k → I → ℝ := fun θ i => Q θ (.inl i) true - Q θ (.inl i) false
+      let b : Fin k → I → ℝ := fun θ i => Q θ (.inr i) true - Q θ (.inr i) false
+      (∀ θ i, (a θ i)^2 ∈ Set.Icc (0 : ℝ) 1) ∧
+      (∀ θ i, (b θ i)^2 ∈ Set.Icc (0 : ℝ) 1) ∧
+      (Fintype.card I : ℝ) * c ≤
+        (∑ θ, w θ * Nightfall.Route1OrthogonalCorrelation.score (a θ) (U (b θ))) ∧
+      ((∑ θ, w θ * ∑ i, Nightfall.Route1OrthogonalCorrelation.psi ((a θ i)^2)) - loss ≤ mutInfo Q w) ∧
+      ((∑ θ, w θ * ∑ i, Nightfall.Route1OrthogonalCorrelation.psi ((b θ i)^2)) - loss ≤ mutInfo Q w)) :
+    (Fintype.card I : ℝ) * Nightfall.Route1OrthogonalCorrelation.psi c - loss ≤ wynerGen ν := by
+  classical
+  rw [← wynerCI_eq_wynerGen]
+  unfold wynerCI
+  apply le_csInf (wynerSet_nonempty ν hν0 hν1)
+  rintro s ⟨k,w,Q,hw0,hw1,hQ0,hQ1,hν,rfl⟩
+  let a : Fin k → I → ℝ := fun θ i => Q θ (.inl i) true - Q θ (.inl i) false
+  let b : Fin k → I → ℝ := fun θ i => Q θ (.inr i) true - Q θ (.inr i) false
+  obtain ⟨ha,hb,hscore,hma,hmb⟩ := hdecomp k w Q hw0 hw1 hQ0 hQ1 hν
+  let N : ℝ := Fintype.card I
+  have hN : 0 < N := Nat.cast_pos.mpr Fintype.card_pos
+  let p : Fin k × I → ℝ := fun t => w t.1 / N
+  have hp : ∀ t, 0 ≤ p t := fun t => div_nonneg (hw0 t.1) hN.le
+  have hp1 : ∑ t, p t = 1 := by
+    rw [Fintype.sum_prod_type]
+    change ∑ θ : Fin k, ∑ _ : I, w θ / N = 1
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    have he : ∀ θ : Fin k, (Fintype.card I : ℝ) * (w θ / N) = w θ := by
+      intro θ
+      change N * (w θ / N) = w θ
+      field_simp
+    simp only [he, hw1]
+  have hj (d : Fin k → I → ℝ)
+      (hd : ∀ θ i, (d θ i)^2 ∈ Set.Icc (0 : ℝ) 1)
+      (he : N * c ≤ ∑ θ, w θ * Nightfall.Route1OrthogonalCorrelation.energy (d θ))
+      (hm : (∑ θ, w θ * ∑ i, Nightfall.Route1OrthogonalCorrelation.psi ((d θ i)^2)) - loss ≤ mutInfo Q w) :
+      N * Nightfall.Route1OrthogonalCorrelation.psi c - loss ≤ mutInfo Q w := by
+    let x : Fin k × I → ℝ := fun t => (d t.1 t.2)^2
+    have hx : ∀ t, x t ∈ Set.Icc (0 : ℝ) 1 := fun t => hd t.1 t.2
+    have hmean : (∑ t, p t * x t) =
+        (∑ θ, w θ * Nightfall.Route1OrthogonalCorrelation.energy (d θ)) / N := by
+      rw [Fintype.sum_prod_type, Finset.sum_div]
+      apply Finset.sum_congr rfl
+      intro θ _
+      unfold p x Nightfall.Route1OrthogonalCorrelation.energy
+      rw [Finset.mul_sum, Finset.sum_div]
+      apply Finset.sum_congr rfl
+      intro i _
+      ring
+    have hmem : (∑ t, p t * x t) ∈ Set.Icc (0 : ℝ) 1 := by
+      constructor
+      · exact Finset.sum_nonneg fun t _ => mul_nonneg (hp t) (hx t).1
+      · calc
+          _ ≤ ∑ t, p t * 1 := Finset.sum_le_sum fun t _ =>
+            mul_le_mul_of_nonneg_left (hx t).2 (hp t)
+          _ = 1 := by simp [hp1]
+    have hle : c ≤ ∑ t, p t * x t := by
+      rw [hmean]
+      apply (le_div_iff₀ hN).2
+      simpa [mul_comm] using he
+    have hJ := Nightfall.Route1OrthogonalCorrelation.weighted_bias_jensen p x hp hp1 hx hconv
+    have hψ := (hmono hc hmem hle).trans hJ
+    have hsum : (∑ t, p t * Nightfall.Route1OrthogonalCorrelation.psi (x t)) =
+        (∑ θ, w θ * ∑ i, Nightfall.Route1OrthogonalCorrelation.psi ((d θ i)^2)) / N := by
+      rw [Fintype.sum_prod_type, Finset.sum_div]
+      apply Finset.sum_congr rfl
+      intro θ _
+      unfold p x
+      rw [Finset.mul_sum, Finset.sum_div]
+      apply Finset.sum_congr rfl
+      intro i _
+      ring
+    rw [hsum] at hψ
+    have hh := (le_div_iff₀ hN).mp hψ
+    rw [mul_comm] at hh
+    linarith
+  rcases Nightfall.Route1OrthogonalCorrelation.one_block_energy U hU w hw0 a b (N*c) hscore with he | he
+  · exact hj a ha he hma
+  · exact hj b hb he hmb
+
 end Nightfall.Route1Polylog
 
 #print axioms Nightfall.Route1Polylog.wynerGen_lower_of_component_entropy
@@ -250,3 +348,5 @@ end Nightfall.Route1Polylog
 #print axioms Nightfall.Route1Polylog.static_wyner_cardinality_terminal
 
 #print axioms Nightfall.Route1Polylog.exact_static_wyner
+
+#print axioms Nightfall.Route1Polylog.orthogonal_wyner_of_marginal_entropy
