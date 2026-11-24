@@ -2,6 +2,7 @@ import Route1WynerGeneral
 import Route1StaticObstruction
 import Route1RecoveryEntropy
 import Route1OrthogonalCorrelation
+import Route1FiniteEntropyProjection
 
 /-! Source-exact terminal composition with #970's general-latent Wyner
 information. No alternate definition of information, finite mixture rank,
@@ -339,6 +340,71 @@ theorem orthogonal_wyner_of_marginal_entropy
   · exact hj a ha he hma
   · exact hj b hb he hmb
 
+
+/-- Split a two-block product law without redefining the source. -/
+def blockPairEquiv (I A : Type) : (Sum I I → A) ≃ (I → A) × (I → A) where
+  toFun z := (fun i => z (.inl i), fun i => z (.inr i))
+  invFun z := Sum.elim z.1 z.2
+  left_inv z := by funext i; cases i <;> rfl
+  right_inv z := by rcases z with ⟨x,y⟩; rfl
+
+theorem prodMass_split_blocks {I A : Type} [Fintype I] [DecidableEq I]
+    (p : Sum I I → A → ℝ) (x y : I → A) :
+    prodMass p (Sum.elim x y) =
+      prodMass (fun i => p (.inl i)) x * prodMass (fun i => p (.inr i)) y := by
+  unfold prodMass
+  rw [Fintype.prod_sum_type]
+  rfl
+
+/-- Genuine #970 latent information dominates the left-block marginal
+information, for all finite normalized product decompositions. -/
+theorem mutInfo_ge_left_block {I A W : Type} [Fintype I] [DecidableEq I]
+    [Fintype A] [DecidableEq A] [Nonempty A] [Fintype W]
+    (Q : W → Sum I I → A → ℝ) (w : W → ℝ)
+    (hw0 : ∀ t, 0 ≤ w t) (hw1 : ∑ t, w t = 1)
+    (hQ0 : ∀ t i a, 0 ≤ Q t i a) (hQ1 : ∀ t i, ∑ a, Q t i a = 1) :
+    Hent (fun x : I → A => ∑ t, w t * prodMass (fun i => Q t (.inl i)) x) -
+      (∑ t, w t * Hent (prodMass (fun i => Q t (.inl i)))) ≤ mutInfo Q w := by
+  classical
+  let u : W → (I → A) → ℝ := fun t => prodMass (fun i => Q t (.inl i))
+  let v : W → (I → A) → ℝ := fun t => prodMass (fun i => Q t (.inr i))
+  have hu : ∀ t x, 0 ≤ u t x :=
+    fun t x => Finset.prod_nonneg (fun i _ => hQ0 t (.inl i) (x i))
+  have hv : ∀ t y, 0 ≤ v t y :=
+    fun t y => Finset.prod_nonneg (fun i _ => hQ0 t (.inr i) (y i))
+  have hu1 : ∀ t, ∑ x, u t x = 1 :=
+    fun t => prodMass_total _ (fun i => hQ1 t (.inl i))
+  have hv1 : ∀ t, ∑ y, v t y = 1 :=
+    fun t => prodMass_total _ (fun i => hQ1 t (.inr i))
+  have h := Nightfall.Route1FiniteEntropyProjection.product_mixture_information_ge_marginal
+    w u v hw0 hu hv hu1 hv1
+  have hj : Hent (fun z => ∑ t, w t * prodMass (Q t) z) =
+      Nightfall.Route1FiniteEntropyProjection.H
+        (fun z : (I → A) × (I → A) => ∑ t, w t * u t z.1 * v t z.2) := by
+    unfold Hent Nightfall.Route1FiniteEntropyProjection.H
+    rw [← Equiv.sum_comp (blockPairEquiv I A).symm]
+    apply Finset.sum_congr rfl
+    intro z _
+    congr 1
+    apply Finset.sum_congr rfl
+    intro t _
+    change w t * prodMass (Q t) (Sum.elim z.1 z.2) = w t * u t z.1 * v t z.2
+    rw [prodMass_split_blocks]
+    unfold u v
+    ring
+  have hk (t : W) : Hent (prodMass (Q t)) =
+      Nightfall.Route1FiniteEntropyProjection.H
+        (fun z : (I → A) × (I → A) => u t z.1 * v t z.2) := by
+    unfold Hent Nightfall.Route1FiniteEntropyProjection.H
+    rw [← Equiv.sum_comp (blockPairEquiv I A).symm]
+    apply Finset.sum_congr rfl
+    intro z _
+    congr 1
+    exact prodMass_split_blocks (Q t) z.1 z.2
+  rw [mutInfo_eq Q hQ1 w hw1, hj]
+  simp only [hk]
+  exact h
+
 end Nightfall.Route1Polylog
 
 #print axioms Nightfall.Route1Polylog.wynerGen_lower_of_component_entropy
@@ -350,3 +416,6 @@ end Nightfall.Route1Polylog
 #print axioms Nightfall.Route1Polylog.exact_static_wyner
 
 #print axioms Nightfall.Route1Polylog.orthogonal_wyner_of_marginal_entropy
+
+#print axioms Nightfall.Route1Polylog.prodMass_split_blocks
+#print axioms Nightfall.Route1Polylog.mutInfo_ge_left_block
