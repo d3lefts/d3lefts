@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 61,
+  "revision": 62,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v61: physical two-phase-oracle unitary amplitude and original-label Fourier path identity pending source custody, no unrestricted theorem promotion",
+  "scope": "v62: exact pending heterogeneous physical projector-sector isometric Hilbert bridge, no unrestricted theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3816,6 +3816,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Physical four-slot coefficient squared energy of source-built original pair quantum paths, positive noncommuting effect, arbitrary complex Hilbert sectors, from actual p- or q-light frames and normalized path mass. Proof of p-light restricted frame depends on T2FirstStageLight orthonormal input family, not yet arbitrary projector normalization. Pending named exact-head Lean; no complete grouped Fourier/Q-bound theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2PhysicalSectors.lean",
+      "source_blob_sha": "ea49acd6b3746540c2f30258bdc32b43b699c2ca",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unrestricted complex Hilbert heterogeneous orthogonal projector submodule range bridge to exact dependent PiLp(2) sector Hilbert space via Mathlib DirectSum.IsInternal.isometryL2OfOrthogonalFamily, preserving physical inner products, norms and arbitrary unitary conjugation. Requires separately construct DirectSum.IsInternal and OrthogonalFamily from actual Π_d; no full T2-31 grouped Fourier terminal. Pending named Lean kernel."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2QuantumPhaseExpansion.lean",
