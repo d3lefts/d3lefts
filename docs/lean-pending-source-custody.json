@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 67,
+  "revision": 68,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v67: exact pending physical noncommuting Group C zero-triple survivor contractions, no root theorem promotion",
+  "scope": "v68: exact pending Hilbert vector hat-pair energy from original finite frequency fibers, no full theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3766,6 +3766,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "T2 source-defined rank-free complex Hilbert double-frame coefficient-energy inequality from visible restricted frame hypothesis and operator contraction; prerequisite to but NOT derivation of full two-stage frame, six group B/C norms or complete T2-31 Fourier/query theorem. Pending separate named kernel gate."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2HatEnergy.lean",
+      "source_blob_sha": "7eebb1aa6837c4489a5dac6af1e7b6b57d7ea0b5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Rank-free Hilbert-vector pair-completion energy ≤M times original squared path mass via complex Hilbert norm triangle, real Cauchy and disjoint original-frequency fibers, including unit-mass corollary. Critical T2 Group C M₂ factor. Pending exact kernel and source-to-actual selected nonzero e-hat composition. Does not settle grouped B/C and full 31 query terminal."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2HeavyQuery.lean",
