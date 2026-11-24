@@ -1,0 +1,48 @@
+name: NIGHTFALL Route1 static representation obstruction
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/Route1StaticObstruction.lean'
+      - '.github/workflows/nightfall-route1-static-obstruction-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and independently replay exact finite geometry
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/static-obstruction
+          P=research/nightfall/formalization/product_space/Route1StaticObstruction.lean
+          git rev-parse HEAD > receipts/static-obstruction/commit.txt
+          sha256sum "$P" > receipts/static-obstruction/SHA256SUMS
+          cp "$P" /tmp/mathlib4/Route1StaticObstruction.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/Route1StaticObstruction.olean Route1StaticObstruction.lean) 2>&1 | tee receipts/static-obstruction/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker Route1StaticObstruction) 2>&1 | tee receipts/static-obstruction/checker.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('receipts/static-obstruction/compile.log').read_text()
+          assert 'sorryAx' not in s and 'declaration uses' not in s
+          reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",s))
+          for name in ['active_footprint_ge','footprint_sum','active_count_bound','exact_information_terminal','score_lower_bound']:
+              full='Nightfall.Route1StaticObstruction.'+name
+              assert full in reports, (full,reports)
+              assert {a.strip() for a in reports[full].split(',') if a.strip()} <= {'propext','Classical.choice','Quot.sound'}
+          print('PASS: all five named declarations, standard axioms only')
+          PY
+      - name: Preserve receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: route1-static-obstruction-receipt
+          path: receipts/static-obstruction
+          if-no-files-found: error
