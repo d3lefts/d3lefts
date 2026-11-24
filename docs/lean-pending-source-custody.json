@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 56,
+  "revision": 57,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v56: exact source custody original-label Walsh transcript and legal all-label strategy; still no T2-31 full kernel terminal",
+  "scope": "v57: source exact physical state and zero-sector quantum light-frame bridge; no T2-31 terminal promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3686,6 +3686,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2ActualSource.lean",
+      "source_blob_sha": "dc80eac4f29536e5971d32bed0d57b5aee7c9950",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Physical first- and second-light Hilbert four-slot coefficient-energy from arbitrary normalized psi, fixed unitary U, genuine input sector projections including zero-mass sectors, and noncommuting positive effect 0≤P≤I; unrestricted arbitrary-dimensional homogeneous complex Hilbert fiber PiLp. Heterogeneous projector-family equivalence and full Fourier grouped B/C and terminal query theorem not established. Pending exact-head Lean/leanchecker."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2CorrectionEventBridge.lean",
