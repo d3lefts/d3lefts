@@ -68,7 +68,7 @@ def repo_file(rel: str) -> Path:
 
 def validate_catalogue(doc: dict) -> None:
     guard(doc.get("schema_version") == "1.0", "Unsupported claim catalogue schema")
-    guard(doc.get("as_of") == "2026-11-17", "Update dated scope review before bumping checkpoint")
+    guard(doc.get("as_of") == "2026-11-23", "Update dated scope review before bumping checkpoint")
     guard(isinstance(doc.get("claims"), list) and bool(doc["claims"]), "Empty claim catalogue")
     entries = doc["claims"]
     ids = [r.get("id") for r in entries]
@@ -178,6 +178,7 @@ def validate_catalogue(doc: dict) -> None:
           and current_q2["formal"]["head"] == "d84d6f0bddb0f7e6f1e0ca17a10165afefe73b6e"
           and current_q2["formal"]["source_git_blob"] == "37673af7af8f0f0d7a2c2d3ae272842c87a167cd"
           and current_q2["formal"]["receipt"] == "https://github.com/d3lefts/d3lefts/actions/runs/44470008420"
+          and current_q2["dependencies"] == []
           and current_q2["review"] == "none-recorded"
           and current_q2["priority"] == "unresolved"
           and infinite_q2["lifecycle"] == "archive"
