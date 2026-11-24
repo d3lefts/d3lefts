@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 64,
+  "revision": 65,
   "as_of": "2026-11-24 UTC",
-  "source_commit": "793ff655b70e639fd58c649a386e3cf5e6997aa3",
-  "scope": "Register exact Route 1 obstruction geometry, recovery range, entropy and orthogonal correlation bridge sources, without status promotion.",
+  "source_commit": "b4b82102dceca92a17cfacdd871ca5e24ba81696",
+  "scope": "Actual #970 Wyner obstruction terminal candidates; no automatic certification promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3158,6 +3158,16 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/product_space/Route1ObstructionWyner.lean",
+      "source_blob_sha": "a4cef3d9919001f3b6448ea6c3a6ee31e3d83f8d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual #970 Wyner terminal candidate and recovery bridges; exact-head kernel proof and independent review pending; Gaussian and approximate-static scope not yet closed."
+    },
+    {
       "path": "research/nightfall/formalization/product_space/Route1OrthogonalCorrelation.lean",
       "source_blob_sha": "cb3206ab43b890b6d0bcf1c5392bcfcb264cd8ba",
       "classification": "unreviewed-source",
@@ -3189,13 +3199,13 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1RecoveryEntropy.lean",
-      "source_blob_sha": "73013cdd1220d8d7d9cc4e1092d8b5ad0770b357",
+      "source_blob_sha": "f5bc94e3816e8bed663932585758a906acb638ca",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Exact source custody; proof scope and kernel receipts separately gated. No full Gaussian-sign or approximate static obstruction certification claimed."
+      "receipt_scope": "Actual #970 Wyner terminal candidate and recovery bridges; exact-head kernel proof and independent review pending; Gaussian and approximate-static scope not yet closed."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1StarCoupling.lean",
