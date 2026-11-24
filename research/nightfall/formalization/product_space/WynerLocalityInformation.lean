@@ -3,9 +3,8 @@ import WynerLocalityPPZ
 
 /-!
 The general-latent entropy bridge uses the actual Route1WynerGeneral
-definition, not a redefined common information. The remaining PPZ
-counting inequality is explicitly named as a hypothesis in the last
-theorem; this file is not an unconditional proof of that inequality.
+definition, not a redefined common information. The terminal theorem
+uses the separately proved PPZ counting lemma without a counting premise.
 -/
 
 namespace Nightfall.WynerLocality
@@ -42,18 +41,25 @@ theorem entropy_le_log_support (p : X → ℝ)
     have he : A = ∅ := Finset.card_eq_zero.mp (by omega)
     simp [he] at hs
   have hM : (0 : ℝ) < A.card := Nat.cast_pos.mpr hA
-  have hcon := Real.concaveOn_negMulLog.le_map_sum (t := A)
+  have hw : (∑ _x ∈ A, (1 : ℝ) / A.card) = 1 := by
+    rw [Finset.sum_const, nsmul_eq_mul]
+    field_simp
+  have hcon := ConcaveOn.le_map_sum Real.concaveOn_negMulLog (t := A)
     (w := fun _ => 1 / (A.card : ℝ)) (p := p)
-    (fun _ _ => by positivity)
-    (by rw [Finset.sum_const, nsmul_eq_mul]; field_simp)
-    (fun x _ => hp0 x)
+    (fun _ _ => by positivity) hw
+    (fun x _ => Set.mem_Ici.mpr (hp0 x))
   simp only [smul_eq_mul] at hcon
-  rw [← Finset.mul_sum, ← Finset.mul_sum, hs, mul_one] at hcon
+  have hleft : (∑ x ∈ A, (1 / (A.card : ℝ)) * negMulLog (p x)) =
+      (∑ x, negMulLog (p x)) / A.card := by
+    rw [← Finset.mul_sum, hH]
+    ring
+  have hright : (∑ x ∈ A, (1 / (A.card : ℝ)) * p x) = 1 / (A.card : ℝ) := by
+    rw [← Finset.mul_sum, hs, mul_one]
   have hv : negMulLog (1 / (A.card : ℝ)) = Real.log (A.card : ℝ) / A.card := by
     unfold negMulLog
     rw [one_div, Real.log_inv]
-    field_simp
-  rw [hv, one_div_mul_eq_div, hH] at hcon
+    ring
+  rw [hleft, hright, hv] at hcon
   exact (div_le_div_iff_of_pos_right hM).mp hcon
 
 end Entropy
