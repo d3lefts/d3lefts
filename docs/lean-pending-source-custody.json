@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 58,
+  "revision": 59,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v58: source-exact q-light compiler repair propagated through physical source/quantum stack; preserve all previous custody, no theorem promotion",
+  "scope": "v59: exact legal light-slot Fourier span closure proof pending; no full quantum simulation theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3796,6 +3796,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-23 exact pending source custody for noncommuting scalar-sector complex crossed-slot operator energy under an explicit Hilbert-energy contraction (paper equation 8). NOT unrestricted Hilbert sectors, no full T2-31 query terminal, no priority promotion. Exact-head Lean/leanchecker must be separately verified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2OutsideSpanLight.lean",
+      "source_blob_sha": "da263a7171aab1536277ad4523036cda570b6da4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Four-slot frequencies outside additive span of original heavy query labels include a legal nonzero unqueried original slot with both p_a,q_a<eta; exact additive group fact, handles uncharged zero sector, no independent-label hypothesis. Pending named Lean/leanchecker; global out-of-span Fourier Hilbert energy and quantum query bound still open."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2PathEnergy.lean",
