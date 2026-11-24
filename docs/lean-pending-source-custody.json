@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 57,
+  "revision": 58,
   "as_of": "2026-11-23 UTC",
   "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v57: source exact physical state and zero-sector quantum light-frame bridge; no T2-31 terminal promotion",
+  "scope": "v58: source-exact q-light compiler repair propagated through physical source/quantum stack; preserve all previous custody, no theorem promotion",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3809,7 +3809,7 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
-      "source_blob_sha": "1580429b4777f6948cc08617d206f249b97fe851",
+      "source_blob_sha": "a6cd9575da447ce0e28b7fe61bccef87e20d2ddd",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
