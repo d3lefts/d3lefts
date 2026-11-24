@@ -258,17 +258,24 @@ theorem ppz_log_card (A : Finset (ι → Bool)) (r : ℕ) (hr : 0 < r)
       Real.exp ((N/r) * Real.log 2) ≤
         (∑ σ : Equiv.Perm ι, Real.exp (f σ x * Real.log 2)) / P := by
     intro x hx
-    have hJ := Real.convexOn_exp.map_sum_le
+    have hw : (∑ _σ : Equiv.Perm ι, (1 : ℝ)/P) = 1 := by
+      rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+      change P * (1/P) = 1
+      field_simp
+    have hJ := ConvexOn.map_sum_le Real.convexOn_exp
       (t := (univ : Finset (Equiv.Perm ι)))
       (w := fun _ => 1/P) (p := fun σ => f σ x * Real.log 2)
-      (fun _ _ => by positivity)
-      (by rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]; change P * (1/P) = 1; field_simp)
-      (fun _ _ => Set.mem_univ _)
+      (fun _ _ => by positivity) hw (fun _ _ => Set.mem_univ _)
     simp only [smul_eq_mul] at hJ
-    rw [← Finset.mul_sum, ← Finset.mul_sum, ← Finset.sum_mul] at hJ
-    have he : (1/P) * ((∑ σ : Equiv.Perm ι, f σ x) * Real.log 2) =
-        ((∑ σ : Equiv.Perm ι, f σ x) / P) * Real.log 2 := by ring
-    rw [he, one_div_mul_eq_div] at hJ
+    have hleft : (∑ σ : Equiv.Perm ι, (1/P) * (f σ x * Real.log 2)) =
+        ((∑ σ : Equiv.Perm ι, f σ x) / P) * Real.log 2 := by
+      rw [← Finset.mul_sum, ← Finset.sum_mul]
+      ring
+    have hright : (∑ σ : Equiv.Perm ι, (1/P) * Real.exp (f σ x * Real.log 2)) =
+        (∑ σ : Equiv.Perm ι, Real.exp (f σ x * Real.log 2)) / P := by
+      rw [← Finset.mul_sum]
+      ring
+    rw [hleft, hright] at hJ
     exact (Real.exp_le_exp.mpr (mul_le_mul_of_nonneg_right (hmean x hx) hlog.le)).trans hJ
   have hpacks : ∀ σ : Equiv.Perm ι,
       (∑ x ∈ A, Real.exp (f σ x * Real.log 2)) ≤ Real.exp (N * Real.log 2) := by
