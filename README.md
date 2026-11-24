@@ -10,6 +10,10 @@ Research directed by **Devin J. Wright** · Human-led, AI-assisted · 2026
 
 NIGHTFALL studies mathematical structures and builds reproducible mechanisms for discovering, checking, and explaining results. Every claim should travel with its **statement, assumptions, source, verification method, and limitations**. A computation, a formal proof, an originality assessment, and a competition result are different kinds of evidence.
 
+## Published research — Zenodo
+
+[**Flagship Wyner simulation preprint (DOI: 10.5281/zenodo.24511398)**](https://doi.org/10.5281/zenodo.24511398) · Published November 24, 2026, manuscript v0.7. [NIGHTFALL — Independent Mathematical Research](https://zenodo.org/communities/nightfall-research/records) · [Publication registry](papers/publications.json) · [Archival procedure](papers/zenodo/README.md). Zenodo publication and external human peer review are distinct.
+
 ## Scholarly research archive — start here
 
 For a mathematician or referee, begin with the [**paper shelf**](papers/README.md), then the [**canonical claim catalogue**](research/catalogue/README.md) and its [machine-readable status/dependency registry](research/catalogue/CLAIMS.json). Each paper entry directs you to the **original source**, exact evidence, and specific missing proof gates; it does not copy or promote its theorem.
