@@ -30,7 +30,7 @@
     "kernel_replay": {
       "ordinary": "lake check",
       "multiple_kernel": "lake check --paranoid",
-      "status": "Selected Q2 103-source lake check PASS on #696 (run 44027853225); extended 107-source build and independent lake check PASS on #718 exact head (run 44120677824), no paranoid replay, no unconditional infinite-product terminal. F9 remains outside the selected Q2 Lake closure.",
+      "status": "Historical selected 103- and 107-source receipts retained below. Current arbitrary-product Q2 source terminal and Hoeffding-degree bridge have successful integrated Lake build and ordinary kernel replay at #888, run 44470008420. Paranoid replay and independent statement review remain open.",
       "claim_boundary": "Independent kernel replay validates formal derivations, not mathematical statement equivalence or real-world authority; no automatic promotion.",
       "selected_lake_receipt": {
         "pr": 696,
@@ -259,5 +259,28 @@
         "review": "do_not_infer_from_named_axiom_audit"
       }
     }
-  ]
+  ],
+  "current_q2_terminal": {
+    "as_of": "2026-11-23",
+    "passport_id": "q2-influence",
+    "catalogue_id": "NF-PS-Q2-INFINITE-HOEFFDING-C105-20261123",
+    "source_path": "research/nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean",
+    "git_blob_sha1": "37673af7af8f0f0d7a2c2d3ae272842c87a167cd",
+    "theorem_declaration": "Nightfall.InfinitePiQ2HoeffdingDegree.infinitePi_q2_105416_hoeffding",
+    "ae_source_path": "research/nightfall/formalization/universal/InfinitePiQ2UnconditionalTerminal.lean",
+    "ae_git_blob_sha1": "837b6066d1dfc1c6b7b294434542555e1d87a817",
+    "evidence": {
+      "pr": 888,
+      "head": "d84d6f0bddb0f7e6f1e0ca17a10165afefe73b6e",
+      "ci_run": 44470008420,
+      "build": "passed",
+      "kernel_check": "passed",
+      "paranoid": "not_run"
+    },
+    "scope": "Real L² classes under arbitrary independent probability factors, essentially bounded by B, of Hoeffding degree at most two in the formal closed-span definition; all genuine coordinate influence bounds imply source variance squared ≤ C105.416 B² M.",
+    "independent_statement_review": false,
+    "novelty_reviewed": false,
+    "complete_certification": false,
+    "limitations": "Exact historical integrated source-head receipt, not a fresh replay on this editorial branch; unrestricted cubic, sharp coefficient, dependent inputs and external review remain open."
+  }
 }
