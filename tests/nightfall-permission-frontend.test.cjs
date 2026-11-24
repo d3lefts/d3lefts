@@ -71,7 +71,8 @@ test("Page and JavaScript wiring are present, dependencies locally resolvable",(
  }
  for(const id of ["pl-cost-form","pl-world-form","pl-changed","pl-cost-result","pl-proof-result"])
    assert.ok(html.includes('id="'+id+'"'));
- for(const file of ["index.html","research.html","active-proof-passport.html",
+ // The permission lab need not occupy the homepage permanently. Keep durable subject routes.
+ for(const file of ["research.html","active-proof-passport.html",
  "cost-of-knowing.html","review.html","commonwealth-os.html","commonwealth.html",
  "constellation.html","atlas.html"])
   assert.ok(fs.readFileSync(path.join(base,file),"utf8").includes("permission-lab.html"),file);
