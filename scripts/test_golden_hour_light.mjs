@@ -93,18 +93,18 @@ try{
         qualified:aside?.querySelector(".nf-opening-overlap-unit")?.textContent.trim(),
         firstFold:displayed?.textContent.trim(),
         cells:aside?.querySelector(".nf-opening-overlap-facts strong")?.textContent.trim(),
-        source:!!aside?.querySelector('a[href="active-proof-passport.html#q2-influence"]'),
+        source:!!aside?.querySelector('a[href="https://github.com/d3lefts/d3lefts/tree/main/papers/wyner-simulation"]'),
         exact:aside?.querySelector(".nf-opening-overlap-unit abbr")?.getAttribute("title"),
         ink:aside?getComputedStyle(aside.querySelector(".nf-opening-overlap-value")).color:null,
         toolbar:document.querySelector('meta[name="theme-color"]')?.content
       };
     });
-    assert.equal(record.value,"V² / [C₂ B²]","The current analytic quadratic denominator leads the hero");
-    assert.ok(record.qualified.includes("C₂≈105.41623982")&&record.exact==="C₂=(2(1+√2)√3+11901/6250)²","Verified finite-product scalar must show its decimal and exact formula, separately");
+    assert.equal(record.value,"O(1 + CW)","The fixed-degree/error Wyner bound leads the hero");
+    assert.ok(record.qualified.includes("Fixed degree and error")&&record.qualified.includes("worst-case optimality at paper level"),"The displayed asymptotic and sharpness scope must be explicit");
     assert.equal(record.firstFold,"DISCOVERY SHOULD COMPOUND","Story-led homepage mission is visible immediately");
-    assert.ok(record.qualified.includes("degree≤2")&&record.qualified.includes("Finite products"),"First-screen Lean result must disclose finite-product and degree-two scope");
-    assert.equal(record.cells,"2","Degree-two scope is disclosed in the hero");
-    assert.equal(record.source,true,"The hero links directly to the current Q2 proof passport");
+    assert.ok(record.qualified.includes("matching coordinate-query model"),"First-screen result must disclose query model");
+    assert.equal(record.cells,"Θ(CW)","Worst-case family is disclosed in the hero");
+    assert.equal(record.source,true,"The hero links directly to the flagship paper outline");
     assert.equal(record.ink,"rgb(234, 240, 245)","Current bound remains legible over black illustration");
     assert.equal(record.toolbar,"#020406","Browser chrome follows carbon-black identity");
    }
