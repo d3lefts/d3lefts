@@ -122,9 +122,12 @@ theorem translation_padding (x : I → G) (ψ : State I G W → ℂ)
     · intro h
       rw [h, e.apply_symm_apply]
   change (∑ v, (if b = e v then (1 : ℂ) else 0) * ψ v) = ψ b
-  simp only [hiff, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', mem_univ, if_true]
-  rcases b with ⟨i, y, w⟩
-  exact hψ i (y - x i) y w
+  calc
+    (∑ v, (if b = e v then (1 : ℂ) else 0) * ψ v) = ψ (e.symm b) := by
+      simp [hiff]
+    _ = ψ b := by
+      rcases b with ⟨i, y, w⟩
+      exact hψ i (y - x i) y w
 
 end Nightfall.ComplexKrausConservation
 
