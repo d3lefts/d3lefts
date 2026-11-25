@@ -27,6 +27,7 @@ open Manifold
 namespace Nightfall.ProductBUFinalGeometricReduction
 noncomputable section
 
+open Nightfall.ProductSphereObstruction
 open Nightfall.ProductBUCompactFiber
 open Nightfall.ProductBUFiberFreeAction
 open Nightfall.ProductBUGlobalAssembly

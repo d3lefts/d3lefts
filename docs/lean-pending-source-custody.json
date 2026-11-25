@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 80,
+  "revision": 81,
   "as_of": "2026-11-25 UTC",
-  "source_commit": "db8b84c3858e1ee98e836c08572eba7c7779199e",
-  "scope": "Repair both time-zero equality transports; preserve all other custody records.",
+  "source_commit": "c7ba0d15ffe792e2893d95ac8e56cbbfb36f319e",
+  "scope": "Repair missing namespace in downstream geometric reduction; preserve source custody.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -529,13 +529,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUFinalGeometricReduction.lean",
-      "source_blob_sha": "759720210e68f470394c19ac8175389a0d05fbf1",
+      "source_blob_sha": "59bb19d15d37403f21bf268bc34aa197c2498237",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
+      "receipt_scope": "Resolve unknown UnitVec at line 45 by opening defining namespace; fresh compiler receipt required."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUGlobalAssembly.lean",
@@ -675,7 +675,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Explicit product equality transport repairs lines 46 and 48; fresh compiler receipt required."
+      "receipt_scope": "Corrected time-zero theorem compiled in exact-head run 45697247916 job 139497737238; full job blocked downstream by missing UnitVec namespace."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean",
