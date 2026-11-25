@@ -127,8 +127,227 @@
       "scope": "All-level tensor code distance and scalar score conditional on entropy-bound hypotheses; not full Paper VI staged simulation.",
       "review": "independent statement and novelty review open",
       "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1200-SynthesisWynerEntropy",
+      "path": "research/nightfall/formalization/product_space/SynthesisWynerEntropy.lean",
+      "blob": "b6d09152f2ee7f911f2c2822ca78a4acbc956d40",
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "pr": 1200,
+      "run": 45626765856,
+      "job": 139248917998,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.SynthesisWynerEntropy.Recovery.leaves_card_le",
+        "Nightfall.SynthesisWynerEntropy.wyner_general_lower_of_component_entropy",
+        "Nightfall.SynthesisWynerEntropy.component_entropy_incidence",
+        "Nightfall.SynthesisWynerEntropy.wyner_entropy_obstruction",
+        "Nightfall.SynthesisWynerEntropy.uniform_pushforward_entropy",
+        "Nightfall.SynthesisWynerEntropy.uniform_code_wyner_obstruction"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "General finite code entropy obstruction and prior QW+ quadratic stopping terminal; not stronger staged MSE Paper VI or all tensor-specific composition.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1200-QuadraticWynerLabelProjection",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean",
+      "blob": "64ae1263468d1b2c533440a17deb4fb8bbe745cc",
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "pr": 1200,
+      "run": 45626765856,
+      "job": 139248917998,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.QuadraticWynerLabelProjection.weighted_total_variance",
+        "Nightfall.QuadraticWynerLabelProjection.variance_survives_latent_averaging"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "General finite code entropy obstruction and prior QW+ quadratic stopping terminal; not stronger staged MSE Paper VI or all tensor-specific composition.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1200-QuadraticWynerSeedAverage",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedAverage.lean",
+      "blob": "5167e8c4b682918ca49583e3c3de2edd1cdd177e",
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "pr": 1200,
+      "run": 45626765856,
+      "job": 139248917998,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.QuadraticWynerSeedAverage.seed_average_degree",
+        "Nightfall.QuadraticWynerSeedAverage.seed_average_variance_survival"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "General finite code entropy obstruction and prior QW+ quadratic stopping terminal; not stronger staged MSE Paper VI or all tensor-specific composition.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1200-QuadraticWynerSeedResampling",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedResampling.lean",
+      "blob": "f66024c46600201fed297f88b7eb9a4068920d66",
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "pr": 1200,
+      "run": 45626765856,
+      "job": 139248917998,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.QuadraticWynerSeedResampling.pinfl_compOf_exact",
+        "Nightfall.QuadraticWynerSeedResampling.seed_average_pinfl_le_original"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "General finite code entropy obstruction and prior QW+ quadratic stopping terminal; not stronger staged MSE Paper VI or all tensor-specific composition.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1200-QuadraticWynerQ2SourceBridge",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerQ2SourceBridge.lean",
+      "blob": "917b25a3d8189e93bad5d2ef0a9f766b0a7d7dcc",
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "pr": 1200,
+      "run": 45626765856,
+      "job": 139248917998,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.QuadraticWynerQ2SourceBridge.quadratic_product_influence_on_route1_source"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "General finite code entropy obstruction and prior QW+ quadratic stopping terminal; not stronger staged MSE Paper VI or all tensor-specific composition.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1200-QuadraticWynerQuadraticProgress",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerQuadraticProgress.lean",
+      "blob": "756c700636fdad38d83b7860229b0bf16a47c4dd",
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "pr": 1200,
+      "run": 45626765856,
+      "job": 139248917998,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.QuadraticWynerQuadraticProgress.quadratic_original_increment_from_seed_variance"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "General finite code entropy obstruction and prior QW+ quadratic stopping terminal; not stronger staged MSE Paper VI or all tensor-specific composition.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1200-QuadraticWynerGoodQuery",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerGoodQuery.lean",
+      "blob": "ec1081cb07f8216f8b69690684ce98205b573495",
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "pr": 1200,
+      "run": 45626765856,
+      "job": 139248917998,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.QuadraticWynerGoodQuery.quadratic_crux",
+        "Nightfall.QuadraticWynerGoodQuery.good_exists_wyner_quadratic"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "General finite code entropy obstruction and prior QW+ quadratic stopping terminal; not stronger staged MSE Paper VI or all tensor-specific composition.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1200-QuadraticWynerParametric",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerParametric.lean",
+      "blob": "0844b2db38c88e5363eca0f287cdfb0168bb317d",
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "pr": 1200,
+      "run": 45626765856,
+      "job": 139248917998,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.Route1Polylog.route1_wyner_from_verified_good"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "General finite code entropy obstruction and prior QW+ quadratic stopping terminal; not stronger staged MSE Paper VI or all tensor-specific composition.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1200-QuadraticWynerTerminal",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerTerminal.lean",
+      "blob": "7de799b0e70ba1e6c5bb3adefcc2b9d7d6988b28",
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "pr": 1200,
+      "run": 45626765856,
+      "job": 139248917998,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.Route1Polylog.quadratic_wyner_simulation",
+        "Nightfall.Route1Polylog.quadratic_wyner_CI",
+        "Nightfall.Route1Polylog.quadratic_wyner_general",
+        "Nightfall.Route1Polylog.quadratic_cost_rewrite",
+        "Nightfall.Route1Polylog.quadratic_wyner_general_explicit"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "General finite code entropy obstruction and prior QW+ quadratic stopping terminal; not stronger staged MSE Paper VI or all tensor-specific composition.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1213-Q7BlockerPacking",
+      "path": "research/nightfall/formalization/product_space/Q7BlockerPacking.lean",
+      "blob": "7989b88196e62611608513dd51e927be089ab200",
+      "head": "351ebeb60d36a61fa6022d2d758e784a5e858e15",
+      "pr": 1213,
+      "run": 45639259383,
+      "job": 139293025352,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.Q7BlockerPacking.rows_checked",
+        "Nightfall.Q7BlockerPacking.row_count",
+        "Nightfall.Q7BlockerPacking.disjoint_hitting_lower",
+        "Nightfall.Q7BlockerPacking.row_lower"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "105 supplied rows, eight disjoint blocker triples per row; not catalogue completeness or global graph extremum. Successful child job within failed overall workflow; unmerged.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1213-QuantumResponseRoute1Terminal",
+      "path": "research/nightfall/formalization/product_space/QuantumResponseRoute1Terminal.lean",
+      "blob": "993dfc565cb03536c328779579e319cabc2d7353",
+      "head": "351ebeb60d36a61fa6022d2d758e784a5e858e15",
+      "pr": 1213,
+      "run": 45639259383,
+      "job": 139293025490,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.QuantumResponseRoute1Terminal.compileNative_wellFormed",
+        "Nightfall.QuantumResponseRoute1Terminal.deltaReference_sum",
+        "Nightfall.QuantumResponseRoute1Terminal.native_acceptance_degree",
+        "Nightfall.QuantumResponseRoute1Terminal.native_response_route1_wyner"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Native finite-group response-oracle scalar acceptance theorem; successful child job within failed overall workflow; unmerged, not adaptive Kraus/dilation.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
     }
   ],
   "exceptions": [],
-  "failed_jobs": []
+  "failed_jobs": [
+    {
+      "pr": 1213,
+      "run": 45639259383,
+      "head": "351ebeb60d36a61fa6022d2d758e784a5e858e15",
+      "jobs": [
+        "ComplexKrausConservation",
+        "AdaptiveInstrumentDegree",
+        "AdaptiveInstrumentWyner",
+        "PhysicalAdaptiveWyner"
+      ],
+      "scope": "Rebuild failed; named replay skipped; no certification."
+    }
+  ]
 }
