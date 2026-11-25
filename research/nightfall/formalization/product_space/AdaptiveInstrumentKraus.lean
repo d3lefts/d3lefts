@@ -41,7 +41,7 @@ theorem fixed_amp_degree (M : κ → κ → ℂ) {d : ℕ}
   · simp only [applyMat, Complex.re_sum, Complex.mul_re, sub_eq_add_neg, neg_mul]
     apply degree_sum
     intro j
-    exact Degree.add (degree_scale (hv j).1 (M k j).re)
+    simpa only [neg_mul] using Degree.add (degree_scale (hv j).1 (M k j).re)
       (degree_scale (hv j).2 (-(M k j).im))
   · simp only [applyMat, Complex.im_sum, Complex.mul_im]
     apply degree_sum
@@ -72,7 +72,7 @@ theorem query_amp_degree (A : ι → α → κ → κ → ℂ) {d : ℕ}
     intro i
     apply degree_sum
     intro j
-    exact Degree.add
+    simpa only [neg_mul] using Degree.add
       (degree_mul_local (hv j).1 {i} _ (by simp) (hlocal i (fun a => (A i a k j).re)))
       (degree_mul_local (hv j).2 {i} _ (by simp) (hlocal i (fun a => -(A i a k j).im)))
   · simp only [queryAmp, Complex.im_sum, Complex.mul_im]
@@ -186,8 +186,34 @@ theorem ensemble_range {γ : Type} [Fintype γ] {T : ℕ}
     0 ≤ ensembleAccept P v x ∧ ensembleAccept P v x ≤ 1 := by
   unfold ensembleAccept
   have hb (c : γ) := evaluate_bounds P h x (v c)
-  exact ⟨Finset.sum_nonneg (fun c _ => (hb c).1),
-    (Finset.sum_le_sum (fun c _ => (hb c).2)).trans_eq hn⟩
+  refine ⟨Finset.sum_nonneg (fun c _ => (hb c).1), ?_⟩
+  calc
+    (∑ c, evaluate P x (v c)) ≤ ∑ c, energy (v c) :=
+      Finset.sum_le_sum (fun c _ => (hb c).2)
+    _ = 1 := hn
+
+
+/-- The stacked Kraus map is an isometry precisely under the operational
+completeness contract. This checks the dilation's isometry step, not
+extension to a square unitary or a controlled padding compiler. -/
+noncomputable def stacked (K : β → κ → κ → ℂ) (v : κ → ℂ) :
+    β × κ → ℂ := fun b => applyMat (K b.1) v b.2
+
+theorem stacked_energy (K : β → κ → κ → ℂ) (v : κ → ℂ) :
+    energy (stacked K v) = ∑ b, energy (applyMat (K b) v) := by
+  simp only [energy, stacked, Fintype.sum_prod_type]
+
+theorem stacked_isometry (K : β → κ → κ → ℂ) (h : Complete K) (v : κ → ℂ) :
+    energy (stacked K v) = energy v := by
+  rw [stacked_energy, h v]
+
+/-- Refining Kraus labels is consistent with retaining their outcome
+probabilities: summation over finite product indices equals iterated sums. -/
+theorem kraus_outcome_refinement {γ : Type} [Fintype γ]
+    (K : β → γ → κ → κ → ℂ) (v : κ → ℂ) :
+    (∑ b : β × γ, energy (applyMat (K b.1 b.2) v)) =
+      ∑ b : β, ∑ c : γ, energy (applyMat (K b c) v) := by
+  rw [Fintype.sum_prod_type]
 
 end Nightfall.KrausAdaptive
 
@@ -196,3 +222,6 @@ end Nightfall.KrausAdaptive
 #print axioms Nightfall.KrausAdaptive.evaluate_bounds
 #print axioms Nightfall.KrausAdaptive.ensemble_degree
 #print axioms Nightfall.KrausAdaptive.ensemble_range
+
+#print axioms Nightfall.KrausAdaptive.stacked_isometry
+#print axioms Nightfall.KrausAdaptive.kraus_outcome_refinement
