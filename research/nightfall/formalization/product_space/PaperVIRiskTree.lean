@@ -185,7 +185,7 @@ theorem extend_legal (P : Θ → ι → α → ℝ) (S : Posterior ι α Θ → 
     | none => simpa [extend,he] using ht
     | some j => exact (by
         simp only [extend,he,legal]
-        exact ⟨hchoose s j hs he, fun _ => rfl⟩)
+        exact ⟨hchoose s j hs he, fun _ => True.intro⟩)
   | node j ts ih =>
     obtain ⟨hj,hc⟩ := ht
     exact ⟨hj, fun b => ih b _ (hpres s j b hs hj) (hc b)⟩

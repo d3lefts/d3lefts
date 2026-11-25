@@ -1,0 +1,167 @@
+name: NIGHTFALL Wyner locality obstruction Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/WynerLocality*.lean'
+      - '.github/workflows/nightfall-wyner-locality-lean.yml'
+    types: [opened, synchronize, reopened]
+  push:
+    branches: ['nightfall/wyner-locality-certificate-20261124', 'nightfall/wyner-simulation-boundary-20261124']
+    paths:
+      - 'research/nightfall/formalization/product_space/WynerLocality*.lean'
+      - '.github/workflows/nightfall-wyner-locality-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  locality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact isolated-support and syndrome falsification replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/wyner-locality
+          for P in research/nightfall/formalization/product_space/check_wyner_simulation_boundary.py research/nightfall/formalization/product_space/check_wyner_isolated_support.py; do
+            sha256sum "$P" | tee -a receipts/wyner-locality/finite-checker-sha256.txt
+            python3 "$P" | tee -a receipts/wyner-locality/finite-checker.log
+          done
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Strict named-declaration audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/wyner-locality
+          P=research/nightfall/formalization/product_space/WynerLocalityCore.lean
+          python3 scripts/lean_bridge.py "$P" --workspace /tmp/mathlib4 \
+            --decl Nightfall.WynerLocality.shallow_retraction_identity \
+            --decl Nightfall.WynerLocality.product_range_obstruction \
+            --decl Nightfall.WynerLocality.rectangle_preimage_local_exclusion \
+            --decl Nightfall.WynerLocality.rectangle_preimage_subset \
+            --decl Nightfall.WynerLocality.parity_full_projection \
+            --decl Nightfall.WynerLocality.parity_product_range_obstruction \
+            --decl Nightfall.WynerLocality.parity_isolated \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --strict --timeout 1200 --json-out receipts/wyner-locality/core.json
+          cp "$P" /tmp/mathlib4/WynerLocalityCore.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityCore.olean WynerLocalityCore.lean)
+          (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityCore) 2>&1 | tee receipts/wyner-locality/kernel.log
+      - name: Strict independent PPZ counting audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space/WynerLocalityPPZ.lean
+          python3 scripts/lean_bridge.py "$P" --workspace /tmp/mathlib4 \
+            --decl Nightfall.WynerLocality.guess_packing \
+            --decl Nightfall.WynerLocality.last_order_count \
+            --decl Nightfall.WynerLocality.ppz_log_card \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --strict --timeout 1200 --json-out receipts/wyner-locality/ppz.json || {
+              python3 -c 'import json; d=json.load(open("receipts/wyner-locality/ppz.json")); print(d.get("stdout", "")); print(d.get("stderr", ""))'
+              exit 1
+            }
+          cp "$P" /tmp/mathlib4/WynerLocalityPPZ.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityPPZ.olean WynerLocalityPPZ.lean)
+          (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityPPZ) 2>&1 | tee receipts/wyner-locality/ppz-kernel.log
+      - name: Compile source-exact Route 1 closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Select the actual transitive imports instead of building every unrelated Q2 proof.
+          python3 - <<'PY'
+          import pathlib, re
+          root = pathlib.Path("research/nightfall/formalization")
+          modules = dict(line.split(maxsplit=1) for line in
+                         (root / "aa_product/CLOSURE.txt").read_text().splitlines()
+                         if line.strip())
+          for p in (root / "product_space").glob("Route1*.lean"):
+              modules[p.stem] = str(p)
+          order, visited, active = [], set(), set()
+          def visit(name):
+              if name in visited:
+                  return
+              if name in active:
+                  raise RuntimeError("Import cycle: " + name)
+              if name not in modules:
+                  if name.split(".")[0] not in {"Mathlib", "Lean", "Init", "Std", "Batteries", "Aesop", "Qq", "ProofWidgets", "Plausible", "ImportGraph", "Cli"}:
+                      raise RuntimeError("Unmapped import: " + name)
+                  return
+              active.add(name)
+              source = pathlib.Path(modules[name]).read_text()
+              for line in source.splitlines():
+                  match = re.match(r"^\s*(?:(?:public|private|meta)\s+)*import\s+(?:all\s+)?([^\n]+)", line)
+                  if match:
+                      for dep in match.group(1).split("--", 1)[0].split():
+                          visit(dep)
+              active.remove(name)
+              visited.add(name)
+              order.append(name)
+          visit("Route1WynerGeneral")
+          manifest = pathlib.Path("receipts/wyner-locality/route1-closure.txt")
+          manifest.write_text("".join(f"{m} {modules[m]}\n" for m in order))
+          print(f"Selected {len(order)} of {len(modules)} mapped modules")
+          PY
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            sha256sum "$P" >> receipts/wyner-locality/route1-source-sha256.txt
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") 2>&1 | tee "receipts/wyner-locality/$M.log"
+            ! grep -q 'declaration uses .sorry' "receipts/wyner-locality/$M.log"
+          done < receipts/wyner-locality/route1-closure.txt
+      - name: Strict general-latent bridge audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space/WynerLocalityInformation.lean
+          python3 scripts/lean_bridge.py "$P" --workspace /tmp/mathlib4 \
+            --decl Nightfall.WynerLocality.entropy_le_log_support \
+            --decl Nightfall.WynerLocality.wyner_general_lower_of_component_entropy \
+            --decl Nightfall.WynerLocality.wyner_locality_of_ppz \
+            --decl Nightfall.WynerLocality.wyner_locality_general \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --strict --timeout 1200 --json-out receipts/wyner-locality/information.json || {
+              python3 -c 'import json; d=json.load(open("receipts/wyner-locality/information.json")); print(d.get("stdout", "")); print(d.get("stderr", ""))'
+              exit 1
+            }
+          cp "$P" /tmp/mathlib4/WynerLocalityInformation.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalityInformation.olean WynerLocalityInformation.lean)
+          (cd /tmp/mathlib4 && lake env leanchecker WynerLocalityInformation) 2>&1 | tee receipts/wyner-locality/information-kernel.log
+      - name: Strict mixture-size and dominated-simulation audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          P=research/nightfall/formalization/product_space/WynerLocalitySimulationBoundary.lean
+          python3 scripts/lean_bridge.py "$P" --workspace /tmp/mathlib4 \
+            --decl Nightfall.WynerLocality.mixture_information_le_log_card \
+            --decl Nightfall.WynerLocality.wynerSet_bddBelow_local \
+            --decl Nightfall.WynerLocality.wynerGen_le_log_mixture_card \
+            --decl Nightfall.WynerLocality.mixture_card_lower_of_wyner_bound \
+            --decl Nightfall.WynerLocality.locality_mixture_card_lower \
+            --decl Nightfall.WynerLocality.dominated_loss \
+            --decl Nightfall.WynerLocality.dominated_product_simulation \
+            --allow-axiom propext --allow-axiom Classical.choice --allow-axiom Quot.sound \
+            --strict --timeout 1200 --json-out receipts/wyner-locality/simulation-boundary.json || {
+              python3 -c 'import json; d=json.load(open("receipts/wyner-locality/simulation-boundary.json")); print(d.get("stdout", "")); print(d.get("stderr", ""))'
+              exit 1
+            }
+          cp "$P" /tmp/mathlib4/WynerLocalitySimulationBoundary.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/WynerLocalitySimulationBoundary.olean WynerLocalitySimulationBoundary.lean)
+          (cd /tmp/mathlib4 && lake env leanchecker WynerLocalitySimulationBoundary) 2>&1 | tee receipts/wyner-locality/simulation-boundary-kernel.log
+      - name: Preserve source identity
+        if: always()
+        run: |
+          mkdir -p receipts/wyner-locality
+          git rev-parse HEAD > receipts/wyner-locality/commit.txt
+          sha256sum research/nightfall/formalization/product_space/WynerLocality*.lean > receipts/wyner-locality/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wyner-locality-core-receipt
+          path: receipts/wyner-locality
+          retention-days: 90
