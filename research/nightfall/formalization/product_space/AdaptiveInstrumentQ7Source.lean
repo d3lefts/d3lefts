@@ -4,6 +4,9 @@ import AdaptiveInstrumentQ7Packing
 Each embedded mask is checked against the frozen archive by the separate
 source audit; Lean checks the face geometry, tightness and exclusion. -/
 
+set_option maxRecDepth 4096
+set_option maxHeartbeats 4000000
+
 namespace Nightfall.Q7SourcePacking
 
 open Nightfall.Q7BlockerPacking
