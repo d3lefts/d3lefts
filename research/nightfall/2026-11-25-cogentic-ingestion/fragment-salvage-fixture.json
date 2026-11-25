@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "asOf": "2026-11-25",
+  "source": "Manually pinned from GitHub exact-head file blobs and returned workflow/job steps; not an authenticated live receipt verifier. Full closure is frozen by head, not individually enumerated here.",
+  "records": [
+    {
+      "id": "native-oracle",
+      "pr": 1176,
+      "head": "ade1a5dcb3132eef7f16646afc967b4fa2d20a34",
+      "path": "research/nightfall/formalization/product_space/QuantumResponseOracleBridge.lean",
+      "blob": "7a59d81038704ef6ca6277b1161991a0cb0cd17b",
+      "run": 45269625546,
+      "names": [
+        "Nightfall.QuantumResponseOracleBridge.oracleMat_response_eq_translation",
+        "Nightfall.QuantumResponseOracleBridge.responseOracle_isUnitary",
+        "Nightfall.QuantumResponseOracleBridge.execute_response_step",
+        "Nightfall.QuantumResponseOracleBridge.response_step_wellFormed"
+      ],
+      "deps": [],
+      "scope": "historical-exact-head-only"
+    },
+    {
+      "id": "native-terminal",
+      "pr": 1176,
+      "head": "ade1a5dcb3132eef7f16646afc967b4fa2d20a34",
+      "path": "research/nightfall/formalization/product_space/QuantumResponseRoute1Terminal.lean",
+      "blob": "993dfc565cb03536c328779579e319cabc2d7353",
+      "run": 45269625546,
+      "names": [
+        "Nightfall.QuantumResponseRoute1Terminal.compileNative_wellFormed",
+        "Nightfall.QuantumResponseRoute1Terminal.deltaReference_sum",
+        "Nightfall.QuantumResponseRoute1Terminal.native_acceptance_degree",
+        "Nightfall.QuantumResponseRoute1Terminal.native_response_route1_wyner"
+      ],
+      "deps": [
+        "native-oracle"
+      ],
+      "scope": "historical-exact-head-only"
+    },
+    {
+      "id": "unitary-wyner",
+      "pr": 974,
+      "head": "7896030e5801c4585e05a7f1409e28c93049a908",
+      "path": "research/nightfall/formalization/product_space/QuantumCircuitWynerSimulation.lean",
+      "blob": "67c93dfabc5b10d7f118272a3513406294e512f7",
+      "run": 44732927247,
+      "names": [
+        "Nightfall.ProductSpace.QuantumCircuitWyner.unitary_circuit_wyner_simulation",
+        "Nightfall.ProductSpace.QuantumCircuitWyner.unitary_circuit_wyner_CI"
+      ],
+      "deps": [],
+      "scope": "historical-exact-head-only"
+    },
+    {
+      "id": "adaptive-degree",
+      "pr": 1210,
+      "head": "a7574558025b6dfeab6aef30f8c9474b25e461f9",
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentDegree.lean",
+      "blob": "4a9797c87caa446e962e6c40aec303acbb032519",
+      "run": null,
+      "names": [
+        "Nightfall.AdaptiveInstrument.adaptive_degree",
+        "Nightfall.AdaptiveInstrument.adaptive_range"
+      ],
+      "deps": [],
+      "scope": "historical-exact-head-only"
+    },
+    {
+      "id": "adaptive-wyner",
+      "pr": 1210,
+      "head": "a7574558025b6dfeab6aef30f8c9474b25e461f9",
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentWyner.lean",
+      "blob": "f2529517cb364979f0ea87786779b570aa79862b",
+      "run": null,
+      "names": [
+        "Nightfall.AdaptiveInstrument.adaptive_route1_wyner"
+      ],
+      "deps": [
+        "adaptive-degree"
+      ],
+      "scope": "historical-exact-head-only"
+    }
+  ],
+  "observedRuns": [
+    {
+      "id": 45269625546,
+      "head": "ade1a5dcb3132eef7f16646afc967b4fa2d20a34",
+      "job": "source-exact-response",
+      "requiredSteps": [
+        "Source exact kernel replay",
+        "Named theorem and trusted axiom audit",
+        "Immutable source/toolchain receipt"
+      ],
+      "result": "success"
+    },
+    {
+      "id": 44732927247,
+      "head": "7896030e5801c4585e05a7f1409e28c93049a908",
+      "job": "quantum-wyner",
+      "requiredSteps": [
+        "Independent kernel replay and strict axiom audit (fail closed)",
+        "Preserve evidence"
+      ],
+      "result": "success"
+    }
+  ]
+}
