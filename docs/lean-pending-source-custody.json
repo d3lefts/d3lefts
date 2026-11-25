@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 70,
-  "as_of": "2026-11-24 UTC",
-  "source_commit": "bdcb0a0097c0759c54771e9d9b90f16bb6ecb262",
-  "scope": "Recover verified locality and simulation-boundary chain with merged QW+ and tensor source custody preserved; no auto-promotion.",
+  "revision": 74,
+  "as_of": "2026-11-25 UTC",
+  "source_commit": "31a71af99957e30a25111d1b328c43a94be04c12",
+  "scope": "Paper VI exact-source custody reconciliation after successful staged MSE run 45652533477. No proof statement changes; pending-source classification preserved until reviewed registry integration.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5804,6 +5804,86 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Explicit mixture-size and dominated-product query simulation; pending strict compiler and non-author review."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIGeneralLatentTerminal.lean",
+      "source_blob_sha": "2b012603ad052a6ae586ae6ce454553307f0ed3a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVILinearCharge.lean",
+      "source_blob_sha": "8bab32205aa2c45a540b9c321f33006b313b3217",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI staged MSE source candidate: repair three exact diagnostics from run 45644805760; pinned kernel and named axiom receipt still pending."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIMSETerminal.lean",
+      "source_blob_sha": "2f2aff5936b274ca3e59ff5c2be0e4d60ecb8b5f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIProjectedCrux.lean",
+      "source_blob_sha": "316611344a479dd78db16a3dda4a48ea5eb49db8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIRiskTree.lean",
+      "source_blob_sha": "c831bb9672c1f638df09278211f9ef091969414f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Repair exact compiler failure in run 45626815434 at legal leaf True; fresh kernel replay pending."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVISquaredEnergy.lean",
+      "source_blob_sha": "1158e8fdf72f0521baba5afeefc2127d9ddb5f77",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI squared-energy cap: repair originalMass namespace identified in failed run 45557426930; exact-head replay pending."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIStageBudget.lean",
+      "source_blob_sha": "e2e2192f5f65671b14ce1e1b6fa981434cb9c2dc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean",
+      "source_blob_sha": "01203c0002aff894e76b242da9efee9a28955d33",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
     }
   ]
 }
