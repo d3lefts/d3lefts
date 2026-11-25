@@ -179,7 +179,7 @@ theorem row_lower (r : Row) (hr : r ∈ rows) (s : Finset Nat)
     (hh : ∀ i : Fin 8, ∃ w ∈ s, w ∈ r.groups i) : 8 ≤ s.card := by
   have h : r.valid = true := (List.all_eq_true.mp rows_checked) r hr
   simp only [Row.valid, Bool.and_eq_true, decide_eq_true_eq] at h
-  exact disjoint_hitting_lower r.groups h.1.2 s hh
+  exact disjoint_hitting_lower r.groups (by tauto) s hh
 
 end Nightfall.Q7BlockerPacking
 
