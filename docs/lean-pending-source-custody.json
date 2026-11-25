@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 79,
+  "revision": 80,
   "as_of": "2026-11-25 UTC",
-  "source_commit": "17ca1ad6993ae6a1dcf97c3d8cc9ef2e56171299",
-  "scope": "Add manuscript-specific high-noise erasure and replay proof candidate; retain previous records unchanged.",
+  "source_commit": "db8b84c3858e1ee98e836c08572eba7c7779199e",
+  "scope": "Repair both time-zero equality transports; preserve all other custody records.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -669,13 +669,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUTimeZeroOrbit.lean",
-      "source_blob_sha": "59d35686c6fc8c1cbc116ed5b5426afb9ece5598",
+      "source_blob_sha": "67b8bb5f98525027f8f366cdfcf52ddc9f4d45a8",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 source custody only: exact reference t=0 orbit transfer and final source-explicit product-BU geometry reduction. Named Lean compiler/axiom CI required separately. The existence of the global smooth zero-fiber manifold and correct time-zero boundary remains an explicit input, not a certified ProductSphereZero."
+      "receipt_scope": "Explicit product equality transport repairs lines 46 and 48; fresh compiler receipt required."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean",

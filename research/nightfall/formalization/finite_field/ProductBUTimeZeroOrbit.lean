@@ -43,9 +43,13 @@ theorem time_zero_real_fiber_one_orbit
   have hp := zeroFiber_mem (k + 1) m F p.2
   have hz := zeroFiber_mem (k + 1) m F z.2
   have hpF : F (p.1.1, (0 : ℝ)) = 0 := by
-    simpa only [hp0] using hp.2.2
+    calc
+      F (p.1.1, (0 : ℝ)) = F p.1 := congrArg F (Prod.ext rfl hp0.symm)
+      _ = 0 := hp.2.2
   have hzF : F (z.1.1, (0 : ℝ)) = 0 := by
-    simpa only [hz0] using hz.2.2
+    calc
+      F (z.1.1, (0 : ℝ)) = F z.1 := congrArg F (Prod.ext rfl hz0.symm)
+      _ = 0 := hz.2.2
   obtain ⟨hpU, hpV⟩ := hF0 p.1.1.1 p.1.1.2 hp.1.1 hp.1.2 hpF
   obtain ⟨hzU, hzV⟩ := hF0 z.1.1.1 z.1.1.2 hz.1.1 hz.1.2 hzF
   obtain ⟨hU | hU, hV | hV⟩ :=
