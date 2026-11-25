@@ -6,6 +6,7 @@ on:
       - 'research/nightfall/formalization/product_space/QuantumResponse*.lean'
       - 'research/nightfall/formalization/product_space/Q7BlockerPacking.lean'
       - 'research/nightfall/formalization/product_space/ComplexKrausConservation.lean'
+      - 'research/nightfall/formalization/product_space/PhysicalAdaptiveWyner.lean'
       - '.github/workflows/nightfall-remaining-cert-gates.yml'
   workflow_dispatch:
 permissions:
@@ -17,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [AdaptiveInstrumentDegree, AdaptiveInstrumentWyner, QuantumResponseRoute1Terminal, Q7BlockerPacking, ComplexKrausConservation]
+        target: [AdaptiveInstrumentDegree, AdaptiveInstrumentWyner, QuantumResponseRoute1Terminal, Q7BlockerPacking, ComplexKrausConservation, PhysicalAdaptiveWyner]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -115,7 +116,12 @@ jobs:
               'Nightfall.ComplexKrausConservation.apply_energy_sum',
               'Nightfall.ComplexKrausConservation.instrument_mass',
               'Nightfall.ComplexKrausConservation.terminal_effect_bounds',
-              'Nightfall.ComplexKrausConservation.translation_padding']
+              'Nightfall.ComplexKrausConservation.translation_padding'],
+            'PhysicalAdaptiveWyner': [
+              'Nightfall.PhysicalAdaptiveWyner.query_amp_degree',
+              'Nightfall.PhysicalAdaptiveWyner.acceptance_degree',
+              'Nightfall.PhysicalAdaptiveWyner.acceptance_range',
+              'Nightfall.PhysicalAdaptiveWyner.physical_adaptive_wyner']
           }[target]
           for name in names:
               m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
@@ -144,7 +150,7 @@ jobs:
           git rev-parse HEAD > receipts/adaptive-instrument/source-head.txt
           git -C /tmp/mathlib4 rev-parse HEAD > receipts/adaptive-instrument/mathlib-head.txt
           cat lean-toolchain > receipts/adaptive-instrument/lean-toolchain.txt
-          sha256sum research/nightfall/formalization/product_space/{AdaptiveInstrument*,QuantumResponse*,Q7BlockerPacking,ComplexKrausConservation}.lean > receipts/adaptive-instrument/SHA256SUMS
+          sha256sum research/nightfall/formalization/product_space/{AdaptiveInstrument*,QuantumResponse*,Q7BlockerPacking,ComplexKrausConservation,PhysicalAdaptiveWyner}.lean > receipts/adaptive-instrument/SHA256SUMS
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
