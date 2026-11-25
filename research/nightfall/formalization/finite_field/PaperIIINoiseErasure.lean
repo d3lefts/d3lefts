@@ -197,7 +197,7 @@ theorem sqNorm_parallelogram (n : ℕ) (x z : Signal n) :
       intro i _
       ring
     _ = 2 * ((∑ i, (x i)^2) + ∑ i, (z i)^2) := by
-      rw [Finset.mul_sum, Finset.sum_add_distrib]
+      rw [← Finset.mul_sum, Finset.sum_add_distrib]
 
 theorem orthogonal_sign_error (n : ℕ) (x z : Signal n)
     (h : mixedDot n x z = 0) :
