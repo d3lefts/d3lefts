@@ -56,8 +56,7 @@ theorem conditional_padding (x : I → G) (i0 : I) (c : ℂ)
       (fun b => if b then response x active else padded i0 c inactive) := by
   funext b
   cases b
-  · simpa only [selectSwap, commonResponse, Bool.false_eq_true, if_false] using
-      harmless_query_padding x i0 c inactive
+  · simpa [selectSwap, commonResponse] using harmless_query_padding x i0 c inactive
   · simp [selectSwap, commonResponse]
 
 end Nightfall.ResponsePadding
