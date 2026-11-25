@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 68,
-  "as_of": "2026-11-25 UTC",
-  "source_commit": "eac3b523850a900f3581a47210ccde8ecb135d07",
-  "scope": "Repair Paper VI source namespace and preserve exact pending custody; no automatic certification.",
+  "revision": 69,
+  "as_of": "2026-11-24 UTC",
+  "source_commit": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+  "scope": "Paper VI actual-law staged closure on reconciled QW+ parent; exact source verification required.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5646,6 +5646,16 @@
       "receipt_scope": "Exact source custody only. Scoped projection and finite latent information proof receipts tracked in PR #1187; no historical ledger promotion or priority inference."
     },
     {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerGoodQuery.lean",
+      "source_blob_sha": "ec1081cb07f8216f8b69690684ce98205b573495",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
+    },
+    {
       "path": "research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean",
       "source_blob_sha": "64ae1263468d1b2c533440a17deb4fb8bbe745cc",
       "classification": "unreviewed-source",
@@ -5656,18 +5666,8 @@
       "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
     },
     {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedAverage.lean",
-      "source_blob_sha": "5167e8c4b682918ca49583e3c3de2edd1cdd177e",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedResampling.lean",
-      "source_blob_sha": "f66024c46600201fed297f88b7eb9a4068920d66",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerParametric.lean",
+      "source_blob_sha": "0844b2db38c88e5363eca0f287cdfb0168bb317d",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -5696,8 +5696,8 @@
       "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
     },
     {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerGoodQuery.lean",
-      "source_blob_sha": "ec1081cb07f8216f8b69690684ce98205b573495",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedAverage.lean",
+      "source_blob_sha": "5167e8c4b682918ca49583e3c3de2edd1cdd177e",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -5706,8 +5706,8 @@
       "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
     },
     {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerParametric.lean",
-      "source_blob_sha": "0844b2db38c88e5363eca0f287cdfb0168bb317d",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedResampling.lean",
+      "source_blob_sha": "f66024c46600201fed297f88b7eb9a4068920d66",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -5743,7 +5743,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Pre-existing main source custody reconciliation only."
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1SharedDrift.lean",
@@ -5753,51 +5753,11 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Pre-existing main source custody reconciliation only."
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
     },
     {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean",
-      "source_blob_sha": "01203c0002aff894e76b242da9efee9a28955d33",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/PaperVIProjectedCrux.lean",
-      "source_blob_sha": "316611344a479dd78db16a3dda4a48ea5eb49db8",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/PaperVISquaredEnergy.lean",
-      "source_blob_sha": "1158e8fdf72f0521baba5afeefc2127d9ddb5f77",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Paper VI squared-energy cap: repair originalMass namespace identified in failed run 45557426930; exact-head replay pending."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/PaperVIRiskTree.lean",
-      "source_blob_sha": "28ea4bf39facd660d515b34110160dc503009f31",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/PaperVIStageBudget.lean",
-      "source_blob_sha": "0ce5cd38d988ff6cbf44a126235f8db02c3f31b0",
+      "path": "research/nightfall/formalization/product_space/PaperVIGeneralLatentTerminal.lean",
+      "source_blob_sha": "17b9bb49c336fe0b6cc9684c8d16dc9286103a46",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -5826,8 +5786,48 @@
       "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
     },
     {
-      "path": "research/nightfall/formalization/product_space/PaperVIGeneralLatentTerminal.lean",
-      "source_blob_sha": "17b9bb49c336fe0b6cc9684c8d16dc9286103a46",
+      "path": "research/nightfall/formalization/product_space/PaperVIProjectedCrux.lean",
+      "source_blob_sha": "316611344a479dd78db16a3dda4a48ea5eb49db8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIRiskTree.lean",
+      "source_blob_sha": "28ea4bf39facd660d515b34110160dc503009f31",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVISquaredEnergy.lean",
+      "source_blob_sha": "1158e8fdf72f0521baba5afeefc2127d9ddb5f77",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI squared-energy cap: repair originalMass namespace identified in failed run 45557426930; exact-head replay pending."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIStageBudget.lean",
+      "source_blob_sha": "0ce5cd38d988ff6cbf44a126235f8db02c3f31b0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean",
+      "source_blob_sha": "01203c0002aff894e76b242da9efee9a28955d33",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,

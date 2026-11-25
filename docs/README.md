@@ -87,3 +87,7 @@ This folder contains a website and local instruments, not a stand-alone software
 - [Separate evidence-digest checker](../scripts/verify_commonwealth_export.cjs): `node scripts/verify_commonwealth_export.cjs saved.json`. SHA-256 covers serialized `payload`, **not** the full JSON envelope; cryptographic integrity does not authenticate real sources or certify law.
 - Regression suite: `node scripts/test_commonwealth_intelligence.cjs`, `node scripts/test_commonwealth_export.cjs`, `node --test tests/test_commonwealth_web_demo.mjs`; with Chromium and playwright-core: `node scripts/test_commonwealth_journey.mjs`. GitHub Actions captures 390px and 1280px screenshots.
 - All real-world authority, election participation, legal precedent ingestion and persistent political data collection remain disabled.
+
+## Published papers
+
+[The NIGHTFALL Papers](publications.html) is shared by both home experiences. Edit the approved metadata in [papers/publications.json](../papers/publications.json), then run `node scripts/generate_publications.cjs` at the repository root. The generator writes static publication pages, homepage selected-publication blocks and sitemap entries. CI checks that generation is reproducible with `--check`. Publication is not a peer-review or proof certification gate. Never register a draft as published or claim exact archived PDF correspondence without checking the bytes.

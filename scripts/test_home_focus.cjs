@@ -5,8 +5,8 @@ const field=fs.readFileSync("docs/index.html","utf8");
 const moon=fs.readFileSync("docs/new-moon.html","utf8");
 const chrome=fs.readFileSync("docs/site.js","utf8");
 const nav=field.match(/<nav class="nav" id="site-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1]||"";
-assert.equal((nav.match(/<a\b/g)||[]).length,3,"Keep the three primary research destinations");
-for(const href of ['href="./" aria-current="page"','href="constellation.html"','href="review.html"'])assert.ok(nav.includes(href));
+assert.equal((nav.match(/<a\b/g)||[]).length,4,"Keep the three primary research destinations plus Publications");
+for(const href of ['href="./" aria-current="page"','href="constellation.html"','href="publications.html"','href="review.html"'])assert.ok(nav.includes(href));
 const actions=[...field.matchAll(/<div class="hero-actions"[^>]*>([\s\S]*?)<\/div>/g)]
  .map(m=>[...m[1].matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(x=>x[1]));
 assert.deepEqual(actions,[["#first-minute","#flagships"]],
