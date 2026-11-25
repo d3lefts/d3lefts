@@ -198,13 +198,14 @@ theorem dyadicRisk_succ (j : ℕ) : dyadicRisk (j+1) = dyadicRisk j/2 := by
   field_simp
   <;> ring
 
-theorem quad_dyadic_budget (j A B : ℕ) (J : ℝ)
-    (hA : 2048*quadraticC ≤ A) (hB : (2^40 : ℝ)*rowK 2*J ≤ B) :
+theorem quad_dyadic_budget (j n : ℕ) (A B J : ℝ)
+    (hA : 2048*quadraticC ≤ A) (hB : (2^40 : ℝ)*rowK 2*J ≤ B)
+    (hn : A*(2 : ℝ)^j+B*(8 : ℝ)^j ≤ n) :
     quadWeight (dyadicRisk j/4)*(2*dyadicRisk j) +
         infoWeight 2 (dyadicRisk j/4)*J ≤
-      ((1+A*2^j+B*8^j : ℕ) : ℝ)*(dyadicRisk j/4) := by
+      (n : ℝ)*(dyadicRisk j/4) := by
   have hu := dyadicRisk_pos j
-  have hK := rowK_pos 2 (by decide)
+  have hp : 0 < (2 : ℝ)^j := by positivity
   have h1 : quadWeight (dyadicRisk j/4)*(2*dyadicRisk j) = 128*quadraticC := by
     unfold quadWeight
     field_simp [hu.ne'] <;> ring
@@ -213,29 +214,36 @@ theorem quad_dyadic_budget (j A B : ℕ) (J : ℝ)
     unfold infoWeight
     norm_num
     field_simp [hu.ne'] <;> ring
-  rw [h1,h2]
-  have hp : 0 < (2 : ℝ)^j := by positivity
   have hpow : (8 : ℝ)^j = ((2 : ℝ)^j)^3 := by
     rw [← pow_mul, Nat.mul_comm, pow_mul]
     norm_num
   have hA' := mul_le_mul_of_nonneg_right hA hp.le
   have hB' := mul_le_mul_of_nonneg_right hB (show 0 ≤ (8 : ℝ)^j by positivity)
-  push_cast
-  unfold dyadicRisk
-  rw [hpow] at hB' ⊢
-  field_simp [hp.ne'] <;> nlinarith only [hA',hB',hp]
+  have hs := (add_le_add hA' hB').trans hn
+  rw [h1,h2]
+  have hcalc :
+      (128*quadraticC+(2^32 : ℝ)*rowK 2*J/(dyadicRisk j)^2) / (dyadicRisk j/4) =
+        2048*quadraticC*(2 : ℝ)^j+(2^40 : ℝ)*rowK 2*J*(8 : ℝ)^j := by
+    rw [hpow]
+    unfold dyadicRisk
+    field_simp [hp.ne'] <;> ring
+  have hdiv : (128*quadraticC+(2^32 : ℝ)*rowK 2*J/(dyadicRisk j)^2)/(dyadicRisk j/4) ≤ n := by
+    rw [hcalc]
+    exact hs
+  exact (div_le_iff₀ (by positivity : 0 < dyadicRisk j/4)).mp hdiv
 
-/-- The exact dyadic terminal, with a geometric depth cap. A and B are
-explicit integer budget coefficients, not unspecified local hypotheses. -/
+/-- Exact dyadic MSE terminal with real coefficients and per-stage
+rounding. In particular, no spurious τ^(-3) term when J=0. -/
 theorem quadratic_mse_mixture_dyadic
     (P : Θ → ι → α → ℝ)
     (hP0 : ∀ θ i a, 0 ≤ P θ i a) (hP1 : ∀ θ i, ∑ a, P θ i a = 1)
     (w : Θ → ℝ) (hw0 : ∀ θ, 0 ≤ w θ) (hw1 : ∑ θ, w θ = 1)
     (f : (ι → α) → ℝ) (hf : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
     (hdeg : HasProdDegreeLE f 2)
-    (J : ℝ) (hJ : mutInfo P w ≤ J) (A B : ℕ)
+    (J : ℝ) (hJ : mutInfo P w ≤ J) (A B : ℝ)
+    (hA0 : 0 ≤ A) (hB0 : 0 ≤ B)
     (hA : 2048*quadraticC ≤ A) (hB : (2^40 : ℝ)*rowK 2*J ≤ B) (N : ℕ) :
-    ∃ t : DTree ι α, (∀ x, t.queries x ≤ N+A*2^N+B*8^N) ∧
+    ∃ t : DTree ι α, (∀ x, (t.queries x : ℝ) ≤ 2*N+A*2^N+B*8^N) ∧
       Ex P w (fun x => (f x-t.eval x)^2) ≤ dyadicRisk N := by
   let s : Posterior ι α Θ := ⟨∅,w,f⟩
   let t0 : DTree ι α := .leaf (mmean P w f) false
@@ -246,36 +254,47 @@ theorem quadratic_mse_mixture_dyadic
   have hstart : legal P s t0 := rfl
   have hR0 : frontier P (risk P) s t0 ≤ dyadicRisk 0 := by
     have h := mvar_le_quarter_mass P hP0 hP1 w hw0 f hf
-    change risk P s ≤ dyadicRisk 0
     change mvar P w f ≤ _
-    norm_num [dyadicRisk]
-    simpa [Vs,hw1] using h
+    simpa [dyadicRisk,Vs,hw1] using h
   have hJ0 : frontier P (entropyCost P) s t0 ≤ J := by
     change Info P ∅ w ≤ J
     rwa [info_empty]
   have H : ∀ k : ℕ, ∃ t : DTree ι α, legal P s t ∧
-      (∀ x, t.queries x ≤ k+A*2^k+B*8^k) ∧
+      (∀ x, (t.queries x : ℝ) ≤ 2*k+A*2^k+B*8^k) ∧
       frontier P (risk P) s t ≤ dyadicRisk k ∧ frontier P (entropyCost P) s t ≤ J := by
     intro k
     induction k with
-    | zero => exact ⟨t0,hstart,fun x => by simp [t0,DTree.queries],hR0,hJ0⟩
+    | zero =>
+      refine ⟨t0,hstart,?_,hR0,hJ0⟩
+      intro x
+      simp [t0,DTree.queries]
+      linarith
     | succ k ih =>
       obtain ⟨t,ht,hq,hr,hj⟩ := ih
-      let n : ℕ := 1+A*2^k+B*8^k
+      let c : ℝ := A*2^k+B*8^k
+      have hc : 0 ≤ c := by dsimp [c]; positivity
+      let n : ℕ := ⌈c⌉₊+1
+      have hn : c ≤ n := by
+        have h := Nat.le_ceil c
+        dsimp [n]
+        push_cast
+        linarith
+      have hnup : (n : ℝ) ≤ c+2 := by
+        have h := Nat.ceil_lt_add_one hc
+        dsimp [n]
+        push_cast
+        linarith
       obtain ⟨t',ht',hq',hr',hj'⟩ := quadratic_halve_stage P hP0 hP1 f s hS hm
         t ht (dyadicRisk k) J (dyadicRisk_pos k) hr hj n (by dsimp [n]; omega)
-        (quad_dyadic_budget k A B J hA hB)
+        (quad_dyadic_budget k n A B J hA hB hn)
       refine ⟨t',ht',?_,?_,hj'⟩
       · intro x
-        have hh := Nat.add_le_add_right (hq x) n
-        have hq'' := (hq' x).trans hh
-        have h8 : B*8^k+B*8^k ≤ B*8^(k+1) := by
-          rw [pow_succ,← Nat.mul_assoc]
-          omega
-        have h2 : A*2^(k+1) = A*2^k+A*2^k := by rw [pow_succ]; ring
-        dsimp [n] at hq''
-        rw [h2]
-        omega
+        have hh : (t'.queries x : ℝ) ≤ (t.queries x : ℝ)+(n : ℝ) := by exact_mod_cast hq' x
+        have h := hq x
+        have hb8 : 0 ≤ B*(8 : ℝ)^k := by positivity
+        dsimp [c] at hnup
+        rw [Nat.cast_succ,pow_succ,pow_succ]
+        nlinarith only [hh,h,hnup,hb8]
       · rwa [dyadicRisk_succ]
   obtain ⟨t,ht,hq,hr,_⟩ := H N
   exact ⟨t,hq,by simpa only [frontier_risk_exact P hP1 s t ht,s] using hr⟩
