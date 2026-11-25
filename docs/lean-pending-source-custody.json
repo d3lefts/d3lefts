@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 67,
+  "revision": 69,
   "as_of": "2026-11-24 UTC",
-  "source_commit": "cb69557cbe4904b8756f7874ed507e47c054468d",
-  "scope": "Reconcile verified Wyner source terminals with current main without changing any proof blob; fresh replay required.",
+  "source_commit": "ea60ad79324d78fad482ded6e3df0e7f3695c8e8",
+  "scope": "Integrate exact previously kernel-checked tensor distance source; preserve main registry including Wyner entries. No status promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5754,6 +5754,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SynthesisTensorDistance.lean",
+      "source_blob_sha": "a2704101bc6a39ea206577b102f8e389b95a1b7e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Revised candidate after run 45550018452 base-case and recursive instance diagnostics. Exact source registration only; new named Lean/kernel receipt pending. Not the full Wyner entropy/incidence or staged simulation theorem."
     }
   ]
 }

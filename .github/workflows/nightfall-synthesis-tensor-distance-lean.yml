@@ -1,0 +1,62 @@
+name: NIGHTFALL synthesis tensor distance Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/SynthesisTensorDistance.lean'
+      - '.github/workflows/nightfall-synthesis-tensor-distance-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: synthesis-tensor-distance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  tensor-distance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact dependencies and named targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p synthesis-receipt
+          dir=research/nightfall/formalization/structural_information
+          for f in SubcubeL3 SubcubeAllSpacesL3 SubcubeAllLevels SubcubeAffineAllLevels SubcubeSharpScalar SubcubeSharpAllLevels SubcubeSharpness SynthesisTensorDistance; do
+            cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "synthesis-receipt/$f.log"
+          done
+          (cd /tmp/mathlib4 && lake env leanchecker SynthesisTensorDistance) 2>&1 | tee synthesis-receipt/kernel.log
+          python3 - <<'PY'
+          import pathlib,re
+          p=pathlib.Path('research/nightfall/formalization/structural_information/SynthesisTensorDistance.lean')
+          s=p.read_text()
+          log=pathlib.Path('synthesis-receipt/SynthesisTensorDistance.log').read_text()
+          assert not re.search(r'\b(sorry|admit|axiom|native_decide)\b',s)
+          assert 'error:' not in log
+          allowed={'propext','Classical.choice','Quot.sound'}
+          for n in ['weight_step','distance_lower','distance_witness','exact_distance','score_lower']:
+              match=re.search(r"'?Nightfall\.StructuralInformation\.SynthesisTensorDistance\."+n+r"'? depends on axioms:\s*\[([^\]]*)\]",log)
+              if match:
+                  assert set(x.strip() for x in match.group(1).split(',') if x.strip())<=allowed
+              else:
+                  assert re.search(r"'?Nightfall\.StructuralInformation\.SynthesisTensorDistance\."+n+r"'? does not depend on any axioms",log)
+          print('SYNTHESIS_TENSOR_DISTANCE_KERNEL_PASS')
+          PY
+      - name: Preserve exact source and toolchain receipt
+        if: always()
+        run: |
+          mkdir -p synthesis-receipt
+          git rev-parse HEAD > synthesis-receipt/commit.txt
+          sha256sum research/nightfall/formalization/structural_information/{SubcubeL3,SubcubeAllSpacesL3,SubcubeAllLevels,SubcubeAffineAllLevels,SubcubeSharpScalar,SubcubeSharpAllLevels,SubcubeSharpness,SynthesisTensorDistance}.lean > synthesis-receipt/SHA256SUMS
+          cp lean-toolchain synthesis-receipt/
+          if test -d /tmp/mathlib4; then git -C /tmp/mathlib4 rev-parse HEAD > synthesis-receipt/mathlib.txt; fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: synthesis-tensor-distance-receipt
+          path: synthesis-receipt/
+          retention-days: 90
