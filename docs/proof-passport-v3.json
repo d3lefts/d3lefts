@@ -35,11 +35,11 @@
     "upstream_mathlib_repository": "https://github.com/leanprover-community/mathlib4"
   },
   "summary": {
-    "custody_sources": 618,
+    "custody_sources": 627,
     "historical_source_records": 67,
-    "pending_legacy_custody": 551,
-    "source_paths_with_exact_blob_and_receipt_reference": 99,
-    "pending_source_paths_with_receipt_leads": 72,
+    "pending_legacy_custody": 560,
+    "source_paths_with_exact_blob_and_receipt_reference": 108,
+    "pending_source_paths_with_receipt_leads": 75,
     "known_record_refs": 209,
     "distinct_referenced_runs": 90,
     "observed_job_modules": 26,
@@ -3264,6 +3264,89 @@
       ]
     },
     {
+      "path": "research/nightfall/formalization/product_space/PaperVIGeneralLatentTerminal.lean",
+      "blob": "2b012603ad052a6ae586ae6ce454553307f0ed3a",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-PaperVIGeneralLatentTerminal"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVILinearCharge.lean",
+      "blob": "8bab32205aa2c45a540b9c321f33006b313b3217",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [
+        45644805760
+      ],
+      "evidence": [
+        "observed:pr1201-PaperVILinearCharge"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIMSETerminal.lean",
+      "blob": "2f2aff5936b274ca3e59ff5c2be0e4d60ecb8b5f",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-PaperVIMSETerminal"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIProjectedCrux.lean",
+      "blob": "316611344a479dd78db16a3dda4a48ea5eb49db8",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-PaperVIProjectedCrux"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIRiskTree.lean",
+      "blob": "c831bb9672c1f638df09278211f9ef091969414f",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [
+        45626815434
+      ],
+      "evidence": [
+        "observed:pr1201-PaperVIRiskTree"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVISquaredEnergy.lean",
+      "blob": "1158e8fdf72f0521baba5afeefc2127d9ddb5f77",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [
+        45557426930
+      ],
+      "evidence": [
+        "observed:pr1201-PaperVISquaredEnergy"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIStageBudget.lean",
+      "blob": "e2e2192f5f65671b14ce1e1b6fa981434cb9c2dc",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-PaperVIStageBudget"
+      ]
+    },
+    {
       "path": "research/nightfall/formalization/product_space/PinnedConditionalStability.lean",
       "blob": "f063086c3bd294c4db5be905fd7efbeeb1ce652e",
       "custody": "pending",
@@ -3383,6 +3466,17 @@
       "receipt_leads": [],
       "evidence": [
         "observed:pr1200-QuadraticWynerLabelProjection"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean",
+      "blob": "01203c0002aff894e76b242da9efee9a28955d33",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-QuadraticWynerMeanIncrementProgress"
       ]
     },
     {
@@ -4409,6 +4503,17 @@
       "receipt_leads": [],
       "evidence": [
         "observed:pr1187-MultiscaleProjectionTransfer"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PaperVITensorTerminal.lean",
+      "blob": "f540943e5ebdba036d688619745a2c935db8f7fd",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1212-PaperVITensorTerminal"
       ]
     },
     {
@@ -8608,7 +8713,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVILinearCharge",
@@ -8635,7 +8740,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVIMSETerminal",
@@ -8662,7 +8767,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVIProjectedCrux",
@@ -8688,7 +8793,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVIRiskTree",
@@ -8716,7 +8821,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVISquaredEnergy",
@@ -8742,7 +8847,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVIStageBudget",
@@ -8767,7 +8872,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-QuadraticWynerMeanIncrementProgress",
@@ -8792,7 +8897,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1212-PaperVITensorTerminal",
@@ -8817,7 +8922,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1213-Q7BlockerPacking",
@@ -10827,7 +10932,7 @@
   "input_blobs": {
     "active": "4101ef99a051400010fd7f37bcc40733664f3678",
     "historical": "9c33680c828ba927de1963b831a6f0de2ee0b480",
-    "pending": "c5a9c6d08faa45ce7c1f242ef77775c706687f55",
+    "pending": "891df39ae447a5a6386a7c6e2a514b2161621591",
     "recent": "94e3ccb394f2c210daa01646202ea9679c1c9ade",
     "v2": "b8ac83faa21946953b32688cdba023f50c55d674",
     "reconciled": "8b98c8dd5d7c7d8534855bdbeb140146ff01c393",
