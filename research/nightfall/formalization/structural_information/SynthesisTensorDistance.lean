@@ -80,22 +80,24 @@ theorem weight_step (A : Finset V) (h0 : (0 : V) ∉ A)
   calc
     weight (rowsUp A) s = ((B ∪ C) ∪ D).card := by
       unfold weight rowsUp
-      rw [Finset.filter_union, Finset.filter_union]
-      rfl
+      rw [Finset.filter_union, Finset.filter_union] <;> rfl
     _ = B.card + C.card + D.card := by
       rw [Finset.card_union_of_disjoint hBCD, Finset.card_union_of_disjoint hBC]
     _ = _ := by rw [hB, hC, hD]
 
 private theorem two_slices_zero (s : (V × V) →ₗ[K] K)
     (h0 : s.comp inl = 0) (h1 : s.comp inr = 0) : s = 0 := by
-  ext x
+  apply LinearMap.ext
+  intro x
+  change s x = 0
   have h : inl x.1 + inr x.2 = x := by simp [inl, inr]
   have h0' : s (inl x.1) = 0 := by
     simpa using LinearMap.congr_fun h0 x.1
   have h1' : s (inr x.2) = 0 := by
     simpa using LinearMap.congr_fun h1 x.2
-  rw [← h, map_add, h0', h1']
-  simp
+  calc
+    s x = s (inl x.1 + inr x.2) := congrArg s h.symm
+    _ = 0 := by simp [map_add, h0', h1']
 
 private theorem diagonal_slice (s : (V × V) →ₗ[K] K) :
     s.comp diag = s.comp inl + s.comp inr := by
@@ -113,7 +115,8 @@ theorem distance_lower : ∀ n (s : E n →ₗ[K] K), s ≠ 0 →
     have h : s (1 : K) ≠ 0 := by
       intro h1
       apply hs
-      ext x
+      apply LinearMap.ext
+      intro x
       have hx := s.map_smul x (1 : K)
       simpa [h1] using hx
     change 2^0 ≤ weight R0 s
