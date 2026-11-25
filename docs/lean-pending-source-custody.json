@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 71,
+  "revision": 72,
   "as_of": "2026-11-24 UTC",
   "source_commit": "31a71af99957e30a25111d1b328c43a94be04c12",
   "scope": "Paper VI publication gate: restore actual staged proof on merged Wyner parent; fix legal leaf; preserve exact custody without automatic certification.",
@@ -5867,7 +5867,7 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/PaperVIStageBudget.lean",
-      "source_blob_sha": "0ce5cd38d988ff6cbf44a126235f8db02c3f31b0",
+      "source_blob_sha": "e2e2192f5f65671b14ce1e1b6fa981434cb9c2dc",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,

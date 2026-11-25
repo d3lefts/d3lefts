@@ -115,7 +115,8 @@ theorem risk_block
     refine ⟨t'',ht'',?_,hR'.trans hR,hj'.trans hj,?_⟩
     · intro x
       have h := extend_queries P choose s t' x
-      change t''.queries x ≤ _
+      change t''.queries x ≤ t'.queries x + 1 at h
+      have hprev := hq x
       omega
     · rw [Nat.cast_succ]
       nlinarith
