@@ -1,0 +1,74 @@
+name: Paper VI export certified proof terms for offline kernel
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/paper-vi-offline-kernel-export.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 41fb1cc5af1836b51ab1122f928efd78fe19c308
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Restore exact successful staged terminal objects (no source compilation)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pvi-shards /tmp/pvi-exact
+          gh run download 45652533477 --repo d3lefts/d3lefts --name paper-vi-workbench-ancestors --dir /tmp/pvi-shards
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          d=Path('/tmp/pvi-shards')
+          for line in (d/'SHA256SUMS').read_text().splitlines():
+              h,p=line.split()
+              with (d/Path(p).name).open('rb') as f:
+                  assert hashlib.file_digest(f,'sha256').hexdigest()==h
+          PY
+          cat /tmp/pvi-shards/part-* | zstd -d -q | tar -xf - -C /tmp/pvi-exact
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json,shutil
+          p=Path('/tmp/pvi-exact'); m=json.loads((p/'manifest.json').read_text())
+          assert m['head']=='03ab8c3878f5532449f8f9458ccf6a1dc60c6539',m['head']
+          for name,h in m['files'].items():
+              with (p/name).open('rb') as f:
+                  assert hashlib.file_digest(f,'sha256').hexdigest()==h,name
+          lib=Path('/tmp/mathlib4/.lake/build/lib/lean')
+          for folder in (p/'checkpoint/files',p/'staged'):
+              for f in folder.rglob('*'):
+                  if f.is_file() and f.suffix!='.log':
+                      dst=lib/f.relative_to(folder);dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(f,dst)
+          for f in (p/'sources').glob('*.lean'):
+              assert f.read_bytes()==(Path('research/nightfall/formalization/product_space')/f.name).read_bytes(),f.name
+          print('Exact source and object manifests verified; no rebuild.')
+          PY
+      - name: Export closed dependency proof terms for both actual-law Wyner endpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pvi-export
+          cd /tmp/mathlib4
+          LEAN_NUM_THREADS=1 lake env leanexport PaperVIGeneralLatentTerminal -- Nightfall.PaperVI.paper_vi_general_mse_wyner Nightfall.PaperVI.paper_vi_quadratic_mse_wyner > /tmp/pvi-export/pvi.ndjson
+          test -s /tmp/pvi-export/pvi.ndjson
+          cd /tmp/pvi-export
+          sha256sum pvi.ndjson > SHA256SUMS
+          zstd -3 -T2 -q pvi.ndjson -o pvi.ndjson.zst
+          rm pvi.ndjson
+          test "$(stat -c %s pvi.ndjson.zst)" -le 200000000
+          sha256sum pvi.ndjson.zst >> SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: paper-vi-closed-proof-terms
+          path: /tmp/pvi-export
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 14
