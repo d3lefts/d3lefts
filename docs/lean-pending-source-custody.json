@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 68,
+  "revision": 69,
   "as_of": "2026-11-25 UTC",
-  "source_commit": "3edfd33a03f95659ea96bd8e16fd0c116b16cf56",
-  "scope": "Register actual arbitrary rank-phase tree lower compiler, no certification promotion.",
+  "source_commit": "989da0ac02152d00bbc153578ae551808a00f8f2",
+  "scope": "Register complete rank-phase source candidate and strict terminal workflow without automatic certification.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5694,6 +5694,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Candidate lower compiler for actual arbitrary finite powered-linear trees via invertible pivot and dependent-row oracle. Full rank-sensitive lower budget target, exact-head compile pending."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhaseIdentity.lean",
+      "source_blob_sha": "8231c6d2a2f5fbd238ec9035f664d72050551a07",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Candidate full optimal rank-phase identity: actual upper/lower tree compilers and finite packing existence, exact-head kernel replay pending."
     }
   ]
 }

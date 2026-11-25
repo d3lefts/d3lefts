@@ -1,0 +1,71 @@
+name: NIGHTFALL full rank-phase identity Lean terminal
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/RankPhasePivot.lean'
+      - 'research/nightfall/formalization/finite_field/RankPhaseAdaptiveTree.lean'
+      - 'research/nightfall/formalization/finite_field/RankPhaseIdentity.lean'
+      - '.github/workflows/nightfall-rank-phase-terminal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Actual pivot, arbitrary tree, exact identity and kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/rank-phase-terminal
+          root=research/nightfall/formalization/finite_field
+          git rev-parse HEAD > receipts/rank-phase-terminal/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/rank-phase-terminal/mathlib.txt
+          python3 - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          r=Path('research/nightfall/formalization/finite_field')
+          idx={e['path']:e['source_blob_sha'] for e in json.loads(Path('docs/lean-pending-source-custody.json').read_text())['sources']}
+          for mod in ['RankPhasePivot','RankPhaseAdaptiveTree','RankPhaseIdentity']:
+              p=r/(mod+'.lean')
+              assert idx[str(p)]==subprocess.check_output(['git','hash-object',str(p)],text=True).strip()
+          PY
+          for M in RankPhasePivot RankPhaseAdaptiveTree RankPhaseIdentity; do
+            cp "$root/$M.lean" "/tmp/mathlib4/$M.lean"
+            sha256sum "$root/$M.lean" >> receipts/rank-phase-terminal/SHA256SUMS
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/rank-phase-terminal/$M.log"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v "$M") 2>&1 | tee "receipts/rank-phase-terminal/$M.kernel.log"
+          done
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          root=Path('receipts/rank-phase-terminal')
+          expected={
+            'RankPhasePivot':('RankPhasePivot',['rank_increase_normalize','row_coordinate_expansion','dependent_row_agrees']),
+            'RankPhaseAdaptiveTree':('RankPhaseAdaptiveTree',['terminal_full','lower_compiler','retrieval_implies_rank_plus_packing']),
+            'RankPhaseIdentity':('RankPhaseAdaptiveTree',['calibrated_transport','packing_implies_retrieval','rank_phase_budget_iff','packing_exists','exact_rank_phase_identity'])
+          }
+          for module,(ns,names) in expected.items():
+              s=Path('research/nightfall/formalization/finite_field',module+'.lean').read_text()
+              assert not re.search(r'(?m)^\s*(sorry|admit|axiom|opaque)\b',s),module
+              log=(root/(module+'.log')).read_text()
+              assert 'error:' not in log and 'sorryAx' not in log
+              for name in names:
+                  full='Nightfall.FiniteField.'+ns+'.'+name
+                  m=re.search(r"'"+re.escape(full)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+                  if m:
+                      assert {a.strip() for a in m.group(1).split(',') if a.strip()} <= {'propext','Classical.choice','Quot.sound'},full
+                  else:
+                      assert "'"+full+"' does not depend on any axioms" in log,full
+          print('FULL RANK-PHASE EXACT-IDENTITY KERNEL PASS')
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: exact-rank-phase-terminal-receipt
+          path: receipts/rank-phase-terminal
