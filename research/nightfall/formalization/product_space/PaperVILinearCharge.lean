@@ -4,7 +4,7 @@ import Route1WynerGeneral
 /-!
 Source-level linearized charge. The constants use the archived
 kernel-compatible switching lemma rather than the sharper manuscript
-constant, but preserve d^6 τ^(-3/2), d^6 C_W τ^(-3), and the staged
+coefficient, but preserve d^6 τ^(-3/2), d^6 C_W τ^(-3), and the staged
 quadratic τ^(-1) energy dependence.
 -/
 namespace Nightfall.PaperVI
