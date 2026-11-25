@@ -1,0 +1,162 @@
+name: NIGHTFALL five-pillars Hilbert and information-cover core Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/observability/HilbertRankBudgetCore.lean'
+      - 'research/nightfall/formalization/costs/GroupInformationCoverDual.lean'
+      - 'research/nightfall/formalization/observability/HilbertAdaptiveDrift.lean'
+      - 'research/nightfall/formalization/costs/GroupInformationCoverRate.lean'
+      - 'research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean'
+      - 'docs/lean-pending-source-custody.json'
+      - '.github/workflows/nightfall-five-pillars-cores-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-exact-mathlib-cores:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact original-source-derived structural components and converse interfaces
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/five-pillars
+          for src in research/nightfall/formalization/observability/HilbertRankBudgetCore.lean \
+                     research/nightfall/formalization/costs/GroupInformationCoverDual.lean \
+                     research/nightfall/formalization/observability/HilbertAdaptiveDrift.lean \
+                     research/nightfall/formalization/costs/GroupInformationCoverRate.lean \
+                     research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean; do
+            name="$(basename "$src" .lean)"
+            cp "$src" "/tmp/mathlib4/$name.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$name.olean" "$name.lean") 2>&1 | tee "receipts/five-pillars/$name.log"
+            test -s "/tmp/mathlib4/.lake/build/lib/lean/$name.olean"
+          done
+      - name: Strict named declarations, standard axiom receipts, independent kernel checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/HilbertRankBudgetCore.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.HilbertRankCore.rank_observability_from_budgets \
+            --decl Nightfall.HilbertRankCore.rank_linear_5043_from_spherical \
+            --json-out receipts/five-pillars/hilbert.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/five-pillars/hilbert.json
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/costs/GroupInformationCoverDual.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InformationCover.group_information_cover_weak_duality \
+            --decl Nightfall.InformationCover.reciprocal_KL_cover_weak_duality \
+            --json-out receipts/five-pillars/cover.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/five-pillars/cover.json
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/observability/HilbertAdaptiveDrift.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.HilbertAdaptiveDrift.reciprocal_step \
+            --decl Nightfall.HilbertAdaptiveDrift.quadratic_drift_depth_bound \
+            --decl Nightfall.HilbertAdaptiveDrift.hard_budget_from_quadratic_drift \
+            --decl Nightfall.HilbertAdaptiveDrift.rank_20172_budget_from_posterior_drift \
+            --json-out receipts/five-pillars/hilbert-drift.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/five-pillars/hilbert-drift.json
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/costs/GroupInformationCoverRate.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.InformationCoverRate.expected_group_cost_lower \
+            --decl Nightfall.InformationCoverRate.triangle_late_cost_lower \
+            --decl Nightfall.InformationCoverRate.triangle_late_cost_upper \
+            --decl Nightfall.InformationCoverRate.triangle_singleton_cost_upper \
+            --json-out receipts/five-pillars/cover-rate.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/five-pillars/cover-rate.json
+          python3 scripts/lean_bridge.py \
+            research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean \
+            --workspace /tmp/mathlib4 --strict --timeout 1800 \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.GroupAdaptiveLikelihood.legalWeight_of_legal \
+            --decl Nightfall.GroupAdaptiveLikelihood.transcript_factorization \
+            --decl Nightfall.GroupAdaptiveLikelihood.hidden_normalizer_factorization \
+            --decl Nightfall.GroupAdaptiveLikelihood.posterior_factorization \
+            --json-out receipts/five-pillars/group-likelihood.json
+          python3 research/nightfall/formalization/product_space/check_receipts.py receipts/five-pillars/group-likelihood.json
+          (cd /tmp/mathlib4 && lake env leanchecker -v HilbertRankBudgetCore) | tee receipts/five-pillars/hilbert-checker.log
+          (cd /tmp/mathlib4 && lake env leanchecker -v GroupInformationCoverDual) | tee receipts/five-pillars/cover-checker.log
+          (cd /tmp/mathlib4 && lake env leanchecker -v HilbertAdaptiveDrift) | tee receipts/five-pillars/hilbert-drift-checker.log
+          (cd /tmp/mathlib4 && lake env leanchecker -v GroupInformationCoverRate) | tee receipts/five-pillars/cover-rate-checker.log
+          (cd /tmp/mathlib4 && lake env leanchecker -v GroupAdaptiveLikelihood) | tee receipts/five-pillars/group-likelihood-checker.log
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          # Use the structured, strict named-declaration receipt rather than
+          # grep Lean's human-readable #print axioms output. Lean legitimately
+          # prints no "depends on axioms" line for an axiom-free theorem.
+          modules = [
+              ("HilbertRankBudgetCore", "hilbert", "observability", [
+                  "Nightfall.HilbertRankCore.rank_observability_from_budgets",
+                  "Nightfall.HilbertRankCore.rank_linear_5043_from_spherical"]),
+              ("GroupInformationCoverDual", "cover", "costs", [
+                  "Nightfall.InformationCover.group_information_cover_weak_duality",
+                  "Nightfall.InformationCover.reciprocal_KL_cover_weak_duality"]),
+              ("HilbertAdaptiveDrift", "hilbert-drift", "observability", [
+                  "Nightfall.HilbertAdaptiveDrift.reciprocal_step",
+                  "Nightfall.HilbertAdaptiveDrift.quadratic_drift_depth_bound",
+                  "Nightfall.HilbertAdaptiveDrift.hard_budget_from_quadratic_drift",
+                  "Nightfall.HilbertAdaptiveDrift.rank_20172_budget_from_posterior_drift"]),
+              ("GroupInformationCoverRate", "cover-rate", "costs", [
+                  "Nightfall.InformationCoverRate.expected_group_cost_lower",
+                  "Nightfall.InformationCoverRate.triangle_late_cost_lower",
+                  "Nightfall.InformationCoverRate.triangle_late_cost_upper",
+                  "Nightfall.InformationCoverRate.triangle_singleton_cost_upper"]),
+              ("GroupAdaptiveLikelihood", "group-likelihood", "costs", [
+                  "Nightfall.GroupAdaptiveLikelihood.legalWeight_of_legal",
+                  "Nightfall.GroupAdaptiveLikelihood.transcript_factorization",
+                  "Nightfall.GroupAdaptiveLikelihood.hidden_normalizer_factorization",
+                  "Nightfall.GroupAdaptiveLikelihood.posterior_factorization"]),
+          ]
+          allowed = {"Classical.choice", "propext", "Quot.sound"}
+          count = 0
+          for mod, receipt_stem, folder, names in modules:
+              src = Path(f"research/nightfall/formalization/{folder}/{mod}.lean")
+              receipt = json.loads(Path(f"receipts/five-pillars/{receipt_stem}.json").read_text())
+              assert receipt.get("status") == "COMPILED", (mod, "not compiled")
+              assert receipt.get("source_sha256") == hashlib.sha256(src.read_bytes()).hexdigest(), (mod, "source mismatch")
+              audit = receipt.get("axiom_audit", {})
+              dependencies = receipt.get("axiom_dependencies", {})
+              assert set(audit) == set(names), (mod, "named declaration mismatch", sorted(set(names) ^ set(audit)))
+              assert set(dependencies) == set(names), (mod, "axiom dependency coverage mismatch")
+              for name in names:
+                  assert audit[name] in {"allowlisted_dependencies", "no_axioms"}, (name, audit[name])
+                  assert set(dependencies[name]) <= allowed, (name, dependencies[name])
+              raw = Path(f"receipts/five-pillars/{mod}.log").read_text()
+              assert "sorryAx" not in raw, (mod, "forbidden sorry axiom")
+              count += len(names)
+          assert count == 16, count
+          print("PASS: 16 named Hilbert/group-cover declarations, exact-source SHA256, standard axioms, independent leanchecker replay")
+          PY
+      - name: Immutable receipt and strictly limited status
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/five-pillars
+          git rev-parse HEAD > receipts/five-pillars/head
+          sha256sum research/nightfall/formalization/observability/HilbertRankBudgetCore.lean \
+             research/nightfall/formalization/costs/GroupInformationCoverDual.lean \
+             research/nightfall/formalization/observability/HilbertAdaptiveDrift.lean \
+             research/nightfall/formalization/costs/GroupInformationCoverRate.lean \
+             research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean > receipts/five-pillars/SHA256SUMS
+          echo 'Hilbert: finite source budgets and exact 20172 reciprocal drift, but no source-level universal rank-r D1 or causal posterior D2. A2: actual adaptive grouped likelihood factorization and KL-exposure conditional cost converse plus exact 3-cycle LP, but no full risk/KL stopping converse or matching sequential oracle construction.' > receipts/five-pillars/scope.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: five-pillars-lean-${{ github.run_id }}
+          path: receipts/five-pillars
+          if-no-files-found: error

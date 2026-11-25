@@ -1,0 +1,70 @@
+name: Verify RH PR 267 Python scanner review amendments
+on:
+  pull_request:
+    paths:
+      - .github/workflows/verify-rh-pr267-review.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  rh-quick-check-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RH_REPO: d3lefts/riemann-hypothesis
+      RH_SHA: 9e932122f24aea97196625503feec2c1e301b4ab
+    steps:
+      - name: Checkout audit workflow
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Retrieve immutable upstream PR source with sparse checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/rh-pr267
+          git -C /tmp/rh-pr267 init
+          git -C /tmp/rh-pr267 remote add origin "https://github.com/$RH_REPO.git"
+          git -C /tmp/rh-pr267 fetch --depth=1 --filter=blob:none origin "$RH_SHA"
+          git -C /tmp/rh-pr267 sparse-checkout init --no-cone
+          printf '/scripts/\n/.github/workflows/build-pr.yml\n' |
+            git -C /tmp/rh-pr267 sparse-checkout set --stdin
+          git -C /tmp/rh-pr267 checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/rh-pr267 rev-parse HEAD)" = "$RH_SHA"
+          test -f /tmp/rh-pr267/scripts/cache-bootstrap/test_quick_check.py
+          test -f /tmp/rh-pr267/scripts/quick-check.py
+          test -f /tmp/rh-pr267/.github/workflows/build-pr.yml
+          test ! -f /tmp/rh-pr267/scripts/test_quick_check_imports.py
+          printf 'RH source: %s\n' "$RH_SHA"
+          sha256sum /tmp/rh-pr267/scripts/{quick-check.py,cache-bootstrap/test_quick_check.py}
+
+      - name: Run existing QuickChecks suite on actual project imports helper
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/rh-pr267
+          python3 --version
+          python3 -m py_compile scripts/quick-check.py scripts/cache-bootstrap/test_quick_check.py
+          python3 scripts/cache-bootstrap/test_quick_check.py -v 2>&1 | tee /tmp/rh-pr267-test.log
+          grep -Eq '^OK$' /tmp/rh-pr267-test.log
+          echo 'PASS: full existing Python suite, including review regressions'
+
+      - name: Archive test run transcript and exact fork commit
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p rh-pr267-review-receipt
+          test ! -f /tmp/rh-pr267-test.log || cp /tmp/rh-pr267-test.log rh-pr267-review-receipt/test.log
+          git -C /tmp/rh-pr267 rev-parse HEAD > rh-pr267-review-receipt/fork-sha.txt || true
+          sha256sum /tmp/rh-pr267/scripts/quick-check.py /tmp/rh-pr267/scripts/cache-bootstrap/test_quick_check.py > rh-pr267-review-receipt/SHA256SUMS || true
+
+      - name: Upload reproducible regression evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rh-pr267-review-regression-tests
+          path: rh-pr267-review-receipt/
+          retention-days: 90
+          if-no-files-found: warn

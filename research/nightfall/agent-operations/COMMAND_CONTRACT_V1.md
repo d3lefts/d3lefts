@@ -94,6 +94,27 @@ python3 scripts/nightfall_agent_tasks.py verify /tmp/nightfall-passport-receipt.
 It is not a cryptographic attestation, re-run, substantive verifier, or
 independent review. Do not label it a proof certificate.
 
+The measured [agent-interface A/B result](AGENT_CONTRACT_AB_RESULTS_20261122.md)
+found that `verify` accepts 18/18 valid-looking but incorrect source/output
+hash substitutions. To prevent that from becoming a false provenance
+certificate, use the **strong local replay** command:
+
+```sh
+python3 scripts/nightfall_agent_tasks.py replay /tmp/nightfall-passport-receipt.json
+```
+
+This validates the receipt structure, requires the *current clean Git checkout*
+to have the **same commit** and exact recorded source-anchor bytes, reruns
+the same allowlisted verifier, and checks its exit status, output SHA-256
+and byte lengths. Any source mismatch or output mismatch fails closed.
+Nushell's `task-verify` now uses this strong replay path; `task-structure`
+is the explicitly weaker offline-format inspection. Replays use the **same
+checker source**—therefore a green result is reproducible process evidence,
+not an independent mathematical proof, reviewer identity, or priority check.
+External results from another commit cannot be replay-attested in a different
+checkout; inspect their structure and retrieve the exact original source first.
+
+
 ## Certification authorities — unchanged
 
 | Question | Authoritative gate |

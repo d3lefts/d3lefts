@@ -1,0 +1,59 @@
+name: NIGHTFALL externally frozen Lean comparator pilot
+on:
+  pull_request:
+    paths:
+      - 'scripts/external_lean_comparator.py'
+      - 'tests/test_external_lean_comparator.py'
+      - 'research/nightfall/formalization/compiler/ContractSmoke.lean'
+      - 'research/nightfall/formalization/compiler/contract-smoke.json'
+      - 'scripts/lean_bridge.py'
+      - '.github/workflows/nightfall-external-comparator.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  mutation-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tests/test_external_lean_comparator.py
+  frozen-kernel-contract:
+    needs: mutation-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Reproduce exact theorem type and axiom evidence under pinned compiler
+        run: |
+          set -euo pipefail
+          mkdir -p lean-receipts
+          python3 scripts/lean_bridge.py research/nightfall/formalization/compiler/ContractSmoke.lean \
+            --workspace /tmp/mathlib4 --timeout 480 --strict \
+            --allow-axiom Classical.choice --allow-axiom Quot.sound --allow-axiom propext \
+            --decl Nightfall.Certification.additive_symmetry \
+            --contract research/nightfall/formalization/compiler/contract-smoke.json \
+            --json-out lean-receipts/external-comparator-smoke.json
+      - name: Compare against trusted base specification and receipt
+        run: |
+          set -euo pipefail
+          git fetch origin main:refs/remotes/origin/main
+          python3 scripts/external_lean_comparator.py \
+            --trusted-base origin/main \
+            --contract research/nightfall/formalization/compiler/contract-smoke.json \
+            --receipt lean-receipts/external-comparator-smoke.json \
+            --json-out lean-receipts/external-comparator-result.json
+      - name: Preserve independently inspectable evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: external-lean-comparator-pilot
+          path: lean-receipts/
+          retention-days: 45
+          if-no-files-found: warn

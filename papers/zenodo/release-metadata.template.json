@@ -1,0 +1,37 @@
+{
+  "title": "NIGHTFALL / PHASESHIFT — Independent Research Archive",
+  "creators": [
+    {
+      "name": "Wright, Devin J.",
+      "affiliation": "Independent researcher"
+    }
+  ],
+  "description": "Selected, rights-cleared research software and reproducibility materials from NIGHTFALL. Mathematical statements, assumptions, source pins, verification receipts and review status are recorded separately. This archival release is not a journal publication or a peer-review certificate.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "OWNER_APPROVED_LICENSE_REQUIRED",
+  "language": "eng",
+  "keywords": [
+    "reproducible mathematics",
+    "mathematical research",
+    "exact arithmetic",
+    "quantum information",
+    "independent verification",
+    "formal verification"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.24511398",
+      "relation": "references"
+    },
+    {
+      "identifier": "https://github.com/d3lefts/d3lefts",
+      "relation": "isDerivedFrom"
+    }
+  ],
+  "communities": [
+    {
+      "identifier": "nightfall-research"
+    }
+  ]
+}

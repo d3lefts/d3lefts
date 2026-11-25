@@ -1,0 +1,100 @@
+{
+  "schema": "nightfall.publications.v1",
+  "community": {
+    "name": "NIGHTFALL — Independent Mathematical Research",
+    "identifier": "nightfall-research",
+    "url": "https://zenodo.org/communities/nightfall-research/records",
+    "creation": "owner-confirmed",
+    "membership_verification": "not independently verified"
+  },
+  "records": [
+    {
+      "id": "route1-wyner-20261124",
+      "title": "Dimension-Free Classical Simulation Under Correlated Inputs: Wyner Common-Information Bounds and Query-Local Representations",
+      "author": "Devin J. Wright",
+      "date": "2026-11-24",
+      "doi": "10.5281/zenodo.24511398",
+      "url": "https://zenodo.org/records/24511398",
+      "manuscript_version": "0.7",
+      "repository_version": "v1",
+      "pages": 24,
+      "resource_type": "research preprint",
+      "publication_status": "published on Zenodo, confirmed by owner's screenshot",
+      "review_status": "AI-assisted mathematical review; external human peer review not established",
+      "community_membership": "unverified",
+      "source_refs": [
+        {
+          "pr": 970,
+          "commit": "aa2325979d681450a46c2063026d9db09d14730c",
+          "scope": "general Wyner simulation"
+        },
+        {
+          "pr": 1150,
+          "commit": "40bd9649725cb0df3a035e2b7161d26c2213f66d",
+          "scope": "query-local representation paper proof"
+        },
+        {
+          "pr": 1182,
+          "commit": "45fb39542fe8b3edb70706cfcab1e5e51e5664e7",
+          "scope": "worst-case sharpness paper proof"
+        }
+      ],
+      "number": 1,
+      "slug": "wyner-common-information",
+      "featured": true,
+      "field": "Information theory / query complexity",
+      "summary": "Connects the common information of correlated inputs to classical acceptance-estimation query bounds, and studies how recoverable latent representations can change those bounds.",
+      "scope": "Original-coordinate query complexity under the stated finite-law and oracle assumptions; not a general runtime or quantum-state simulation theorem. The exact archived manuscript-to-Lean correspondence is not established here.",
+      "evidence_links": [
+        {
+          "label": "General-latent theorem and source review",
+          "href": "https://github.com/d3lefts/d3lefts/pull/970"
+        },
+        {
+          "label": "Query-local representation theorem",
+          "href": "https://github.com/d3lefts/d3lefts/pull/1150"
+        },
+        {
+          "label": "Worst-case sharpness",
+          "href": "https://github.com/d3lefts/d3lefts/pull/1182"
+        }
+      ]
+    },
+    {
+      "id": "q2-influence-20261124",
+      "number": 2,
+      "slug": "quadratic-influence",
+      "featured": true,
+      "title": "Quadratic Influence Beyond the Boolean Cube: A Bias-Free, Exponent-Two Bound on Product Probability Spaces",
+      "author": "Devin J. Wright",
+      "date": "2026-11-24",
+      "doi": "10.5281/zenodo.24516569",
+      "url": "https://zenodo.org/records/24516569",
+      "manuscript_version": "0.7",
+      "resource_type": "research preprint",
+      "publication_status": "Published on Zenodo; DOI and title confirmed by owner. Live record and archived file bytes not independently verified.",
+      "review_status": "AI-assisted mathematical review; external human peer review not established",
+      "community_membership": "unverified",
+      "field": "Probability / analysis of functions",
+      "summary": "Establishes a variance-squared maximum-coordinate influence inequality for bounded degree-two functions on product probability spaces, without a dimension or bias penalty under the stated hypotheses.",
+      "scope": "The related finite-product theorem has a named Lean evidence trail. No claim is made here that every statement in the archived PDF has an exact matching kernel receipt.",
+      "evidence_links": [
+        {
+          "label": "Related finite-product theorem and scoped Lean receipt",
+          "href": "active-proof-passport.html#q2-influence"
+        },
+        {
+          "label": "Mathematical results and scope",
+          "href": "mathematical-results.html"
+        }
+      ],
+      "source_refs": []
+    }
+  ],
+  "release_policy": {
+    "automatic_release_authorized": false,
+    "rights_review_required": true,
+    "license": "unselected",
+    "archive_scope": "selected, approved immutable source package only"
+  }
+}

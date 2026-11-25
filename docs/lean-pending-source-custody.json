@@ -1,10 +1,20 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 71,
-  "as_of": "2026-11-25 UTC",
-  "source_commit": "138219c773199c14e085cfa148ff179c8fe40d70",
-  "scope": "Restore clipped estimator and repair classical decidability; no certification promotion.",
+  "revision": 72,
+  "as_of": "2026-11-24 UTC",
+  "source_commit": "cb69557cbe4904b8756f7874ed507e47c054468d",
+  "scope": "Clean-main recovery of 24 scoped T2 sources and exact pinned manuscripts, three strict workflows, independent regression; archived unrelated experiments retained on original historical heads.",
   "sources": [
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
+      "source_blob_sha": "a8a56af2c1c57476c1df4fb2ccb98b11896f3d16",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-level finite product-mixture nonfree Dirac theorem candidate (support-to-positive-component rigidity) for exact affine-code Wyner. Pinned Lean+leanchecker and independent review pending; NOT complete common-information infimum."
+    },
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
       "source_blob_sha": "a389e02a2b0bf67cd8336a7dad17f3a436b686e2",
@@ -136,6 +146,36 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/costs/GroupAdaptiveLikelihood.lean",
+      "source_blob_sha": "0d24d26aefdc35675a43f01f2c8ff1d990d6c2c8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual finite adaptive grouped noisy-sign oracle response and history likelihood factorization; source posterior normalization. No Bayesian risk theorem, sequential KL lower, optional stopping or matching SPRT upper. Exact-head green CI required."
+    },
+    {
+      "path": "research/nightfall/formalization/costs/GroupInformationCoverDual.lean",
+      "source_blob_sha": "27ac8bdb150c9af61ba6e90146fe048139a9d02a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Draft PR #1138 A2: exact general group fractional-cover weak-duality core, not full adaptive KL/Bayes risk/sequential stopping/matching asymptotics. Exact-head Lean and independent leanchecker receipts are separate; no peer review or novelty claim."
+    },
+    {
+      "path": "research/nightfall/formalization/costs/GroupInformationCoverRate.lean",
+      "source_blob_sha": "8088f895f379ac43100dc4a86dc91994d5dbddfc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact assumed per-coordinate KL expected-query exposure yields group-cost dual lower bound and 3-cycle fractional example. Bayes/stopping/attaining group oracle A2 theorem remains unformalized."
     },
     {
       "path": "research/nightfall/formalization/dq2/DQ2BinarySection.lean",
@@ -378,6 +418,66 @@
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUActualFiberOrbit.lean",
+      "source_blob_sha": "110202706a3fd206aea36e69f05818c3cfd7bb91",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source-identity custody of scoped pure-character topology composition. Full ProductSphereZero and global boundary manifold still unproved. Pinned Lean pre-integration run #45059393121 succeeded on byte-identical source."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUAugmentedRank.lean",
+      "source_blob_sha": "e3e99f0e67b6a7f6a99a7dd0a0666f9fb695ecde",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
+      "source_blob_sha": "114c4159630eb787e494dc4aa6448dc24884e919",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-integrated exact Lean module from #1070, blob 114c4159630eb787e494dc4aa6448dc24884e919, successfully compiled on frozen Lean pin with ordinary axioms in run 45058026793. Scope: compact actual product-sphere time-slab zero fiber and exclusion of zero-free t=1 endpoint; NO global 1D manifold, ProductSphereZero or priority."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUCompatibleAtlas.lean",
+      "source_blob_sha": "cc7fabe4f731d4ac28d5b279fce871cdebf880a8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Byte-identical source to original #1108 / passed repair #1126; pinned Mathlib kernel+ordinary axiom CI 45066160663 and new clean source #1132 run 45066754031 pass separately. Source custody only, no physical covering charts or unconditional ProductSphereZero."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
+      "source_blob_sha": "07ec9863d19a25196e2a84e187b36a500da6bfba",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source-identity custody of scoped pure-character topology composition. Full ProductSphereZero and global boundary manifold still unproved. Pinned Lean pre-integration run #45059393121 succeeded on byte-identical source."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUConcreteHomotopy.lean",
+      "source_blob_sha": "e8b0105b2f7f5b52cde07de58f33434f9eb29277",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
       "source_blob_sha": "8314fd4cfca632a9a2ae7da85e863ea8cb0ed7e4",
       "classification": "unreviewed-source",
@@ -386,6 +486,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Pending source-custody record only. Independent exact-head pinned Lean result 45055510914 supports the named t=0 algebraic Jacobian inverse, but is not recognized by this manifest as a full global proof passport; ProductSphereZero, full derivative and manifold parity remain unproved."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUFiberFreeAction.lean",
+      "source_blob_sha": "15799a751bd25dcfb9b9a7bc9619806b7c53d513",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source blob custody only; independent scoped pinned Lean run #45058710989 on source-identical stacked #1082 passed the named genuine zero-fiber free-action source. Global proof, ProductSphereZero and specialist novelty review remain unverified."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
@@ -418,6 +528,26 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUPerturbation.lean",
+      "source_blob_sha": "923eafa2ebe8be3a5c856cf7024a97620decc52a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean",
+      "source_blob_sha": "fb885c8fd0664896ed4aaeb890c40cf8620a520e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source copied byte-for-byte from scoped passing pinned Lean run 45060016205; source custody only (not historical global certificate). No full ProductSphereZero or new mathematical priority."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBURegularFiberLocal.lean",
       "source_blob_sha": "85d70972e8e30fdee85b311725b775e115374749",
       "classification": "unreviewed-source",
@@ -425,7 +555,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 protected-checkout repair for independently originated ProductBURegularFiberLocal source. Exact blob registered as pending custody only; external ATLAS bridge may have separate scoped checks. Does not prove ProductSphereZero, T2, novelty or a new terminal. Authorship unchanged."
+      "receipt_scope": "2026-11-22 parallel-branch source observed on current main PR-merge checkout; exact Git blob recorded for protected-main custody only, no theorem, compilation, peer review or novelty certified in this ledger."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBURegularParameter.lean",
@@ -438,6 +568,26 @@
       "receipt_scope": "Source custody only. Pinned external ATLAS parametric Sard ordinary-axiom replay in merged #1048; theorem-level regular parameter existence in this branch is not yet source-certified. ProductSphereZero remains open."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUSmoothInverse.lean",
+      "source_blob_sha": "827afac9c159ca5e219c0a7a5d16f33bf0e28fcd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source copied byte-for-byte from scoped passing pinned Lean run 45060020899; source custody only (not historical global certificate). No full ProductSphereZero or new mathematical priority."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUSphereCompact.lean",
+      "source_blob_sha": "325ee8dc11ce0b1a9d2cbd350380f59affda8c80",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-integrated from parallel PR #1055 with exact Lean source blob 325ee8dc11ce0b1a9d2cbd350380f59affda8c80, repaired and kernel-checked in #1063 run 45057651776, original proof from #1055. Custody only; ProductSphereZero and global phase-retrieval topology remain unproved."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUSphereExtension.lean",
       "source_blob_sha": "c4541cd216dc7ab3169e14f2632378dbc57be966",
       "classification": "unreviewed-source",
@@ -446,6 +596,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Late parallel source merge, exact blob custody only. Does not certify ProductSphereZero, topological extension proof, named Lean kernel, or originality."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUTimeOrientedIFT.lean",
+      "source_blob_sha": "f817e05a01284f6703e75d311d05fbe79bac642c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Pinned Lean IFT time-oriented zero graph from #1131, exact-head 45067372003 PASS, strict 45067372058 PASS; no actual global t=0 halfspace chart nor unconditional ProductSphereZero."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean",
@@ -1702,6 +1862,16 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/observability/HilbertAdaptiveDrift.lean",
+      "source_blob_sha": "5fb47463d0e7d726731573fa6d7b5931ef08b124",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact assumed posterior quadratic drift yields 20172*r*B²/η hard budget. Source-to-posterior identification and universal Hilbert D1 absent; do not certify full theorem D."
+    },
+    {
       "path": "research/nightfall/formalization/observability/HilbertFromScalarKhintchine.lean",
       "source_blob_sha": "0ef895e357fdb269178e2b5702a2b444a191acae",
       "classification": "unreviewed-source",
@@ -1710,6 +1880,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/observability/HilbertRankBudgetCore.lean",
+      "source_blob_sha": "5566cb729c0a084ae6dbe91f4ee0b61dba1555fd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Draft PR #1138 D1: exact budget aggregation and numerical 5043 rank-linear scalar implication from stipulated source budgets and spherical coefficient. No universal product Hilbert budgets, spherical measure theorem or adaptive D2 certified; exact-head CI and independent review separate."
     },
     {
       "path": "research/nightfall/formalization/observability/OriginalSourceConditionalPoincare.lean",
@@ -2358,6 +2538,16 @@
       "receipt_scope": "Merged to main without a recorded scoped Lean receipt in this ledger; source custody only. No certification, human-review or novelty status is inferred."
     },
     {
+      "path": "research/nightfall/formalization/prime_zeta/RHScaleSeparation.lean",
+      "source_blob_sha": "c4893768b6a7984b74e75b46dc118b6dcfdf0e8c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "New-to-main #1113 source; separately passed pinned named Lean plus leanchecker run 45062953520 at exact head 0fa7f2c703b144ec1f8a1addd9c7521e844fe5c6. Historical 67-record ledger is frozen; this custody entry does not auto-promote conditional source."
+    },
+    {
       "path": "research/nightfall/formalization/product_space/ActualESConditionalJensen.lean",
       "source_blob_sha": "501c47c54d65222b1a035f4937d271b95fbb2c1b",
       "classification": "unreviewed-source",
@@ -2876,6 +3066,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1AccessCoupling.lean",
+      "source_blob_sha": "1c586e361cb63290e8deabd2781867e3e2e931c5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only. Separate named Lean replay covers the classical transfer, with the operational quantum hybrid and paper separations outside its certificate."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1DegreeSourceBridge.lean",
@@ -3558,6 +3758,126 @@
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerFibers.lean",
+      "source_blob_sha": "0414c52b5ac939a5adef64b4e55085d7f0789425",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Carried corrected source from #1099/#1104 for clean-main pinned Lean CI; pending source custody, not certification. No full affine Wyner C_W/entropy kernel proof yet."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerSupport.lean",
+      "source_blob_sha": "5519634afa3ac1b7659e08d6070549a9c9aac148",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Carried corrected source from #1099/#1104 for clean-main pinned Lean CI; pending source custody, not certification. No full affine Wyner C_W/entropy kernel proof yet."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/LocalMomentAtoms.lean",
+      "source_blob_sha": "50291b712f1c843e89bd0d89fa7418b3541f7592",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/LocalMomentRisk.lean",
+      "source_blob_sha": "be9073504ae43fd8dd719b7bb7db799b47a5ded7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockActualCircuit.lean",
+      "source_blob_sha": "1d5bfcf6f78f2eef4b689aca1a1d4b69039bb9e6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only. Named Lean receipt and supported oracle scope are tracked separately in PR #1128."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockGrouping.lean",
+      "source_blob_sha": "8bd6d322c58235567d4ed9cfb7605409df8509c6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Exact named Lean compiler run 45065168946 has passed for this byte-identical file; full raw-circuit Route1 theorem and originality not certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockQuantumDegree.lean",
+      "source_blob_sha": "939b5855e510f76ca7ec89d1666e27b45cf7d065",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Registered Git blob with separately passed named kernel proof, workflow run 45059108351; this pending ledger is not an analytic, novelty, or full raw-circuit terminal certification."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockRoute1.lean",
+      "source_blob_sha": "5f08403421e30dc8bfd0f0727c0f8a246f81f9b6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Registered Git blob with separately passed named kernel proof, workflow run 45058739792; this pending ledger is not an analytic, novelty, or full raw-circuit terminal certification."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockRoute1Terminal.lean",
+      "source_blob_sha": "62303f013d7b5ebee698b320e7b635b7696fdd40",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only. Named Lean receipt and supported oracle scope are tracked separately in PR #1128."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockTreeCompiler.lean",
+      "source_blob_sha": "47e988c9d70d49027e4d9cfb88ef87cd467b9346",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source custody only. Exact named Lean compiler run 45065169016 has passed for this byte-identical file; full raw-circuit Route1 theorem and originality not certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseBlockWellFormed.lean",
+      "source_blob_sha": "3b51811f993848b1da2dcd4ed384bf6947c4f6fa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only. Named Lean receipt and supported oracle scope are tracked separately in PR #1128."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PhaseRoute1Finite.lean",
+      "source_blob_sha": "6495ed33759de30945b455c25f3037fb894d17a2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Integrated from #1083 identical Git blob 6495ed33759de30945b455c25f3037fb894d17a2; exact finite Lean CI 45058815183 passed three named statements and standard axiom check. Custody ledger does not establish full Route 1 composition, all-B Wyner information, independent referee review, or novelty."
+    },
+    {
       "path": "research/nightfall/formalization/structural_information/SubcubeAffineAllLevels.lean",
       "source_blob_sha": "988246fed292c8dd75c1ec2eefc0620695804825",
       "classification": "unreviewed-source",
@@ -3688,234 +4008,124 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2ActualSource.lean",
-      "source_blob_sha": "f9d940259480e915463ea2b1938f74fe388b3c20",
+      "path": "research/nightfall/formalization/structural_information/TensorCircuitSupportBudget.lean",
+      "source_blob_sha": "ad9a87f31f57b235f46fdbba6d5b3149f3c1dcae",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Physical first- and second-light Hilbert four-slot coefficient-energy from arbitrary normalized psi, fixed unitary U, genuine input sector projections including zero-mass sectors, and noncommuting positive effect 0≤P≤I; unrestricted arbitrary-dimensional homogeneous complex Hilbert fiber PiLp. Heterogeneous projector-family equivalence and full Fourier grouped B/C and terminal query theorem not established. Pending exact-head Lean/leanchecker."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorCircuitSupportBudget); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2BornExpansion.lean",
-      "source_blob_sha": "67406ec40853601e537608b9bd38e58bc94078aa",
+      "path": "research/nightfall/formalization/structural_information/TensorCubicFreeSiteBudget.lean",
+      "source_blob_sha": "8c7bfe0dbbc76a63cb5ec77b70ae903e137f0bf9",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Actual physical arbitrary complex two-query Born inner-product expansion into true original four-slot coefficient family, no assumed path normal form and no commutation/finite-rank effect premise. Source pending named exact Lean kernel; char2 real frequency simplification, grouped Hilbert Fourier tail and final 31 original query theorem still open."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorCubicFreeSiteBudget); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2CorrectionEventBridge.lean",
-      "source_blob_sha": "aad9019fde7c562f1031f9d5127c43cc72e6b149",
+      "path": "research/nightfall/formalization/structural_information/TensorFixedRank2Local.lean",
+      "source_blob_sha": "03293ab2c3bd5157f2aebb90eb2b0257581e7238",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 characteristic-two exact four-slot source extended zero-triple survivor-event to six repeated-position fiber implication; establishes ≤6M2 for genuine exactly-two event, conditional on source M2 pair bound. Full Hilbert Fourier/quantum theorem separate, pending exact-head kernel."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorFixedRank2Local); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2CorrectionSix.lean",
-      "source_blob_sha": "c0b8d1759fb45d0964644e5284830ac49bcdfc6e",
+      "path": "research/nightfall/formalization/structural_information/TensorMinimalZeroCircuit.lean",
+      "source_blob_sha": "da2590f72add9146e0f88136fb600a8f2d92ff98",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 universal six-lift upper cover for repeated-label zero-triple correction; bound <=6 times actual ordered pair fiber. Equivalence with zero-triple event indicator, physical Hilbert frame tail and complete T2-31 terminal remain OPEN. Named Lean kernel receipt pending."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorMinimalZeroCircuit); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2EffectOrder.lean",
+      "path": "research/nightfall/formalization/structural_information/TensorPairFibersLocal.lean",
+      "source_blob_sha": "78c5bcf1004ff8c20fd71507f5d54b7a55622d0a",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 T2 operator or finite query bridge, pending named Lean and kernel check. No full T2-31 certification, independent audit, or novelty promotion.",
-      "source_blob_sha": "4acc2a316388067de0c0c4b7bc23076f087d1554"
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorPairFibersLocal); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2FiberEnergy.lean",
-      "source_blob_sha": "24250b55a799fa451f9eb801b9cb79ac3d0203de",
+      "path": "research/nightfall/formalization/structural_information/TensorPureFibersL3.lean",
+      "source_blob_sha": "a95d366ec353aae9a1297df387f5052848be31ad",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Real Cauchy-Schwarz plus complex norm triangle and exact disjoint original-tuple frequency fibers: universal grouped complex Fourier-energy ≤ M times ungrouped coefficient energy for bounded fiber size M. Source built, no orthogonal paths assumption, no synthetic classical queries. Pending kernel; primitive A/B/C physical Hilbert estimates and full T2-31 terminal still open."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorPureFibersL3); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2FirstStageLight.lean",
-      "source_blob_sha": "ee8d0581d5ad32cbb283cc624ca6e67cd77ca658",
+      "path": "research/nightfall/formalization/structural_information/TensorSixSiteCircuit.lean",
+      "source_blob_sha": "0b56015d5d99ef22a63a3f03c066c9eb3a738958",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Actual p-light first-stage full Hilbert direct-sum path frame derived from orthonormal weighted input vectors and arbitrary interposed unitary; hypothesis orthonormal family requires separate bridge from arbitrary normalized input and projector sectors. Pending named Lean kernel/axiom audit, not unrestricted T2 Fourier theorem."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorSixSiteCircuit); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2FrameEnergy.lean",
-      "source_blob_sha": "f38cb7e146a5069e52249a8992251d67e45f155f",
+      "path": "research/nightfall/formalization/structural_information/TensorSymmetricDifferenceXor.lean",
+      "source_blob_sha": "e96886569955d646e2cdea35dc75c32253c803f6",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "T2 source-defined rank-free complex Hilbert double-frame coefficient-energy inequality from visible restricted frame hypothesis and operator contraction; prerequisite to but NOT derivation of full two-stage frame, six group B/C norms or complete T2-31 Fourier/query theorem. Pending separate named kernel gate."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorSymmetricDifferenceXor); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2HatEnergy.lean",
-      "source_blob_sha": "7eebb1aa6837c4489a5dac6af1e7b6b57d7ea0b5",
+      "path": "research/nightfall/formalization/structural_information/TensorT2Cancellation.lean",
+      "source_blob_sha": "ccdf378c38a06f51c7158f4138370dbc55fce778",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Rank-free Hilbert-vector pair-completion energy ≤M times original squared path mass via complex Hilbert norm triangle, real Cauchy and disjoint original-frequency fibers, including unit-mass corollary. Critical T2 Group C M₂ factor. Pending exact kernel and source-to-actual selected nonzero e-hat composition. Does not settle grouped B/C and full 31 query terminal."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorT2Cancellation); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2HeavyQuery.lean",
-      "source_blob_sha": "4fe07c8c0b27075153c2eeeb70b1dad7816b9bea",
+      "path": "research/nightfall/formalization/structural_information/TensorT2RepeatMobius.lean",
+      "source_blob_sha": "0bf2b6c0177405d74650c5448fe237755b9f040c",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact Lean source of T2 original-label heavy-set query budget and finite uniform Markov step. Fourier tail and physical operator estimate remain separate unproven kernel obligations. Pending exact-head Lean/leanchecker and source custody, not full T2 certification."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorT2RepeatMobius); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2HilbertCrossed.lean",
-      "source_blob_sha": "5a33ae78294b9eb62e763b41992bdf4d4288c4d9",
+      "path": "research/nightfall/formalization/structural_information/TensorThreeFactorRankCover.lean",
+      "source_blob_sha": "8a8d40e038860ba028bb58c46b0237619fe9afb8",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 scoped noncommuting crossed-slot equation (8) in arbitrary complex-normed sector fibers, including infinite dimension; explicit direct-sum energy contraction from physical positive effect and Hilbert-sector decomposition not yet formalized. Pending exact-head Lean, not full T2 theorem."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorThreeFactorRankCover); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/T2HilbertEffect.lean",
-      "source_blob_sha": "e0e63d9e76e92289f8d3a45ddc6cf285ad85db90",
+      "path": "research/nightfall/formalization/structural_information/TensorZeroCircuitDecomposition.lean",
+      "source_blob_sha": "2fba680439f8f642f6056eac14612bbfa18e8d9d",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 source-quantified arbitrary-dimensional Hilbert PiLp direct-sum operator norm contraction, selected-sector energy and crossed operator inequality from ‖P‖≤1. Physical positive operator conversion and full T2-31 terminal remain open; pending exact-head Lean receipt, not historical certification."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2LightFrame.lean",
-      "source_blob_sha": "c32e486d91963a066744251fbac378fd60418ee6",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 arbitrary (including infinite-dimensional) complex Hilbert orthonormal weighted light-frame Bessel inequality, essential T2 analytic ingredient. No two-stage path pinching or complete query theorem asserted. Pending exact-head kernel."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2OperatorEnergy.lean",
-      "source_blob_sha": "76041e78ab7b125a4cfbdc711cd15941023fd178",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact pending source custody for noncommuting scalar-sector complex crossed-slot operator energy under an explicit Hilbert-energy contraction (paper equation 8). NOT unrestricted Hilbert sectors, no full T2-31 query terminal, no priority promotion. Exact-head Lean/leanchecker must be separately verified."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2OutsideSpanLight.lean",
-      "source_blob_sha": "da263a7171aab1536277ad4523036cda570b6da4",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Four-slot frequencies outside additive span of original heavy query labels include a legal nonzero unqueried original slot with both p_a,q_a<eta; exact additive group fact, handles uncharged zero sector, no independent-label hypothesis. Pending named Lean/leanchecker; global out-of-span Fourier Hilbert energy and quantum query bound still open."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2PathEnergy.lean",
-      "source_blob_sha": "0f895d917c0756c8961dfb2b90a3f94c54a757f6",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Physical four-slot coefficient squared energy of source-built original pair quantum paths, positive noncommuting effect, arbitrary complex Hilbert sectors, from actual p- or q-light frames and normalized path mass. Proof of p-light restricted frame depends on T2FirstStageLight orthonormal input family, not yet arbitrary projector normalization. Pending named exact-head Lean; no complete grouped Fourier/Q-bound theorem."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2PhysicalSectors.lean",
-      "source_blob_sha": "61a9ac0e7f13b3bfd3ea32c1923c296bf99eb0f7",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Unrestricted complex Hilbert heterogeneous orthogonal projector submodule range bridge to exact dependent PiLp(2) sector Hilbert space via Mathlib DirectSum.IsInternal.isometryL2OfOrthogonalFamily, preserving physical inner products, norms and arbitrary unitary conjugation. Requires separately construct DirectSum.IsInternal and OrthogonalFamily from actual Π_d; no full T2-31 grouped Fourier terminal. Pending named Lean kernel."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2QuantumPhaseExpansion.lean",
-      "source_blob_sha": "46cf185c7c77a1e35996a41daba0be88dedaef5c",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Repair archived phase expansion's four PiLp coordinate sum failures via actual linear projection; exact-head replay pending."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
-      "source_blob_sha": "a6cd9575da447ce0e28b7fe61bccef87e20d2ddd",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 actual q_b-light second-stage Hilbert path-frame in arbitrary-dimensional complex direct sum of sectors, derived Cauchy-Schwarz and direct-sum norm without independent path orthogonality; pending kernel; no T2 full Fourier composition."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2SurvivorFrames.lean",
-      "source_blob_sha": "df92eb7cee9a59662b6d499455c5aa05f62e4989",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Exact rank-free arbitrary complex Hilbert first- and second-light zero-triple survivor contraction operators. First: physical p-light frame plus post-P pinched synthesis. Second: finite indexed inner-product Cauchy plus post-P coordinate pinching and q-light condition. Physical effect 0≤P≤I noncommuting. Still requires actual pair-hat energy ≤M₂, source-to-C survivor regrouping, full Fourier tail and 31 query terminal. Pending named Lean kernel and independent audit."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2WalshTranscript.lean",
-      "source_blob_sha": "2482460ab0aca4ec28b4ff60499ecbe8c88d49b7",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Exact original-label additive-character transcript determines all Fourier frequencies in additive span and all four-slot polynomials supported there; no independence or synthetic oracle-label assumptions. Pending named source-exact Lean/leanchecker; uniform dual Parseval and out-of-span Hilbert Fourier tail not yet formally established."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean",
-      "source_blob_sha": "ab62d4b41cce2e22058268b2790b4f8452155de3",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact blob source custody only; the separate scoped Lean CI may have a kernel receipt but this pending ledger does not promote it. Full T2 complex-Hilbert theorem, query accounting and external review remain open."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean",
-      "source_blob_sha": "27434fbb975ae8a41ad6bc452e925f4ef4cefa6d",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "2026-11-23 exact blob source custody only; the separate scoped Lean CI may have a kernel receipt but this pending ledger does not promote it. Full T2 complex-Hilbert theorem, query accounting and external review remain open."
+      "receipt_scope": "Nov 22 tensor T2 scoped Lean source (TensorZeroCircuitDecomposition); separate source-matched Lean workflows are required for the exact declarations. This custody record does not certify arbitrary complex two-query simulator, published novelty or external review."
     },
     {
       "path": "research/nightfall/formalization/swansea_v5/SwanseaV5UnionConvolution.lean",
@@ -5396,6 +5606,66 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerFiberCount.lean",
+      "source_blob_sha": "816194e12bbf67288591a4117d2483c18379365c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-#1151 source-exact proof candidate: free affine-code fiber equivalence, q^r cardinality, and support Shannon entropy bound. Mandatory pinned Lean/leanchecker and proof review; not full Wyner infimum."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerEntropyBound.lean",
+      "source_blob_sha": "76f521c3a3081d7840361411097263ace6482ec7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Entropy proof source exact variant of Route1Entropy Jensen finite-card lemma, two named affine entropy terminals; fixed misleading workflow expected name, pending full pinned Lean/leanchecker."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean",
+      "source_blob_sha": "01a3923d5add628ce047fc2e60422a3186c1f85a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Generic exact finite mixture Shannon entropy-chain algebra candidate: posterior entropy form equals H(output)-expected component H. Exact mathlib pinned Lean/leanchecker pending. Not affine C_W identity or novelty."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/MultiscaleProjectionTransfer.lean",
+      "source_blob_sha": "822df860033ae53fccb47772ba4e2ffe28de0bb3",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only. Scoped projection and finite latent information proof receipts tracked in PR #1187; no historical ledger promotion or priority inference."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2ActualSource.lean",
+      "source_blob_sha": "f9d940259480e915463ea2b1938f74fe388b3c20",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Physical first- and second-light Hilbert four-slot coefficient-energy from arbitrary normalized psi, fixed unitary U, genuine input sector projections including zero-mass sectors, and noncommuting positive effect 0≤P≤I; unrestricted arbitrary-dimensional homogeneous complex Hilbert fiber PiLp. Heterogeneous projector-family equivalence and full Fourier grouped B/C and terminal query theorem not established. Pending exact-head Lean/leanchecker."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2BornExpansion.lean",
+      "source_blob_sha": "67406ec40853601e537608b9bd38e58bc94078aa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual physical arbitrary complex two-query Born inner-product expansion into true original four-slot coefficient family, no assumed path normal form and no commutation/finite-rank effect premise. Source pending named exact Lean kernel; char2 real frequency simplification, grouped Hilbert Fourier tail and final 31 original query theorem still open."
+    },
+    {
       "path": "research/nightfall/formalization/structural_information/T2ClippedEstimator.lean",
       "source_blob_sha": "cff3d46551584ecb455c16af3065313c26fbf296",
       "classification": "unreviewed-source",
@@ -5404,6 +5674,236 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Recovered archived #1181; explicit classical decidability fixes observed missing Decidable existential. Exact-head kernel replay pending; visible Fourier energy premise retained."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2CorrectionEventBridge.lean",
+      "source_blob_sha": "aad9019fde7c562f1031f9d5127c43cc72e6b149",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 characteristic-two exact four-slot source extended zero-triple survivor-event to six repeated-position fiber implication; establishes ≤6M2 for genuine exactly-two event, conditional on source M2 pair bound. Full Hilbert Fourier/quantum theorem separate, pending exact-head kernel."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2CorrectionSix.lean",
+      "source_blob_sha": "c0b8d1759fb45d0964644e5284830ac49bcdfc6e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 universal six-lift upper cover for repeated-label zero-triple correction; bound <=6 times actual ordered pair fiber. Equivalence with zero-triple event indicator, physical Hilbert frame tail and complete T2-31 terminal remain OPEN. Named Lean kernel receipt pending."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2EffectOrder.lean",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 T2 operator or finite query bridge, pending named Lean and kernel check. No full T2-31 certification, independent audit, or novelty promotion.",
+      "source_blob_sha": "4acc2a316388067de0c0c4b7bc23076f087d1554"
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FiberEnergy.lean",
+      "source_blob_sha": "24250b55a799fa451f9eb801b9cb79ac3d0203de",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Real Cauchy-Schwarz plus complex norm triangle and exact disjoint original-tuple frequency fibers: universal grouped complex Fourier-energy ≤ M times ungrouped coefficient energy for bounded fiber size M. Source built, no orthogonal paths assumption, no synthetic classical queries. Pending kernel; primitive A/B/C physical Hilbert estimates and full T2-31 terminal still open."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FirstStageLight.lean",
+      "source_blob_sha": "ee8d0581d5ad32cbb283cc624ca6e67cd77ca658",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual p-light first-stage full Hilbert direct-sum path frame derived from orthonormal weighted input vectors and arbitrary interposed unitary; hypothesis orthonormal family requires separate bridge from arbitrary normalized input and projector sectors. Pending named Lean kernel/axiom audit, not unrestricted T2 Fourier theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FrameEnergy.lean",
+      "source_blob_sha": "f38cb7e146a5069e52249a8992251d67e45f155f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "T2 source-defined rank-free complex Hilbert double-frame coefficient-energy inequality from visible restricted frame hypothesis and operator contraction; prerequisite to but NOT derivation of full two-stage frame, six group B/C norms or complete T2-31 Fourier/query theorem. Pending separate named kernel gate."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2HatEnergy.lean",
+      "source_blob_sha": "7eebb1aa6837c4489a5dac6af1e7b6b57d7ea0b5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Rank-free Hilbert-vector pair-completion energy ≤M times original squared path mass via complex Hilbert norm triangle, real Cauchy and disjoint original-frequency fibers, including unit-mass corollary. Critical T2 Group C M₂ factor. Pending exact kernel and source-to-actual selected nonzero e-hat composition. Does not settle grouped B/C and full 31 query terminal."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2HeavyQuery.lean",
+      "source_blob_sha": "4fe07c8c0b27075153c2eeeb70b1dad7816b9bea",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact Lean source of T2 original-label heavy-set query budget and finite uniform Markov step. Fourier tail and physical operator estimate remain separate unproven kernel obligations. Pending exact-head Lean/leanchecker and source custody, not full T2 certification."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2HilbertCrossed.lean",
+      "source_blob_sha": "5a33ae78294b9eb62e763b41992bdf4d4288c4d9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 scoped noncommuting crossed-slot equation (8) in arbitrary complex-normed sector fibers, including infinite dimension; explicit direct-sum energy contraction from physical positive effect and Hilbert-sector decomposition not yet formalized. Pending exact-head Lean, not full T2 theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2HilbertEffect.lean",
+      "source_blob_sha": "e0e63d9e76e92289f8d3a45ddc6cf285ad85db90",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 source-quantified arbitrary-dimensional Hilbert PiLp direct-sum operator norm contraction, selected-sector energy and crossed operator inequality from ‖P‖≤1. Physical positive operator conversion and full T2-31 terminal remain open; pending exact-head Lean receipt, not historical certification."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2LightFrame.lean",
+      "source_blob_sha": "c32e486d91963a066744251fbac378fd60418ee6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 arbitrary (including infinite-dimensional) complex Hilbert orthonormal weighted light-frame Bessel inequality, essential T2 analytic ingredient. No two-stage path pinching or complete query theorem asserted. Pending exact-head kernel."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2OperatorEnergy.lean",
+      "source_blob_sha": "76041e78ab7b125a4cfbdc711cd15941023fd178",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact pending source custody for noncommuting scalar-sector complex crossed-slot operator energy under an explicit Hilbert-energy contraction (paper equation 8). NOT unrestricted Hilbert sectors, no full T2-31 query terminal, no priority promotion. Exact-head Lean/leanchecker must be separately verified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2OutsideSpanLight.lean",
+      "source_blob_sha": "da263a7171aab1536277ad4523036cda570b6da4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Four-slot frequencies outside additive span of original heavy query labels include a legal nonzero unqueried original slot with both p_a,q_a<eta; exact additive group fact, handles uncharged zero sector, no independent-label hypothesis. Pending named Lean/leanchecker; global out-of-span Fourier Hilbert energy and quantum query bound still open."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2PathEnergy.lean",
+      "source_blob_sha": "0f895d917c0756c8961dfb2b90a3f94c54a757f6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Physical four-slot coefficient squared energy of source-built original pair quantum paths, positive noncommuting effect, arbitrary complex Hilbert sectors, from actual p- or q-light frames and normalized path mass. Proof of p-light restricted frame depends on T2FirstStageLight orthonormal input family, not yet arbitrary projector normalization. Pending named exact-head Lean; no complete grouped Fourier/Q-bound theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2PhysicalSectors.lean",
+      "source_blob_sha": "61a9ac0e7f13b3bfd3ea32c1923c296bf99eb0f7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Unrestricted complex Hilbert heterogeneous orthogonal projector submodule range bridge to exact dependent PiLp(2) sector Hilbert space via Mathlib DirectSum.IsInternal.isometryL2OfOrthogonalFamily, preserving physical inner products, norms and arbitrary unitary conjugation. Requires separately construct DirectSum.IsInternal and OrthogonalFamily from actual Π_d; no full T2-31 grouped Fourier terminal. Pending named Lean kernel."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2QuantumPhaseExpansion.lean",
+      "source_blob_sha": "46cf185c7c77a1e35996a41daba0be88dedaef5c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Repair archived phase expansion's four PiLp coordinate sum failures via actual linear projection; exact-head replay pending."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
+      "source_blob_sha": "a6cd9575da447ce0e28b7fe61bccef87e20d2ddd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 actual q_b-light second-stage Hilbert path-frame in arbitrary-dimensional complex direct sum of sectors, derived Cauchy-Schwarz and direct-sum norm without independent path orthogonality; pending kernel; no T2 full Fourier composition."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2SurvivorFrames.lean",
+      "source_blob_sha": "df92eb7cee9a59662b6d499455c5aa05f62e4989",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact rank-free arbitrary complex Hilbert first- and second-light zero-triple survivor contraction operators. First: physical p-light frame plus post-P pinched synthesis. Second: finite indexed inner-product Cauchy plus post-P coordinate pinching and q-light condition. Physical effect 0≤P≤I noncommuting. Still requires actual pair-hat energy ≤M₂, source-to-C survivor regrouping, full Fourier tail and 31 query terminal. Pending named Lean kernel and independent audit."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2WalshTranscript.lean",
+      "source_blob_sha": "2482460ab0aca4ec28b4ff60499ecbe8c88d49b7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact original-label additive-character transcript determines all Fourier frequencies in additive span and all four-slot polynomials supported there; no independence or synthetic oracle-label assumptions. Pending named source-exact Lean/leanchecker; uniform dual Parseval and out-of-span Hilbert Fourier tail not yet formally established."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2ZeroTripleMultiplicity.lean",
+      "source_blob_sha": "ab62d4b41cce2e22058268b2790b4f8452155de3",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact blob source custody only; the separate scoped Lean CI may have a kernel receipt but this pending ledger does not promote it. Full T2 complex-Hilbert theorem, query accounting and external review remain open."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2ZeroTripleOverlap31.lean",
+      "source_blob_sha": "27434fbb975ae8a41ad6bc452e925f4ef4cefa6d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "2026-11-23 exact blob source custody only; the separate scoped Lean CI may have a kernel receipt but this pending ledger does not promote it. Full T2 complex-Hilbert theorem, query accounting and external review remain open."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1ReciprocalAtom.lean",
+      "source_blob_sha": "ab0aa7a3cf64420a501fead76f31d8645fd60858",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1SharedDrift.lean",
+      "source_blob_sha": "86a0a87eb6893bfb18da131fecd3354909f1c620",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
     }
   ]
 }

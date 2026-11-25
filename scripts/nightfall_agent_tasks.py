@@ -215,6 +215,47 @@ def verify_receipt(d: object) -> None:
         pass
 
 
+def replay_receipt(d: dict, timeout: int = 180) -> dict:
+    """Bind receipt to this clean checkout and rerun the SAME source checker.
+
+    This is an integrity/replay check, not independent mathematics. There is
+    no claim that agent identity, mathematical soundness, or source originality
+    is attested by this function.
+    """
+    verify_receipt(d)
+    if d["execution"]["status"] != "PASS":
+        raise ValueError("cannot replay-promote a failed execution receipt")
+    recorded = d["source"]
+    if recorded["worktree_dirty"] or get_dirty():
+        raise ValueError("source-bound replay requires a clean working tree")
+    head = get_git_head()
+    if recorded["git_head"] != head:
+        raise ValueError("recorded source commit differs from checked-out HEAD")
+    for source_name, expected_hash in recorded["anchor_sha256"].items():
+        if file_sha256(source_name) != expected_hash:
+            raise ValueError("source anchor byte hash mismatch: " + source_name)
+    fresh = run_task(d["task"], d["problem_id"],
+                     d["agent_role_claimed"], timeout)
+    if fresh["source"] != recorded:
+        raise ValueError("replay source identity changed during checker execution")
+    if fresh["toolchain"] != d["toolchain"]:
+        raise ValueError("replay Python interpreter/toolchain differs")
+    for key in ("status", "exit_code", "timed_out", "stdout_sha256",
+                "stderr_sha256", "stdout_bytes", "stderr_bytes"):
+        if d["execution"][key] != fresh["execution"][key]:
+            raise ValueError("checker output or exit outcome mismatch: " + key)
+    return {
+        "schema": "nightfall.agent-task-validation.v1",
+        "valid_structure": True,
+        "replay_bound_to_this_checkout": True,
+        "same_checker_source_reexecuted": True,
+        "independent_math_audit": False,
+        "mathematical_certification": False,
+        "source_commit": head,
+        "task": d["task"],
+    }
+
+
 def write_receipt(d: dict, path: Path) -> None:
     # Do not overwrite existing receipts; leave historical certificates intact.
     if path.exists():
@@ -237,6 +278,9 @@ def main() -> int:
     run.add_argument("--receipt", type=Path, help="Write immutable JSON receipt to a new path")
     verify = sub.add_parser("verify", help="Validate receipt structure (not truth)")
     verify.add_argument("receipt", type=Path)
+    replay = sub.add_parser("replay", help="Reexecute checker, binding source and output to current clean checkout")
+    replay.add_argument("receipt", type=Path)
+    replay.add_argument("--timeout", type=int, default=180)
     args = p.parse_args()
     try:
         if args.operation == "list":
@@ -246,11 +290,14 @@ def main() -> int:
             verify_receipt(d)
             if args.receipt is not None:
                 write_receipt(d, args.receipt)
-        else:
+        elif args.operation == "verify":
             d = json.loads(args.receipt.read_text(encoding="utf-8"))
             verify_receipt(d)
             d = {"schema": "nightfall.agent-task-validation.v1",
                  "valid_structure": True, "mathematical_certification": False}
+        else:
+            d = json.loads(args.receipt.read_text(encoding="utf-8"))
+            d = replay_receipt(d, args.timeout)
         print(json.dumps(d, sort_keys=True, separators=(",", ":")))
         return 1 if args.operation == "run" and d["execution"]["status"] != "PASS" else 0
     except (ValueError, KeyError, TypeError, OSError, json.JSONDecodeError,

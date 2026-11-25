@@ -1,0 +1,134 @@
+name: NIGHTFALL tensor T2 cancellation Lean audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/TensorT2Cancellation.lean'
+      - 'research/nightfall/formalization/structural_information/TensorPureFibersL3.lean'
+      - 'research/nightfall/formalization/structural_information/TensorPairFibersLocal.lean'
+      - '.github/workflows/nightfall-tensor-t2-cancellation-lean.yml'
+      - 'research/nightfall/structural_information/check_tensor_t2_primitive_independent.py'
+      - 'research/nightfall/structural_information/check_tensor_pure_fibers.cpp'
+      - 'research/nightfall/structural_information/check_tensor_t2_group_energy_exact.py'
+      - 'research/nightfall/structural_information/check_tensor_pure_support_coefficients.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scoped-t2-cancellation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and kernel-check genuine algebra theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tensor-t2-cancellation-receipt
+          src=research/nightfall/formalization/structural_information/TensorT2Cancellation.lean
+          cp "$src" /tmp/mathlib4/TensorT2Cancellation.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/TensorT2Cancellation.olean TensorT2Cancellation.lean) 2>&1 | tee tensor-t2-cancellation-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker TensorT2Cancellation) 2>&1 | tee tensor-t2-cancellation-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/TensorT2Cancellation.lean').read_text()
+          log=Path('tensor-t2-cancellation-receipt/compile.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          names=['pair_zero_iff_eq','repeated_four_labels_collapse','overlapping_zero_triples_force_repeat']
+          assert all(name in log for name in names)
+          matches=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          assert len(matches)>=3
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert all(set(v.strip() for v in m.split(',') if v.strip())<=allowed for m in matches)
+          print('TENSOR_T2_CANCELLATION_KERNEL_PASS_SCOPED')
+          PY
+      - name: Kernel-check small-depth pair-XOR spectrum
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir=research/nightfall/formalization/structural_information
+          cp "$dir/SubcubeL3.lean" /tmp/mathlib4/SubcubeL3.lean
+          cp "$dir/TensorPairFibersLocal.lean" /tmp/mathlib4/TensorPairFibersLocal.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/SubcubeL3.olean SubcubeL3.lean) 2>&1 | tee tensor-t2-cancellation-receipt/SubcubeL3-pairs.log
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/TensorPairFibersLocal.olean TensorPairFibersLocal.lean) 2>&1 | tee tensor-t2-cancellation-receipt/TensorPairFibersLocal.log
+          (cd /tmp/mathlib4 && lake env leanchecker TensorPairFibersLocal) 2>&1 | tee tensor-t2-cancellation-receipt/kernel-pair-fibers.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          src=Path('research/nightfall/formalization/structural_information/TensorPairFibersLocal.lean').read_text()
+          log=Path('tensor-t2-cancellation-receipt/TensorPairFibersLocal.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',src)
+          assert 'error:' not in log
+          names=['row_pair_L1','row_pair_L2','nonrow_pair_L2']
+          assert all(n in log for n in names)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          assert len(reports)>=3
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert all(set(v.strip() for v in m.split(',') if v.strip())<=allowed for m in reports)
+          print('TENSOR_PAIR_LOCAL_KERNEL_PASS')
+          PY
+      - name: Independent exact high-rank two-query grouped-energy audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/structural_information/check_tensor_t2_group_energy_exact.py | tee tensor-t2-cancellation-receipt/t2-group-energy.log
+          grep -q 'PASS: exact finite arbitrary-rank-style audit only' tensor-t2-cancellation-receipt/t2-group-energy.log
+      - name: Independent exact source-level primitive support coefficients
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/structural_information/check_tensor_pure_support_coefficients.py | tee tensor-t2-cancellation-receipt/local-support-coefficients.log
+          grep -q 'PASS: complete finite local coefficient table k<=4' tensor-t2-cancellation-receipt/local-support-coefficients.log
+      - name: Kernel-check exact local primitive coefficients at L<=3
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir=research/nightfall/formalization/structural_information
+          for f in SubcubeL3 TensorPureFibersL3; do
+            cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "tensor-t2-cancellation-receipt/$f.log"
+          done
+          (cd /tmp/mathlib4 && lake env leanchecker TensorPureFibersL3) 2>&1 | tee tensor-t2-cancellation-receipt/kernel-pure-fibers.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/TensorPureFibersL3.lean').read_text()
+          log=Path('tensor-t2-cancellation-receipt/TensorPureFibersL3.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          names=['primitive_two_L1','primitive_three_L2','primitive_four_L2','primitive_three_L3','primitive_four_L3']
+          assert all(name in log for name in names)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert len(reports)>=5
+          assert all(set(v.strip() for v in m.split(',') if v.strip())<=allowed for m in reports)
+          print('TENSOR_PURE_FIBER_LOCAL_COEFFICIENTS_KERNEL_PASS')
+          PY
+      - name: Exhaustive independent primitive-fiber checks at L<=4
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/structural_information/check_tensor_t2_primitive_independent.py | tee tensor-t2-cancellation-receipt/exact-fibers.log
+      - name: Exact independent pair-XOR contraction through tensor level seven
+        shell: bash
+        run: |
+          set -euo pipefail
+          g++ -O3 -std=c++17 -Wall -Wextra -Werror research/nightfall/structural_information/check_tensor_pure_fibers.cpp -o /tmp/tensor_pure_fibers
+          /tmp/tensor_pure_fibers 7 | tee tensor-t2-cancellation-receipt/pure-fibers.log
+          grep -q 'L=7.*TOTAL=1247 PASS' tensor-t2-cancellation-receipt/pure-fibers.log
+      - name: Persist source and receipt
+        if: always()
+        run: |
+          mkdir -p tensor-t2-cancellation-receipt
+          git rev-parse HEAD > tensor-t2-cancellation-receipt/commit.txt
+          sha256sum research/nightfall/formalization/structural_information/TensorT2Cancellation.lean research/nightfall/formalization/structural_information/TensorPureFibersL3.lean research/nightfall/formalization/structural_information/TensorPairFibersLocal.lean research/nightfall/structural_information/check_tensor_t2_primitive_independent.py research/nightfall/structural_information/check_tensor_pure_fibers.cpp research/nightfall/structural_information/check_tensor_t2_group_energy_exact.py research/nightfall/structural_information/check_tensor_pure_support_coefficients.py > tensor-t2-cancellation-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: tensor-t2-cancellation-receipt
+          path: tensor-t2-cancellation-receipt/
+          retention-days: 90

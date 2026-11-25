@@ -10,6 +10,12 @@ Research directed by **Devin J. Wright** · Human-led, AI-assisted · 2026
 
 NIGHTFALL studies mathematical structures and builds reproducible mechanisms for discovering, checking, and explaining results. Every claim should travel with its **statement, assumptions, source, verification method, and limitations**. A computation, a formal proof, an originality assessment, and a competition result are different kinds of evidence.
 
+## Published research — Zenodo
+
+[**The NIGHTFALL Papers**](https://d3lefts.github.io/d3lefts/publications.html) · [Quadratic Influence Beyond the Boolean Cube (DOI: 10.5281/zenodo.24516569)](https://doi.org/10.5281/zenodo.24516569) · Owner-confirmed preprint, November 24, 2026. Live record and archived bytes not independently verified.
+
+[**Flagship Wyner simulation preprint (DOI: 10.5281/zenodo.24511398)**](https://doi.org/10.5281/zenodo.24511398) · Published November 24, 2026, manuscript v0.7. [NIGHTFALL — Independent Mathematical Research](https://zenodo.org/communities/nightfall-research/records) · [Publication registry](papers/publications.json) · [Archival procedure](papers/zenodo/README.md). Zenodo publication and external human peer review are distinct.
+
 ## Scholarly research archive — start here
 
 For a mathematician or referee, begin with the [**paper shelf**](papers/README.md), then the [**canonical claim catalogue**](research/catalogue/README.md) and its [machine-readable status/dependency registry](research/catalogue/CLAIMS.json). Each paper entry directs you to the **original source**, exact evidence, and specific missing proof gates; it does not copy or promote its theorem.
@@ -17,6 +23,14 @@ For a mathematician or referee, begin with the [**paper shelf**](papers/README.m
 [Independent referee desk](research/referee/README.md) · [Historical finite evidence and errata](research/archive/README.md) · [Publication/reuse rights](research/REUSE_AND_RIGHTS.md) · [Full research map](research/README.md).
 
 This is a **non-destructive index migration**: the original `research/nightfall/` files, Lean declarations, witness hashes, cited URLs and frozen 40-record/11-passport historical catalogues remain in place. The 15 selected claims in the current catalogue are **not** 15 refereed results or additions to the approved finding list. The [Paper A](papers/exact-recovery/MANUSCRIPT.md), [Paper B](papers/spectral-adaptive-prediction/MANUSCRIPT.md), and [Paper C](papers/specialized-complexity/MANUSCRIPT.md) manuscripts have distinct query models and certification scopes. Their validity, source completeness, independent review and originality remain separately labeled.
+
+## Route 1 / Wyner common-information simulation — scope update, 23 November 2026
+
+The [general-latent Route 1 theorem](https://github.com/d3lefts/d3lefts/pull/970) bounds classical original-coordinate query depth for bounded low-degree acceptance functions on finite correlated input laws by `poly(d, 1/epsilon, 1/delta) * (1 + C_W)`. It is a sufficient simulation theorem, not a classical runtime or full quantum-state simulation result. Quantum acceptance uses the standard polynomial method and requires the matching oracle interface. Credit **David Turturean** ([arXiv:2611.09773](https://arxiv.org/abs/2611.09773)) for the level-integration, third-moment, median/doubling and light-coordinate averaging mechanism; [#317](https://github.com/d3lefts/d3lefts/pull/317) ports it to arbitrary finite product laws, and #970 extends that foundation using latent switching and a conditional-information potential.
+
+**Supporting sharpness proposition, paper level:** the [updated converse and prior-art memo](research/nightfall/structural_information/ROUTE1_CONVERSE_EXACT_FORRELATION_20261121.md#2026-11-23-addendum-worst-case-linear-wyner-dependence-via-hard-law-sparsification) uses Girish–Servedio's query lower bound, Yao/minimax, finite-tree counting and Hoeffding to derive an existential family with fixed-degree, fixed-tolerance classical acceptance-estimation depth Theta(C_W). The user-supplied review of #1182 at head `21aa4e3` identified the entropy limitation and proposed independent-product padding: the revised family has unchanged optimal query depth and C_W, while total entropy and log support size can grow arbitrarily relative to C_W. This establishes worst-case optimal linear dependence on C_W and an unbounded improvement over linear total-entropy bounds on this family, **not** a universal characterization or uniqueness of Wyner's measure. It is a supporting proposition in Route 1, not a separate flagship. External specialist proof review, Lean certification and priority clearance remain open. The [#1150 diagonal transfer](https://github.com/d3lefts/d3lefts/pull/1150) instead demonstrates an unbounded gap between ambient and recoverable-latent **upper bounds**, not an optimal-query lower bound.
+
+Relevant nonuniform-input predecessors include [Girish–Mittal–Nehoran–Raz](https://arxiv.org/abs/2609.35327) (fixed-bias products and slices), [distributional quantum query complexity](https://arxiv.org/abs/2610.06835) (composition and quantum lower bounds), and the older average-case query literature; see the memo for distinctions and references. No change of flagship ranking or originality status is implied by this scope update.
 
 ## Active Lean certification environment — 17 November 2026
 

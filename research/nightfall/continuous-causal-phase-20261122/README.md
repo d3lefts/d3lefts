@@ -1,5 +1,7 @@
 # NIGHTFALL flagship execution checkpoint — 2026-11-22
 
+> **Current evidence reconciliation, 2026-11-22:** The all-policy oriented-row threshold has a paper-level proof from merged #995 plus independent AI audit #1000, and its product-sphere zero premise is exactly Chan–Chen–Frick–Hull (2019/2020), Remark 2.7. The causal Lean source is certified only *conditional* on that classical topological zero; an unconditional kernel check, outside referee, and novelty audit remain open. The later [topology and detector-holonomy audit](TOPOLOGY_SOURCE_AND_DETECTOR_HOLONOMY_20261122.md) includes a new reachable-history example separating continuous **rank-one detectors** from continuous **oriented row choices**. The earlier text below is preserved as the dated initial checkpoint, not a live certification status.
+
 **Research gate:** provisional universal lower-bound proof candidate.
 Do **not** equate this with an independently verified mathematical theorem,
 novel result, a Lean certificate, or a publication-ready contribution.

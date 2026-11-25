@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://d3lefts.github.io/d3lefts/</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://d3lefts.github.io/d3lefts/</loc><lastmod>2026-11-24</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/engineering.html</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/evals.html</loc><lastmod>2026-11-18</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/dispatchq-b1.html</loc><lastmod>2026-11-18</lastmod></url>
@@ -22,7 +22,7 @@
   <url><loc>https://d3lefts.github.io/d3lefts/erdos-paper.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/living-investigation.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/agenda.html</loc><lastmod>2026-10-28</lastmod></url>
-  <url><loc>https://d3lefts.github.io/d3lefts/research.html</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://d3lefts.github.io/d3lefts/research.html</loc><lastmod>2026-11-24</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/claim-lab.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/referee.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/adversary.html</loc><lastmod>2026-10-29</lastmod></url>
@@ -38,9 +38,9 @@
   <url><loc>https://d3lefts.github.io/d3lefts/judgment-provenance.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/product-space-influence.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/observability.html</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://d3lefts.github.io/d3lefts/active-proof-passport.html</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://d3lefts.github.io/d3lefts/active-proof-passport.html</loc><lastmod>2026-11-24</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/kaczmarz-proof-passport.html</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://d3lefts.github.io/d3lefts/mathematical-results.html</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://d3lefts.github.io/d3lefts/mathematical-results.html</loc><lastmod>2026-11-24</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/four-shuffle-proof-passport.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/finite-product-influence-proof-passport.html</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/cubic-obstruction-proof-passport.html</loc><lastmod>2026-11-11</lastmod></url>
@@ -57,6 +57,13 @@
   <url><loc>https://d3lefts.github.io/d3lefts/commonwealth.html</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/commonwealth-intelligence.html</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/commonwealth-warrant.html</loc></url>
-  <url><loc>https://d3lefts.github.io/d3lefts/recent-research.html</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://d3lefts.github.io/d3lefts/recent-research.html</loc><lastmod>2026-11-24</lastmod></url>
   <url><loc>https://d3lefts.github.io/d3lefts/forrelation-mixture.html</loc><lastmod>2026-11-19</lastmod></url>
+  <url><loc>https://d3lefts.github.io/d3lefts/research-dispatch-20261123.html</loc><lastmod>2026-11-23</lastmod></url>
+  <url><loc>https://d3lefts.github.io/d3lefts/research-dispatch-20261124.html</loc><lastmod>2026-11-24</lastmod></url>
+<!-- nightfall-publications:start -->
+  <url><loc>https://d3lefts.github.io/d3lefts/publications.html</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://d3lefts.github.io/d3lefts/publication-wyner-common-information.html</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://d3lefts.github.io/d3lefts/publication-quadratic-influence.html</loc><lastmod>2026-11-24</lastmod></url>
+<!-- nightfall-publications:end -->
 </urlset>

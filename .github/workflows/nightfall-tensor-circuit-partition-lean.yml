@@ -1,0 +1,59 @@
+name: NIGHTFALL disjoint zero-circuit partition Lean kernel
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/TensorMinimalZeroCircuit.lean'
+      - 'research/nightfall/formalization/structural_information/TensorZeroCircuitDecomposition.lean'
+      - '.github/workflows/nightfall-tensor-circuit-partition-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  circuit-partition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile and kernel-check finite minimal-circuit disjoint partition
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p circuit-partition-receipt
+          dir=research/nightfall/formalization/structural_information
+          for f in TensorMinimalZeroCircuit TensorZeroCircuitDecomposition; do
+            cp "$dir/$f.lean" "/tmp/mathlib4/$f.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$f.olean" "$f.lean") 2>&1 | tee "circuit-partition-receipt/$f.log"
+          done
+          (cd /tmp/mathlib4 && lake env leanchecker TensorZeroCircuitDecomposition) 2>&1 | tee circuit-partition-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          d=Path('research/nightfall/formalization/structural_information')
+          for f in ['TensorMinimalZeroCircuit','TensorZeroCircuitDecomposition']:
+            src=(d/(f+'.lean')).read_text()
+            log=Path('circuit-partition-receipt/'+f+'.log').read_text()
+            assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',src)
+            assert 'error:' not in log
+            reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+            no=re.findall(r'does not depend on any axioms',log)
+            assert reports or no
+            allowed={'propext','Classical.choice','Quot.sound'}
+            assert all(set(s.strip() for s in x.split(',') if s.strip())<=allowed for x in reports)
+          assert 'exists_disjoint_minimal_circuit_partition' in Path('circuit-partition-receipt/TensorZeroCircuitDecomposition.log').read_text()
+          print('TENSOR_ZERO_CIRCUIT_PARTITION_KERNEL_PASS')
+          PY
+      - name: Exact source and compiler receipt
+        if: always()
+        run: |
+          mkdir -p circuit-partition-receipt
+          git rev-parse HEAD > circuit-partition-receipt/HEAD
+          sha256sum research/nightfall/formalization/structural_information/TensorMinimalZeroCircuit.lean research/nightfall/formalization/structural_information/TensorZeroCircuitDecomposition.lean > circuit-partition-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: tensor-circuit-partition-receipt
+          path: circuit-partition-receipt/
+          retention-days: 90

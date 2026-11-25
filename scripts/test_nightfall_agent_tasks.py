@@ -108,5 +108,91 @@ class AgentTasksTest(unittest.TestCase):
             tasks.verify_receipt(mutated)
 
 
+
+    def test_replay_on_same_clean_checkout(self):
+        result = tasks.replay_receipt(self.receipt)
+        self.assertTrue(result["replay_bound_to_this_checkout"])
+        self.assertTrue(result["same_checker_source_reexecuted"])
+        self.assertFalse(result["independent_math_audit"])
+        self.assertFalse(result["mathematical_certification"])
+        self.assertEqual(result["source_commit"], self.receipt["source"]["git_head"])
+
+    def test_structurally_plausible_tampering_is_caught_by_replay(self):
+        # Structural syntax validation deliberately does NOT catch valid-length
+        # forged checksums: the stricter same-checkout replay MUST do so.
+        for kind in ("git_head", "anchor_sha256", "stdout_sha256"):
+            with self.subTest(kind=kind):
+                mutated = copy.deepcopy(self.receipt)
+                if kind == "git_head":
+                    old = mutated["source"]["git_head"]
+                    mutated["source"]["git_head"] = ("0" if old[0] != "0" else "1") + old[1:]
+                elif kind == "anchor_sha256":
+                    key = sorted(mutated["source"]["anchor_sha256"])[0]
+                    old = mutated["source"]["anchor_sha256"][key]
+                    mutated["source"]["anchor_sha256"][key] = ("0" if old[0] != "0" else "1") + old[1:]
+                else:
+                    old = mutated["execution"]["stdout_sha256"]
+                    mutated["execution"]["stdout_sha256"] = ("0" if old[0] != "0" else "1") + old[1:]
+                tasks.verify_receipt(mutated)  # structurally valid is not attested
+                with self.assertRaises(ValueError):
+                    tasks.replay_receipt(mutated)
+
+    def test_dirty_worktree_cannot_be_replay_attested(self):
+        mutated = copy.deepcopy(self.receipt)
+        mutated["source"]["worktree_dirty"] = True
+        tasks.verify_receipt(mutated)
+        with self.assertRaisesRegex(ValueError, "clean working tree"):
+            tasks.replay_receipt(mutated)
+
+    def test_forged_success_cannot_be_replay_attested(self):
+        mutated = copy.deepcopy(self.receipt)
+        mutated["certification"]["independent_semantic_audit"] = True
+        with self.assertRaises(ValueError):
+            tasks.replay_receipt(mutated)
+
+
+    def test_activity_telemetry_deduplicates_shared_work(self):
+        from nightfall_activity_telemetry import aggregate
+        event = {"run_id": "run-1", "activity": "U29.04",
+                 "operator": "dual", "receipt": self.receipt}
+        result = aggregate([event, {**event, "related_activities": ["U29.01"]}])
+        self.assertEqual(result["unique_runs"], 1)
+        self.assertEqual(result["duplicate_observations"], 1)
+        self.assertEqual(result["total_command_runtime_ms"],
+                         self.receipt["execution"]["duration_ms"])
+        self.assertEqual(result["secondary_tag_counts_nonadditive"], {"U29.01": 1})
+        self.assertFalse(result["proof_certification"])
+        self.assertFalse(result["independent_review_certified"])
+        self.assertFalse(result["novelty_certified"])
+
+    def test_activity_telemetry_retains_failures_and_rejects_conflicts(self):
+        from nightfall_activity_telemetry import aggregate
+        event = {"run_id": "run-1", "activity": "U29.04",
+                 "operator": "dual", "receipt": self.receipt}
+        failed = copy.deepcopy(self.receipt)
+        failed["execution"].update(status="FAIL", exit_code=7)
+        result = aggregate([event, {**event, "run_id": "run-2", "receipt": failed}])
+        self.assertEqual(result["activity_operator"][0]["pass_checks"], 1)
+        self.assertEqual(result["activity_operator"][0]["fail_checks"], 1)
+        for changed in (
+            {**event, "activity": "U29.01"},
+            {**event, "run_id": "run-alias"},
+            {**event, "operator": "other"},
+        ):
+            with self.assertRaises(ValueError):
+                aggregate([event, changed])
+        with self.assertRaises(ValueError):
+            aggregate([{**event, "activity": "unknown"}])
+        with self.assertRaises(ValueError):
+            aggregate([{**event, "related_activities": ["U29.04"]}])
+        invalid = copy.deepcopy(self.receipt)
+        invalid["certification"]["mathematical_theorem"] = True
+        with self.assertRaises(ValueError):
+            aggregate([{**event, "receipt": invalid}])
+        invalid = copy.deepcopy(self.receipt)
+        invalid["execution"]["duration_ms"] = True
+        with self.assertRaises(ValueError):
+            aggregate([{**event, "receipt": invalid}])
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

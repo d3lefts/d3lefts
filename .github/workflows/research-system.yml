@@ -17,6 +17,9 @@ on:
       - "docs/referee-app.js"
       - "docs/sitemap.xml"
       - "research/nightfall/research-system/**"
+      - "scripts/nightfall_activity_telemetry.py"
+      - "scripts/nightfall_agent_tasks.py"
+      - "scripts/test_nightfall_agent_tasks.py"
       - ".github/workflows/research-system.yml"
   pull_request:
     paths:
@@ -33,6 +36,9 @@ on:
       - "docs/referee-app.js"
       - "docs/sitemap.xml"
       - "research/nightfall/research-system/**"
+      - "scripts/nightfall_activity_telemetry.py"
+      - "scripts/nightfall_agent_tasks.py"
+      - "scripts/test_nightfall_agent_tasks.py"
       - ".github/workflows/research-system.yml"
   workflow_dispatch:
 concurrency:
@@ -58,3 +64,6 @@ jobs:
         run: node research/nightfall/research-system/test.cjs
       - name: Referee exact arithmetic regression
         run: node research/nightfall/referee/test.cjs
+
+      - name: Agent receipt and activity accounting regressions
+        run: python3 scripts/test_nightfall_agent_tasks.py

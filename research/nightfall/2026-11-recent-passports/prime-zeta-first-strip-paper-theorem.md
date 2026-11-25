@@ -46,3 +46,52 @@ MathWorld, *Prime Zeta Function*, equations (10)–(11) and the following discus
 **Limit:** Not an independently certified or first-priority result. Does not prove an actual multi-member zero fiber, global all-layer continuation, or RH. Dated specialist prior-art audit open. The P' residue-cancellation mechanism is already public classical prior art, not original NIGHTFALL mathematics.
 
 **Source:** https://github.com/d3lefts/d3lefts/pull/1043
+
+
+## RH-conditioned strengthening (2026-11-22, v2 addendum)
+
+**Conditional mathematical statement.** Assuming RH, for each
+nontrivial zeta zero ρ with multiplicity `r_ρ` and `n≥1`,
+put λ=ρ/n. Since any other nontrivial zero `mλ` must also
+have real part 1/2, `m=n`. Therefore
+
+`M(ρ/n)=μ(n)r_ρ/n`, and A⁺ is locally holomorphic at
+`s₀=ρ/n-1` **iff n is not squarefree**. If n is squarefree,
+the logarithmic singularity survives, including at multiple zeros.
+This relies on the unconditional first-strip analytic theorem above
+and on the RH theorem as a separately sourced premise.
+
+**Lean boundary.** The added
+[`RHScaleSeparation.lean`](../../formalization/prime_zeta/RHScaleSeparation.lean)
+models the actual `riemannZeta` nontrivial-zero predicate and takes
+`hRH` as an *assumption*, proving uniqueness of the dilation index
+and collapse of finite weighted fibers. It does **not** import a proof
+of RH, formalize the meromorphic prime-zeta logarithmic derivative,
+formalize orders of vanishing, or prove the displayed squarefree
+analytic criterion end to end. Its compilation/kernal receipt must be
+checked on the precise branch and pinned toolchain before upgrading
+this *subclaim* to named Lean. This passport's original `analytic`
+tier is unchanged.
+
+**Sources and limits.** RH provenance:
+https://math.mit.edu/~drew/grh/ ;
+https://leanprover-community.github.io/blog/posts/riemann-hypothesis/ .
+For the full local criterion see
+[`PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md`](../structural_information/PRIME_ZETA_FIRST_STRIP_BOUNDARY_PAPER_THEOREMS_20261122.md).
+The classical scaled-zero residue mechanism and its cancellation rule
+are prior art: https://mathworld.wolfram.com/PrimeZetaFunction.html .
+No assertion of standalone novelty, prime-gap consequences,
+or automorphic GRH is made.
+
+**Review conditions.** Verify the analytic bridge, nontrivial-zero
+strip restriction, sign of μ, multiplicity, and the finite
+fiber equation independently (issue #1040). The RH-conditional
+lemma cannot be promoted to a claim that the entire analytic
+first-strip theorem is Lean-certified.
+
+
+## 22 November 2026 v3 — independently replayed conditional Lean scope
+
+The branch/head-specific [named Lean and independent kernel CI run 45062953520](https://github.com/d3lefts/d3lefts/actions/runs/45062953520) **PASSED** at exact source head `0fa7f2c703b144ec1f8a1addd9c7521e844fe5c6`. Its six named declarations include `real_dilation_unique`, `re_nat_dilation`, `scale_index_unique`, `rh_conditional_zeta_scale_unique`, `finite_fiber_sum`, and `finite_fiber_zero_iff`. Source blob: `c4893768b6a7984b74e75b46dc118b6dcfdf0e8c`. The action used pinned Lean and Mathlib, strict declaration/axiom checks with permitted `propext`, `Classical.choice`, and `Quot.sound`, plus a separate `leanchecker` replay. The exact source was merged to `main` by [PR #1113](https://github.com/d3lefts/d3lefts/pull/1113), merge commit `618cd40f3bac7942ac6d1602624595204dab3598`.
+
+**Status promotion limited to the explicitly RH-conditional algebraic-scale lemma and finite-sum lemmas: named Lean + kernel replay passed.** The `hRH` proposition is an explicit theorem argument; the imported hypotheses are *not* discharged. This does not elevate the paper-level analytic first-strip local continuation, squarefree residue-to-holomorphy equivalence, or natural boundary to Lean certification. Historical 67-record source register remains frozen, with this later Lean file recorded in pending source custody; that administrative classification must not override the separately verified named CI receipt. External novelty and independent human analytic review remain open.
