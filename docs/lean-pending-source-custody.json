@@ -1,20 +1,10 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 70,
+  "revision": 71,
   "as_of": "2026-11-24 UTC",
   "source_commit": "bdcb0a0097c0759c54771e9d9b90f16bb6ecb262",
-  "scope": "Recover verified locality and simulation-boundary chain with merged QW+ and tensor source custody preserved; no auto-promotion.",
+  "scope": "Add three exact locally checked rank-phase sources; preserve pending registry classification pending independent review. No fabricated CI receipt.",
   "sources": [
-    {
-      "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
-      "source_blob_sha": "a8a56af2c1c57476c1df4fb2ccb98b11896f3d16",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Source-level finite product-mixture nonfree Dirac theorem candidate (support-to-positive-component rigidity) for exact affine-code Wyner. Pinned Lean+leanchecker and independent review pending; NOT complete common-information infimum."
-    },
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
       "source_blob_sha": "a389e02a2b0bf67cd8336a7dad17f3a436b686e2",
@@ -626,6 +616,36 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhaseAdaptiveTree.lean",
+      "source_blob_sha": "83cb2a4bd67f0a47da3efe35baa97443e7fb90b4",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact local source elaboration and fresh-kernel export replay recorded separately in research/nightfall/rank-phase-local-certificate-20261125/CERTIFICATE.json; pending repository integration and review, not a CI receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhaseIdentity.lean",
+      "source_blob_sha": "0ab3b7f81a4cf312cbecf85d5c9d1c90152ea3b8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact local source elaboration and fresh-kernel export replay recorded separately in research/nightfall/rank-phase-local-certificate-20261125/CERTIFICATE.json; pending repository integration and review, not a CI receipt."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhasePivot.lean",
+      "source_blob_sha": "e943fd2ef95349bbfa05675dbc7a8260c19d01da",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact local source elaboration and fresh-kernel export replay recorded separately in research/nightfall/rank-phase-local-certificate-20261125/CERTIFICATE.json; pending repository integration and review, not a CI receipt."
     },
     {
       "path": "research/nightfall/formalization/floor_four/Q2MeanFieldFourAlgebra.lean",
@@ -2958,6 +2978,86 @@
       "receipt_scope": "Source hash recorded as a pending extension to the immutable historical 67-file ledger. Exact theorem-type, kernel and compiler scope require an independent receipt."
     },
     {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerGoodQuery.lean",
+      "source_blob_sha": "ec1081cb07f8216f8b69690684ce98205b573495",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean",
+      "source_blob_sha": "64ae1263468d1b2c533440a17deb4fb8bbe745cc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerParametric.lean",
+      "source_blob_sha": "0844b2db38c88e5363eca0f287cdfb0168bb317d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerQ2SourceBridge.lean",
+      "source_blob_sha": "917b25a3d8189e93bad5d2ef0a9f766b0a7d7dcc",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerQuadraticProgress.lean",
+      "source_blob_sha": "756c700636fdad38d83b7860229b0bf16a47c4dd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedAverage.lean",
+      "source_blob_sha": "5167e8c4b682918ca49583e3c3de2edd1cdd177e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedResampling.lean",
+      "source_blob_sha": "f66024c46600201fed297f88b7eb9a4068920d66",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerTerminal.lean",
+      "source_blob_sha": "7de799b0e70ba1e6c5bb3adefcc2b9d7d6988b28",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "QW+ terminal cast normalization after run 45551547785; no promotion until exact-head compiler, leanchecker and named axiom gate pass."
+    },
+    {
       "path": "research/nightfall/formalization/product_space/QuantumCircuitMixtureSimulation.lean",
       "source_blob_sha": "21aad22f9b847b5e466eb02ab9c397db23097c94",
       "classification": "unreviewed-source",
@@ -3186,6 +3286,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1ReciprocalAtom.lean",
+      "source_blob_sha": "ab0aa7a3cf64420a501fead76f31d8645fd60858",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1SharedDrift.lean",
+      "source_blob_sha": "86a0a87eb6893bfb18da131fecd3354909f1c620",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1StarCoupling.lean",
@@ -3436,6 +3556,56 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/SynthesisWynerEntropy.lean",
+      "source_blob_sha": "b6d09152f2ee7f911f2c2822ca78a4acbc956d40",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalityCore.lean",
+      "source_blob_sha": "7a8011fe87243ac05cc8eacba71a962be0ad2a95",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact predecessor branch receipt run 45482284099 at 17922490919b24491b2e598228b0b055ac615e45; pending main-registry integration and non-author review. No main promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalityInformation.lean",
+      "source_blob_sha": "dc8375a62c84c7690c680df4127bec872927dbc6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact predecessor branch receipt run 45482284099 at 17922490919b24491b2e598228b0b055ac615e45; pending main-registry integration and non-author review. No main promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalityPPZ.lean",
+      "source_blob_sha": "5acdeccee817fb4f79f81890ac4f0883dedb08ec",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact predecessor branch receipt run 45482284099 at 17922490919b24491b2e598228b0b055ac615e45; pending main-registry integration and non-author review. No main promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalitySimulationBoundary.lean",
+      "source_blob_sha": "214e469bc5af468c329e2d5155734341061f399e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Explicit mixture-size and dominated-product query simulation; pending strict compiler and non-author review."
     },
     {
       "path": "research/nightfall/formalization/q2_99/Q299ConditionalAndNoGo.lean",
@@ -3758,6 +3928,26 @@
       "receipt_scope": "Source introduced by merged PRs #645/#647/#655/#658/#659/#663 and related Q2 frontier certificates. Exact current Git blob registered for custody only. Named scoped Lean receipts and proof assumptions remain separate; no new unconditional arbitrary-product Q2 or F9 terminal claimed by this registry entry."
     },
     {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerEntropyBound.lean",
+      "source_blob_sha": "76f521c3a3081d7840361411097263ace6482ec7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Entropy proof source exact variant of Route1Entropy Jensen finite-card lemma, two named affine entropy terminals; fixed misleading workflow expected name, pending full pinned Lean/leanchecker."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerFiberCount.lean",
+      "source_blob_sha": "816194e12bbf67288591a4117d2483c18379365c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Post-#1151 source-exact proof candidate: free affine-code fiber equivalence, q^r cardinality, and support Shannon entropy bound. Mandatory pinned Lean/leanchecker and proof review; not full Wyner infimum."
+    },
+    {
       "path": "research/nightfall/formalization/structural_information/AffineWynerFibers.lean",
       "source_blob_sha": "0414c52b5ac939a5adef64b4e55085d7f0789425",
       "classification": "unreviewed-source",
@@ -3768,6 +3958,16 @@
       "receipt_scope": "Carried corrected source from #1099/#1104 for clean-main pinned Lean CI; pending source custody, not certification. No full affine Wyner C_W/entropy kernel proof yet."
     },
     {
+      "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
+      "source_blob_sha": "a8a56af2c1c57476c1df4fb2ccb98b11896f3d16",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-level finite product-mixture nonfree Dirac theorem candidate (support-to-positive-component rigidity) for exact affine-code Wyner. Pinned Lean+leanchecker and independent review pending; NOT complete common-information infimum."
+    },
+    {
       "path": "research/nightfall/formalization/structural_information/AffineWynerSupport.lean",
       "source_blob_sha": "5519634afa3ac1b7659e08d6070549a9c9aac148",
       "classification": "unreviewed-source",
@@ -3776,6 +3976,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Carried corrected source from #1099/#1104 for clean-main pinned Lean CI; pending source custody, not certification. No full affine Wyner C_W/entropy kernel proof yet."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean",
+      "source_blob_sha": "01a3923d5add628ce047fc2e60422a3186c1f85a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Generic exact finite mixture Shannon entropy-chain algebra candidate: posterior entropy form equals H(output)-expected component H. Exact mathlib pinned Lean/leanchecker pending. Not affine C_W identity or novelty."
     },
     {
       "path": "research/nightfall/formalization/structural_information/LocalMomentAtoms.lean",
@@ -3796,6 +4006,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 strict source hash custody only; named pinned Lean proofs in PR #1058 under same exact source bytes are separately auditable. No automatic full recursive decision-tree theorem, no iff converse, no non-author referee or novelty certified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/MultiscaleProjectionTransfer.lean",
+      "source_blob_sha": "822df860033ae53fccb47772ba4e2ffe28de0bb3",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact source custody only. Scoped projection and finite latent information proof receipts tracked in PR #1187; no historical ledger promotion or priority inference."
     },
     {
       "path": "research/nightfall/formalization/structural_information/PhaseBlockActualCircuit.lean",
@@ -4006,6 +4226,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/SynthesisTensorDistance.lean",
+      "source_blob_sha": "a2704101bc6a39ea206577b102f8e389b95a1b7e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Revised candidate after run 45550018452 base-case and recursive instance diagnostics. Exact source registration only; new named Lean/kernel receipt pending. Not the full Wyner entropy/incidence or staged simulation theorem."
     },
     {
       "path": "research/nightfall/formalization/structural_information/TensorCircuitSupportBudget.lean",
@@ -5604,206 +5834,6 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/AffineWynerFiberCount.lean",
-      "source_blob_sha": "816194e12bbf67288591a4117d2483c18379365c",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Post-#1151 source-exact proof candidate: free affine-code fiber equivalence, q^r cardinality, and support Shannon entropy bound. Mandatory pinned Lean/leanchecker and proof review; not full Wyner infimum."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/AffineWynerEntropyBound.lean",
-      "source_blob_sha": "76f521c3a3081d7840361411097263ace6482ec7",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Entropy proof source exact variant of Route1Entropy Jensen finite-card lemma, two named affine entropy terminals; fixed misleading workflow expected name, pending full pinned Lean/leanchecker."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/FiniteMixtureEntropyChain.lean",
-      "source_blob_sha": "01a3923d5add628ce047fc2e60422a3186c1f85a",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Generic exact finite mixture Shannon entropy-chain algebra candidate: posterior entropy form equals H(output)-expected component H. Exact mathlib pinned Lean/leanchecker pending. Not affine C_W identity or novelty."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/MultiscaleProjectionTransfer.lean",
-      "source_blob_sha": "822df860033ae53fccb47772ba4e2ffe28de0bb3",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Exact source custody only. Scoped projection and finite latent information proof receipts tracked in PR #1187; no historical ledger promotion or priority inference."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerGoodQuery.lean",
-      "source_blob_sha": "ec1081cb07f8216f8b69690684ce98205b573495",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerLabelProjection.lean",
-      "source_blob_sha": "64ae1263468d1b2c533440a17deb4fb8bbe745cc",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerParametric.lean",
-      "source_blob_sha": "0844b2db38c88e5363eca0f287cdfb0168bb317d",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerQ2SourceBridge.lean",
-      "source_blob_sha": "917b25a3d8189e93bad5d2ef0a9f766b0a7d7dcc",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerQuadraticProgress.lean",
-      "source_blob_sha": "756c700636fdad38d83b7860229b0bf16a47c4dd",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedAverage.lean",
-      "source_blob_sha": "5167e8c4b682918ca49583e3c3de2edd1cdd177e",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerSeedResampling.lean",
-      "source_blob_sha": "f66024c46600201fed297f88b7eb9a4068920d66",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/QuadraticWynerTerminal.lean",
-      "source_blob_sha": "7de799b0e70ba1e6c5bb3adefcc2b9d7d6988b28",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "QW+ terminal cast normalization after run 45551547785; no promotion until exact-head compiler, leanchecker and named axiom gate pass."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/SynthesisWynerEntropy.lean",
-      "source_blob_sha": "b6d09152f2ee7f911f2c2822ca78a4acbc956d40",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Synthesis terminal candidate, no certification until exact-source compiler and kernel replay plus named axiom gate."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/Route1ReciprocalAtom.lean",
-      "source_blob_sha": "ab0aa7a3cf64420a501fead76f31d8645fd60858",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/Route1SharedDrift.lean",
-      "source_blob_sha": "86a0a87eb6893bfb18da131fecd3354909f1c620",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
-    },
-    {
-      "path": "research/nightfall/formalization/structural_information/SynthesisTensorDistance.lean",
-      "source_blob_sha": "a2704101bc6a39ea206577b102f8e389b95a1b7e",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Revised candidate after run 45550018452 base-case and recursive instance diagnostics. Exact source registration only; new named Lean/kernel receipt pending. Not the full Wyner entropy/incidence or staged simulation theorem."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/WynerLocalityCore.lean",
-      "source_blob_sha": "7a8011fe87243ac05cc8eacba71a962be0ad2a95",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Exact predecessor branch receipt run 45482284099 at 17922490919b24491b2e598228b0b055ac615e45; pending main-registry integration and non-author review. No main promotion."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/WynerLocalityInformation.lean",
-      "source_blob_sha": "dc8375a62c84c7690c680df4127bec872927dbc6",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Exact predecessor branch receipt run 45482284099 at 17922490919b24491b2e598228b0b055ac615e45; pending main-registry integration and non-author review. No main promotion."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/WynerLocalityPPZ.lean",
-      "source_blob_sha": "5acdeccee817fb4f79f81890ac4f0883dedb08ec",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Exact predecessor branch receipt run 45482284099 at 17922490919b24491b2e598228b0b055ac615e45; pending main-registry integration and non-author review. No main promotion."
-    },
-    {
-      "path": "research/nightfall/formalization/product_space/WynerLocalitySimulationBoundary.lean",
-      "source_blob_sha": "214e469bc5af468c329e2d5155734341061f399e",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Explicit mixture-size and dominated-product query simulation; pending strict compiler and non-author review."
     }
   ]
 }
