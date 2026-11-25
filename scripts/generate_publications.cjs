@@ -7,7 +7,12 @@ const read = p => fs.readFileSync(path.join(root,p),"utf8");
 function build(reg,home,moon,sitemap){
  const e=x=>String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
  const origin="https://d3lefts.github.io/d3lefts/";
- const records=[...reg.records].sort((a,b)=>a.number-b.number);
+ // Registry includes owner-confirmed publications even while external metadata is incomplete.
+ const allRecords=[...reg.records];
+ const numbers=new Set(allRecords.map(r=>r.number));
+ if(numbers.size!==allRecords.length||allRecords.some(r=>!Number.isInteger(r.number)||r.number<1))throw Error("Invalid publication inventory numbering");
+ if(reg.inventory_checkpoint&&reg.inventory_checkpoint.published_count!==allRecords.length)throw Error("Publication inventory count mismatch");
+ const records=allRecords.filter(r=>r.site_ready!==false).sort((a,b)=>a.number-b.number);
  const fail=m=>{throw Error(m)};
  const unique=(k)=>new Set(records.map(r=>r[k])).size===records.length;
  for(const k of ["id","slug","doi","number"])if(!unique(k))fail("Duplicate publication "+k);
