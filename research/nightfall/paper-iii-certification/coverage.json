@@ -67,7 +67,7 @@
     },
     {
       "label": "lem:zeros",
-      "scope": "Published CCFH; explicit dependency, not a manuscript originality claim",
+      "scope": "Published CCFH (2020) Theorem 1.1 and Remark 2.7 are explicit external mathematical dependencies; no new proof or independent re-formalization requested. External status distinct from kernel proof of these theorems.",
       "match": "external_dependency",
       "manuscript_proof": {
         "source": "nightfall_phase_retrieval_v7.tex",
@@ -104,6 +104,30 @@
         {
           "module": "ProductSphereCausalComposition",
           "name": "Nightfall.ProductSphereCausal.continuous_testV"
+        },
+        {
+          "module": "GenuinePrefixPhase",
+          "name": "Nightfall.GenuinePrefixPhase.transcript_neg"
+        },
+        {
+          "module": "GenuinePrefixPhase",
+          "name": "Nightfall.GenuinePrefixPhase.comparison_flip_left"
+        },
+        {
+          "module": "GenuinePrefixPhase",
+          "name": "Nightfall.GenuinePrefixPhase.comparison_flip_right"
+        },
+        {
+          "module": "ProductSphereCausalComposition",
+          "name": "Nightfall.ProductSphereCausal.testU_flip_left"
+        },
+        {
+          "module": "ProductSphereCausalComposition",
+          "name": "Nightfall.ProductSphereCausal.testV_flip_right"
+        },
+        {
+          "module": "ProductSphereCausalComposition",
+          "name": "Nightfall.ProductSphereCausal.collision_of_product_sphere_zero_reachable"
         }
       ],
       "manuscript_proof": {
@@ -137,6 +161,18 @@
         {
           "module": "ProductBUCausalScaling",
           "name": "Nightfall.ProductBUCausalScaling.causal_transcript_scaling"
+        },
+        {
+          "module": "InfiniteFieldTerminal",
+          "name": "Nightfall.InfiniteFieldPhase.Terminal.exists_fixed_upper"
+        },
+        {
+          "module": "ProductBUQuantitativeCollision",
+          "name": "Nightfall.ProductBUQuantitativeCollision.exact_plus_minus_separation"
+        },
+        {
+          "module": "ProductBUCausalScaling",
+          "name": "Nightfall.ProductBUCausalScaling.sqNorm_smul"
         }
       ],
       "manuscript_proof": {
@@ -162,6 +198,14 @@
         {
           "module": "ProductBUMixedRadius",
           "name": "Nightfall.ProductBUMixedRadius.known_radius_risk_of_mixed_product_sphere_zero"
+        },
+        {
+          "module": "ProductBUMixedRadius",
+          "name": "Nightfall.ProductBUMixedRadius.exact_known_radius_pair"
+        },
+        {
+          "module": "GenuinePrefixPhase",
+          "name": "Nightfall.GenuinePrefixPhase.omitted_intensity_eq"
         }
       ],
       "manuscript_proof": {
@@ -265,6 +309,10 @@
         {
           "module": "ProductBUMixedRadius",
           "name": "Nightfall.ProductBUMixedRadius.known_radius_risk_of_mixed_product_sphere_zero"
+        },
+        {
+          "module": "ProductBUMixedRadius",
+          "name": "Nightfall.ProductBUMixedRadius.exact_known_radius_pair"
         }
       ],
       "manuscript_proof": {
@@ -462,8 +510,8 @@
     },
     {
       "label": "thm:noise",
-      "scope": "Noisy lower bound and dimension-two exponent",
-      "match": "unmapped",
+      "scope": "Exact compensating-error causal replay kernel receipt; does not establish the claimed quantitative exponent or minimax lower bound by itself.",
+      "match": "partial",
       "manuscript_proof": {
         "source": "nightfall_phase_retrieval_v7.tex",
         "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
@@ -475,7 +523,13 @@
           "https://github.com/d3lefts/d3lefts/pull/1009"
         ],
         "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
-      }
+      },
+      "targets": [
+        {
+          "module": "PaperIIINoiseErasure",
+          "name": "Nightfall.PaperIIINoiseErasure.bounded_replay_collision"
+        }
+      ]
     },
     {
       "label": "thm:allnoise",
@@ -575,5 +629,13 @@
     "conclusion": "success",
     "receipt_reuse": "passed; setup and all compilation steps skipped",
     "coverage": "3 full, 6 partial, 14 unmapped, 1 external as last recorded; run success does not promote mathematical claims"
+  },
+  "receipt_mapping_audit": {
+    "source_run": 45700694880,
+    "source_job": 139509813655,
+    "reuse_run": 45705100056,
+    "source": "Direct inspection of the immutable successful Lean logs and theorem statements",
+    "added_scope": "Parity, reachable prefix, fixed-frame upper, separation, scale identity, known-radius geometry, omitted reading and noise replay",
+    "limitations": "Global reachable continuity in the compiled prefix theorem is stronger than continuity restricted to arbitrary D; unit-vector collision and uniform scaling do not by themselves imply the unequal-radius annular statement; mixed-zero hypothesis remains explicit. No source-matched terminal promotion based on names or paper proofs."
   }
 }
