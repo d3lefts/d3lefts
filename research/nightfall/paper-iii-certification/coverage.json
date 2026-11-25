@@ -1,127 +1,211 @@
 {
   "manuscript": "Adaptivity, Continuity, and the Exact Limits of Real Phase Retrieval",
   "source": "Library nightfall_phase_retrieval_v7.tex; deposited-version identity not yet checked",
-  "status": "Audit gate, not a completed certificate. Unmapped means no exact terminal receipt located in the current inventory, not proof impossibility.",
+  "status": "Live declaration-level coverage, calculated from exact-head compiler receipts, not preassigned PASS labels. Partial results, explicit external topology, and unmapped results never count as full terminal coverage. Deposited manuscript version identity remains unverified.",
   "claims": [
     {
       "label": "thm:algebra",
-      "status": "existing_terminal",
-      "scope": "InfiniteFieldTerminal; exact-source compile in this run"
+      "scope": "InfiniteFieldTerminal; exact-source compile in this run",
+      "match": "full",
+      "targets": [
+        {
+          "module": "InfiniteFieldTerminal",
+          "name": "Nightfall.InfiniteFieldPhase.Terminal.infinite_field_phase_retrieval_causal_terminal"
+        }
+      ]
     },
     {
       "label": "prop:coordinate",
-      "status": "existing_terminal",
-      "scope": "ContinuousPhaseAllDimensions restricted architecture"
+      "scope": "ContinuousPhaseAllDimensions restricted architecture",
+      "match": "full",
+      "targets": [
+        {
+          "module": "ContinuousPhaseAllDimensions",
+          "name": "Nightfall.ContinuousPhaseObstruction.no_continuous_final_row_all_dimensions"
+        }
+      ]
     },
     {
       "label": "thm:coordinateBU",
-      "status": "unmapped_full_terminal",
-      "scope": "Arbitrary continuous continuation; published ordinary BU dependency"
+      "scope": "Arbitrary continuous continuation; published ordinary BU dependency",
+      "match": "unmapped"
     },
     {
       "label": "lem:zeros",
-      "status": "external_dependency",
-      "scope": "Published CCFH; explicit dependency, not a manuscript originality claim"
+      "scope": "Published CCFH; explicit dependency, not a manuscript originality claim",
+      "match": "external_dependency"
     },
     {
       "label": "lem:prefix",
-      "status": "existing_conditional",
-      "scope": "GenuinePrefixPhase and ProductSphereCausalComposition"
+      "scope": "GenuinePrefixPhase and ProductSphereCausalComposition",
+      "match": "partial",
+      "targets": [
+        {
+          "module": "GenuinePrefixPhase",
+          "name": "Nightfall.GenuinePrefixPhase.causal_collision_of_genuine_prefix_zeros"
+        },
+        {
+          "module": "ProductSphereCausalComposition",
+          "name": "Nightfall.ProductSphereCausal.continuous_actual_transcript"
+        },
+        {
+          "module": "ProductSphereCausalComposition",
+          "name": "Nightfall.ProductSphereCausal.continuous_testU"
+        },
+        {
+          "module": "ProductSphereCausalComposition",
+          "name": "Nightfall.ProductSphereCausal.continuous_testV"
+        }
+      ]
     },
     {
       "label": "thm:annulus",
-      "status": "unmapped_full_terminal",
-      "scope": "Existing causal threshold reduction; exact annular collision and upper construction require coverage mapping"
+      "scope": "Existing causal threshold reduction; exact annular collision and upper construction require coverage mapping",
+      "match": "partial",
+      "targets": [
+        {
+          "module": "ConditionalPhaseThreshold",
+          "name": "Nightfall.ProductSphereCausal.no_continuous_causal_exact_recovery_below"
+        },
+        {
+          "module": "ProductBUQuantitativeCollision",
+          "name": "Nightfall.ProductBUQuantitativeCollision.quantitative_collision_of_product_sphere_zero"
+        },
+        {
+          "module": "ProductBUCausalScaling",
+          "name": "Nightfall.ProductBUCausalScaling.causal_transcript_scaling"
+        }
+      ]
     },
     {
       "label": "thm:sphere",
-      "status": "unmapped_full_terminal",
-      "scope": "Known-radius mixed/Stiefel reduction; source receipts must be mapped"
+      "scope": "Known-radius mixed/Stiefel reduction; source receipts must be mapped",
+      "match": "partial",
+      "targets": [
+        {
+          "module": "ProductBUMixedRadius",
+          "name": "Nightfall.ProductBUMixedRadius.known_radius_risk_of_mixed_product_sphere_zero"
+        }
+      ]
     },
     {
       "label": "thm:minimax",
-      "status": "unmapped_full_terminal",
-      "scope": "Local archived annular construction and continuity pass; terminal minimax and nonattainment need source-level mapping"
+      "scope": "Local archived annular construction and continuity pass; terminal minimax and nonattainment need source-level mapping",
+      "match": "partial",
+      "targets": [
+        {
+          "module": "AnnularBalancedDecode",
+          "name": "Nightfall.AnnularBalancedDecode.balanced_residual_injective"
+        },
+        {
+          "module": "ProductBUDecoderRiskFloor",
+          "name": "Nightfall.ProductBUDecoderRiskFloor.causal_decoder_risk_floor_of_product_sphere_zero"
+        }
+      ],
+      "archived": "NIGHTFALL_III_V_local_progress_20261125.zip: AnnularAdaptiveConstruction and AnnularRowContinuity, fresh-kernel receipt iii-fresh-kernel.log; exact full minimax terminal not established."
     },
     {
       "label": "thm:sphererisk",
-      "status": "unmapped_full_terminal",
-      "scope": "Sphere risk terminal not located"
+      "scope": "Sphere risk terminal not located",
+      "match": "partial",
+      "targets": [
+        {
+          "module": "ProductBUMixedRadius",
+          "name": "Nightfall.ProductBUMixedRadius.known_radius_risk_of_mixed_product_sphere_zero"
+        }
+      ]
     },
     {
       "label": "thm:block",
-      "status": "unmapped_full_terminal",
-      "scope": "Two-bin odd-sensor result"
+      "scope": "Two-bin odd-sensor result",
+      "match": "unmapped"
     },
     {
       "label": "prop:lift",
-      "status": "unmapped_full_terminal",
-      "scope": "Global lift and prefix rank"
+      "scope": "Global lift and prefix rank",
+      "match": "unmapped"
     },
     {
       "label": "thm:conjugacy",
-      "status": "unmapped_full_terminal",
-      "scope": "Full-rank causal prefix conjugacy"
+      "scope": "Full-rank causal prefix conjugacy",
+      "match": "unmapped"
     },
     {
       "label": "cor:rankloss",
-      "status": "unmapped_full_terminal",
-      "scope": "Prefix degeneration"
+      "scope": "Prefix degeneration",
+      "match": "unmapped"
     },
     {
       "label": "prop:contractible",
-      "status": "unmapped_full_terminal",
-      "scope": "Two-reading history contractibility"
+      "scope": "Two-reading history contractibility",
+      "match": "unmapped"
     },
     {
       "label": "prop:holonomy",
-      "status": "unmapped_full_terminal",
-      "scope": "Nonliftability onset"
+      "scope": "Nonliftability onset",
+      "match": "unmapped"
     },
     {
       "label": "thm:mixed",
-      "status": "unmapped_full_terminal",
-      "scope": "Hybrid pure/mixed character argument"
+      "scope": "Hybrid pure/mixed character argument",
+      "match": "unmapped"
     },
     {
       "label": "cor:projectormixed",
-      "status": "unmapped_full_terminal",
-      "scope": "Infinite-family projector count"
+      "scope": "Infinite-family projector count",
+      "match": "unmapped"
     },
     {
       "label": "prop:zerogain",
-      "status": "unmapped_full_terminal",
-      "scope": "Zero-gain orientation defect"
+      "scope": "Zero-gain orientation defect",
+      "match": "unmapped"
     },
     {
       "label": "lem:inflate",
-      "status": "unmapped_full_terminal",
-      "scope": "Collision inflation; noise replay module is separate"
+      "scope": "Collision inflation; noise replay module is separate",
+      "match": "partial",
+      "targets": [
+        {
+          "module": "PaperIIINoiseErasure",
+          "name": "Nightfall.PaperIIINoiseErasure.bounded_replay_collision"
+        }
+      ]
     },
     {
       "label": "thm:noise",
-      "status": "unmapped_full_terminal",
-      "scope": "Noisy lower bound and dimension-two exponent"
+      "scope": "Noisy lower bound and dimension-two exponent",
+      "match": "unmapped"
     },
     {
       "label": "thm:allnoise",
-      "status": "unmapped_full_terminal",
-      "scope": "All-dimensional exponent"
+      "scope": "All-dimensional exponent",
+      "match": "unmapped"
     },
     {
       "label": "thm:annnoise",
-      "status": "unmapped_full_terminal",
-      "scope": "Annular noise law"
+      "scope": "Annular noise law",
+      "match": "unmapped"
     },
     {
       "label": "thm:spherenoise",
-      "status": "unmapped_full_terminal",
-      "scope": "Sphere noise laws"
+      "scope": "Sphere noise laws",
+      "match": "unmapped"
     },
     {
       "label": "rem:erasure",
-      "status": "existing_terminal",
-      "scope": "PaperIIINoiseErasure squared loss floor and saturation"
+      "scope": "Equivalent squared sign-quotient loss formulation; universal lower bound and zero-decoder matching upper bound.",
+      "match": "full",
+      "targets": [
+        {
+          "module": "PaperIIINoiseErasure",
+          "name": "Nightfall.PaperIIINoiseErasure.high_noise_floor"
+        },
+        {
+          "module": "PaperIIINoiseErasure",
+          "name": "Nightfall.PaperIIINoiseErasure.high_noise_saturation"
+        }
+      ]
     }
-  ]
+  ],
+  "source_receipt_reference": "Archived conditional quantitative lane PR #1120, exact head b79bc06e29578c350d70d0123f3bed03c5cbc58a. Restored unchanged four source blobs; fresh audit required."
 }

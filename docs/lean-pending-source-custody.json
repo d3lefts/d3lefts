@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 82,
+  "revision": 83,
   "as_of": "2026-11-25 UTC",
-  "source_commit": "44ffcec4396140580a959fbc7452d172184720b5",
-  "scope": "Repair erasure parallelogram rewrite; preserve previous source receipts.",
+  "source_commit": "b0d9c5742a30f556e017458c2c009a82b38c10cf",
+  "scope": "Restore four archived quantitative Paper III sources and map exact declaration receipts.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -448,6 +448,16 @@
       "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUCausalScaling.lean",
+      "source_blob_sha": "31f7c9337abc2bab69a8e92eae1ec0d149b11e30",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": "b79bc06e29578c350d70d0123f3bed03c5cbc58a",
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered exact source from closed PR #1120; conditional quantitative geometry, no full manuscript promotion; exact current-head replay required."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
       "source_blob_sha": "114c4159630eb787e494dc4aa6448dc24884e919",
       "classification": "unreviewed-source",
@@ -506,6 +516,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUDecoderRiskFloor.lean",
+      "source_blob_sha": "2eddc81492ee2b8536a000e2fac5526b82c82e48",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": "b79bc06e29578c350d70d0123f3bed03c5cbc58a",
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered exact source from closed PR #1120; conditional quantitative geometry, no full manuscript promotion; exact current-head replay required."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUEndpointRank.lean",
@@ -568,6 +588,16 @@
       "receipt_scope": "Exact unreviewed source custody, new I01 subtype membership tactic repair. Pinned theorem CI must be replayed at this blob; no ProductSphereZero claim."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUMixedRadius.lean",
+      "source_blob_sha": "1202ba29f0db6e5f86f3a9c457e7a6ae61ea53c7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": "b79bc06e29578c350d70d0123f3bed03c5cbc58a",
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered exact source from closed PR #1120; conditional quantitative geometry, no full manuscript promotion; exact current-head replay required."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUOrbitCertificate.lean",
       "source_blob_sha": "bb9b3ed27b4f6011e90b6859948688a790af2785",
       "classification": "unreviewed-source",
@@ -596,6 +626,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUQuantitativeCollision.lean",
+      "source_blob_sha": "bd55c5e5fc315ec75bb9accacf17492ce5b34361",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": "b79bc06e29578c350d70d0123f3bed03c5cbc58a",
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered exact source from closed PR #1120; conditional quantitative geometry, no full manuscript promotion; exact current-head replay required."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUReferenceFace.lean",

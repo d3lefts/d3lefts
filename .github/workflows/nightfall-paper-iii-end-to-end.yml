@@ -130,7 +130,7 @@ jobs:
           set -uo pipefail
           mkdir -p receipts/paper-iii
           failures=0
-          for m in InfiniteFieldSignedStep InfiniteFieldFixedLower InfiniteFieldFixedUpper InfiniteFieldAdaptiveLower InfiniteFieldLegalUpper InfiniteFieldTerminal ContinuousPhaseCrossing ContinuousPhaseOracleObstruction ContinuousPhaseAllDimensions GenuinePrefixPhase ProductSphereCausalComposition ConditionalPhaseThreshold AnnularBalancedDecode PaperIIINoiseErasure; do
+          for m in InfiniteFieldSignedStep InfiniteFieldFixedLower InfiniteFieldFixedUpper InfiniteFieldAdaptiveLower InfiniteFieldLegalUpper InfiniteFieldTerminal ContinuousPhaseCrossing ContinuousPhaseOracleObstruction ContinuousPhaseAllDimensions GenuinePrefixPhase ProductSphereCausalComposition ConditionalPhaseThreshold ProductBUQuantitativeCollision ProductBUDecoderRiskFloor ProductBUMixedRadius ProductBUCausalScaling AnnularBalancedDecode PaperIIINoiseErasure; do
             src="research/nightfall/formalization/finite_field/$m.lean"
             if [ "$m" = AnnularBalancedDecode ]; then
               src="research/nightfall/local-certificates/20261125-iii-v/lean/$m.lean"
@@ -158,18 +158,42 @@ jobs:
           mkdir -p receipts/paper-iii
           git rev-parse HEAD > receipts/paper-iii/head.txt
           python3 - <<'PY' | tee receipts/paper-iii/coverage.log
-          import json
+          import json, re
           from pathlib import Path
+          root=Path("receipts/paper-iii")
           spec=json.loads(Path("research/nightfall/paper-iii-certification/coverage.json").read_text())
+          module_status=(root/"status.txt").read_text().splitlines() if (root/"status.txt").exists() else []
+          allowed={"propext","Classical.choice","Quot.sound"}
           pending=[]
+          results=[]
           for item in spec["claims"]:
-              status=item["status"]
+              checked=[]
+              for target in item.get("targets",[]):
+                  module,name=target["module"],target["name"]
+                  path=root/(module+".log")
+                  data=path.read_text() if path.exists() else ""
+                  hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",data,re.S)
+                  clean=(hit is not None and {x.strip() for x in hit[1].split(",") if x.strip()}<=allowed) or ("'"+name+"' does not depend on any axioms" in data)
+                  checked.append("PASS "+module in module_status and clean)
+              match=item["match"]
+              if match=="full" and checked and all(checked):
+                  status="full_terminal_verified"
+              elif match=="partial" and checked and all(checked):
+                  status="partial_terminal_verified"
+              elif checked:
+                  status="receipt_missing_or_failed"
+              else:
+                  status=match
+              results.append({"label":item["label"],"status":status,"targets":item.get("targets",[]),"target_pass":checked})
               print(item["label"],status,item["scope"])
-              if status != "full_terminal_verified":
+              if status!="full_terminal_verified":
                   pending.append(item["label"])
-          print("Full manuscript certification is NOT established:", ", ".join(pending))
+          (root/"coverage-result.json").write_text(json.dumps(results,indent=2)+"\n")
+          print("Full exact-head manuscript targets:",len(results)-len(pending),"/",len(results))
           if pending:
+              print("Full manuscript certification is NOT established:",", ".join(pending))
               raise SystemExit(1)
+          raise SystemExit("Deposited manuscript identity has not been independently checked")
           PY
       - uses: actions/upload-artifact@v4
         if: always()
