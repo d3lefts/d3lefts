@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 70,
-  "as_of": "2026-11-24 UTC",
+  "revision": 71,
+  "as_of": "2026-11-25 UTC",
   "source_commit": "bdcb0a0097c0759c54771e9d9b90f16bb6ecb262",
-  "scope": "Recover verified locality and simulation-boundary chain with merged QW+ and tensor source custody preserved; no auto-promotion.",
+  "scope": "Append recovered adaptive instrument, direct complex Kraus and Q7 packing source custody; preserve prior records; kernel receipts independent.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5804,6 +5804,56 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Explicit mixture-size and dominated-product query simulation; pending strict compiler and non-author review."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentDegree.lean",
+      "source_blob_sha": "e3e412057bfc19e912c70e22feb679742c7ef0c6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered adaptive linear support-degree, cone/mass validity, negative-knowledge lemmas and explicit counterexamples. Exact-head kernel pending."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentWyner.lean",
+      "source_blob_sha": "f2529517cb364979f0ea87786779b570aa79862b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "General-latent Wyner terminal for adaptive linear programs. Exact-head kernel pending."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentKraus.lean",
+      "source_blob_sha": "8ca73e69fd2123d4aaf8c9e01a11b163be453f5d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Complex Kraus tree degree/range and mixed ensembles, norm-completeness, stacked isometry and finite outcome refinement. Full square-unitary compiler not claimed. Exact-head kernel pending."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentKrausWyner.lean",
+      "source_blob_sha": "9b1a9032750cbd60a62ff25025d425eec0343e81",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual general-latent Wyner terminal for complex Kraus history trees. Exact-head kernel pending."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentQ7Packing.lean",
+      "source_blob_sha": "d90e6cce40c4ad7e966c7c731b52aed98d698e72",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Eight disjoint-blocker lower bound and 105 explicitly listed packing records; full source-catalogue extraction is separate computational evidence. Exact-head kernel pending."
     }
   ]
 }
