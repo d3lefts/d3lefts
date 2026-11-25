@@ -12,6 +12,8 @@ NIGHTFALL studies mathematical structures and builds reproducible mechanisms for
 
 ## Published research — Zenodo
 
+[**The NIGHTFALL Papers**](https://d3lefts.github.io/d3lefts/publications.html) · [Quadratic Influence Beyond the Boolean Cube (DOI: 10.5281/zenodo.24516569)](https://doi.org/10.5281/zenodo.24516569) · Owner-confirmed preprint, November 24, 2026. Live record and archived bytes not independently verified.
+
 [**Flagship Wyner simulation preprint (DOI: 10.5281/zenodo.24511398)**](https://doi.org/10.5281/zenodo.24511398) · Published November 24, 2026, manuscript v0.7. [NIGHTFALL — Independent Mathematical Research](https://zenodo.org/communities/nightfall-research/records) · [Publication registry](papers/publications.json) · [Archival procedure](papers/zenodo/README.md). Zenodo publication and external human peer review are distinct.
 
 ## Scholarly research archive — start here
