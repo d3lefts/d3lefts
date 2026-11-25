@@ -1,0 +1,134 @@
+{
+  "schema": "nightfall.passport-v3.observed-receipts.v1",
+  "as_of": "2026-11-25",
+  "main_checkpoint": "8017a300672259decc71dfb2997bcc2f49afd904",
+  "scope": "Manually recovered job-level receipts; declaration output matched source text at PR head; not artifact authentication or independent statement review.",
+  "records": [
+    {
+      "id": "pr1187-MultiscaleProjectionTransfer",
+      "path": "research/nightfall/formalization/structural_information/MultiscaleProjectionTransfer.lean",
+      "blob": "822df860033ae53fccb47772ba4e2ffe28de0bb3",
+      "head": "613e01688a1b1a9c5dbddb61f68edaacb1aa44dc",
+      "pr": 1187,
+      "run": 45451503628,
+      "job": 138649545186,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.MultiscaleProjection.sumRisk_exact",
+        "Nightfall.MultiscaleProjection.overlap_variance",
+        "Nightfall.MultiscaleProjection.residual_variance",
+        "Nightfall.MultiscaleProjection.union_card_budget",
+        "Nightfall.MultiscaleProjection.kl_predictive_floor",
+        "Nightfall.MultiscaleProjection.predictive_eq_cell_average",
+        "Nightfall.MultiscaleProjection.finite_latent_transfer"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "Finite independent-union projection and predictive-floor KL; not full adaptive selector or dimension-free Wyner rate.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1195-WynerLocalityCore",
+      "path": "research/nightfall/formalization/product_space/WynerLocalityCore.lean",
+      "blob": "7a8011fe87243ac05cc8eacba71a962be0ad2a95",
+      "head": "11c6f7ceab32f6170b1a1c14e31a95da9dfd5011",
+      "pr": 1195,
+      "run": 45631176578,
+      "job": 139264457355,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.WynerLocality.shallow_retraction_identity",
+        "Nightfall.WynerLocality.product_range_obstruction",
+        "Nightfall.WynerLocality.rectangle_preimage_local_exclusion",
+        "Nightfall.WynerLocality.rectangle_preimage_subset",
+        "Nightfall.WynerLocality.parity_full_projection",
+        "Nightfall.WynerLocality.parity_product_range_obstruction",
+        "Nightfall.WynerLocality.parity_isolated"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "Exact binary locality/recovery, isolated-assignment bound, general-latent entropy transfer, mixture cardinality and dominated-product simulation; not approximate recovery or universal query converse.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1195-WynerLocalityInformation",
+      "path": "research/nightfall/formalization/product_space/WynerLocalityInformation.lean",
+      "blob": "dc8375a62c84c7690c680df4127bec872927dbc6",
+      "head": "11c6f7ceab32f6170b1a1c14e31a95da9dfd5011",
+      "pr": 1195,
+      "run": 45631176578,
+      "job": 139264457355,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.WynerLocality.entropy_le_log_support",
+        "Nightfall.WynerLocality.wyner_general_lower_of_component_entropy",
+        "Nightfall.WynerLocality.wyner_locality_of_ppz",
+        "Nightfall.WynerLocality.wyner_locality_general"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "Exact binary locality/recovery, isolated-assignment bound, general-latent entropy transfer, mixture cardinality and dominated-product simulation; not approximate recovery or universal query converse.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1195-WynerLocalityPPZ",
+      "path": "research/nightfall/formalization/product_space/WynerLocalityPPZ.lean",
+      "blob": "5acdeccee817fb4f79f81890ac4f0883dedb08ec",
+      "head": "11c6f7ceab32f6170b1a1c14e31a95da9dfd5011",
+      "pr": 1195,
+      "run": 45631176578,
+      "job": 139264457355,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.WynerLocality.guess_packing",
+        "Nightfall.WynerLocality.last_order_count",
+        "Nightfall.WynerLocality.ppz_log_card"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "Exact binary locality/recovery, isolated-assignment bound, general-latent entropy transfer, mixture cardinality and dominated-product simulation; not approximate recovery or universal query converse.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1195-WynerLocalitySimulationBoundary",
+      "path": "research/nightfall/formalization/product_space/WynerLocalitySimulationBoundary.lean",
+      "blob": "214e469bc5af468c329e2d5155734341061f399e",
+      "head": "11c6f7ceab32f6170b1a1c14e31a95da9dfd5011",
+      "pr": 1195,
+      "run": 45631176578,
+      "job": 139264457355,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.WynerLocality.locality_mixture_card_lower",
+        "Nightfall.WynerLocality.dominated_product_simulation"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "Exact binary locality/recovery, isolated-assignment bound, general-latent entropy transfer, mixture cardinality and dominated-product simulation; not approximate recovery or universal query converse.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1199-SynthesisTensorDistance",
+      "path": "research/nightfall/formalization/structural_information/SynthesisTensorDistance.lean",
+      "blob": "a2704101bc6a39ea206577b102f8e389b95a1b7e",
+      "head": "c55dc5e5a4d63c29cfa8eda819b0eb7a977e54eb",
+      "pr": 1199,
+      "run": 45631046471,
+      "job": 139264022826,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.StructuralInformation.SynthesisTensorDistance.weight_step",
+        "Nightfall.StructuralInformation.SynthesisTensorDistance.distance_lower",
+        "Nightfall.StructuralInformation.SynthesisTensorDistance.distance_witness",
+        "Nightfall.StructuralInformation.SynthesisTensorDistance.exact_distance",
+        "Nightfall.StructuralInformation.SynthesisTensorDistance.score_lower"
+      ],
+      "source_location": "current-custody-blob-match",
+      "scope": "All-level tensor code distance and scalar score conditional on entropy-bound hypotheses; not full Paper VI staged simulation.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    }
+  ],
+  "exceptions": [],
+  "failed_jobs": []
+}
