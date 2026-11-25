@@ -1,0 +1,179 @@
+name: Paper III manuscript-wide Lean certification gate
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/nightfall-paper-iii-end-to-end.yml'
+      - 'research/nightfall/formalization/finite_field/**'
+      - 'research/nightfall/paper-iii-certification/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: paper-iii-end-to-end-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  existing-source-closure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact ATLAS source retrieval and full 1D classification closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-global-boundary
+          git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
+          git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
+          test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = "7857a2e8c32088b5002f7cafe29a21d936baf704"
+          for M in             MathlibExt/MeasureTheory/Measure/ImageNull             MathlibExt/Geometry/Manifold/Sard             MathlibExt/Geometry/Manifold/ParametricSard             MathlibExt/Geometry/Manifold/RiemannianMetricExistence             MathlibExt/Geometry/Manifold/OneDimensional; do
+            dst="/tmp/mathlib4/$M.lean"
+            mkdir -p "$(dirname "$dst")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$M")"
+            cp "/tmp/atlas-lean/$M.lean" "$dst"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$dst"
+            sha256sum "$dst" >> receipts/bu-global-boundary/ATLAS-SHA256SUMS
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-global-boundary/$(basename "$M").log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-global-boundary/$(basename "$M").log"
+          done
+      - name: Compile original IVT and the global boundary assembly theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBUFiberFreeAction ProductBUIntervalStabilizer ProductBUComponentOrbit ProductBUActualFiberOrbit ProductBUGlobalBoundary ProductBUComponentClassification ProductBUComponentEndpoints ProductBUGlobalAssembly ProductBUTimeZeroOrbit ProductBUFinalGeometricReduction ProductBUReferenceFace ProductBUAxisBoundaryTerminal; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-global-boundary/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-global-boundary/$M.log"
+          done
+      - name: Check named theorem signatures and standard axiom closure
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          s=Path("receipts/bu-global-boundary/ProductBUGlobalBoundary.log").read_text()
+          for suffix in ("boundary_component_diffeomorphic_closed_interval",
+                         "boundary_component_homeomorphic_closed_interval",
+                         "no_free_homeomorphism_of_compact_boundary_component"):
+              name="Nightfall.ProductBUGlobalBoundary."+suffix
+              assert name in s, ("MISSING_DECLARATION",name)
+              hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in s,("NO_AX_RECEIPT",name)
+                  a=set()
+              assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+              print("PASS named Lean theorem",name,sorted(a))
+          s2=Path("receipts/bu-global-boundary/ProductBUComponentClassification.log").read_text()
+          name="Nightfall.ProductBUComponentClassification.boundary_connected_component_is_interval"
+          assert name in s2, ("MISSING_COMPONENT_DECLARATION",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s2,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s2,("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS component interval classification",sorted(a))
+          s3=Path("receipts/bu-global-boundary/ProductBUComponentEndpoints.log").read_text()
+          name="Nightfall.ProductBUComponentEndpoints.exists_second_endpoint_of_smooth_boundary_component"
+          assert name in s3, ("MISSING_SECOND_ENDPOINT",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s3,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s3, ("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS actual component second boundary endpoint",sorted(a))
+          s4=Path("receipts/bu-global-boundary/ProductBUGlobalAssembly.log").read_text()
+          name="Nightfall.ProductBUGlobalAssembly.actual_smooth_four_orbit_zero_fiber_impossible"
+          assert name in s4, ("MISSING_GLOBAL_COMPOSITION",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s4,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s4, ("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS actual global zero-fiber composition",sorted(a))
+          for log,suffix in [
+              ("ProductBUTimeZeroOrbit.log","Nightfall.ProductBUTimeZeroOrbit.time_zero_real_fiber_one_orbit"),
+              ("ProductBUFinalGeometricReduction.log","Nightfall.ProductBUFinalGeometricReduction.actual_smooth_time_boundary_zero_fiber_impossible"),
+          ]:
+              data=Path("receipts/bu-global-boundary/"+log).read_text()
+              assert suffix in data,("MISSING_FINAL_COMPONENT",suffix)
+              hit=re.search(r"'"+re.escape(suffix)+r"' depends on axioms:\s*\[([^\]]*)\]",data,re.S)
+              if hit: axioms={v.strip() for v in hit.group(1).split(",") if v.strip()}
+              else:
+                  assert f"'{suffix}' does not depend on any axioms" in data,("NO_AX_RECEIPT",suffix)
+                  axioms=set()
+              assert axioms <= {"propext","Classical.choice","Quot.sound"},(suffix,axioms)
+              assert "sorryAx" not in data
+              print("PASS source-explicit final geometry declaration",suffix,sorted(axioms))
+          data=Path("receipts/bu-global-boundary/ProductBUAxisBoundaryTerminal.log").read_text()
+          name="Nightfall.ProductBUAxisBoundaryTerminal.actual_smooth_reference_boundary_impossible"
+          assert name in data, ("MISSING_BOUNDARY_POINT_FREE_TERMINAL",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",data,re.S)
+          if hit: axioms={v.strip() for v in hit.group(1).split(",") if v.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in data, ("MISSING_AXIOM_RECEIPT",name)
+              axioms=set()
+          assert axioms <= {"propext","Classical.choice","Quot.sound"},(name,axioms)
+          print("PASS real signed-axis boundary-point-free global terminal",sorted(axioms))
+          assert all("sorryAx" not in x for x in (s,s2,s3,s4,data))
+          print("NOT PROVED: global regular zero-fiber smooth manifold-with-boundary or ProductSphereZero")
+          PY
+      - name: Algebraic thresholds, causal obstruction, annular decoding and noise closure
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p receipts/paper-iii
+          failures=0
+          for m in InfiniteFieldSignedStep InfiniteFieldFixedLower InfiniteFieldFixedUpper InfiniteFieldAdaptiveLower InfiniteFieldLegalUpper InfiniteFieldTerminal ContinuousPhaseCrossing ContinuousPhaseOracleObstruction ContinuousPhaseAllDimensions GenuinePrefixPhase ProductSphereCausalComposition ConditionalPhaseThreshold AnnularBalancedDecode PaperIIINoiseErasure; do
+            src="research/nightfall/formalization/finite_field/$m.lean"
+            if [ "$m" = AnnularBalancedDecode ]; then
+              src="research/nightfall/local-certificates/20261125-iii-v/lean/$m.lean"
+            fi
+            cp "$src" "/tmp/mathlib4/$m.lean"
+            sha256sum "$src" >> receipts/paper-iii/SHA256SUMS
+            if (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean") 2>&1 | tee "receipts/paper-iii/$m.log"; then
+              if grep -Eq 'sorryAx|declaration uses .sorry' "receipts/paper-iii/$m.log"; then
+                failures=$((failures+1))
+                echo "FAIL $m admitted proof" | tee -a receipts/paper-iii/status.txt
+              else
+                echo "PASS $m" | tee -a receipts/paper-iii/status.txt
+              fi
+            else
+              failures=$((failures+1))
+              echo "FAIL $m" | tee -a receipts/paper-iii/status.txt
+            fi
+          done
+          test "$failures" = 0
+      - name: Manuscript-wide terminal coverage and axiom gate
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/paper-iii
+          git rev-parse HEAD > receipts/paper-iii/head.txt
+          python3 - <<'PY' | tee receipts/paper-iii/coverage.log
+          import json
+          from pathlib import Path
+          spec=json.loads(Path("research/nightfall/paper-iii-certification/coverage.json").read_text())
+          pending=[]
+          for item in spec["claims"]:
+              status=item["status"]
+              print(item["label"],status,item["scope"])
+              if status != "full_terminal_verified":
+                  pending.append(item["label"])
+          print("Full manuscript certification is NOT established:", ", ".join(pending))
+          if pending:
+              raise SystemExit(1)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paper-iii-manuscript-wide-receipts
+          path: receipts/
+          retention-days: 90

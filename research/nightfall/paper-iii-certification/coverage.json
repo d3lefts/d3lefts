@@ -1,0 +1,127 @@
+{
+  "manuscript": "Adaptivity, Continuity, and the Exact Limits of Real Phase Retrieval",
+  "source": "Library nightfall_phase_retrieval_v7.tex; deposited-version identity not yet checked",
+  "status": "Audit gate, not a completed certificate. Unmapped means no exact terminal receipt located in the current inventory, not proof impossibility.",
+  "claims": [
+    {
+      "label": "thm:algebra",
+      "status": "existing_terminal",
+      "scope": "InfiniteFieldTerminal; exact-source compile in this run"
+    },
+    {
+      "label": "prop:coordinate",
+      "status": "existing_terminal",
+      "scope": "ContinuousPhaseAllDimensions restricted architecture"
+    },
+    {
+      "label": "thm:coordinateBU",
+      "status": "unmapped_full_terminal",
+      "scope": "Arbitrary continuous continuation; published ordinary BU dependency"
+    },
+    {
+      "label": "lem:zeros",
+      "status": "external_dependency",
+      "scope": "Published CCFH; explicit dependency, not a manuscript originality claim"
+    },
+    {
+      "label": "lem:prefix",
+      "status": "existing_conditional",
+      "scope": "GenuinePrefixPhase and ProductSphereCausalComposition"
+    },
+    {
+      "label": "thm:annulus",
+      "status": "unmapped_full_terminal",
+      "scope": "Existing causal threshold reduction; exact annular collision and upper construction require coverage mapping"
+    },
+    {
+      "label": "thm:sphere",
+      "status": "unmapped_full_terminal",
+      "scope": "Known-radius mixed/Stiefel reduction; source receipts must be mapped"
+    },
+    {
+      "label": "thm:minimax",
+      "status": "unmapped_full_terminal",
+      "scope": "Local archived annular construction and continuity pass; terminal minimax and nonattainment need source-level mapping"
+    },
+    {
+      "label": "thm:sphererisk",
+      "status": "unmapped_full_terminal",
+      "scope": "Sphere risk terminal not located"
+    },
+    {
+      "label": "thm:block",
+      "status": "unmapped_full_terminal",
+      "scope": "Two-bin odd-sensor result"
+    },
+    {
+      "label": "prop:lift",
+      "status": "unmapped_full_terminal",
+      "scope": "Global lift and prefix rank"
+    },
+    {
+      "label": "thm:conjugacy",
+      "status": "unmapped_full_terminal",
+      "scope": "Full-rank causal prefix conjugacy"
+    },
+    {
+      "label": "cor:rankloss",
+      "status": "unmapped_full_terminal",
+      "scope": "Prefix degeneration"
+    },
+    {
+      "label": "prop:contractible",
+      "status": "unmapped_full_terminal",
+      "scope": "Two-reading history contractibility"
+    },
+    {
+      "label": "prop:holonomy",
+      "status": "unmapped_full_terminal",
+      "scope": "Nonliftability onset"
+    },
+    {
+      "label": "thm:mixed",
+      "status": "unmapped_full_terminal",
+      "scope": "Hybrid pure/mixed character argument"
+    },
+    {
+      "label": "cor:projectormixed",
+      "status": "unmapped_full_terminal",
+      "scope": "Infinite-family projector count"
+    },
+    {
+      "label": "prop:zerogain",
+      "status": "unmapped_full_terminal",
+      "scope": "Zero-gain orientation defect"
+    },
+    {
+      "label": "lem:inflate",
+      "status": "unmapped_full_terminal",
+      "scope": "Collision inflation; noise replay module is separate"
+    },
+    {
+      "label": "thm:noise",
+      "status": "unmapped_full_terminal",
+      "scope": "Noisy lower bound and dimension-two exponent"
+    },
+    {
+      "label": "thm:allnoise",
+      "status": "unmapped_full_terminal",
+      "scope": "All-dimensional exponent"
+    },
+    {
+      "label": "thm:annnoise",
+      "status": "unmapped_full_terminal",
+      "scope": "Annular noise law"
+    },
+    {
+      "label": "thm:spherenoise",
+      "status": "unmapped_full_terminal",
+      "scope": "Sphere noise laws"
+    },
+    {
+      "label": "rem:erasure",
+      "status": "existing_terminal",
+      "scope": "PaperIIINoiseErasure squared loss floor and saturation"
+    }
+  ]
+}
