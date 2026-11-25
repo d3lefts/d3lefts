@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 73,
+  "revision": 74,
   "as_of": "2026-11-25 UTC",
   "source_commit": "31a71af99957e30a25111d1b328c43a94be04c12",
-  "scope": "Paper VI publication gate: restore actual staged proof on merged Wyner parent; fix legal leaf; preserve exact custody without automatic certification.",
+  "scope": "Paper VI exact-source custody reconciliation after successful staged MSE run 45652533477. No proof statement changes; pending-source classification preserved until reviewed registry integration.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5807,7 +5807,7 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/PaperVIGeneralLatentTerminal.lean",
-      "source_blob_sha": "17b9bb49c336fe0b6cc9684c8d16dc9286103a46",
+      "source_blob_sha": "2b012603ad052a6ae586ae6ce454553307f0ed3a",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -5827,7 +5827,7 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/PaperVIMSETerminal.lean",
-      "source_blob_sha": "69cd85aa35867e6184e5440f33d1637256211d2d",
+      "source_blob_sha": "2f2aff5936b274ca3e59ff5c2be0e4d60ecb8b5f",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
