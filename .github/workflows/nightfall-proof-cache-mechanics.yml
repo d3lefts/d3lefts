@@ -1,0 +1,19 @@
+name: NIGHTFALL proof cache mechanics (no Lean rebuild)
+on:
+  pull_request:
+    paths:
+      - 'scripts/paper_vi_dependency_checkpoint.py'
+      - 'scripts/test_paper_vi_dependency_checkpoint.py'
+      - '.github/actions/setup-nightfall-paper-vi-dependencies/**'
+      - '.github/workflows/nightfall-proof-cache-mechanics.yml'
+permissions:
+  contents: read
+jobs:
+  cache-mechanics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - run: python3 scripts/test_paper_vi_dependency_checkpoint.py
