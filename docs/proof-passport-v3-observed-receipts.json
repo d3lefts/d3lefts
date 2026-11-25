@@ -333,6 +333,189 @@
       "scope": "Native finite-group response-oracle scalar acceptance theorem; successful child job within failed overall workflow; unmerged, not adaptive Kraus/dilation.",
       "review": "independent statement and novelty review open",
       "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1201-QuadraticWynerMeanIncrementProgress",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean",
+      "blob": "01203c0002aff894e76b242da9efee9a28955d33",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "pr": 1201,
+      "run": 45654629250,
+      "job": 139347878838,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.QuadraticWynerMeanIncrementProgress.pincr_compOf_exact",
+        "Nightfall.QuadraticWynerMeanIncrementProgress.seed_average_pincr_le_original",
+        "Nightfall.QuadraticWynerMeanIncrementProgress.mean_increment_original_source_energy"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1201-PaperVIProjectedCrux",
+      "path": "research/nightfall/formalization/product_space/PaperVIProjectedCrux.lean",
+      "blob": "316611344a479dd78db16a3dda4a48ea5eb49db8",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "pr": 1201,
+      "run": 45654629250,
+      "job": 139347878838,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.PaperVI.source_projection_or_information",
+        "Nightfall.PaperVI.mean_source_dichotomy",
+        "Nightfall.PaperVI.quadratic_source_energy",
+        "Nightfall.PaperVI.quadratic_source_dichotomy"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1201-PaperVISquaredEnergy",
+      "path": "research/nightfall/formalization/product_space/PaperVISquaredEnergy.lean",
+      "blob": "1158e8fdf72f0521baba5afeefc2127d9ddb5f77",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "pr": 1201,
+      "run": 45654629250,
+      "job": 139347878838,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.PaperVI.sum_mul_pinfl_sect",
+        "Nightfall.PaperVI.Phi2_sum",
+        "Nightfall.PaperVI.Itot_le_degree_var",
+        "Nightfall.PaperVI.Phi2_le_degree_mvar"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1201-PaperVIRiskTree",
+      "path": "research/nightfall/formalization/product_space/PaperVIRiskTree.lean",
+      "blob": "c831bb9672c1f638df09278211f9ef091969414f",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "pr": 1201,
+      "run": 45654629250,
+      "job": 139347878838,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.PaperVI.mvar_le_constant",
+        "Nightfall.PaperVI.mvar_children_le",
+        "Nightfall.PaperVI.mvar_le_quarter_mass",
+        "Nightfall.PaperVI.frontier_risk_exact",
+        "Nightfall.PaperVI.extend_cost_le",
+        "Nightfall.PaperVI.extend_queries"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1201-PaperVIStageBudget",
+      "path": "research/nightfall/formalization/product_space/PaperVIStageBudget.lean",
+      "blob": "e2e2192f5f65671b14ce1e1b6fa981434cb9c2dc",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "pr": 1201,
+      "run": 45654629250,
+      "job": 139347878838,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.PaperVI.frontier_energy_cap",
+        "Nightfall.PaperVI.risk_block",
+        "Nightfall.PaperVI.risk_block_budget"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1201-PaperVILinearCharge",
+      "path": "research/nightfall/formalization/product_space/PaperVILinearCharge.lean",
+      "blob": "8bab32205aa2c45a540b9c321f33006b313b3217",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "pr": 1201,
+      "run": 45654629250,
+      "job": 139347878838,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.PaperVI.mean_linear_charge",
+        "Nightfall.PaperVI.info_linear_charge",
+        "Nightfall.PaperVI.quadratic_linear_charge",
+        "Nightfall.PaperVI.source_mean_charge",
+        "Nightfall.PaperVI.source_quad_charge"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1201-PaperVIMSETerminal",
+      "path": "research/nightfall/formalization/product_space/PaperVIMSETerminal.lean",
+      "blob": "2f2aff5936b274ca3e59ff5c2be0e4d60ecb8b5f",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "pr": 1201,
+      "run": 45654629250,
+      "job": 139347878838,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.PaperVI.source_block",
+        "Nightfall.PaperVI.mean_mse_mixture",
+        "Nightfall.PaperVI.quadratic_halve_stage",
+        "Nightfall.PaperVI.quad_dyadic_budget",
+        "Nightfall.PaperVI.quadratic_mse_mixture_dyadic"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1201-PaperVIGeneralLatentTerminal",
+      "path": "research/nightfall/formalization/product_space/PaperVIGeneralLatentTerminal.lean",
+      "blob": "2b012603ad052a6ae586ae6ce454553307f0ed3a",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "pr": 1201,
+      "run": 45654629250,
+      "job": 139347878838,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.PaperVI.mean_mse_general",
+        "Nightfall.PaperVI.paper_vi_general_mse",
+        "Nightfall.PaperVI.quadratic_mse_general_dyadic",
+        "Nightfall.PaperVI.paper_vi_quadratic_mse",
+        "Nightfall.PaperVI.paper_vi_general_mse_wyner",
+        "Nightfall.PaperVI.paper_vi_quadratic_mse_wyner"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
+    },
+    {
+      "id": "pr1212-PaperVITensorTerminal",
+      "path": "research/nightfall/formalization/structural_information/PaperVITensorTerminal.lean",
+      "blob": "f540943e5ebdba036d688619745a2c935db8f7fd",
+      "head": "f7bdd571d9005218544ea442bc88161e92675a9c",
+      "pr": 1212,
+      "run": 45644811376,
+      "job": 139312816048,
+      "job_status": "success",
+      "declarations": [
+        "Nightfall.StructuralInformation.PaperVITensorTerminal.code_exact_parameters",
+        "Nightfall.StructuralInformation.PaperVITensorTerminal.tensor_entropy",
+        "Nightfall.StructuralInformation.PaperVITensorTerminal.tensor_representation_score"
+      ],
+      "source_location": "historical-branch-only-or-source-drift",
+      "scope": "Paper VI tensor representation obstruction, exact code parameters and actual Wyner entropy/score transfer; no general staged MSE terminal or originality claim. Source PR unmerged; local replay not reported.",
+      "review": "independent statement and novelty review open",
+      "evidence": "observed historical named audit and successful job; no fresh replay in this change"
     }
   ],
   "exceptions": [],
