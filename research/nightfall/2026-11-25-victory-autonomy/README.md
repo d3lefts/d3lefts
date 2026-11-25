@@ -24,3 +24,30 @@ Prediction: certificate-scoped negative caching reduces repeated solver invocati
 Proposed owners: Ryev implement fixture/checker; Lemnis attack invalidation and concurrency; Axiom generalize monotone failure reuse; Tessera test cross-domain transfer; Vesper assess evidence and prior art. No assignments actually dispatched or changes to runtime made by this note.
 
 Graph: partial observability -> canonical dependency identity -> monotonicity / alias tracking -> certificate-scoped negative cache and revalidation -> proposed trace experiment -> limits (nonmonotonicity, incomplete observation, heuristic failure) -> Lean compilation, search orchestration, proof passport invalidation. Edge class: proposed transfer, not certified computational dependency.
+
+
+## v1.1 follow-up — 2026-11-25: eight additional commit diffs and finite replay
+
+Source remains pinned to 71652a2c. Additional review: f2cc1009, 579a8d9d, e7e6c00b, 1c7231d9, ae909379, 4cbe9d76, cf62e1ae, 03629f3f. The following are proposed transfers, not new scientific priority claims.
+
+- **Correction to operator 4 (alias completeness):** [ae909379](https://github.com/Belobug/VIctory-Belobug-AMD/commit/ae909379e6a401e30e424347544b2e8aec7be5dd) explicitly limits joint guarding to at most 64 views and describes address-based runtime writes as a shortcut. The source is not universally alias-complete; the stronger NIGHTFALL requirement is a proposed design invariant. The same patch provides three diagnostic refresh modes to discriminate distinct stale-copy mechanisms. Use selective invalidation versus full recomputation as a causal ablation, not a success-metric substitute.
+- **In-flight work is not complete when the launching call returns.** [579a8d9d](https://github.com/Belobug/VIctory-Belobug-AMD/commit/579a8d9dd96f803df82cf34f0d0e5aa5f9705557) protects asynchronous writes against premature reguarding using a two-second pin and repeated dirty reporting. Transfer: explicit completion acknowledgments, revisioned leases and uncertain state until termination is observed; expiration is not proof of completion. The source timer is a heuristic, not a correctness guarantee.
+- **Batch optimistically, split on failure, reconcile per item.** [e7e6c00b](https://github.com/Belobug/VIctory-Belobug-AMD/commit/e7e6c00b33d295870d78a9a05f65408cb50a846f) falls back from failed contiguous protection changes to individual blocks; [f2cc1009](https://github.com/Belobug/VIctory-Belobug-AMD/commit/f2cc1009a73fc93c704fdc57ec2baf300aaa72a3) amortizes alias lookup under a lock. Transfer: batch independent checks and split failed batches; only mark success for confirmed per-item outcomes. The original patch ignores individual protection-return values; do not transfer that weakness. For isolated deterministic single-fault batches, recursive bisection needs at most 1+2 ceil(log2 n) batch probes including the first failed batch, when both halves are probed at each level; not a bound for interacting or nondeterministic faults.
+- **Reconcile control-plane state against observed state without broadening authority.** [1c7231d9](https://github.com/Belobug/VIctory-Belobug-AMD/commit/1c7231d9e02c6b193cac5c167d613080f1bfab25) repairs mismatch between tracked protection and actual protection. Transfer: reconcile stale job/receipt records against authoritative worker state; unknown ownership fails closed, never generalize a local fault-recovery heuristic into an authority bypass.
+- **Controlled component substitution and boundary-specific semantics.** [cf62e1ae](https://github.com/Belobug/VIctory-Belobug-AMD/commit/cf62e1aeaa69b17eb5b40ac1117badec94f0286c) supports hash-indexed diagnostic substitutions; [03629f3f](https://github.com/Belobug/VIctory-Belobug-AMD/commit/03629f3f0d3f3329052e05084440aeee75ce3107) corrects helper-lane semantics at triangle boundaries. Transfer: matched substitution of research components under frozen contracts, explicit boundary cases, and independent semantic checks. Same interface is not semantic equivalence. The source's 16-digit diagnostic lookup is not a full identity certificate.
+
+### Executed finite replay
+Artifact: [replay-negative-cache.cjs](replay-negative-cache.cjs), standalone original JS, no upstream code copied. Run: `node replay-negative-cache.cjs`. Executed the same replay function in a JS runtime before writing the file. Budget: exhaustive ordered pairs of 8-bit masks and first/second requests 1–8, 4,194,304 cases; stop on any mismatch, false suppression, or failure of negative control. Oracle enumerates candidate bit intervals; candidate scanner counts consecutive free bits. These are distinct implementations authored in the same session, not independent non-author review. Cache only skips when the first query fails, the second threshold is no smaller, and the next mask is a subset of the first.
+
+| Metric | Exact count |
+|---|---:|
+| Cases | 4,194,304 |
+| Restrictive cases (includes unchanged mask) | 419,904 |
+| Baseline query count | 8,388,608 |
+| Candidate query count | 8,303,040 |
+| Queries suppressed | 85,568 |
+| False suppressions | 0 |
+| Outcome mismatches | 0 |
+| Deliberately broken cache false suppressions (ignores enlargement) | 78,281 |
+
+Smallest encountered broken witness: before mask 0, after mask 1, requests 1 then 1. An empty feasible set becomes nonempty. Suppression is 85,568 / 8,388,608 of baseline queries (about 1.02%) under exhaustive all-pair weighting, not an observed speedup, and 85,568 / (2 * 419,904) of baseline queries within restrictive cases. No runtime claims. Scope: two-step finite model, not the source allocator or actual orchestration. Multi-step traces, dependency keys, asynchronous completion, alias changes, starvation and stale commits remain open. This extends the first planned finite test but does not complete the full experimental contract. Next decisive test: independent reviewer replay and actual matched orchestration traces, with explicit dependency identity and in-flight version checks. No independent review has been obtained.

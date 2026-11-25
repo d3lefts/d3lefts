@@ -1,0 +1,54 @@
+name: NIGHTFALL rank-phase transport and causal observation
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/RankPhaseTransport.lean'
+      - 'research/nightfall/doctoral-closure-20261125/**'
+      - '.github/workflows/nightfall-doctoral-closure.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Verify exact checked bytes and replay
+        run: |
+          set -euo pipefail
+          cd research/nightfall/doctoral-closure-20261125
+          echo '325a0b542fc9ef288f75ebe32f23cf5cef52970e686b1981b1fa221571bca089  check_rank_phase.py' | sha256sum -c
+          echo '7dec30bc6d22c1c406147d1185f24c7615725aff3439cf8712c3afaba10ca5e9  check_causal_observation.py' | sha256sum -c
+          python3 check_rank_phase.py
+          python3 check_causal_observation.py
+  named-kernel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Exact source compilation and mandatory kernel replay
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/rank-phase
+          cp research/nightfall/formalization/finite_field/RankPhaseTransport.lean /tmp/mathlib4/RankPhaseTransport.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/RankPhaseTransport.olean RankPhaseTransport.lean) 2>&1 | tee receipts/rank-phase/compile.log
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v RankPhaseTransport) 2>&1 | tee receipts/rank-phase/kernel.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          log=Path('receipts/rank-phase/compile.log').read_text()
+          for suffix in ['calibrated_reading','dependent_row_reading','normalized_anchor_unique','kernel_shift_collision']:
+              decl='Nightfall.FiniteField.RankPhaseTransport.'+suffix
+              m=re.search(r"'"+re.escape(decl)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m:
+                  assert {x.strip() for x in m.group(1).split(',') if x.strip()} <= {'propext','Classical.choice','Quot.sound'},decl
+              else:
+                  assert "'"+decl+"' does not depend on any axioms" in log,decl
+          print('SCOPED RANK-PHASE TRANSPORT KERNEL PASS; NOT FULL IDENTITY')
+          PY
+          sha256sum research/nightfall/formalization/finite_field/RankPhaseTransport.lean > receipts/rank-phase/source.sha256
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: scoped-rank-phase-receipt
+          path: receipts/rank-phase
