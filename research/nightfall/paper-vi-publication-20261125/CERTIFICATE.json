@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-25",
+  "manuscript": "Paper VI v1.4; certification-only section 10.2 update",
+  "prospectus": "v0.7 frozen; unchanged",
+  "pdf_sha256": "155e1d8d7c317928738e533bffcff1e79bdaaeb5a7d27fa4055e1b0edc54a7d7",
+  "staged": {
+    "pr": 1201,
+    "source_head": "41fb1cc5af1836b51ab1122f928efd78fe19c308",
+    "tested_merge": "03ab8c3878f5532449f8f9458ccf6a1dc60c6539",
+    "run": 45652533477,
+    "metadata_reconciled_head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+    "reconciled_run": 45654629250,
+    "theorems": [
+      "Nightfall.PaperVI.paper_vi_general_mse_wyner",
+      "Nightfall.PaperVI.paper_vi_quadratic_mse_wyner"
+    ],
+    "lean": "4.36.0-rc2",
+    "lean_commit": "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+    "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "export_run": 45653852704,
+    "export_artifact": 15041568364,
+    "export_sha256": "58ad2a0a247f1ae48caf78f0b444bafa288dff4c3881ff2a95cc8c4a8fa1141f",
+    "local_kernel": {
+      "command": "./lean-env leanchecker --from-export pvi-closed-export/pvi.ndjson",
+      "exit_status": 0,
+      "output": "Lean default kernel accepts the solution",
+      "wall_seconds": 122.18,
+      "max_rss_kib": 928468,
+      "log_sha256": "928340b44357b4004dcdd813895c79505f48deb7c690b80bdc36f961e171c73f"
+    },
+    "local_theorem_count": 33595,
+    "local_verified_project_objects": 207,
+    "local_reused": 180,
+    "local_recompiled": 0
+  },
+  "tensor": {
+    "pr": 1212,
+    "head": "f7bdd571d9005218544ea442bc88161e92675a9c",
+    "run": 45644811376,
+    "theorems": [
+      "code_exact_parameters",
+      "tensor_entropy",
+      "tensor_representation_score"
+    ],
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "local_replay": "not performed"
+  },
+  "earlier_qw_plus": {
+    "pr": 1200,
+    "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+    "run": 45626765856
+  },
+  "scope": "Headline named statements and explicit constants giving published orders, not every manuscript composition, heterogeneous-alphabet generalization, global priority or human peer review. Secondary direct-cover, robust support, block syndrome, shared staging, measurable lift and Paper V full two-query terminal retain outstanding scope. Source PRs not yet merged. No external deposit performed."
+}

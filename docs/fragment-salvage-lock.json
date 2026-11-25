@@ -1,0 +1,20 @@
+{
+  "schema": "nightfall-fragment-salvage-lock/v1",
+  "version": 1,
+  "status": "historical evidence triage; not a proof certificate",
+  "source": "https://arxiv.org/abs/2609.40324",
+  "source_commit": "4a7bc8ab0bc770e71a259b7966c500496b99010a",
+  "files": [
+    {
+      "path": "research/nightfall/2026-11-25-cogentic-ingestion/fragment-salvage-fixture.json",
+      "git_blob": "5291863ba52777320f0c056eb1654becf237db52"
+    },
+    {
+      "path": "research/nightfall/2026-11-25-cogentic-ingestion/replay-fragment-salvage.cjs",
+      "git_blob": "a8eb5d58a82badda19c1fe2128685845fabc11a7"
+    }
+  ],
+  "scope": "historical-exact-head-only",
+  "trust": "manually observed historical metadata; not live authenticated trust",
+  "policy": "Immutable snapshot; separately reviewed upgrades; no automatic claim promotions; existing Proof Passports control proof status"
+}
