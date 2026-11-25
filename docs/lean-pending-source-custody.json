@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 67,
-  "as_of": "2026-11-25 UTC",
-  "source_commit": "b099e38f7cb06fba92b8cb5fa9ec97cea86bd5d1",
-  "scope": "Register repaired tensor-distance proof candidate at exact source blob; retain existing custody without certification promotion.",
+  "revision": 68,
+  "as_of": "2026-11-24 UTC",
+  "source_commit": "33efbc7d1b50d73d856678aefad7af97b7bb0f82",
+  "scope": "Queue reconciliation: preserve main custody; add exact previously kernel-checked tensor distance source without promoting registry status; register two inherited missing sources.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5663,7 +5663,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Pre-existing main source identified by strict custody failure on #1199. Exact blob registration only; no new proof or certificate claim."
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
     },
     {
       "path": "research/nightfall/formalization/product_space/Route1SharedDrift.lean",
@@ -5673,7 +5673,7 @@
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Pre-existing main source identified by strict custody failure on #1199. Exact blob registration only; no new proof or certificate claim."
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
     }
   ]
 }
