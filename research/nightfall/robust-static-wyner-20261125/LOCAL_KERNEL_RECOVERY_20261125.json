@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-25",
+  "runtime": {
+    "lean": "4.36.0-rc2",
+    "leanCommit": "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+    "mathlibCommit": "9d581dfff2e41de989072ea63abf3daf69311520"
+  },
+  "method": "Recovery of existing compiled predecessors, with fresh kernel verification only for previously outstanding exports and newly composed lemmas. No previously completed theorem recompiled.",
+  "existingRepositoryReceipt": {
+    "pr": 1232,
+    "mergeCommit": "6fefad8b4d324cd3bb4a830545c6b24d184645de",
+    "terminal": "Nightfall.AllOrder.Quantum.physical_tensor_simulation",
+    "certificateBlob": "b564975063395d45fe3bcb7204b04a88b8e21788",
+    "scope": "full-label uniform additive-character physical simulation"
+  },
+  "localArchive": {
+    "filename": "NIGHTFALL_e2e_recovery_2026-11-25.tar.zst",
+    "sha256": "0c964cfdb6acf169f38545faec359b481fb141cf318f7865fd5cd1f3169c54a6",
+    "availability": "Delivered as conversation attachment, not uploaded to GitHub. Contains exact source, compiled objects, standalone dependency-closed exports, receipts, predecessor source snapshots, replay script and SHA256SUMS."
+  },
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "certificates": [
+    {
+      "module": "FrontierTapeTerminal",
+      "scope": "actual compiled stopped tape joint law",
+      "terminal": "Nightfall.FrontierTapeTerminal.compiled_uniform_tape",
+      "sourceGitBlob": "4528b32fa629229b8c172e5b1f2658dbfab4c318",
+      "sourceSHA256": "34a2cc7466647063904c2ace90c5e3523939049acc040c1c7ab32359aaf92617",
+      "exportSHA256": "cd5f2e95679241dd984125d53afdd965150815c18888b67a3d74c6d4a9216f29",
+      "compileExit": 0,
+      "kernelExit": 0,
+      "kernelSeconds": 5.13
+    },
+    {
+      "module": "FrontierPhysicalPhase",
+      "scope": "restricted-label physical quantum tensor simulation; reused existing compiled object",
+      "terminal": "Nightfall.FrontierPhysicalPhase.physical_tensor_quantum_simulation",
+      "sourceGitBlob": "be7fd3204889be701426f140a5f791ff2ecc6966",
+      "sourceSHA256": "f5a8cb9985db83d11ff1b99d6e85fee4261d1ce190b92204eb1c68968e1fc440",
+      "exportSHA256": "26ee41704372bf1315844336f8bd7572c2333209c749dcd7d421d9a285c9874e",
+      "compileExit": 0,
+      "kernelExit": 0,
+      "kernelSeconds": 21.32
+    },
+    {
+      "module": "FrontierWindowComposition",
+      "scope": "conditional weighted RMS and correlated suffix marginal transfer; not staged-query construction",
+      "terminals": [
+        "Nightfall.FrontierWindowComposition.weighted_mse",
+        "Nightfall.FrontierWindowComposition.window_mse"
+      ],
+      "sourceGitBlob": "24e6e75d3725fedaadf36326ab1c2661eb3ea3e0",
+      "sourceSHA256": "489f08dc2afa5eda66030162e6764d3a55f41742884a0e6ecd4af3bc0594aa58",
+      "exportSHA256": "5eb6023c2091acd03639c6fce7be603f080c697501897781605b3ea09e3932e7",
+      "compileExit": 0,
+      "kernelExit": 0,
+      "kernelSeconds": 6.16
+    },
+    {
+      "module": "FrontierCommonReference",
+      "scope": "continuous probability-integral common-reference overlap and minimax; assumes positive normalized likelihood ratios, integrable logs and reverse-KL bound; no Gaussian transcript construction",
+      "terminals": [
+        "Nightfall.FrontierCommonReference.common_reference_overlap",
+        "Nightfall.FrontierCommonReference.common_reference_minimax"
+      ],
+      "sourceGitBlob": "90b2e95ed48aa9108834913112e75813c94f69ab",
+      "sourceSHA256": "f1b10a9bf81e262d3e4d9be683acc98bf7b3dee557259d019387dbd26d7b2ae6",
+      "exportSHA256": "0886fba3724bc7b0505dcf3c6e7fba70e6ee9013fb98c7e7958809f8c889cc4a",
+      "compileExit": 0,
+      "kernelExit": 0,
+      "kernelSeconds": 18.09
+    }
+  ],
+  "remaining": [
+    {
+      "scope": "Equivariant collision and Gaussian model",
+      "status": "OPEN",
+      "sources": [
+        "#1147 paper proof",
+        "#1149 paper proof",
+        "#1207 archived global geometric reduction",
+        "#1129 conditional covering atlas"
+      ],
+      "blocker": "actual smooth manifold/compatible chart and boundary construction or an exact topological alternative, followed by adaptive Gaussian likelihood normalization and reverse-KL evaluation. Run 45628041355 failed. No assumption-to-theorem promotion."
+    },
+    {
+      "scope": "Causal staged dynamics/window query budget",
+      "status": "OPEN",
+      "sources": [
+        "#1208",
+        "#1201 already certified Paper VI source",
+        "#1228"
+      ],
+      "blocker": "actual released-coordinate adaptive posterior drift with one shared information charge, stage tolerance allocation and final query budget. Weighted MSE and window risk transfer now certified."
+    },
+    {
+      "scope": "Repository integration of local robust Wyner source-slice, risk transfer and normalized-deletion certificates",
+      "status": "OPEN",
+      "blocker": "exact source custody and dependency integration; this metadata record does not claim binary artifact or full source upload"
+    }
+  ],
+  "publication": "No merge, no publication, no external priority promotion."
+}
