@@ -1,0 +1,42 @@
+name: Export archived flagship proof sources (no compilation)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/nightfall-flagship-source-transfer.yml'
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: df39c2677e9fcef8a212aab13361ebf5cd975ac3
+          path: rank
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 592dd68e3eee5edb843b6ad93be3c081409576dc
+          path: t2
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: f7bdd571d9005218544ea442bc88161e92675a9c
+          path: tensor
+          persist-credentials: false
+      - name: Transfer exact source snapshots only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p export
+          for name in rank t2 tensor; do
+            (cd "$name" && git archive HEAD research/nightfall/formalization) | gzip -1 > "export/$name.tar.gz"
+            git -C "$name" rev-parse HEAD > "export/$name.commit"
+          done
+          (cd export && sha256sum *.tar.gz *.commit > SHA256SUMS)
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: flagship-exact-source-snapshots
+          path: export/
+          retention-days: 7
