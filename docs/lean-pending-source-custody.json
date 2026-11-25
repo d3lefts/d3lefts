@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 70,
+  "revision": 71,
   "as_of": "2026-11-25 UTC",
-  "source_commit": "af0e0336648eff3aee1470c9f4f79629f44b5712",
-  "scope": "T2 phase expansion source repair on archived dependency chain; clean-main integration and full theorem still open.",
+  "source_commit": "138219c773199c14e085cfa148ff179c8fe40d70",
+  "scope": "Restore clipped estimator and repair classical decidability; no certification promotion.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -5394,6 +5394,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2ClippedEstimator.lean",
+      "source_blob_sha": "cff3d46551584ecb455c16af3065313c26fbf296",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Recovered archived #1181; explicit classical decidability fixes observed missing Decidable existential. Exact-head kernel replay pending; visible Fourier energy premise retained."
     }
   ]
 }
