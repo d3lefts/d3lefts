@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NIGHTFALL generated Proof Passport evidence inventory: sources, receipts, scope and unresolved review.">
+<title>Proof Passport v3 — NIGHTFALL</title>
+<link rel="canonical" href="https://d3lefts.github.io/d3lefts/proof-passport-v3.html">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="ethereal-theme.css">
+<link rel="alternate" type="application/json" href="proof-passport-v3.json">
+<style>
+.ppv3{max-width:1100px;margin:0 auto;padding:3rem 1.2rem;line-height:1.6}.ppv3 h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.1}.ppv3 a{text-decoration:underline}.ppv3 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:1.5rem 0}.ppv3 .stat,.ppv3 article{border:1px solid currentColor;border-color:rgba(128,128,128,.3);padding:1rem;overflow-wrap:anywhere}.ppv3 .stat strong{font-size:1.65rem;display:block}.ppv3 label{display:block;margin-top:1rem}.ppv3 input,.ppv3 select,.ppv3 button{font:inherit;padding:.55rem;max-width:100%;background:transparent;color:inherit;border:1px solid #888}.ppv3 input{width:min(100%,40rem)}.ppv3 #results{display:grid;gap:.75rem;margin:1rem 0}.ppv3 article h3{font-size:1rem;margin:0 0 .5rem}.ppv3 article p{margin:.4rem 0}.ppv3 .small{font-size:.88rem}.ppv3 .links{display:flex;flex-wrap:wrap;gap:1rem}.ppv3 nav{margin-bottom:2rem}
+</style>
+<script src="site.js" defer></script>
+<script src="ethereal-theme.js" defer></script>
+<script src="proof-passport-v3.js" defer></script>
+</head>
+<body>
+<header class="header"><div class="wrap header-inner">
+<a href="index.html" class="brand" aria-label="NULL FIELD active research"><span class="mark" aria-hidden="true">N∕F</span><span class="brand-copy">NIGHTFALL <span>PHASESHIFT / ACTIVE RESEARCH</span></span></a>
+<button type="button" class="menu-toggle" id="menu-button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">MENU +</button>
+<nav class="nav" id="site-nav" aria-label="Primary navigation">
+<a href="index.html">Current research</a>
+<a href="active-proof-passport.html" aria-current="page">Proof passports</a>
+<a href="research.html">Research library</a>
+<a class="nav-call" href="review.html">Independent review ↗</a>
+</nav>
+</div></header>
+<main class="ppv3" id="main">
+<nav aria-label="Research evidence"><a href="index.html">NIGHTFALL</a> · <a href="active-proof-passport.html">Earlier active passports</a> · <a href="recent-research.html">Recent research</a> · <a href="review.html">Independent review</a></nav>
+<p>RESEARCH INFRASTRUCTURE / GENERATED EVIDENCE VIEW</p>
+<h1>Proof Passport v3</h1>
+<p>Claims, original source bytes, historical job receipts and review obligations in one generated inventory. The former hand-maintained passports remain immutable evidence snapshots. This page does not certify a mathematical statement, replay Lean, or authorize a publication.</p>
+<p><a href="proof-passport-v3.json">Download complete machine-readable inventory</a> · <a href="https://github.com/d3lefts/d3lefts/blob/main/scripts/sync_proof_passports_v3.cjs">Reproduction and validation source</a></p>
+<div id="status" role="status" aria-live="polite">Loading generated inventory…</div>
+<div id="stats" class="stats"></div>
+<p>Source-blob match is not full dependency-closure or statement certification. Pending-custody files may have scoped receipts in newer ledgers. The inventory is complete for registered source paths at the validated checkpoint, not an exhaustive historical CI census.</p>
+<label for="search">Search declaration, source, claim, or run ID</label>
+<input id="search" type="search" placeholder="e.g. Wyner, Q7BlockerPacking, 45626765856">
+<label for="mode">Inventory layer</label>
+<select id="mode"><option value="records">Claim and evidence references</option><option value="sources">All Lean source custody</option><option value="leads">Pending-custody receipt leads</option><option value="observed">Newly observed job audits</option></select>
+<p id="result-count" role="status" aria-live="polite"></p>
+<div id="results"></div>
+<button id="more" type="button" hidden>Show more</button>
+<h2>Interpretation</h2>
+<p>Evidence may support several claim records; overlapping records are not independent discoveries. Scientific validity, named kernel replay, theorem-to-manuscript correspondence, non-author review, prior art, significance and release authorization remain separate gates. Off-main evidence is kept distinct; a failed parent workflow does not erase a successful child job.</p>
+<noscript>JavaScript is required for filtering. The complete JSON inventory is available through the download link.</noscript>
+</main>
+</body></html>
