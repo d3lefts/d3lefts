@@ -1,0 +1,20 @@
+/mnt/data/lean-workbench/src/AllOrderPaddedFiber.lean:16:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.actualRow_some`:
+  [Fintype I]
+  [DecidableEq I]
+  [Fintype J]
+  [DecidableEq J]
+  [Fintype K]
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype I] [DecidableEq I] [Fintype J] [DecidableEq J] [Fintype K] [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderPaddedFiber.lean:34:26: warning: This simp argument is unused:
+  h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [optionLabel]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'Nightfall.AllOrder.Geometry.active_sum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Geometry.padded_fiber_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

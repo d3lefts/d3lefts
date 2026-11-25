@@ -1,0 +1,45 @@
+/mnt/data/lean-workbench/src/AllOrderMaskCost.lean:18:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.mask_cost_one`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderMaskCost.lean:23:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.cubeForm_add`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderMaskCost.lean:27:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.cubeForm_sub`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderMaskCost.lean:47:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.mask_cost_mul`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderMaskCost.lean:58:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.mask_cost_mono`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderMaskCost.lean:63:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.mask_cost_zero`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderMaskCost.lean:89:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.mask_cost_rep`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Nightfall.AllOrder.mask_cost_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.mask_cost_rep' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.zero_subset_mask_cost' depends on axioms: [propext, Classical.choice, Quot.sound]

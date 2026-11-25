@@ -1,0 +1,22 @@
+/mnt/data/lean-workbench/src/AllOrderMixedNorm.lean:9:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.signedSum_reindex`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderMixedNorm.lean:46:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.energy_nonneg`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderMixedNorm.lean:48:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.sum_cons`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Nightfall.AllOrder.signedSum_second' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.signedSum_fourth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.chaos_second' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.chaos_fourth' depends on axioms: [propext, Classical.choice, Quot.sound]

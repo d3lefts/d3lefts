@@ -1,0 +1,33 @@
+/mnt/data/lean-workbench/src/AllOrderActiveFiber.lean:14:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.tensorLabel_eq`:
+  [DecidableEq J]
+  [Fintype K]
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq J] [Fintype K] [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderActiveFiber.lean:38:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.walk_hamming`:
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderActiveFiber.lean:55:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.near_same_component`:
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderActiveFiber.lean:68:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.tensor_add_self`:
+  [Fintype J]
+  [DecidableEq J]
+  [Fintype K]
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype J] [DecidableEq J] [Fintype K] [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Nightfall.AllOrder.Geometry.short_circuit_near' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Geometry.walk_hamming' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Geometry.component_hamming' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Geometry.active_row_near_reference' depends on axioms: [propext, Classical.choice, Quot.sound]

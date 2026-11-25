@@ -1,0 +1,4 @@
+'Nightfall.AllOrder.chaos_l1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.first_row_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.first_row_mixed_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.all_slot_mixed_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
