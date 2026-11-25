@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 67,
+  "revision": 68,
   "as_of": "2026-11-25 UTC",
-  "source_commit": "b099e38f7cb06fba92b8cb5fa9ec97cea86bd5d1",
-  "scope": "Register Paper VI staged MSE source closure; preserve earlier entropy and QW+ custody without certification promotion.",
+  "source_commit": "eac3b523850a900f3581a47210ccde8ecb135d07",
+  "scope": "Repair Paper VI source namespace and preserve exact pending custody; no automatic certification.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5777,13 +5777,13 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/PaperVISquaredEnergy.lean",
-      "source_blob_sha": "87120b78033c7bcada9876432f5600a72d05aec8",
+      "source_blob_sha": "1158e8fdf72f0521baba5afeefc2127d9ddb5f77",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
+      "receipt_scope": "Paper VI squared-energy cap: repair originalMass namespace identified in failed run 45557426930; exact-head replay pending."
     },
     {
       "path": "research/nightfall/formalization/product_space/PaperVIRiskTree.lean",

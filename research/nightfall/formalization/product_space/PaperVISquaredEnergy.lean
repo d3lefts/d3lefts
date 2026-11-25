@@ -13,6 +13,7 @@ open Nightfall.ProductSpace.Influence
 open Nightfall.ProductSpace.RowBound
 open Nightfall.ProductSpace.Simulation
 open Nightfall.ProductSpace.Mixture
+open Nightfall.Observability.ActualProductMergeTower (originalMass)
 open Nightfall.Observability.ActualSourceANOVA
 open Nightfall.Observability.ActualSourceVarianceEnergy
 open Nightfall.Observability.ActualSourceInfluenceEnergy
