@@ -12,7 +12,19 @@
           "module": "InfiniteFieldTerminal",
           "name": "Nightfall.InfiniteFieldPhase.Terminal.infinite_field_phase_retrieval_causal_terminal"
         }
-      ]
+      ],
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          80,
+          91
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/695"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "prop:coordinate",
@@ -23,17 +35,54 @@
           "module": "ContinuousPhaseAllDimensions",
           "name": "Nightfall.ContinuousPhaseObstruction.no_continuous_final_row_all_dimensions"
         }
-      ]
+      ],
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          97,
+          102
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/699"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:coordinateBU",
       "scope": "Arbitrary continuous continuation; published ordinary BU dependency",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          105,
+          114
+        ],
+        "related_prs": [],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts.",
+        "published_dependency": "Ordinary Borsuk–Ulam theorem; manuscript mentions Ullrich formalization but no source-matched terminal recovered."
+      }
     },
     {
       "label": "lem:zeros",
       "scope": "Published CCFH; explicit dependency, not a manuscript originality claim",
-      "match": "external_dependency"
+      "match": "external_dependency",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          120,
+          125
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1010",
+          "https://github.com/d3lefts/d3lefts/pull/1147"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts.",
+        "published_dependency": "Chan–Chen–Frick–Hull (2020), Theorem 1.1 and Remark 2.7, arXiv:1902.00935v2."
+      }
     },
     {
       "label": "lem:prefix",
@@ -56,7 +105,21 @@
           "module": "ProductSphereCausalComposition",
           "name": "Nightfall.ProductSphereCausal.continuous_testV"
         }
-      ]
+      ],
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          129,
+          145
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/997",
+          "https://github.com/d3lefts/d3lefts/pull/1008",
+          "https://github.com/d3lefts/d3lefts/pull/1017"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:annulus",
@@ -75,7 +138,21 @@
           "module": "ProductBUCausalScaling",
           "name": "Nightfall.ProductBUCausalScaling.causal_transcript_scaling"
         }
-      ]
+      ],
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          152,
+          161
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/997",
+          "https://github.com/d3lefts/d3lefts/pull/1017",
+          "https://github.com/d3lefts/d3lefts/pull/1117"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:sphere",
@@ -86,7 +163,20 @@
           "module": "ProductBUMixedRadius",
           "name": "Nightfall.ProductBUMixedRadius.known_radius_risk_of_mixed_product_sphere_zero"
         }
-      ]
+      ],
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          163,
+          170
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/997",
+          "https://github.com/d3lefts/d3lefts/pull/1120"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:minimax",
@@ -152,6 +242,19 @@
           }
         ],
         "limitation": "Archive evidence is not yet a live branch module receipt. Named proofs cover the adaptive upper and sharpness for that design only, not full thm:minimax. No promotion of full coverage."
+      },
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          183,
+          222
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/999",
+          "https://github.com/d3lefts/d3lefts/pull/1117"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
       }
     },
     {
@@ -163,52 +266,176 @@
           "module": "ProductBUMixedRadius",
           "name": "Nightfall.ProductBUMixedRadius.known_radius_risk_of_mixed_product_sphere_zero"
         }
-      ]
+      ],
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          227,
+          234
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/999"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:block",
       "scope": "Two-bin odd-sensor result",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          238,
+          247
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1000",
+          "https://github.com/d3lefts/d3lefts/pull/1148",
+          "https://github.com/d3lefts/d3lefts/pull/1149"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "prop:lift",
       "scope": "Global lift and prefix rank",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          266,
+          271
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1047"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:conjugacy",
       "scope": "Full-rank causal prefix conjugacy",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          273,
+          282
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1047"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "cor:rankloss",
       "scope": "Prefix degeneration",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          284,
+          289
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1047"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "prop:contractible",
       "scope": "Two-reading history contractibility",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          291,
+          304
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1047"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "prop:holonomy",
       "scope": "Nonliftability onset",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          306,
+          321
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1047"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:mixed",
       "scope": "Hybrid pure/mixed character argument",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          340,
+          360
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1047",
+          "https://github.com/d3lefts/d3lefts/pull/1149"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "cor:projectormixed",
       "scope": "Infinite-family projector count",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          362,
+          369
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1047",
+          "https://github.com/d3lefts/d3lefts/pull/1149"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "prop:zerogain",
       "scope": "Zero-gain orientation defect",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          378,
+          390
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1047"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "lem:inflate",
@@ -219,27 +446,89 @@
           "module": "PaperIIINoiseErasure",
           "name": "Nightfall.PaperIIINoiseErasure.bounded_replay_collision"
         }
-      ]
+      ],
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          395,
+          412
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1009"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:noise",
       "scope": "Noisy lower bound and dimension-two exponent",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          414,
+          431
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1009"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:allnoise",
       "scope": "All-dimensional exponent",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          433,
+          473
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1011",
+          "https://github.com/d3lefts/d3lefts/pull/1020"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:annnoise",
       "scope": "Annular noise law",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          479,
+          503
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1011",
+          "https://github.com/d3lefts/d3lefts/pull/1020"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "thm:spherenoise",
       "scope": "Sphere noise laws",
-      "match": "unmapped"
+      "match": "unmapped",
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          505,
+          534
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1011"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     },
     {
       "label": "rem:erasure",
@@ -254,7 +543,19 @@
           "module": "PaperIIINoiseErasure",
           "name": "Nightfall.PaperIIINoiseErasure.high_noise_saturation"
         }
-      ]
+      ],
+      "manuscript_proof": {
+        "source": "nightfall_phase_retrieval_v7.tex",
+        "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+        "lines": [
+          537,
+          543
+        ],
+        "related_prs": [
+          "https://github.com/d3lefts/d3lefts/pull/1001"
+        ],
+        "scope": "Written proof and related provenance; references alone do not constitute Lean receipts."
+      }
     }
   ],
   "source_receipt_reference": "Archived conditional quantitative lane PR #1120, exact head b79bc06e29578c350d70d0123f3bed03c5cbc58a. Restored unchanged four source blobs; fresh audit required.",
@@ -266,5 +567,13 @@
       "prop:gap",
       "rem:mixedcoverage"
     ]
+  },
+  "compilation_reuse_checkpoint": {
+    "run": 45705100056,
+    "job": 139524926090,
+    "head": "0afd0692787b01dae7e0df7448a6d5eaba6e4c76",
+    "conclusion": "success",
+    "receipt_reuse": "passed; setup and all compilation steps skipped",
+    "coverage": "3 full, 6 partial, 14 unmapped, 1 external as last recorded; run success does not promote mathematical claims"
   }
 }
