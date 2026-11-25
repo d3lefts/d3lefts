@@ -71,9 +71,9 @@ theorem quadratic_mse_general_dyadic
     (ν : (ι → α) → ℝ) (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
     (f : (ι → α) → ℝ) (hf : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
     (hdeg : HasProdDegreeLE f 2) (s : ℝ) (hs : wynerGen ν < s)
-    (A B : ℕ) (hA : 2048*quadraticC ≤ A)
+    (A B : ℝ) (hA0 : 0 ≤ A) (hB0 : 0 ≤ B) (hA : 2048*quadraticC ≤ A)
     (hB : (2^40 : ℝ)*rowK 2*s ≤ B) (N : ℕ) :
-    ∃ t : DTree ι α, (∀ x, t.queries x ≤ N+A*2^N+B*8^N) ∧
+    ∃ t : DTree ι α, (∀ x, (t.queries x : ℝ) ≤ 2*N+A*2^N+B*8^N) ∧
       ∑ x, ν x*(f x-t.eval x)^2 ≤ dyadicRisk N := by
   rw [← wynerCI_eq_wynerGen] at hs
   obtain ⟨s0, ⟨k,w,Q,hw0,hw1,hQ0,hQ1,hν,rfl⟩,hlt⟩ :=
@@ -84,7 +84,7 @@ theorem quadratic_mse_general_dyadic
     · exact h
   letI : Nonempty (Fin k) := ⟨⟨0,hk⟩⟩
   obtain ⟨t,ht,herr⟩ := quadratic_mse_mixture_dyadic Q hQ0 hQ1 w hw0 hw1 f hf hdeg
-    s hlt.le A B hA hB N
+    s hlt.le A B hA0 hB0 hA hB N
   have hEx : Ex Q w (fun x => (f x-t.eval x)^2) = ∑ x, ν x*(f x-t.eval x)^2 := by
     unfold Ex pexp
     simp only [hν,Finset.mul_sum,Finset.sum_mul]
@@ -111,8 +111,23 @@ theorem dyadic_exists (τ : ℝ) (hτ : 0 < τ) : ∃ N : ℕ, dyadicRisk N ≤ 
   rw [div_le_iff₀ (by positivity)]
   nlinarith only [h]
 
+theorem positive_wyner_charge
+    (ν : (ι → α) → ℝ) (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
+    (s : ℝ) (hs : wynerGen ν < s) : 0 < s := by
+  rw [← wynerCI_eq_wynerGen] at hs
+  obtain ⟨s0, ⟨k,w,Q,hw0,hw1,hQ0,hQ1,hν,rfl⟩,hlt⟩ :=
+    exists_lt_of_csInf_lt (wynerSet_nonempty ν hν0 hν1) hs
+  have hk : 0 < k := by
+    rcases Nat.eq_zero_or_pos k with h0 | h
+    · subst h0; simp at hw1
+    · exact h
+  letI : Nonempty (Fin k) := ⟨⟨0,hk⟩⟩
+  have h := info_nonneg Q hQ0 hQ1 _ (∅ : Finset ι) w rfl hw0
+  rw [info_empty] at h
+  exact lt_of_le_of_lt h hlt
+
 /-- Main quadratic terminal, with arbitrary positive tolerance below
-one quarter. Integer budget coefficients can be chosen by ceilings.
+one quarter. Rounding is done inside the stages, not on the information coefficient.
 No per-stage or local drift hypotheses remain. -/
 theorem paper_vi_quadratic_mse
     (ν : (ι → α) → ℝ) (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
@@ -121,14 +136,19 @@ theorem paper_vi_quadratic_mse
     (τ : ℝ) (hτ : 0 < τ) (hτmax : τ < 1/4) :
     ∃ t : DTree ι α,
       (∀ x, (t.queries x : ℝ) ≤
-        ((⌈2048*quadraticC⌉₊ : ℕ)+1 : ℝ)/(2*τ) +
-        (⌈(2^40 : ℝ)*rowK 2*s⌉₊ : ℝ)/(8*τ^3)) ∧
+        (2048*quadraticC+2)/(2*τ) +
+        ((2^40 : ℝ)*rowK 2*s)/(8*τ^3)) ∧
       ∑ x, ν x*(f x-t.eval x)^2 ≤ τ := by
   classical
-  let A : ℕ := ⌈2048*quadraticC⌉₊
-  let B : ℕ := ⌈(2^40 : ℝ)*rowK 2*s⌉₊
-  have hA : 2048*quadraticC ≤ A := Nat.le_ceil _
-  have hB : (2^40 : ℝ)*rowK 2*s ≤ B := Nat.le_ceil _
+  let A : ℝ := 2048*quadraticC
+  let B : ℝ := (2^40 : ℝ)*rowK 2*s
+  have hC := quadraticC_pos
+  have hs0 := positive_wyner_charge ν hν0 hν1 s hs
+  have hK := rowK_pos 2 (by decide)
+  have hA0 : 0 ≤ A := by dsimp [A]; positivity
+  have hB0 : 0 ≤ B := by dsimp [B]; positivity
+  have hA : 2048*quadraticC ≤ A := le_rfl
+  have hB : (2^40 : ℝ)*rowK 2*s ≤ B := le_rfl
   let hex := dyadic_exists τ hτ
   let N := Nat.find hex
   have hN : dyadicRisk N ≤ τ := Nat.find_spec hex
@@ -144,7 +164,9 @@ theorem paper_vi_quadratic_mse
     omega
   have hrel : dyadicRisk N = dyadicRisk (N-1)/2 := by
     have hN' : N-1+1 = N := by omega
-    rw [← hN',dyadicRisk_succ]
+    calc
+      dyadicRisk N = dyadicRisk (N-1+1) := congrArg dyadicRisk hN'.symm
+      _ = dyadicRisk (N-1)/2 := dyadicRisk_succ _
   have hhalf : τ/2 < dyadicRisk N := by linarith
   have hp : (2 : ℝ)^N ≤ 1/(2*τ) := by
     unfold dyadicRisk at hhalf
@@ -157,23 +179,20 @@ theorem paper_vi_quadratic_mse
       norm_num
     rw [hpow]
     have h := pow_le_pow_left₀ (by positivity : 0 ≤ (2 : ℝ)^N) hp 3
-    have he : (1/(2*τ))^3 = 1/(8*τ^3) := by ring
+    have he : (1/(2*τ))^3 = 1/(8*τ^3) := by field_simp [hτ.ne'] <;> ring
     rwa [he] at h
-  obtain ⟨t,ht,herr⟩ := quadratic_mse_general_dyadic ν hν0 hν1 f hf hdeg s hs A B hA hB N
+  obtain ⟨t,ht,herr⟩ := quadratic_mse_general_dyadic ν hν0 hν1 f hf hdeg s hs A B hA0 hB0 hA hB N
   refine ⟨t,?_,herr.trans hN⟩
   intro x
-  have hdepth : (t.queries x : ℝ) ≤ (N : ℝ)+(A : ℝ)*(2 : ℝ)^N+(B : ℝ)*(8 : ℝ)^N := by
-    exact_mod_cast ht x
+  have hdepth : (t.queries x : ℝ) ≤ 2*(N : ℝ)+A*(2 : ℝ)^N+B*(8 : ℝ)^N := ht x
   have hNpow : (N : ℝ) ≤ (2 : ℝ)^N := by
     exact_mod_cast (show N ≤ 2^N from (Nat.le_succ N).trans (two_pow_ge_succ N))
-  have h1 := mul_le_mul_of_nonneg_left hp (Nat.cast_nonneg A : (0 : ℝ) ≤ A)
-  have h2 := mul_le_mul_of_nonneg_left h8 (Nat.cast_nonneg B : (0 : ℝ) ≤ B)
-  change (t.queries x : ℝ) ≤ ((A : ℝ)+1)/(2*τ)+(B : ℝ)/(8*τ^3)
-  rw [add_div,one_div]
-  have he : (A : ℝ)/(2*τ) = (A : ℝ)*(1/(2*τ)) := by ring
-  rw [he]
-  have he2 : (B : ℝ)/(8*τ^3) = (B : ℝ)*(1/(8*τ^3)) := by ring
-  rw [he2]
+  have h1 := mul_le_mul_of_nonneg_left hp hA0
+  have h2 := mul_le_mul_of_nonneg_left h8 hB0
+  change (t.queries x : ℝ) ≤ (A+2)/(2*τ)+B/(8*τ^3)
+  have he : (A+2)/(2*τ) = A*(1/(2*τ))+2*(1/(2*τ)) := by ring
+  have he2 : B/(8*τ^3) = B*(1/(8*τ^3)) := by ring
+  rw [he,he2]
   linarith
 
 #print axioms Nightfall.PaperVI.mean_mse_general
