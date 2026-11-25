@@ -1,0 +1,64 @@
+name: NIGHTFALL time-oriented C-infinity implicit zero-graph (Lean)
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/finite_field/ProductBUTimeOrientedIFT.lean'
+      - '.github/workflows/nightfall-product-bu-time-ift.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bu-time-ift-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  actual-time-graph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Pinned direct Mathlib IFT proof, no assumption-shaped axiom
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-time-ift
+          src="research/nightfall/formalization/finite_field/ProductBUTimeOrientedIFT.lean"
+          ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+          cp "$src" /tmp/mathlib4/ProductBUTimeOrientedIFT.lean
+          (cd /tmp/mathlib4 && lake env lean ProductBUTimeOrientedIFT.lean) 2>&1 | tee receipts/bu-time-ift/lean.log
+          ! grep -E '(^|:)error:|declaration uses .sorry' receipts/bu-time-ift/lean.log
+      - name: Axiom and exact theorem contract
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("receipts/bu-time-ift/lean.log").read_text()
+          name="Nightfall.ProductBUTimeOrientedIFT.exists_time_oriented_zero_graph"
+          assert name in s,("MISSING",name)
+          x=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+          if x:
+              a={z.strip() for z in x[1].split(",") if z.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},a
+          assert "sorryAx" not in s
+          print("PASS: spatially regular zero has exact local time oriented smooth graph",a)
+          print("SCOPE: local endpoint graph only, no full halfspace covering or ProductSphereZero")
+          PY
+      - name: Source SHA and frozen toolchain
+        if: always()
+        run: |
+          mkdir -p receipts/bu-time-ift
+          git rev-parse HEAD > receipts/bu-time-ift/head.txt
+          cat lean-toolchain > receipts/bu-time-ift/toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBUTimeOrientedIFT.lean > receipts/bu-time-ift/source.sha256
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bu-time-ift-source-certificate
+          path: receipts/bu-time-ift
+          retention-days: 90

@@ -1,0 +1,56 @@
+name: NIGHTFALL fixed-order tensor circuit support budget Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/TensorCircuitSupportBudget.lean'
+      - '.github/workflows/nightfall-tensor-circuit-budget-lean.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  budget:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Prove abstract circuit active-support inequality with Lean kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tensor-circuit-budget-receipt
+          src=research/nightfall/formalization/structural_information/TensorCircuitSupportBudget.lean
+          cp "$src" /tmp/mathlib4/TensorCircuitSupportBudget.lean
+          (cd /tmp/mathlib4 && lake env lean -o .lake/build/lib/lean/TensorCircuitSupportBudget.olean TensorCircuitSupportBudget.lean) 2>&1 | tee tensor-circuit-budget-receipt/compile.log
+          (cd /tmp/mathlib4 && lake env leanchecker TensorCircuitSupportBudget) 2>&1 | tee tensor-circuit-budget-receipt/kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/nightfall/formalization/structural_information/TensorCircuitSupportBudget.lean').read_text()
+          log=Path('tensor-circuit-budget-receipt/compile.log').read_text()
+          assert not re.search(r'(?m)^\s*(sorry|admit|axiom)\b',s)
+          assert 'error:' not in log
+          names=['union_active_sites_plus_twice_circuit_count','fixed_order_active_support_budget','six_site_of_eight_rows']
+          assert all(n in log for n in names)
+          reports=re.findall(r'depends on axioms:\s*\[([^\]]*)\]',log)
+          none=re.findall(r'does not depend on any axioms',log)
+          assert len(reports)+len(none)>=3
+          allowed={'propext','Classical.choice','Quot.sound'}
+          assert all(set(x.strip() for x in m.split(',') if x.strip())<=allowed for m in reports)
+          print('TENSOR_CIRCUIT_SUPPORT_BUDGET_KERNEL_PASS_SCOPED')
+          PY
+      - name: Exact-head hash receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p tensor-circuit-budget-receipt
+          git rev-parse HEAD > tensor-circuit-budget-receipt/commit.txt
+          sha256sum research/nightfall/formalization/structural_information/TensorCircuitSupportBudget.lean > tensor-circuit-budget-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: tensor-circuit-budget-receipt
+          path: tensor-circuit-budget-receipt/
+          retention-days: 90

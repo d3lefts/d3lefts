@@ -1,0 +1,23 @@
+name: NIGHTFALL dual-distance phase risk exact finite audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/DUAL_DISTANCE_GRAPH_PHASE_RISK_SIMULATION_20261122.md'
+      - 'scripts/check_dual_distance_phase_risk_exact.py'
+      - '.github/workflows/nightfall-dual-distance-phase-risk-exact.yml'
+  workflow_dispatch:
+
+jobs:
+  affine-and-graph-finite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Source-identified exact F2 affine code and graph marginal/risk checks
+        run: |
+          set -euo pipefail
+          git rev-parse HEAD
+          sha256sum scripts/check_dual_distance_phase_risk_exact.py research/nightfall/structural_information/DUAL_DISTANCE_GRAPH_PHASE_RISK_SIMULATION_20261122.md
+          python3 scripts/check_dual_distance_phase_risk_exact.py
+          echo 'NOTE: finite exact checks and negative controls do NOT certify the all-T analytic theorem, quantum interface, or any Lean terminal.'

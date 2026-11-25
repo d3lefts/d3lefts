@@ -1,5 +1,10 @@
 # NIGHTFALL paper shelf
 
+**Mandatory Zenodo manuscript style (owner directive, 24 November 2026):** Before drafting or formatting a publication PDF, read the [house style and required visual preflight](zenodo/README.md#mandatory-manuscript-format--owner-directive-24-november-2026). Use the established AMS layout and the author block Devin J. Wright / Independent researcher, with no version or NIGHTFALL affiliation in the byline. This requirement applies to all research roles and fresh sessions.
+
+**24 November — first Zenodo publication:** [Dimension-Free Classical Simulation Under Correlated Inputs: Wyner Common-Information Bounds and Query-Local Representations](https://doi.org/10.5281/zenodo.24511398), v0.7, 24 pages. [NIGHTFALL community](https://zenodo.org/communities/nightfall-research/records) · [Publication registry](publications.json) · [Reproducibility archival procedure](zenodo/README.md). Published preprint; not externally refereed.
+
+
 **Scholarly entry point · 11 November 2026 · working research manuscripts, not a journal publication record.**
 
 

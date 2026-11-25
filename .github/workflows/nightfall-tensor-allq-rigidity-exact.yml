@@ -1,0 +1,39 @@
+name: NIGHTFALL all-q tensor rank-four tail rigidity exact audit
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/structural_information/check_tensor_allq_tail_rigidity.py'
+      - '.github/workflows/nightfall-tensor-allq-rigidity-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  allq-rigidity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Exact GL4 enumeration and full-rank tails
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p allq-rigidity-receipt
+          python3 research/nightfall/structural_information/check_tensor_allq_tail_rigidity.py | tee allq-rigidity-receipt/replay.log
+          grep -q 'FULL_RANK_4X4_GL4_DECOMPOSITIONS_EXACT_PASS' allq-rigidity-receipt/replay.log
+          grep -q 'RANK_MINIMALITY_NEGATIVE_CONTROL_PASS' allq-rigidity-receipt/replay.log
+          grep -q 'GF2_ALL_Q_TAIL_RIGIDITY_FINITE_AUDIT_PASS' allq-rigidity-receipt/replay.log
+      - name: Exact-head source receipts
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p allq-rigidity-receipt
+          git rev-parse HEAD > allq-rigidity-receipt/HEAD
+          sha256sum research/nightfall/structural_information/check_tensor_allq_tail_rigidity.py research/nightfall/structural_information/TENSOR_ALL_LOCAL_DIMENSIONS_RANK_RIGIDITY_20261122.md > allq-rigidity-receipt/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: allq-rigidity-receipt
+          path: allq-rigidity-receipt/
+          retention-days: 90

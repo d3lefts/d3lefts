@@ -97,3 +97,71 @@ This promotion authorizes **paper-level theorem presentation with full assumptio
 The currently accessible MathWorld article *Prime Zeta Function*, equations (10)–(11) and the paragraphs immediately after them, explicitly states **all** of the following for P itself: (i) the Möbius-inversion and logarithmic-derivative identities, (ii) single-valued meromorphic continuation of P' into Re(w)>0, (iii) residues μ(m)r_{mλ}/m at scaled nontrivial zeta zeros, and (iv) addition of coincident residues and removability when their sum vanishes. Source: https://mathworld.wolfram.com/PrimeZetaFunction.html ; checked 2026-11-22. Thus **none of (i)–(iv) is new mathematics contributed by NIGHTFALL**.
 
 The first-strip theorem for A⁺ is the **shifted corollary** obtained using the September manuscript's A⁺=sP(s+1)+H. The classical natural boundary of P is likewise prior art, and the boundary at Re(s)=−1 is its transfer through this holomorphic decomposition. No global originality claim is warranted for either. Future publication must foreground the classical provenance and identify any additional nontrivial contribution separately.
+
+
+## 2026-11-22 RH-dependent exact squarefree criterion (v2.1 addendum)
+
+**Status: conditional paper corollary.** This **strengthens** Theorem 1
+*assuming RH*; it does not replace the unconditional residue criterion,
+prove RH, or certify the analytic continuation theorem in Lean.
+
+Assume the Riemann Hypothesis for nontrivial zeros of the classical
+Riemann zeta function. Fix any nontrivial zero ρ of multiplicity
+`r_ρ ≥ 1`, and `n ≥ 1`. Set λ=ρ/n and s₀=λ−1.
+If another integer `m ≥ 1` has ζ(mλ)=0, then mλ is a
+nontrivial zero (it is nonreal and has positive real part); RH forces
+
+```math
+m\operatorname{Re}(\lambda)=\frac12
+=n\operatorname{Re}(\lambda).
+```
+
+Since `Re(λ)=1/(2n) > 0`, necessarily `m=n`. Thus the
+complete active dilation fiber is either `{n}` when μ(n)≠0,
+or empty when μ(n)=0. The exact finite residue is
+
+```math
+\boxed{M(\rho/n)=\frac{\mu(n)}{n}\operatorname{ord}_{\rho}\zeta.}
+```
+
+By Theorem 1 (and s₀≠0), the original shifted function A⁺
+admits a holomorphic continuation through s₀ **if and only if n
+is not squarefree**. Equivalently, a logarithmic singularity survives
+**exactly for squarefree n**, regardless of zero multiplicity.
+This is pointwise local continuation inside `Re(s)>-1`; it does not
+cross the natural boundary or establish a prime-gap claim.
+
+### Formal/analytic bridge and honest certificate boundary
+
+- Lean source: `research/nightfall/formalization/prime_zeta/RHScaleSeparation.lean`.
+  Its named theorems `rh_conditional_zeta_scale_unique`,
+  `finite_fiber_sum`, and `finite_fiber_zero_iff` prove
+  only the **conditional geometric/combinatorial core**.
+- The Lean statement takes a hypothesis `hRH` explicitly. Neither
+  the Alpöge proof object nor the analytic identity
+  `A⁺(s)=sP(s+1)+H(s)` is imported into this module.
+  The bridge from `s=ρ/n-1` to the finite residue and the
+  characterization `μ(n)≠0 iff squarefree(n)` are
+  mathematical inputs of this paper addendum, **not an end-to-end Lean proof**.
+- Exact source receipt is a passing pinned workflow run, if/when
+  available; a checked-in Lean file alone is not evidence of compilation.
+  No new `merged-lean`, formal RH, or novel-discovery status is inferred.
+- External RH source:
+  https://math.mit.edu/~drew/grh/ and
+  https://leanprover-community.github.io/blog/posts/riemann-hypothesis/ .
+  Prior art for prime-zeta residue addition remains
+  https://mathworld.wolfram.com/PrimeZetaFunction.html .
+- More general transfer: for different Dirichlet L-functions,
+  GRH separates **distinct positive dilation indices**, but does not
+  prohibit simultaneous zeros at the *same* dilation index;
+  a signed mixed-family residue still needs a within-index
+  noncancellation argument. Zhang's positive-weight mechanism applies
+  only where its positivity hypotheses are present:
+  https://www.ihes.fr/~rzhang/files/GRH%20note.pdf .
+
+**Adversarial check:** falsify by finding two distinct positive integers
+m≠n for which ζ(mρ/n)=0 with RH and nontrivial ρ; this
+would force both real parts to equal 1/2 and hence m=n. For the remaining
+paper bridge, independently verify that all nonzero-residue sources are
+exactly those in Theorem 1, including multiplicity and no pole on the
+nonreal ray. Independent source reconciliation remains issue #1040.

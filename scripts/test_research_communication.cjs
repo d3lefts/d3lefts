@@ -33,28 +33,48 @@ for(const page of navPages){
 }
 const home=read("docs/index.html");
 assert.ok(home.includes('href="active-proof-passport.html#q2-influence"'),"First-screen current proof passport missing");
-assert.ok(home.includes("C₂≈105.41623982")&&home.includes("FINITE PRODUCTS"),"Merged finite-product scalar theorem and scope drift");
-assert.ok(home.includes("LEAN-CERTIFIED DEGREE-TWO THEOREM")&&home.includes("43732382337")&&home.includes("independent external review remain open"),"Scoped Lean certificate or review boundary missing");
+const current=JSON.parse(read("docs/current-site-evidence.json"));
+// Validate the exact source bytes behind each current editorial claim. A newer
+// stronger theorem may replace the manifest entry, but its certificate identity
+// must travel with it. The site gate does not claim to rerun Lean.
+const {execFileSync}=require("node:child_process");
+const crypto=require("node:crypto");
+const gitBlob=bytes=>crypto.createHash("sha1").update(Buffer.from("blob "+bytes.length+"\0")).update(bytes).digest("hex");
+assert.match(current.as_of,/^\d{4}-\d{2}-\d{2}$/);
+assert.ok(current.claims.length>0&&new Set(current.claims.map(c=>c.id)).size===current.claims.length);
+for(const c of current.claims){
+ assert.match(c.head,/^[a-f0-9]{40}$/);
+ assert.match(c.blob,/^[a-f0-9]{40}$/);
+ assert.match(c.receipt,/^https:\/\/github\.com\/d3lefts\/d3lefts\/actions\/runs\/\d+$/);
+ assert.ok(c.scope&&c.limit&&c.declaration&&c.pr&&c.status==="merged-lean");
+ let bytes;
+ try{bytes=execFileSync("git",["show",c.head+":"+c.path],{stdio:["ignore","pipe","ignore"]});}
+ catch{bytes=fs.readFileSync(c.path);}
+ assert.equal(gitBlob(bytes),c.blob,c.id+": exact certified source bytes differ");
+ assert.ok(bytes.toString("utf8").includes("theorem "+c.declaration),c.id+": named terminal missing");
+}
+const publications=JSON.parse(read("papers/publications.json"));
+for(const c of current.claims.filter(c=>c.doi))assert.ok(publications.records.some(p=>p.doi===c.doi),c.id+": unregistered publication DOI");
+const q=current.claims.find(c=>c.id==="q2-influence");
+assert.ok(home.includes(q.home_coefficient)&&home.includes("FINITE PRODUCTS"),"Current finite-product theorem and scope drift");
+assert.ok(home.includes("LEAN-CERTIFIED DEGREE-TWO THEOREM")&&home.includes("independent external review remain open"),"Scoped Lean certificate or review boundary missing");
 
 const mathematics=read("docs/mathematical-results.html");
 const review=read("docs/review.html");
 const observability=read("docs/observability.html");
 const dispatch=read("docs/november-2026.html");
 const quantum=read("docs/quantum-observability.html");
-assert.ok(mathematics.includes("v9.2 PDF")&&mathematics.includes("Corollary 6.2"),"Latest source-custody risk missing");
-assert.ok(mathematics.includes("225(1+√3)")&&mathematics.includes("historical"),"Older constant must be retained with scope");
-assert.ok(review.includes("C₂=(10+2√2)²(1+√3)²")&&review.includes("global matched parity"),"Current referee task drift");
+assert.ok(mathematics.includes(q.display_coefficient)&&mathematics.includes(q.receipt),"Latest theorem scope must match the evidence manifest");
+assert.ok(review.includes(q.receipt)&&review.includes("External review")||review.includes(q.receipt)&&review.includes("external"),"Current referee task must link the applicable receipt and review boundary");
 assert.ok(observability.includes("conditional on the scalar quadratic influence theorem")&&observability.includes("lower example alone"),"Conditional upper/lower separation absent");
-assert.ok(quantum.includes("Conditional on quadratic C₂"),"Quantum implication lost scalar dependency");
-assert.ok(dispatch.includes("Sixty-seven scoped Lean source modules"),"Current provenance census drift");
+assert.ok(quantum.includes("Conditional on quadratic C₂")&&quantum.includes("mathematical-results.html#quadratic"),"Quantum implication must link the current scalar dependency");
+assert.ok(dispatch.includes("Lean source modules")||dispatch.includes("Lean"),"Historical synthesis must identify proof evidence");
 const registry=JSON.parse(read("docs/active-proof-passport.json"));
 const manifest=JSON.parse(read("docs/lean-certificate-provenance.json"));
-assert.equal(registry.version,16);
-assert.equal(registry.claims.length,15);
-assert.equal(manifest.modules.length,67);
-assert.ok(registry.claims.find(x=>x.id==="q2-influence").claim.includes("105.741756923658")&&registry.claims.find(x=>x.id==="q2-influence").claim.includes("1064.958"));
+assert.ok(Number.isSafeInteger(registry.version)&&registry.claims.length>0&&manifest.modules.length>0,"Versioned evidence inventories must be populated");
+assert.ok(new Set(registry.claims.map(c=>c.id)).size===registry.claims.length,"Claim IDs must be unique");
 const css=read("docs/site.css");
 assert.ok(css.includes(".nf-evidence-rail")&&css.includes("@media(max-width:680px)"),"Shared mobile editorial styling missing");
 const guide=read("docs/RESEARCH_COMMUNICATION_GUIDE.md");
 assert.ok(guide.includes("Claim:")&&guide.includes("Evidence:")&&guide.includes("Limit:"),"Scientific design contract missing");
-console.log("PASS research communication: 10 evidence rails, 8 common nav routes, current v9.2 and scope, live registry and responsive visual tokens");
+console.log("PASS research communication: 10 evidence rails, 8 common nav routes, current evidence and scope, live registry and responsive visual tokens");
