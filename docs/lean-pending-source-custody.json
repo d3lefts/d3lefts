@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 70,
+  "revision": 71,
   "as_of": "2026-11-24 UTC",
-  "source_commit": "bdcb0a0097c0759c54771e9d9b90f16bb6ecb262",
-  "scope": "Recover verified locality and simulation-boundary chain with merged QW+ and tensor source custody preserved; no auto-promotion.",
+  "source_commit": "31a71af99957e30a25111d1b328c43a94be04c12",
+  "scope": "Register Paper VI full tensor representation terminal candidate on merged source dependencies; no automatic certification.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5804,6 +5804,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Explicit mixture-size and dominated-product query simulation; pending strict compiler and non-author review."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/PaperVITensorTerminal.lean",
+      "source_blob_sha": "6c25fef66854463701106afc2828512c9a97a68d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper VI actual tensor uniform evaluation code, entropy and score terminal; dependency-exact kernel replay pending."
     }
   ]
 }
