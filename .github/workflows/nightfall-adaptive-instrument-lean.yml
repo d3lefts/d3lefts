@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [AdaptiveInstrumentDegree, AdaptiveInstrumentWyner, AdaptiveInstrumentKraus, AdaptiveInstrumentKrausWyner, AdaptiveInstrumentQ7Packing]
+        target: [AdaptiveInstrumentDegree, AdaptiveInstrumentWyner, AdaptiveInstrumentKraus, AdaptiveInstrumentKrausWyner, AdaptiveInstrumentQ7Packing, AdaptiveInstrumentQ7Source, AdaptiveInstrumentPadding]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -105,14 +105,23 @@ jobs:
               'Nightfall.KrausAdaptive.ensemble_degree',
               'Nightfall.KrausAdaptive.ensemble_range',
               'Nightfall.KrausAdaptive.stacked_isometry',
-              'Nightfall.KrausAdaptive.kraus_outcome_refinement'],
+              'Nightfall.KrausAdaptive.kraus_outcome_refinement',
+              'Nightfall.KrausAdaptive.queryAmp_eq_source',
+              'Nightfall.KrausAdaptive.source_query_energy'],
             'AdaptiveInstrumentKrausWyner': [
               'Nightfall.KrausAdaptive.kraus_indicator_degree',
               'Nightfall.KrausAdaptive.kraus_route1_wyner'],
             'AdaptiveInstrumentQ7Packing': [
               'Nightfall.Q7BlockerPacking.packing_lower_bound',
               'Nightfall.Q7BlockerPacking.records_count',
-              'Nightfall.Q7BlockerPacking.all_records_require_eight']
+              'Nightfall.Q7BlockerPacking.all_records_require_eight'],
+            'AdaptiveInstrumentQ7Source': [
+              'Nightfall.Q7SourcePacking.tight_blocker_hit',
+              'Nightfall.Q7SourcePacking.all_entries_valid',
+              'Nightfall.Q7SourcePacking.all_source_records_require_eight'],
+            'AdaptiveInstrumentPadding': [
+              'Nightfall.ResponsePadding.harmless_query_padding',
+              'Nightfall.ResponsePadding.conditional_padding']
           }[target]
           for name in names:
               m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
@@ -133,6 +142,12 @@ jobs:
           node research/nightfall/2026-11-25-victory-autonomy/replay-negative-cache.cjs | tee receipts/adaptive-instrument/cache-replay.json
           node research/nightfall/2026-11-25-victory-autonomy/replay-q7-cache.cjs | tee receipts/adaptive-instrument/q7-replay.json
           node research/nightfall/2026-11-25-loregian-lorenzin-monadicity/replay-adaptive-instrument.cjs | tee receipts/adaptive-instrument/instrument-replay.json
+      - name: Source-linked Q7 packing replay
+        if: matrix.target == 'AdaptiveInstrumentQ7Source'
+        shell: bash
+        run: |
+          set -euo pipefail
+          node research/nightfall/2026-11-25-victory-autonomy/verify-q7-blocker-packing.cjs | tee receipts/adaptive-instrument/q7-packing-source-replay.json
       - name: Source and compiler receipt
         if: always()
         shell: bash
