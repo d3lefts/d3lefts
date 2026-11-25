@@ -1,0 +1,123 @@
+name: NIGHTFALL Paper VI actual-law staged MSE Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/QuadraticWyner*.lean'
+      - 'research/nightfall/formalization/product_space/PaperVI*.lean'
+      - '.github/workflows/nightfall-paper-vi-staged-mse.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: paper-vi-mse-PR-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  actual-staged-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Recompile original AA and Q2 source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/paper-vi-mse
+          git rev-parse HEAD | tee receipts/paper-vi-mse/commit.txt
+          cat lean-toolchain | tee receipts/paper-vi-mse/compiler.txt
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1 || { cat "/tmp/log-$M.txt"; exit 1; }
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Recompile original Route1/Wyner source
+        id: route1
+        shell: bash
+        run: |
+          set -euo pipefail
+          base=research/nightfall/formalization/product_space
+          for M in Route1LatentDegree Route1DegreeSourceBridge \
+                   Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift \
+                   Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral; do
+            src="$base/$M.lean"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/paper-vi-mse/$M.log" 2>&1 || { cat "receipts/paper-vi-mse/$M.log"; exit 1; }
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/paper-vi-mse/$M.log"
+          done
+      - name: Compile source projection and actual finite MSE tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          base=research/nightfall/formalization/product_space
+          for M in QuadraticWynerLabelProjection QuadraticWynerSeedAverage \
+                   QuadraticWynerSeedResampling QuadraticWynerQ2SourceBridge \
+                   QuadraticWynerQuadraticProgress QuadraticWynerGoodQuery \
+                   QuadraticWynerMeanIncrementProgress PaperVIProjectedCrux \
+                   PaperVISquaredEnergy PaperVIRiskTree PaperVIStageBudget \
+                   PaperVILinearCharge PaperVIMSETerminal PaperVIGeneralLatentTerminal; do
+            src="$base/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/paper-vi-mse/$M.log" 2>&1 ||
+                { cat "receipts/paper-vi-mse/$M.log"; exit 1; }
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/paper-vi-mse/$M.log"
+          done
+      - name: Mandatory independent kernel replay of general-latent staged terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v PaperVIGeneralLatentTerminal) \
+            2>&1 | tee receipts/paper-vi-mse/kernel.log
+      - name: Named theorem and standard axiom gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          d=Path('receipts/paper-vi-mse')
+          required={
+            'QuadraticWynerMeanIncrementProgress':('Nightfall.QuadraticWynerMeanIncrementProgress',['pincr_compOf_exact','seed_average_pincr_le_original','mean_increment_original_source_energy']),
+            'PaperVIProjectedCrux':('Nightfall.PaperVI',['source_projection_or_information','mean_source_dichotomy','quadratic_source_energy','quadratic_source_dichotomy']),
+            'PaperVISquaredEnergy':('Nightfall.PaperVI',['sum_mul_pinfl_sect','Phi2_sum','Itot_le_degree_var','Phi2_le_degree_mvar']),
+            'PaperVIRiskTree':('Nightfall.PaperVI',['mvar_le_constant','mvar_children_le','mvar_le_quarter_mass','frontier_risk_exact','extend_cost_le','extend_queries']),
+            'PaperVIStageBudget':('Nightfall.PaperVI',['frontier_energy_cap','risk_block','risk_block_budget']),
+            'PaperVILinearCharge':('Nightfall.PaperVI',['mean_linear_charge','info_linear_charge','quadratic_linear_charge','source_mean_charge','source_quad_charge']),
+            'PaperVIMSETerminal':('Nightfall.PaperVI',['source_block','mean_mse_mixture','quadratic_halve_stage','quad_dyadic_budget','quadratic_mse_mixture_dyadic']),
+            'PaperVIGeneralLatentTerminal':('Nightfall.PaperVI',['mean_mse_general','paper_vi_general_mse','quadratic_mse_general_dyadic','paper_vi_quadratic_mse','paper_vi_general_mse_wyner','paper_vi_quadratic_mse_wyner'])}
+          for module,(namespace,names) in required.items():
+              log=(d/(module+'.log')).read_text()
+              assert 'sorryAx' not in log,module
+              for suffix in names:
+                  declaration=namespace+'.'+suffix
+                  m=re.search(r"'"+re.escape(declaration)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+                  if m:
+                      ax={s.strip() for s in m.group(1).split(',') if s.strip()}
+                  else:
+                      assert "'"+declaration+"' does not depend on any axioms" in log,declaration
+                      ax=set()
+                  assert ax <= {'propext','Classical.choice','Quot.sound'},(declaration,ax)
+                  print(declaration,sorted(ax))
+          print('PAPER VI ACTUAL GENERAL-LATENT STAGED MSE KERNEL PASS')
+          PY
+      - name: Preserve exact source and toolchain receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/paper-vi-mse
+          git rev-parse HEAD > receipts/paper-vi-mse/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/paper-vi-mse/mathlib-head.txt || true
+          sha256sum research/nightfall/formalization/product_space/QuadraticWyner*.lean research/nightfall/formalization/product_space/PaperVI*.lean > receipts/paper-vi-mse/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: paper-vi-actual-staged-mse
+          path: receipts/paper-vi-mse
+          retention-days: 90
