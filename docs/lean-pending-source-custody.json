@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 66,
-  "as_of": "2026-11-24 UTC",
-  "source_commit": "27070af4f2dd1b26dc4f5dc7fa5a4b679d6307c4",
-  "scope": "Repair global component endpoint source, preserve all other proof blobs.",
+  "revision": 67,
+  "as_of": "2026-11-25 UTC",
+  "source_commit": "1419607bf129afc71c390e2d4211ec49792198f9",
+  "scope": "Parser-only repair of global component endpoint theorem; preserve all other proof blobs and custody rows.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5667,13 +5667,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
-      "source_blob_sha": "5df514e98c314057e605eb68f8906945ea2c6e62",
+      "source_blob_sha": "ed7f01bd6950b55078c173b5cd34a121518c1da5",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Repair explicit Z argument and interval endpoint typeclass through the actual Set.Icc underlying alias; run 45626714615 diagnostics. Exact replay pending."
+      "receipt_scope": "Parser-only repair after run 45628041355 failed at the doc-comment/set_option ordering; exact-head kernel replay pending. No unconditional product-sphere zero claim."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUFinalGeometricReduction.lean",

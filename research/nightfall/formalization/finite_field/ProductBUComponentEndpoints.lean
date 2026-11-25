@@ -23,11 +23,11 @@ noncomputable section
 
 abbrev I01 := Nightfall.ProductBUInterval.I01
 
+set_option maxHeartbeats 1000000 in
 /-- A selected boundary point in any compact smooth one-dimensional
 manifold has a *distinct* boundary point within its actual connected
 component. This is exactly the second-endpoint obligation previously
 assumed in the product-sphere boundary-orbit contradiction. -/
-set_option maxHeartbeats 1000000 in
 theorem exists_second_endpoint_of_smooth_boundary_component
     (Z : Type*) [TopologicalSpace Z]
     [ChartedSpace (EuclideanHalfSpace 1) Z]
