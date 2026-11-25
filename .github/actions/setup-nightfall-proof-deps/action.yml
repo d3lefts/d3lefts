@@ -1,0 +1,26 @@
+name: Restore exact NIGHTFALL proof dependencies
+description: Cache AA/Q2 and Route1 closure before downstream proof compilation; never substitutes for terminal kernel replay.
+runs:
+  using: composite
+  steps:
+    - name: Derive exact dependency key
+      id: deps
+      shell: bash
+      run: python3 scripts/nightfall_proof_deps_cache.py key
+    - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      id: restore
+      with:
+        path: /tmp/nightfall-proof-deps-v1
+        key: nightfall-proof-deps-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.deps.outputs.key }}
+    - name: Build only on exact cache miss
+      if: steps.restore.outputs.cache-hit != 'true'
+      shell: bash
+      run: python3 scripts/nightfall_proof_deps_cache.py build
+    - name: Validate and install exact checkpoint
+      shell: bash
+      run: python3 scripts/nightfall_proof_deps_cache.py restore
+    - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      if: steps.restore.outputs.cache-hit != 'true'
+      with:
+        path: /tmp/nightfall-proof-deps-v1
+        key: nightfall-proof-deps-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.deps.outputs.key }}
