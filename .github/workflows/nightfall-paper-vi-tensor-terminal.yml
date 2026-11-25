@@ -1,0 +1,114 @@
+name: NIGHTFALL Paper VI tensor representation terminal
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/structural_information/PaperVITensorTerminal.lean'
+      - '.github/workflows/nightfall-paper-vi-tensor-terminal.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: paper-vi-tensor-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  complete-source-terminal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Recompile original AA and Q2 source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/qw-complete
+          git rev-parse HEAD | tee receipts/qw-complete/commit.txt
+          cat lean-toolchain | tee receipts/qw-complete/compiler.txt
+          while read -r M P; do
+            [ -z "$M" ] && continue
+            REL="$(printf '%s' "$M" | tr '.' '/')"
+            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
+            cp "$P" "/tmp/mathlib4/$REL.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1 || { cat "/tmp/log-$M.txt"; exit 1; }
+            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
+          done < research/nightfall/formalization/aa_product/CLOSURE.txt
+      - name: Recompile original Route1/Wyner source
+        id: route1
+        shell: bash
+        run: |
+          set -euo pipefail
+          base=research/nightfall/formalization/product_space
+          for M in Route1LatentDegree Route1DegreeSourceBridge \
+                   Route1FiniteMaxCoupling Route1FiniteJointMass \
+                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
+                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift \
+                   Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral; do
+            src="$base/$M.lean"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/qw-complete/$M.log" 2>&1 || { cat "receipts/qw-complete/$M.log"; exit 1; }
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/qw-complete/$M.log"
+          done
+      - name: Compile and kernel replay actual Wyner entropy obstruction
+        shell: bash
+        run: |
+          set -euo pipefail
+          M=SynthesisWynerEntropy
+          src=research/nightfall/formalization/product_space/$M.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+          cp "$src" "/tmp/mathlib4/$M.lean"
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee receipts/qw-complete/$M.log
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v "$M") 2>&1 | tee receipts/qw-complete/entropy-kernel.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          log=Path('receipts/qw-complete/SynthesisWynerEntropy.log').read_text()
+          for suffix in ['Recovery.leaves_card_le','wyner_general_lower_of_component_entropy','component_entropy_incidence','wyner_entropy_obstruction','uniform_pushforward_entropy','uniform_code_wyner_obstruction']:
+              declaration='Nightfall.SynthesisWynerEntropy.'+suffix
+              m=re.search(r"'"+re.escape(declaration)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m:
+                  assert {x.strip() for x in m.group(1).split(',') if x.strip()} <= {'propext','Classical.choice','Quot.sound'},declaration
+              else:
+                  assert "'"+declaration+"' does not depend on any axioms" in log,declaration
+          print('GENERAL WYNER ENTROPY TERMINAL KERNEL PASS')
+          PY
+      - name: Compile actual tensor rows and full representation terminal
+        shell: bash
+        run: |
+          set -euo pipefail
+          base=research/nightfall/formalization/structural_information
+          for M in SubcubeL3 SubcubeAllSpacesL3 SubcubeAllLevels SubcubeAffineAllLevels SubcubeSharpScalar SubcubeSharpAllLevels SubcubeSharpness SynthesisTensorDistance PaperVITensorTerminal; do
+            src="$base/$M.lean"
+            ! grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)\b' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/qw-complete/$M.log"
+          done
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v PaperVITensorTerminal) 2>&1 | tee receipts/qw-complete/tensor-kernel.log
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          log=Path('receipts/qw-complete/PaperVITensorTerminal.log').read_text()
+          assert 'error:' not in log and 'sorryAx' not in log
+          for suffix in ['code_exact_parameters','tensor_entropy','tensor_representation_score']:
+              name='Nightfall.StructuralInformation.PaperVITensorTerminal.'+suffix
+              m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m:
+                  assert {x.strip() for x in m.group(1).split(',') if x.strip()} <= {'propext','Classical.choice','Quot.sound'},name
+              else:
+                  assert "'"+name+"' does not depend on any axioms" in log,name
+          print('PAPER VI ACTUAL TENSOR REPRESENTATION KERNEL PASS')
+          PY
+      - name: Preserve exact dependency receipt
+        if: always()
+        run: |
+          mkdir -p receipts/qw-complete
+          git rev-parse HEAD > receipts/qw-complete/commit.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/qw-complete/mathlib-head.txt || true
+          sha256sum research/nightfall/formalization/structural_information/{Subcube*,SynthesisTensorDistance,PaperVITensorTerminal}.lean research/nightfall/formalization/product_space/{Route1*,SynthesisWynerEntropy}.lean > receipts/qw-complete/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: paper-vi-tensor-terminal-receipt
+          path: receipts/qw-complete
+          retention-days: 90
