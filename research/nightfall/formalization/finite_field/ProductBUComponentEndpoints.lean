@@ -27,6 +27,7 @@ abbrev I01 := Nightfall.ProductBUInterval.I01
 manifold has a *distinct* boundary point within its actual connected
 component. This is exactly the second-endpoint obligation previously
 assumed in the product-sphere boundary-orbit contradiction. -/
+set_option maxHeartbeats 1000000 in
 theorem exists_second_endpoint_of_smooth_boundary_component
     (Z : Type*) [TopologicalSpace Z]
     [ChartedSpace (EuclideanHalfSpace 1) Z]
@@ -35,8 +36,9 @@ theorem exists_second_endpoint_of_smooth_boundary_component
     (p : Z) (hp : (𝓡∂ 1).IsBoundaryPoint p) :
     ∃ q : Z, q ∈ connectedComponent p ∧
       (𝓡∂ 1).IsBoundaryPoint q ∧ q ≠ p := by
+  classical
   letI : LocallyConnectedSpace Z :=
-    ChartedSpace.locallyConnectedSpace (H := EuclideanHalfSpace 1)
+    ChartedSpace.locallyConnectedSpace (H := EuclideanHalfSpace 1) Z
   have hOpen : IsOpen (connectedComponent p) :=
     isOpen_connectedComponent
   let U : TopologicalSpace.Opens Z := ⟨connectedComponent p, hOpen⟩
@@ -59,28 +61,34 @@ theorem exists_second_endpoint_of_smooth_boundary_component
   have hpre : e ⁻¹' ModelWithCorners.boundary (I := 𝓡∂ 1) I01 =
       ModelWithCorners.boundary (I := 𝓡∂ 1) U :=
     e.preimage_boundary (by simp)
-  have hpI : e pU ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) I01 := by
-    have h : pU ∈ e ⁻¹' ModelWithCorners.boundary (I := 𝓡∂ 1) I01 := by
-      rw [hpre]
-      exact hpU
-    exact h
-  let target : I01 := if e pU = ⊥ then ⊤ else ⊥
+  letI : Fact ((0 : ℝ) < 1) := ⟨by norm_num⟩
+  -- The original interval alias is a plain def. Use Mathlib's
+  -- endpoint instances on the actual Set.Icc, not on that alias.
+  let botI : I01 := (⊥ : Set.Icc (0 : ℝ) 1)
+  let topI : I01 := (⊤ : Set.Icc (0 : ℝ) 1)
+  have hbot : botI ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) I01 := by
+    change (𝓡∂ 1).IsBoundaryPoint (⊥ : Set.Icc (0 : ℝ) 1)
+    exact Icc_isBoundaryPoint_bot
+  have htop : topI ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) I01 := by
+    change (𝓡∂ 1).IsBoundaryPoint (⊤ : Set.Icc (0 : ℝ) 1)
+    exact Icc_isBoundaryPoint_top
+  have hdistinct : topI ≠ botI := by
+    intro h
+    have hv := congrArg (fun z : I01 => (z : ℝ)) h
+    change (1 : ℝ) = 0 at hv
+    norm_num at hv
+  let target : I01 := if e pU = botI then topI else botI
   have htargetB : target ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) I01 := by
-    dsimp [target]
-    split_ifs with h
-    · exact Icc_isBoundaryPoint_top
-    · exact Icc_isBoundaryPoint_bot
+    dsimp only [target]
+    split_ifs
+    · exact htop
+    · exact hbot
   have hneq : target ≠ e pU := by
-    by_cases hb : e pU = (⊥ : I01)
+    by_cases hb : e pU = botI
     · intro h
-      have he : (⊤ : I01) = ⊥ := by
-        simpa [target, hb] using h.trans hb
-      have he' := congrArg (fun z : I01 => (z : ℝ)) he
-      norm_num at he'
+      exact hdistinct ((by simpa only [target, if_pos hb] using h : topI = e pU).trans hb)
     · intro h
-      have he : (⊥ : I01) = e pU := by
-        simpa [target, hb] using h
-      exact hb he.symm
+      exact hb (by simpa only [target, if_neg hb] using h.symm)
   let qU : U := e.symm target
   have hqU : qU ∈ ModelWithCorners.boundary (I := 𝓡∂ 1) U := by
     rw [← hpre]

@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 65,
+  "revision": 66,
   "as_of": "2026-11-24 UTC",
-  "source_commit": "cb69557cbe4904b8756f7874ed507e47c054468d",
-  "scope": "Clean-main recovery of exact product-sphere global classification chain; preserve inherited sources and pending-only custody.",
+  "source_commit": "27070af4f2dd1b26dc4f5dc7fa5a4b679d6307c4",
+  "scope": "Repair global component endpoint source, preserve all other proof blobs.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5667,13 +5667,13 @@
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
-      "source_blob_sha": "c7bad81a3523d7e9bd164e2d9d76f452d180d150",
+      "source_blob_sha": "5df514e98c314057e605eb68f8906945ea2c6e62",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "2026-11-22 source-only correction: explicit ContDiff notation for smooth manifold parser; exact-head Lean CI required. The actual global manifold-with-boundary and ProductSphereZero remain unproved; no automatic certification."
+      "receipt_scope": "Repair explicit Z argument and interval endpoint typeclass through the actual Set.Icc underlying alias; run 45626714615 diagnostics. Exact replay pending."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUFinalGeometricReduction.lean",
