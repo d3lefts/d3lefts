@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 66,
+  "revision": 67,
   "as_of": "2026-11-25 UTC",
-  "source_commit": "fc8d85b2500425d801f23063212b20b929a919e7",
-  "scope": "Register two inherited unregistered Route1 sources after exact-custody failure 45626057834; preserve all other source entries.",
+  "source_commit": "c5a1c98ce3bcea4cd689aba131442ad69885fc71",
+  "scope": "Register exact rank-phase Gaussian pivot source; no automatic promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5674,6 +5674,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhasePivot.lean",
+      "source_blob_sha": "55e987bd482055bcbd539a9ee1f47621dff44844",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Explicit invertible Gaussian pivot and actual dependent row, no assumed rank-extension theorem. Pending compile and kernel replay."
     }
   ]
 }
