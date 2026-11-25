@@ -1,0 +1,45 @@
+name: NIGHTFALL generated Proof Passport v3
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/**'
+      - 'research/catalogue/CLAIMS.json'
+      - 'docs/*passport*.json'
+      - 'docs/lean-*.json'
+      - 'docs/recent-research.json'
+      - 'papers/publications.json'
+      - 'scripts/sync_proof_passports_v3.cjs'
+      - '.github/workflows/nightfall-proof-passport-v3.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/**'
+      - 'research/catalogue/CLAIMS.json'
+      - 'docs/*passport*.json'
+      - 'docs/lean-*.json'
+      - 'docs/recent-research.json'
+      - 'papers/publications.json'
+      - 'scripts/sync_proof_passports_v3.cjs'
+      - '.github/workflows/nightfall-proof-passport-v3.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  generated-inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify exact source bytes, references, dependency and mutation controls; generate current view
+        run: node scripts/sync_proof_passports_v3.cjs --self-test --output passport-receipts/generated.json
+      - name: Require checked-in snapshot to match generated view
+        run: node scripts/sync_proof_passports_v3.cjs --check
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: generated-proof-passport-v3
+          path: passport-receipts/generated.json
+          if-no-files-found: warn
+          retention-days: 90
