@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 71,
+  "revision": 72,
   "as_of": "2026-11-25 UTC",
   "source_commit": "bdcb0a0097c0759c54771e9d9b90f16bb6ecb262",
-  "scope": "Append recovered adaptive instrument, direct complex Kraus and Q7 packing source custody; preserve prior records; kernel receipts independent.",
+  "scope": "Exact recovered adaptive instrument, direct complex Kraus, coherent response padding, and source-linked Q7 packing custody; prior records unchanged; no automatic promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5827,7 +5827,7 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentKraus.lean",
-      "source_blob_sha": "8ca73e69fd2123d4aaf8c9e01a11b163be453f5d",
+      "source_blob_sha": "ebd9bf782f2d308ab8b7ea070ae6c72ded00dfc9",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -5847,13 +5847,33 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentQ7Packing.lean",
-      "source_blob_sha": "d90e6cce40c4ad7e966c7c731b52aed98d698e72",
+      "source_blob_sha": "e4aa2ccbb94561d61ad1b69fd7f16962d27ab54f",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Eight disjoint-blocker lower bound and 105 explicitly listed packing records; full source-catalogue extraction is separate computational evidence. Exact-head kernel pending."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentQ7Source.lean",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Actual cube face geometry, tightness, and 105 source-mask packing exclusions; source mask hashes and provenance cross-checked separately. Exact-head kernel pending.",
+      "source_blob_sha": "8895bf811a09665c32bdb7fdc582c2b969ab8d3f"
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentPadding.lean",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "One-call coherent additive-group inactive-branch padding identity; full dilation compiler remains separate. Exact-head kernel pending.",
+      "source_blob_sha": "ea80550199c0b81bc696bec730b74d4d1e16f57e"
     }
   ]
 }
