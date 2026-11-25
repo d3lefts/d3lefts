@@ -47,11 +47,24 @@ theorem phaseOracle_apply
     phaseOracle label s x b = s (label b) • x b := by
   rfl
 
+/-- Coordinate evaluation commutes with sums by linearity of the actual projection. -/
+private theorem coordinate_sum {J : Type*} [Fintype J]
+    (f : J → H D E) (b : D) :
+    (∑ j, f j) b = ∑ j, f j b := by
+  let L : H D E →ₗ[ℂ] E := PiLp.projₗ 2 (fun _ : D => E) b
+  change L (∑ j, f j) = ∑ j, L (f j)
+  exact map_sum L f Finset.univ
+
+private theorem coordinate_smul (c : ℂ) (x : H D E) (b : D) :
+    (c • x) b = c • x b := by
+  rfl
+
 /-- Physical sector projections resolve every vector, including
 possibly zero output blocks, without choosing a basis for E. -/
 theorem psi_eq_sum_sectors (psi : H D E) :
     psi = ∑ a : D, psiSector psi a := by
   ext b
+  rw [coordinate_sum]
   change psi b = ∑ a : D, (if b = a then psi a else 0)
   simp
 
@@ -62,9 +75,11 @@ theorem phaseOracle_eq_sum_original_sector_paths
     phaseOracle label s psi =
       ∑ a : D, s (label a) • psiSector psi a := by
   ext b
+  rw [coordinate_sum]
+  simp only [coordinate_smul]
   change s (label b) • psi b =
-      ∑ a : D, (if b = a then s (label a) • psi a else 0)
-  simp
+      ∑ a : D, s (label a) • (if b = a then psi a else 0)
+  simp [smul_ite]
 
 /-- Exact source-unitary first-oracle state identity, by the
 complex linearity of U and without any spectral assumption. -/
@@ -91,6 +106,7 @@ theorem twoQueryState_coordinate_eq_path_sum
     twoQueryState label s psi U b =
       ∑ a : D, s (label b + label a) • sourcePath psi U b a := by
   rw [twoQueryState, phaseOracle_apply, unitary_after_first_oracle]
+  simp only [coordinate_sum, coordinate_smul]
   change s (label b) •
       (∑ a : D, s (label a) • sourcePath psi U b a) = _
   rw [smul_sum]
@@ -110,17 +126,20 @@ theorem twoQueryState_eq_original_path_sum
           T2SecondStageLight.path (sourcePath psi U) b a := by
   ext d
   rw [twoQueryState_coordinate_eq_path_sum]
-  rw [Finset.sum_apply]
-  rw [Finset.sum_eq_single d]
-  · simp only [Finset.sum_apply]
-    apply Finset.sum_congr rfl
-    intro a _
-    simp [T2SecondStageLight.path, Pi.smul_apply]
-  · intro b hb hne
-    simp [Finset.sum_apply,T2SecondStageLight.path,
-      Pi.smul_apply, hne]
-  · intro hnot
-    exact (hnot (Finset.mem_univ d)).elim
+  simp only [coordinate_sum, coordinate_smul]
+  change (∑ a : D, s (label d + label a) • sourcePath psi U d a) =
+    ∑ b : D, ∑ a : D,
+      s (label b + label a) • (if d = b then sourcePath psi U b a else 0)
+  symm
+  calc
+    _ = ∑ b : D, if d = b then
+          ∑ a : D, s (label b + label a) • sourcePath psi U b a else 0 := by
+      apply Finset.sum_congr rfl
+      intro b _
+      by_cases h : d = b
+      · simp [h]
+      · simp [h]
+    _ = _ := by simp
 
 /-- Additive character multiplicativity proves the literal four-slot
 Walsh frequency, without treating labels as independent bits. -/

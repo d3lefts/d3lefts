@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 69,
-  "as_of": "2026-11-23 UTC",
-  "source_commit": "141f4da458337b4ae81418253e60b881f988cff8",
-  "scope": "v69: exact source repairs for actual-source and heterogeneous physical Hilbert isometry in full 23-module verifier; fail-closed pending named kernel; no T2 root theorem promotion",
+  "revision": 70,
+  "as_of": "2026-11-25 UTC",
+  "source_commit": "af0e0336648eff3aee1470c9f4f79629f44b5712",
+  "scope": "T2 phase expansion source repair on archived dependency chain; clean-main integration and full theorem still open.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -3859,13 +3859,13 @@
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2QuantumPhaseExpansion.lean",
-      "source_blob_sha": "f826620e13a06953a726e5842f4618add015cd52",
+      "source_blob_sha": "46cf185c7c77a1e35996a41daba0be88dedaef5c",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Source-built arbitrary-Hilbert homogeneous-sector physical two-oracle phase unitary amplitude expansion, AddChar on actual original labels, explicit zero-sector preservation and four-character frequency algebra. No assumption of convenient path normal form; still not Born four-slot coefficient grouped Fourier tail or complete T2-31 query theorem. Pending exact-head Lean/leanchecker."
+      "receipt_scope": "Repair archived phase expansion's four PiLp coordinate sum failures via actual linear projection; exact-head replay pending."
     },
     {
       "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
