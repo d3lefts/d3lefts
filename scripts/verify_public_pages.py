@@ -93,7 +93,7 @@ def main():
                     raise ValueError("Active Proof Passport or machine-readable companion missing")
                 if f"<strong>v{expected_version}</strong>" not in html or f"<strong>{expected_claims}</strong>Active claim records" not in html:
                     raise ValueError("Deployed active passport version/count does not match checked-in registry")
-                if f"MANUAL SNAPSHOT · {expected_date}" not in html:
+                if not any(f"{label} · {expected_date}" in html for label in ("MANUAL SNAPSHOT", "ARCHIVED EVIDENCE SNAPSHOT")):
                     raise ValueError("Deployed passport date does not match checked-in registry")
                 legacy = f">{expected_lean_sources}-source scoped Lean provenance" in html
                 frozen = f">Frozen {expected_lean_sources}-source historical Lean provenance" in html

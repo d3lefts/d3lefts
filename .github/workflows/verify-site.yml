@@ -11,6 +11,7 @@ on:
       - ".gitignore"
       - ".github/pull_request_template.md"
       - "docs/**"
+      - "papers/publications.json"
       - "scripts/**"
       - ".github/workflows/verify-site.yml"
   pull_request:
@@ -20,6 +21,7 @@ on:
       - ".gitignore"
       - ".github/pull_request_template.md"
       - "docs/**"
+      - "papers/publications.json"
       - "scripts/**"
       - ".github/workflows/verify-site.yml"
   workflow_dispatch:
@@ -47,6 +49,7 @@ jobs:
         run: python3 scripts/test_repository_docs.py
       - name: Validate static pages, source links, anchors, and fallback catalogue
         run: |
+          node scripts/generate_publications.cjs --check
           python3 scripts/check_site.py
           node scripts/test_proof_passport_batch.cjs
           node scripts/test_active_proof_passport.cjs

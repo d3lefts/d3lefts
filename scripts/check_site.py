@@ -155,7 +155,7 @@ def main() -> int:
         FAILURES.append("RESEARCH: missing source-linked observability dossier")
     else:
         obs_text = obs.read_text(encoding="utf-8")
-        for label in ("PROPOSED DEGREE-TWO INFLUENCE THEOREM", "Θ(r/η)",
+        for label in ("DEGREE-TWO INFLUENCE THEOREM", "Θ(r/η)",
                       "Θ(rm/η)", "CUBIC_OBSTRUCTION_NOTE.md",
                       "general degree-three", "external human"):
             if label.lower() not in obs_text.lower():

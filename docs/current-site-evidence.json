@@ -1,0 +1,47 @@
+{
+  "schema": "nightfall.current-site-evidence.v1",
+  "as_of": "2026-11-24",
+  "policy": "Live claims may be replaced by stronger source-matched results. Immutable published versions and exact certificate identities are retained separately.",
+  "claims": [
+    {
+      "id": "q2-influence",
+      "display_coefficient": "105.41624",
+      "home_coefficient": "C₂≈105.41623982",
+      "scope_marker": "native heterogeneous alphabets",
+      "status": "merged-lean",
+      "pr": 740,
+      "head": "9d7c00a6775e7ddc0dcfd81d05988fa695117607",
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2NativeSupportedTerminal.lean",
+      "blob": "13205ce8ab03d16ae79cefad4fcd962241ab35a8",
+      "declaration": "native_heterogeneous_q2_105416_supported_unconditional",
+      "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/44124722630",
+      "scope": "Finite independent heterogeneous coordinates, quadratic degree and boundedness on positive support. Zero atoms allowed.",
+      "limit": "Optimal coefficient, cubic and external referee review remain open."
+    },
+    {
+      "id": "q2-infinite",
+      "status": "merged-lean",
+      "pr": 888,
+      "head": "d84d6f0bddb0f7e6f1e0ca17a10165afefe73b6e",
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2HoeffdingDegree.lean",
+      "blob": "37673af7af8f0f0d7a2c2d3ae272842c87a167cd",
+      "declaration": "infinitePi_q2_105416_hoeffding",
+      "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/44470008420",
+      "scope": "Independent arbitrary-index product probability law, L² Hoeffding degree at most two, almost-everywhere bounded, all source-coordinate influences bounded by M.",
+      "limit": "Does not establish unrestricted cubic or rank-sensitive adaptive observation."
+    },
+    {
+      "id": "wyner-route1",
+      "status": "merged-lean",
+      "pr": 970,
+      "head": "e41639b2bc569d4da9e3760722f9dfb0fd3c71a5",
+      "path": "research/nightfall/formalization/product_space/Route1WynerGeneral.lean",
+      "blob": "4e896cdcf97c62e2640694e077f8b36f54e2105e",
+      "declaration": "route1_wyner_general",
+      "receipt": "https://github.com/d3lefts/d3lefts/actions/runs/44732951300",
+      "doi": "10.5281/zenodo.24511398",
+      "scope": "Finite correlated inputs, globally bounded low-degree functions, strict-slack general latent Wyner information and deterministic query depth.",
+      "limit": "Not classical runtime or a per-instance lower bound."
+    }
+  ]
+}

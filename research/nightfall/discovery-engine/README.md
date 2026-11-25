@@ -109,3 +109,50 @@ The first selection grid omitted the fully atomic representation. The corrected 
 ## Measured outcome (2026-10-28)
 
 The corrected 19-option boundary-policy training selected **atomic resolution**. See the [full bounded experimental log](EXPERIMENT_20261028.md) and the linked CI artifact. The earlier 96/96 source-span diagnostic contained oracle-label leakage and has been demoted. Fixed versus adaptive compression exhibits a synthetic source-span improvement, while adaptive compression fails to outperform atomic on the frozen held-out suites. This negative result is preserved, with source, checker, and complete SHA-256 provenance.
+
+## Research activity accounting (SciNet overlay)
+
+The activity overlay is deliberately separate from claims, Proof Passports and
+operator definitions. It adopts the six theoretical-analysis activity IDs
+(U29.01–U29.06) from SciNet v1.10.0, by Cristian Alamos and Lukas Althoff
+(2026), *SciNet: The Anatomy of Science*, CC BY 4.0
+([pinned activity data](https://github.com/lukasalthoff/scinet/blob/69973ad2cf21a34298b1f7f600f2c3820989113e/data/work_activities.csv);
+[methodology](https://github.com/lukasalthoff/scinet/blob/69973ad2cf21a34298b1f7f600f2c3820989113e/TASK_DIMENSIONS.md)).
+Labels are shortened; UNMAPPED is a local extension, not a SciNet category.
+The source's model-estimated AI ratings and training feasibility scores are
+not empirical NIGHTFALL measurements.
+
+For each actual command receipt produced by scripts/nightfall_agent_tasks.py,
+write one JSONL observation with a unique execution run_id, a primary activity,
+a NIGHTFALL operator identifier, the embedded unmodified receipt, and optionally
+related_activities (secondary activity IDs). Most existing verifier commands
+belong to U29.04 or UNMAPPED depending on scope; do not label a metadata check
+as theorem construction just because it belongs to a theorem project. A run ID
+is assigned once when the command executes and reused by all reporting lanes.
+Record failures as well as successes. Do not invent receipts for work not run.
+
+    python3 scripts/nightfall_activity_telemetry.py observations.jsonl
+
+The aggregator validates the existing receipt contract; deduplicates repeated
+observations of a run; rejects inconsistent attribution and ambiguous identical
+receipts bearing different IDs; reports primary activity/operator runtime,
+pass/fail counts, dirty-worktree runs, and separate nonadditive secondary tags.
+All counts are descriptive, not independent or mathematical certifications.
+Runtime is summed command wall time, not makespan, token use, or financial cost.
+Because older receipts do not embed execution UUIDs, truly distinct runs with
+identical receipt bytes cannot be distinguished and are rejected rather than
+silently merged or double counted. Fingerprints are canonical JSON hashes,
+not proof that the original command executed; replay remains separate.
+No scores or measured rates feed back into claim status.
+
+Next experiment (not run): pre-register a held-out problem set, fixed tool and
+compute budgets, and independently scored mathematical endpoints. Compare
+existing operator selection against verifier-aware selection using verification
+cost, simulability and feedback delay as candidate features. Count all failed
+attempts and shared work once. Report effect sizes with uncertainty and disclose
+null results; do not optimize against metadata-check pass rates. Keep the
+SciNet taxonomy as an external reference, not a substitute for our research
+operator registry.
+
+Regression: python3 scripts/test_nightfall_agent_tasks.py (includes shared-work
+deduplication, conflict, failure and forged-certification controls).

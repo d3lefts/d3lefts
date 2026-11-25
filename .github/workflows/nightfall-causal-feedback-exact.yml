@@ -1,0 +1,23 @@
+name: NIGHTFALL causal feedback exact replay
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/causal-feedback-20261125/**'
+      - '.github/workflows/nightfall-causal-feedback-exact.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Replay exact rational and formal-log checks
+        run: |
+          set -euo pipefail
+          cd research/nightfall/causal-feedback-20261125
+          echo 'fc259760a5496cd5c62a8ffe502d8d8e7340afb2d8dc7c86bc136bca3c677ac2  check_causal_feedback.py' | sha256sum -c
+          python3 check_causal_feedback.py | tee /tmp/feedback-replay.txt
+          grep -Fx "{'models': 49, 'energy': 41, 'nodes': 42, 'information': 1, 'feedback_steps': 139968}" /tmp/feedback-replay.txt
