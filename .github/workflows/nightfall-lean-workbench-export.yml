@@ -1,0 +1,554 @@
+name: Export pinned Lean interactive workbench
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/nightfall-lean-workbench-export.yml'
+      - 'scripts/export_lean_workbench.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Preserve exporter before selecting exact proof sources
+        run: cp scripts/export_lean_workbench.py /tmp/export_lean_workbench.py
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 39cff6496c2c75696a62946eb27f423abbcbaaa2
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Smoke-test pinned compiler against Mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'import Mathlib\nexample : (2 : Nat) + 2 = 4 := by norm_num\n' > /tmp/mathlib4/WorkbenchSmoke.lean
+          (cd /tmp/mathlib4 && lake env lean WorkbenchSmoke.lean)
+      - name: Export runtime and exact proof sources (no AA/Q2 rebuild)
+        id: export
+        shell: bash
+        run: |
+          python3 /tmp/export_lean_workbench.py
+          for f in /tmp/nightfall-workbench-export/part-*; do echo "$(basename "$f")=true" >> "$GITHUB_OUTPUT"; done
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: lean-workbench-manifest
+          path: /tmp/nightfall-workbench-export/manifest.json
+          if-no-files-found: error
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-00 == 'true'
+        with:
+          name: lean-workbench-part-00
+          path: /tmp/nightfall-workbench-export/part-00
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-01 == 'true'
+        with:
+          name: lean-workbench-part-01
+          path: /tmp/nightfall-workbench-export/part-01
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-02 == 'true'
+        with:
+          name: lean-workbench-part-02
+          path: /tmp/nightfall-workbench-export/part-02
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-03 == 'true'
+        with:
+          name: lean-workbench-part-03
+          path: /tmp/nightfall-workbench-export/part-03
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-04 == 'true'
+        with:
+          name: lean-workbench-part-04
+          path: /tmp/nightfall-workbench-export/part-04
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-05 == 'true'
+        with:
+          name: lean-workbench-part-05
+          path: /tmp/nightfall-workbench-export/part-05
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-06 == 'true'
+        with:
+          name: lean-workbench-part-06
+          path: /tmp/nightfall-workbench-export/part-06
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-07 == 'true'
+        with:
+          name: lean-workbench-part-07
+          path: /tmp/nightfall-workbench-export/part-07
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-08 == 'true'
+        with:
+          name: lean-workbench-part-08
+          path: /tmp/nightfall-workbench-export/part-08
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-09 == 'true'
+        with:
+          name: lean-workbench-part-09
+          path: /tmp/nightfall-workbench-export/part-09
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-10 == 'true'
+        with:
+          name: lean-workbench-part-10
+          path: /tmp/nightfall-workbench-export/part-10
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-11 == 'true'
+        with:
+          name: lean-workbench-part-11
+          path: /tmp/nightfall-workbench-export/part-11
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-12 == 'true'
+        with:
+          name: lean-workbench-part-12
+          path: /tmp/nightfall-workbench-export/part-12
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-13 == 'true'
+        with:
+          name: lean-workbench-part-13
+          path: /tmp/nightfall-workbench-export/part-13
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-14 == 'true'
+        with:
+          name: lean-workbench-part-14
+          path: /tmp/nightfall-workbench-export/part-14
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-15 == 'true'
+        with:
+          name: lean-workbench-part-15
+          path: /tmp/nightfall-workbench-export/part-15
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-16 == 'true'
+        with:
+          name: lean-workbench-part-16
+          path: /tmp/nightfall-workbench-export/part-16
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-17 == 'true'
+        with:
+          name: lean-workbench-part-17
+          path: /tmp/nightfall-workbench-export/part-17
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-18 == 'true'
+        with:
+          name: lean-workbench-part-18
+          path: /tmp/nightfall-workbench-export/part-18
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-19 == 'true'
+        with:
+          name: lean-workbench-part-19
+          path: /tmp/nightfall-workbench-export/part-19
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-20 == 'true'
+        with:
+          name: lean-workbench-part-20
+          path: /tmp/nightfall-workbench-export/part-20
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-21 == 'true'
+        with:
+          name: lean-workbench-part-21
+          path: /tmp/nightfall-workbench-export/part-21
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-22 == 'true'
+        with:
+          name: lean-workbench-part-22
+          path: /tmp/nightfall-workbench-export/part-22
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-23 == 'true'
+        with:
+          name: lean-workbench-part-23
+          path: /tmp/nightfall-workbench-export/part-23
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-24 == 'true'
+        with:
+          name: lean-workbench-part-24
+          path: /tmp/nightfall-workbench-export/part-24
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-25 == 'true'
+        with:
+          name: lean-workbench-part-25
+          path: /tmp/nightfall-workbench-export/part-25
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-26 == 'true'
+        with:
+          name: lean-workbench-part-26
+          path: /tmp/nightfall-workbench-export/part-26
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-27 == 'true'
+        with:
+          name: lean-workbench-part-27
+          path: /tmp/nightfall-workbench-export/part-27
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-28 == 'true'
+        with:
+          name: lean-workbench-part-28
+          path: /tmp/nightfall-workbench-export/part-28
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-29 == 'true'
+        with:
+          name: lean-workbench-part-29
+          path: /tmp/nightfall-workbench-export/part-29
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-30 == 'true'
+        with:
+          name: lean-workbench-part-30
+          path: /tmp/nightfall-workbench-export/part-30
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-31 == 'true'
+        with:
+          name: lean-workbench-part-31
+          path: /tmp/nightfall-workbench-export/part-31
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-32 == 'true'
+        with:
+          name: lean-workbench-part-32
+          path: /tmp/nightfall-workbench-export/part-32
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-33 == 'true'
+        with:
+          name: lean-workbench-part-33
+          path: /tmp/nightfall-workbench-export/part-33
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-34 == 'true'
+        with:
+          name: lean-workbench-part-34
+          path: /tmp/nightfall-workbench-export/part-34
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-35 == 'true'
+        with:
+          name: lean-workbench-part-35
+          path: /tmp/nightfall-workbench-export/part-35
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-36 == 'true'
+        with:
+          name: lean-workbench-part-36
+          path: /tmp/nightfall-workbench-export/part-36
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-37 == 'true'
+        with:
+          name: lean-workbench-part-37
+          path: /tmp/nightfall-workbench-export/part-37
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-38 == 'true'
+        with:
+          name: lean-workbench-part-38
+          path: /tmp/nightfall-workbench-export/part-38
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-39 == 'true'
+        with:
+          name: lean-workbench-part-39
+          path: /tmp/nightfall-workbench-export/part-39
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-40 == 'true'
+        with:
+          name: lean-workbench-part-40
+          path: /tmp/nightfall-workbench-export/part-40
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-41 == 'true'
+        with:
+          name: lean-workbench-part-41
+          path: /tmp/nightfall-workbench-export/part-41
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-42 == 'true'
+        with:
+          name: lean-workbench-part-42
+          path: /tmp/nightfall-workbench-export/part-42
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-43 == 'true'
+        with:
+          name: lean-workbench-part-43
+          path: /tmp/nightfall-workbench-export/part-43
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-44 == 'true'
+        with:
+          name: lean-workbench-part-44
+          path: /tmp/nightfall-workbench-export/part-44
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-45 == 'true'
+        with:
+          name: lean-workbench-part-45
+          path: /tmp/nightfall-workbench-export/part-45
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-46 == 'true'
+        with:
+          name: lean-workbench-part-46
+          path: /tmp/nightfall-workbench-export/part-46
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-47 == 'true'
+        with:
+          name: lean-workbench-part-47
+          path: /tmp/nightfall-workbench-export/part-47
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-48 == 'true'
+        with:
+          name: lean-workbench-part-48
+          path: /tmp/nightfall-workbench-export/part-48
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-49 == 'true'
+        with:
+          name: lean-workbench-part-49
+          path: /tmp/nightfall-workbench-export/part-49
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-50 == 'true'
+        with:
+          name: lean-workbench-part-50
+          path: /tmp/nightfall-workbench-export/part-50
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-51 == 'true'
+        with:
+          name: lean-workbench-part-51
+          path: /tmp/nightfall-workbench-export/part-51
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-52 == 'true'
+        with:
+          name: lean-workbench-part-52
+          path: /tmp/nightfall-workbench-export/part-52
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-53 == 'true'
+        with:
+          name: lean-workbench-part-53
+          path: /tmp/nightfall-workbench-export/part-53
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-54 == 'true'
+        with:
+          name: lean-workbench-part-54
+          path: /tmp/nightfall-workbench-export/part-54
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-55 == 'true'
+        with:
+          name: lean-workbench-part-55
+          path: /tmp/nightfall-workbench-export/part-55
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-56 == 'true'
+        with:
+          name: lean-workbench-part-56
+          path: /tmp/nightfall-workbench-export/part-56
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-57 == 'true'
+        with:
+          name: lean-workbench-part-57
+          path: /tmp/nightfall-workbench-export/part-57
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-58 == 'true'
+        with:
+          name: lean-workbench-part-58
+          path: /tmp/nightfall-workbench-export/part-58
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-59 == 'true'
+        with:
+          name: lean-workbench-part-59
+          path: /tmp/nightfall-workbench-export/part-59
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-60 == 'true'
+        with:
+          name: lean-workbench-part-60
+          path: /tmp/nightfall-workbench-export/part-60
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-61 == 'true'
+        with:
+          name: lean-workbench-part-61
+          path: /tmp/nightfall-workbench-export/part-61
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-62 == 'true'
+        with:
+          name: lean-workbench-part-62
+          path: /tmp/nightfall-workbench-export/part-62
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.export.outputs.part-63 == 'true'
+        with:
+          name: lean-workbench-part-63
+          path: /tmp/nightfall-workbench-export/part-63
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
