@@ -34,7 +34,8 @@ def bit (x : K) : Bool := decide (x ≠ 0)
 
 theorem bit_injective : Function.Injective bit := by
   intro x y h
-  fin_cases x <;> fin_cases y <;> simp_all [bit]
+  fin_cases x <;> fin_cases y
+  all_goals first | rfl | (exfalso; revert h; decide)
 
 def evaluate (n : ℕ) (s : Dual n) : Row n → Bool :=
   fun a => bit (s a.1)
