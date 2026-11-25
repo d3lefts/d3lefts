@@ -104,6 +104,20 @@ private theorem diagonal_slice (s : (V × V) →ₗ[K] K) :
   ext x
   simp [diag, map_add]
 
+private theorem base_weight (s : K →ₗ[K] K) (h : s 1 ≠ 0) :
+    weight R0 s = 1 := by
+  classical
+  have hf : (R0.filter fun a => s a ≠ 0) = {1} := by
+    ext a
+    simp only [R0, Finset.mem_filter, Finset.mem_singleton]
+    constructor
+    · exact And.left
+    · intro ha
+      subst a
+      exact ⟨rfl, h⟩
+  unfold weight
+  rw [hf, Finset.card_singleton]
+
 /-- Every nonzero linear functional on the actual all-level tensor source
     has at least 2^n nonzero evaluations. No finite-depth restriction. -/
 theorem distance_lower : ∀ n (s : E n →ₗ[K] K), s ≠ 0 →
@@ -112,38 +126,49 @@ theorem distance_lower : ∀ n (s : E n →ₗ[K] K), s ≠ 0 →
   induction n with
   | zero =>
     intro s hs
-    have h : s (1 : K) ≠ 0 := by
+    let s' : K →ₗ[K] K := s
+    have hs' : s' ≠ 0 := hs
+    have h : s' (1 : K) ≠ 0 := by
       intro h1
-      apply hs
+      apply hs'
       apply LinearMap.ext
       intro x
-      have hx := s.map_smul x (1 : K)
-      simpa [h1] using hx
-    change 2^0 ≤ weight R0 s
-    simp [weight, R0, h]
+      change s' x = 0
+      have hx := s'.map_smul x (1 : K)
+      simpa only [smul_eq_mul, mul_one, h1, mul_zero] using hx
+    have hb : weight R0 s' = 1 := base_weight s' h
+    change 2^0 ≤ weight R0 s'
+    exact le_of_eq (by simpa only [pow_zero] using hb.symm)
   | succ n ih =>
     intro s hs
-    change 2^(n+1) ≤ weight (rowsUp (R n)) s
-    rw [weight_step (R n) (rows_nonzero n), pow_succ]
-    have hdiag := diagonal_slice s
-    by_cases h0 : s.comp inl = 0
-    · have h1 : s.comp inr ≠ 0 := fun h => hs (two_slices_zero s h0 h)
-      have h2 : s.comp diag ≠ 0 := by
-        rw [hdiag, h0, zero_add]
-        exact h1
-      have u := ih (s.comp inr) h1
-      have v := ih (s.comp diag) h2
-      omega
-    · by_cases h1 : s.comp inr = 0
-      · have h2 : s.comp diag ≠ 0 := by
-          rw [hdiag, h1, add_zero]
-          exact h0
-        have u := ih (s.comp inl) h0
-        have v := ih (s.comp diag) h2
+    let s' : (E n × E n) →ₗ[K] K := s
+    have hs' : s' ≠ 0 := hs
+    have hw := weight_step (R n) (rows_nonzero n) s'
+    have hdiag := diagonal_slice s'
+    have hbound : 2^n * 2 ≤ weight (R n) (s'.comp inl) +
+        weight (R n) (s'.comp inr) + weight (R n) (s'.comp diag) := by
+      by_cases h0 : s'.comp inl = 0
+      · have h1 : s'.comp inr ≠ 0 := fun h => hs' (two_slices_zero s' h0 h)
+        have h2 : s'.comp diag ≠ 0 := by
+          rw [hdiag, h0, zero_add]
+          exact h1
+        have u := ih (s'.comp inr) h1
+        have v := ih (s'.comp diag) h2
         omega
-      · have u := ih (s.comp inl) h0
-        have v := ih (s.comp inr) h1
-        omega
+      · by_cases h1 : s'.comp inr = 0
+        · have h2 : s'.comp diag ≠ 0 := by
+            rw [hdiag, h1, add_zero]
+            exact h0
+          have u := ih (s'.comp inl) h0
+          have v := ih (s'.comp diag) h2
+          omega
+        · have u := ih (s'.comp inl) h0
+          have v := ih (s'.comp inr) h1
+          omega
+    have hfinal : 2^(n+1) ≤ weight (rowsUp (R n)) s' := by
+      rw [hw, pow_succ]
+      exact hbound
+    exact hfinal
 
 /-- The rank-one dual witness, iteratively taking the first factor. -/
 noncomputable def witness : (n : Nat) → E n →ₗ[K] K
@@ -153,20 +178,25 @@ noncomputable def witness : (n : Nat) → E n →ₗ[K] K
 theorem distance_witness : ∀ n, weight (R n) (witness n) = 2^n := by
   intro n
   induction n with
-  | zero => simp [R, R0, weight, witness]
+  | zero =>
+    have h : weight R0 (LinearMap.id : K →ₗ[K] K) = 1 :=
+      base_weight LinearMap.id (by simp)
+    exact h
   | succ n ih =>
-    change weight (rowsUp (R n)) (witness (n+1)) = 2^(n+1)
-    rw [weight_step (R n) (rows_nonzero n)]
-    have h0 : (witness (n+1)).comp inl = witness n := by
+    let w : (E n × E n) →ₗ[K] K :=
+      (witness n).comp (LinearMap.fst K (E n) (E n))
+    have h0 : w.comp inl = witness n := by
       ext x
-      simp [witness, inl]
-    have h1 : (witness (n+1)).comp inr = 0 := by
+      simp [w, inl]
+    have h1 : w.comp inr = 0 := by
       ext x
-      simp [witness, inr]
-    have h2 : (witness (n+1)).comp diag = witness n := by
+      simp [w, inr]
+    have h2 : w.comp diag = witness n := by
       rw [diagonal_slice, h0, h1, add_zero]
-    rw [h0, h1, h2, weight_zero, ih, pow_succ]
-    omega
+    have hfinal : weight (rowsUp (R n)) w = 2^(n+1) := by
+      rw [weight_step (R n) (rows_nonzero n) w, h0, h1, h2, weight_zero, ih, pow_succ]
+      omega
+    exact hfinal
 
 /-- Exact minimum, including the nonzero witness, and actual source length
     and ambient rank. The observed code is the linear evaluation image. -/
