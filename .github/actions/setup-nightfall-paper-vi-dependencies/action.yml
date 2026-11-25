@@ -1,0 +1,55 @@
+name: Restore or build exact Paper VI dependencies
+description: Cache immutable AA/Q2 and Route1 build outputs; downstream named kernel and axiom gates remain mandatory
+inputs:
+  receipts:
+    description: Directory for dependency provenance and logs
+    required: true
+  require-warm:
+    description: Refuse cold rebuilds during downstream-only proof repair
+    required: false
+    default: 'false'
+outputs:
+  cache-hit:
+    description: Exact-key restore hit
+    value: ${{ steps.restore.outputs.cache-hit }}
+runs:
+  using: composite
+  steps:
+    - name: Compute exact closure and toolchain cache key
+      id: key
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 scripts/paper_vi_dependency_checkpoint.py key >> "$GITHUB_OUTPUT"
+    - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      id: restore
+      with:
+        path: /tmp/nightfall-paper-vi-deps-v1
+        key: ${{ steps.key.outputs.key }}
+    - name: Refuse an unplanned cold rebuild in repair mode
+      if: steps.restore.outputs.cache-hit != 'true' && inputs.require-warm == 'true'
+      shell: bash
+      run: |
+        echo '::error::Exact dependency cache unavailable. Repair mode will not rebuild AA/Q2 or Route1. Restore the matching checkpoint or explicitly authorize one cold build.'
+        exit 1
+    - name: Build unchanged dependency closure only on exact cache miss
+      if: steps.restore.outputs.cache-hit != 'true' && inputs.require-warm != 'true'
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 scripts/paper_vi_dependency_checkpoint.py build
+    - name: Verify exact inputs and compiled file hashes, install checkpoint
+      shell: bash
+      env:
+        RECEIPTS: ${{ inputs.receipts }}
+      run: |
+        set -euo pipefail
+        python3 scripts/paper_vi_dependency_checkpoint.py install "$RECEIPTS"
+        printf '%s\n' "${{ steps.key.outputs.key }}" > "$RECEIPTS/dependency-cache-key.txt"
+        printf '%s\n' "${{ steps.restore.outputs.cache-hit }}" > "$RECEIPTS/dependency-cache-hit.txt"
+    - name: Save successful dependency checkpoint before compiling any new terminal
+      if: steps.restore.outputs.cache-hit != 'true'
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      with:
+        path: /tmp/nightfall-paper-vi-deps-v1
+        key: ${{ steps.key.outputs.key }}
