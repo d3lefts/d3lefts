@@ -102,7 +102,57 @@
           "name": "Nightfall.ProductBUDecoderRiskFloor.causal_decoder_risk_floor_of_product_sphere_zero"
         }
       ],
-      "archived": "NIGHTFALL_III_V_local_progress_20261125.zip: AnnularAdaptiveConstruction and AnnularRowContinuity, fresh-kernel receipt iii-fresh-kernel.log; exact full minimax terminal not established."
+      "archived": "Recovered v2 archive: continuous normalized two-batch upper bound, in-annulus decoder and matching design-specific sharpness, four additional module kernel replay exits 0; fixed-frame infimum, fixed nonattainment, and lower bound over all policies remain separate.",
+      "archived_evidence": {
+        "archive": "NIGHTFALL_III_V_certification_20261125_v2.zip",
+        "archive_sha256": "bc40e90289452ec130dd23a6784b691174b5f62f0c677ddde0f67e94d43276a4",
+        "source": "Library archive; all SHA256SUMS entries verified during recovery; original local kernel replays, not rerun",
+        "lean_commit": "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+        "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+        "modules": [
+          {
+            "module": "AnnularTwoBatchTerminal",
+            "name": "Nightfall.AnnularAdaptiveConstruction.off_axis_injective",
+            "source_sha256": "b9e8437439d4cb1f0bd7cd80c58989730fcf9993091e037c24d9fa6aa9b1fa81",
+            "git_blob": "612c9f550a4372e7e9bd979bcbaa39ef16a6f34a",
+            "compile_log_sha256": "38379ac11e80ca076ed20764234cc9e665241dec05e13c2cca6fe8bce0761d5e",
+            "kernel_log_sha256": "e9937eb99d4a62c65e304cd8b737d3c636d29ea7f21b5cd50f6a66a16e2a9ced",
+            "kernel_exit": 0
+          },
+          {
+            "module": "AnnularDecoderTerminal",
+            "name": "Nightfall.AnnularAdaptiveConstruction.annular_two_batch_upper",
+            "source_sha256": "b28de0de1b3767e38711ce965d55f0ea0377ff09d6c9a56a8c2c2c8a86c8d5b0",
+            "git_blob": "26ce7363a2094f14a7b14fbd1735567fdd2b501b",
+            "compile_log_sha256": "0bd0049c4c35b6dee5f2fd678d0ad5e3bccdf71291bb3e58862c7b47407bd8d3",
+            "kernel_log_sha256": "b15b5bfe1ee77169c3a428889efb40d4da5a8b437ffd10a0f8a77cbf006caa24",
+            "kernel_exit": 0
+          },
+          {
+            "module": "AnnularNormalizedTerminal",
+            "name": "Nightfall.AnnularAdaptiveConstruction.annular_normalized_upper",
+            "additional_names": [
+              "Nightfall.AnnularAdaptiveConstruction.unitRow_continuous",
+              "Nightfall.AnnularAdaptiveConstruction.unitRow_unit"
+            ],
+            "source_sha256": "8c8469f9ff1d9be1933934d667b6d6730aec2face88d8dbaddc49a9411017c3f",
+            "git_blob": "7582b3884773c190ad77af47afddee413a9a8a11",
+            "compile_log_sha256": "08b4e8cd3d4b9fe1165379a1019cbc2ea95cf215fc4f63cefaee3e974a6939da",
+            "kernel_log_sha256": "5eae9eab2fdfd9720367a4ddefddc4e3f4d2df315c09ae9813099a5717843c51",
+            "kernel_exit": 0
+          },
+          {
+            "module": "AnnularDesignSharp",
+            "name": "Nightfall.AnnularAdaptiveConstruction.annular_normalized_design_sharp",
+            "source_sha256": "3cd1883df4cbd378456f6f0d89e5fcc458a8cef91d858cd09b59ec85c88a0618",
+            "git_blob": "e0f84f97bc2c637f3747c8ad233973fdb9d1ee95",
+            "compile_log_sha256": "1329e513e2d93a7d6df58e155180d28c2e50d2f1d200d011c79647018fff5475",
+            "kernel_log_sha256": "9cb37f51209523a49fe3dbd4e50a02dc6f5d2ddb72b67dd10604001de3117582",
+            "kernel_exit": 0
+          }
+        ],
+        "limitation": "Archive evidence is not yet a live branch module receipt. Named proofs cover the adaptive upper and sharpness for that design only, not full thm:minimax. No promotion of full coverage."
+      }
     },
     {
       "label": "thm:sphererisk",
@@ -207,5 +257,14 @@
       ]
     }
   ],
-  "source_receipt_reference": "Archived conditional quantitative lane PR #1120, exact head b79bc06e29578c350d70d0123f3bed03c5cbc58a. Restored unchanged four source blobs; fresh audit required."
+  "source_receipt_reference": "Archived conditional quantitative lane PR #1120, exact head b79bc06e29578c350d70d0123f3bed03c5cbc58a. Restored unchanged four source blobs; fresh audit required.",
+  "recovered_manuscript": {
+    "file": "nightfall_phase_retrieval_v7.tex",
+    "sha256": "1a4358d784ac8238005243fce506fa3bcb2b6b7624bc1b618750335a554329d2",
+    "identity": "Library source only; deposited PDF identity remains unverified",
+    "additional_labeled_remarks_outside_24_claim_manifest": [
+      "prop:gap",
+      "rem:mixedcoverage"
+    ]
+  }
 }
