@@ -69,7 +69,7 @@ theorem quadratic_wyner_simulation
   have h := route1_wyner_from_verified_good
     P hP0 hP1 w hw0 hw1 f hf01 2 hdeg τ hτ ε hε n hn
     (quadGa τ) (quadGb quadraticSeedK τ) hga hgb hgood
-  simpa only [quadraticSeedK] using h
+  simpa only [quadraticSeedK, Nat.cast_ofNat] using h
 
 /-- Source-quantified Wyner-CI variant with a finite product decomposition
 chosen below any strict information charge s>C_W(ν). -/
