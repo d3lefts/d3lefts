@@ -1,0 +1,31 @@
+/mnt/data/lean-workbench/src/AllOrderGeometry.lean:36:21: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+/mnt/data/lean-workbench/src/AllOrderGeometry.lean:41:18: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+/mnt/data/lean-workbench/src/AllOrderGeometry.lean:80:19: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+/mnt/data/lean-workbench/src/AllOrderGeometry.lean:82:19: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+/mnt/data/lean-workbench/src/AllOrderGeometry.lean:23:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.repeated_pattern_split`:
+  [DecidableEq I]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq I] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderGeometry.lean:86:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.sum_eval`:
+  [Fintype J]
+  [DecidableEq J]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype J] [DecidableEq J] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Nightfall.AllOrder.Geometry.repeated_pattern_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Geometry.minimal_pattern_constant' depends on axioms: [propext, Classical.choice, Quot.sound]

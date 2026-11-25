@@ -51,3 +51,33 @@ Artifact: [replay-negative-cache.cjs](replay-negative-cache.cjs), standalone ori
 | Deliberately broken cache false suppressions (ignores enlargement) | 78,281 |
 
 Smallest encountered broken witness: before mask 0, after mask 1, requests 1 then 1. An empty feasible set becomes nonempty. Suppression is 85,568 / 8,388,608 of baseline queries (about 1.02%) under exhaustive all-pair weighting, not an observed speedup, and 85,568 / (2 * 419,904) of baseline queries within restrictive cases. No runtime claims. Scope: two-step finite model, not the source allocator or actual orchestration. Multi-step traces, dependency keys, asynchronous completion, alias changes, starvation and stale commits remain open. This extends the first planned finite test but does not complete the full experimental contract. Next decisive test: independent reviewer replay and actual matched orchestration traces, with explicit dependency identity and in-flight version checks. No independent review has been obtained.
+
+
+## v1.2 — actual research input replay (Q7 catalogue, 2026-11-25)
+
+Objective: quantify certificate-aware negative caching on an existing mathematical search workload rather than synthetic bit masks. Frozen input: [PR #63](https://github.com/d3lefts/d3lefts/pull/63), merge dca3319118b0b933dfc1aa02895bce77afb7d4e1; canonical_180.txt Git blob 9f88b6e958f00b6a875218d8c2850e19fefdc667, archived SHA-256 2c4a0bfdcbac0d2751a6d2ab3b8b345cd6d4dd2febe437d63cadc2af960168a1. Minamo Minamoto's 180 published canonical masks, existing attribution/license unchanged. The original checker blob b4ce413b2b18ea2b2c8f48af662d4ff364540137 and README were read at the same pinned merge. Strongest reference checked here is that existing exact catalogue-local result; not a new external priority search or a current global bound comparison. Existing finite result: no 305-edge improvement within four deletions from those seeds. Remaining gap: dynamic dependency identities, asynchronous state, production telemetry and independent review.
+
+Experiment contract: for every pair passing the source's necessary support-overlap filter, and every resulting four-clique, replay an identical sequence of deletion budgets 4,3,2,1,0. Baseline executes each decision; candidate skips a smaller budget only after an exact negative decision on the same blocker family at a larger budget. Prediction: identical decisions, fewer calls and DFS nodes. Alternative: erroneous monotonicity direction or stale failure when expanding the feasible set. Negative control reuses the budget-0 negative at budget 4; must produce false suppression. Stop on any outcome mismatch, source count disagreement or ineffective negative control. Cost budget: all 180 masks, no solver timeout or approximate arithmetic. This is a constructed repeated-query schedule on real research inputs, not a recorded production trace; it does not compare against an optimized threshold search or claim runtime speedup. Novelty: elementary monotonic pruning is established practice; no priority claim.
+
+Reproduction: `node research/nightfall/2026-11-25-victory-autonomy/replay-q7-cache.cjs` from the repository. Optional first argument is the exact original mask path. The script checks the input SHA-256 before executing. The identical replay function was executed in a JS runtime against the pinned connector-returned file content; the Node CLI/hash wrapper itself was not executed in that runtime. A fresh JavaScript implementation reconstructs 448 edges, 672 squares, verifies the 180 seeds, computes tight blockers, exact pair feasibility and clique joint feasibility. Existing Python checker counts are an independent historical reference; candidate and uncached arms share the new DFS solver, so their comparison isolates cache semantics and is not independent solver verification.
+
+| Metric | Result |
+|---|---:|
+| Actual pair blocker instances (after source overlap filter) | 43,093 |
+| Four-clique blocker instances | 105 |
+| Exact pair compatibilities at budget four | 20,668 |
+| Pair compatibilities at budget two | 0 |
+| Jointly feasible four-cliques at budget four | 0 |
+| Baseline DFS calls | 215,990 |
+| Cache-aware DFS calls | 72,900 |
+| Calls skipped | 143,090 |
+| Baseline DFS nodes | 5,812,945 |
+| Cache-aware DFS nodes | 4,251,623 |
+| Decision mismatches | 0 |
+| False negatives if stale budget-0 failure reused at budget four | 20,668 |
+
+The 43,198 instances x 5 budgets yield 215,990 matched decisions. The cache removes 143,090/215,990 calls (~66.25%) and 1,561,322/5,812,945 DFS nodes (~26.86%) on this schedule. Counts exclude the common setup, extra expansion checks and negative controls. Tight-square histogram and all principal compatibility totals match the prior archive exactly. No elapsed-time or end-to-end throughput claim.
+
+Exploratory structural observation: all 105 four-cliques from the budget-four compatibility graph are also jointly infeasible at budgets five and six under the same necessary tight-blocker constraints. This does NOT cover four-cliques that first become compatible at five or six, let alone the six/seven additions needed for strict improvement; no extension of the original four-deletion global-within-catalogue exclusion follows. Preserve this scoped negative result for a future enlarged-compatibility search.
+
+Next cheapest decisive comparison: replay a stronger baseline that computes the exact minimum hitting-set cardinality once (or uses binary search over thresholds), and replay actual recorded worker requests with artifact hashes and leases. Only claim benefit relative to an optimized comparator and genuine workload distribution. Independent non-author replay and source-to-production compatibility remain required. No change to live orchestration.

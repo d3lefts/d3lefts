@@ -1,0 +1,4 @@
+src/AllOrderMask.lean:45:8: warning: `mul_le_one₀` has been deprecated: No replacement, use constituent lemmas from proof.
+'Nightfall.AllOrder.cube_mask_expansion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.cube_mask_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.cube_contracted_mask_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

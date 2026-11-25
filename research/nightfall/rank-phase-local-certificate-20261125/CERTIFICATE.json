@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-25",
+  "paper": "IV, exact rank-phase decomposition, principal theorem",
+  "archived_source_head": "df39c2677e9fcef8a212aab13361ebf5cd975ac3",
+  "source_transfer_run": 45656954822,
+  "source_transfer_artifact": 15042692306,
+  "lean": "4.36.0-rc2",
+  "lean_commit": "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+  "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+  "source_files": [
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhasePivot.lean",
+      "blob": "e943fd2ef95349bbfa05675dbc7a8260c19d01da",
+      "sha256": "4ca382850d95b32b32e04f61d052489deab7b02148817176f9cc7b284a9835e5",
+      "object_sha256": "b308b331141db33249e72e6e6bb1181db6c779af67eab4c6293704d7419b059d",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhaseAdaptiveTree.lean",
+      "blob": "83cb2a4bd67f0a47da3efe35baa97443e7fb90b4",
+      "sha256": "487798308d40fccb172a1d8929b29f89c47fbb1477c609ebcc7e011f8cc5df31",
+      "object_sha256": "9d20c0942af0d3ed09a669aa73e41373ee59a9f061a5a75958516306d6b8fdff",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhaseIdentity.lean",
+      "blob": "0ab3b7f81a4cf312cbecf85d5c9d1c90152ea3b8",
+      "sha256": "932ccaf0c9832656eccf4b8a273de19ca6b048de2a445cab584b2e60f1c313ba",
+      "object_sha256": "41599c0a73976137789ede311bec0ff00f123b92fec78b1728315c0a05453f37",
+      "elaboration_exit": 0
+    }
+  ],
+  "repairs": [
+    "Replace broad Mathlib import with five explicit imports; pivot proof text unchanged.",
+    "Bind classical decidability inside noncomputable retrievalDepth and packingDepth definitions; original Nat.find minimality proof retained.",
+    "RankPhaseAdaptiveTree unchanged."
+  ],
+  "targets": [
+    "Nightfall.FiniteField.RankPhaseAdaptiveTree.exact_rank_phase_identity",
+    "Nightfall.FiniteField.RankPhaseAdaptiveTree.rank_phase_budget_iff"
+  ],
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "export_sha256": "0574ad5503eb7ebc0638e22ce1870389cba93f5b7d744be659fa75ca51ade1c6",
+  "local_kernel": {
+    "command": "./lean-env leanchecker --from-export rankphase-export/rankphase.ndjson",
+    "exit_status": 0,
+    "output": "Lean default kernel accepts the solution",
+    "wall_seconds": 3.95,
+    "max_rss_kib": 149444,
+    "log_sha256": "7fe5aafe314fd9ea85f3a3adad5808b9f6ee0dce0056dd3c0e161e170b9745ca"
+  },
+  "scope": "All finite fields, positive exponent d, positive dimension k=n+1. Powered-linear trees and normalized phase packing; finite feasible trees can be pruned on unreachable responses to the bounded Within model. Does not certify every secondary result or independent global priority. Local execution, not remote CI. Export and logs retained locally."
+}

@@ -1,0 +1,11 @@
+/mnt/data/lean-workbench/src/AllOrderPatternAssembly.lean:22:6: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+/mnt/data/lean-workbench/src/AllOrderPatternAssembly.lean:89:18: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+'Nightfall.AllOrder.Geometry.contracted_support_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Geometry.contracted_cube_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Geometry.contracted_phase_identity' depends on axioms: [propext, Classical.choice, Quot.sound]

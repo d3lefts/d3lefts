@@ -1,0 +1,16 @@
+/mnt/data/lean-workbench/src/AllOrderQuantumPath.lean:14:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Quantum.orthogonal_sum_energy`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderQuantumPath.lean:67:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Quantum.sum_cons_E`:
+  [DecidableEq A]
+  [InnerProductSpace ℂ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] [InnerProductSpace ℂ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Nightfall.AllOrder.Quantum.oracle_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Quantum.run_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Quantum.run_path_expansion' depends on axioms: [propext, Classical.choice, Quot.sound]

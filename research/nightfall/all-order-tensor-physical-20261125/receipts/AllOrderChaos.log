@@ -1,0 +1,9 @@
+/mnt/data/lean-workbench/src/AllOrderChaos.lean:64:13: warning: This simp argument is unused:
+  Fintype.sum_bool
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [avg]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'Nightfall.AllOrder.linearRad_second' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.linearRad_fourth' depends on axioms: [propext, Classical.choice, Quot.sound]

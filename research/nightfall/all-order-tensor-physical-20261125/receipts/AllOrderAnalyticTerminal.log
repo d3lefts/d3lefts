@@ -1,0 +1,1 @@
+'Nightfall.AllOrder.all_pattern_simulation_from_chaos_norm' depends on axioms: [propext, Classical.choice, Quot.sound]

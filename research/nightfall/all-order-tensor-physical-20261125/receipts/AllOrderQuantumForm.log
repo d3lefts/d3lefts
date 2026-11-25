@@ -1,0 +1,27 @@
+src/AllOrderQuantumForm.lean:14:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Quantum.sum_two_paths`:
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+src/AllOrderQuantumForm.lean:21:98: warning: This simp argument is unused:
+  ← Fin.natAdd_eq_addNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+src/AllOrderQuantumForm.lean:22:45: warning: This simp argument is unused:
+  ← Fin.natAdd_eq_addNat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: Simp arguments with `←` have the additional effect of removing the other direction from the simp set, even if the simp argument itself is unused. If the hint above does not work, try replacing `←` with `-` to only get that effect and silence this warning.
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+src/AllOrderQuantumForm.lean:58:8: warning: `mul_le_one₀` has been deprecated: No replacement, use constituent lemmas from proof.
+'Nightfall.AllOrder.Quantum.amplitude_cube_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Quantum.amplitude_cube_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,276 @@
+{
+  "terminal": "Nightfall.AllOrder.Quantum.physical_tensor_simulation",
+  "terminal_compile_exit": 0,
+  "terminal_leanchecker_exit": 0,
+  "modules": [
+    {
+      "module": "T2UniformParseval",
+      "audits": 1,
+      "receipts": [
+        ".log"
+      ]
+    },
+    {
+      "module": "T2ClippedEstimator",
+      "audits": 7,
+      "receipts": [
+        ".log"
+      ]
+    },
+    {
+      "module": "AllOrderCore",
+      "audits": 7,
+      "receipts": [
+        ".log",
+        "-kernel.log"
+      ]
+    },
+    {
+      "module": "AllOrderMask",
+      "audits": 3,
+      "receipts": [
+        ".log",
+        "-kernel.log"
+      ]
+    },
+    {
+      "module": "AllOrderFourier",
+      "audits": 6,
+      "receipts": [
+        ".log",
+        "-kernel.log"
+      ]
+    },
+    {
+      "module": "AllOrderTruncation",
+      "audits": 6,
+      "receipts": [
+        ".log",
+        "-kernel.log"
+      ]
+    },
+    {
+      "module": "AllOrderTerminal",
+      "audits": 6,
+      "receipts": [
+        ".log",
+        "-kernel.log"
+      ]
+    },
+    {
+      "module": "AllOrderMoments",
+      "audits": 2,
+      "receipts": [
+        ".log",
+        "-kernel.log"
+      ]
+    },
+    {
+      "module": "AllOrderChaos",
+      "audits": 2,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderGeometry",
+      "audits": 2,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderTensorLocalization",
+      "audits": 4,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderMixedNorm",
+      "audits": 4,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderTensorSource",
+      "audits": 5,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderRowBound",
+      "audits": 4,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderAnchor",
+      "audits": 1,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderAnalyticTerminal",
+      "audits": 1,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderHammingBall",
+      "audits": 2,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderActiveFiber",
+      "audits": 4,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderPaddedFiber",
+      "audits": 2,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderCombinedTerminal",
+      "audits": 1,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderMaskCost",
+      "audits": 3,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderNearMask",
+      "audits": 3,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderPatternGeometry",
+      "audits": 3,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderPatternMask",
+      "audits": 3,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderPatternAssembly",
+      "audits": 3,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderFullForm",
+      "audits": 1,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    },
+    {
+      "module": "AllOrderQuantumPath",
+      "audits": 3,
+      "receipts": [
+        ".log",
+        ".exit"
+      ]
+    },
+    {
+      "module": "AllOrderQuantumForm",
+      "audits": 2,
+      "receipts": [
+        ".log",
+        ".exit"
+      ]
+    },
+    {
+      "module": "AllOrderPhysicalTerminal",
+      "audits": 2,
+      "receipts": [
+        ".log",
+        "-kernel.log",
+        ".exit",
+        "-kernel.exit"
+      ]
+    }
+  ],
+  "scope": "full pure-tensor label family, positive fixed T, scalar acceptance, uniform additive character law; no runtime claim"
+}
