@@ -1,0 +1,5 @@
+# Paper V — local physical Born and coefficient-energy certificate
+
+All nine source modules elaborated locally. Four named endpoint declarations passed dependency-closed fresh kernel replay (exit 0, 18.77 s, 275632 KiB peak RSS). All named axioms are standard. Repaired the #1204 failing four-slot expansion by the exact finite sum interchange; targeted imports prevent the local memory failure. The source is the actual physical PiLp path model, not a supplied abstract tail assumption.
+
+This is **not** the full Paper V simulation theorem. Remaining obligations: grouped A/B/C contractions and real uniform-character Parseval, final legal-query tail composition, plus any arbitrary-sector bridge beyond this direct-sum model. See CERTIFICATE.json for pinned compiler, original source, exact repaired blobs and replay hashes. Reproduce by compiling the nine source_files in order, running leanexport T2BornExpansion -- with the four targets, then leanchecker --from-export born-energy.ndjson. Local receipt only, pending repository integration; no external publication or novelty promotion.

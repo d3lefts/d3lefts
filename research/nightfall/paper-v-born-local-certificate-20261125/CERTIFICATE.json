@@ -1,0 +1,88 @@
+{
+  "date": "2026-11-25",
+  "paper": "V, physical source Born expansion and light-path coefficient energy",
+  "scope": "Scoped analytical source chain, not full two-query simulation terminal. PiLp physical sector model, arbitrary complex Hilbert fiber and complex-linear terminal; remaining grouped A/B/C nonzero-frequency tail, real Walsh outside-span Parseval and final original-query theorem remain open.",
+  "archived_source_head": "592dd68e3eee5edb843b6ad93be3c081409576dc",
+  "source_transfer_run": 45656954822,
+  "source_transfer_artifact": 15042692306,
+  "lean": "4.36.0-rc2",
+  "lean_commit": "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+  "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+  "source_files": [
+    {
+      "path": "research/nightfall/formalization/structural_information/T2LightFrame.lean",
+      "blob": "a95505116d16302595af47edf21150a4ecda96ae",
+      "sha256": "c65b4509473f4975444d7e830f3a6c6037790eca29035386c58fb4495a6e3045",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
+      "blob": "9813f549146af580bbec11ea55568642249247cb",
+      "sha256": "f69f7a5e9b91b10eee34a01980274bc5145acd3bb3238760b6ff4453ca42b1c4",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FrameEnergy.lean",
+      "blob": "3b53d8a34136455d25faf5eb9308b80678f1be09",
+      "sha256": "da21da0915d8115febf97a595400ef2a2c85f277d99870aecfd62fe7ae406ddb",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2EffectOrder.lean",
+      "blob": "c9b339be53d46f3aa5aa744aa97ae41d08655411",
+      "sha256": "88f429fa65f607ea33044edd8e92aebe3bef75cf81f2db26204f66b3d53b2003",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FirstStageLight.lean",
+      "blob": "ee8d0581d5ad32cbb283cc624ca6e67cd77ca658",
+      "sha256": "58b5ef759275c4385ee3935b29084580db86f4d559320a44b6787643d08debb6",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2PathEnergy.lean",
+      "blob": "0f895d917c0756c8961dfb2b90a3f94c54a757f6",
+      "sha256": "7c96782138e1587f71b5f94598d015c17066d148f24dc0f63300832e763857e6",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2ActualSource.lean",
+      "blob": "f9d940259480e915463ea2b1938f74fe388b3c20",
+      "sha256": "020fce3ca707ecfd8dc94d16027b50dee3b5e046e14da3b73c7beb6712f9d0e4",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2QuantumPhaseExpansion.lean",
+      "blob": "ba6d7adc57934b13c181dc2f4928107d56d52f92",
+      "sha256": "d20f3c2c385c216d2d5a077fd23028699d97a8ec862815199d024c8492a4e3b3",
+      "elaboration_exit": 0
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2BornExpansion.lean",
+      "blob": "4ea8b019f94100a73ddfccf502cc6b85f63a1714",
+      "sha256": "02a387df84412e8e4eed91d3f172b4c1c2de0c409d61044f994845a84c2cb298",
+      "elaboration_exit": 0
+    }
+  ],
+  "repair": "Replace broad imports with targeted modules; add AddChar import; resolve actual failed Born finite sum order with Finset.sum_comm. No statement changes.",
+  "targets": [
+    "Nightfall.StructuralInformation.T2BornExpansion.bornAmplitude_eq_complex_four_slot_sum",
+    "Nightfall.StructuralInformation.T2BornExpansion.quantum_state_eq_original_pair_sum",
+    "Nightfall.StructuralInformation.T2ActualSource.actual_first_light_four_slot_energy",
+    "Nightfall.StructuralInformation.T2ActualSource.actual_second_light_four_slot_energy"
+  ],
+  "axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "export_sha256": "0e3f1d91180be2c22a0a04bdeb633e4ec8f196d9e2d0812ac934df1934216db0",
+  "local_kernel": {
+    "command": "./lean-env leanchecker --from-export t2-local-export/born-energy.ndjson",
+    "output": "Lean default kernel accepts the solution",
+    "exit_status": 0,
+    "wall_seconds": 18.77,
+    "max_rss_kib": 275632,
+    "log_sha256": "233f74ffdd4ea9ee4500d2b02be722a43b4e26348684a72bba94bd287457707d"
+  }
+}

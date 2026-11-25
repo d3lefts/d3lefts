@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 76,
+  "revision": 77,
   "as_of": "2026-11-25 UTC",
   "source_commit": "31a71af99957e30a25111d1b328c43a94be04c12",
-  "scope": "Merge locally certified exact rank-phase sources; preserve all independent custody rows.",
+  "scope": "Merge exact locally certified physical Born/energy source; retain all other custody rows.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -4326,6 +4326,96 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Revised candidate after run 45550018452 base-case and recursive instance diagnostics. Exact source registration only; new named Lean/kernel receipt pending. Not the full Wyner entropy/incidence or staged simulation theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2ActualSource.lean",
+      "source_blob_sha": "f9d940259480e915463ea2b1938f74fe388b3c20",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Local source elaboration and fresh kernel replay of scoped physical T2 Born/energy statements; see research/nightfall/paper-v-born-local-certificate-20261125/CERTIFICATE.json. Not full T2."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2BornExpansion.lean",
+      "source_blob_sha": "4ea8b019f94100a73ddfccf502cc6b85f63a1714",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Local source elaboration and fresh kernel replay of scoped physical T2 Born/energy statements; see research/nightfall/paper-v-born-local-certificate-20261125/CERTIFICATE.json. Not full T2."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2EffectOrder.lean",
+      "source_blob_sha": "c9b339be53d46f3aa5aa744aa97ae41d08655411",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Local source elaboration and fresh kernel replay of scoped physical T2 Born/energy statements; see research/nightfall/paper-v-born-local-certificate-20261125/CERTIFICATE.json. Not full T2."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FirstStageLight.lean",
+      "source_blob_sha": "ee8d0581d5ad32cbb283cc624ca6e67cd77ca658",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Local source elaboration and fresh kernel replay of scoped physical T2 Born/energy statements; see research/nightfall/paper-v-born-local-certificate-20261125/CERTIFICATE.json. Not full T2."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FrameEnergy.lean",
+      "source_blob_sha": "3b53d8a34136455d25faf5eb9308b80678f1be09",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Local source elaboration and fresh kernel replay of scoped physical T2 Born/energy statements; see research/nightfall/paper-v-born-local-certificate-20261125/CERTIFICATE.json. Not full T2."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2LightFrame.lean",
+      "source_blob_sha": "a95505116d16302595af47edf21150a4ecda96ae",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Local source elaboration and fresh kernel replay of scoped physical T2 Born/energy statements; see research/nightfall/paper-v-born-local-certificate-20261125/CERTIFICATE.json. Not full T2."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2PathEnergy.lean",
+      "source_blob_sha": "0f895d917c0756c8961dfb2b90a3f94c54a757f6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Local source elaboration and fresh kernel replay of scoped physical T2 Born/energy statements; see research/nightfall/paper-v-born-local-certificate-20261125/CERTIFICATE.json. Not full T2."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2QuantumPhaseExpansion.lean",
+      "source_blob_sha": "ba6d7adc57934b13c181dc2f4928107d56d52f92",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Local source elaboration and fresh kernel replay of scoped physical T2 Born/energy statements; see research/nightfall/paper-v-born-local-certificate-20261125/CERTIFICATE.json. Not full T2."
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
+      "source_blob_sha": "9813f549146af580bbec11ea55568642249247cb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Local source elaboration and fresh kernel replay of scoped physical T2 Born/energy statements; see research/nightfall/paper-v-born-local-certificate-20261125/CERTIFICATE.json. Not full T2."
     },
     {
       "path": "research/nightfall/formalization/structural_information/TensorCircuitSupportBudget.lean",
