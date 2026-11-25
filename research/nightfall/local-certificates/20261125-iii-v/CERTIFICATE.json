@@ -1,0 +1,110 @@
+{
+  "date": "2026-11-25",
+  "scope": "Local scoped fresh-kernel replay. Not full Paper III or V certification.",
+  "lean": "4.36.0-rc2",
+  "lean_commit": "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+  "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+  "source_blobs": {
+    "GenuinePrefixPhase": "42b413b803b2db7c6839f2a46510594515b49dac",
+    "ProductSphereObstruction": "5a9f8e21d5086ccc0266006fb8e0feb170cf9840",
+    "ProductSphereCausalComposition": "c995f887fbf035eb9d596c59d90ded047e2bd5f6",
+    "ConditionalPhaseThreshold": "b5e5a97237d595e0b37fedd4184e10c4ce9e0abb",
+    "AnnularBalancedDecode": "f25c577674f8dc500348a00c05f5779c257564dd",
+    "PaperIIILocalCheck": "b49fda4e07263de84ef25ffc1c71b8c7093eaab2",
+    "T2WalshTranscript": "d02a7b4e3352c57f020127e79643322a426e45aa",
+    "T2ClippedEstimator": "d3d5cb2e33da10dc8fabc2a761446623ebc31826",
+    "T2UniformParseval": "93540f085cf1daf86905e5d1ff8db387252dd0ce",
+    "T2UniformEstimator": "6259a20ec01c48c9120b051b20164ec552df866d",
+    "T2BornWalsh": "01b64a4f0ceaa8bdebca682a441e02e896d90c25",
+    "T2CertifiedTailBridge": "b98859a9bb94285510cd0aa4bb67f0da9d0736c7",
+    "T2DoubleLightCharge": "8fff500e96939279b2e53920e788d3880cfac40c",
+    "T2BornExpansion": "4ea8b019f94100a73ddfccf502cc6b85f63a1714",
+    "T2ActualSource": "f9d940259480e915463ea2b1938f74fe388b3c20",
+    "T2QuantumPhaseExpansion": "ba6d7adc57934b13c181dc2f4928107d56d52f92",
+    "T2PathEnergy": "0f895d917c0756c8961dfb2b90a3f94c54a757f6",
+    "T2FirstStageLight": "ee8d0581d5ad32cbb283cc624ca6e67cd77ca658",
+    "T2SecondStageLight": "9813f549146af580bbec11ea55568642249247cb",
+    "T2FrameEnergy": "3b53d8a34136455d25faf5eb9308b80678f1be09",
+    "T2EffectOrder": "c9b339be53d46f3aa5aa744aa97ae41d08655411",
+    "T2LightFrame": "a95505116d16302595af47edf21150a4ecda96ae"
+  },
+  "base": "285609b4481f4075f0dcabf51e9ab6719dfb779e",
+  "replays": [
+    {
+      "id": "paperiii",
+      "module": "PaperIIILocalCheck",
+      "targets": [
+        "Nightfall.ProductSphereCausal.no_continuous_causal_exact_recovery_below",
+        "Nightfall.AnnularBalancedDecode.balanced_code_injective",
+        "Nightfall.AnnularBalancedDecode.balanced_residual_injective"
+      ],
+      "export_sha256": "e033c605a6ab7e35be0b03511e5775a845a32ff4705841e9cc112e740ac7193b",
+      "log_sha256": "14955fbdf0649b68154bb2cbb03777c237e5d752248d86b1978884a4c01771ec",
+      "wall_seconds": 14.38,
+      "max_rss_kib": 217784,
+      "exit": 0,
+      "kernel": "Lean default kernel accepts the solution",
+      "export_command": "leanexport PaperIIILocalCheck -- Nightfall.ProductSphereCausal.no_continuous_causal_exact_recovery_below Nightfall.AnnularBalancedDecode.balanced_code_injective Nightfall.AnnularBalancedDecode.balanced_residual_injective",
+      "replay_command": "leanchecker --from-export paperiii.ndjson"
+    },
+    {
+      "id": "t2-parseval",
+      "module": "T2UniformParseval",
+      "targets": [
+        "Nightfall.StructuralInformation.T2UniformParseval.uniform_parseval"
+      ],
+      "export_sha256": "c109a8127c03e0b8e1cfbfcae689d279f1dbb0134966369c91b8864ae19280bb",
+      "log_sha256": "304016935365ac02760af2318e86627b721eb947c0826e6d9a7d6e23e8870914",
+      "wall_seconds": 47.2,
+      "max_rss_kib": 439880,
+      "exit": 0,
+      "kernel": "Lean default kernel accepts the solution",
+      "export_command": "leanexport T2UniformParseval -- Nightfall.StructuralInformation.T2UniformParseval.uniform_parseval",
+      "replay_command": "leanchecker --from-export t2-parseval.ndjson"
+    },
+    {
+      "id": "paperv",
+      "module": "T2CertifiedTailBridge",
+      "targets": [
+        "Nightfall.StructuralInformation.T2BornWalsh.physical_uniform_success_of_tail",
+        "Nightfall.StructuralInformation.T2BornWalsh.actual_born_eq_real_fourier",
+        "Nightfall.StructuralInformation.T2UniformEstimator.actual_uniform_tail_identity",
+        "Nightfall.StructuralInformation.T2UniformEstimator.legal_query_uniform_success"
+      ],
+      "export_sha256": "44bb8d44a9dccf2e43cc8b67ea79e673834deeccebdf3411de85fe837a22e2cd",
+      "log_sha256": "b97135cb3a6cd3d3728c32d7e2178017a76c11056f09a53ff5ebff83279dbcc4",
+      "wall_seconds": 44.34,
+      "max_rss_kib": 448468,
+      "exit": 0,
+      "kernel": "Lean default kernel accepts the solution",
+      "export_command": "leanexport T2CertifiedTailBridge -- Nightfall.StructuralInformation.T2BornWalsh.physical_uniform_success_of_tail Nightfall.StructuralInformation.T2BornWalsh.actual_born_eq_real_fourier Nightfall.StructuralInformation.T2UniformEstimator.actual_uniform_tail_identity Nightfall.StructuralInformation.T2UniformEstimator.legal_query_uniform_success",
+      "replay_command": "leanchecker --from-export paperv.ndjson"
+    },
+    {
+      "id": "t2double",
+      "module": "T2DoubleLightCharge",
+      "targets": [
+        "Nightfall.StructuralInformation.T2DoubleLightCharge.double_light_energy",
+        "Nightfall.StructuralInformation.T2DoubleLightCharge.pair_energy_coefficient_le_28"
+      ],
+      "export_sha256": "705156ddbf6f6664fd23d17979fff75711948a5196cfd721b62ff2223036eef7",
+      "log_sha256": "f2a0bf0ce86e9573bbae901c7b044ca7cdae0087a91e5eea8752de1628f9c8a5",
+      "wall_seconds": 9.05,
+      "max_rss_kib": 193312,
+      "exit": 0,
+      "kernel": "Lean default kernel accepts the solution",
+      "export_command": "leanexport T2DoubleLightCharge -- Nightfall.StructuralInformation.T2DoubleLightCharge.double_light_energy Nightfall.StructuralInformation.T2DoubleLightCharge.pair_energy_coefficient_le_28",
+      "replay_command": "leanchecker --from-export t2double.ndjson"
+    }
+  ],
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "limitations": [
+    "III: separate-antipode ProductSphereZero remains an explicit hypothesis, not a new axiom; Stiefel/mixed-projector and full selector/minimax results not certified. Balanced decoding only covers stated code and residual.",
+    "V: physical direct-sum common-fiber model; actual range and tail bound remain explicit hypotheses in physical_uniform_success_of_tail; full primitive/repeated/zero-triple quantitative grouping, heavy query count and rank cap composition and arbitrary sector transport remain open. The 28 arithmetic and double-light lemma do not certify the 28 query bound."
+  ],
+  "artifact_note": "Exports and logs were created and checked locally; their SHA-256 digests are recorded here, not remote CI claims. Full binary proof exports are in the separate local archive."
+}
