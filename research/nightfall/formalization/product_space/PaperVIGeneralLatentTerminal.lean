@@ -1,0 +1,183 @@
+import PaperVIMSETerminal
+
+/-!
+Paper VI: lift both actual mixture MSE terminals to the existing
+general-latent Wyner infimum. No alternative definition of common
+information; no externally supplied good-query condition.
+-/
+namespace Nightfall.PaperVI
+open Finset
+open Nightfall.Route1Polylog
+open Nightfall.QuadraticWynerQuadraticProgress
+open Nightfall.ProductSpace.Transfer
+open Nightfall.ProductSpace.Influence
+open Nightfall.ProductSpace.RowBound
+open Nightfall.ProductSpace.Simulation
+open Nightfall.ProductSpace.Mixture
+
+variable {ι α : Type} [Fintype ι] [DecidableEq ι] [Fintype α] [DecidableEq α] [Nonempty α]
+
+theorem mean_mse_general
+    (ν : (ι → α) → ℝ) (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
+    (f : (ι → α) → ℝ) (hf : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
+    (d : ℕ) (hd : 1 ≤ d) (hdeg : HasProdDegreeLE f d)
+    (u : ℝ) (hu : 0 < u) (n : ℕ) (hn : 0 < n)
+    (s : ℝ) (hs : wynerGen ν < s) :
+    ∃ t : DTree ι α, (∀ x, t.queries x ≤ n) ∧
+      ∑ x, ν x*(f x-t.eval x)^2 ≤ u +
+        (meanWeight d u*rowK d+infoWeight d u*s)/n := by
+  rw [← wynerCI_eq_wynerGen] at hs
+  obtain ⟨s0, ⟨k,w,Q,hw0,hw1,hQ0,hQ1,hν,rfl⟩,hlt⟩ :=
+    exists_lt_of_csInf_lt (wynerSet_nonempty ν hν0 hν1) hs
+  have hk : 0 < k := by
+    rcases Nat.eq_zero_or_pos k with h0 | h
+    · subst h0; simp at hw1
+    · exact h
+  letI : Nonempty (Fin k) := ⟨⟨0,hk⟩⟩
+  obtain ⟨t,ht,herr⟩ := mean_mse_mixture Q hQ0 hQ1 w hw0 hw1 f hf d hd hdeg u hu n hn
+  have hEx : Ex Q w (fun x => (f x-t.eval x)^2) = ∑ x, ν x*(f x-t.eval x)^2 := by
+    unfold Ex pexp
+    simp only [hν,Finset.mul_sum,Finset.sum_mul]
+    rw [Finset.sum_comm]
+    exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun θ _ => by ring
+  rw [hEx] at herr
+  refine ⟨t,ht,herr.trans ?_⟩
+  have hb : 0 ≤ infoWeight d u := by unfold infoWeight; positivity
+  have hnR : (0 : ℝ) ≤ n := Nat.cast_nonneg n
+  exact add_le_add_left (div_le_div_of_nonneg_right
+    (add_le_add_left (mul_le_mul_of_nonneg_left hlt.le hb) _) hnR) _
+
+/-- Main general-degree MSE terminal, target tolerance τ. The displayed
+coefficient is explicit and has exactly the d^6, τ^(-3/2) and
+d^6 C_W τ^(-3) orders of Paper VI. -/
+theorem paper_vi_general_mse
+    (ν : (ι → α) → ℝ) (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
+    (f : (ι → α) → ℝ) (hf : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
+    (d : ℕ) (hd : 1 ≤ d) (hdeg : HasProdDegreeLE f d)
+    (τ : ℝ) (hτ : 0 < τ) (s : ℝ) (hs : wynerGen ν < s)
+    (n : ℕ) (hn : 0 < n)
+    (hbudget : meanWeight d (τ/2)*rowK d + infoWeight d (τ/2)*s ≤ (n : ℝ)*(τ/2)) :
+    ∃ t : DTree ι α, (∀ x, t.queries x ≤ n) ∧
+      ∑ x, ν x*(f x-t.eval x)^2 ≤ τ := by
+  obtain ⟨t,ht,herr⟩ := mean_mse_general ν hν0 hν1 f hf d hd hdeg
+    (τ/2) (by positivity) n hn s hs
+  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+  have hdiv : (meanWeight d (τ/2)*rowK d+infoWeight d (τ/2)*s)/n ≤ τ/2 := by
+    rw [div_le_iff₀ hnR]
+    simpa [mul_comm] using hbudget
+  exact ⟨t,ht,by linarith⟩
+
+theorem quadratic_mse_general_dyadic
+    (ν : (ι → α) → ℝ) (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
+    (f : (ι → α) → ℝ) (hf : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
+    (hdeg : HasProdDegreeLE f 2) (s : ℝ) (hs : wynerGen ν < s)
+    (A B : ℕ) (hA : 2048*quadraticC ≤ A)
+    (hB : (2^40 : ℝ)*rowK 2*s ≤ B) (N : ℕ) :
+    ∃ t : DTree ι α, (∀ x, t.queries x ≤ N+A*2^N+B*8^N) ∧
+      ∑ x, ν x*(f x-t.eval x)^2 ≤ dyadicRisk N := by
+  rw [← wynerCI_eq_wynerGen] at hs
+  obtain ⟨s0, ⟨k,w,Q,hw0,hw1,hQ0,hQ1,hν,rfl⟩,hlt⟩ :=
+    exists_lt_of_csInf_lt (wynerSet_nonempty ν hν0 hν1) hs
+  have hk : 0 < k := by
+    rcases Nat.eq_zero_or_pos k with h0 | h
+    · subst h0; simp at hw1
+    · exact h
+  letI : Nonempty (Fin k) := ⟨⟨0,hk⟩⟩
+  obtain ⟨t,ht,herr⟩ := quadratic_mse_mixture_dyadic Q hQ0 hQ1 w hw0 hw1 f hf hdeg
+    s hlt.le A B hA hB N
+  have hEx : Ex Q w (fun x => (f x-t.eval x)^2) = ∑ x, ν x*(f x-t.eval x)^2 := by
+    unfold Ex pexp
+    simp only [hν,Finset.mul_sum,Finset.sum_mul]
+    rw [Finset.sum_comm]
+    exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun θ _ => by ring
+  rw [hEx] at herr
+  exact ⟨t,ht,herr⟩
+
+theorem two_pow_ge_succ (N : ℕ) : N+1 ≤ 2^N := by
+  induction N with
+  | zero => norm_num
+  | succ n ih =>
+    rw [pow_succ]
+    omega
+
+theorem dyadic_exists (τ : ℝ) (hτ : 0 < τ) : ∃ N : ℕ, dyadicRisk N ≤ τ := by
+  obtain ⟨N,hN⟩ := exists_nat_gt (1/(4*τ))
+  refine ⟨N,?_⟩
+  have hpow : (N : ℝ) ≤ (2 : ℝ)^N := by
+    exact_mod_cast (show N ≤ 2^N from (Nat.le_succ N).trans (two_pow_ge_succ N))
+  have h := hN.le.trans hpow
+  rw [div_le_iff₀ (by positivity : 0 < 4*τ)] at h
+  unfold dyadicRisk
+  rw [div_le_iff₀ (by positivity)]
+  nlinarith only [h]
+
+/-- Main quadratic terminal, with arbitrary positive tolerance below
+one quarter. Integer budget coefficients can be chosen by ceilings.
+No per-stage or local drift hypotheses remain. -/
+theorem paper_vi_quadratic_mse
+    (ν : (ι → α) → ℝ) (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
+    (f : (ι → α) → ℝ) (hf : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
+    (hdeg : HasProdDegreeLE f 2) (s : ℝ) (hs : wynerGen ν < s)
+    (τ : ℝ) (hτ : 0 < τ) (hτmax : τ < 1/4) :
+    ∃ t : DTree ι α,
+      (∀ x, (t.queries x : ℝ) ≤
+        ((⌈2048*quadraticC⌉₊ : ℕ)+1 : ℝ)/(2*τ) +
+        (⌈(2^40 : ℝ)*rowK 2*s⌉₊ : ℝ)/(8*τ^3)) ∧
+      ∑ x, ν x*(f x-t.eval x)^2 ≤ τ := by
+  classical
+  let A : ℕ := ⌈2048*quadraticC⌉₊
+  let B : ℕ := ⌈(2^40 : ℝ)*rowK 2*s⌉₊
+  have hA : 2048*quadraticC ≤ A := Nat.le_ceil _
+  have hB : (2^40 : ℝ)*rowK 2*s ≤ B := Nat.le_ceil _
+  let hex := dyadic_exists τ hτ
+  let N := Nat.find hex
+  have hN : dyadicRisk N ≤ τ := Nat.find_spec hex
+  have hpos : 0 < N := by
+    by_contra! hn
+    have he : N = 0 := Nat.eq_zero_of_le_zero hn
+    rw [he] at hN
+    norm_num [dyadicRisk] at hN
+    linarith
+  have hprev : τ < dyadicRisk (N-1) := by
+    by_contra! hle
+    have hmin : N ≤ N-1 := Nat.find_min' hex hle
+    omega
+  have hrel : dyadicRisk N = dyadicRisk (N-1)/2 := by
+    have hN' : N-1+1 = N := by omega
+    rw [← hN',dyadicRisk_succ]
+  have hhalf : τ/2 < dyadicRisk N := by linarith
+  have hp : (2 : ℝ)^N ≤ 1/(2*τ) := by
+    unfold dyadicRisk at hhalf
+    rw [lt_div_iff₀ (by positivity)] at hhalf
+    rw [le_div_iff₀ (by positivity)]
+    nlinarith only [hhalf]
+  have h8 : (8 : ℝ)^N ≤ 1/(8*τ^3) := by
+    have hpow : (8 : ℝ)^N = ((2 : ℝ)^N)^3 := by
+      rw [← pow_mul, Nat.mul_comm, pow_mul]
+      norm_num
+    rw [hpow]
+    have h := pow_le_pow_left₀ (by positivity : 0 ≤ (2 : ℝ)^N) hp 3
+    have he : (1/(2*τ))^3 = 1/(8*τ^3) := by ring
+    rwa [he] at h
+  obtain ⟨t,ht,herr⟩ := quadratic_mse_general_dyadic ν hν0 hν1 f hf hdeg s hs A B hA hB N
+  refine ⟨t,?_,herr.trans hN⟩
+  intro x
+  have hdepth : (t.queries x : ℝ) ≤ (N : ℝ)+(A : ℝ)*(2 : ℝ)^N+(B : ℝ)*(8 : ℝ)^N := by
+    exact_mod_cast ht x
+  have hNpow : (N : ℝ) ≤ (2 : ℝ)^N := by
+    exact_mod_cast (show N ≤ 2^N from (Nat.le_succ N).trans (two_pow_ge_succ N))
+  have h1 := mul_le_mul_of_nonneg_left hp (Nat.cast_nonneg A : (0 : ℝ) ≤ A)
+  have h2 := mul_le_mul_of_nonneg_left h8 (Nat.cast_nonneg B : (0 : ℝ) ≤ B)
+  change (t.queries x : ℝ) ≤ ((A : ℝ)+1)/(2*τ)+(B : ℝ)/(8*τ^3)
+  rw [add_div,one_div]
+  have he : (A : ℝ)/(2*τ) = (A : ℝ)*(1/(2*τ)) := by ring
+  rw [he]
+  have he2 : (B : ℝ)/(8*τ^3) = (B : ℝ)*(1/(8*τ^3)) := by ring
+  rw [he2]
+  linarith
+
+#print axioms Nightfall.PaperVI.mean_mse_general
+#print axioms Nightfall.PaperVI.paper_vi_general_mse
+#print axioms Nightfall.PaperVI.quadratic_mse_general_dyadic
+#print axioms Nightfall.PaperVI.paper_vi_quadratic_mse
+end Nightfall.PaperVI
