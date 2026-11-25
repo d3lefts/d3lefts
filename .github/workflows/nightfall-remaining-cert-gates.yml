@@ -1,0 +1,154 @@
+name: NIGHTFALL remaining certificate gates Lean
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/formalization/product_space/AdaptiveInstrument*.lean'
+      - 'research/nightfall/formalization/product_space/QuantumResponse*.lean'
+      - 'research/nightfall/formalization/product_space/Q7BlockerPacking.lean'
+      - 'research/nightfall/formalization/product_space/ComplexKrausConservation.lean'
+      - '.github/workflows/nightfall-remaining-cert-gates.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [AdaptiveInstrumentDegree, AdaptiveInstrumentWyner, QuantumResponseRoute1Terminal, Q7BlockerPacking, ComplexKrausConservation]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Rebuild exact source import closure
+        shell: bash
+        env:
+          TARGET: ${{ matrix.target }}
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/adaptive-instrument
+          python3 - <<'PY'
+          import os, pathlib, re, subprocess, shutil
+          root=pathlib.Path.cwd()
+          lib=pathlib.Path('/tmp/mathlib4')
+          out=root/'receipts/adaptive-instrument'
+          mapping={}
+          for line in (root/'research/nightfall/formalization/aa_product/CLOSURE.txt').read_text().splitlines():
+              if line.strip():
+                  mod, path=line.split(maxsplit=1)
+                  mapping[mod]=root/path
+          for p in (root/'research/nightfall/formalization/product_space').glob('*.lean'):
+              if p.stem in mapping:
+                  assert mapping[p.stem] == p, (p, mapping[p.stem])
+              mapping[p.stem]=p
+          done=set()
+          active=set()
+          def compile_module(mod):
+              if mod in done: return
+              assert mod not in active, ('cyclic import',mod)
+              active.add(mod)
+              path=mapping[mod]
+              source=path.read_text()
+              assert not re.search(r'(?m)^\s*(sorry|admit|axiom|constant)\b',source),str(path)
+              for line in source.splitlines():
+                  if line.startswith('import '):
+                      for dep in line[7:].split('--',1)[0].split():
+                          if dep in mapping: compile_module(dep)
+              rel=pathlib.Path(*mod.split('.'))
+              dest=lib/rel.with_suffix('.lean')
+              olean=lib/'.lake/build/lib/lean'/rel.with_suffix('.olean')
+              dest.parent.mkdir(parents=True,exist_ok=True)
+              olean.parent.mkdir(parents=True,exist_ok=True)
+              shutil.copyfile(path,dest)
+              log=out/(mod+'.log')
+              print('Compiling',mod,flush=True)
+              with log.open('w') as f:
+                  res=subprocess.run(['lake','env','lean','-o',str(olean),str(dest)],cwd=lib,stdout=f,stderr=subprocess.STDOUT)
+              content=log.read_text()
+              if res.returncode or re.search(r'(^|:)error:|declaration uses .sorry',content,re.M):
+                  print(content)
+                  raise SystemExit(1)
+              active.remove(mod)
+              done.add(mod)
+          compile_module(os.environ['TARGET'])
+          PY
+      - name: Independent kernel replay and named ordinary-axiom audit
+        shell: bash
+        env:
+          TARGET: ${{ matrix.target }}
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v "$TARGET") 2>&1 | tee "receipts/adaptive-instrument/leanchecker-$TARGET.log"
+          python3 - <<'PY'
+          import os,re,pathlib
+          target=os.environ['TARGET']
+          log=pathlib.Path('receipts/adaptive-instrument',target+'.log').read_text()
+          names = {
+            'AdaptiveInstrumentDegree': [
+              'Nightfall.AdaptiveInstrument.query_degree',
+              'Nightfall.AdaptiveInstrument.adaptive_degree',
+              'Nightfall.AdaptiveInstrument.adaptive_range',
+              'Nightfall.NegativeKnowledge.failure_reuse',
+              'Nightfall.NegativeKnowledge.hitting_failure_reuse',
+              'Nightfall.NegativeKnowledge.enlargement_counterexample',
+              'Nightfall.InstrumentCounterexamples.same_outcome_mass',
+              'Nightfall.InstrumentCounterexamples.terminal_separation',
+              'Nightfall.InstrumentCounterexamples.parity_degree_four_witness'],
+            'AdaptiveInstrumentWyner': [
+              'Nightfall.AdaptiveInstrument.degree_to_indicator',
+              'Nightfall.AdaptiveInstrument.adaptive_indicator_degree',
+              'Nightfall.AdaptiveInstrument.adaptive_route1_wyner'],
+            'QuantumResponseRoute1Terminal': [
+              'Nightfall.QuantumResponseRoute1Terminal.compileNative_wellFormed',
+              'Nightfall.QuantumResponseRoute1Terminal.deltaReference_sum',
+              'Nightfall.QuantumResponseRoute1Terminal.native_acceptance_degree',
+              'Nightfall.QuantumResponseRoute1Terminal.native_response_route1_wyner'],
+            'Q7BlockerPacking': [
+              'Nightfall.Q7BlockerPacking.rows_checked',
+              'Nightfall.Q7BlockerPacking.row_count',
+              'Nightfall.Q7BlockerPacking.disjoint_hitting_lower',
+              'Nightfall.Q7BlockerPacking.row_lower'],
+            'ComplexKrausConservation': [
+              'Nightfall.ComplexKrausConservation.apply_energy_sum',
+              'Nightfall.ComplexKrausConservation.instrument_mass',
+              'Nightfall.ComplexKrausConservation.terminal_effect_bounds',
+              'Nightfall.ComplexKrausConservation.translation_padding']
+          }[target]
+          for name in names:
+              m=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",log,re.S)
+              if m:
+                  axs={x.strip() for x in m.group(1).split(',') if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in log,name
+                  axs=set()
+              assert axs <= {'propext','Classical.choice','Quot.sound'},(name,axs)
+              print(name,sorted(axs))
+          assert 'sorryAx' not in log
+          PY
+      - name: Replay archived executable checks
+        if: matrix.target == 'AdaptiveInstrumentDegree'
+        shell: bash
+        run: |
+          set -euo pipefail
+          node research/nightfall/2026-11-25-victory-autonomy/replay-negative-cache.cjs | tee receipts/adaptive-instrument/cache-replay.json
+          node research/nightfall/2026-11-25-victory-autonomy/replay-q7-cache.cjs | tee receipts/adaptive-instrument/q7-replay.json
+          node research/nightfall/2026-11-25-loregian-lorenzin-monadicity/replay-adaptive-instrument.cjs | tee receipts/adaptive-instrument/instrument-replay.json
+      - name: Source and compiler receipt
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p receipts/adaptive-instrument
+          git rev-parse HEAD > receipts/adaptive-instrument/source-head.txt
+          git -C /tmp/mathlib4 rev-parse HEAD > receipts/adaptive-instrument/mathlib-head.txt
+          cat lean-toolchain > receipts/adaptive-instrument/lean-toolchain.txt
+          sha256sum research/nightfall/formalization/product_space/{AdaptiveInstrument*,QuantumResponse*,Q7BlockerPacking,ComplexKrausConservation}.lean > receipts/adaptive-instrument/SHA256SUMS
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: adaptive-instrument-${{ matrix.target }}-${{ github.run_id }}
+          path: receipts/adaptive-instrument
+          if-no-files-found: error
+          retention-days: 90
