@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 69,
+  "revision": 70,
   "as_of": "2026-11-24 UTC",
-  "source_commit": "ea60ad79324d78fad482ded6e3df0e7f3695c8e8",
-  "scope": "Integrate exact previously kernel-checked tensor distance source; preserve main registry including Wyner entries. No status promotion.",
+  "source_commit": "bdcb0a0097c0759c54771e9d9b90f16bb6ecb262",
+  "scope": "Recover verified locality and simulation-boundary chain with merged QW+ and tensor source custody preserved; no auto-promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5764,6 +5764,46 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Revised candidate after run 45550018452 base-case and recursive instance diagnostics. Exact source registration only; new named Lean/kernel receipt pending. Not the full Wyner entropy/incidence or staged simulation theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalityCore.lean",
+      "source_blob_sha": "7a8011fe87243ac05cc8eacba71a962be0ad2a95",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact predecessor branch receipt run 45482284099 at 17922490919b24491b2e598228b0b055ac615e45; pending main-registry integration and non-author review. No main promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalityInformation.lean",
+      "source_blob_sha": "dc8375a62c84c7690c680df4127bec872927dbc6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact predecessor branch receipt run 45482284099 at 17922490919b24491b2e598228b0b055ac615e45; pending main-registry integration and non-author review. No main promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalityPPZ.lean",
+      "source_blob_sha": "5acdeccee817fb4f79f81890ac4f0883dedb08ec",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact predecessor branch receipt run 45482284099 at 17922490919b24491b2e598228b0b055ac615e45; pending main-registry integration and non-author review. No main promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/WynerLocalitySimulationBoundary.lean",
+      "source_blob_sha": "214e469bc5af468c329e2d5155734341061f399e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Explicit mixture-size and dominated-product query simulation; pending strict compiler and non-author review."
     }
   ]
 }
