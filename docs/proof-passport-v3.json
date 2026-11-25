@@ -14,7 +14,8 @@
     "salvage": "research/nightfall/2026-11-25-cogentic-ingestion/fragment-salvage-fixture.json",
     "publications": "papers/publications.json",
     "compiler": "docs/lean-compiler-lock.json",
-    "observed": "docs/proof-passport-v3-observed-receipts.json"
+    "observed": "docs/proof-passport-v3-observed-receipts.json",
+    "paper_vi_publication": "research/nightfall/paper-vi-publication-20261125/CERTIFICATE.json"
   },
   "compiler": {
     "schema": "nightfall-lean-compiler-lock/v1",
@@ -39,10 +40,10 @@
     "pending_legacy_custody": 551,
     "source_paths_with_exact_blob_and_receipt_reference": 99,
     "pending_source_paths_with_receipt_leads": 72,
-    "known_record_refs": 197,
-    "distinct_referenced_runs": 86,
-    "observed_job_modules": 17,
-    "observed_named_declaration_refs": 58,
+    "known_record_refs": 209,
+    "distinct_referenced_runs": 90,
+    "observed_job_modules": 26,
+    "observed_named_declaration_refs": 97,
     "record_counts_by_input": {
       "docs/lean-certificate-provenance.json": 68,
       "docs/active-proof-passport.json": 15,
@@ -54,7 +55,8 @@
       "research/catalogue/CLAIMS.json": 20,
       "research/nightfall/2026-11-25-cogentic-ingestion/fragment-salvage-fixture.json": 5,
       "papers/publications.json": 2,
-      "docs/proof-passport-v3-observed-receipts.json": 17
+      "docs/proof-passport-v3-observed-receipts.json": 26,
+      "research/nightfall/paper-vi-publication-20261125/CERTIFICATE.json": 3
     },
     "all_historical_runs_exhaustive": false,
     "current_kernel_replay_in_this_generator": false,
@@ -8581,6 +8583,243 @@
       "source_match": "current-custody-blob-match"
     },
     {
+      "id": "observed:pr1201-PaperVIGeneralLatentTerminal",
+      "origin": "docs/proof-passport-v3-observed-receipts.json",
+      "original_id": "pr1201-PaperVIGeneralLatentTerminal",
+      "title": null,
+      "kind": "observed-job-named-audit",
+      "state": "observed-historical-job-pass",
+      "path": "research/nightfall/formalization/product_space/PaperVIGeneralLatentTerminal.lean",
+      "blob": "2b012603ad052a6ae586ae6ce454553307f0ed3a",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "run": 45654629250,
+      "job": 139347878838,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.PaperVI.mean_mse_general",
+        "Nightfall.PaperVI.paper_vi_general_mse",
+        "Nightfall.PaperVI.quadratic_mse_general_dyadic",
+        "Nightfall.PaperVI.paper_vi_quadratic_mse",
+        "Nightfall.PaperVI.paper_vi_general_mse_wyner",
+        "Nightfall.PaperVI.paper_vi_quadratic_mse_wyner"
+      ],
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [],
+      "promotion_authorized": false,
+      "source_match": "off-main-or-out-of-scope"
+    },
+    {
+      "id": "observed:pr1201-PaperVILinearCharge",
+      "origin": "docs/proof-passport-v3-observed-receipts.json",
+      "original_id": "pr1201-PaperVILinearCharge",
+      "title": null,
+      "kind": "observed-job-named-audit",
+      "state": "observed-historical-job-pass",
+      "path": "research/nightfall/formalization/product_space/PaperVILinearCharge.lean",
+      "blob": "8bab32205aa2c45a540b9c321f33006b313b3217",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "run": 45654629250,
+      "job": 139347878838,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.PaperVI.mean_linear_charge",
+        "Nightfall.PaperVI.info_linear_charge",
+        "Nightfall.PaperVI.quadratic_linear_charge",
+        "Nightfall.PaperVI.source_mean_charge",
+        "Nightfall.PaperVI.source_quad_charge"
+      ],
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [],
+      "promotion_authorized": false,
+      "source_match": "off-main-or-out-of-scope"
+    },
+    {
+      "id": "observed:pr1201-PaperVIMSETerminal",
+      "origin": "docs/proof-passport-v3-observed-receipts.json",
+      "original_id": "pr1201-PaperVIMSETerminal",
+      "title": null,
+      "kind": "observed-job-named-audit",
+      "state": "observed-historical-job-pass",
+      "path": "research/nightfall/formalization/product_space/PaperVIMSETerminal.lean",
+      "blob": "2f2aff5936b274ca3e59ff5c2be0e4d60ecb8b5f",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "run": 45654629250,
+      "job": 139347878838,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.PaperVI.source_block",
+        "Nightfall.PaperVI.mean_mse_mixture",
+        "Nightfall.PaperVI.quadratic_halve_stage",
+        "Nightfall.PaperVI.quad_dyadic_budget",
+        "Nightfall.PaperVI.quadratic_mse_mixture_dyadic"
+      ],
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [],
+      "promotion_authorized": false,
+      "source_match": "off-main-or-out-of-scope"
+    },
+    {
+      "id": "observed:pr1201-PaperVIProjectedCrux",
+      "origin": "docs/proof-passport-v3-observed-receipts.json",
+      "original_id": "pr1201-PaperVIProjectedCrux",
+      "title": null,
+      "kind": "observed-job-named-audit",
+      "state": "observed-historical-job-pass",
+      "path": "research/nightfall/formalization/product_space/PaperVIProjectedCrux.lean",
+      "blob": "316611344a479dd78db16a3dda4a48ea5eb49db8",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "run": 45654629250,
+      "job": 139347878838,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.PaperVI.source_projection_or_information",
+        "Nightfall.PaperVI.mean_source_dichotomy",
+        "Nightfall.PaperVI.quadratic_source_energy",
+        "Nightfall.PaperVI.quadratic_source_dichotomy"
+      ],
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [],
+      "promotion_authorized": false,
+      "source_match": "off-main-or-out-of-scope"
+    },
+    {
+      "id": "observed:pr1201-PaperVIRiskTree",
+      "origin": "docs/proof-passport-v3-observed-receipts.json",
+      "original_id": "pr1201-PaperVIRiskTree",
+      "title": null,
+      "kind": "observed-job-named-audit",
+      "state": "observed-historical-job-pass",
+      "path": "research/nightfall/formalization/product_space/PaperVIRiskTree.lean",
+      "blob": "c831bb9672c1f638df09278211f9ef091969414f",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "run": 45654629250,
+      "job": 139347878838,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.PaperVI.mvar_le_constant",
+        "Nightfall.PaperVI.mvar_children_le",
+        "Nightfall.PaperVI.mvar_le_quarter_mass",
+        "Nightfall.PaperVI.frontier_risk_exact",
+        "Nightfall.PaperVI.extend_cost_le",
+        "Nightfall.PaperVI.extend_queries"
+      ],
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [],
+      "promotion_authorized": false,
+      "source_match": "off-main-or-out-of-scope"
+    },
+    {
+      "id": "observed:pr1201-PaperVISquaredEnergy",
+      "origin": "docs/proof-passport-v3-observed-receipts.json",
+      "original_id": "pr1201-PaperVISquaredEnergy",
+      "title": null,
+      "kind": "observed-job-named-audit",
+      "state": "observed-historical-job-pass",
+      "path": "research/nightfall/formalization/product_space/PaperVISquaredEnergy.lean",
+      "blob": "1158e8fdf72f0521baba5afeefc2127d9ddb5f77",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "run": 45654629250,
+      "job": 139347878838,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.PaperVI.sum_mul_pinfl_sect",
+        "Nightfall.PaperVI.Phi2_sum",
+        "Nightfall.PaperVI.Itot_le_degree_var",
+        "Nightfall.PaperVI.Phi2_le_degree_mvar"
+      ],
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [],
+      "promotion_authorized": false,
+      "source_match": "off-main-or-out-of-scope"
+    },
+    {
+      "id": "observed:pr1201-PaperVIStageBudget",
+      "origin": "docs/proof-passport-v3-observed-receipts.json",
+      "original_id": "pr1201-PaperVIStageBudget",
+      "title": null,
+      "kind": "observed-job-named-audit",
+      "state": "observed-historical-job-pass",
+      "path": "research/nightfall/formalization/product_space/PaperVIStageBudget.lean",
+      "blob": "e2e2192f5f65671b14ce1e1b6fa981434cb9c2dc",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "run": 45654629250,
+      "job": 139347878838,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.PaperVI.frontier_energy_cap",
+        "Nightfall.PaperVI.risk_block",
+        "Nightfall.PaperVI.risk_block_budget"
+      ],
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [],
+      "promotion_authorized": false,
+      "source_match": "off-main-or-out-of-scope"
+    },
+    {
+      "id": "observed:pr1201-QuadraticWynerMeanIncrementProgress",
+      "origin": "docs/proof-passport-v3-observed-receipts.json",
+      "original_id": "pr1201-QuadraticWynerMeanIncrementProgress",
+      "title": null,
+      "kind": "observed-job-named-audit",
+      "state": "observed-historical-job-pass",
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean",
+      "blob": "01203c0002aff894e76b242da9efee9a28955d33",
+      "head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "run": 45654629250,
+      "job": 139347878838,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.QuadraticWynerMeanIncrementProgress.pincr_compOf_exact",
+        "Nightfall.QuadraticWynerMeanIncrementProgress.seed_average_pincr_le_original",
+        "Nightfall.QuadraticWynerMeanIncrementProgress.mean_increment_original_source_energy"
+      ],
+      "scope": "Paper VI v1.4 actual-law staged mean-square source chain; named replay at metadata-reconciled source head. Finite common-alphabet general-latent source model; not all secondary manuscript compositions, independent statement review or novelty. Source PR unmerged.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [],
+      "promotion_authorized": false,
+      "source_match": "off-main-or-out-of-scope"
+    },
+    {
+      "id": "observed:pr1212-PaperVITensorTerminal",
+      "origin": "docs/proof-passport-v3-observed-receipts.json",
+      "original_id": "pr1212-PaperVITensorTerminal",
+      "title": null,
+      "kind": "observed-job-named-audit",
+      "state": "observed-historical-job-pass",
+      "path": "research/nightfall/formalization/structural_information/PaperVITensorTerminal.lean",
+      "blob": "f540943e5ebdba036d688619745a2c935db8f7fd",
+      "head": "f7bdd571d9005218544ea442bc88161e92675a9c",
+      "run": 45644811376,
+      "job": 139312816048,
+      "pr": 1212,
+      "declarations": [
+        "Nightfall.StructuralInformation.PaperVITensorTerminal.code_exact_parameters",
+        "Nightfall.StructuralInformation.PaperVITensorTerminal.tensor_entropy",
+        "Nightfall.StructuralInformation.PaperVITensorTerminal.tensor_representation_score"
+      ],
+      "scope": "Paper VI tensor representation obstruction, exact code parameters and actual Wyner entropy/score transfer; no general staged MSE terminal or originality claim. Source PR unmerged; local replay not reported.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [],
+      "promotion_authorized": false,
+      "source_match": "off-main-or-out-of-scope"
+    },
+    {
       "id": "observed:pr1213-Q7BlockerPacking",
       "origin": "docs/proof-passport-v3-observed-receipts.json",
       "original_id": "pr1213-Q7BlockerPacking",
@@ -8738,6 +8977,86 @@
       ],
       "promotion_authorized": false,
       "source_match": "current-custody-blob-match"
+    },
+    {
+      "id": "paper_vi_publication:staged-local-export-replay",
+      "origin": "research/nightfall/paper-vi-publication-20261125/CERTIFICATE.json",
+      "original_id": "staged-local-export-replay",
+      "title": "Paper VI closed dependency local kernel replay",
+      "kind": "reported-local-kernel-replay",
+      "state": "reported-local-kernel-pass",
+      "path": null,
+      "blob": null,
+      "head": "41fb1cc5af1836b51ab1122f928efd78fe19c308",
+      "run": 45653852704,
+      "job": null,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.PaperVI.paper_vi_general_mse_wyner",
+        "Nightfall.PaperVI.paper_vi_quadratic_mse_wyner"
+      ],
+      "scope": "Archived local replay exit 0; export artifact 15041568364; export SHA256 58ad2a0a247f1ae48caf78f0b444bafa288dff4c3881ff2a95cc8c4a8fa1141f; local log SHA256 928340b44357b4004dcdd813895c79505f48deb7c690b80bdc36f961e171c73f. Not freshly replayed by this generator. Source integration and manuscript correspondence remain separate.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [
+        "paper_vi_publication:staged-original-head",
+        "observed:pr1201-PaperVIGeneralLatentTerminal"
+      ],
+      "promotion_authorized": false,
+      "source_match": "not-applicable"
+    },
+    {
+      "id": "paper_vi_publication:staged-original-head",
+      "origin": "research/nightfall/paper-vi-publication-20261125/CERTIFICATE.json",
+      "original_id": "staged-original-head",
+      "title": "Paper VI v1.4; certification-only section 10.2 update",
+      "kind": "publication-scope-kernel-reference",
+      "state": "archived-publication-scope-pass",
+      "path": null,
+      "blob": null,
+      "head": "41fb1cc5af1836b51ab1122f928efd78fe19c308",
+      "run": 45652533477,
+      "job": null,
+      "pr": 1201,
+      "declarations": [
+        "Nightfall.PaperVI.paper_vi_general_mse_wyner",
+        "Nightfall.PaperVI.paper_vi_quadratic_mse_wyner"
+      ],
+      "scope": "Headline named statements and explicit constants giving published orders, not every manuscript composition, heterogeneous-alphabet generalization, global priority or human peer review. Secondary direct-cover, robust support, block syndrome, shared staging, measurable lift and Paper V full two-query terminal retain outstanding scope. Source PRs not yet merged. No external deposit performed.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [
+        "observed:pr1201-PaperVIGeneralLatentTerminal"
+      ],
+      "promotion_authorized": false,
+      "source_match": "not-applicable"
+    },
+    {
+      "id": "paper_vi_publication:tensor-headline",
+      "origin": "research/nightfall/paper-vi-publication-20261125/CERTIFICATE.json",
+      "original_id": "tensor-headline",
+      "title": "Paper VI tensor representation obstruction",
+      "kind": "publication-scope-kernel-reference",
+      "state": "archived-publication-scope-pass",
+      "path": null,
+      "blob": null,
+      "head": "f7bdd571d9005218544ea442bc88161e92675a9c",
+      "run": 45644811376,
+      "job": null,
+      "pr": 1212,
+      "declarations": [
+        "code_exact_parameters",
+        "tensor_entropy",
+        "tensor_representation_score"
+      ],
+      "scope": "Headline named statements and explicit constants giving published orders, not every manuscript composition, heterogeneous-alphabet generalization, global priority or human peer review. Secondary direct-cover, robust support, block syndrome, shared staging, measurable lift and Paper V full two-query terminal retain outstanding scope. Source PRs not yet merged. No external deposit performed.",
+      "dependencies": [],
+      "unresolved_dependencies": [],
+      "links": [
+        "observed:pr1212-PaperVITensorTerminal"
+      ],
+      "promotion_authorized": false,
+      "source_match": "not-applicable"
     },
     {
       "id": "publications:q2-influence-20261124",
@@ -10421,6 +10740,69 @@
       "source_match": "current-custody-blob-match"
     }
   ],
+  "paper_vi_publication_certificate": {
+    "date": "2026-11-25",
+    "manuscript": "Paper VI v1.4; certification-only section 10.2 update",
+    "prospectus": "v0.7 frozen; unchanged",
+    "pdf_sha256": "155e1d8d7c317928738e533bffcff1e79bdaaeb5a7d27fa4055e1b0edc54a7d7",
+    "staged": {
+      "pr": 1201,
+      "source_head": "41fb1cc5af1836b51ab1122f928efd78fe19c308",
+      "tested_merge": "03ab8c3878f5532449f8f9458ccf6a1dc60c6539",
+      "run": 45652533477,
+      "metadata_reconciled_head": "9cfec81fdb3fd5efcad92a65684a343f6ec5e3fb",
+      "reconciled_run": 45654629250,
+      "theorems": [
+        "Nightfall.PaperVI.paper_vi_general_mse_wyner",
+        "Nightfall.PaperVI.paper_vi_quadratic_mse_wyner"
+      ],
+      "lean": "4.36.0-rc2",
+      "lean_commit": "b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a",
+      "mathlib_commit": "9d581dfff2e41de989072ea63abf3daf69311520",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "export_run": 45653852704,
+      "export_artifact": 15041568364,
+      "export_sha256": "58ad2a0a247f1ae48caf78f0b444bafa288dff4c3881ff2a95cc8c4a8fa1141f",
+      "local_kernel": {
+        "command": "./lean-env leanchecker --from-export pvi-closed-export/pvi.ndjson",
+        "exit_status": 0,
+        "output": "Lean default kernel accepts the solution",
+        "wall_seconds": 122.18,
+        "max_rss_kib": 928468,
+        "log_sha256": "928340b44357b4004dcdd813895c79505f48deb7c690b80bdc36f961e171c73f"
+      },
+      "local_theorem_count": 33595,
+      "local_verified_project_objects": 207,
+      "local_reused": 180,
+      "local_recompiled": 0
+    },
+    "tensor": {
+      "pr": 1212,
+      "head": "f7bdd571d9005218544ea442bc88161e92675a9c",
+      "run": 45644811376,
+      "theorems": [
+        "code_exact_parameters",
+        "tensor_entropy",
+        "tensor_representation_score"
+      ],
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "local_replay": "not performed"
+    },
+    "earlier_qw_plus": {
+      "pr": 1200,
+      "head": "b623f79f7ebc02ed5d53c7875c4bff2330879d0e",
+      "run": 45626765856
+    },
+    "scope": "Headline named statements and explicit constants giving published orders, not every manuscript composition, heterogeneous-alphabet generalization, global priority or human peer review. Secondary direct-cover, robust support, block syndrome, shared staging, measurable lift and Paper V full two-query terminal retain outstanding scope. Source PRs not yet merged. No external deposit performed."
+  },
   "failed_jobs": [
     {
       "pr": 1213,
@@ -10455,6 +10837,7 @@
     "salvage": "5291863ba52777320f0c056eb1654becf237db52",
     "publications": "7b9c64ceaef4e6ff0d7eab85c8736c75a70c8ebe",
     "compiler": "3975596f449269102556bd7869e10e27104bc78b",
-    "observed": "95cb25b3ec2179a1730b1157d5b9460c4b952649"
+    "observed": "056a422ed656810239194c11d28e51194b055194",
+    "paper_vi_publication": "a2303d075915b9ea60c8e185b36b157e0890d0e9"
   }
 }
