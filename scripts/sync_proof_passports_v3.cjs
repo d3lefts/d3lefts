@@ -110,7 +110,7 @@ function selfTest(d,paths){
  if(build(drift,paths).records.find(x=>x.id==="observed:"+target.id).source_match!=="source-drift")throw Error("source drift not detected");
  return {blocked,revocation_and_drift:2,summary:base.summary};
 }
-const d=Object.fromEntries(Object.entries(inputPaths).map(([k,p])=>[k,JSON.parse(fs.readFileSync(path.join(root,p),'utf8')))]));
+const d=Object.fromEntries(Object.entries(inputPaths).map(([k,p])=>[k,JSON.parse(fs.readFileSync(path.join(root,p),'utf8'))]));
 const out=build(d,inputPaths);
 const blob=b=>crypto.createHash('sha1').update(Buffer.from('blob '+b.length+'\0')).update(b).digest('hex');
 const walk=p=>fs.readdirSync(path.join(root,p),{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(p+'/'+e.name):e.isFile()&&e.name.endsWith('.lean')?[p+'/'+e.name]:[]);
