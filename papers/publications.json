@@ -89,6 +89,94 @@
         }
       ],
       "source_refs": []
+    },
+    {
+      "author": "Devin J. Wright",
+      "resource_type": "research preprint",
+      "publication_status": "Published on Zenodo, confirmed by owner on 2026-11-25; exact archived metadata and bytes not independently verified.",
+      "review_status": "AI-assisted mathematical review; external human peer review not established",
+      "community_membership": "unverified",
+      "featured": false,
+      "site_ready": false,
+      "source_refs": [],
+      "id": "real-phase-retrieval-20261125",
+      "number": 3,
+      "slug": "real-phase-retrieval",
+      "title": "Adaptivity, Continuity, and the Exact Limits of Real Phase Retrieval",
+      "doi": "10.5281/zenodo.24518260",
+      "url": "https://zenodo.org/records/24518260",
+      "doi_status": "Recovered from prior deposit-preparation record; live DOI not verified",
+      "date": null,
+      "manuscript_version": null,
+      "field": "Mathematics / phase retrieval",
+      "summary": "Exact adaptive and continuous oriented-row real phase retrieval thresholds.",
+      "scope": "Full manuscript-to-kernel coverage has not been established; distinguish continuous oriented-row policies from projective detectors.",
+      "evidence_links": [
+        {
+          "label": "Causal proof",
+          "href": "https://github.com/d3lefts/d3lefts/pull/995"
+        },
+        {
+          "label": "Independent internal audit",
+          "href": "https://github.com/d3lefts/d3lefts/pull/1000"
+        }
+      ]
+    },
+    {
+      "author": "Devin J. Wright",
+      "resource_type": "research preprint",
+      "publication_status": "Published on Zenodo, confirmed by owner on 2026-11-25; exact archived metadata and bytes not independently verified.",
+      "review_status": "AI-assisted mathematical review; external human peer review not established",
+      "community_membership": "unverified",
+      "featured": false,
+      "site_ready": false,
+      "source_refs": [],
+      "id": "finite-field-phase-retrieval-20261125",
+      "number": 4,
+      "slug": "finite-field-phase-retrieval",
+      "title": "Exact Adaptive Phase Retrieval over Finite Fields: Rank–Phase Decomposition and Optimal Query Packing",
+      "doi": null,
+      "url": null,
+      "doi_status": "Not recovered; do not infer DOI from adjacent record numbers",
+      "date": null,
+      "manuscript_version": null,
+      "field": "Mathematics / finite fields",
+      "summary": "Exact rank–phase decomposition of adaptive powered-linear query complexity and optimal finite-field phase packing.",
+      "scope": "Local manuscript title recovered; exact deposited version and complete kernel mapping not established.",
+      "evidence_links": [
+        {
+          "label": "Local rank-phase certificate",
+          "href": "https://github.com/d3lefts/d3lefts/pull/1224"
+        }
+      ]
+    },
+    {
+      "author": "Devin J. Wright",
+      "resource_type": "research preprint",
+      "publication_status": "Published on Zenodo, confirmed by owner on 2026-11-25; exact archived metadata and bytes not independently verified.",
+      "review_status": "AI-assisted mathematical review; external human peer review not established",
+      "community_membership": "unverified",
+      "featured": false,
+      "site_ready": false,
+      "source_refs": [],
+      "id": "beyond-common-information-20261125",
+      "number": 5,
+      "slug": "beyond-common-information",
+      "title": "Beyond Common Information: Classical Simulation of Quantum Queries via Additive Fiber Multiplicity",
+      "doi": "10.5281/zenodo.24521630",
+      "url": "https://zenodo.org/records/24521630",
+      "doi_status": "Recovered from prior deposit-preparation record; live DOI not verified",
+      "date": null,
+      "manuscript_version": null,
+      "field": "Quantum query complexity",
+      "summary": "Classical simulation bounds via additive fiber multiplicities.",
+      "scope": "Physical Born and light-energy certificates are scoped; complete published-manuscript kernel coverage is not established.",
+      "evidence_links": [
+        {
+          "label": "Local physical Born and light-energy certificates",
+          "href": "https://github.com/d3lefts/d3lefts/pull/1225"
+        }
+      ]
     }
   ],
   "release_policy": {
@@ -96,5 +184,27 @@
     "rights_review_required": true,
     "license": "unselected",
     "archive_scope": "selected, approved immutable source package only"
+  },
+  "inventory_checkpoint": {
+    "date": "2026-11-25",
+    "published_count": 5,
+    "pending_count": 1,
+    "confirmation": "Research owner directly confirmed five published papers and a sixth pending. This inventory supersedes the prior two-record count; external deposit metadata remains separate.",
+    "site_projection": "Only records with complete verified-for-display metadata are rendered; site_ready=false marks records awaiting metadata reconciliation, not unpublished work.",
+    "pending": [
+      {
+        "number": 6,
+        "title": "Staged Wyner Simulation and Tensor-Code Representation Obstructions (working title)",
+        "status": "Awaiting publication; owner reports certification gate pending",
+        "reserved_doi": "10.5281/zenodo.24522932",
+        "doi_status": "Recovered reservation, not independently verified",
+        "evidence_links": [
+          {
+            "label": "Headline terminal certificate and limitations",
+            "href": "https://github.com/d3lefts/d3lefts/pull/1201"
+          }
+        ]
+      }
+    ]
   }
 }
