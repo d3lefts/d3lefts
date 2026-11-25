@@ -1,7 +1,7 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 72,
-  "as_of": "2026-11-24 UTC",
+  "revision": 73,
+  "as_of": "2026-11-25 UTC",
   "source_commit": "31a71af99957e30a25111d1b328c43a94be04c12",
   "scope": "Paper VI publication gate: restore actual staged proof on merged Wyner parent; fix legal leaf; preserve exact custody without automatic certification.",
   "sources": [
@@ -5817,13 +5817,13 @@
     },
     {
       "path": "research/nightfall/formalization/product_space/PaperVILinearCharge.lean",
-      "source_blob_sha": "43fa2227842e7ae595fe68e2936b4757eb41be86",
+      "source_blob_sha": "8bab32205aa2c45a540b9c321f33006b313b3217",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
       "historical_head": null,
       "global_priority": "unverified",
-      "receipt_scope": "Paper VI stronger actual-law staged MSE terminal candidate. Awaiting pinned source compilation, independent kernel replay and named axiom audit; no automatic promotion."
+      "receipt_scope": "Paper VI staged MSE source candidate: repair three exact diagnostics from run 45644805760; pinned kernel and named axiom receipt still pending."
     },
     {
       "path": "research/nightfall/formalization/product_space/PaperVIMSETerminal.lean",

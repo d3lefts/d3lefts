@@ -123,9 +123,11 @@ theorem source_mean_charge (P : Θ → ι → α → ℝ)
   have hK := rowK_pos d hd
   have hRV : R*mass s = risk P s := by dsimp [R]; field_simp [show mass s ≠ 0 from hV.ne']
   have hvar : (R/2)*Vs s.weight < mvar P s.weight s.target := by
-    have h := mul_pos hRpos hV
     change (R/2)*mass s < risk P s
-    nlinarith only [h,hRV]
+    calc
+      (R/2)*mass s < R*mass s :=
+        mul_lt_mul_of_pos_right (by linarith only [hRpos]) (show 0 < mass s from hV)
+      _ = risk P s := hRV
   obtain ⟨j,hj,halt⟩ := mean_source_dichotomy P hP0 hP1 s.weight hv hV s.target hg
     d hd hdeg s.read hinv (R/2) (by positivity) (by linarith) hvar
   let D := ∑ θ, s.weight θ*pincr (P θ) s.target j
@@ -185,9 +187,11 @@ theorem source_quad_charge (P : Θ → ι → α → ℝ)
   have hK := rowK_pos 2 (by decide)
   have hRV : R*mass s = risk P s := by dsimp [R]; field_simp [show mass s ≠ 0 from hV.ne']
   have hvar : (R/2)*Vs s.weight < mvar P s.weight s.target := by
-    have h := mul_pos hRpos hV
     change (R/2)*mass s < risk P s
-    nlinarith only [h,hRV]
+    calc
+      (R/2)*mass s < R*mass s :=
+        mul_lt_mul_of_pos_right (by linarith only [hRpos]) (show 0 < mass s from hV)
+      _ = risk P s := hRV
   obtain ⟨j,hj,halt⟩ := quadratic_source_dichotomy P hP0 hP1 s.weight hv hV s.target hg
     hdeg s.read hinv (R/2) (by positivity) (by linarith) hvar
   let D := ∑ θ, s.weight θ*pinfl (P θ) s.target j
@@ -217,7 +221,7 @@ theorem source_quad_charge (P : Θ → ι → α → ℝ)
       quadWeight u*D - infoWeight 2 u*Q) ≤ _
     linarith
   · have hi' : stageGb (rowK 2) 2 (R/2)*mass s ≤ T := by
-      simpa only [rowK, Nat.cast_ofNat] using hi
+      simpa only [rowK, Nat.cast_ofNat, mass, T] using hi
     have hh : R*mass s ≤ infoWeight 2 u*T :=
       info_linear_charge (rowK 2) 2 u R (mass s) T hK (by decide) hu hR hV hi'
     rw [hRV] at hh

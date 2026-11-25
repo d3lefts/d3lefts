@@ -10,7 +10,7 @@ permissions:
   contents: read
 concurrency:
   group: paper-vi-mse-PR-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   actual-staged-terminal:
     runs-on: ubuntu-latest
@@ -20,37 +20,17 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nightfall-lean
-      - name: Recompile original AA and Q2 source closure
+      - name: Restore or build exact AA/Q2 and Route1 checkpoint
+        id: route1
+        uses: ./.github/actions/setup-nightfall-paper-vi-dependencies
+        with:
+          receipts: receipts/paper-vi-mse
+      - name: Record current checkout and toolchain
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p receipts/paper-vi-mse
           git rev-parse HEAD | tee receipts/paper-vi-mse/commit.txt
           cat lean-toolchain | tee receipts/paper-vi-mse/compiler.txt
-          while read -r M P; do
-            [ -z "$M" ] && continue
-            REL="$(printf '%s' "$M" | tr '.' '/')"
-            mkdir -p "/tmp/mathlib4/$(dirname "$REL")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$REL")"
-            cp "$P" "/tmp/mathlib4/$REL.lean"
-            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$REL.olean" "$REL.lean") > "/tmp/log-$M.txt" 2>&1 || { cat "/tmp/log-$M.txt"; exit 1; }
-            ! grep -E '(^|:)error:|declaration uses .sorry' "/tmp/log-$M.txt"
-          done < research/nightfall/formalization/aa_product/CLOSURE.txt
-      - name: Recompile original Route1/Wyner source
-        id: route1
-        shell: bash
-        run: |
-          set -euo pipefail
-          base=research/nightfall/formalization/product_space
-          for M in Route1LatentDegree Route1DegreeSourceBridge \
-                   Route1FiniteMaxCoupling Route1FiniteJointMass \
-                   Route1MaximalConditionalKernel Route1StarCoupling Route1StarMaximalBridge \
-                   Route1PolylogTools Route1Entropy Route1KeyLemma Route1Lift \
-                   Route1PolylogSimulation Route1WynerSimulation Route1WynerGeneral; do
-            src="$base/$M.lean"
-            cp "$src" "/tmp/mathlib4/$M.lean"
-            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") > "receipts/paper-vi-mse/$M.log" 2>&1 || { cat "receipts/paper-vi-mse/$M.log"; exit 1; }
-            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/paper-vi-mse/$M.log"
-          done
       - name: Compile source projection and actual finite MSE tree
         shell: bash
         run: |
