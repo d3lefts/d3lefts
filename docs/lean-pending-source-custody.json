@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 78,
+  "revision": 79,
   "as_of": "2026-11-25 UTC",
-  "source_commit": "6fefad8b4d324cd3bb4a830545c6b24d184645de",
-  "scope": "Reconcile Paper III global-boundary proof branch with current main without changing existing proof receipts; new source remains provisional.",
+  "source_commit": "17ca1ad6993ae6a1dcf97c3d8cc9ef2e56171299",
+  "scope": "Add manuscript-specific high-noise erasure and replay proof candidate; retain previous records unchanged.",
   "sources": [
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -406,6 +406,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact merged Git blob at dc14a2830ab834385cd30cdad94d38bdd86ceea0; pending historical custody only. Existing named-declaration kernel receipts are separate and retain their exact domain. No new terminal or human/novelty certification from this registry."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/PaperIIINoiseErasure.lean",
+      "source_blob_sha": "50f836c6daef52b396279a6f48b264c462fb65df",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Paper III manuscript high-noise erasure and compensating-error replay source candidate; uncompiled. No certification promotion."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUActualFiberOrbit.lean",
