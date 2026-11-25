@@ -349,6 +349,70 @@ theorem wyner_entropy_obstruction
     p hp0 hp1 (fun z hz => hsource z (hs z hz))
     (fun z hz => hinv z (hs z hz))
 
+
+/-- Entropy of an exactly encoded uniform finite observed law. Recoverability
+forces injectivity on positive source atoms, so the observed uniform mass
+equals the corresponding latent mass, including sources with zero atoms. -/
+theorem uniform_pushforward_entropy
+    (S : Finset (ι → Bool)) (hS : S.Nonempty)
+    (E : (κ → α) → (ι → Bool))
+    (ν : (κ → α) → ℝ) (hν0 : ∀ z, 0 ≤ ν z) (hν1 : ∑ z, ν z = 1)
+    (hsource : ∀ z, 0 < ν z → E z ∈ S)
+    (hinj : ∀ z z', 0 < ν z → 0 < ν z' → E z = E z' → z = z')
+    (huniform : ∀ x ∈ S, (∑ z ∈ univ.filter (fun z => E z = x), ν z)
+      = 1 / (S.card : ℝ)) :
+    Hent ν = Real.log (S.card : ℝ) := by
+  classical
+  have hcard : (0 : ℝ) < S.card := Nat.cast_pos.mpr (Finset.card_pos.mpr hS)
+  have hmass : ∀ z, 0 < ν z → ν z = 1 / (S.card : ℝ) := by
+    intro z hz
+    have hu := huniform (E z) (hsource z hz)
+    have hsum : (∑ y ∈ univ.filter (fun y => E y = E z), ν y) = ν z := by
+      apply Finset.sum_eq_single z
+      · intro y hy hyz
+        by_contra hne
+        have hypos : 0 < ν y := lt_of_le_of_ne (hν0 y) (Ne.symm hne)
+        exact hyz (hinj y z hypos hz (Finset.mem_filter.mp hy).2)
+      · intro hn
+        exact False.elim (hn (Finset.mem_filter.mpr ⟨Finset.mem_univ _, rfl⟩))
+    rwa [hsum] at hu
+  have hterm : ∀ z, negMulLog (ν z) = ν z * Real.log (S.card : ℝ) := by
+    intro z
+    rcases (hν0 z).eq_or_lt with hzero | hpos
+    · rw [← hzero, Real.negMulLog_zero, zero_mul]
+    · unfold negMulLog
+      rw [hmass z hpos, one_div, Real.log_inv]
+      ring
+  unfold Hent
+  simp_rw [hterm]
+  rw [← Finset.sum_mul, hν1, one_mul]
+
+/-- Uniform-code terminal, stated directly with exact pushforward and
+binary recovery. The observed code need not be linear. -/
+theorem uniform_code_wyner_obstruction
+    (S : Finset (ι → Bool)) (hS : S.Nonempty)
+    (dist b r : ℕ) (hd : 0 < dist)
+    (E : (κ → α) → (ι → Bool)) (T : κ → Recovery ι α) (L : ι → Finset κ)
+    (hL : ∀ i, (L i).card ≤ b)
+    (hlocal : ∀ i z z', (∀ j ∈ L i, z j = z' j) → E z i = E z' i)
+    (hdepth : ∀ j, (T j).depth ≤ r)
+    (hdist : ∀ x ∈ S, ∀ y ∈ S, x ≠ y →
+      dist ≤ (univ.filter fun i => x i ≠ y i).card)
+    (ν : (κ → α) → ℝ) (hν0 : ∀ z, 0 ≤ ν z) (hν1 : ∑ z, ν z = 1)
+    (hsource : ∀ z, 0 < ν z → E z ∈ S)
+    (hinv : ∀ z, 0 < ν z → ∀ j, (T j).eval (E z) = z j)
+    (huniform : ∀ x ∈ S, (∑ z ∈ univ.filter (fun z => E z = x), ν z)
+      = 1 / (S.card : ℝ)) :
+    Real.log (S.card : ℝ) -
+      (((b * Fintype.card ι * r : ℕ) : ℝ) / dist) * Real.log 2 ≤ wynerGen ν := by
+  have he := uniform_pushforward_entropy S hS E ν hν0 hν1 hsource
+    (fun z z' hz hz' he => by
+      funext j
+      rw [← hinv z hz j, ← hinv z' hz' j, he]) huniform
+  have h := wyner_entropy_obstruction (↑S : Set (ι → Bool)) dist b r hd
+    E T L hL hlocal hdepth hdist ν hν0 hν1 hsource hinv
+  rwa [he] at h
+
 end Incidence
 end Nightfall.SynthesisWynerEntropy
 
@@ -356,3 +420,6 @@ end Nightfall.SynthesisWynerEntropy
 #print axioms Nightfall.SynthesisWynerEntropy.wyner_general_lower_of_component_entropy
 #print axioms Nightfall.SynthesisWynerEntropy.component_entropy_incidence
 #print axioms Nightfall.SynthesisWynerEntropy.wyner_entropy_obstruction
+
+#print axioms Nightfall.SynthesisWynerEntropy.uniform_pushforward_entropy
+#print axioms Nightfall.SynthesisWynerEntropy.uniform_code_wyner_obstruction
