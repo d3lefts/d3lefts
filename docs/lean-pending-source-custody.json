@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 70,
-  "as_of": "2026-11-24 UTC",
+  "revision": 71,
+  "as_of": "2026-11-25 UTC",
   "source_commit": "bdcb0a0097c0759c54771e9d9b90f16bb6ecb262",
-  "scope": "Recover verified locality and simulation-boundary chain with merged QW+ and tensor source custody preserved; no auto-promotion.",
+  "scope": "Recover archived native response and adaptive instrument sources on current main and register Q7 compact blocker packing and complex Kraus conservation; no certification promotion.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5804,6 +5804,66 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Explicit mixture-size and dominated-product query simulation; pending strict compiler and non-author review."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentDegree.lean",
+      "source_blob_sha": "bdc4c2583c36a56057a0eef89dd44628c3738754",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "New or recovered proof candidate; dedicated exact-head kernel replay pending; no novelty assertion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/AdaptiveInstrumentWyner.lean",
+      "source_blob_sha": "f2529517cb364979f0ea87786779b570aa79862b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "New or recovered proof candidate; dedicated exact-head kernel replay pending; no novelty assertion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumResponseOracleBridge.lean",
+      "source_blob_sha": "7a59d81038704ef6ca6277b1161991a0cb0cd17b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Byte-identical archived #1176 source, historical full native kernel run 45269625546 at ade1a5dcb3132eef7f16646afc967b4fa2d20a34; fresh current-main exact-head replay required."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuantumResponseRoute1Terminal.lean",
+      "source_blob_sha": "993dfc565cb03536c328779579e319cabc2d7353",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Byte-identical archived #1176 source, historical full native kernel run 45269625546 at ade1a5dcb3132eef7f16646afc967b4fa2d20a34; fresh current-main exact-head replay required."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Q7BlockerPacking.lean",
+      "source_blob_sha": "7989b88196e62611608513dd51e927be089ab200",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "New or recovered proof candidate; dedicated exact-head kernel replay pending; no novelty assertion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/ComplexKrausConservation.lean",
+      "source_blob_sha": "35b1394245b0c7103a3e3c58193102e13088e393",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "New or recovered proof candidate; dedicated exact-head kernel replay pending; no novelty assertion."
     }
   ]
 }
