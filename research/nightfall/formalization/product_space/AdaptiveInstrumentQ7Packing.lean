@@ -5,6 +5,9 @@ The data is generated from the 180 archived canonical masks; the kernel
 checks disjointness and the finite deletion bound. Source-face and full
 catalogue extraction are separately checked by the executable replay. -/
 
+set_option maxRecDepth 4096
+set_option maxHeartbeats 4000000
+
 namespace Nightfall.Q7BlockerPacking
 
 theorem packing_lower_bound {W : Type} [DecidableEq W] {n : ℕ}
