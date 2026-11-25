@@ -33,7 +33,7 @@ theorem boundary_connected_component_is_interval
     Nonempty ((connectedComponent p) ≃ₜ
       Nightfall.ProductBUInterval.I01) := by
   letI : LocallyConnectedSpace Z :=
-    ChartedSpace.locallyConnectedSpace (H := EuclideanHalfSpace 1)
+    ChartedSpace.locallyConnectedSpace (H := EuclideanHalfSpace 1) Z
   have hOpen : IsOpen (connectedComponent p) :=
     isOpen_connectedComponent
   let U : TopologicalSpace.Opens Z := ⟨connectedComponent p, hOpen⟩
