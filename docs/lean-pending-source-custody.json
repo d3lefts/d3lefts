@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 65,
+  "revision": 66,
   "as_of": "2026-11-25 UTC",
-  "source_commit": "b099e38f7cb06fba92b8cb5fa9ec97cea86bd5d1",
-  "scope": "Register rank-phase transport exact source; pending named kernel and independent review.",
+  "source_commit": "fc8d85b2500425d801f23063212b20b929a919e7",
+  "scope": "Register two inherited unregistered Route1 sources after exact-custody failure 45626057834; preserve all other source entries.",
   "sources": [
     {
       "path": "research/nightfall/formalization/structural_information/AffineWynerMixtureDirac.lean",
@@ -5654,6 +5654,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Four scoped transport lemmas, not full optimal-tree theorem."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1ReciprocalAtom.lean",
+      "source_blob_sha": "ab0aa7a3cf64420a501fead76f31d8645fd60858",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/Route1SharedDrift.lean",
+      "source_blob_sha": "86a0a87eb6893bfb18da131fecd3354909f1c620",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Existing source on inherited main; registration repairs exact custody only, no automatic certification."
     }
   ]
 }
