@@ -195,6 +195,39 @@ theorem paper_vi_quadratic_mse
   rw [he,he2]
   linarith
 
+/-- No free information slack in the stated bound: use a tolerance-dependent
+strict charge, which has the same order as the private energy term. -/
+theorem paper_vi_general_mse_wyner
+    (ν : (ι → α) → ℝ) (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
+    (f : (ι → α) → ℝ) (hf : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
+    (d : ℕ) (hd : 1 ≤ d) (hdeg : HasProdDegreeLE f d)
+    (τ : ℝ) (hτ : 0 < τ) (n : ℕ) (hn : 0 < n)
+    (hbudget : meanWeight d (τ/2)*rowK d +
+      infoWeight d (τ/2)*(wynerGen ν+τ*Real.sqrt τ) ≤ (n : ℝ)*(τ/2)) :
+    ∃ t : DTree ι α, (∀ x, t.queries x ≤ n) ∧
+      ∑ x, ν x*(f x-t.eval x)^2 ≤ τ := by
+  have hstrict : wynerGen ν < wynerGen ν+τ*Real.sqrt τ := by
+    have h := mul_pos hτ (Real.sqrt_pos.mpr hτ)
+    linarith
+  exact paper_vi_general_mse ν hν0 hν1 f hf d hd hdeg τ hτ _ hstrict n hn hbudget
+
+theorem paper_vi_quadratic_mse_wyner
+    (ν : (ι → α) → ℝ) (hν0 : ∀ x, 0 ≤ ν x) (hν1 : ∑ x, ν x = 1)
+    (f : (ι → α) → ℝ) (hf : ∀ x, 0 ≤ f x ∧ f x ≤ 1)
+    (hdeg : HasProdDegreeLE f 2) (τ : ℝ) (hτ : 0 < τ) (hτmax : τ < 1/4) :
+    ∃ t : DTree ι α,
+      (∀ x, (t.queries x : ℝ) ≤
+        (2048*quadraticC+2)/(2*τ) +
+        ((2^40 : ℝ)*rowK 2*(wynerGen ν+τ^2))/(8*τ^3)) ∧
+      ∑ x, ν x*(f x-t.eval x)^2 ≤ τ := by
+  have hstrict : wynerGen ν < wynerGen ν+τ^2 := by
+    have h := sq_pos_of_pos hτ
+    linarith
+  exact paper_vi_quadratic_mse ν hν0 hν1 f hf hdeg _ hstrict τ hτ hτmax
+
+#print axioms Nightfall.PaperVI.paper_vi_general_mse_wyner
+#print axioms Nightfall.PaperVI.paper_vi_quadratic_mse_wyner
+
 #print axioms Nightfall.PaperVI.mean_mse_general
 #print axioms Nightfall.PaperVI.paper_vi_general_mse
 #print axioms Nightfall.PaperVI.quadratic_mse_general_dyadic
