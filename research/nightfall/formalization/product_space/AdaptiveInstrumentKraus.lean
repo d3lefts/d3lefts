@@ -215,6 +215,29 @@ theorem kraus_outcome_refinement {γ : Type} [Fintype γ]
       ∑ b : β, ∑ c : γ, energy (applyMat (K b c) v) := by
   rw [Fintype.sum_prod_type]
 
+
+/-- Exact compatibility with the existing source matrix-oracle semantics.
+One call to queryAmp is one call to the original symbol-controlled oracle. -/
+theorem queryAmp_eq_source
+    (A : ι → α → κ → κ → ℂ) (x : ι → α) (v : κ → ℂ) :
+    queryAmp A x v =
+      applyMat (oracleMat (fun s : ι × α => A s.1 s.2) x) v := by
+  classical
+  funext k
+  have hs (j : κ) :
+      (∑ s : ι × α, Nightfall.QuantumCircuitPaths.symbol s x * A s.1 s.2 k j) =
+        ∑ i : ι, A i (x i) k j := by
+    simp [Fintype.sum_prod_type, Nightfall.QuantumCircuitPaths.symbol]
+  unfold queryAmp applyMat oracleMat
+  simp_rw [hs, Finset.sum_mul]
+  exact Finset.sum_comm
+
+theorem source_query_energy (A : ι → α → κ → κ → ℂ) (x : ι → α)
+    (h : IsUnitary (oracleMat (fun s : ι × α => A s.1 s.2) x))
+    (v : κ → ℂ) : energy (queryAmp A x v) = energy v := by
+  rw [queryAmp_eq_source]
+  exact h v
+
 end Nightfall.KrausAdaptive
 
 #print axioms Nightfall.KrausAdaptive.query_amp_degree
@@ -225,3 +248,6 @@ end Nightfall.KrausAdaptive
 
 #print axioms Nightfall.KrausAdaptive.stacked_isometry
 #print axioms Nightfall.KrausAdaptive.kraus_outcome_refinement
+
+#print axioms Nightfall.KrausAdaptive.queryAmp_eq_source
+#print axioms Nightfall.KrausAdaptive.source_query_energy
