@@ -1,6 +1,6 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 71,
+  "revision": 72,
   "as_of": "2026-11-25 UTC",
   "source_commit": "bdcb0a0097c0759c54771e9d9b90f16bb6ecb262",
   "scope": "Recover archived native response and adaptive instrument sources on current main and register Q7 compact blocker packing and complex Kraus conservation; no certification promotion.",
@@ -5864,6 +5864,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "New or recovered proof candidate; dedicated exact-head kernel replay pending; no novelty assertion."
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PhysicalAdaptiveWyner.lean",
+      "source_blob_sha": "5588db6f2a8584cd9ba6aeedf3eb91d53522422c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Direct complex refined Kraus trajectory adaptive finite program and general-latent Wyner scalar acceptance terminal; completeness and oracle unitarity local premises, terminal effects factorized; pending exact-head kernel check; no full coherent dilation or spectral factorization."
     }
   ]
 }
