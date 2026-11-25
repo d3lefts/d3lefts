@@ -134,7 +134,7 @@ theorem mean_mse_mixture
   have ht : legal P s t := rfl
   have hmass : mass s = 1 := hw1
   have ha : 0 ≤ meanWeight d u := by unfold meanWeight; positivity
-  have hb : 0 ≤ infoWeight d u := by unfold infoWeight; positivity
+  have hb : 0 ≤ infoWeight d u := by unfold infoWeight rowK; positivity
   obtain ⟨t',ht',hq,_,hr⟩ := source_block P hP0 hP1 f (rowK d) d
     (incrementCost P) (meanWeight d u) (infoWeight d u) u ha hb hu
     (fun z hz => incrementCost_nonneg P hP0 z hz.1.1)
@@ -150,7 +150,10 @@ theorem mean_mse_mixture
   refine ⟨t',fun x => by simpa [t,DTree.queries] using hq x,hr.trans ?_⟩
   have h := mul_le_mul_of_nonneg_left hcap ha
   have hnR : (0 : ℝ) ≤ n := Nat.cast_nonneg n
-  exact add_le_add_left (div_le_div_of_nonneg_right (add_le_add_right h _) hnR) _
+  have hsum : meanWeight d u*incrementCost P s + infoWeight d u*mutInfo P w ≤
+      meanWeight d u*rowK d + infoWeight d u*mutInfo P w := by linarith only [h]
+  have hdiv := div_le_div_of_nonneg_right hsum hnR
+  linarith only [hdiv]
 
 /-- One actual quadratic stage, with the information charge shared across
 stages. The cap is on the expected frontier variance, not each branch. -/
@@ -169,7 +172,7 @@ theorem quadratic_halve_stage
       frontier P (risk P) s t' ≤ u/2 ∧ frontier P (entropyCost P) s t' ≤ J := by
   have hu4 : 0 < u/4 := by positivity
   have ha : 0 ≤ quadWeight (u/4) := by unfold quadWeight; have := quadraticC_pos; positivity
-  have hb : 0 ≤ infoWeight 2 (u/4) := by unfold infoWeight; positivity
+  have hb : 0 ≤ infoWeight 2 (u/4) := by unfold infoWeight rowK; positivity
   obtain ⟨t',ht',hq,hj,hnew⟩ := source_block P hP0 hP1 f (rowK 2) 2
     (energyCost P) (quadWeight (u/4)) (infoWeight 2 (u/4)) (u/4) ha hb hu4
     (fun z hz => Phi2_nonneg P hP0 z.weight hz.1.1 z.target)

@@ -42,10 +42,13 @@ theorem mean_mse_general
     exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun θ _ => by ring
   rw [hEx] at herr
   refine ⟨t,ht,herr.trans ?_⟩
-  have hb : 0 ≤ infoWeight d u := by unfold infoWeight; positivity
+  have hb : 0 ≤ infoWeight d u := by unfold infoWeight rowK; positivity
   have hnR : (0 : ℝ) ≤ n := Nat.cast_nonneg n
-  exact add_le_add_left (div_le_div_of_nonneg_right
-    (add_le_add_left (mul_le_mul_of_nonneg_left hlt.le hb) _) hnR) _
+  have hcharge := mul_le_mul_of_nonneg_left hlt.le hb
+  have hsum : meanWeight d u*rowK d + infoWeight d u*mutInfo Q w ≤
+      meanWeight d u*rowK d + infoWeight d u*s := by linarith only [hcharge]
+  have hdiv := div_le_div_of_nonneg_right hsum hnR
+  linarith only [hdiv]
 
 /-- Main general-degree MSE terminal, target tolerance τ. The displayed
 coefficient is explicit and has exactly the d^6, τ^(-3/2) and

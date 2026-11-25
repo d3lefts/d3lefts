@@ -25,6 +25,7 @@ jobs:
         uses: ./.github/actions/setup-nightfall-paper-vi-dependencies
         with:
           receipts: receipts/paper-vi-mse
+          require-warm: 'true'
       - name: Record current checkout and toolchain
         shell: bash
         run: |
