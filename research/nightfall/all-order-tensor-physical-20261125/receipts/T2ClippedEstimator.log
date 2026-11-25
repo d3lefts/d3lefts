@@ -1,0 +1,25 @@
+src/T2ClippedEstimator.lean:2:0: warning: 
+'Mathlib.Data.Real.Basic' has been deprecated: please replace this import by
+
+import Mathlib.Basic.Real.Basic
+'Nightfall.StructuralInformation.T2ClippedEstimator.clip01_nonneg' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Nightfall.StructuralInformation.T2ClippedEstimator.clipped_squared_error_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Nightfall.StructuralInformation.T2ClippedEstimator.transcriptProjection_eval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Nightfall.StructuralInformation.T2ClippedEstimator.clippedTranscriptEstimator_eval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Nightfall.StructuralInformation.T2ClippedEstimator.clipped_estimator_pointwise_error' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Nightfall.StructuralInformation.T2ClippedEstimator.clipped_estimator_L2_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Nightfall.StructuralInformation.T2ClippedEstimator.clipped_estimator_uniform_success' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

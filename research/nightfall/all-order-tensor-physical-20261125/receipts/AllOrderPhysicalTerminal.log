@@ -1,0 +1,2 @@
+'Nightfall.AllOrder.Quantum.physical_phase_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Quantum.physical_tensor_simulation' depends on axioms: [propext, Classical.choice, Quot.sound]

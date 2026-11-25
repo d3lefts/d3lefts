@@ -1,0 +1,27 @@
+/mnt/data/lean-workbench/src/AllOrderPatternMask.lean:21:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.pattern_graph_eq`:
+  [Fintype I]
+  [DecidableEq I]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype I] [DecidableEq I] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderPatternMask.lean:138:27: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+/mnt/data/lean-workbench/src/AllOrderPatternMask.lean:128:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.patternMask_prod`:
+  [DecidableEq I]
+  [DecidableEq K]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq I] [DecidableEq K] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderPatternMask.lean:150:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.Geometry.test_card`:
+  [DecidableEq I]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq I] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+'Nightfall.AllOrder.Geometry.pattern_keep_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Geometry.pattern_mask_cost' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.Geometry.pattern_card' depends on axioms: [propext, Classical.choice, Quot.sound]

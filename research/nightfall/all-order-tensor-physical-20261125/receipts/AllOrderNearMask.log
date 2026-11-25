@@ -1,0 +1,68 @@
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:11:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.slotMask_prod`:
+  [Fintype A]
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype A] [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:18:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.slotMask_abs`:
+  [Fintype I]
+  [Fintype A]
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype I] [Fintype A] [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:32:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.basis_inj`:
+  [Fintype A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:38:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.bitGroup_two`:
+  [Fintype A]
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype A] [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:57:10: warning: `mul_le_one₀` has been deprecated: No replacement, use constituent lemmas from proof.
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:77:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.neighborAt_mem`:
+  [Fintype A]
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype A] [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:87:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.neighborAt_unique`:
+  [Fintype A]
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype A] [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:100:0: warning: automatically included section variable(s) unused in theorem `Nightfall.AllOrder.neighborAt_exists`:
+  [Fintype A]
+  [DecidableEq A]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype A] [DecidableEq A] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:106:19: warning: This simp argument is unused:
+  hk
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [neighborAt, k, t]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:119:10: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+/mnt/data/lean-workbench/src/AllOrderNearMask.lean:125:10: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+'Nightfall.AllOrder.slot_mask_cost' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.partial_equality_mask_cost' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.neighbor_mask_cost' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,6 @@
+'Nightfall.AllOrder.rowNorm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.heavy_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.light_slot_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.selected_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.residual_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.retained_uses_selected' depends on axioms: [propext, Classical.choice, Quot.sound]

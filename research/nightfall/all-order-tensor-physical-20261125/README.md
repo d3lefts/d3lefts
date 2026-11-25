@@ -1,0 +1,13 @@
+# All-order physical tensor simulation — local Lean certificate
+
+Research owner: Devin J. Wright. Checkpoint dated 2026-11-25. Exact local source archive, not a claim of peer review or worldwide priority.
+
+**Terminal:** `Nightfall.AllOrder.Quantum.physical_tensor_simulation`. The original local terminal compile and fresh leanchecker replay returned 0. The printed terminal axioms are only propext, Classical.choice and Quot.sound. See the preserved certificate.json, STATUS.md and receipts. Geometry, mask contractions, row norm bounds, Fourier tail and actual complex path/Born expansion are composed in the terminal. This is a full-label, uniform additive-character input law, positive fixed query order, scalar acceptance result. The model allows orthogonal sectors, contractive gates, and a positive contractive terminal effect. A known dummy label is counted conservatively. No polynomial runtime or joint polynomial dependence on query order is claimed. Explicit depth-growth formalization, restricted-label support preservation, independent mathematical review, and global priority clearance remain open. The elementary localization estimate replaces the sharper external splitting theorem. The parallel normalized-deletion manuscript in PR #1229 is distinct; its proof is not certified by this archive.
+
+This archive retains the 29 exact Lean source modules and all text receipts, including the original local replay script. It intentionally excludes generated .olean files and other binary build artifacts. Original complete ZIP SHA-256: `18c8c339cbcc299b52fe769be9ee8cbf2236d1f3ebf21bffeda444eaf8d9ed21`. SOURCE_BLOBS.json binds each archived source and receipt to the exact local Git blob identity. The local pinned environment was recovered from compiler export run [45650723011](https://github.com/d3lefts/d3lefts/actions/runs/45650723011), Lean 4.36.0-rc2, Mathlib 9d581dfff2e41de989072ea63abf3daf69311520.
+
+## Replay
+
+Use `./replay-source.sh /path/to/lean-workbench/runtime` on the recovered exact runtime. This verifies source custody, then compiles and replays each module in dependency order and rejects any nonstandard axiom in the named audit output. The original `replay.sh` is kept byte-for-byte as a historical record for the full local ZIP; it expects the full ZIP's SHA256SUMS and build objects and is not the entry point for this source-only archive. The stored source receipts are local evidence, not GitHub CI receipts. A new replay is a separate event.
+
+Credits: NIGHTFALL Paper V / tensor-source research, prior tensor geometry and T2 Fourier/Born source modules, and the original authors of external related results. No independent review or external publication is implied by repository integration.

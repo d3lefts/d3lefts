@@ -1,0 +1,2 @@
+'Nightfall.AllOrder.avg_cauchy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nightfall.AllOrder.avg_moment_interpolation' depends on axioms: [propext, Classical.choice, Quot.sound]
