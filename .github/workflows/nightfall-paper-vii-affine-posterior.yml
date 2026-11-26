@@ -1,0 +1,57 @@
+name: NIGHTFALL Paper VII affine posterior proof
+on:
+  push:
+    branches:
+      - nightfall/paper-vii-affine-posterior-20261125
+    paths:
+      - '.github/workflows/nightfall-paper-vii-affine-posterior.yml'
+      - 'research/nightfall/seven-paper-closure-20261125/PaperVIIAffinePosterior.lean'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  affine-posterior:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile actual causal tree and affine fiber theorem
+        shell: bash
+        env:
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          git rev-parse HEAD > receipts/head.txt
+          cp docs/lean-compiler-lock.json receipts/
+          m=PaperVIIAffinePosterior
+          p=research/nightfall/seven-paper-closure-20261125/$m.lean
+          sha256sum "$p" > receipts/SHA256SUMS
+          cp "$p" "/tmp/mathlib4/$m.lean"
+          (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean") 2>&1 | tee "receipts/$m.log"
+          (cd /tmp/mathlib4 && lake env leanchecker -v "$m") 2>&1 | tee "receipts/$m.kernel.log"
+      - name: Audit named declarations
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          log=Path('receipts/PaperVIIAffinePosterior.log').read_text()
+          reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
+          reports.update({n:'' for n in re.findall(r"'([^']+)' does not depend on any axioms",log)})
+          for target in ['trace_consistent','trace_eq_iff','trace_eq_iff_annihilator']:
+              matches=[n for n in reports if n.endswith('.'+target)]
+              assert len(matches)==1,(target,matches)
+          for name,axioms in reports.items():
+              assert {a.strip() for a in axioms.split(',') if a.strip()} <= {'propext','Classical.choice','Quot.sound'},(name,axioms)
+          assert 'sorryAx' not in log
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: paper-vii-affine-posterior-${{ github.run_id }}
+          path: receipts
+          retention-days: 90
