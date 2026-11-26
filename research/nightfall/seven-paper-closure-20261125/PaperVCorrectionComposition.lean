@@ -18,8 +18,9 @@ noncomputable def outsideCorrection (R Z : Finset G) : Finset (Tuple G) :=
   Z.biUnion (eventCorrectionFiber R)
 
 theorem correction_freq (R : Finset G) (z : G) (t : Tuple G)
-    (ht : t ∈ eventCorrectionFiber R z) : freq t = z :=
-  (Finset.mem_filter.mp ht).2.1
+    (ht : t ∈ eventCorrectionFiber R z) : freq t = z := by
+  classical
+  exact (Finset.mem_filter.mp ht).2.1
 
 theorem actual_correction_energy (h₂ : ∀ x : G, x+x=0)
     (R Z L : Finset G) (c : Tuple G → ℝ) (M : ℕ) (eta : ℝ)
