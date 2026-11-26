@@ -1,5 +1,10 @@
 # NIGHTFALL / PHASESHIFT — Team strengths and operating roles
 
+
+## Mandatory receipt-first certification checkpoint (2026-11-25)
+
+Owner-directed correction, superseding stale session/task certification queues. Before planning or reporting any Lean work, every NIGHTFALL role must read [the shared Discovery Graph](2026-11-task-distinction-engineering/DISCOVERY_GRAPH.json), specifically `portfolio_certification_checkpoint`. All seven papers I–VII have existing successful implemented proof-chain receipts; the operational replay queue is CLOSED. Do not schedule another paper-wide compilation or change the compiler because a prior conversation, old PR, or older status file describes a gap. Retrieve and reuse exact-head receipts first. This checkpoint distinguishes implemented-chain completion from full manuscript theorem coverage: any genuinely new theorem obligation must have its own exact statement and scope, and must not invalidate a successful historical receipt. Reopen only for an explicitly requested new theorem target, a relevant changed dependency, or an invalidated receipt. The prospective general law in VII remains a research hypothesis. Do not claim entire-manuscript certification beyond evidence. If status sources conflict, reconcile against immutable receipts and the latest owner-directed checkpoint before asking the owner to restate decisions.
+
 **Version:** 2026-10-29 / Vesper evaluation 01  
 **Research owner:** Devin J. Wright  
 **Coordination and site integration:** Vesper  
