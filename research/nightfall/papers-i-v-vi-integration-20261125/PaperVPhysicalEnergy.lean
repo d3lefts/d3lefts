@@ -32,13 +32,18 @@ theorem physical_left_input_light
     (hL : ∀ a ∈ L, ‖psi a‖^2 ≤ eta) :
     ∑ t ∈ ((univ : Finset D).product L).product
       (univ : Finset (D × D)), (c psi U P t)^2 ≤ eta := by
-  rw [Finset.sum_product]
-  refine le_trans ?_ (actual_first_light_four_slot_energy psi U hpsi L eta heta hL P hP0 hP1)
-  apply Finset.sum_le_sum
-  intro ba _
-  apply Finset.sum_le_sum
-  intro cd _
-  exact real_sq_le_norm_sq (originalFourCoefficient psi U P ba cd)
+  calc
+    _ = ∑ ba ∈ (univ : Finset D).product L, ∑ cd : D × D,
+        (c psi U P (ba,cd))^2 :=
+      Finset.sum_product ((univ : Finset D).product L) (univ : Finset (D × D))
+        (fun t => (c psi U P t)^2)
+    _ ≤ eta := by
+      refine le_trans ?_ (actual_first_light_four_slot_energy psi U hpsi L eta heta hL P hP0 hP1)
+      apply Finset.sum_le_sum
+      intro ba _
+      apply Finset.sum_le_sum
+      intro cd _
+      exact real_sq_le_norm_sq (originalFourCoefficient psi U P ba cd)
 
 theorem physical_left_output_light
     (psi : H D E) (U : H D E ≃ₗᵢ[ℂ] H D E) (P : H D E →L[ℂ] H D E)
@@ -47,13 +52,18 @@ theorem physical_left_output_light
     (hL : ∀ b ∈ L, (∑ a : D, ‖sourcePath psi U b a‖^2) ≤ eta) :
     ∑ t ∈ (L.product (univ : Finset D)).product
       (univ : Finset (D × D)), (c psi U P t)^2 ≤ eta := by
-  rw [Finset.sum_product]
-  refine le_trans ?_ (actual_second_light_four_slot_energy psi U hpsi L eta heta hL P hP0 hP1)
-  apply Finset.sum_le_sum
-  intro ba _
-  apply Finset.sum_le_sum
-  intro cd _
-  exact real_sq_le_norm_sq (originalFourCoefficient psi U P ba cd)
+  calc
+    _ = ∑ ba ∈ L.product (univ : Finset D), ∑ cd : D × D,
+        (c psi U P (ba,cd))^2 :=
+      Finset.sum_product (L.product (univ : Finset D)) (univ : Finset (D × D))
+        (fun t => (c psi U P t)^2)
+    _ ≤ eta := by
+      refine le_trans ?_ (actual_second_light_four_slot_energy psi U hpsi L eta heta hL P hP0 hP1)
+      apply Finset.sum_le_sum
+      intro ba _
+      apply Finset.sum_le_sum
+      intro cd _
+      exact real_sq_le_norm_sq (originalFourCoefficient psi U P ba cd)
 
 theorem coeff_swap (psi : H D E) (U : H D E ≃ₗᵢ[ℂ] H D E)
     (P : H D E →L[ℂ] H D E) (hP0 : 0 ≤ P) (ba cd : D × D) :
@@ -70,13 +80,17 @@ theorem swap_energy (psi : H D E) (U : H D E ≃ₗᵢ[ℂ] H D E)
     (P : H D E →L[ℂ] H D E) (hP0 : 0 ≤ P) (A B : Finset (D × D)) :
     (∑ t ∈ A.product B, (c psi U P t)^2) =
       ∑ t ∈ B.product A, (c psi U P t)^2 := by
-  simp only [Finset.sum_product]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro cd _
-  apply Finset.sum_congr rfl
-  intro ba _
-  rw [coeff_swap psi U P hP0 ba cd]
+  calc
+    _ = ∑ ba ∈ A, ∑ cd ∈ B, (c psi U P (ba,cd))^2 :=
+      Finset.sum_product A B (fun t => (c psi U P t)^2)
+    _ = ∑ cd ∈ B, ∑ ba ∈ A, (c psi U P (ba,cd))^2 := Finset.sum_comm
+    _ = ∑ cd ∈ B, ∑ ba ∈ A, (c psi U P (cd,ba))^2 := by
+      apply Finset.sum_congr rfl
+      intro cd _
+      apply Finset.sum_congr rfl
+      intro ba _
+      rw [coeff_swap psi U P hP0 ba cd]
+    _ = _ := (Finset.sum_product B A (fun t => (c psi U P t)^2)).symm
 
 /-- For actual physical coefficients, any one-light subfamily with
 bounded frequency fibers has the Paper V primitive 4*K*eta energy.
