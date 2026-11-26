@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2026-11-25_v0.3",
+  "version": "2026-11-25_v0.4",
   "owner": "Devin J. Wright / NIGHTFALL",
   "research_status": "portfolio synthesis; no world-original general law certified",
   "claims": [
@@ -165,6 +165,29 @@
           "terminal": "Nightfall.PaperVPhysicalEnergy.physical_double_light_grouped"
         }
       ]
+    },
+    {
+      "id": "paper_iii_implemented_e2e",
+      "domain": "real_phase_retrieval",
+      "claim": "Paper III implemented algebraic, causal, risk, noise, global-boundary geometry and continuous-to-smooth reduction proof chains passed pinned Lean compilation and kernel replay.",
+      "status": "historically_scoped_lean_with_import",
+      "source": "https://github.com/d3lefts/d3lefts/actions/runs/45748645526",
+      "certificate": "Successful runs 45748645526 (both global-boundary and algebra-causal-risk-noise jobs), head f310966e4fe20e2ca9b36743f75070d822c7f850; and 45760973060 (continuous reduction), head 3035d571c2aa4ffc7bdbe2a47b4bb08562042eef. Named theorem and standard-axiom checks passed.",
+      "limit": "Implemented proof-chain certification, not evidence that every unconditional statement of the manuscript is kernel checked; do not erase distinctions between conditional reductions and terminal theorem coverage.",
+      "operational_status": "complete_reuse_existing_receipts",
+      "rerun_policy": "Do not recompile unchanged certified Paper III chains; reopen only for new theorem scope, relevant dependency changes, invalidated receipts or explicit owner instruction.",
+      "receipts": [
+        {
+          "run_id": 45748645526,
+          "url": "https://github.com/d3lefts/d3lefts/actions/runs/45748645526",
+          "conclusion": "success"
+        },
+        {
+          "run_id": 45760973060,
+          "url": "https://github.com/d3lefts/d3lefts/actions/runs/45760973060",
+          "conclusion": "success"
+        }
+      ]
     }
   ],
   "transfers": [
@@ -279,6 +302,13 @@
       "operator": "reuse_immutable_kernel_receipts",
       "relation": "case_study_not_logical_implication",
       "test": "Recover successful exact-head receipts before scheduling any Paper V work; separate new theorem scope from unchanged certified closure."
+    },
+    {
+      "from": "paper_iii_implemented_e2e",
+      "to": "thesis",
+      "operator": "reuse_immutable_kernel_receipts",
+      "relation": "case_study_not_logical_implication",
+      "test": "Recover successful exact-head receipts before scheduling Paper III work; distinguish new theorem scope from unchanged certified closure."
     }
   ],
   "novelty_gates": [
@@ -294,15 +324,16 @@
     "completed_for_replay": [
       "I",
       "II",
+      "III",
       "IV",
       "V",
       "VI"
     ],
     "remaining_operational_targets": [
-      "III",
       "VII"
     ],
     "paper_v_claim_id": "paper_v_implemented_e2e",
-    "rule": "Do not reopen completed proof-chain compilation merely because secondary manuscript obligations remain. Reuse the strongest existing receipt; only test new scope or invalidated dependencies."
+    "rule": "Do not reopen completed proof-chain compilation merely because secondary manuscript obligations remain. Reuse the strongest existing receipt; only test new scope or invalidated dependencies.",
+    "paper_iii_claim_id": "paper_iii_implemented_e2e"
   }
 }
