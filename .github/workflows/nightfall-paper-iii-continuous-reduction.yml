@@ -1,0 +1,66 @@
+name: NIGHTFALL Paper III continuous zero reduction
+on:
+  push:
+    branches:
+      - nightfall/paper-iii-continuous-reduction-20261125
+    paths:
+      - '.github/workflows/nightfall-paper-iii-continuous-reduction.yml'
+      - 'research/nightfall/seven-paper-closure-20261125/PaperIIIContinuousReduction.lean'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  continuous-reduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile actual topology reduction and dependencies
+        shell: bash
+        env:
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          git rev-parse HEAD > receipts/head.txt
+          cp docs/lean-compiler-lock.json receipts/
+          ff=research/nightfall/formalization/finite_field
+          old=research/nightfall/portfolio-proof-closure-20261125
+          seven=research/nightfall/seven-paper-closure-20261125
+          compile() {
+            local p="$1" m
+            m=$(basename "$p" .lean)
+            sha256sum "$p" >> receipts/SHA256SUMS
+            cp "$p" "/tmp/mathlib4/$m.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean") 2>&1 | tee "receipts/$m.log"
+          }
+          for m in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact; do
+            compile "$ff/$m.lean"
+          done
+          compile "$old/PaperIIIReynolds.lean"
+          compile "$seven/PaperIIISmoothApprox.lean"
+          compile "$seven/PaperIIIContinuousReduction.lean"
+          (cd /tmp/mathlib4 && lake env leanchecker -v PaperIIIContinuousReduction) 2>&1 | tee receipts/PaperIIIContinuousReduction.kernel.log
+      - name: Audit named theorem
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          log=Path('receipts/PaperIIIContinuousReduction.log').read_text()
+          reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
+          reports.update({n:'' for n in re.findall(r"'([^']+)' does not depend on any axioms",log)})
+          assert len([n for n in reports if n.endswith('.continuous_zero_of_smooth')])==1,reports
+          for n,a in reports.items():
+              assert {x.strip() for x in a.split(',') if x.strip()} <= {'propext','Classical.choice','Quot.sound'},(n,a)
+          assert 'sorryAx' not in log
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: paper-iii-continuous-reduction-${{ github.run_id }}
+          path: receipts
+          retention-days: 90
