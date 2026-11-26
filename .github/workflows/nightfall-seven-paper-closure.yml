@@ -1,0 +1,131 @@
+name: NIGHTFALL seven-paper source closure candidates
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/seven-paper-closure-20261125/**'
+      - '.github/workflows/nightfall-seven-paper-closure.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  new-proof-closure:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - paper: I-VI
+            targets: PaperIWynerAttainment PaperVIReferenceTransfer
+            route1: true
+          - paper: II
+            targets: PaperIIAdaptiveDrift
+            route1: false
+          - paper: III
+            targets: PaperIIISmoothApprox
+            route1: false
+          - paper: IV
+            targets: PaperIVNineSign
+            route1: false
+          - paper: V
+            targets: PaperVCorrectionComposition
+            route1: false
+          - paper: VII
+            targets: PaperVIIAdaptiveLikelihood
+            route1: false
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Restore exact existing Route1 and quadratic dependency checkpoint
+        if: matrix.route1
+        uses: ./.github/actions/setup-nightfall-paper-vi-dependencies
+        with:
+          receipts: receipts
+          require-warm: 'true'
+      - name: Compile actual source dependencies and new proof modules
+        shell: bash
+        env:
+          PAPER: ${{ matrix.paper }}
+          TARGETS: ${{ matrix.targets }}
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          git rev-parse HEAD > receipts/head.txt
+          cp docs/lean-compiler-lock.json receipts/
+          base=research/nightfall/seven-paper-closure-20261125
+          old=research/nightfall/portfolio-proof-closure-20261125
+          ff=research/nightfall/formalization/finite_field
+          ps=research/nightfall/formalization/product_space
+          compile() {
+            local path="$1" m
+            m=$(basename "$path" .lean)
+            sha256sum "$path" >> receipts/SHA256SUMS
+            cp "$path" "/tmp/mathlib4/$m.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean") 2>&1 | tee "receipts/$m.log"
+          }
+          case "$PAPER" in
+            I-VI)
+              for M in QuadraticWynerLabelProjection QuadraticWynerSeedAverage QuadraticWynerSeedResampling QuadraticWynerQ2SourceBridge QuadraticWynerQuadraticProgress QuadraticWynerGoodQuery QuadraticWynerMeanIncrementProgress PaperVIProjectedCrux PaperVISquaredEnergy PaperVIRiskTree PaperVIStageBudget PaperVILinearCharge PaperVIMSETerminal PaperVIGeneralLatentTerminal; do
+                compile "$ps/$M.lean"
+              done ;;
+            III)
+              compile "$ff/ProductSphereObstruction.lean"
+              compile "$ff/ProductBUSphereExtension.lean"
+              compile "$old/PaperIIIReynolds.lean" ;;
+            V)
+              compile research/nightfall/local-certificates/20261125-iii-v/lean/T2DoubleLightCharge.lean
+              compile "$old/PaperVGroupedEnergy.lean"
+              for M in T2ZeroTripleOverlap31 T2ZeroTripleMultiplicity T2CorrectionSix T2CorrectionEventBridge; do
+                compile "$base/recovered/$M.lean"
+              done ;;
+          esac
+          for M in $TARGETS; do compile "$base/$M.lean"; done
+      - name: Fresh independent kernel replay
+        shell: bash
+        env:
+          TARGETS: ${{ matrix.targets }}
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          for M in $TARGETS; do
+            (cd /tmp/mathlib4 && lake env leanchecker -v "$M") 2>&1 | tee "receipts/$M.kernel.log"
+          done
+      - name: Named theorem audit
+        shell: bash
+        env:
+          TARGETS: ${{ matrix.targets }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re
+          from pathlib import Path
+          required={
+            'PaperIWynerAttainment':['wynerSet_compact','wynerGen_attained','route1_wyner_attained'],
+            'PaperIIAdaptiveDrift':['reciprocal_increment','inverse_energy_bound'],
+            'PaperIIISmoothApprox':['spherePair_compact','smooth_on_compact','exists_smooth_pureU','exists_smooth_pureV'],
+            'PaperIVNineSign':['exact_packet','actual_square_alphabet','two_sign_alphabet_count'],
+            'PaperVCorrectionComposition':['actual_correction_energy'],
+            'PaperVIReferenceTransfer':['dominated_mse','reference_general_mse','reference_quadratic_mse'],
+            'PaperVIIAdaptiveLikelihood':['planted_event_bound','transcript_event_lower','adaptive_likelihood_bound']}
+          allowed={'propext','Classical.choice','Quot.sound'}
+          for module in os.environ['TARGETS'].split():
+              log=Path('receipts',module+'.log').read_text()
+              reports=dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]",log))
+              reports.update({n:'' for n in re.findall(r"'([^']+)' does not depend on any axioms",log)})
+              for name in required[module]:
+                  matches=[n for n in reports if n.endswith('.'+name)]
+                  assert len(matches)==1,(module,name,matches)
+              for name,axioms in reports.items():
+                  assert {a.strip() for a in axioms.split(',') if a.strip()} <= allowed,(name,axioms)
+                  print('PASS',name,axioms)
+              assert 'sorryAx' not in log
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: seven-paper-${{ matrix.paper }}-source-closure-${{ github.run_id }}
+          path: receipts
+          retention-days: 90
