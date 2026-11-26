@@ -1,10 +1,300 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 77,
-  "as_of": "2026-11-25 UTC",
-  "source_commit": "31a71af99957e30a25111d1b328c43a94be04c12",
-  "scope": "Merge exact locally certified physical Born/energy source; retain all other custody rows.",
+  "revision": 78,
+  "as_of": "2026-11-26 UTC",
+  "source_commit": "f2dc4612c7395e6874277d46ea887a90ed4ad353",
+  "scope": "Reconcile all previously unregistered Lean source blobs on repaired main; preserve historical register, previous pending rows and evidence classifications. No automatic certification.",
   "sources": [
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderActiveFiber.lean",
+      "source_blob_sha": "da6b96dae8832bf2df0c865ca653da17108db6e9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderAnalyticTerminal.lean",
+      "source_blob_sha": "a7130dcdd490b808e247fd094a9af7c288f4ecbb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderAnchor.lean",
+      "source_blob_sha": "347a6b6f87cecf6d4258b5258ce9b4dbe1a1bed0",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderChaos.lean",
+      "source_blob_sha": "b1297c2d9b069b31c6b242a7c427795ce238cd6e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderCombinedTerminal.lean",
+      "source_blob_sha": "2109c1fe6b2aad3bc1494bee203daec99cb167b6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderCore.lean",
+      "source_blob_sha": "6952d3be61319f1869cf0ca62a61ab3f56e1ff1a",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderFourier.lean",
+      "source_blob_sha": "5de49ed7b55d81a6aced4c5ed860585014fc611b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderFullForm.lean",
+      "source_blob_sha": "ff97fda50112a4413dd0063cdb475c3e7cd748ae",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderGeometry.lean",
+      "source_blob_sha": "57eedb51d25055a562d0b7fece6d21b1c6d1f50b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderHammingBall.lean",
+      "source_blob_sha": "948aca25ab22cdff4fa00504e445a12f2a5f2b39",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderMask.lean",
+      "source_blob_sha": "b767cf3b3d95f1e565007d53df203d18fab4b054",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderMaskCost.lean",
+      "source_blob_sha": "bb0ed2224fbaf06ebadfd7e4af72d2bfcce46107",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderMixedNorm.lean",
+      "source_blob_sha": "3335f019bc58c5385ff7fcc61d0654cf26095057",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderMoments.lean",
+      "source_blob_sha": "8b92060584e219cd99a8bb8e9e590995a2a969ea",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderNearMask.lean",
+      "source_blob_sha": "c0ec4df03b4f3d2bbcb9a3124e690dbdf2d44740",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPaddedFiber.lean",
+      "source_blob_sha": "ea74a547ca3b1daefa3a070e0fe4d3900a257f15",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPatternAssembly.lean",
+      "source_blob_sha": "8b5a277c9f727a99fcdb07dc6d70caf1956d532d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPatternGeometry.lean",
+      "source_blob_sha": "001690af5b924b67e7865d89ff7823595a99b5d6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPatternMask.lean",
+      "source_blob_sha": "a86b2143e84a0a68066d1eabf3fd0a2e06c80d2f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPhysicalTerminal.lean",
+      "source_blob_sha": "bd2072c35fe1c708ca7c9a5fa56e7e1453682938",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderQuantumForm.lean",
+      "source_blob_sha": "56fa385f6419bdde56619be161330d0459872ec2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderQuantumPath.lean",
+      "source_blob_sha": "7124ff8d6d2f32f4dfa9b5579b2e7e70253a789e",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderRowBound.lean",
+      "source_blob_sha": "96ef92b8996643655fa32179674fe5858e4593e7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderTensorLocalization.lean",
+      "source_blob_sha": "3b41e8824c1e3ae21e1ece127d2c4e1484fce065",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderTensorSource.lean",
+      "source_blob_sha": "10a9c3b8ab7f54c7a3d2f65ea4c2d32eee0fb2ef",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderTerminal.lean",
+      "source_blob_sha": "aec901873a8ab7dc1216f2abcc60bd39ae13421b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderTruncation.lean",
+      "source_blob_sha": "2847a94dfabee50c21eaaa0070907a602fc4d068",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/T2ClippedEstimator.lean",
+      "source_blob_sha": "d3d5cb2e33da10dc8fabc2a761446623ebc31826",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/T2UniformParseval.lean",
+      "source_blob_sha": "93540f085cf1daf86905e5d1ff8db387252dd0ce",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
       "source_blob_sha": "a389e02a2b0bf67cd8336a7dad17f3a436b686e2",
@@ -908,8 +1198,8 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
-      "path": "research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean",
-      "source_blob_sha": "52a79d96044154ff8638d7a02e853b8255bd765f",
+      "path": "research/nightfall/formalization/observability/ActualSourceANOVA.lean",
+      "source_blob_sha": "29e98f82d8fe57497fc5d88b34cb7ea045146340",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -918,8 +1208,8 @@
       "receipt_scope": "Post-November-12 original-source Lean module on protected main. Source blob SHA recorded for custody only; separate current-pin declaration scope and CI receipt review required. This entry does not certify any source theorem or global novelty."
     },
     {
-      "path": "research/nightfall/formalization/observability/ActualSourceANOVA.lean",
-      "source_blob_sha": "29e98f82d8fe57497fc5d88b34cb7ea045146340",
+      "path": "research/nightfall/formalization/observability/ActualSourceAmplitudeRectangles.lean",
+      "source_blob_sha": "52a79d96044154ff8638d7a02e853b8255bd765f",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -4298,8 +4588,8 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/SubcubeSharpness.lean",
-      "source_blob_sha": "c83d903d08558e911c7ddaa601c1101638fbf730",
+      "path": "research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean",
+      "source_blob_sha": "9bb1796e391eea7a503bc9c1a4d794f08aba7470",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -4308,8 +4598,8 @@
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
     },
     {
-      "path": "research/nightfall/formalization/structural_information/SubcubeSharpScalar.lean",
-      "source_blob_sha": "9bb1796e391eea7a503bc9c1a4d794f08aba7470",
+      "path": "research/nightfall/formalization/structural_information/SubcubeSharpness.lean",
+      "source_blob_sha": "c83d903d08558e911c7ddaa601c1101638fbf730",
       "classification": "unreviewed-source",
       "ci_source_match_status": "no-verified-receipt",
       "historical_run": null,
@@ -4927,16 +5217,6 @@
       }
     },
     {
-      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean",
-      "source_blob_sha": "d361023a0ae311ce2ed3b83d828f2e42ef49c94f",
-      "classification": "unreviewed-source",
-      "ci_source_match_status": "no-verified-receipt",
-      "historical_run": null,
-      "historical_head": null,
-      "global_priority": "unverified",
-      "receipt_scope": "Merged finite C105.416 positive-support repair terminal, dated named Lean receipt is separately auditable. Pending historical ledger registration is source custody only; not novel/unrestricted infinite theorem."
-    },
-    {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportRepair.lean",
       "source_blob_sha": "0ef04eae9c92f18ae6da2d8382f178307585609e",
       "classification": "unreviewed-source",
@@ -4945,6 +5225,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact Git blob registered from merged protected-main source a8142aacf0ad2d4d7864d7693af679140da436a0. Custody only, not a new named-declaration Lean receipt, external review, or originality/priority certificate; any existing scoped compiler evidence is tracked separately."
+    },
+    {
+      "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteSupportedTerminal.lean",
+      "source_blob_sha": "d361023a0ae311ce2ed3b83d828f2e42ef49c94f",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Merged finite C105.416 positive-support repair terminal, dated named Lean receipt is separately auditable. Pending historical ledger registration is source custody only; not novel/unrestricted infinite theorem."
     },
     {
       "path": "research/nightfall/formalization/universal/InfinitePiQ2FiniteTestLabelRealization.lean",
@@ -5984,6 +6274,226 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "2026-11-22 exact source custody only, not a named theorem/axiom/kernel review. Separate scoped CI may exist; this historical ledger does not authenticate it. Peer review, all-L compilation and novelty remain unverified."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/AnnularBalancedDecode.lean",
+      "source_blob_sha": "f25c577674f8dc500348a00c05f5779c257564dd",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/ConditionalPhaseThreshold.lean",
+      "source_blob_sha": "b5e5a97237d595e0b37fedd4184e10c4ce9e0abb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/GenuinePrefixPhase.lean",
+      "source_blob_sha": "42b413b803b2db7c6839f2a46510594515b49dac",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/PaperIIILocalCheck.lean",
+      "source_blob_sha": "b49fda4e07263de84ef25ffc1c71b8c7093eaab2",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/ProductSphereCausalComposition.lean",
+      "source_blob_sha": "c995f887fbf035eb9d596c59d90ded047e2bd5f6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/ProductSphereObstruction.lean",
+      "source_blob_sha": "5a9f8e21d5086ccc0266006fb8e0feb170cf9840",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2ActualSource.lean",
+      "source_blob_sha": "f9d940259480e915463ea2b1938f74fe388b3c20",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2BornExpansion.lean",
+      "source_blob_sha": "4ea8b019f94100a73ddfccf502cc6b85f63a1714",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2BornWalsh.lean",
+      "source_blob_sha": "01b64a4f0ceaa8bdebca682a441e02e896d90c25",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2CertifiedTailBridge.lean",
+      "source_blob_sha": "b98859a9bb94285510cd0aa4bb67f0da9d0736c7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2ClippedEstimator.lean",
+      "source_blob_sha": "d3d5cb2e33da10dc8fabc2a761446623ebc31826",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2DoubleLightCharge.lean",
+      "source_blob_sha": "8fff500e96939279b2e53920e788d3880cfac40c",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2EffectOrder.lean",
+      "source_blob_sha": "c9b339be53d46f3aa5aa744aa97ae41d08655411",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2FirstStageLight.lean",
+      "source_blob_sha": "ee8d0581d5ad32cbb283cc624ca6e67cd77ca658",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2FrameEnergy.lean",
+      "source_blob_sha": "3b53d8a34136455d25faf5eb9308b80678f1be09",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2LightFrame.lean",
+      "source_blob_sha": "a95505116d16302595af47edf21150a4ecda96ae",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2PathEnergy.lean",
+      "source_blob_sha": "0f895d917c0756c8961dfb2b90a3f94c54a757f6",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2QuantumPhaseExpansion.lean",
+      "source_blob_sha": "ba6d7adc57934b13c181dc2f4928107d56d52f92",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2SecondStageLight.lean",
+      "source_blob_sha": "9813f549146af580bbec11ea55568642249247cb",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2UniformEstimator.lean",
+      "source_blob_sha": "6259a20ec01c48c9120b051b20164ec552df866d",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2UniformParseval.lean",
+      "source_blob_sha": "93540f085cf1daf86905e5d1ff8db387252dd0ce",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2WalshTranscript.lean",
+      "source_blob_sha": "d02a7b4e3352c57f020127e79643322a426e45aa",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
     },
     {
       "path": "research/nightfall/pr1000-phase-retrieval-robustness/CausalCollisionAlgebra.lean",
