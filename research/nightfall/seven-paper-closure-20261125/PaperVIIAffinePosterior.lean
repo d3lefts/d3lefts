@@ -123,7 +123,10 @@ noncomputable def untouchedFiberEquiv (t : Tree K V) (s : Secret K V)
     (U : Submodule K V) (hd : Disjoint (pathSpan t s) U)
     (z w : Secret K U) : RestrictionFiber t s U z ≃ RestrictionFiber t s U w := by
   classical
-  obtain ⟨d,hdker,hdres⟩ := untouched_lift (pathSpan t s) U hd (w-z)
+  let h := untouched_lift (pathSpan t s) U hd (w-z)
+  let d := Classical.choose h
+  have hdker := (Classical.choose_spec h).1
+  have hdres := (Classical.choose_spec h).2
   have hshift (r : Secret K V) (hr : trace t r = trace t s) :
       trace t (r+d) = trace t s := by
     apply (trace_eq_iff_annihilator t s (r+d)).mpr
@@ -229,5 +232,56 @@ theorem pathSpan_rank_le_length (t : Tree K V) (s : Secret K V) :
 #print axioms untouched_equal_counts
 #print axioms touched_rank_bound
 #print axioms pathSpan_rank_le_length
+
+
+/-- Full leaf is the product of the block dual and one fixed restriction
+fiber. This exact cardinal identity is the uniform posterior probability
+statement for a finite uniform prior. -/
+noncomputable def untouchedLeafEquiv (t : Tree K V) (s : Secret K V)
+    (U : Submodule K V) (hd : Disjoint (pathSpan t s) U)
+    (z : Secret K U) :
+    {r : Secret K V // trace t r = trace t s} ≃
+      (Secret K U × RestrictionFiber t s U z) := by
+  classical
+  let e := fun w => untouchedFiberEquiv t s U hd w z
+  refine {
+    toFun := fun r => (U.dualRestrict r.1, e (U.dualRestrict r.1) ⟨r.1,r.2,rfl⟩)
+    invFun := fun p => ⟨((e p.1).symm p.2).1, ((e p.1).symm p.2).2.1⟩
+    left_inv := ?_
+    right_inv := ?_ }
+  · intro r
+    apply Subtype.ext
+    change (((e (U.dualRestrict r.1)).symm
+      (e (U.dualRestrict r.1) ⟨r.1,r.2,rfl⟩)) : RestrictionFiber t s U
+      (U.dualRestrict r.1)).1 = r.1
+    rw [Equiv.symm_apply_apply]
+  · rintro ⟨w,v⟩
+    let a := (e w).symm v
+    have ha : U.dualRestrict a.1 = w := a.2.2
+    change (U.dualRestrict a.1, e (U.dualRestrict a.1) ⟨a.1,a.2.1,rfl⟩) = (w,v)
+    have hh : ∀ (w' : Secret K U) (hw' : U.dualRestrict a.1 = w'),
+        (U.dualRestrict a.1, e (U.dualRestrict a.1) ⟨a.1,a.2.1,rfl⟩) =
+          (w', e w' ⟨a.1,a.2.1,hw'⟩) := by
+      intro w' hw'
+      cases hw'
+      rfl
+    rw [hh w ha]
+    have heq : (⟨a.1,a.2.1,ha⟩ : RestrictionFiber t s U w) = a := Subtype.ext rfl
+    rw [heq]
+    simp [a]
+
+theorem untouched_uniform_cardinality (t : Tree K V) (s : Secret K V)
+    (U : Submodule K V) (hd : Disjoint (pathSpan t s) U) (z : Secret K U) :
+    Nat.card {r : Secret K V // trace t r = trace t s} =
+      Nat.card (Secret K U) * Nat.card (RestrictionFiber t s U z) := by
+  rw [Nat.card_congr (untouchedLeafEquiv t s U hd z), Nat.card_prod]
+
+theorem touched_path_bound {ι : Type*} [Fintype ι] [Module.Finite K V]
+    (t : Tree K V) (s : Secret K V) (U : ι → Submodule K V) (hU : iSupIndep U) :
+    Nat.card {i : ι // pathSpan t s ⊓ U i ≠ ⊥} ≤ (trace t s).length :=
+  (touched_rank_bound (pathSpan t s) U hU).trans (pathSpan_rank_le_length t s)
+
+#print axioms untouched_uniform_cardinality
+#print axioms touched_path_bound
 
 end Nightfall.PaperVIIAffinePosterior
