@@ -1,0 +1,79 @@
+name: NIGHTFALL Paper I independent certification
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/paper-i-independent-20261125/**'
+      - '.github/workflows/nightfall-paper-i-independent-certification.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  paper-i:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Restore exact checkpoint or rebuild on GitHub runner
+        uses: ./.github/actions/setup-nightfall-paper-vi-dependencies
+        with:
+          receipts: receipts
+          require-warm: 'false'
+      - name: Compile recovered and newly composed actual theorem sources
+        shell: bash
+        env:
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -uo pipefail
+          mkdir -p receipts
+          git rev-parse HEAD > receipts/head.txt
+          ps=research/nightfall/formalization/product_space
+          si=research/nightfall/formalization/structural_information
+          old=research/nightfall/paper-i-independent-20261125
+          base=research/nightfall/paper-i-independent-20261125
+          failed=0
+          compile() {
+            local path="$1" m
+            m=$(basename "$path" .lean)
+            sha256sum "$path" >> receipts/SHA256SUMS
+            cp "$path" "/tmp/mathlib4/$m.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean") 2>&1 | tee "receipts/$m.log"
+          }
+          replay() {
+            local m="$1"
+            (cd /tmp/mathlib4 && lake env leanchecker -v "$m") 2>&1 | tee "receipts/$m.kernel.log"
+          }
+          target() {
+            local p="$1" m
+            m=$(basename "$p" .lean)
+            if compile "$p" && replay "$m"; then echo "$m PASS" | tee -a receipts/status.txt
+            else echo "$m FAIL" | tee -a receipts/status.txt; failed=1; fi
+          }
+          target "$old/PaperIWynerAttainment.lean"
+          target "$ps/Route1AbstractLatentPushforward.lean"
+          target "$base/recovered/Route1FiniteSampling.lean"
+          target "$base/recovered/Route1DiagonalWyner.lean"
+          for M in QueryLocalWynerCompiler QueryLocalWynerDegree QueryLocalWynerTerminal; do
+            compile "$base/recovered/$M.lean" || failed=1
+          done
+          target "$base/recovered/QueryLocalWynerComplete.lean"
+          for M in Route1DensityDomination QuantumCircuitPaths QuantumPathDegree QuantumCircuitNormalization QuantumCircuitSimulation; do
+            compile "$ps/$M.lean" || failed=1
+          done
+          compile research/formalization_candidates/route1/Route1WynerConverse.lean || failed=1
+          target "$base/recovered/QuantumInformationBarrier.lean"
+          exit "$failed"
+      - name: Standard-axiom and named terminal audit
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/paper-i-independent-20261125/audit.py route1 receipts
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: paper-i-independent-${{ github.run_id }}
+          path: receipts
+          retention-days: 90
