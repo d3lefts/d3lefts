@@ -69,7 +69,13 @@ theorem actual_correction_energy (h₂ : ∀ x : G, x+x=0)
       split <;> split <;> norm_num
   have h := correction_grouped_energy S A B C D Z freq c (M : ℝ) eta
     (Nat.cast_nonneg M) ha hb hc hd hdouble hcard
-  simpa only [hF] using h
+  have he : (∑ z ∈ Z, (∑ t ∈ S.filter (fun t => freq t=z), c t)^2) =
+      ∑ z ∈ Z, (∑ t ∈ eventCorrectionFiber R z, c t)^2 := by
+    apply Finset.sum_congr rfl
+    intro z hz
+    rw [hF z hz]
+  rw [he] at h
+  exact h
 
 #print axioms actual_correction_energy
 end Nightfall.PaperVCorrectionComposition

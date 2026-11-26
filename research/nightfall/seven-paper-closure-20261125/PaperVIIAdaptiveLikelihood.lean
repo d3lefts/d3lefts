@@ -26,8 +26,7 @@ theorem planted_event_bound (P D : S → ℝ) (B : Finset S)
     apply Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul B
       (fun s _ => hP s) (fun s _ => mul_nonneg (hP s) (sq_nonneg _))
     intro s _
-    ring_nf
-    exact le_rfl
+    ring_nf <;> exact le_rfl
   have hsub : (∑ s ∈ B, P s*(D s)^2) ≤ C :=
     (Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ B)
       (fun s _ _ => mul_nonneg (hP s) (sq_nonneg _))).trans hsecond
