@@ -1,0 +1,75 @@
+name: NIGHTFALL Paper V independent physical proof continuation
+on:
+  push:
+    branches:
+      - nightfall/paper-v-independent-certification-20261125
+    paths:
+      - '.github/workflows/nightfall-paper-v-independent.yml'
+      - 'research/nightfall/papers-i-v-vi-integration-20261125/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  physical-two-query:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile physical paths, grouped correction and estimator
+        shell: bash
+        env:
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          git rev-parse HEAD > receipts/head.txt
+          loc=research/nightfall/local-certificates/20261125-iii-v/lean
+          old=research/nightfall/portfolio-proof-closure-20261125
+          seven=research/nightfall/seven-paper-closure-20261125
+          base=research/nightfall/papers-i-v-vi-integration-20261125
+          compile() {
+            local path="$1" m
+            m=$(basename "$path" .lean)
+            sha256sum "$path" >> receipts/SHA256SUMS
+            cp "$path" "/tmp/mathlib4/$m.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean") 2>&1 | tee "receipts/$m.log"
+          }
+          for M in T2LightFrame T2SecondStageLight T2FirstStageLight T2FrameEnergy T2EffectOrder T2PathEnergy T2ActualSource T2QuantumPhaseExpansion T2BornExpansion T2WalshTranscript T2ClippedEstimator T2UniformParseval T2UniformEstimator T2BornWalsh T2CertifiedTailBridge T2DoubleLightCharge; do
+            compile "$loc/$M.lean"
+          done
+          compile "$old/PaperVGroupedEnergy.lean"
+          for M in T2ZeroTripleOverlap31 T2ZeroTripleMultiplicity T2CorrectionSix T2CorrectionEventBridge; do
+            compile "$seven/recovered/$M.lean"
+          done
+          compile "$seven/PaperVCorrectionComposition.lean"
+          compile "$base/PaperVPhysicalEnergy.lean"
+          compile "$base/PaperVPhysicalDoubleLight.lean"
+          for M in T2CertifiedTailBridge PaperVCorrectionComposition PaperVPhysicalEnergy PaperVPhysicalDoubleLight; do
+            (cd /tmp/mathlib4 && lake env leanchecker -v "$M") 2>&1 | tee "receipts/$M.kernel.log"
+          done
+      - name: Standard-axiom and named terminal audit
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 research/nightfall/papers-i-v-vi-integration-20261125/audit.py physical receipts
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          log = Path('receipts/PaperVPhysicalDoubleLight.log').read_text()
+          matches = re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]", log)
+          found = [(n,a) for n,a in matches if n.endswith('.physical_double_light_grouped')]
+          assert len(found) == 1, matches
+          assert {a.strip() for a in found[0][1].split(',') if a.strip()} <= {'propext','Classical.choice','Quot.sound'}
+          assert 'sorryAx' not in log
+          print('PASS', found[0])
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: paper-v-integrated-${{ github.run_id }}
+          path: receipts
+          retention-days: 90
