@@ -35,11 +35,11 @@
     "upstream_mathlib_repository": "https://github.com/leanprover-community/mathlib4"
   },
   "summary": {
-    "custody_sources": 618,
+    "custody_sources": 690,
     "historical_source_records": 67,
-    "pending_legacy_custody": 551,
-    "source_paths_with_exact_blob_and_receipt_reference": 99,
-    "pending_source_paths_with_receipt_leads": 72,
+    "pending_legacy_custody": 623,
+    "source_paths_with_exact_blob_and_receipt_reference": 108,
+    "pending_source_paths_with_receipt_leads": 75,
     "known_record_refs": 209,
     "distinct_referenced_runs": 90,
     "observed_job_modules": 26,
@@ -84,6 +84,267 @@
       "evidence": [
         "historical:research/nightfall/2026-11-universal-spectral-observability/AdaptiveBudget.lean"
       ]
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderActiveFiber.lean",
+      "blob": "da6b96dae8832bf2df0c865ca653da17108db6e9",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderAnalyticTerminal.lean",
+      "blob": "a7130dcdd490b808e247fd094a9af7c288f4ecbb",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderAnchor.lean",
+      "blob": "347a6b6f87cecf6d4258b5258ce9b4dbe1a1bed0",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderChaos.lean",
+      "blob": "b1297c2d9b069b31c6b242a7c427795ce238cd6e",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderCombinedTerminal.lean",
+      "blob": "2109c1fe6b2aad3bc1494bee203daec99cb167b6",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderCore.lean",
+      "blob": "6952d3be61319f1869cf0ca62a61ab3f56e1ff1a",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderFourier.lean",
+      "blob": "5de49ed7b55d81a6aced4c5ed860585014fc611b",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderFullForm.lean",
+      "blob": "ff97fda50112a4413dd0063cdb475c3e7cd748ae",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderGeometry.lean",
+      "blob": "57eedb51d25055a562d0b7fece6d21b1c6d1f50b",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderHammingBall.lean",
+      "blob": "948aca25ab22cdff4fa00504e445a12f2a5f2b39",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderMask.lean",
+      "blob": "b767cf3b3d95f1e565007d53df203d18fab4b054",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderMaskCost.lean",
+      "blob": "bb0ed2224fbaf06ebadfd7e4af72d2bfcce46107",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderMixedNorm.lean",
+      "blob": "3335f019bc58c5385ff7fcc61d0654cf26095057",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderMoments.lean",
+      "blob": "8b92060584e219cd99a8bb8e9e590995a2a969ea",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderNearMask.lean",
+      "blob": "c0ec4df03b4f3d2bbcb9a3124e690dbdf2d44740",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPaddedFiber.lean",
+      "blob": "ea74a547ca3b1daefa3a070e0fe4d3900a257f15",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPatternAssembly.lean",
+      "blob": "8b5a277c9f727a99fcdb07dc6d70caf1956d532d",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPatternGeometry.lean",
+      "blob": "001690af5b924b67e7865d89ff7823595a99b5d6",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPatternMask.lean",
+      "blob": "a86b2143e84a0a68066d1eabf3fd0a2e06c80d2f",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderPhysicalTerminal.lean",
+      "blob": "bd2072c35fe1c708ca7c9a5fa56e7e1453682938",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderQuantumForm.lean",
+      "blob": "56fa385f6419bdde56619be161330d0459872ec2",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderQuantumPath.lean",
+      "blob": "7124ff8d6d2f32f4dfa9b5579b2e7e70253a789e",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderRowBound.lean",
+      "blob": "96ef92b8996643655fa32179674fe5858e4593e7",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderTensorLocalization.lean",
+      "blob": "3b41e8824c1e3ae21e1ece127d2c4e1484fce065",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderTensorSource.lean",
+      "blob": "10a9c3b8ab7f54c7a3d2f65ea4c2d32eee0fb2ef",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderTerminal.lean",
+      "blob": "aec901873a8ab7dc1216f2abcc60bd39ae13421b",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderTruncation.lean",
+      "blob": "2847a94dfabee50c21eaaa0070907a602fc4d068",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/T2ClippedEstimator.lean",
+      "blob": "d3d5cb2e33da10dc8fabc2a761446623ebc31826",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/all-order-tensor-physical-20261125/src/T2UniformParseval.lean",
+      "blob": "93540f085cf1daf86905e5d1ff8db387252dd0ce",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
     },
     {
       "path": "research/nightfall/evaluations/certcustody-d4/candidate/fixture/sources/Alpha.lean",
@@ -709,6 +970,33 @@
     {
       "path": "research/nightfall/formalization/finite_field/ProductSphereObstruction.lean",
       "blob": "27e5199f32d22edf51f8c52b19560bb4399c6df7",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhaseAdaptiveTree.lean",
+      "blob": "83cb2a4bd67f0a47da3efe35baa97443e7fb90b4",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhaseIdentity.lean",
+      "blob": "0ab3b7f81a4cf312cbecf85d5c9d1c90152ea3b8",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/RankPhasePivot.lean",
+      "blob": "e943fd2ef95349bbfa05675dbc7a8260c19d01da",
       "custody": "pending",
       "classification": "unreviewed-source",
       "legacy_run": null,
@@ -3264,6 +3552,89 @@
       ]
     },
     {
+      "path": "research/nightfall/formalization/product_space/PaperVIGeneralLatentTerminal.lean",
+      "blob": "2b012603ad052a6ae586ae6ce454553307f0ed3a",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-PaperVIGeneralLatentTerminal"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVILinearCharge.lean",
+      "blob": "8bab32205aa2c45a540b9c321f33006b313b3217",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [
+        45644805760
+      ],
+      "evidence": [
+        "observed:pr1201-PaperVILinearCharge"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIMSETerminal.lean",
+      "blob": "2f2aff5936b274ca3e59ff5c2be0e4d60ecb8b5f",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-PaperVIMSETerminal"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIProjectedCrux.lean",
+      "blob": "316611344a479dd78db16a3dda4a48ea5eb49db8",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-PaperVIProjectedCrux"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIRiskTree.lean",
+      "blob": "c831bb9672c1f638df09278211f9ef091969414f",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [
+        45626815434
+      ],
+      "evidence": [
+        "observed:pr1201-PaperVIRiskTree"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVISquaredEnergy.lean",
+      "blob": "1158e8fdf72f0521baba5afeefc2127d9ddb5f77",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [
+        45557426930
+      ],
+      "evidence": [
+        "observed:pr1201-PaperVISquaredEnergy"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/PaperVIStageBudget.lean",
+      "blob": "e2e2192f5f65671b14ce1e1b6fa981434cb9c2dc",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-PaperVIStageBudget"
+      ]
+    },
+    {
       "path": "research/nightfall/formalization/product_space/PinnedConditionalStability.lean",
       "blob": "f063086c3bd294c4db5be905fd7efbeeb1ce652e",
       "custody": "pending",
@@ -3383,6 +3754,17 @@
       "receipt_leads": [],
       "evidence": [
         "observed:pr1200-QuadraticWynerLabelProjection"
+      ]
+    },
+    {
+      "path": "research/nightfall/formalization/product_space/QuadraticWynerMeanIncrementProgress.lean",
+      "blob": "01203c0002aff894e76b242da9efee9a28955d33",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1201-QuadraticWynerMeanIncrementProgress"
       ]
     },
     {
@@ -4412,6 +4794,17 @@
       ]
     },
     {
+      "path": "research/nightfall/formalization/structural_information/PaperVITensorTerminal.lean",
+      "blob": "f540943e5ebdba036d688619745a2c935db8f7fd",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": [
+        "observed:pr1212-PaperVITensorTerminal"
+      ]
+    },
+    {
       "path": "research/nightfall/formalization/structural_information/PhaseBlockActualCircuit.lean",
       "blob": "1d5bfcf6f78f2eef4b689aca1a1d4b69039bb9e6",
       "custody": "pending",
@@ -4630,6 +5023,87 @@
       "evidence": [
         "observed:pr1199-SynthesisTensorDistance"
       ]
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2ActualSource.lean",
+      "blob": "f9d940259480e915463ea2b1938f74fe388b3c20",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2BornExpansion.lean",
+      "blob": "4ea8b019f94100a73ddfccf502cc6b85f63a1714",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2EffectOrder.lean",
+      "blob": "c9b339be53d46f3aa5aa744aa97ae41d08655411",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FirstStageLight.lean",
+      "blob": "ee8d0581d5ad32cbb283cc624ca6e67cd77ca658",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2FrameEnergy.lean",
+      "blob": "3b53d8a34136455d25faf5eb9308b80678f1be09",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2LightFrame.lean",
+      "blob": "a95505116d16302595af47edf21150a4ecda96ae",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2PathEnergy.lean",
+      "blob": "0f895d917c0756c8961dfb2b90a3f94c54a757f6",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2QuantumPhaseExpansion.lean",
+      "blob": "ba6d7adc57934b13c181dc2f4928107d56d52f92",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/structural_information/T2SecondStageLight.lean",
+      "blob": "9813f549146af580bbec11ea55568642249247cb",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
     },
     {
       "path": "research/nightfall/formalization/structural_information/TensorCircuitSupportBudget.lean",
@@ -5945,6 +6419,204 @@
     {
       "path": "research/nightfall/formalization/vendor/aaronson_ambainis/AaronsonAmbainis/TwoSided/Overlap.lean",
       "blob": "c3b319abe096d528d3e490aa7627c68c05ba70a4",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/AnnularBalancedDecode.lean",
+      "blob": "f25c577674f8dc500348a00c05f5779c257564dd",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/ConditionalPhaseThreshold.lean",
+      "blob": "b5e5a97237d595e0b37fedd4184e10c4ce9e0abb",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/GenuinePrefixPhase.lean",
+      "blob": "42b413b803b2db7c6839f2a46510594515b49dac",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/PaperIIILocalCheck.lean",
+      "blob": "b49fda4e07263de84ef25ffc1c71b8c7093eaab2",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/ProductSphereCausalComposition.lean",
+      "blob": "c995f887fbf035eb9d596c59d90ded047e2bd5f6",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/ProductSphereObstruction.lean",
+      "blob": "5a9f8e21d5086ccc0266006fb8e0feb170cf9840",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2ActualSource.lean",
+      "blob": "f9d940259480e915463ea2b1938f74fe388b3c20",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2BornExpansion.lean",
+      "blob": "4ea8b019f94100a73ddfccf502cc6b85f63a1714",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2BornWalsh.lean",
+      "blob": "01b64a4f0ceaa8bdebca682a441e02e896d90c25",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2CertifiedTailBridge.lean",
+      "blob": "b98859a9bb94285510cd0aa4bb67f0da9d0736c7",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2ClippedEstimator.lean",
+      "blob": "d3d5cb2e33da10dc8fabc2a761446623ebc31826",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2DoubleLightCharge.lean",
+      "blob": "8fff500e96939279b2e53920e788d3880cfac40c",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2EffectOrder.lean",
+      "blob": "c9b339be53d46f3aa5aa744aa97ae41d08655411",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2FirstStageLight.lean",
+      "blob": "ee8d0581d5ad32cbb283cc624ca6e67cd77ca658",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2FrameEnergy.lean",
+      "blob": "3b53d8a34136455d25faf5eb9308b80678f1be09",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2LightFrame.lean",
+      "blob": "a95505116d16302595af47edf21150a4ecda96ae",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2PathEnergy.lean",
+      "blob": "0f895d917c0756c8961dfb2b90a3f94c54a757f6",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2QuantumPhaseExpansion.lean",
+      "blob": "ba6d7adc57934b13c181dc2f4928107d56d52f92",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2SecondStageLight.lean",
+      "blob": "9813f549146af580bbec11ea55568642249247cb",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2UniformEstimator.lean",
+      "blob": "6259a20ec01c48c9120b051b20164ec552df866d",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2UniformParseval.lean",
+      "blob": "93540f085cf1daf86905e5d1ff8db387252dd0ce",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/local-certificates/20261125-iii-v/lean/T2WalshTranscript.lean",
+      "blob": "d02a7b4e3352c57f020127e79643322a426e45aa",
       "custody": "pending",
       "classification": "unreviewed-source",
       "legacy_run": null,
@@ -8608,7 +9280,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVILinearCharge",
@@ -8635,7 +9307,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVIMSETerminal",
@@ -8662,7 +9334,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVIProjectedCrux",
@@ -8688,7 +9360,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVIRiskTree",
@@ -8716,7 +9388,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVISquaredEnergy",
@@ -8742,7 +9414,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-PaperVIStageBudget",
@@ -8767,7 +9439,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1201-QuadraticWynerMeanIncrementProgress",
@@ -8792,7 +9464,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1212-PaperVITensorTerminal",
@@ -8817,7 +9489,7 @@
       "unresolved_dependencies": [],
       "links": [],
       "promotion_authorized": false,
-      "source_match": "off-main-or-out-of-scope"
+      "source_match": "current-custody-blob-match"
     },
     {
       "id": "observed:pr1213-Q7BlockerPacking",
@@ -10827,7 +11499,7 @@
   "input_blobs": {
     "active": "4101ef99a051400010fd7f37bcc40733664f3678",
     "historical": "9c33680c828ba927de1963b831a6f0de2ee0b480",
-    "pending": "c5a9c6d08faa45ce7c1f242ef77775c706687f55",
+    "pending": "5d435ca57b925008d2388dd30ff78ce0a9694b2a",
     "recent": "94e3ccb394f2c210daa01646202ea9679c1c9ade",
     "v2": "b8ac83faa21946953b32688cdba023f50c55d674",
     "reconciled": "8b98c8dd5d7c7d8534855bdbeb140146ff01c393",
