@@ -1,0 +1,90 @@
+name: NIGHTFALL III V VII new proof closure
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/portfolio-proof-closure-20261125/**'
+      - '.github/workflows/nightfall-portfolio-proof-closure.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compile:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - paper: III
+            module: PaperIIIReynolds
+            dependency: research/nightfall/formalization/finite_field/ProductSphereObstruction.lean
+            targets: pureU_smooth pureV_smooth pureU_uniform_error pureV_uniform_error
+          - paper: V
+            module: PaperVGroupedEnergy
+            dependency: research/nightfall/local-certificates/20261125-iii-v/lean/T2DoubleLightCharge.lean
+            targets: grouped_sq_bound primitive_grouped_energy correction_grouped_energy
+          - paper: VII
+            module: PaperVIIEliminationBudget
+            dependency: ''
+            targets: errorMass_exact screenWork_bound validationWork_formula total_marginal_work_bound
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile new actual proof source and direct dependency
+        shell: bash
+        env:
+          MODULE: ${{ matrix.module }}
+          DEP: ${{ matrix.dependency }}
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          git rev-parse HEAD > receipts/head.txt
+          cp docs/lean-compiler-lock.json receipts/
+          compile() {
+            local path="$1" m
+            m=$(basename "$path" .lean)
+            sha256sum "$path" >> receipts/SHA256SUMS
+            cp "$path" "/tmp/mathlib4/$m.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean") 2>&1 | tee "receipts/$m.log"
+          }
+          if [[ -n "$DEP" ]]; then compile "$DEP"; fi
+          compile "research/nightfall/portfolio-proof-closure-20261125/$MODULE.lean"
+      - name: Fresh kernel replay
+        shell: bash
+        env:
+          MODULE: ${{ matrix.module }}
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && lake env leanchecker -v "$MODULE") 2>&1 | tee receipts/kernel.log
+      - name: Named theorem axiom audit
+        shell: bash
+        env:
+          MODULE: ${{ matrix.module }}
+          TARGETS: ${{ matrix.targets }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os,re
+          from pathlib import Path
+          log = Path('receipts',os.environ['MODULE']+'.log').read_text()
+          allowed = {'propext','Classical.choice','Quot.sound'}
+          reports = dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]", log))
+          reports.update({n:'' for n in re.findall(r"'([^']+)' does not depend on any axioms",log)})
+          for target in os.environ['TARGETS'].split():
+              names = [n for n in reports if n.endswith('.'+target)]
+              assert len(names)==1,(target,names)
+          for name, row in reports.items():
+              assert {a.strip() for a in row.split(',') if a.strip()} <= allowed,(name,row)
+              print('PASS',name,row)
+          assert 'sorryAx' not in log
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: paper-${{ matrix.paper }}-new-proof-${{ github.run_id }}
+          path: receipts
+          retention-days: 90
