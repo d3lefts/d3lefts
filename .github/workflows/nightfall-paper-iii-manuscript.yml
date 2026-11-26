@@ -1,0 +1,226 @@
+name: NIGHTFALL Paper III manuscript-wide Lean certification
+on:
+  pull_request:
+    paths:
+      - 'research/nightfall/paper-iii-certification/**'
+      - '.github/workflows/nightfall-paper-iii-manuscript.yml'
+      - 'research/nightfall/formalization/finite_field/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: paper-iii-manuscript-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: false
+jobs:
+  global-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Recover byte-exact turnover and physical-atlas proof sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/nightfall/formalization/finite_field
+          echo '9634ca0470e1d38c78c1333a73f5b3e469f3d38b7143d99613cabeed6efa4959  research/nightfall/formalization/finite_field/paper-iii-atlas-source.tar.gz' | sha256sum -c -
+          tar -xzf "research/nightfall/formalization/finite_field/paper-iii-atlas-source.tar.gz" -C "$src" ProductBUTurnoverChart.lean ProductBUPhysicalAtlas.lean
+          (cd "$src" && printf '%s\n' 'b8583ba7e78a1276611a8af91b328141d1643dafc9721d4036a632b12898c3e7  ProductBUTurnoverChart.lean' 'bb4c7f4e66030d19f7252597c3bfd6c5634828387af004df6a57284509ee7f1a  ProductBUPhysicalAtlas.lean' | sha256sum -c -)
+      - name: Exact ATLAS source retrieval and full 1D classification closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/bu-global-boundary
+          git clone --filter=blob:none https://github.com/facebookresearch/atlas-lean.git /tmp/atlas-lean
+          git -C /tmp/atlas-lean checkout --detach 7857a2e8c32088b5002f7cafe29a21d936baf704
+          test "$(git -C /tmp/atlas-lean rev-parse HEAD)" = "7857a2e8c32088b5002f7cafe29a21d936baf704"
+          for M in             MathlibExt/MeasureTheory/Measure/ImageNull             MathlibExt/Geometry/Manifold/Sard             MathlibExt/Geometry/Manifold/ParametricSard             MathlibExt/Geometry/Manifold/RiemannianMetricExistence             MathlibExt/Geometry/Manifold/OneDimensional; do
+            dst="/tmp/mathlib4/$M.lean"
+            mkdir -p "$(dirname "$dst")" "/tmp/mathlib4/.lake/build/lib/lean/$(dirname "$M")"
+            cp "/tmp/atlas-lean/$M.lean" "$dst"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$dst"
+            sha256sum "$dst" >> receipts/bu-global-boundary/ATLAS-SHA256SUMS
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-global-boundary/$(basename "$M").log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-global-boundary/$(basename "$M").log"
+          done
+      - name: Compile original IVT and the global boundary assembly theorem
+        shell: bash
+        run: |
+          set -euo pipefail
+          for M in ProductSphereObstruction ProductBUSphereExtension ProductBUParityReference ProductBUOrbitCertificate ProductBUSphereCompact ProductBUCompactFiber ProductBUFiberFreeAction ProductBUIntervalStabilizer ProductBUComponentOrbit ProductBUActualFiberOrbit ProductBUGlobalBoundary ProductBUComponentClassification ProductBUComponentEndpoints ProductBUGlobalAssembly ProductBUTimeZeroOrbit ProductBUFinalGeometricReduction ProductBUReferenceFace ProductBUAxisBoundaryTerminal ProductBUPerturbation ProductBUAugmentedRank ProductBUConcreteHomotopy ProductBUTurnoverChart ProductBUPhysicalAtlas ProductBUAtlasAssembly; do
+            src="research/nightfall/formalization/finite_field/$M.lean"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$src"
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/bu-global-boundary/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/bu-global-boundary/$M.log"
+          done
+      - name: Check named theorem signatures and standard axiom closure
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          s=Path("receipts/bu-global-boundary/ProductBUGlobalBoundary.log").read_text()
+          for suffix in ("boundary_component_diffeomorphic_closed_interval",
+                         "boundary_component_homeomorphic_closed_interval",
+                         "no_free_homeomorphism_of_compact_boundary_component"):
+              name="Nightfall.ProductBUGlobalBoundary."+suffix
+              assert name in s, ("MISSING_DECLARATION",name)
+              hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s,re.S)
+              if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+              else:
+                  assert f"'{name}' does not depend on any axioms" in s,("NO_AX_RECEIPT",name)
+                  a=set()
+              assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+              print("PASS named Lean theorem",name,sorted(a))
+          s2=Path("receipts/bu-global-boundary/ProductBUComponentClassification.log").read_text()
+          name="Nightfall.ProductBUComponentClassification.boundary_connected_component_is_interval"
+          assert name in s2, ("MISSING_COMPONENT_DECLARATION",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s2,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s2,("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS component interval classification",sorted(a))
+          s3=Path("receipts/bu-global-boundary/ProductBUComponentEndpoints.log").read_text()
+          name="Nightfall.ProductBUComponentEndpoints.exists_second_endpoint_of_smooth_boundary_component"
+          assert name in s3, ("MISSING_SECOND_ENDPOINT",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s3,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s3, ("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS actual component second boundary endpoint",sorted(a))
+          s4=Path("receipts/bu-global-boundary/ProductBUGlobalAssembly.log").read_text()
+          name="Nightfall.ProductBUGlobalAssembly.actual_smooth_four_orbit_zero_fiber_impossible"
+          assert name in s4, ("MISSING_GLOBAL_COMPOSITION",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",s4,re.S)
+          if hit: a={x.strip() for x in hit.group(1).split(",") if x.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in s4, ("NO_AX_RECEIPT",name)
+              a=set()
+          assert a <= {"propext","Classical.choice","Quot.sound"},(name,a)
+          print("PASS actual global zero-fiber composition",sorted(a))
+          for log,suffix in [
+              ("ProductBUTimeZeroOrbit.log","Nightfall.ProductBUTimeZeroOrbit.time_zero_real_fiber_one_orbit"),
+              ("ProductBUFinalGeometricReduction.log","Nightfall.ProductBUFinalGeometricReduction.actual_smooth_time_boundary_zero_fiber_impossible"),
+          ]:
+              data=Path("receipts/bu-global-boundary/"+log).read_text()
+              assert suffix in data,("MISSING_FINAL_COMPONENT",suffix)
+              hit=re.search(r"'"+re.escape(suffix)+r"' depends on axioms:\s*\[([^\]]*)\]",data,re.S)
+              if hit: axioms={v.strip() for v in hit.group(1).split(",") if v.strip()}
+              else:
+                  assert f"'{suffix}' does not depend on any axioms" in data,("NO_AX_RECEIPT",suffix)
+                  axioms=set()
+              assert axioms <= {"propext","Classical.choice","Quot.sound"},(suffix,axioms)
+              assert "sorryAx" not in data
+              print("PASS source-explicit final geometry declaration",suffix,sorted(axioms))
+          data=Path("receipts/bu-global-boundary/ProductBUAxisBoundaryTerminal.log").read_text()
+          name="Nightfall.ProductBUAxisBoundaryTerminal.actual_smooth_reference_boundary_impossible"
+          assert name in data, ("MISSING_BOUNDARY_POINT_FREE_TERMINAL",name)
+          hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",data,re.S)
+          if hit: axioms={v.strip() for v in hit.group(1).split(",") if v.strip()}
+          else:
+              assert f"'{name}' does not depend on any axioms" in data, ("MISSING_AXIOM_RECEIPT",name)
+              axioms=set()
+          assert axioms <= {"propext","Classical.choice","Quot.sound"},(name,axioms)
+          print("PASS real signed-axis boundary-point-free global terminal",sorted(axioms))
+          assert all("sorryAx" not in x for x in (s,s2,s3,s4,data))
+          print("Prior global boundary assembly is conditional. New geometry terminal checked in next step; full ProductSphereZero not claimed.")
+          PY
+      - name: Named new geometry terminal and fresh kernel check
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v ProductBUAtlasAssembly) 2>&1 | tee receipts/bu-global-boundary/geometry-kernel.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          d=Path("receipts/bu-global-boundary")
+          for module, suffix in [("ProductBUTurnoverChart","regular_point_ambient_chart"),("ProductBUPhysicalAtlas","physical_regular_manifold"),("ProductBUAtlasAssembly","physical_eq_zeroFiber"),("ProductBUAtlasAssembly","regular_augmented_reference_fiber_impossible")]:
+              name="Nightfall."+module+"."+suffix
+              data=(d/(module+".log")).read_text()
+              assert "sorryAx" not in data, name
+              hit=re.search(r"'"+re.escape(name)+r"' depends on axioms:\s*\[([^\]]*)\]",data,re.S)
+              assert hit or f"'{name}' does not depend on any axioms" in data,name
+              ax={x.strip() for x in hit.group(1).split(",") if x.strip()} if hit else set()
+              assert ax <= {"propext","Classical.choice","Quot.sound"},(name,ax)
+              print("PASS",name,sorted(ax))
+          PY
+      - name: Persist exact-head source receipts
+        if: always()
+        run: |
+          mkdir -p receipts/bu-global-boundary
+          git rev-parse HEAD > receipts/bu-global-boundary/nightfall-commit.txt
+          cat lean-toolchain > receipts/bu-global-boundary/lean-toolchain.txt
+          sha256sum research/nightfall/formalization/finite_field/ProductBU*.lean > receipts/bu-global-boundary/NIGHTFALL-SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paper-iii-geometry-source-axiom-receipt
+          path: receipts/bu-global-boundary
+          retention-days: 90
+
+  algebra-causal-risk-noise:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Kernel compile actual manuscript dependency sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p receipts/paper-iii-manuscript
+          src=research/nightfall/formalization/finite_field
+          archive=research/nightfall/paper-iii-certification
+          compile() {
+            local f="$1" m
+            m="$(basename "$f" .lean)"
+            ! grep -nE '^[[:space:]]*(axiom|sorry|admit)[[:space:]]' "$f"
+            sha256sum "$f" >> receipts/paper-iii-manuscript/SOURCES.sha256
+            cp "$f" "/tmp/mathlib4/$m.lean"
+            (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean -o ".lake/build/lib/lean/$m.olean" "$m.lean") 2>&1 | tee "receipts/paper-iii-manuscript/$m.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry|sorryAx' "receipts/paper-iii-manuscript/$m.log"
+          }
+          for m in InfiniteFieldSignedStep InfiniteFieldFixedLower InfiniteFieldFixedUpper InfiniteFieldAdaptiveLower InfiniteFieldLegalUpper InfiniteFieldTerminal ContinuousPhaseCrossing ContinuousPhaseOracleObstruction ContinuousPhaseAllDimensions GenuinePrefixPhase ProductSphereObstruction ProductSphereCausalComposition CausalPhaseConditional ConditionalPhaseThreshold; do
+            compile "$src/$m.lean"
+          done
+          for m in ProductBUQuantitativeCollision ProductBUDecoderRiskFloor ProductBUMixedRadius ProductBUCausalScaling; do
+            compile "$archive/$m.lean"
+          done
+          compile research/nightfall/local-certificates/20261125-iii-v/lean/AnnularBalancedDecode.lean
+          for m in CausalCollisionAlgebra EnvelopeErasure NoisyCausalCollision; do
+            compile "research/nightfall/pr1000-phase-retrieval-robustness/$m.lean"
+          done
+          compile "$archive/PaperIIINamedAudit.lean"
+          cp receipts/paper-iii-manuscript/PaperIIINamedAudit.log receipts/paper-iii-manuscript/named-axioms.log
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env leanchecker -v PaperIIINamedAudit) 2>&1 | tee receipts/paper-iii-manuscript/kernel.log
+      - name: Unconditional manuscript terminal challenge
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp research/nightfall/paper-iii-certification/PaperIIIUnconditionalChallenge.lean /tmp/mathlib4/
+          (cd /tmp/mathlib4 && LEAN_NUM_THREADS=1 lake env lean PaperIIIUnconditionalChallenge.lean) 2>&1 | tee receipts/paper-iii-manuscript/unconditional-terminal.log
+      - name: Whole manuscript claim coverage and axiom gate
+        if: always()
+        run: python3 research/nightfall/paper-iii-certification/check_coverage.py
+      - name: Retain exact source pin and run receipt
+        if: always()
+        run: |
+          mkdir -p receipts/paper-iii-manuscript
+          git rev-parse HEAD > receipts/paper-iii-manuscript/head.txt
+          cat lean-toolchain > receipts/paper-iii-manuscript/toolchain.txt
+          cp docs/lean-compiler-lock.json receipts/paper-iii-manuscript/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paper-iii-manuscript-coverage-and-kernel-receipt
+          path: receipts/paper-iii-manuscript
+          retention-days: 90

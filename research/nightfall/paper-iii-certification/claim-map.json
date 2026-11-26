@@ -1,0 +1,170 @@
+{
+  "manuscript": "Adaptivity, Continuity, and the Exact Limits of Real Phase Retrieval, v7",
+  "source": "nightfall_phase_retrieval_v7.tex",
+  "source_custody": "Library file file_00000000a964821294a41f63c8660ba6; label inventory from actual manuscript; manuscript itself unchanged",
+  "status": "incomplete",
+  "claims": [
+    {
+      "label": "thm:algebra",
+      "status": "closed",
+      "declaration": "Nightfall.InfiniteFieldPhase.Terminal.infinite_field_phase_retrieval_causal_terminal",
+      "scope": "Exact algebraic counts."
+    },
+    {
+      "label": "prop:coordinate",
+      "status": "closed",
+      "declaration": "Nightfall.ContinuousPhaseObstruction.no_continuous_final_row_all_dimensions",
+      "scope": "Coordinate-first obstruction, restricted to manuscript's attained path."
+    },
+    {
+      "label": "thm:coordinateBU",
+      "status": "open",
+      "declaration": null,
+      "scope": "Unconditional arbitrary continuous continuation requires topology terminal."
+    },
+    {
+      "label": "lem:zeros",
+      "status": "open",
+      "declaration": null,
+      "scope": "Pure and mixed-character zero theorems must be proved, not assumed; geometry terminal is only a regular-family contradiction."
+    },
+    {
+      "label": "lem:prefix",
+      "status": "partial",
+      "declaration": "Nightfall.GenuinePrefixPhase.causal_collision_of_genuine_prefix_zeros",
+      "scope": "Pure genuine-prefix collision induction; full manuscript's mixed/odd variants not closed."
+    },
+    {
+      "label": "thm:annulus",
+      "status": "partial",
+      "declaration": "Nightfall.ProductSphereCausal.no_continuous_causal_exact_recovery_below",
+      "scope": "Conditional continuous causal threshold; unconditional topology and separated collision still required."
+    },
+    {
+      "label": "thm:sphere",
+      "status": "open",
+      "declaration": null,
+      "scope": "Known-norm mixed-character topology and actual causal terminal."
+    },
+    {
+      "label": "thm:minimax",
+      "status": "partial",
+      "declaration": "Nightfall.AnnularBalancedDecode.balanced_residual_injective",
+      "scope": "Balanced decoder arithmetic, not full sharp annular minimax or fixed nonattainment."
+    },
+    {
+      "label": "thm:sphererisk",
+      "status": "open",
+      "declaration": null,
+      "scope": "Exact known-sphere minimax upper and lower."
+    },
+    {
+      "label": "thm:block",
+      "status": "open",
+      "declaration": null,
+      "scope": "Even readouts of odd sensors and two-bin obstruction."
+    },
+    {
+      "label": "multiway",
+      "status": "open",
+      "declaration": null,
+      "scope": "Multiway ambiguity on sphere."
+    },
+    {
+      "label": "prop:lift",
+      "status": "open",
+      "declaration": null,
+      "scope": "Global lift and full-rank prefixes."
+    },
+    {
+      "label": "thm:conjugacy",
+      "status": "open",
+      "declaration": null,
+      "scope": "Full-rank causal prefix conjugacy."
+    },
+    {
+      "label": "cor:rankloss",
+      "status": "open",
+      "declaration": null,
+      "scope": "Necessary prefix degeneration."
+    },
+    {
+      "label": "prop:contractible",
+      "status": "open",
+      "declaration": null,
+      "scope": "Two-reading history contractibility."
+    },
+    {
+      "label": "prop:holonomy",
+      "status": "open",
+      "declaration": null,
+      "scope": "Sharp onset of nonliftability."
+    },
+    {
+      "label": "prop:gap",
+      "status": "open",
+      "declaration": null,
+      "scope": "Sharp distance from oriented implementations."
+    },
+    {
+      "label": "thm:mixed",
+      "status": "open",
+      "declaration": null,
+      "scope": "Hybrid pure/mixed obstruction and characteristic-class realization."
+    },
+    {
+      "label": "cor:projectormixed",
+      "status": "open",
+      "declaration": null,
+      "scope": "Exact normalized projector counts in infinite family."
+    },
+    {
+      "label": "rem:mixedcoverage",
+      "status": "open",
+      "declaration": null,
+      "scope": "Exact three-lift coverage."
+    },
+    {
+      "label": "prop:zerogain",
+      "status": "open",
+      "declaration": null,
+      "scope": "Earliest orientation defect with zero gain."
+    },
+    {
+      "label": "lem:inflate",
+      "status": "partial",
+      "declaration": "Nightfall.CausalNoise.cancellingNoise_bound",
+      "scope": "Existing bounded cancellation algebra; collision inflation as stated still needs a terminal."
+    },
+    {
+      "label": "thm:noise",
+      "status": "partial",
+      "declaration": "Nightfall.CausalNoise.decoder_noise_floor",
+      "scope": "Existing erasure/collision floor; sharp positive excess and two-dimensional upper not closed."
+    },
+    {
+      "label": "thm:allnoise",
+      "status": "open",
+      "declaration": null,
+      "scope": "All-dimensional sharp noise exponent, polynomial interpolation upper."
+    },
+    {
+      "label": "thm:annnoise",
+      "status": "open",
+      "declaration": null,
+      "scope": "Annular linear excess law."
+    },
+    {
+      "label": "thm:spherenoise",
+      "status": "open",
+      "declaration": null,
+      "scope": "Spherical linear excess laws."
+    },
+    {
+      "label": "rem:erasure",
+      "status": "partial",
+      "declaration": "Nightfall.EnvelopeErasure.envelope_erasure",
+      "scope": "Erasure subtheorem; full envelope and saturation needs exact manuscript statement check."
+    }
+  ]
+}
