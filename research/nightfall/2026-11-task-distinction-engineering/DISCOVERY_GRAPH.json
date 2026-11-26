@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2026-11-25_v0.4",
+  "version": "2026-11-25_v0.5",
   "owner": "Devin J. Wright / NIGHTFALL",
   "research_status": "portfolio synthesis; no world-original general law certified",
   "claims": [
@@ -188,6 +188,24 @@
           "conclusion": "success"
         }
       ]
+    },
+    {
+      "id": "paper_vii_implemented_e2e",
+      "domain": "structural_observability",
+      "claim": "Paper VII frozen v0.7 implemented adaptive causal tree and affine posterior fiber proof chain passed pinned Lean compilation and named declaration audit.",
+      "status": "historically_scoped_lean_with_import",
+      "source": "https://github.com/d3lefts/d3lefts/actions/runs/45760995598",
+      "certificate": "Run 45760995598, exact head cab6007f1d8fe8076129b459b9ad39cd7f17019b, affine-posterior job success; compiler, named declaration audit and artifact upload all passed.",
+      "limit": "Implemented affine-posterior theorem receipt, not manuscript-wide formalization. The prospectus general structural selection law is expressly an open research hypothesis.",
+      "operational_status": "complete_reuse_existing_receipts",
+      "rerun_policy": "Do not repeat unchanged Paper VII proof chains. New theorem scope requires a distinct claim and explicit target.",
+      "receipts": [
+        {
+          "run_id": 45760995598,
+          "url": "https://github.com/d3lefts/d3lefts/actions/runs/45760995598",
+          "conclusion": "success"
+        }
+      ]
     }
   ],
   "transfers": [
@@ -309,6 +327,13 @@
       "operator": "reuse_immutable_kernel_receipts",
       "relation": "case_study_not_logical_implication",
       "test": "Recover successful exact-head receipts before scheduling Paper III work; distinguish new theorem scope from unchanged certified closure."
+    },
+    {
+      "from": "paper_vii_implemented_e2e",
+      "to": "thesis",
+      "operator": "reuse_immutable_kernel_receipts",
+      "relation": "case_study_not_logical_implication",
+      "test": "Recover exact-head successful receipt before new Paper VII work; distinguish prospectus hypotheses from proved results."
     }
   ],
   "novelty_gates": [
@@ -327,13 +352,42 @@
       "III",
       "IV",
       "V",
-      "VI"
-    ],
-    "remaining_operational_targets": [
+      "VI",
       "VII"
     ],
+    "remaining_operational_targets": [],
     "paper_v_claim_id": "paper_v_implemented_e2e",
-    "rule": "Do not reopen completed proof-chain compilation merely because secondary manuscript obligations remain. Reuse the strongest existing receipt; only test new scope or invalidated dependencies.",
-    "paper_iii_claim_id": "paper_iii_implemented_e2e"
+    "rule": "Read this checkpoint before scheduling or reporting any portfolio Lean work. All seven implemented proof-chain replay tasks are closed. No automatic rerun, compiler change, or reopening based on stale session summaries or manuscript-wide coverage gaps. Record new theorem obligations separately and require a distinct requested target, changed relevant dependency, or invalidated receipt. Successful compilation is not blanket manuscript certification.",
+    "paper_iii_claim_id": "paper_iii_implemented_e2e",
+    "paper_vii_claim_id": "paper_vii_implemented_e2e",
+    "queue_status": "closed_owner_directed",
+    "receipt_index": {
+      "I": [
+        "PR #970"
+      ],
+      "II": [
+        "run 44470008420"
+      ],
+      "III": [
+        "run 45748645526",
+        "run 45760973060"
+      ],
+      "IV": [
+        "PR #1224"
+      ],
+      "V": [
+        "run 45754399534",
+        "run 45760781991"
+      ],
+      "VI": [
+        "PR #1201",
+        "PR #1212",
+        "run 45652533477",
+        "run 45644811376"
+      ],
+      "VII": [
+        "run 45760995598"
+      ]
+    }
   }
 }
