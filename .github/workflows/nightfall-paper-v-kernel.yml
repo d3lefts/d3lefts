@@ -1,0 +1,111 @@
+name: NIGHTFALL Paper V pinned implemented proof closure
+on:
+  push:
+    branches: ['nightfall/paper-v-pinned-kernel-*']
+    paths: ['.github/workflows/nightfall-paper-v-kernel.yml']
+  pull_request:
+    paths:
+      - '.github/workflows/nightfall-paper-v-kernel.yml'
+      - 'research/nightfall/local-certificates/20261125-iii-v/lean/T2*.lean'
+      - 'research/nightfall/all-order-tensor-physical-20261125/src/**'
+      - 'research/nightfall/formalization/structural_information/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compile:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - scope: physical-t2
+            dir: research/nightfall/local-certificates/20261125-iii-v/lean
+            modules: T2LightFrame T2SecondStageLight T2FrameEnergy T2EffectOrder T2FirstStageLight T2PathEnergy T2ActualSource T2QuantumPhaseExpansion T2BornExpansion T2WalshTranscript T2ClippedEstimator T2UniformParseval T2UniformEstimator T2BornWalsh T2CertifiedTailBridge T2DoubleLightCharge
+            terminals: T2BornExpansion T2CertifiedTailBridge T2DoubleLightCharge
+          - scope: all-order-tensor
+            dir: research/nightfall/all-order-tensor-physical-20261125/src
+            modules: T2UniformParseval T2ClippedEstimator AllOrderCore AllOrderMask AllOrderFourier AllOrderTruncation AllOrderTerminal AllOrderMoments AllOrderChaos AllOrderGeometry AllOrderTensorLocalization AllOrderMixedNorm AllOrderTensorSource AllOrderRowBound AllOrderAnchor AllOrderAnalyticTerminal AllOrderHammingBall AllOrderActiveFiber AllOrderPaddedFiber AllOrderCombinedTerminal AllOrderMaskCost AllOrderNearMask AllOrderPatternGeometry AllOrderPatternMask AllOrderPatternAssembly AllOrderFullForm AllOrderQuantumPath AllOrderQuantumForm AllOrderPhysicalTerminal
+            terminals: AllOrderPhysicalTerminal
+          - scope: affine-and-local-fibers
+            dir: research/nightfall/formalization/structural_information
+            modules: AffineWynerSupport AffineWynerFibers AffineWynerFiberCount AffineWynerEntropyBound AffineWynerMixtureDirac FiniteMixtureEntropyChain SubcubeL3 TensorPairFibersLocal TensorPureFibersL3 TensorT2Cancellation TensorT2RepeatMobius
+            terminals: AffineWynerEntropyBound AffineWynerMixtureDirac FiniteMixtureEntropyChain TensorPairFibersLocal TensorPureFibersL3 TensorT2Cancellation TensorT2RepeatMobius
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nightfall-lean
+      - name: Compile exact repository sources with pinned Lean
+        shell: bash
+        env:
+          SRC: ${{ matrix.dir }}
+          MODULES: ${{ matrix.modules }}
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          mkdir -p receipts
+          git rev-parse HEAD > receipts/head.txt
+          cp docs/lean-compiler-lock.json receipts/
+          cat lean-toolchain > receipts/toolchain.txt
+          for M in $MODULES; do
+            src="$SRC/$M.lean"
+            test -f "$src"
+            sha256sum "$src" >> receipts/SHA256SUMS
+            git hash-object "$src" >> receipts/git-blobs.txt
+            cp "$src" "/tmp/mathlib4/$M.lean"
+            (cd /tmp/mathlib4 && lake env lean -o ".lake/build/lib/lean/$M.olean" "$M.lean") 2>&1 | tee "receipts/$M.log"
+            ! grep -E '(^|:)error:|declaration uses .sorry' "receipts/$M.log"
+          done
+      - name: Fresh kernel checks of actual implemented endpoints
+        shell: bash
+        env:
+          TERMINALS: ${{ matrix.terminals }}
+          LEAN_NUM_THREADS: '1'
+        run: |
+          set -euo pipefail
+          for M in $TERMINALS; do
+            (cd /tmp/mathlib4 && lake env leanchecker -v "$M") 2>&1 | tee "receipts/$M-kernel.log"
+          done
+      - name: Audit actual theorem signatures and standard axioms
+        shell: bash
+        env:
+          SCOPE: ${{ matrix.scope }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os, re
+          from pathlib import Path
+          allowed = {'propext', 'Classical.choice', 'Quot.sound'}
+          logs = '\n'.join(p.read_text() for p in Path('receipts').glob('*.log') if not p.name.endswith('-kernel.log'))
+          found = dict(re.findall(r"'([^']+)' depends on axioms:\s*\[([^\]]*)\]", logs))
+          found.update({n: '' for n in re.findall(r"'([^']+)' does not depend on any axioms", logs)})
+          assert found, 'No actual axiom reports'
+          for n, a in found.items():
+              assert {x.strip() for x in a.split(',') if x.strip()} <= allowed, (n,a)
+          assert 'sorryAx' not in logs
+          expected = {
+              'physical-t2': [
+                  'bornAmplitude_eq_complex_four_slot_sum',
+                  'actual_born_eq_real_fourier',
+                  'actual_uniform_tail_identity',
+                  'physical_uniform_success_of_tail',
+                  'double_light_energy',
+                  'pair_energy_coefficient_le_28'],
+              'all-order-tensor': ['physical_tensor_simulation'],
+              'affine-and-local-fibers': ['fixedProjectionFiber_card','affine_free_fiber_entropy_bound','repeated_four_labels_collapse']
+          }[os.environ['SCOPE']]
+          for suffix in expected:
+              assert any(n.endswith('.'+suffix) for n in found), suffix
+          for n, a in sorted(found.items()):
+              print(n, a)
+          print('PASS implemented endpoints; no manuscript-wide completeness claim')
+          PY
+      - name: Preserve exact source and kernel receipts
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: paper-v-${{ matrix.scope }}-${{ github.run_id }}
+          path: receipts
+          retention-days: 90
