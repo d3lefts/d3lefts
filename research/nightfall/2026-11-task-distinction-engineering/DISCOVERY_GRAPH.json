@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2026-11-13_v0.2",
+  "version": "2026-11-25_v0.3",
   "owner": "Devin J. Wright / NIGHTFALL",
   "research_status": "portfolio synthesis; no world-original general law certified",
   "claims": [
@@ -141,6 +141,30 @@
       "source": "research/nightfall/2026-11-task-distinction-engineering/change-stable-safety/change_stable_safety.tex",
       "certificate": "checker.py exact direct-update vs hitting-transversal audit (53608 parameter cases) and versioned synthetic passport fail-closed checker",
       "limit": "Sound hazard envelope, full dependency provenance and complete authenticated updates assumed; trusted cost excludes finding optimum and hazard construction; novelty not certified"
+    },
+    {
+      "id": "paper_v_implemented_e2e",
+      "domain": "quantum_query_complexity",
+      "claim": "Paper V v2.1 implemented physical Born, estimator, tensor, affine-fiber and double-light proof chains have passed end-to-end compilation and fresh Lean kernel replay.",
+      "status": "historically_scoped_lean_with_import",
+      "source": "https://github.com/d3lefts/d3lefts/pull/1236",
+      "certificate": "GitHub Actions 45754399534 and 45760781991: successful source compilation, fresh kernel replay and named standard-axiom audits. Exact heads 27c46abdeffa7f9b9dcb72c0ac3b745641c990ef and ec885a930ea770e4f6bacb1cf0ed6f965753e38c.",
+      "limit": "Implemented proof-chain certification only. Unconditional manuscript Theorems 4.1 and 5.1 are not established by these receipts. No full-manuscript promotion.",
+      "operational_status": "complete_reuse_existing_receipts",
+      "rerun_policy": "Do not repeat Paper V certification of unchanged implemented chains. Only reopen on a changed relevant dependency, invalidated receipt, or explicit owner request for a new theorem scope.",
+      "receipts": [
+        {
+          "run_id": 45754399534,
+          "url": "https://github.com/d3lefts/d3lefts/actions/runs/45754399534",
+          "conclusion": "success"
+        },
+        {
+          "run_id": 45760781991,
+          "url": "https://github.com/d3lefts/d3lefts/actions/runs/45760781991",
+          "conclusion": "success",
+          "terminal": "Nightfall.PaperVPhysicalEnergy.physical_double_light_grouped"
+        }
+      ]
     }
   ],
   "transfers": [
@@ -248,6 +272,13 @@
       "operator": "model_version_attestation_boundary",
       "relation": "case_study_not_logical_implication",
       "test": "Two models with same full sensor law have incompatible Bayes reliability; require separate trusted observation-law certificate before evidence reuse"
+    },
+    {
+      "from": "paper_v_implemented_e2e",
+      "to": "thesis",
+      "operator": "reuse_immutable_kernel_receipts",
+      "relation": "case_study_not_logical_implication",
+      "test": "Recover successful exact-head receipts before scheduling any Paper V work; separate new theorem scope from unchanged certified closure."
     }
   ],
   "novelty_gates": [
@@ -256,5 +287,22 @@
     "source-exact artifact replay",
     "oracle and normalization identity",
     "human authorization for submission"
-  ]
+  ],
+  "portfolio_certification_checkpoint": {
+    "date": "2026-11-25",
+    "authority": "Owner-directed operational reconciliation; status scope distinguished from manuscript-wide proof completeness.",
+    "completed_for_replay": [
+      "I",
+      "II",
+      "IV",
+      "V",
+      "VI"
+    ],
+    "remaining_operational_targets": [
+      "III",
+      "VII"
+    ],
+    "paper_v_claim_id": "paper_v_implemented_e2e",
+    "rule": "Do not reopen completed proof-chain compilation merely because secondary manuscript obligations remain. Reuse the strongest existing receipt; only test new scope or invalidated dependencies."
+  }
 }
