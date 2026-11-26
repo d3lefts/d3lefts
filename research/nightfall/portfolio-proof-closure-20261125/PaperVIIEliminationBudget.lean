@@ -7,7 +7,7 @@ upper bound. No inter-block independence enters the sum. The actual
 noisy policy and majority-tail probability coupling are separate. -/
 namespace Nightfall.PaperVIIEliminationBudget
 
-def errorMass : ℕ → ℝ
+noncomputable def errorMass : ℕ → ℝ
   | 0 => 0
   | n+1 => errorMass n + 1 / (((n : ℝ)+1)*((n : ℝ)+2))
 
@@ -31,13 +31,13 @@ theorem errorMass_le_one (n : ℕ) : errorMass n ≤ 1 := by
 
 /-- j is zero-based, so a fair block reaches its jth relative
 position with probability 2^{-j}. -/
-def screenWork (r : ℕ → ℝ) (j : ℕ) : ℕ → ℝ
+noncomputable def screenWork (r : ℕ → ℝ) (j : ℕ) : ℕ → ℝ
   | 0 => 0
   | n+1 => r j + (1/2 : ℝ) * screenWork r (j+1) n
 
 /-- A survivor of an n-bit fair block has probability 2^{-n};
 validation uses a fresh copy of the schedule. -/
-def validationWork (r : ℕ → ℝ) (j : ℕ) : ℕ → ℝ
+noncomputable def validationWork (r : ℕ → ℝ) (j : ℕ) : ℕ → ℝ
   | 0 => 0
   | n+1 => (1/2 : ℝ)^(n+1) * r j +
       (1/2 : ℝ) * validationWork r (j+1) n
@@ -82,7 +82,7 @@ theorem validationWork_formula (r : ℕ → ℝ) (j n : ℕ) :
   induction n generalizing j with
   | zero => simp [validationWork]
   | succ n ih =>
-    rw [validationWork, ih (j+1), Finset.sum_range_succ_comm, pow_succ]
+    rw [validationWork, ih (j+1), Finset.sum_range_succ', pow_succ]
     simp only [Nat.add_zero]
     have he : (∑ i ∈ Finset.range n, r (j+1+i)) =
         ∑ i ∈ Finset.range n, r (j+(i+1)) := by

@@ -10,10 +10,10 @@ open Nightfall.ProductSphereObstruction
 open scoped ContDiff
 abbrev V (n : ℕ) := Fin n → ℝ
 
-def pureU {n : ℕ} (f : V n → V n → ℝ) (u v : V n) : ℝ :=
+noncomputable def pureU {n : ℕ} (f : V n → V n → ℝ) (u v : V n) : ℝ :=
   (f u v - f (-u) v + f u (-v) - f (-u) (-v)) / 4
 
-def pureV {n : ℕ} (f : V n → V n → ℝ) (u v : V n) : ℝ :=
+noncomputable def pureV {n : ℕ} (f : V n → V n → ℝ) (u v : V n) : ℝ :=
   pureU (fun x y => f y x) v u
 
 theorem pureU_odd {n : ℕ} (f : V n → V n → ℝ) (u v : V n) :
