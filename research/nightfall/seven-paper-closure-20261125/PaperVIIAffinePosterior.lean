@@ -66,7 +66,7 @@ theorem trace_eq_iff_annihilator (t : Tree K V) (s r : Secret K V) :
   · intro h
     apply Submodule.span_le.mpr
     rintro a ⟨b,hb⟩
-    rw [LinearMap.mem_ker]
+    apply LinearMap.mem_ker.mpr
     change r a - s a = 0
     exact sub_eq_zero.mpr ((h (a,b) hb).trans (trace_consistent t s (a,b) hb).symm)
   · intro h p hp
