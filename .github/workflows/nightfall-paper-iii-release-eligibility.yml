@@ -1,0 +1,24 @@
+name: NIGHTFALL Paper III release eligibility (not compiler)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  completeness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Report outstanding manuscript obligations
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('research/nightfall/paper-iii-certification/claim-map.json').read_text())
+          for c in p['claims']:
+              print(c['status'],c['label'],c['scope'])
+          # This gate cannot authorize publication even with complete metadata:
+          # exact-type kernel receipts and independent statement review are separate.
+          assert all(c['status']=='closed' for c in p['claims']), 'Manuscript incomplete; kernel builds remain independent'
+          PY

@@ -89,7 +89,6 @@ jobs:
           python3 scripts/check_proof_graph.py --self-test research/nightfall/formalization/compiler/PROOF_GRAPH.json
 
   exact-type-kernel:
-    needs: adversarial-unit
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:

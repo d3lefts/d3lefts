@@ -1,0 +1,30 @@
+name: NIGHTFALL Paper III implemented proof closure
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/nightfall/paper-iii-certification/**'
+      - 'research/nightfall/formalization/finite_field/**'
+      - '.github/workflows/nightfall-paper-iii-kernel.yml'
+      - '.github/workflows/nightfall-paper-iii-kernel-entry.yml'
+      - 'scripts/check_pinned_lean_named_axioms.py'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'docs/lean-compiler-lock.json'
+  pull_request:
+    paths:
+      - 'research/nightfall/paper-iii-certification/**'
+      - 'research/nightfall/formalization/finite_field/**'
+      - '.github/workflows/nightfall-paper-iii-kernel.yml'
+      - '.github/workflows/nightfall-paper-iii-kernel-entry.yml'
+      - 'scripts/check_pinned_lean_named_axioms.py'
+      - '.github/actions/setup-nightfall-lean/**'
+      - 'docs/lean-compiler-lock.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: paper-iii-kernel-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  compile:
+    uses: ./.github/workflows/nightfall-paper-iii-kernel.yml

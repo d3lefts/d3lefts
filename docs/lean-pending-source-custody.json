@@ -1,9 +1,9 @@
 {
   "schema": "nightfall-lean-pending-source-custody-v1",
-  "revision": 78,
+  "revision": 79,
   "as_of": "2026-11-26 UTC",
-  "source_commit": "f2dc4612c7395e6874277d46ea887a90ed4ad353",
-  "scope": "Reconcile all previously unregistered Lean source blobs on repaired main; preserve historical register, previous pending rows and evidence classifications. No automatic certification.",
+  "source_commit": "c6b79b6c20d7f70a1194e894e7fa099f5b8d0262",
+  "scope": "Reintegrate verified Paper III source checkpoint with exact custody; no automatic theorem promotion.",
   "sources": [
     {
       "path": "research/nightfall/all-order-tensor-physical-20261125/src/AllOrderActiveFiber.lean",
@@ -708,6 +708,16 @@
       "receipt_scope": "Exact source-identity custody of scoped pure-character topology composition. Full ProductSphereZero and global boundary manifold still unproved. Pinned Lean pre-integration run #45059393121 succeeded on byte-identical source."
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUAtlasAssembly.lean",
+      "source_blob_sha": "361b848a01277a384dec087f22b4702c5acc40b5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUAugmentedRank.lean",
       "source_blob_sha": "e3e99f0e67b6a7f6a99a7dd0a0666f9fb695ecde",
       "classification": "unreviewed-source",
@@ -716,6 +726,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact byte-preserved source of #1100 plus rank-one repair merged #1134. Full concrete scalar endpoint, character parity and smoothness source-pinned Lean #45067983701 PASSED; this register tracks custody only; actual complete fderiv, Sard-to-global fiber and ProductSphereZero not proven."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUAxisBoundaryTerminal.lean",
+      "source_blob_sha": "ecdaed123a3998fbc3f581f0db5ac54a7423abe9",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUCompactFiber.lean",
@@ -736,6 +756,26 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Byte-identical source to original #1108 / passed repair #1126; pinned Mathlib kernel+ordinary axiom CI 45066160663 and new clean source #1132 run 45066754031 pass separately. Source custody only, no physical covering charts or unconditional ProductSphereZero."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentClassification.lean",
+      "source_blob_sha": "4d5e6bfcc72e7e6882bc775bd1b46975a30a2421",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
+      "source_blob_sha": "ed7f01bd6950b55078c173b5cd34a121518c1da5",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUComponentOrbit.lean",
@@ -776,6 +816,36 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Source blob custody only; independent scoped pinned Lean run #45058710989 on source-identical stacked #1082 passed the named genuine zero-fiber free-action source. Global proof, ProductSphereZero and specialist novelty review remain unverified."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUFinalGeometricReduction.lean",
+      "source_blob_sha": "59bb19d15d37403f21bf268bc34aa197c2498237",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUGlobalAssembly.lean",
+      "source_blob_sha": "02cb32f25275c40f18c10866d6036a661971fb4b",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean",
+      "source_blob_sha": "2dd4eb4802ddabfce3f719b37d7429d64733df16",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductBUIntervalStabilizer.lean",
@@ -886,6 +956,16 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Pinned Lean IFT time-oriented zero graph from #1131, exact-head 45067372003 PASS, strict 45067372058 PASS; no actual global t=0 halfspace chart nor unconditional ProductSphereZero."
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUTimeZeroOrbit.lean",
+      "source_blob_sha": "67b8bb5f98525027f8f366cdfcf52ddc9f4d45a8",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
     },
     {
       "path": "research/nightfall/formalization/finite_field/ProductSphereCausalComposition.lean",
@@ -6494,6 +6574,56 @@
       "historical_head": null,
       "global_priority": "unverified",
       "receipt_scope": "Exact checkout source custody only; no new named kernel receipt, independent review or novelty promotion. Existing archived evidence remains separate."
+    },
+    {
+      "path": "research/nightfall/paper-iii-certification/PaperIIINamedAudit.lean",
+      "source_blob_sha": "3ddc60444414364f9a1f01f108510d36268fbd38",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
+    },
+    {
+      "path": "research/nightfall/paper-iii-certification/ProductBUCausalScaling.lean",
+      "source_blob_sha": "31f7c9337abc2bab69a8e92eae1ec0d149b11e30",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
+    },
+    {
+      "path": "research/nightfall/paper-iii-certification/ProductBUDecoderRiskFloor.lean",
+      "source_blob_sha": "2eddc81492ee2b8536a000e2fac5526b82c82e48",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
+    },
+    {
+      "path": "research/nightfall/paper-iii-certification/ProductBUMixedRadius.lean",
+      "source_blob_sha": "1202ba29f0db6e5f86f3a9c457e7a6ae61ea53c7",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
+    },
+    {
+      "path": "research/nightfall/paper-iii-certification/ProductBUQuantitativeCollision.lean",
+      "source_blob_sha": "bd55c5e5fc315ec75bb9accacf17492ce5b34361",
+      "classification": "unreviewed-source",
+      "ci_source_match_status": "no-verified-receipt",
+      "historical_run": null,
+      "historical_head": null,
+      "global_priority": "unverified",
+      "receipt_scope": "Source-exact custody. Prior passing scoped geometry/kernel logs and manuscript dependency replay are preserved separately. No automatic promotion."
     },
     {
       "path": "research/nightfall/pr1000-phase-retrieval-robustness/CausalCollisionAlgebra.lean",
