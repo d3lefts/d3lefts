@@ -35,9 +35,9 @@
     "upstream_mathlib_repository": "https://github.com/leanprover-community/mathlib4"
   },
   "summary": {
-    "custody_sources": 690,
+    "custody_sources": 703,
     "historical_source_records": 67,
-    "pending_legacy_custody": 623,
+    "pending_legacy_custody": 636,
     "source_paths_with_exact_blob_and_receipt_reference": 108,
     "pending_source_paths_with_receipt_leads": 75,
     "known_record_refs": 209,
@@ -771,6 +771,15 @@
       "evidence": []
     },
     {
+      "path": "research/nightfall/formalization/finite_field/ProductBUAtlasAssembly.lean",
+      "blob": "361b848a01277a384dec087f22b4702c5acc40b5",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
       "path": "research/nightfall/formalization/finite_field/ProductBUAugmentedRank.lean",
       "blob": "e3e99f0e67b6a7f6a99a7dd0a0666f9fb695ecde",
       "custody": "pending",
@@ -779,6 +788,15 @@
       "receipt_leads": [
         45067983701
       ],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUAxisBoundaryTerminal.lean",
+      "blob": "ecdaed123a3998fbc3f581f0db5ac54a7423abe9",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
       "evidence": []
     },
     {
@@ -802,6 +820,24 @@
         45066160663,
         45066754031
       ],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentClassification.lean",
+      "blob": "4d5e6bfcc72e7e6882bc775bd1b46975a30a2421",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUComponentEndpoints.lean",
+      "blob": "ed7f01bd6950b55078c173b5cd34a121518c1da5",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
       "evidence": []
     },
     {
@@ -846,6 +882,33 @@
       "receipt_leads": [
         45058710989
       ],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUFinalGeometricReduction.lean",
+      "blob": "59bb19d15d37403f21bf268bc34aa197c2498237",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUGlobalAssembly.lean",
+      "blob": "02cb32f25275c40f18c10866d6036a661971fb4b",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUGlobalBoundary.lean",
+      "blob": "2dd4eb4802ddabfce3f719b37d7429d64733df16",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
       "evidence": []
     },
     {
@@ -956,6 +1019,15 @@
         45067372003,
         45067372058
       ],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/formalization/finite_field/ProductBUTimeZeroOrbit.lean",
+      "blob": "67b8bb5f98525027f8f366cdfcf52ddc9f4d45a8",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
       "evidence": []
     },
     {
@@ -6624,6 +6696,51 @@
       "evidence": []
     },
     {
+      "path": "research/nightfall/paper-iii-certification/PaperIIINamedAudit.lean",
+      "blob": "3ddc60444414364f9a1f01f108510d36268fbd38",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/paper-iii-certification/ProductBUCausalScaling.lean",
+      "blob": "31f7c9337abc2bab69a8e92eae1ec0d149b11e30",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/paper-iii-certification/ProductBUDecoderRiskFloor.lean",
+      "blob": "2eddc81492ee2b8536a000e2fac5526b82c82e48",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/paper-iii-certification/ProductBUMixedRadius.lean",
+      "blob": "1202ba29f0db6e5f86f3a9c457e7a6ae61ea53c7",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
+      "path": "research/nightfall/paper-iii-certification/ProductBUQuantitativeCollision.lean",
+      "blob": "bd55c5e5fc315ec75bb9accacf17492ce5b34361",
+      "custody": "pending",
+      "classification": "unreviewed-source",
+      "legacy_run": null,
+      "receipt_leads": [],
+      "evidence": []
+    },
+    {
       "path": "research/nightfall/pr1000-phase-retrieval-robustness/CausalCollisionAlgebra.lean",
       "blob": "9a9b94d700151f52a10c19188b756ac61e355647",
       "custody": "pending",
@@ -11499,7 +11616,7 @@
   "input_blobs": {
     "active": "4101ef99a051400010fd7f37bcc40733664f3678",
     "historical": "9c33680c828ba927de1963b831a6f0de2ee0b480",
-    "pending": "5d435ca57b925008d2388dd30ff78ce0a9694b2a",
+    "pending": "1d25a10fdbeb4efe6c73ea0bece9d6458ae2dbce",
     "recent": "94e3ccb394f2c210daa01646202ea9679c1c9ade",
     "v2": "b8ac83faa21946953b32688cdba023f50c55d674",
     "reconciled": "8b98c8dd5d7c7d8534855bdbeb140146ff01c393",
