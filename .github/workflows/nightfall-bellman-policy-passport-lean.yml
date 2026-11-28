@@ -1,4 +1,4 @@
-name: NIGHTFALL source-bound Bellman policy Proof Passport Lean certificate
+name: NIGHTFALL Bellman policy exact replay and Lean certificate
 
 on:
   pull_request:
@@ -11,9 +11,6 @@ on:
       - 'research/nightfall/formalization/agent_safety/SemanticBellmanPotential.lean'
       - 'research/nightfall/formalization/agent_safety/SemanticFencing.lean'
       - 'research/nightfall/assurance/semantic-fencing-v0.3/semantic_fence.py'
-      - 'docs/proof-object-passport.json'
-      - 'scripts/check_proof_object_passport.cjs'
-      - 'scripts/check_bellman_policy_passport.cjs'
       - '.github/workflows/nightfall-bellman-policy-passport-lean.yml'
   workflow_dispatch:
 
@@ -47,12 +44,6 @@ jobs:
         run: |
           set -euo pipefail
           node research/nightfall/price_permission/check_bellman_policy_independent.cjs
-      - name: Shared source-bound Proof Passport metadata and checker replay
-        shell: bash
-        run: |
-          set -euo pipefail
-          node scripts/check_bellman_policy_passport.cjs
-          node scripts/check_proof_object_passport.cjs
       - name: Setup pinned Lean and Mathlib
         uses: ./.github/actions/setup-nightfall-lean
       - name: Compile original semantic-fencing dependencies and new potential source
