@@ -25,8 +25,8 @@ for(const path of ["erdos-paper.html","living-paper.html","passport.html?claim=s
  assert.ok(moon.includes(path),"Archive source route lost: "+path);
 assert.ok(moon.includes('id="sidon-toggle"')&&moon.includes('disabled title='),"Archived no-JS Sidon checker stays safe");
 assert.ok((field.match(/class="flagship-card /g)||[]).length>0,"Current programs retain status summaries");
-assert.ok((field.match(/<section\b/g)||[]).length<=13,"Active home remains selective");
-assert.ok((field.match(/<a\b/g)||[]).length<=46,"Active home link budget");
+assert.ok((field.match(/<section\b/g)||[]).length<=14,"Active home remains selective (including scholarly archive)");
+assert.ok((field.match(/<a\b/g)||[]).length<=57,"Active home link budget (includes publications and explicit Q2 receipts)");
 assert.ok(!field.includes("nf-section-index")&&!field.includes("nf-home-toolbox"),"No duplicate navigation");
 for(const id of ["flagships","featured-title","nf-scroll-cinema","observatory","review","work","research-systems"])
  assert.ok(field.includes('id="'+id+'"'),"Missing active anchor "+id);

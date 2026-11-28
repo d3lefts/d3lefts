@@ -66,7 +66,7 @@ assert.ok(review.includes('id="priority"')&&review.includes('id="submit"')&&
 // justify limited extra copy, but link proliferation is still capped.
 const editorial=read("docs/index.html").replace(/<[^>]+>/g," ").replace(/\s+/g," ");
 const openingCss=read("docs/home-opening-cinema.css");
-assert.ok(editorial.length<=14000,"Homepage exceeded its story-led editorial copy budget");
+assert.ok(editorial.length<=15200,"Homepage exceeded its revised editorial budget (14,854-character baseline plus scoped theorem and publication corrections)");
 assert.ok(home.includes('id="nightfall-story"')&&home.includes('id="commonwealth-product"'),"Both distinct narrative destinations must exist");
 assert.ok(home.includes('href="#flagships"'),"First-fold route to the three signature results is missing");
 for(const id of ["signature-wright","signature-erdos","signature-safety"])
@@ -74,7 +74,7 @@ for(const id of ["signature-wright","signature-erdos","signature-safety"])
 assert.ok(home.indexOf('id="signature-wright"')<home.indexOf('id="signature-erdos"')&&home.indexOf('id="signature-erdos"')<home.indexOf('id="signature-safety"'),"Principal results should lead in stated order");
 for(const selector of ["#main>.hero.nf-opening","#nf-scroll-cinema.nf-cinema--still .nf-cinema-stage","#flagships .nf-signature-card"])
  assert.ok(openingCss.includes(selector),"Compact evidence-first layout regression: "+selector);
-assert.equal((home.match(/<a\b/g)||[]).length<=46,true,"Keep the original focused homepage link budget despite new story and gateway");
+assert.equal((home.match(/<a\b/g)||[]).length<=57,true,"Cap homepage links at the publication-inclusive baseline plus the three explicit DOI/receipt links");
 
 assert.ok(home.includes('href="#first-minute">Start here · one minute'),"First-time visitors require a short evidence guide");
 assert.ok(home.includes('id="first-minute"')&&home.includes('id="nf-first-minute-title"'),"Missing accessible first-minute orientation");

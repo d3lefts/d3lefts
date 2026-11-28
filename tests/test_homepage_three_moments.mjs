@@ -65,15 +65,16 @@ test("Cross-entrance navigation is explicit and in both directions",()=>{
  }
  assert.ok(field.includes('href="new-moon.html#archived-records"'));
  assert.ok(moon.includes('href="index.html"'));
- assert.equal(count(field,/<a\b/g)<=46,true,"Story-led homepage preserves focused navigation");
- assert.ok(count(field,/<section\b/g)<=13,"Active homepage section budget");
+ assert.equal(count(field,/<a\b/g)<=57,true,"Story-led homepage preserves focused navigation, including publications and explicit proof receipts");
+ assert.ok(count(field,/<section\b/g)<=14,"Active homepage section budget including the publication section");
  assert.ok(count(field,/<details\b/g)<=2,"Avoid nested disclosures");
 });
 test("Both entrances retain accessible still artwork and scoped evidence links",()=>{
  assert.ok(field.includes('id="nf-scroll-cinema"'));
  assert.ok(field.indexOf('id="nf-scroll-cinema"')<field.indexOf('id="flagships"'));
- assert.ok(field.includes('href="home-rhythm.css"'));
- assert.ok(field.includes('href="home-dual-experience.css"'));
+ assert.ok(field.includes('href="home-bundle.css"'));
+ const bundle=readFileSync("docs/home-bundle.css","utf8");
+ assert.ok(bundle.includes(styles)&&bundle.includes(readFileSync("docs/home-dual-experience.css","utf8")),"Bundle retains the exact home-rhythm and dual-experience rules");
  assert.ok(moon.includes('class="moon-end wrap"'));
  assert.ok(field.includes('href="evidence.html#public-downloads"'));
  assert.ok(field.includes('href="constellation.html#map"'));

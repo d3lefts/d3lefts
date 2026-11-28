@@ -56,7 +56,8 @@ for(const c of current.claims){
 const publications=JSON.parse(read("papers/publications.json"));
 for(const c of current.claims.filter(c=>c.doi))assert.ok(publications.records.some(p=>p.doi===c.doi),c.id+": unregistered publication DOI");
 const q=current.claims.find(c=>c.id==="q2-influence");
-assert.ok(home.includes(q.home_coefficient)&&home.includes("FINITE PRODUCTS"),"Current finite-product theorem and scope drift");
+const qi=current.claims.find(c=>c.id==="q2-infinite");
+assert.ok(home.includes(q.home_coefficient)&&home.includes("ARBITRARY-INDEX PRODUCTS")&&home.includes(q.receipt)&&home.includes(qi.receipt)&&home.includes("Var(f)² ≤ C₂ B² M")&&home.includes("M ≥ 0 bounds every source-coordinate influence"),"Current arbitrary-index theorem, finite companion, hypotheses or receipt drift");
 assert.ok(home.includes("LEAN-CERTIFIED DEGREE-TWO THEOREM")&&home.includes("independent external review remain open"),"Scoped Lean certificate or review boundary missing");
 
 const mathematics=read("docs/mathematical-results.html");

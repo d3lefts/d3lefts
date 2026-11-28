@@ -36,6 +36,8 @@ for(const file of files.filter(x=>x.endsWith(".html")&&readFileSync(join(root,x)
  const html=readFileSync(join(root,file),"utf8");
  assert.ok(html.includes('href="two-skies.css"'),file+" missing shared palette stylesheet");
 }
+const home=readFileSync(join(root,"index.html"),"utf8");
+assert.ok(home.includes('href="home-bundle.css"')&&readFileSync(join(root,"home-bundle.css"),"utf8").includes(readFileSync(join(root,"two-skies.css"),"utf8")),"Homepage bundle must retain the shared palette");
 const light=readFileSync(join(root,"two-skies.css"),"utf8");
 const dusk=readFileSync(join(root,"two-skies.css"),"utf8");
 for(const token of ["--lf-paper:#020406","--lf-ink:#eaf0f5","--lf-primary:#e46a84","--lf-cherry-fill:#650d27","--lf-cherry-fill-hover:#841736","--lf-oxblood:#080d12"]){

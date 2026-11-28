@@ -19,10 +19,12 @@ assert.ok(home.includes('id="signature-wright"') && home.includes('id="signature
 assert.ok(home.includes('id="signature-safety"'));
 assert.ok(home.includes('class="nf-engineering-gateway'));
 assert.ok(home.includes('href="engineering.html"'));
-assert.equal((home.match(/<section\b/g)||[]).length,13);
-assert.ok((home.match(/<a\b/g)||[]).length<=46);
-assert.ok(home.replace(/<[^>]+>/g," ").replace(/\s+/g," ").length<=14000);
-assert.ok(home.includes('href="experience-pages.css"'));
+assert.equal((home.match(/<section\b/g)||[]).length,14);
+assert.ok((home.match(/<a\b/g)||[]).length<=57);
+assert.ok(home.replace(/<[^>]+>/g," ").replace(/\s+/g," ").length<=15200);
+assert.ok(home.includes('href="home-bundle.css"'));
+assert.ok(read("docs/home-bundle.css").includes(read("docs/experience-pages.css")));
+assert.ok(/class="nf-engineering-gateway-links"[^>]*>[\s\S]*?href="portfolio.html"/.test(home),"Résumé must be discoverable from engineering gateway");
 assert.ok(read("docs/experience-pages.css").includes(".nf-engineering-gateway"));
 
 // Two public standalone pages must be crawlable, usable without JavaScript and reciprocal.
