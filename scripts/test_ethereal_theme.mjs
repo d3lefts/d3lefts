@@ -177,8 +177,8 @@ try{
    assert.equal(await page.locator('.about-lead a[href="portfolio.html"]').count(),1,
      "Research About directly links to attributed professional work");
    await page.goto(origin+"index.html",{waitUntil:"load"});
-   assert.equal(await page.locator('.footer a[href="portfolio.html"]').count(),1,
-     "Research homepage footer exposes portfolio without changing primary navigation");
+   assert.equal(await page.locator('.nf-engineering-gateway a[href="portfolio.html"]').count(),1,
+     "Research homepage engineering gateway exposes portfolio without changing primary navigation");
    assert.equal(await page.locator('.footer a[href="review.html#start-here"]').count(),1,
      "Homepage handoff points to runnable first review");
 

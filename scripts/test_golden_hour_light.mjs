@@ -99,10 +99,10 @@ try{
         toolbar:document.querySelector('meta[name="theme-color"]')?.content
       };
     });
-    assert.equal(record.value,"V² / [C₂ B²]","The current analytic quadratic denominator leads the hero");
-    assert.ok(record.qualified.includes("C₂≈105.41623982")&&record.exact==="C₂=(2(1+√2)√3+11901/6250)²","Verified finite-product scalar must show its decimal and exact formula, separately");
+    assert.equal(record.value,"Var(f)² ≤ C₂ B² M","The exact arbitrary-index quadratic inequality leads the hero");
+    assert.ok(record.qualified.includes("C₂≈105.41623982")&&record.exact==="C₂=(2(1+√2)√3+11901/6250)²","Verified quadratic coefficient must show its decimal and exact formula, separately");
     assert.equal(record.firstFold,"DISCOVERY SHOULD COMPOUND","Story-led homepage mission is visible immediately");
-    assert.ok(record.qualified.includes("degree≤2")&&record.qualified.includes("Finite products"),"First-screen Lean result must disclose finite-product and degree-two scope");
+    assert.ok(record.qualified.includes("Hoeffding degree ≤ 2")&&record.qualified.includes("Any index set and measurable coordinate probability spaces")&&record.qualified.includes("almost everywhere")&&record.qualified.includes("M ≥ 0 bounds every source-coordinate influence"),"First-screen Lean result must disclose arbitrary-index scope and all stated hypotheses");
     assert.equal(record.cells,"2","Degree-two scope is disclosed in the hero");
     assert.equal(record.source,true,"The hero links directly to the current Q2 proof passport");
     assert.equal(record.ink,"rgb(234, 240, 245)","Current bound remains legible over black illustration");

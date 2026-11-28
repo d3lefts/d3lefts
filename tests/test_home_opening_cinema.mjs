@@ -16,7 +16,8 @@ test('two separate first-fold experiences retain static, decorative art',()=>{
  assert.match(nightHtml,/class="moon-sky" aria-hidden="true"/);
  assert.match(nightHtml,/data-nf-experience="moon"/);
  assert.match(nightCss,/\.moon-disc\{/);
- assert.match(html,/href="home-opening-cinema.css"/);
+ assert.match(html,/href="home-bundle.css"/);
+ assert.ok(readFileSync('docs/home-bundle.css','utf8').includes(css),"Homepage bundle retains the complete opening-cinema rules");
  assert.doesNotMatch(html,/src="(?:scroll-cinema|home-opening-cinema)\.js"/);
  assert.match(html,/id="hero-title-archive"/);
  assert.doesNotMatch(html,/id="hero-title"/);
