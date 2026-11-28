@@ -7,8 +7,8 @@ for(const [file,current] of [["docs/index.html","./"],["docs/constellation.html"
  const nav=html.match(/<nav\b[^>]*id="site-nav"[^>]*>([\s\S]*?)<\/nav>/);
  assert.ok(nav,"Missing primary navigation "+file);
  const links=[...nav[1].matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
- assert.equal(links.length,3,file+" must present three destinations");
- assert.deepEqual(links.map(x=>x[1].match(/href="([^"]+)"/)?.[1]),["./","constellation.html","review.html"]);
+ const expected=file==="docs/index.html"?["./","publications.html","constellation.html","review.html"]:["./","constellation.html","review.html"];
+ assert.deepEqual(links.map(x=>x[1].match(/href="([^"]+)"/)?.[1]),expected,file+" must present the intended destinations");
  const selected=links.filter(x=>x[1].includes('aria-current="page"'));
  assert.equal(selected.length,1,file+" has exactly one active destination");
  assert.equal(selected[0][1].match(/href="([^"]+)"/)?.[1],current);
