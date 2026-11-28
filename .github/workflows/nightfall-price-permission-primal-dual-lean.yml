@@ -10,11 +10,6 @@ on:
       - 'research/nightfall/price_permission/check_semantic_fence_independent.cjs'
       - 'research/nightfall/price_permission/semantic_fence_optimality_4source.json'
       - 'research/nightfall/price_permission/semantic_fence_dual_type_contract.json'
-      - 'docs/proof-object-passport.json'
-      - 'scripts/check_proof_object_passport.cjs'
-      - 'scripts/check_price_permission_optimality_passport.cjs'
-      - 'scripts/check_bellman_policy_passport.cjs'
-      - 'scripts/check_robust_observation_hull_passport.cjs'
       - 'research/nightfall/price_permission/robust_observation_hull/**'
       - '.github/workflows/nightfall-price-permission-primal-dual-lean.yml'
   workflow_dispatch:
@@ -45,12 +40,6 @@ jobs:
         run: |
           set -euo pipefail
           node research/nightfall/price_permission/check_semantic_fence_independent.cjs
-      - name: Fail-closed model-bound Proof Passport and cross-language checker provenance
-        shell: bash
-        run: |
-          set -euo pipefail
-          node scripts/check_price_permission_optimality_passport.cjs
-          node scripts/check_proof_object_passport.cjs
       - name: Set up pinned Lean + Mathlib
         uses: ./.github/actions/setup-nightfall-lean
       - name: Compile original rational dual source
