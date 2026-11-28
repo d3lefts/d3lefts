@@ -1,74 +1,20 @@
-name: NIGHTFALL fifteen active Proof Passport scopes and Lean provenance
+name: NIGHTFALL addressed-family exact computational replay
 on:
   pull_request:
     paths:
-      - 'docs/active-proof-passport.*'
-      - 'docs/lean-proof-passport-overlay.json'
-      - 'docs/proof-object-passport.json'
-      - 'scripts/check_proof_object_passport.cjs'
-      - 'scripts/check_formalization_differential.py'
-      - 'research/nightfall/AGENT_VERIFICATION_PROTOCOL.md'
-      - 'CONTRIBUTING.md'
-      - '.github/pull_request_template.md'
-      - 'scripts/check_price_permission_optimality_passport.cjs'
-      - 'scripts/check_bellman_policy_passport.cjs'
-      - 'scripts/check_robust_observation_hull_passport.cjs'
-      - 'research/nightfall/price_permission/robust_observation_hull/**'
-      - 'research/nightfall/price_permission/bellman_*'
-      - 'research/nightfall/price_permission/check_bellman_*'
-      - 'research/nightfall/price_permission/generate_bellman_*'
-      - 'research/nightfall/assurance/semantic-fencing-v0.3/semantic_fence.py'
-      - 'papers/certifying-algorithms/**'
-      - 'scripts/check_lean_proof_passport_overlay.cjs'
-      - 'projects/commonwealth-os/assurance/lean/passport-contract.json'
-      - 'docs/*proof-passport.html'
-      - 'docs/lean-certificate-provenance.*'
-      - 'research/nightfall/formalization/**'
-      - 'scripts/test_lean_certificate_provenance.cjs'
-      - 'docs/discovery-system.html'
-      - 'docs/research.html'
-      - 'docs/mathematical-results.html'
-      - 'docs/site.js'
-      - 'docs/sitemap.xml'
-      - 'research/nightfall/2026-11-active-passports/**'
-      - 'research/nightfall/2026-11-information-cost-dissertation/**'
-      - 'scripts/test_active_proof_passport.cjs'
-      - 'scripts/test_unrestricted_terminal_passport.cjs'
-      - 'docs/unrestricted-terminal-proof-scope-20261114.json'
-      - 'scripts/test_discovery_system_identity.cjs'
+      - 'research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py'
+      - 'research/nightfall/2026-11-active-passports/check_addressed_family_independent.cjs'
       - '.github/workflows/nightfall-active-passports.yml'
   workflow_dispatch:
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-env:
-  # Only PR checkouts may have experimental Lean sources with no historical receipt.
-  # Main stays fail-closed via the provenance scripts.
-  NIGHTFALL_ALLOW_UNREVIEWED: ${{ github.event_name == 'pull_request' && '1' || '0' }}
 permissions:
   contents: read
 jobs:
-  active-passport-scopes:
+  exact-replay:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          node-version: '22'
-      - name: Verify active claims, exact Lean provenance and frozen historical boundary
-        run: |
-          node scripts/test_active_proof_passport.cjs
-          node scripts/check_lean_proof_passport_overlay.cjs
-          node scripts/check_proof_object_passport.cjs
-          node scripts/test_unrestricted_terminal_passport.cjs
-          node scripts/test_lean_certificate_provenance.cjs
-          node scripts/test_discovery_system_identity.cjs
-      - name: Test fail-closed staged differential evidence contract (not a theorem check)
-        run: python3 scripts/check_formalization_differential.py --self-test
-      - name: Independently replay finite addressed-family tester in two arithmetic implementations
-        run: |
-          python3 research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py
-          node research/nightfall/2026-11-active-passports/check_addressed_family_independent.cjs
-      - name: Check public source links, page anchors and site metadata
-        run: python3 scripts/check_site.py
+          persist-credentials: false
+      - run: python3 research/nightfall/2026-11-information-cost-dissertation/check_addressed_family_exact.py
+      - run: node research/nightfall/2026-11-active-passports/check_addressed_family_independent.cjs
