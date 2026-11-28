@@ -36,7 +36,7 @@ Relevant nonuniform-input predecessors include [Girish–Mittal–Nehoran–Raz]
 
 The active Lean/Mathlib compiler configuration is **Lean 4.36.0-rc2** (exact Mathlib commit `9d581dfff2e41de989072ea63abf3daf69311520`), defined in [the compiler lock](docs/lean-compiler-lock.json), reproduced via the [compiler and certification guide](docs/lean-compiler-settings.md), and checked by the shared [CI installation](.github/actions/setup-nightfall-lean/action.yml). Historical 4.33/4.35 certificate receipts are retained at their original pins, not silently migrated.
 
-Merged [PR #696](https://github.com/d3lefts/d3lefts/pull/696) provides a **103-source selected Q2 Lake build**, four named axiom checks and `lake check` official kernel replay at this exact pin (run [44027853225](https://github.com/d3lefts/d3lefts/actions/runs/44027853225)). Its infinite-product L² limit is **conditional**, not an unconditional infinite-product Q2 theorem; multi-kernel `lake check --paranoid` and independent field-statement review remain separate gates. Current finite unrestricted Q2 coefficient C105.416 has its own original-source certificate. See the [active Proof Passport overlay](docs/lean-proof-passport-overlay.json) for exact named declaration and remaining obligations.
+Merged [PR #696](https://github.com/d3lefts/d3lefts/pull/696) provides a **103-source selected Q2 Lake build**, four named axiom checks and `lake check` official kernel replay at this exact pin (run [44027853225](https://github.com/d3lefts/d3lefts/actions/runs/44027853225)). Its infinite-product L² limit is **conditional**, not an unconditional infinite-product Q2 theorem; multi-kernel `lake check --paranoid` and independent field-statement review remain separate gates. Current finite unrestricted Q2 coefficient C105.416 has its own original-source certificate. For current verification policy see the [receipt-first CI contract](research/nightfall/CI_CONTRACT.md); the [historical overlay](docs/lean-proof-passport-overlay.json) is archival.
 
 **Expanded shared certificate:** Merged [PR #718](https://github.com/d3lefts/d3lefts/pull/718) subsequently extended the selected Q2 closure to **107 original source modules**; exact [run 44120677824](https://github.com/d3lefts/d3lefts/actions/runs/44120677824) passed `lake build Nightfall`, eight named axiom reports and independent `lake check`. Its infinite-product limit is still conditional. The all-(L^2) source-label extension in #743 has its own pending common-build gate. The merged GF(9) all-length adaptive source certificate (#690) is **not** included in this selected Q2 Lake graph.
 
@@ -101,7 +101,6 @@ From the repository root with Python 3 and Node.js:
 python3 scripts/check_site.py
 python3 scripts/test_repository_docs.py
 python3 scripts/check_research_archive.py --self-test
-node scripts/test_proof_passport_batch.cjs
 ```
 
 These are documentation/site and **scoped finite-record consistency checks**, not mathematical refereeing. Some browser tests require Chromium and Playwright; specialist research checkers document their own inputs, toolchains, and hashes. For the pinned Lean bridge, see [the formalization directory](research/nightfall/formalization/product_space/) and [contribution guide](CONTRIBUTING.md).
