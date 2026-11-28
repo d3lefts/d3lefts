@@ -44,8 +44,12 @@
       "featured": true,
       "field": "Information theory / query complexity",
       "summary": "Connects the common information of correlated inputs to classical acceptance-estimation query bounds, and studies how recoverable latent representations can change those bounds.",
-      "scope": "Original-coordinate query complexity under the stated finite-law and oracle assumptions; not a general runtime or quantum-state simulation theorem. The exact archived manuscript-to-Lean correspondence is not established here.",
+      "scope": "Original-coordinate query complexity under the stated finite-law and oracle assumptions; not a general runtime or quantum-state simulation theorem. The principal general-latent theorem has a successful pinned Lean receipt (#970). The archived PDF identity is a separate evidence object and was not independently checked in this editorial review.",
       "evidence_links": [
+        {
+          "label": "Pinned Route 1 kernel replay (#970)",
+          "href": "https://github.com/d3lefts/d3lefts/actions/runs/44732951300"
+        },
         {
           "label": "General-latent theorem and source review",
           "href": "https://github.com/d3lefts/d3lefts/pull/970"
@@ -72,15 +76,23 @@
       "url": "https://zenodo.org/records/24516569",
       "manuscript_version": "0.7",
       "resource_type": "research preprint",
-      "publication_status": "Published on Zenodo; DOI and title confirmed by owner. Live record and archived file bytes not independently verified.",
+      "publication_status": "Published on Zenodo 24 November 2026. Record metadata checked in the supplied Claude review dated 28 November 2026: v1, nightfall_q2_v0.7.pdf, CC BY 4.0. Archived file bytes were not independently hashed in this editorial review",
       "review_status": "AI-assisted mathematical review; external human peer review not established",
       "community_membership": "owner screenshot confirmed 2026-11-28; live metadata not independently retrieved",
       "field": "Probability / analysis of functions",
       "summary": "Establishes a variance-squared maximum-coordinate influence inequality for bounded degree-two functions on product probability spaces, without a dimension or bias penalty under the stated hypotheses.",
-      "scope": "The related finite-product theorem has a named Lean evidence trail. No claim is made here that every statement in the archived PDF has an exact matching kernel receipt.",
+      "scope": "Finite positive-support theorem (#740) and arbitrary-index L² Hoeffding-degree theorem (#888) have successful pinned Lean receipts. The archived file identity and theorem-source receipts are separate evidence objects",
       "evidence_links": [
         {
-          "label": "Related finite-product theorem and scoped Lean receipt",
+          "label": "Finite positive-support Lean receipt (#740)",
+          "href": "https://github.com/d3lefts/d3lefts/actions/runs/44124722630"
+        },
+        {
+          "label": "Arbitrary-index Hoeffding Lean receipt (#888)",
+          "href": "https://github.com/d3lefts/d3lefts/actions/runs/44470008420"
+        },
+        {
+          "label": "Proof Passport and scope",
           "href": "active-proof-passport.html#q2-influence"
         },
         {
@@ -88,7 +100,10 @@
           "href": "mathematical-results.html"
         }
       ],
-      "source_refs": []
+      "source_refs": [],
+      "repository_version": "v1",
+      "archive_file": "nightfall_q2_v0.7.pdf",
+      "license": "CC BY 4.0"
     },
     {
       "author": "Devin J. Wright",

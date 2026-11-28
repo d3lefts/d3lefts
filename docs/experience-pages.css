@@ -185,3 +185,7 @@ html[data-nf-experience="moon"] .footer h2{font-size:clamp(48px,6vw,86px)}
 .nf-engineering-gateway a:focus-visible{outline:3px solid #f2d797;outline-offset:4px}
 @media(max-width:900px){.nf-engineering-gateway{grid-template-columns:1fr}}
 @media(max-width:640px){.nf-engineering-gateway{padding:14px 18px}.nf-engineering-gateway span{margin-left:0;display:block}}
+
+/* Keep the two engineering entry links together without crowding narrow screens. */
+.nf-engineering-gateway-links{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+html #main>.hero.nf-opening .nf-opening-overlap-value{white-space:normal;overflow-wrap:anywhere}
