@@ -5,7 +5,7 @@
     "identifier": "nightfall-research",
     "url": "https://zenodo.org/communities/nightfall-research/records",
     "creation": "owner-confirmed",
-    "membership_verification": "not independently verified"
+    "membership_verification": "Papers I–V shown as community members in owner-supplied Zenodo screenshots dated 2026-11-28; live metadata not independently retrieved"
   },
   "records": [
     {
@@ -21,7 +21,7 @@
       "resource_type": "research preprint",
       "publication_status": "published on Zenodo, confirmed by owner's screenshot",
       "review_status": "AI-assisted mathematical review; external human peer review not established",
-      "community_membership": "unverified",
+      "community_membership": "owner screenshot confirmed 2026-11-28; live metadata not independently retrieved",
       "source_refs": [
         {
           "pr": 970,
@@ -74,7 +74,7 @@
       "resource_type": "research preprint",
       "publication_status": "Published on Zenodo; DOI and title confirmed by owner. Live record and archived file bytes not independently verified.",
       "review_status": "AI-assisted mathematical review; external human peer review not established",
-      "community_membership": "unverified",
+      "community_membership": "owner screenshot confirmed 2026-11-28; live metadata not independently retrieved",
       "field": "Probability / analysis of functions",
       "summary": "Establishes a variance-squared maximum-coordinate influence inequality for bounded degree-two functions on product probability spaces, without a dimension or bias penalty under the stated hypotheses.",
       "scope": "The related finite-product theorem has a named Lean evidence trail. No claim is made here that every statement in the archived PDF has an exact matching kernel receipt.",
@@ -89,6 +89,98 @@
         }
       ],
       "source_refs": []
+    },
+    {
+      "author": "Devin J. Wright",
+      "date": "2026-11-25",
+      "doi": null,
+      "url": "https://zenodo.org/communities/nightfall-research/records",
+      "repository_version": "v1",
+      "resource_type": "research preprint",
+      "publication_status": "Published on Zenodo according to owner-supplied community screenshot dated 2026-11-28; individual record DOI and archived bytes pending reconciliation",
+      "review_status": "AI-assisted mathematical review; external human peer review not established",
+      "community_membership": "owner screenshot confirmed 2026-11-28; live metadata not independently retrieved",
+      "featured": false,
+      "source_refs": [],
+      "evidence_links": [
+        {
+          "label": "Research results and scope",
+          "href": "mathematical-results.html"
+        },
+        {
+          "label": "Proof Passports",
+          "href": "active-proof-passport.html"
+        }
+      ],
+      "id": "real-phase-retrieval-20261125",
+      "number": 3,
+      "slug": "real-phase-retrieval",
+      "title": "Adaptivity, Continuity, and the Exact Limits of Real Phase Retrieval",
+      "field": "Inverse problems / adaptive measurement",
+      "summary": "Studies exact real phase retrieval from sequential squared-linear measurements, distinguishing unrestricted adaptive, fixed, and continuous causal measurement regimes.",
+      "scope": "Real phase retrieval under the manuscript's stated measurement and continuity assumptions; the archived version and individual DOI have not been independently reconciled.",
+      "reported_reserved_doi": "10.5281/zenodo.24518260"
+    },
+    {
+      "author": "Devin J. Wright",
+      "date": "2026-11-25",
+      "doi": null,
+      "url": "https://zenodo.org/communities/nightfall-research/records",
+      "repository_version": "v1",
+      "resource_type": "research preprint",
+      "publication_status": "Published on Zenodo according to owner-supplied community screenshot dated 2026-11-28; individual record DOI and archived bytes pending reconciliation",
+      "review_status": "AI-assisted mathematical review; external human peer review not established",
+      "community_membership": "owner screenshot confirmed 2026-11-28; live metadata not independently retrieved",
+      "featured": false,
+      "source_refs": [],
+      "evidence_links": [
+        {
+          "label": "Research results and scope",
+          "href": "mathematical-results.html"
+        },
+        {
+          "label": "Proof Passports",
+          "href": "active-proof-passport.html"
+        }
+      ],
+      "id": "finite-field-phase-retrieval-20261125",
+      "number": 4,
+      "slug": "finite-field-phase-retrieval",
+      "title": "Exact Adaptive Phase Retrieval Over Finite Fields: Rank–Phase Decomposition and Optimal Query Packing",
+      "field": "Finite fields / adaptive measurement",
+      "summary": "Develops a rank–phase decomposition for exact adaptive phase retrieval over finite fields and analyzes query packing.",
+      "scope": "Finite-field recovery under the stated oracle and equivalence conventions; the archived version and individual DOI have not been independently reconciled."
+    },
+    {
+      "author": "Devin J. Wright",
+      "date": "2026-11-25",
+      "doi": null,
+      "url": "https://zenodo.org/communities/nightfall-research/records",
+      "repository_version": "v1",
+      "resource_type": "research preprint",
+      "publication_status": "Published on Zenodo according to owner-supplied community screenshot dated 2026-11-28; individual record DOI and archived bytes pending reconciliation",
+      "review_status": "AI-assisted mathematical review; external human peer review not established",
+      "community_membership": "owner screenshot confirmed 2026-11-28; live metadata not independently retrieved",
+      "featured": false,
+      "source_refs": [],
+      "evidence_links": [
+        {
+          "label": "Research results and scope",
+          "href": "mathematical-results.html"
+        },
+        {
+          "label": "Proof Passports",
+          "href": "active-proof-passport.html"
+        }
+      ],
+      "id": "additive-fiber-multiplicity-20261125",
+      "number": 5,
+      "slug": "additive-fiber-multiplicity",
+      "title": "Beyond Common Information: Classical Simulation of Quantum Queries via Additive Fiber Multiplicity",
+      "field": "Quantum query complexity / additive combinatorics",
+      "summary": "Develops a structural approach to classical simulation of quantum queries under correlated binary character inputs using additive fiber multiplicity.",
+      "scope": "Correlated binary-character query models under the manuscript's stated assumptions; the archived version and individual DOI have not been independently reconciled.",
+      "reported_reserved_doi": "10.5281/zenodo.24521630"
     }
   ],
   "release_policy": {
@@ -96,5 +188,13 @@
     "rights_review_required": true,
     "license": "unselected",
     "archive_scope": "selected, approved immutable source package only"
-  }
+  },
+  "pending_release": [
+    {
+      "number": 6,
+      "title": "Staged Wyner Simulation and Tensor-Code Representation Obstructions",
+      "status": "Draft in owner-supplied Zenodo screenshot dated 2026-11-28; excluded from published index",
+      "reported_reserved_doi": "10.5281/zenodo.24522932"
+    }
+  ]
 }
