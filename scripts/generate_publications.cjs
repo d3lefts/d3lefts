@@ -35,7 +35,7 @@ function build(reg,home,moon,sitemap){
  out["docs/index.html"]=block(home,"nightfall-publications",section("Selected publications.",featured),'<section class="nf-observatory wrap"');
  out["docs/new-moon.html"]=block(moon,"nightfall-publications",section("On the scholarly record.",featured),'<section class="moon-dispatch wrap"');
  const csslink='<link rel="stylesheet" href="publications.css">';
- for(const f of ["docs/index.html","docs/new-moon.html"]){if(!out[f].includes(csslink))out[f]=out[f].replace("</head>",csslink+"\n</head>");}
+ for(const f of ["docs/index.html","docs/new-moon.html"]){if(!out[f].includes(csslink)&&!out[f].includes('href="home-bundle.css"'))out[f]=out[f].replace("</head>",csslink+"\n</head>");}
  // Keep the owner-approved three primary active-home destinations plus the publication entry.
  for(const f of ["docs/index.html","docs/new-moon.html"]){if(!out[f].includes('<a href="publications.html">Publications</a>'))out[f]=out[f].replace('<a href="constellation.html">','<a href="publications.html">Publications</a>\n      <a href="constellation.html">');}
  out["docs/index.html"]=out["docs/index.html"].replace("Our first preprint is published.","Our research preprints are published.");
