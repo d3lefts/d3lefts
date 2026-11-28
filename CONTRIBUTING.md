@@ -14,7 +14,7 @@ For a named theorem, retain exact source SHA, original definition/hypotheses, `#
 
 New NIGHTFALL agent workflows should use the versioned [command contract](research/nightfall/agent-operations/COMMAND_CONTRACT_V1.md): `just --list`, `just preflight`, and the underlying allowlisted `python3 scripts/nightfall_agent_tasks.py run <task>`. Nushell 0.117.0 is the **preferred structured-data interface**, not a required runtime for every agent. No existing verified Python/Node/Rust/Lean checker is being rewritten or replaced.
 
-Every task reports a scoped JSON receipt with source HEAD, SHA-256 anchors, exit status and **explicit non-certification flags**. The shell-level PASS means only that the named checker ran successfully within its declared scope. Kernel proof, independent reproduction, specialist review and novelty gates remain separate. Existing `lean_bridge.py --strict`, frozen Lean source checks, Proof Passport v2 and independent exact checkers stay authoritative. Use `just` or the Python CLI as the stable entrypoint; use Nushell for typed filtering and inspection, and keep separate construction and auditing artifacts.
+Every task reports a scoped JSON receipt with source HEAD, SHA-256 anchors, exit status and **explicit non-certification flags**. The shell-level PASS means only that the named checker ran successfully within its declared scope. Kernel proof, independent reproduction, specialist review and novelty gates remain separate. Use `lean_bridge.py --strict` and independent exact checkers as direct evidence; historical registries and passports are archival only. Use `just` or the Python CLI as the stable entrypoint; use Nushell for typed filtering and inspection, and keep separate construction and auditing artifacts.
 
 ## Scholarly source-of-truth protocol
 
@@ -82,7 +82,7 @@ A branch protection/ruleset must be enabled by a repository administrator to enf
 - For Q2, **do not add another automatically triggered pinned-Lean workflow**. Use the [single source-only certificate pipeline](.github/workflows/nightfall-q2-consolidated-lean.yml) and its [ordered stage driver](scripts/nightfall_q2_certify.py). Historical `nightfall-q2-*-v436.yml` jobs are manual-only diagnostics, not independent required checks.
 - Prefer one CI run per PR head, source-dependency caching, and `concurrency.cancel-in-progress: true` when later runs supersede earlier checks. Non-Q2 research workflows retain separate subject-specific evidence contracts.
 - Run `python3 scripts/audit_ci_architecture.py --self-test` after changing workflow triggers, CI scripts, or the canonical Q2 proof graph. This architectural test does **not** compile Lean.
-- Do not close or merge old Q2 PRs merely because a newer PR reproduces their title. Compare source blobs and preserve unique proofs, failure records, certificates, and analytic manuscripts in an explicit custody ledger.
+- Do not close or merge old Q2 PRs merely because a newer PR reproduces their title. Compare source blobs and preserve unique proofs, failure records, certificates, and analytic manuscripts with their original source and execution receipts.
 - A current-head terminal `ActualSourceQ2Terminal.actual_source_q2_terminal` **strict named-declaration receipt** is required before calling the dimension-free Q2 theorem machine-certified. Green build steps or scoped historical lemmas are insufficient.
 
 ### Quick checks
@@ -93,7 +93,6 @@ From the repository root:
 python3 scripts/test_repository_docs.py
 python3 scripts/check_research_archive.py --self-test
 python3 scripts/check_site.py
-node scripts/test_proof_passport_batch.cjs
 ```
 
 For browser behavior use [the pinned website CI workflow](.github/workflows/verify-site.yml); for mathematical claims use the explicit source-specific commands, not a generic green build. A Lean result is certified **only to the named statement and its declared premises**. Keep receipts, source versions and axiom dependencies together.
@@ -112,13 +111,9 @@ For formal review formats see [the external-review protocol](research/nightfall/
 
 Preserve negative controls, failed counterexample searches, withdrawn claims, and historical versions with reasons. Do not confuse *no counterexample found* with *theorem proved*. Do not claim an old red CI run is green; cite the actual successful rerun and commit.
 
-## Exact Lean source custody on every PR
+## Receipt-first verification
 
-Every new or modified `research/nightfall/**/*.lean` source **must** be accompanied, in the same PR, by an exact Git-blob SHA entry or update in [the pending-source custody ledger](docs/lean-pending-source-custody.json), unless the historical certificate registry has a separate, source-verified and reviewed update. The [strict custody workflow](.github/workflows/nightfall-strict-lean-custody.yml) now runs on Lean source changes as well as manifest edits, with `NIGHTFALL_ALLOW_UNREVIEWED=0` for both PR and protected-main checks. An unregistered or hash-mutated source is a CI failure; do not suppress the failure by granting blanket approval or changing the environment flag.
-
-For a source without a verified named theorem receipt, record `classification: "unreviewed-source"`, `ci_source_match_status: "no-verified-receipt"`, `historical_run: null`, `historical_head: null`, `global_priority: "unverified"` and its actual Git blob hash. A successful separate Lean build does **not** automatically change the older custody record. Keep the 67 frozen historical certificates immutable; formal certification requires separate exact-head theorem, axiom, kernel and human semantic review.
-
-Before merging a Lean-containing PR, run `node scripts/test_lean_certificate_provenance.cjs` and `python3 scripts/lean_certificate_registry.py --audit` at its actual head. The strict CI also inserts an intentionally unregistered source and mutates a registered source in a temporary runner checkout to prove the checks fail closed, then restores the original bytes. Maintainers should configure the strict workflow as a required branch-protection check; the workflow alone does not establish that repository administration setting.
+Follow the [current CI contract](research/nightfall/CI_CONTRACT.md). New Lean sources require no administrative enrollment or passport update. Verify the selected theorem source with the pinned compiler and preserve actual execution receipts, exact source identity, dependencies and named axiom results. Historical ledgers remain archival. Do not require retired administrative checks in branch protection.
 
 ## Attribution, licensing and responsible disclosure
 

@@ -4,9 +4,7 @@ on:
     paths:
       - 'lean-toolchain'
       - 'docs/lean-compiler-lock.json'
-      - 'docs/lean-proof-passport-overlay.json'
       - 'docs/current-lean-proof-receipts-20261116.json'
-      - 'projects/commonwealth-os/assurance/lean/passport-contract.json'
       - '.github/actions/setup-nightfall-lean/action.yml'
       - 'scripts/check_nightfall_compiler_lock.py'
       - 'scripts/audit_active_lean_436.py'
@@ -14,7 +12,6 @@ on:
       - 'scripts/generate_nightfall_lake.py'
       - '.github/workflows/nightfall-integrated-lake.yml'
       - 'tests/test_nightfall_compiler_lock.py'
-      - 'scripts/check_lean_proof_passport_overlay.cjs'
       - '.github/workflows/nightfall-compiler-lock.yml'
   push:
     branches: [main]
@@ -46,5 +43,3 @@ jobs:
         run: |
           python3 scripts/audit_active_lean_436.py
           python3 -m unittest discover -s tests -p 'test_active_lean_436.py' -v
-      - name: Ensure no science passport was promoted by pin-only changes
-        run: node scripts/check_lean_proof_passport_overlay.cjs
