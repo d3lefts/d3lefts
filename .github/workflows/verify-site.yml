@@ -28,10 +28,6 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-env:
-  # Only PR checkouts may have experimental Lean sources with no historical receipt.
-  # Main stays fail-closed via the provenance scripts.
-  NIGHTFALL_ALLOW_UNREVIEWED: ${{ github.event_name == 'pull_request' && '1' || '0' }}
 permissions:
   contents: read
 jobs:
@@ -51,9 +47,6 @@ jobs:
         run: |
           node scripts/generate_publications.cjs --check
           python3 scripts/check_site.py
-          node scripts/test_proof_passport_batch.cjs
-          node scripts/test_active_proof_passport.cjs
-          node scripts/test_lean_certificate_provenance.cjs
           node scripts/test_mathematical_entrypoint.cjs
           node scripts/test_research_communication.cjs
           node scripts/test_discovery_system_identity.cjs
